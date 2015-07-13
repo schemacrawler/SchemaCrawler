@@ -68,9 +68,9 @@ public final class InformationSchemaViewsBuilder
    *        Map of information schema view definitions.
    */
   @Override
-  public InformationSchemaViewsBuilder fromConfig(final Map<String, String> informationSchemaViewsSql)
+  public InformationSchemaViewsBuilder
+    fromConfig(final Map<String, String> informationSchemaViewsSql)
   {
-    informationSchemaQueries.clear();
     if (informationSchemaViewsSql == null)
     {
       return this;
@@ -101,7 +101,8 @@ public final class InformationSchemaViewsBuilder
    * @param informationSchemaViewsSql
    *        Map of information schema view definitions.
    */
-  public InformationSchemaViewsBuilder fromResourceFolder(final String classpath)
+  public InformationSchemaViewsBuilder
+    fromResourceFolder(final String classpath)
   {
     informationSchemaQueries.clear();
 
@@ -138,7 +139,8 @@ public final class InformationSchemaViewsBuilder
    * @param sql
    *        Additional attributes SQL for columns.
    */
-  public InformationSchemaViewsBuilder withAdditionalColumnAttributesSql(final String sql)
+  public InformationSchemaViewsBuilder
+    withAdditionalColumnAttributesSql(final String sql)
   {
     informationSchemaQueries.put(ADDITIONAL_COLUMN_ATTRIBUTES, sql);
     return this;
@@ -150,7 +152,8 @@ public final class InformationSchemaViewsBuilder
    * @param sql
    *        Additional attributes SQL for tables.
    */
-  public InformationSchemaViewsBuilder withAdditionalTableAttributesSql(final String sql)
+  public InformationSchemaViewsBuilder
+    withAdditionalTableAttributesSql(final String sql)
   {
     informationSchemaQueries.put(ADDITIONAL_TABLE_ATTRIBUTES, sql);
     return this;
@@ -174,7 +177,8 @@ public final class InformationSchemaViewsBuilder
    * @param sql
    *        Table check constraints SQL.
    */
-  public InformationSchemaViewsBuilder withExtTableConstraintsSql(final String sql)
+  public InformationSchemaViewsBuilder
+    withExtTableConstraintsSql(final String sql)
   {
     informationSchemaQueries.put(EXT_TABLE_CONSTRAINTS, sql);
     return this;
@@ -259,7 +263,8 @@ public final class InformationSchemaViewsBuilder
    * @param sql
    *        Table constraints columns SQL.
    */
-  public InformationSchemaViewsBuilder withTableConstraintsColumnsSql(final String sql)
+  public InformationSchemaViewsBuilder
+    withTableConstraintsColumnsSql(final String sql)
   {
     informationSchemaQueries.put(CONSTRAINT_COLUMN_USAGE, sql);
     return this;
