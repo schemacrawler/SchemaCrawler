@@ -6,9 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -22,11 +19,10 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("oracle");
-    final Config config = databaseSystemIdentifier.getDatabaseSystemConnector()
-      .getConfig();
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptionsBuilder()
-      .fromConfig(config).toOptions();
-    assertEquals(11, options.getInformationSchemaViews().size());
+    assertEquals(11,
+                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                   .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
+                   .getInformationSchemaViews().size());
   }
 
   @Test

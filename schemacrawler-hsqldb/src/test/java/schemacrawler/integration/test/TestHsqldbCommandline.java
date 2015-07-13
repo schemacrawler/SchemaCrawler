@@ -25,10 +25,12 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -81,14 +83,20 @@ public class TestHsqldbCommandline
     throws Exception
   {
 
-    final Config config = new HyperSQLDatabaseConnector()
-      .getDatabaseSystemConnector().getConfig();
+    final DatabaseSystemConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector()
+      .getDatabaseSystemConnector();
+
+    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = hsqldbSystemConnector
+      .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
+
+    final Config config = hsqldbSystemConnector.getConfig();
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
       .fromConfig(config);
     optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
-                                                            null, optionsBuilder
-                                                                .toOptions());
+
+    final Catalog catalog = SchemaCrawlerUtility
+      .getCatalog(getConnection(), databaseSpecificOverrideOptions,
+                  optionsBuilder.toOptions());
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());

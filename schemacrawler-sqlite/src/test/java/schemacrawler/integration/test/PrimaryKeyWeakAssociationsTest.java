@@ -77,7 +77,7 @@ public class PrimaryKeyWeakAssociationsTest
 
   private void weakAssociations(final String currentMethodFullName,
                                 final String database)
-    throws Exception
+                                  throws Exception
   {
     final Path sqliteDbFile = copyResourceToTempFile(database);
     final Config config = new Config();
@@ -93,7 +93,7 @@ public class PrimaryKeyWeakAssociationsTest
         .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
 
       final Catalog baseCatalog = SchemaCrawlerUtility
-        .getCatalog(connectionOptions.getConnection(), null, schemaCrawlerOptions);
+        .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 1, schemas.length);
