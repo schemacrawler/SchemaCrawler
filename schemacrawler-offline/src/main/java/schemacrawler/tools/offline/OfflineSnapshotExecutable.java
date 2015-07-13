@@ -42,6 +42,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -87,6 +88,15 @@ public class OfflineSnapshotExecutable
   }
 
   @Override
+  public void
+    execute(final Connection connection,
+            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+              throws Exception
+  {
+    execute(connection);
+  }
+
+  @Override
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
@@ -99,9 +109,9 @@ public class OfflineSnapshotExecutable
     ((Reducible) catalog).reduce(Schema.class,
                                  new SchemasReducer(schemaCrawlerOptions));
     final Predicate<Table> tableFilter = tableFilter(schemaCrawlerOptions);
-    ((Reducible) catalog).reduce(Table.class,
-                                 new TablesReducer(schemaCrawlerOptions,
-                                                   tableFilter));
+    ((Reducible) catalog)
+      .reduce(Table.class,
+              new TablesReducer(schemaCrawlerOptions, tableFilter));
     final Predicate<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Routine.class,
                                  new RoutinesReducer(routineFilter));
