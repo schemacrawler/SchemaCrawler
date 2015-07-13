@@ -39,6 +39,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
@@ -79,21 +80,31 @@ public class SchemaCrawlerSpringCommandLine
     }
     else
     {
-      LOGGER.log(Level.INFO,
-                 "Loading context from classpath, "
-                     + springOptions.getContextFileName());
-      appContext = new ClassPathXmlApplicationContext(springOptions.getContextFileName());
+      LOGGER.log(Level.INFO, "Loading context from classpath, "
+                             + springOptions.getContextFileName());
+      appContext = new ClassPathXmlApplicationContext(springOptions
+        .getContextFileName());
     }
 
     try
     {
       final DataSource dataSource = (DataSource) appContext
         .getBean(springOptions.getDataSourceName());
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
+        .getBean(springOptions.getDatabaseSpecificOverrideOptionsName());
+
       try (Connection connection = dataSource.getConnection();)
       {
         final Executable executable = (Executable) appContext
           .getBean(springOptions.getExecutableName());
-        executable.execute(connection);
+        if (databaseSpecificOverrideOptions == null)
+        {
+          executable.execute(connection);
+        }
+        else
+        {
+          executable.execute(connection, databaseSpecificOverrideOptions);
+        }
       }
     }
     finally

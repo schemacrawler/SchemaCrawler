@@ -21,8 +21,15 @@ public class DatabaseSpecificOverrideOptionsBuilder
     informationSchemaViewsBuilder = new InformationSchemaViewsBuilder();
   }
 
+  public DatabaseSpecificOverrideOptionsBuilder(final Map<String, String> map)
+  {
+    this();
+    fromConfig(map);
+  }
+
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Map<String, String> map)
+  public DatabaseSpecificOverrideOptionsBuilder
+    fromConfig(final Map<String, String> map)
   {
     final Config config;
     if (map == null)
@@ -70,7 +77,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
    * @param getIdentifierQuoteString
    *        Value for the override
    */
-  public DatabaseSpecificOverrideOptionsBuilder identifierQuoteString(final String identifierQuoteString)
+  public DatabaseSpecificOverrideOptionsBuilder
+    identifierQuoteString(final String identifierQuoteString)
   {
     this.identifierQuoteString = identifierQuoteString;
     return this;

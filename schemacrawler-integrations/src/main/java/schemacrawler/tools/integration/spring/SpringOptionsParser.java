@@ -45,6 +45,7 @@ final class SpringOptionsParser
     normalizeOptionName("context-file", "c");
     normalizeOptionName("executable", "x");
     normalizeOptionName("datasource", "d");
+    normalizeOptionName("databaseoverrides", "m");
   }
 
   @Override
@@ -57,10 +58,13 @@ final class SpringOptionsParser
       .setExecutableName(config.getStringValue("executable", "executable"));
     options
       .setDataSourceName(config.getStringValue("datasource", "datasource"));
+    options.setDatabaseSpecificOverrideOptionsName(config
+      .getStringValue("databaseoverrides", "databaseSpecificOverrideOptions"));
 
     consumeOption("context-file");
     consumeOption("executable");
     consumeOption("datasource");
+    consumeOption("databaseoverrides");
 
     return options;
   }
