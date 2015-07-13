@@ -38,6 +38,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
@@ -58,10 +59,12 @@ public class SpringIntegrationTest
     final Object bean = appContext.getBean(beanDefinitionName);
     if (bean instanceof Executable)
     {
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
+        .getBean("databaseSpecificOverrideOptions");
+
       final Executable executable = (Executable) bean;
-      executeAndCheckForOutputFile(beanDefinitionName,
-                                   executable,
-                                   failures,
+      executeAndCheckForOutputFile(beanDefinitionName, executable,
+                                   databaseSpecificOverrideOptions, failures,
                                    true);
     }
     if (failures.size() > 0)
@@ -84,10 +87,12 @@ public class SpringIntegrationTest
       final Object bean = appContext.getBean(beanDefinitionName);
       if (bean instanceof Executable)
       {
+        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
+          .getBean("databaseSpecificOverrideOptions");
+
         final Executable executable = (Executable) bean;
-        executeAndCheckForOutputFile(beanDefinitionName,
-                                     executable,
-                                     failures,
+        executeAndCheckForOutputFile(beanDefinitionName, executable,
+                                     databaseSpecificOverrideOptions, failures,
                                      false);
       }
     }
@@ -106,31 +111,31 @@ public class SpringIntegrationTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Unexpected number of tables in the schema", 6, catalog
-      .getTables(schema).size());
+    assertEquals("Unexpected number of tables in the schema", 6,
+                 catalog.getTables(schema).size());
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
                                             final Executable executable,
+                                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                             final List<String> failures,
                                             final boolean isCompressedOutput)
-    throws Exception
+                                              throws Exception
   {
     final Path testOutputFile = createTempFile(executableName, "data");
 
     executable.getOutputOptions().setOutputFile(testOutputFile);
-    executable.execute(getConnection());
+    executable.execute(getConnection(), databaseSpecificOverrideOptions);
 
     if (isCompressedOutput)
     {
-      failures.addAll(compareCompressedOutput(executableName + ".txt",
-                                              testOutputFile,
-                                              TextOutputFormat.text.name()));
+      failures
+        .addAll(compareCompressedOutput(executableName + ".txt", testOutputFile,
+                                        TextOutputFormat.text.name()));
     }
     else
     {
-      failures.addAll(compareOutput(executableName + ".txt",
-                                    testOutputFile,
+      failures.addAll(compareOutput(executableName + ".txt", testOutputFile,
                                     TextOutputFormat.text.name()));
     }
   }
