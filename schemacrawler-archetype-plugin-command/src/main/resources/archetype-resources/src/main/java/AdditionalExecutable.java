@@ -6,6 +6,8 @@ package ${package};
 
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -17,7 +19,9 @@ public class AdditionalExecutable
   extends BaseStagedExecutable
 {
 
-  static final String COMMAND = "additional";
+  private static final Logger LOGGER = Logger.getLogger(AdditionalExecutable.class.getName());
+	  
+  private static final String COMMAND = "additional";
 
   protected AdditionalExecutable()
   {
@@ -36,7 +40,8 @@ public class AdditionalExecutable
     {
       for (final Schema schema: catalog.getSchemas())
       {
-        System.out.println(schema);
+    	// SchemaCrawler will control output of log messages if you use JDK logging
+    	LOGGER.log(Level.INFO, "Processing, " + schema);
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);
