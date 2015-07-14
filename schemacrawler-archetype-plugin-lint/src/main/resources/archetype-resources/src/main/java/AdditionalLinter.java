@@ -11,6 +11,8 @@ public class AdditionalLinter
   extends BaseLinter
 {
 
+  private static final Logger LOGGER = Logger.getLogger(AdditionalLinter.class.getName());
+	  
   @Override
   public String getDescription()
   {
@@ -30,6 +32,8 @@ public class AdditionalLinter
     {
       if (!table.getName().startsWith("FOO_"))
       {
+      	// SchemaCrawler will control output of log messages if you use JDK logging
+      	LOGGER.log(Level.INFO, "Adding lint for table, " + table);    	  
         addLint(table, getSummary(), table.getFullName());
       }
     }
