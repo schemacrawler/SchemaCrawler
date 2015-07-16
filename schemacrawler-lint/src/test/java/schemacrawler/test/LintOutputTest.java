@@ -93,7 +93,7 @@ public class LintOutputTest
           .fromConfig(config);
         optionsBuilder
           .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-        optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+        optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
@@ -130,7 +130,7 @@ public class LintOutputTest
         .fromConfig(config);
       optionsBuilder
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
       final Executable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
@@ -159,7 +159,7 @@ public class LintOutputTest
         .fromConfig(config);
       optionsBuilder
         .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
 
       final Executable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
