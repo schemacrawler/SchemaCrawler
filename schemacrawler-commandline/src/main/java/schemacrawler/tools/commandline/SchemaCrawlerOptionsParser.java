@@ -106,9 +106,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule schemaInclusionRule = config
         .getInclusionRule("schemas");
-      logOverride("schemas",
-                  optionsBuilder.getSchemaInclusionRule(),
-                  schemaInclusionRule);
+      logOverride("schemas", schemaInclusionRule);
       optionsBuilder.includeSchemas(schemaInclusionRule);
       consumeOption("schemas");
     }
@@ -132,9 +130,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule tableInclusionRule = config
         .getInclusionRule("tables");
-      logOverride("tables",
-                  optionsBuilder.getTableInclusionRule(),
-                  tableInclusionRule);
+      logOverride("tables", tableInclusionRule);
       optionsBuilder.includeTables(tableInclusionRule);
       consumeOption("tables");
     }
@@ -142,9 +138,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule columnInclusionRule = config
         .getExclusionRule("excludecolumns");
-      logOverride("excludecolumns",
-                  optionsBuilder.getColumnInclusionRule(),
-                  columnInclusionRule);
+      logOverride("excludecolumns", columnInclusionRule);
       optionsBuilder.includeColumns(columnInclusionRule);
       consumeOption("excludecolumns");
     }
@@ -160,9 +154,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule routineInclusionRule = config
         .getInclusionRule("routines");
-      logOverride("routines",
-                  optionsBuilder.getRoutineInclusionRule(),
-                  routineInclusionRule);
+      logOverride("routines", routineInclusionRule);
       optionsBuilder.includeRoutines(routineInclusionRule);
       consumeOption("routines");
     }
@@ -170,9 +162,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule routineColumnInclusionRule = config
         .getExclusionRule("excludeinout");
-      logOverride("excludeinout",
-                  optionsBuilder.getRoutineColumnInclusionRule(),
-                  routineColumnInclusionRule);
+      logOverride("excludeinout", routineColumnInclusionRule);
       optionsBuilder.includeRoutineColumns(routineColumnInclusionRule);
       consumeOption("excludeinout");
     }
@@ -181,9 +171,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule synonymInclusionRule = config
         .getInclusionRule("synonyms");
-      logOverride("synonyms",
-                  optionsBuilder.getSynonymInclusionRule(),
-                  synonymInclusionRule);
+      logOverride("synonyms", synonymInclusionRule);
       optionsBuilder.includeSynonyms(synonymInclusionRule);
       consumeOption("synonyms");
     }
@@ -192,24 +180,22 @@ public final class SchemaCrawlerOptionsParser
     {
       final InclusionRule sequenceInclusionRule = config
         .getInclusionRule("sequences");
-      logOverride("sequences",
-                  optionsBuilder.getSequenceInclusionRule(),
-                  sequenceInclusionRule);
+      logOverride("sequences", sequenceInclusionRule);
       optionsBuilder.includeSequences(sequenceInclusionRule);
       consumeOption("sequences");
     }
 
     if (config.hasValue("invert-match"))
     {
-      optionsBuilder.setGrepInvertMatch(config.getBooleanValue("invert-match",
-                                                               true));
+      optionsBuilder
+        .grepInvertMatch(config.getBooleanValue("invert-match", true));
       consumeOption("invert-match");
     }
 
     if (config.hasValue("only-matching"))
     {
-      optionsBuilder.setGrepOnlyMatching(config
-        .getBooleanValue("only-matching", true));
+      optionsBuilder
+        .grepOnlyMatching(config.getBooleanValue("only-matching", true));
       consumeOption("only-matching");
     }
 
@@ -230,12 +216,12 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule grepRoutineColumnInclusionRule = config
         .getInclusionRule("grepinout");
       optionsBuilder
-        .setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
+        .grepIncludeRoutineColumns(grepRoutineColumnInclusionRule);
       consumeOption("grepinout");
     }
     else
     {
-      optionsBuilder.setGrepRoutineColumnInclusionRule(null);
+      optionsBuilder.grepIncludeRoutineColumns(null);
     }
 
     if (config.hasValue("grepdef"))
@@ -287,14 +273,12 @@ public final class SchemaCrawlerOptionsParser
   }
 
   private void logOverride(final String inclusionRuleName,
-                           final InclusionRule oldSchemaInclusionRule,
                            final InclusionRule schemaInclusionRule)
   {
-    LOGGER.log(Level.INFO, String
-      .format("Overriding %s inclusion rule from command-line, to %s, from %s",
-              inclusionRuleName,
-              schemaInclusionRule,
-              oldSchemaInclusionRule));
+    LOGGER.log(Level.INFO,
+               String.format(
+                             "Overriding %s inclusion rule from command-line to %s",
+                             inclusionRuleName, schemaInclusionRule));
   }
 
 }

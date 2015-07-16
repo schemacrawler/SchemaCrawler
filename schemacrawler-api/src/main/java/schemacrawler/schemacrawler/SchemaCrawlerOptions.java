@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Locale;
 
 import schemacrawler.schema.RoutineType;
 import sf.util.ObjectToString;
@@ -324,7 +323,8 @@ public final class SchemaCrawlerOptions
    * @param grepColumnInclusionRule
    *        Column inclusion rule for grep
    */
-  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  public void
+    setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
   {
     this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
@@ -335,7 +335,8 @@ public final class SchemaCrawlerOptions
    * @param grepDefinitionInclusionRule
    *        Definition inclusion rule for grep
    */
-  public void setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
+  public void
+    setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
   }
@@ -370,7 +371,8 @@ public final class SchemaCrawlerOptions
    * @param grepRoutineColumnInclusionRule
    *        Routine column inclusion rule for grep
    */
-  public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
+  public void
+    setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
     this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
   }
@@ -398,7 +400,8 @@ public final class SchemaCrawlerOptions
    * @param routineColumnInclusionRule
    *        Routine column inclusion rule
    */
-  public void setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
+  public void
+    setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
   {
     this.routineColumnInclusionRule = requireNonNull(routineColumnInclusionRule,
                                                      "Cannot use null value in a setter");
@@ -425,29 +428,6 @@ public final class SchemaCrawlerOptions
     else
     {
       this.routineTypes = new HashSet<>(routineTypes);
-    }
-  }
-
-  /**
-   * Sets routine types from a comma-separated list of routine types.
-   *
-   * @param routineTypesString
-   *        Comma-separated list of routine types.
-   */
-  public void setRoutineTypes(final String routineTypesString)
-  {
-    routineTypes = new HashSet<>();
-    if (routineTypesString != null)
-    {
-      final String[] routineTypeStrings = routineTypesString.split(",");
-      if (routineTypeStrings != null && routineTypeStrings.length > 0)
-      {
-        for (final String routineTypeString: routineTypeStrings)
-        {
-          routineTypes.add(RoutineType
-            .valueOf(routineTypeString.toLowerCase(Locale.ENGLISH)));
-        }
-      }
     }
   }
 
@@ -481,7 +461,8 @@ public final class SchemaCrawlerOptions
    * @param sequenceInclusionRule
    *        Sequence inclusion rule
    */
-  public void setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
+  public void
+    setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
   {
     this.sequenceInclusionRule = requireNonNull(sequenceInclusionRule,
                                                 "Cannot use null value in a setter");
@@ -543,34 +524,6 @@ public final class SchemaCrawlerOptions
     else
     {
       this.tableTypes = new HashSet<>(tableTypes);
-    }
-  }
-
-  /**
-   * Sets table types requested for output from a comma-separated list of table
-   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
-   *
-   * @param tableTypesString
-   *        Comma-separated list of table types. Can be null if all supported
-   *        table types are requested.
-   */
-  public void setTableTypesFromString(final String tableTypesString)
-  {
-    if (tableTypesString != null)
-    {
-      tableTypes = new HashSet<>();
-      final String[] tableTypeStrings = tableTypesString.split(",");
-      if (tableTypeStrings != null && tableTypeStrings.length > 0)
-      {
-        for (final String tableTypeString: tableTypeStrings)
-        {
-          tableTypes.add(tableTypeString.trim());
-        }
-      }
-    }
-    else
-    {
-      tableTypes = null;
     }
   }
 
