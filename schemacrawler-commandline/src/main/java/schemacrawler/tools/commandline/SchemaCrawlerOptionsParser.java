@@ -188,7 +188,7 @@ public final class SchemaCrawlerOptionsParser
     if (config.hasValue("invert-match"))
     {
       optionsBuilder
-        .grepInvertMatch(config.getBooleanValue("invert-match", true));
+        .invertGrepMatch(config.getBooleanValue("invert-match", true));
       consumeOption("invert-match");
     }
 
@@ -216,12 +216,12 @@ public final class SchemaCrawlerOptionsParser
       final InclusionRule grepRoutineColumnInclusionRule = config
         .getInclusionRule("grepinout");
       optionsBuilder
-        .grepIncludeRoutineColumns(grepRoutineColumnInclusionRule);
+        .includeGreppedRoutineColumns(grepRoutineColumnInclusionRule);
       consumeOption("grepinout");
     }
     else
     {
-      optionsBuilder.grepIncludeRoutineColumns(null);
+      optionsBuilder.includeGreppedRoutineColumns(null);
     }
 
     if (config.hasValue("grepdef"))
