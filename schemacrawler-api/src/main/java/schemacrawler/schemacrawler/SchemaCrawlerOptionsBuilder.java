@@ -22,6 +22,8 @@ package schemacrawler.schemacrawler;
 
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 
 import schemacrawler.schema.RoutineType;
@@ -73,60 +75,11 @@ public class SchemaCrawlerOptionsBuilder
     this.options = options;
   }
 
-  public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
+  public SchemaCrawlerOptionsBuilder
+    childTableFilterDepth(final int childTableFilterDepth)
   {
     options.setChildTableFilterDepth(childTableFilterDepth);
     return this;
-  }
-
-  public InclusionRule getColumnInclusionRule()
-  {
-    return options.getColumnInclusionRule();
-  }
-
-  public InclusionRule getGrepColumnInclusionRule()
-  {
-    return options.getGrepColumnInclusionRule();
-  }
-
-  public InclusionRule getGrepDefinitionInclusionRule()
-  {
-    return options.getGrepDefinitionInclusionRule();
-  }
-
-  public InclusionRule getGrepRoutineColumnInclusionRule()
-  {
-    return options.getGrepRoutineColumnInclusionRule();
-  }
-
-  public InclusionRule getRoutineColumnInclusionRule()
-  {
-    return options.getRoutineColumnInclusionRule();
-  }
-
-  public InclusionRule getRoutineInclusionRule()
-  {
-    return options.getRoutineInclusionRule();
-  }
-
-  public InclusionRule getSchemaInclusionRule()
-  {
-    return options.getSchemaInclusionRule();
-  }
-
-  public InclusionRule getSequenceInclusionRule()
-  {
-    return options.getSequenceInclusionRule();
-  }
-
-  public InclusionRule getSynonymInclusionRule()
-  {
-    return options.getSynonymInclusionRule();
-  }
-
-  public InclusionRule getTableInclusionRule()
-  {
-    return options.getTableInclusionRule();
   }
 
   public SchemaCrawlerOptionsBuilder hideEmptyTables()
@@ -135,79 +88,112 @@ public class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeColumns(final InclusionRule columnInclusionRule)
   {
     options.setColumnInclusionRule(columnInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
   {
     options.setGrepColumnInclusionRule(grepColumnInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
     options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutineColumns(final InclusionRule routineColumnInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeRoutineColumns(final InclusionRule routineColumnInclusionRule)
   {
     options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeRoutines(final InclusionRule routineInclusionRule)
   {
     options.setRoutineInclusionRule(routineInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeSchemas(final InclusionRule schemaInclusionRule)
   {
     options.setSchemaInclusionRule(schemaInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeSequences(final InclusionRule sequenceInclusionRule)
   {
     options.setSequenceInclusionRule(sequenceInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeSynonyms(final InclusionRule synonymInclusionRule)
   {
     options.setSynonymInclusionRule(synonymInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    includeTables(final InclusionRule tableInclusionRule)
   {
     options.setTableInclusionRule(tableInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
+  public SchemaCrawlerOptionsBuilder
+    parentTableFilterDepth(final int parentTableFilterDepth)
   {
     options.setParentTableFilterDepth(parentTableFilterDepth);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
+  public SchemaCrawlerOptionsBuilder
+    routineTypes(final Collection<RoutineType> routineTypes)
   {
     options.setRoutineTypes(routineTypes);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
+  /**
+   * Sets routine types from a comma-separated list of routine types.
+   *
+   * @param routineTypesString
+   *        Comma-separated list of routine types.
+   */
+  public SchemaCrawlerOptionsBuilder
+    routineTypes(final String routineTypesString)
   {
-    options.setRoutineTypes(routineTypesString);
+    final Collection<RoutineType> routineTypes = new HashSet<>();
+    if (routineTypesString != null)
+    {
+      final String[] routineTypeStrings = routineTypesString.split(",");
+      if (routineTypeStrings != null && routineTypeStrings.length > 0)
+      {
+        for (final String routineTypeString: routineTypeStrings)
+        {
+          routineTypes.add(RoutineType
+            .valueOf(routineTypeString.toLowerCase(Locale.ENGLISH)));
+        }
+      }
+    }
+
+    options.setRoutineTypes(routineTypes);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder schemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
+  public SchemaCrawlerOptionsBuilder
+    schemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     options.setSchemaInfoLevel(schemaInfoLevel);
     return this;
@@ -220,7 +206,8 @@ public class SchemaCrawlerOptionsBuilder
    *        Configuration properties
    */
   @Override
-  public SchemaCrawlerOptionsBuilder fromConfig(final Map<String, String> config)
+  public SchemaCrawlerOptionsBuilder
+    fromConfig(final Map<String, String> config)
   {
     final Config configProperties;
     if (config == null)
@@ -274,39 +261,70 @@ public class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder setGrepInvertMatch(final boolean grepInvertMatch)
+  public SchemaCrawlerOptionsBuilder
+    grepInvertMatch(final boolean grepInvertMatch)
   {
     options.setGrepInvertMatch(grepInvertMatch);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder setGrepOnlyMatching(final boolean grepOnlyMatching)
+  public SchemaCrawlerOptionsBuilder
+    grepOnlyMatching(final boolean grepOnlyMatching)
   {
     options.setGrepOnlyMatching(grepOnlyMatching);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
+  public SchemaCrawlerOptionsBuilder
+    grepIncludeRoutineColumns(final InclusionRule grepRoutineColumnInclusionRule)
   {
     options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder tableNamePattern(final String tableNamePattern)
+  public SchemaCrawlerOptionsBuilder
+    tableNamePattern(final String tableNamePattern)
   {
     options.setTableNamePattern(tableNamePattern);
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder tableTypes(final Collection<String> tableTypes)
+  public SchemaCrawlerOptionsBuilder
+    tableTypes(final Collection<String> tableTypes)
   {
     options.setTableTypes(tableTypes);
     return this;
   }
 
+  /**
+   * Sets table types requested for output from a comma-separated list of table
+   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
+   *
+   * @param tableTypesString
+   *        Comma-separated list of table types. Can be null if all supported
+   *        table types are requested.
+   */
   public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
   {
-    options.setTableTypesFromString(tableTypesString);
+    final Collection<String> tableTypes;
+    if (tableTypesString != null)
+    {
+      tableTypes = new HashSet<>();
+      final String[] tableTypeStrings = tableTypesString.split(",");
+      if (tableTypeStrings != null && tableTypeStrings.length > 0)
+      {
+        for (final String tableTypeString: tableTypeStrings)
+        {
+          tableTypes.add(tableTypeString.trim());
+        }
+      }
+    }
+    else
+    {
+      tableTypes = null;
+    }
+
+    options.setTableTypes(tableTypes);
     return this;
   }
 
