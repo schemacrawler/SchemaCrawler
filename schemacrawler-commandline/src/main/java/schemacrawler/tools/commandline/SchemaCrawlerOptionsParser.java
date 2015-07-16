@@ -110,6 +110,12 @@ public final class SchemaCrawlerOptionsParser
       optionsBuilder.includeSchemas(schemaInclusionRule);
       consumeOption("schemas");
     }
+    else
+    {
+      LOGGER
+        .log(Level.WARNING,
+             "Please provide a -schemas option for efficient retrieval of database metadata");
+    }
 
     if (config.hasValue("tabletypes"))
     {
