@@ -57,7 +57,7 @@ public class SchemaSerializationTest
       .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
       .fromConfig(config);
-    optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+    optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
 
     final Catalog catalog = getCatalog(optionsBuilder.toOptions());
     assertNotNull("Could not obtain catalog", catalog);

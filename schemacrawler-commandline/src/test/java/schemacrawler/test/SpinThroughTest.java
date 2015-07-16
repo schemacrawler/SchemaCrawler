@@ -93,7 +93,7 @@ public class SpinThroughTest
 
           final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
             .fromConfig(config);
-          optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
+          optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
           optionsBuilder.includeSequences(new IncludeAll())
             .includeSynonyms(new IncludeAll());
 
