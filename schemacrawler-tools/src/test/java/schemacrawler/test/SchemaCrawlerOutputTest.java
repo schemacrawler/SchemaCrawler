@@ -119,7 +119,7 @@ public class SchemaCrawlerOutputTest
           .fromConfig(config);
         optionsBuilder
           .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-        optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+        optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
         optionsBuilder.includeSequences(new IncludeAll());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -178,7 +178,7 @@ public class SchemaCrawlerOutputTest
 
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
         .fromConfig(config);
-      optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       optionsBuilder.includeSequences(new IncludeAll());
@@ -236,7 +236,7 @@ public class SchemaCrawlerOutputTest
 
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
         .fromConfig(config);
-      optionsBuilder.schemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       optionsBuilder.includeSequences(new IncludeAll());
@@ -340,7 +340,7 @@ public class SchemaCrawlerOutputTest
 
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
         .fromConfig(config);
-      optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       optionsBuilder.includeSequences(new IncludeAll());
@@ -405,7 +405,7 @@ public class SchemaCrawlerOutputTest
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"))
         .includeTables(new ExcludeAll()).includeRoutines(new IncludeAll())
         .includeSequences(new ExcludeAll()).includeSynonyms(new ExcludeAll());
-      optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
         .name());
@@ -461,7 +461,7 @@ public class SchemaCrawlerOutputTest
 
       final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
         .fromConfig(config);
-      optionsBuilder.schemaInfoLevel(SchemaInfoLevel.maximum());
+      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
       optionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
       optionsBuilder.includeSequences(new IncludeAll());
