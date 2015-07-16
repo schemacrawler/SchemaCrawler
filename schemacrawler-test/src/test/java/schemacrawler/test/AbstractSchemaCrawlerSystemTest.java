@@ -89,7 +89,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
                                                       + ".properties");
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
       .fromConfig(config);
-    optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
+    optionsBuilder.withSchemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
     if (schemaInclusion != null)
     {
       optionsBuilder

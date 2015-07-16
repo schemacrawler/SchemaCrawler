@@ -193,7 +193,7 @@ public class SchemaCrawlerOptionsBuilder
   }
 
   public SchemaCrawlerOptionsBuilder
-    schemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
+    withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     options.setSchemaInfoLevel(schemaInfoLevel);
     return this;

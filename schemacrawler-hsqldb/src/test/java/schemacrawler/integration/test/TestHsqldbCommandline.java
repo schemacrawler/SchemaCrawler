@@ -92,7 +92,7 @@ public class TestHsqldbCommandline
     final Config config = hsqldbSystemConnector.getConfig();
     final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
       .fromConfig(config);
-    optionsBuilder.schemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
+    optionsBuilder.withSchemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
 
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(getConnection(), databaseSpecificOverrideOptions,

@@ -29,7 +29,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
@@ -109,16 +109,18 @@ public class TableTypesTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
+      schemaCrawlerOptionsBuilder
+        .withSchemaInfoLevel(SchemaInfoLevel.standard());
+      schemaCrawlerOptionsBuilder
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       if (!"default".equals(tableTypes))
       {
-        schemaCrawlerOptions.setTableTypesFromString(tableTypes);
+        schemaCrawlerOptionsBuilder.tableTypes(tableTypes);
       }
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaCrawlerOptionsBuilder
+        .toOptions());
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -128,15 +130,13 @@ public class TableTypesTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          out.println(String.format("  %s [%s]",
-                                    table.getName(),
+          out.println(String.format("  %s [%s]", table.getName(),
                                     table.getTableType()));
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            out.println(String.format("    %s [%s]",
-                                      column.getName(),
+            out.println(String.format("    %s [%s]", column.getName(),
                                       column.getColumnDataType()));
           }
         }
