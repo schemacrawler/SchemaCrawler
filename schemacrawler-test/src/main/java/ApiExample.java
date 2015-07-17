@@ -11,7 +11,7 @@ import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ApiExample
@@ -28,7 +28,7 @@ public final class ApiExample
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     // Set what details are required in the schema - this affects the
     // time taken to crawl the schema
-    options.setSchemaInfoLevel(SchemaInfoLevel.standard());
+    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     options.setRoutineInclusionRule(new ExcludeAll());
     options
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
