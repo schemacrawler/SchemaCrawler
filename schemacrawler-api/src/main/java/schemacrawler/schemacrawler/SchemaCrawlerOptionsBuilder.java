@@ -43,6 +43,7 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_SYNONYM_PATTERN_INCLUDE = "schemacrawler.synonym.pattern.include";
   private static final String SC_SEQUENCE_PATTERN_EXCLUDE = "schemacrawler.sequence.pattern.exclude";
   private static final String SC_SEQUENCE_PATTERN_INCLUDE = "schemacrawler.sequence.pattern.include";
+
   private static final String SC_TABLE_PATTERN_EXCLUDE = "schemacrawler.table.pattern.exclude";
   private static final String SC_TABLE_PATTERN_INCLUDE = "schemacrawler.table.pattern.include";
   private static final String SC_COLUMN_PATTERN_EXCLUDE = "schemacrawler.column.pattern.exclude";
@@ -63,6 +64,7 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
   private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
   private static final String SC_HIDE_EMPTY_TABLES = "schemacrawler.hide.empty-tables";
+
   private final SchemaCrawlerOptions options;
 
   public SchemaCrawlerOptionsBuilder()
