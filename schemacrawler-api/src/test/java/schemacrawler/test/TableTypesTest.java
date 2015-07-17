@@ -30,7 +30,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
@@ -111,7 +111,7 @@ public class TableTypesTest
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
       schemaCrawlerOptionsBuilder
-        .withSchemaInfoLevel(SchemaInfoLevel.standard());
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptionsBuilder
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       if (!"default".equals(tableTypes))

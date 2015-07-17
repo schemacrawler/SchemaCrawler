@@ -184,7 +184,7 @@ public final class SchemaCrawlerOptions
   {
     if (schemaInfoLevel == null)
     {
-      return SchemaInfoLevel.standard();
+      return SchemaInfoLevelBuilder.standard();
     }
     else
     {

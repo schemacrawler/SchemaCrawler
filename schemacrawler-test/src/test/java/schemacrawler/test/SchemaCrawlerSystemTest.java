@@ -34,6 +34,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import sf.util.ObjectToString;
 
 public class SchemaCrawlerSystemTest
@@ -54,7 +55,7 @@ public class SchemaCrawlerSystemTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = createOptions(dataSource,
                                                                       ".*");
-      final SchemaInfoLevel infoLevel = SchemaInfoLevel.minimum();
+      final SchemaInfoLevel infoLevel = SchemaInfoLevelBuilder.minimum();
       infoLevel.setRetrieveTables(false);
       infoLevel.setRetrieveRoutines(false);
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel);

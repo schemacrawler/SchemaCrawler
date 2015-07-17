@@ -36,7 +36,7 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
@@ -93,7 +93,7 @@ public class LintOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
         schemaCrawlerOptions
           .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
