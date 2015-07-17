@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 
 public enum InfoLevel
 {
@@ -56,19 +57,19 @@ public enum InfoLevel
     switch (this)
     {
       case minimum:
-        schemaInfoLevel = SchemaInfoLevel.minimum();
+        schemaInfoLevel = SchemaInfoLevelBuilder.minimum();
         break;
       case standard:
-        schemaInfoLevel = SchemaInfoLevel.standard();
+        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
         break;
       case detailed:
-        schemaInfoLevel = SchemaInfoLevel.detailed();
+        schemaInfoLevel = SchemaInfoLevelBuilder.detailed();
         break;
       case maximum:
-        schemaInfoLevel = SchemaInfoLevel.maximum();
+        schemaInfoLevel = SchemaInfoLevelBuilder.maximum();
         break;
       default:
-        schemaInfoLevel = SchemaInfoLevel.standard();
+        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
         break;
     }
     schemaInfoLevel.setTag(name());

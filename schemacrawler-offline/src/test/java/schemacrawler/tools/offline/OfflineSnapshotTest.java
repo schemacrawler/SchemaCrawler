@@ -44,7 +44,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
@@ -141,7 +141,7 @@ public class OfflineSnapshotTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final OutputOptions inputOptions = new OutputOptions();
     inputOptions.setCompressedInputFile(serializedDatabaseFile);
@@ -160,7 +160,7 @@ public class OfflineSnapshotTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

@@ -38,7 +38,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestUtility;
@@ -76,7 +76,7 @@ public class GraphExecutableOptionsTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(schemaCrawlerOptions,
@@ -152,7 +152,7 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.brief);
 
@@ -166,7 +166,7 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setSchemaTextDetailType(SchemaTextDetailType.schema);
 
