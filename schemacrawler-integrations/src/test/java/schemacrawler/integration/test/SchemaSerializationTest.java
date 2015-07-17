@@ -39,8 +39,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
@@ -53,20 +52,17 @@ public class SchemaSerializationTest
   public void schemaSerializationWithXStream()
     throws Exception
   {
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .fromConfig(config);
-    optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = getCatalog(optionsBuilder.toOptions());
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
 
     final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6, catalog
-      .getTables(schema).size());
+    assertEquals("Unexpected number of tables in the schema", 6,
+                 catalog.getTables(schema).size());
 
     XmlSerializedCatalog xmlCatalog;
     StringWriter writer;
@@ -77,8 +73,8 @@ public class SchemaSerializationTest
     writer.close();
     final String xmlSerializedCatalog1 = writer.toString();
     assertNotNull("Catalog was not serialized to XML", xmlSerializedCatalog1);
-    assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedCatalog1
-      .trim().length());
+    assertNotSame("Catalog was not serialized to XML", 0,
+                  xmlSerializedCatalog1.trim().length());
 
     xmlCatalog = new XmlSerializedCatalog(new StringReader(xmlSerializedCatalog1));
     final Catalog deserializedCatalog = xmlCatalog;
@@ -86,8 +82,7 @@ public class SchemaSerializationTest
     final Schema deserializedSchema = deserializedCatalog
       .getSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
-    assertEquals("Unexpected number of tables in the deserialized schema",
-                 6,
+    assertEquals("Unexpected number of tables in the deserialized schema", 6,
                  catalog.getTables(deserializedSchema).size());
 
     writer = new StringWriter();
@@ -95,8 +90,8 @@ public class SchemaSerializationTest
     writer.close();
     final String xmlSerializedCatalog2 = writer.toString();
     assertNotNull("Catalog was not serialized to XML", xmlSerializedCatalog2);
-    assertNotSame("Catalog was not serialized to XML", 0, xmlSerializedCatalog2
-      .trim().length());
+    assertNotSame("Catalog was not serialized to XML", 0,
+                  xmlSerializedCatalog2.trim().length());
 
     final DetailedDiff xmlDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
                                                            xmlSerializedCatalog2));

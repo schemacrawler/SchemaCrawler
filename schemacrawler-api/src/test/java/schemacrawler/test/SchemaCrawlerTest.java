@@ -390,14 +390,11 @@ public class SchemaCrawlerTest
       DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = optionsBuilder
-        .toOptions();
       final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
