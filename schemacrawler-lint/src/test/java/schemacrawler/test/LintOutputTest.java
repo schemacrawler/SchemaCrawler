@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
@@ -69,13 +69,16 @@ public class LintOutputTest
            "SELECT TOP 5 ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-        SchemaTextDetailType.brief + "," + Operation.count + "," + "lint",
-        queryCommand1 + "," + SchemaTextDetailType.brief + "," + "lint",
+                                             SchemaTextDetailType.brief + ","
+                                             + Operation.count + ","
+                                             + "lint", queryCommand1 + ","
+                                                       + SchemaTextDetailType.brief
+                                                       + "," + "lint",
     };
 
     final List<String> failures = new ArrayList<>();
-    for (final OutputFormat outputFormat: EnumSet.complementOf(EnumSet
-      .of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: EnumSet
+      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
     {
       for (final String command: commands)
       {
@@ -87,23 +90,20 @@ public class LintOutputTest
         final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                               testOutputFile);
 
-        final Config config = Config
-          .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-        final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-          .fromConfig(config);
-        optionsBuilder
-          .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-        optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+        schemaCrawlerOptions
+          .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
-        executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(getConnection());
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputFormat.getFormat()));
+        failures
+          .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                testOutputFile, outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -119,21 +119,19 @@ public class LintOutputTest
     clean(JSON_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (final TestWriter out = new TestWriter(TextOutputFormat.json.getFormat());)
+    try (
+      final TestWriter out = new TestWriter(TextOutputFormat.json.getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
                                                             out);
 
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
       final Executable executable = new SchemaCrawlerExecutable("lint");
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
 
@@ -148,21 +146,19 @@ public class LintOutputTest
     clean(TEXT_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (final TestWriter out = new TestWriter(TextOutputFormat.text.getFormat());)
+    try (
+      final TestWriter out = new TestWriter(TextOutputFormat.text.getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
                                                             out);
 
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder
-        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
       final Executable executable = new SchemaCrawlerExecutable("lint");
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
 
