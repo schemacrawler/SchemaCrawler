@@ -66,8 +66,8 @@ public final class SchemaCrawlerOptions
   private boolean grepInvertMatch;
   private boolean grepOnlyMatching;
   private boolean hideEmptyTables;
-  private int childTableFilterDepth;
 
+  private int childTableFilterDepth;
   private int parentTableFilterDepth;
 
   /**
