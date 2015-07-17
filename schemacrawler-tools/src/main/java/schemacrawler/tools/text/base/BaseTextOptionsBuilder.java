@@ -45,15 +45,15 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
   private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                        + "show_unqualified_names";
 
-  private static final String SC_SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                              + "sort_alphabetically.tables";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_columns";
+  private static final String SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
+                                                           + "sort_alphabetically.tables";
+  private static final String SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
+                                                                  + "sort_alphabetically.table_columns";
 
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                + "sort_alphabetically.routines";
-  private static final String SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                       + "sort_alphabetically.routine_columns";
+  private static final String SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
+                                                             + "sort_alphabetically.routines";
+  private static final String SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
+                                                                    + "sort_alphabetically.routine_columns";
 
   protected final O options;
 
@@ -111,15 +111,15 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
       .setShowUnqualifiedNames(config.getBooleanValue(SHOW_UNQUALIFIED_NAMES));
 
     options.setAlphabeticalSortForTables(config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLES, true));
+      .getBooleanValue(SORT_ALPHABETICALLY_TABLES, true));
     options.setAlphabeticalSortForTableColumns(config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS));
+      .getBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS));
 
     options.setAlphabeticalSortForRoutines(config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES));
+      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINES));
 
     options.setAlphabeticalSortForRoutineColumns(config
-      .getBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
+      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
 
     return this;
   }
@@ -167,15 +167,15 @@ public class BaseTextOptionsBuilder<O extends BaseTextOptions>
     config.setBooleanValue(SHOW_UNQUALIFIED_NAMES,
                            options.isShowUnqualifiedNames());
 
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLES,
+    config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
                            options.isAlphabeticalSortForTables());
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_COLUMNS,
+    config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
                            options.isAlphabeticalSortForTableColumns());
 
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINES,
+    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
                            options.isAlphabeticalSortForRoutines());
 
-    config.setBooleanValue(SC_SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
+    config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
                            options.isAlphabeticalSortForRoutineColumns());
 
     return config;

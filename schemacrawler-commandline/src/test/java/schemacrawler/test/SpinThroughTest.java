@@ -21,7 +21,7 @@ import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.Executable;
@@ -80,29 +80,27 @@ public class SpinThroughTest
           .values())
         {
           final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
+                                                     infoLevel, outputFormat);
           final Path testOutputFile = createTempFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
+                                                     infoLevel, outputFormat);
 
           final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                                 testOutputFile);
 
           final Config config = Config.load(hsqldbProperties.toString());
 
-          final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-            .fromConfig(config);
-          optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-          optionsBuilder.includeSequences(new IncludeAll())
-            .includeSynonyms(new IncludeAll());
-
           final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
           databaseSpecificOverrideOptionsBuilder.fromConfig(config);
 
+          final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+          schemaCrawlerOptions
+            .setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
+          schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+          schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
+
           final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
-          executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+          executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable.setOutputOptions(outputOptions);
           executable
             .execute(getConnection(),
@@ -110,8 +108,7 @@ public class SpinThroughTest
 
           failures
             .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
+                                  testOutputFile, outputFormat.getFormat()));
         }
       }
     }
@@ -141,11 +138,9 @@ public class SpinThroughTest
           .values())
         {
           final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
+                                                     infoLevel, outputFormat);
           final Path testOutputFile = createTempFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
+                                                     infoLevel, outputFormat);
 
           final Map<String, String> argsMap = new HashMap<>();
           argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -163,8 +158,7 @@ public class SpinThroughTest
 
           failures
             .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
+                                  testOutputFile, outputFormat.getFormat()));
         }
       }
     }
@@ -189,11 +183,8 @@ public class SpinThroughTest
                                final OutputFormat outputFormat)
   {
     final String referenceFile = String
-      .format("%d%d.%s_%s.%s",
-              schemaTextDetailType.ordinal(),
-              infoLevel.ordinal(),
-              schemaTextDetailType,
-              infoLevel,
+      .format("%d%d.%s_%s.%s", schemaTextDetailType.ordinal(),
+              infoLevel.ordinal(), schemaTextDetailType, infoLevel,
               outputFormat.getFormat());
     return referenceFile;
   }

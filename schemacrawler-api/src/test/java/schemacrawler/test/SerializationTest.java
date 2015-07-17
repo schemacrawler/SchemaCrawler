@@ -30,8 +30,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 
@@ -43,20 +42,17 @@ public class SerializationTest
   public void catalogSerialization()
     throws Exception
   {
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .fromConfig(config);
-    optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
-    final Catalog catalog = getCatalog(optionsBuilder.toOptions());
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
 
     final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6, catalog
-      .getTables(schema).size());
+    assertEquals("Unexpected number of tables in the schema", 6,
+                 catalog.getTables(schema).size());
 
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);
 
@@ -69,8 +65,8 @@ public class SerializationTest
     final Schema clonedSchema = clonedCatalog.getSchema("PUBLIC.BOOKS")
       .orElse(null);
     assertNotNull("Could not obtain schema", clonedSchema);
-    assertEquals("Unexpected number of tables in the schema", 6, clonedCatalog
-      .getTables(clonedSchema).size());
+    assertEquals("Unexpected number of tables in the schema", 6,
+                 clonedCatalog.getTables(clonedSchema).size());
   }
 
 }
