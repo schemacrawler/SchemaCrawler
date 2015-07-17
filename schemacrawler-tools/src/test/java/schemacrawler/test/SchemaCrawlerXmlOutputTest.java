@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -102,7 +102,7 @@ public class SchemaCrawlerXmlOutputTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevel.minimum());
+    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);

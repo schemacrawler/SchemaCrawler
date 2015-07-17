@@ -54,6 +54,7 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
@@ -99,7 +100,7 @@ public class SchemaCrawlerTest
         .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
@@ -139,7 +140,7 @@ public class SchemaCrawlerTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
@@ -168,7 +169,7 @@ public class SchemaCrawlerTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.standard());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
@@ -200,7 +201,7 @@ public class SchemaCrawlerTest
       .withRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
@@ -221,7 +222,7 @@ public class SchemaCrawlerTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.detailed());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertTrue("Could not find any tables",
@@ -254,7 +255,7 @@ public class SchemaCrawlerTest
       databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
         .withSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
 
-      final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+      final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSequenceInformation(true);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -314,7 +315,7 @@ public class SchemaCrawlerTest
                          + "WHERE                                           \n"
                          + "  TABLE_SCHEMA != 'BOOKS'                       ");
 
-      final SchemaInfoLevel minimum = SchemaInfoLevel.minimum();
+      final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSynonymInformation(true);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -352,7 +353,7 @@ public class SchemaCrawlerTest
         .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
       final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -391,7 +392,7 @@ public class SchemaCrawlerTest
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
@@ -504,7 +505,7 @@ public class SchemaCrawlerTest
       .withTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
@@ -536,7 +537,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
     schemaCrawlerOptionsBuilder.tableTypes("VIEW");
-    schemaCrawlerOptionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
+    schemaCrawlerOptionsBuilder.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
       .toOptions(), schemaCrawlerOptionsBuilder.toOptions());

@@ -140,7 +140,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <property name="schemaInfoLevel">
       <bean
         factory-method="maximum"
-        class="schemacrawler.schemacrawler.SchemaInfoLevel" />
+        class="schemacrawler.schemacrawler.SchemaInfoLevelBuilder" />
     </property>
   </bean>
   
