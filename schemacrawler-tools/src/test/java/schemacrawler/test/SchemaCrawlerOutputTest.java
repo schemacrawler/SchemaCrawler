@@ -41,7 +41,6 @@ import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
@@ -115,15 +114,14 @@ public class SchemaCrawlerOutputTest
         final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
           .fromConfig(config);
 
-        final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-          .fromConfig(config);
-        optionsBuilder
-          .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-        optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
-        optionsBuilder.includeSequences(new IncludeAll());
+        final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+        schemaCrawlerOptions
+          .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+        schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-        executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(getConnection(),
@@ -131,8 +129,7 @@ public class SchemaCrawlerOutputTest
 
         failures
           .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                testOutputFile,
-                                outputFormat.getFormat()));
+                                testOutputFile, outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -176,19 +173,18 @@ public class SchemaCrawlerOutputTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-      optionsBuilder.includeSequences(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
                                                                              + ","
                                                                              + Operation.dump);
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
@@ -198,8 +194,7 @@ public class SchemaCrawlerOutputTest
 
       failures
         .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
-                              testOutputFile,
-                              outputFormat.getFormat()));
+                              testOutputFile, outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -234,22 +229,20 @@ public class SchemaCrawlerOutputTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder.withSchemaInfoLevel(infoLevel.getSchemaInfoLevel());
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-      optionsBuilder.includeSequences(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
-      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                    testOutputFile,
+      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile, testOutputFile,
                                     outputOptions.getOutputFormatValue()));
     }
     if (failures.size() > 0)
@@ -297,8 +290,7 @@ public class SchemaCrawlerOutputTest
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+                                    testOutputFile, outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -338,19 +330,18 @@ public class SchemaCrawlerOutputTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-      optionsBuilder.includeSequences(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
                                                                              + ","
                                                                              + Operation.dump);
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
@@ -359,8 +350,7 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+                                    testOutputFile, outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -399,17 +389,18 @@ public class SchemaCrawlerOutputTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"))
-        .includeTables(new ExcludeAll()).includeRoutines(new IncludeAll())
-        .includeSequences(new ExcludeAll()).includeSynonyms(new ExcludeAll());
-      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+      schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setSequenceInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions.setSynonymInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
         .name());
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
@@ -418,8 +409,7 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+                                    testOutputFile, outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -459,19 +449,18 @@ public class SchemaCrawlerOutputTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .fromConfig(config);
-      optionsBuilder.withSchemaInfoLevel(SchemaInfoLevel.maximum());
-      optionsBuilder
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-      optionsBuilder.includeSequences(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevel.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
                                                                              + Operation.count
                                                                              + ","
                                                                              + Operation.dump);
-      executable.setSchemaCrawlerOptions(optionsBuilder.toOptions());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
@@ -480,8 +469,7 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
+                                    testOutputFile, outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {

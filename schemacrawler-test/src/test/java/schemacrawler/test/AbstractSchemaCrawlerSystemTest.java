@@ -33,7 +33,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
@@ -43,8 +42,9 @@ public abstract class AbstractSchemaCrawlerSystemTest
 
   protected final ApplicationContext appContext = new ClassPathXmlApplicationContext("datasources.xml");
   protected final String[] dataSources = {
-      "MicrosoftSQLServer", "Oracle", "IBM_DB2", "MySQL", "PostgreSQL",
-  // "Derby",
+                                           "MicrosoftSQLServer", "Oracle",
+                                           "IBM_DB2", "MySQL", "PostgreSQL",
+      // "Derby",
   };
 
   @Test
@@ -85,22 +85,23 @@ public abstract class AbstractSchemaCrawlerSystemTest
   protected SchemaCrawlerOptions createOptions(final String dataSourceName,
                                                final String schemaInclusion)
   {
-    final Config config = (Config) appContext.getBean(dataSourceName
-                                                      + ".properties");
-    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .fromConfig(config);
-    optionsBuilder.withSchemaInfoLevel(InfoLevel.maximum.getSchemaInfoLevel());
+    final Config config = (Config) appContext
+      .getBean(dataSourceName + ".properties");
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
     if (schemaInclusion != null)
     {
-      optionsBuilder
-        .includeSchemas(new RegularExpressionInclusionRule(schemaInclusion));
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(schemaInclusion));
     }
-    return optionsBuilder.toOptions();
+    return schemaCrawlerOptions;
   }
 
-  protected Catalog retrieveDatabase(final String dataSourceName,
-                                     final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws Exception
+  protected Catalog
+    retrieveDatabase(final String dataSourceName,
+                     final SchemaCrawlerOptions schemaCrawlerOptions)
+                       throws Exception
   {
     final Connection connection = connect(dataSourceName);
     try

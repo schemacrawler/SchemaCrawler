@@ -50,7 +50,7 @@ public enum InfoLevel
     }
   }
 
-  public final SchemaInfoLevel getSchemaInfoLevel()
+  public final SchemaInfoLevel buildSchemaInfoLevel()
   {
     final SchemaInfoLevel schemaInfoLevel;
     switch (this)
