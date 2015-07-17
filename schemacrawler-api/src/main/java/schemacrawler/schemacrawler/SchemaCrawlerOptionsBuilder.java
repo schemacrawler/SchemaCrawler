@@ -61,10 +61,6 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
-  private static final String SC_GREP_INVERT_MATCH = "schemacrawler.grep.invert-match";
-  private static final String SC_GREP_ONLY_MATCHING = "schemacrawler.grep.only-matching";
-  private static final String SC_HIDE_EMPTY_TABLES = "schemacrawler.hide.empty-tables";
-
   private final SchemaCrawlerOptions options;
 
   public SchemaCrawlerOptionsBuilder()
@@ -134,14 +130,6 @@ public class SchemaCrawlerOptionsBuilder
     options.setGrepDefinitionInclusionRule(configProperties
       .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
                               SC_GREP_DEFINITION_PATTERN_EXCLUDE));
-
-    options.setGrepInvertMatch(configProperties
-      .getBooleanValue(SC_GREP_INVERT_MATCH));
-    options.setGrepOnlyMatching(configProperties
-      .getBooleanValue(SC_GREP_ONLY_MATCHING));
-
-    options.setHideEmptyTables(configProperties
-      .getBooleanValue(SC_HIDE_EMPTY_TABLES));
 
     return this;
   }
