@@ -54,9 +54,10 @@ public class DatabaseSystemConnector
     }
 
     @Override
-    public void execute(Connection connection,
-                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                          throws Exception
+    public void
+      execute(Connection connection,
+              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                throws Exception
     {
       // No-op
     }
@@ -103,7 +104,8 @@ public class DatabaseSystemConnector
    * Gets the complete bundled database specific configuration set, including
    * the SQL for information schema views.
    */
-  public final DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder
+    getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
@@ -134,8 +136,9 @@ public class DatabaseSystemConnector
    * @param additionalConfig
    *        Configuration from the command-line, and from configuration files.
    */
-  public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
-    throws SchemaCrawlerException
+  public ConnectionOptions
+    newDatabaseConnectionOptions(final Config additionalConfig)
+      throws SchemaCrawlerException
   {
     if (additionalConfig == null || additionalConfig.isEmpty())
     {

@@ -20,19 +20,44 @@
 package schemacrawler.tools.sqlite;
 
 
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final DatabaseServerType SQLITE_SERVER_TYPE = new DatabaseServerType("sqlite",
+                                                                                      "SQLite");
+
+  private static final class SQLiteDatabaseSystemConnector
+    extends DatabaseSystemConnector
+  {
+    private SQLiteDatabaseSystemConnector(final String configResource,
+                                          final String informationSchemaViewsResourceFolder)
+    {
+      super(SQLITE_SERVER_TYPE, configResource,
+            informationSchemaViewsResourceFolder);
+    }
+
+    @Override
+    public DatabaseSpecificOverrideOptionsBuilder
+      getDatabaseSpecificOverrideOptionsBuilder()
+    {
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
+      return databaseSpecificOverrideOptionsBuilder;
+    }
+
+  }
+
   public SQLiteDatabaseConnector()
   {
-    super(new DatabaseServerType("sqlite", "SQLite"),
-          "/help/Connections.sqlite.txt",
-          "/schemacrawler-sqlite.config.properties",
-          "/sqlite.information_schema");
+    super(SQLITE_SERVER_TYPE, "/help/Connections.sqlite.txt",
+          new SQLiteDatabaseSystemConnector("/schemacrawler-sqlite.config.properties",
+                                            "/sqlite.information_schema"));
     try
     {
       Class.forName("org.sqlite.JDBC");
