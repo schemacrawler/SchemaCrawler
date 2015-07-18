@@ -20,19 +20,44 @@
 package schemacrawler.server.sybaseiq;
 
 
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SybaseIQDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final DatabaseServerType SYBASEIQ_SERVER_TYPE = new DatabaseServerType("sybaseiq",
+                                                                                        "SAP Sybase IQ");
+
+  private static final class SybaseIQDatabaseSystemConnector
+    extends DatabaseSystemConnector
+  {
+    private SybaseIQDatabaseSystemConnector(final String configResource,
+                                            final String informationSchemaViewsResourceFolder)
+    {
+      super(SYBASEIQ_SERVER_TYPE, configResource,
+            informationSchemaViewsResourceFolder);
+    }
+
+    @Override
+    public DatabaseSpecificOverrideOptionsBuilder
+      getDatabaseSpecificOverrideOptionsBuilder()
+    {
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+      databaseSpecificOverrideOptionsBuilder.doesNotSupportCatalogs();
+      return databaseSpecificOverrideOptionsBuilder;
+    }
+
+  }
+
   public SybaseIQDatabaseConnector()
   {
-    super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),
-          "/help/Connections.sybaseiq.txt",
-          "/schemacrawler-sybaseiq.config.properties",
-          "/sybaseiq.information_schema");
+    super(SYBASEIQ_SERVER_TYPE, "/help/Connections.sybaseiq.txt",
+          new SybaseIQDatabaseSystemConnector("/schemacrawler-sybaseiq.config.properties",
+                                              "/sybaseiq.information_schema"));
   }
 
 }
