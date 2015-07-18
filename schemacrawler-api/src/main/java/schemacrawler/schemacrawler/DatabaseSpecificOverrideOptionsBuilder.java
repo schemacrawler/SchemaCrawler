@@ -7,10 +7,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
-  private static final String SC_OVERRIDE_SUPPORTS_SCHEMAS = "schemacrawler.override.supports_schemas";
-  private static final String SC_OVERRIDE_SUPPORTS_CATALOGS = "schemacrawler.override.supports_catalogs";
-  private static final String SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING = "schemacrawler.override.identifier_quote_string";
-
   private Boolean supportsSchemas;
   private Boolean supportsCatalogs;
   private String identifierQuoteString;
@@ -31,42 +27,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder
     fromConfig(final Map<String, String> map)
   {
-    final Config config;
-    if (map == null)
-    {
-      config = new Config();
-    }
-    else
-    {
-      config = new Config(map);
-    }
-
-    if (config.hasValue(SC_OVERRIDE_SUPPORTS_SCHEMAS))
-    {
-      final boolean supportsSchemasValue = config
-        .getBooleanValue(SC_OVERRIDE_SUPPORTS_SCHEMAS);
-      if (supportsSchemasValue)
-      {
-        supportsSchemas();
-      }
-    }
-    if (config.hasValue(SC_OVERRIDE_SUPPORTS_CATALOGS))
-    {
-      final boolean supportsCatalogsValue = config
-        .getBooleanValue(SC_OVERRIDE_SUPPORTS_CATALOGS);
-      if (supportsCatalogsValue)
-      {
-        supportsCatalogs();
-      }
-    }
-    if (config.hasValue(SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING))
-    {
-      identifierQuoteString(config
-        .getStringValue(SC_OVERRIDE_SUPPORTS_IDENTIFIER_QUOTE_STRING, null));
-    }
-
     informationSchemaViewsBuilder.fromConfig(map);
-
     return this;
   }
 
@@ -91,6 +52,26 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
   {
     supportsCatalogs = Boolean.TRUE;
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
+  {
+    supportsSchemas = Boolean.FALSE;
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
+  {
+    supportsCatalogs = Boolean.FALSE;
     return this;
   }
 
