@@ -24,12 +24,14 @@
 			<artifactId>schemacrawler</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+    <!--
 		<dependency>
 			<groupId>com.sybase.jdbcx</groupId>
 			<artifactId>jconn4</artifactId>
 			<version>7.07</version>
 			<scope>provided</scope>
 		</dependency>
+    -->
 	</dependencies>
   <build>
     <plugins>
