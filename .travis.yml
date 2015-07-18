@@ -4,4 +4,7 @@ jdk:
 os:
   - linux
   - osx
-  
+notifications:
+    on_success: [change] # default: change [always|never|change] 
+    on_failure: [change] # default: always [always|never|change] 
+    
