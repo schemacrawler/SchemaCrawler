@@ -24,12 +24,14 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!--
     <dependency>
       <groupId>db2</groupId>
       <artifactId>db2-jdbc</artifactId>
       <version>4.17.28</version>
       <scope>provided</scope>
     </dependency>
+    -->
   </dependencies>
   <build>
     <plugins>
