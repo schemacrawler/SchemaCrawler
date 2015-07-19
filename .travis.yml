@@ -2,7 +2,7 @@ language: java
 jdk:
   - oraclejdk8
 os:
-  - osx
+  - linux
 notifications:
     on_success: [change] # default: change [always|never|change] 
     on_failure: [change] # default: always [always|never|change] 
