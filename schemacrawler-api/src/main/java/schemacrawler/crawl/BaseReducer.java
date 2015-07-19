@@ -23,7 +23,6 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -46,7 +45,7 @@ abstract class BaseReducer<N extends NamedObject>
   {
     if (allNamedObjects != null)
     {
-      final Set<? extends N> keepList = allNamedObjects.stream().filter(filter)
+      final Collection<N> keepList = allNamedObjects.stream().filter(filter)
         .collect(Collectors.toSet());
       allNamedObjects.retainAll(keepList);
     }
