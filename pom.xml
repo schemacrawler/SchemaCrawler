@@ -136,9 +136,12 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    
     <skip.signing.artifacts>true</skip.signing.artifacts>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    
     <springframework.version>4.1.2.RELEASE</springframework.version>
-    <xstream.version>1.4.7</xstream.version>
+    <xstream.version>1.4.8</xstream.version>
   </properties>
   <build>
     <plugins>
