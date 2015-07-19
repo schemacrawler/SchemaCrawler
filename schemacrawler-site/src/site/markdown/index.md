@@ -39,7 +39,7 @@ SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.
 Examples are provided for all of these with the
-[download](http://sourceforge.net/projects/schemacrawler/files/).
+[download](http://www.schemacrawler.com/files/).
 
 SchemaCrawler is integrated with, and allows you to write templates to
 generate SQL scripts or any other text output, using templating engines, such
