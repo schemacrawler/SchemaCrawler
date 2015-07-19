@@ -57,7 +57,9 @@
     <module>schemacrawler</module>
 
     <module>schemacrawler-lint</module>
-
+    
+    <module>schemacrawler-testdb</module> 
+        
     <module>schemacrawler-offline</module>
     <module>schemacrawler-db2</module>
     <module>schemacrawler-derby</module>
@@ -83,8 +85,7 @@
           <name>complete-deployment-build</name>
         </property>
       </activation>      
-      <modules>
-        <module>schemacrawler-testdb</module>      
+      <modules>     
         <module>schemacrawler-diff</module>
         
         <module>schemacrawler-docs</module>
