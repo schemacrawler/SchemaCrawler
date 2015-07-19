@@ -1,5 +1,5 @@
 SchemaCrawler
-http://sourceforge.net/projects/schemacrawler
+http://www.schemacrawler.com
 Copyright (c) 2000-2015, Sualeh Fatehi.
 
 This distribution of SchemaCrawler will work for any database that has a JDBC 
