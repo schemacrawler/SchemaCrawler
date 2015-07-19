@@ -332,10 +332,7 @@
         <p>
           <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
           SchemaCrawler is free, licensed under the
-          <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL),</a>
-          but
-          <a href="http://sourceforge.net/donate/index.php?group_id=148383"> donations </a>
-          are welcome.
+          <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL).</a>
         </p>
         <p>
           <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
