@@ -1,7 +1,7 @@
 # SchemaCrawler
 
 SchemaCrawler is a free database schema discovery and comprehension tool.
-SchemaCrawler has a good mix useful features for data governance. You can
+SchemaCrawler has a good mix of useful features for data governance. You can
 [search for database schema objects](schemacrawler_grep.html) using regular
 expressions, and output the schema and data in a readable text format. The
 output serves for database documentation, and is designed to be 
@@ -15,9 +15,6 @@ SchemaCrawler supports almost any database that has a JDBC driver, but for
 convenience is [bundled with drivers](database-support.html) for some commonly used
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8 or better.
-
-Consider supporting SchemaCrawler by making a 
-[donation](http://sourceforge.net/donate/index.php?group_id=148383).
 
 ## SchemaCrawler Command-line
 
