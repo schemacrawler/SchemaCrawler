@@ -85,25 +85,36 @@ public final class TestUtility
 {
 
   private final static Pattern[] neuters = {
-      Pattern.compile("url +jdbc:.*"),
-      Pattern.compile("database product version.*"),
-      Pattern.compile("driver version.*"),
-      Pattern.compile("\\s+<schemaCrawlerVersion>.*"),
-      Pattern.compile("\\s+<schemaCrawlerAbout>.*"),
-      Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
-      Pattern.compile(".*201[45]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-      Pattern
-        .compile(".*201[45]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-      // SVG {
-      Pattern.compile("<svg.*"),
-      Pattern.compile(" viewBox=\"0.00.*"),
-      Pattern.compile("<g id=.*"),
-      Pattern.compile("<text text-anchor.*"),
-      Pattern.compile("<path fill=.*"),
-      Pattern.compile("<ellipse fill=.*"),
-      Pattern.compile("<polyline fill=.*"),
-      Pattern.compile("<polygon fill=.*"),
-  // }
+                                             Pattern.compile("url +jdbc:.*"),
+                                             Pattern
+                                               .compile("database product version.*"),
+                                             Pattern
+                                               .compile("driver version.*"),
+                                             Pattern
+                                               .compile("\\s+<schemaCrawlerVersion>.*"),
+                                             Pattern
+                                               .compile("\\s+<schemaCrawlerAbout>.*"),
+                                             Pattern
+                                               .compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
+                                             Pattern
+                                               .compile(".*201[45]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+                                             Pattern
+                                               .compile(".*201[45]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                             // SVG {
+                                             Pattern.compile("<svg.*"),
+                                             Pattern
+                                               .compile(" viewBox=\"0.00.*"),
+                                             Pattern.compile("<g id=.*"),
+                                             Pattern
+                                               .compile("<text text-anchor.*"),
+                                             Pattern.compile("<path fill=.*"),
+                                             Pattern
+                                               .compile("<ellipse fill=.*"),
+                                             Pattern
+                                               .compile("<polyline fill=.*"),
+                                             Pattern
+                                               .compile("<polygon fill=.*"),
+                                             Pattern.compile(".*&#xd;"),
   };
 
   public static void clean(final String dirname)
@@ -116,7 +127,7 @@ public final class TestUtility
   public static List<String> compareCompressedOutput(final String referenceFile,
                                                      final Path testOutputTempFile,
                                                      final String outputFormat)
-    throws Exception
+                                                       throws Exception
   {
     return compareOutput(referenceFile, testOutputTempFile, outputFormat, true);
   }
@@ -124,16 +135,16 @@ public final class TestUtility
   public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile,
                                            final String outputFormat)
-    throws Exception
+                                             throws Exception
   {
-    return compareOutput(referenceFile, testOutputTempFile, outputFormat, false);
+    return compareOutput(referenceFile, testOutputTempFile, outputFormat,
+                         false);
   }
 
-  public static List<String> compareOutput(final String referenceFile,
-                                           final Path testOutputTempFile,
-                                           final String outputFormat,
-                                           final boolean isCompressed)
-    throws Exception
+  public static List<String>
+    compareOutput(final String referenceFile, final Path testOutputTempFile,
+                  final String outputFormat, final boolean isCompressed)
+                    throws Exception
   {
 
     requireNonNull(referenceFile, "Reference file is not defined");
@@ -144,8 +155,8 @@ public final class TestUtility
         || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
         || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
     {
-      return Collections.singletonList("Output file not created - "
-                                       + testOutputTempFile);
+      return Collections
+        .singletonList("Output file not created - " + testOutputTempFile);
     }
 
     final List<String> failures = new ArrayList<>();
@@ -184,9 +195,7 @@ public final class TestUtility
         .resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
-      move(testOutputTempFile,
-           testOutputTargetFilePath,
-           ATOMIC_MOVE,
+      move(testOutputTempFile, testOutputTargetFilePath, ATOMIC_MOVE,
            REPLACE_EXISTING);
 
       if (!contentEquals)
@@ -208,8 +217,9 @@ public final class TestUtility
   public static Path copyResourceToTempFile(final String resource)
     throws IOException
   {
-    try (final InputStream resourceStream = TestUtility.class
-      .getResourceAsStream(resource);)
+    try (
+      final InputStream resourceStream = TestUtility.class
+        .getResourceAsStream(resource);)
     {
       requireNonNull(resourceStream, "Resource not found, " + resource);
       return writeToTempFile(resourceStream);
@@ -218,12 +228,12 @@ public final class TestUtility
 
   public static Path createTempFile(final String stem,
                                     final String outputFormatValue)
-    throws IOException
+                                      throws IOException
   {
     final Path testOutputTempFilePath = Files
       .createTempFile(String.format("schemacrawler.%s.", stem),
-                      String.format(".%s", outputFormatValue)).normalize()
-      .toAbsolutePath();
+                      String.format(".%s", outputFormatValue))
+      .normalize().toAbsolutePath();
     delete(testOutputTempFilePath);
     testOutputTempFilePath.toFile().deleteOnExit();
     return testOutputTempFilePath;
@@ -231,7 +241,7 @@ public final class TestUtility
 
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
-    throws IOException
+                                           throws IOException
   {
     return readerForResource(resource, encoding, false);
   }
@@ -252,9 +262,8 @@ public final class TestUtility
   {
     final StackTraceElement ste = currentMethodStackTraceElement();
     final Class<?> callingClass = Class.forName(ste.getClassName());
-    final Path codePath = Paths
-      .get(callingClass.getProtectionDomain().getCodeSource().getLocation()
-        .toURI()).normalize().toAbsolutePath();
+    final Path codePath = Paths.get(callingClass.getProtectionDomain()
+      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
     final boolean isInTarget = codePath.toString().contains("target");
     if (!isInTarget)
     {
@@ -267,7 +276,7 @@ public final class TestUtility
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final Pattern... ignoreLinePatterns)
-    throws Exception
+                                         throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
     {
@@ -275,8 +284,9 @@ public final class TestUtility
     }
 
     int i = 0;
-    try (final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
-        final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
+    try (
+      final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
+      final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
     {
       String expectedline;
       while ((expectedline = expectedBufferedReader.readLine()) != null)
@@ -299,7 +309,7 @@ public final class TestUtility
 
         if (!expectedline.equals(actualLine))
         {
-          System.out.println("Line #" + i);
+          System.out.println("Line #" + i + " (expected followed by actual)");
           System.out.println(expectedline);
           System.out.println(actualLine);
           return false;
@@ -351,7 +361,7 @@ public final class TestUtility
 
   private static void fastChannelCopy(final ReadableByteChannel src,
                                       final WritableByteChannel dest)
-    throws IOException
+                                        throws IOException
   {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
     while (src.read(buffer) != -1)
@@ -381,7 +391,7 @@ public final class TestUtility
 
   private static Reader readerForFile(final Path testOutputTempFile,
                                       final boolean isCompressed)
-    throws IOException
+                                        throws IOException
   {
 
     final BufferedReader bufferedReader;
@@ -403,7 +413,7 @@ public final class TestUtility
   private static Reader readerForResource(final String resource,
                                           final Charset encoding,
                                           final boolean isCompressed)
-    throws IOException
+                                            throws IOException
   {
     final InputStream inputStream = TestUtility.class
       .getResourceAsStream("/" + resource);
@@ -438,11 +448,13 @@ public final class TestUtility
 
   private static boolean validateJSON(final Path testOutputFile,
                                       final List<String> failures)
-    throws FileNotFoundException, SAXException, IOException
+                                        throws FileNotFoundException,
+                                        SAXException, IOException
   {
     final JsonElement jsonElement;
-    try (final Reader reader = readerForFile(testOutputFile);
-        final JsonReader jsonReader = new JsonReader(reader);)
+    try (
+      final Reader reader = readerForFile(testOutputFile);
+      final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
       if (jsonReader.peek() != JsonToken.END_DOCUMENT)
@@ -480,7 +492,7 @@ public final class TestUtility
 
   private static void validateXML(final Path testOutputFile,
                                   final List<String> failures)
-    throws Exception
+                                    throws Exception
   {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);
@@ -519,10 +531,10 @@ public final class TestUtility
     final Path tempFile = createTempFile("resource", "data").normalize()
       .toAbsolutePath();
 
-    try (final OutputStream tempFileStream = newOutputStream(tempFile,
-                                                             WRITE,
-                                                             TRUNCATE_EXISTING,
-                                                             CREATE);)
+    try (
+      final OutputStream tempFileStream = newOutputStream(tempFile, WRITE,
+                                                          TRUNCATE_EXISTING,
+                                                          CREATE);)
     {
       fastChannelCopy(Channels.newChannel(resourceStream),
                       Channels.newChannel(tempFileStream));
