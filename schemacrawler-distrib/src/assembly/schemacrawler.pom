@@ -9,7 +9,7 @@
   <version>14.01.01</version>
   <name>SchemaCrawler</name>
   <description>SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects.  SchemaCrawler is also a database schema discovery and comprehension, and schema documentation tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. The output is designed to be diff-ed against other database schemas.</description>
-  <url>http://schemacrawler.sourceforge.net</url>
+  <url>http://www.schemacrawler.com</url>
   <inceptionYear>2003</inceptionYear>
   <licenses>
     <license>
@@ -18,7 +18,7 @@
     </license>
   </licenses>
   <scm>
-    <url>http://sourceforge.net/p/schemacrawler/code_git/ci/master/tree/</url>
+    <url>https://github.com/sualeh/SchemaCrawler.git</url>
   </scm>
   <developers>
     <developer>

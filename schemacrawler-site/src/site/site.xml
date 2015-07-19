@@ -11,7 +11,7 @@
     <reflowSkin>
       <brand>
         <name>SchemaCrawler</name>
-        <href>http://schemacrawler.sourceforge.net/</href>
+        <href>http://www.schemacrawler.com/</href>
       </brand>
       <slogan>Free database schema discovery and comprehension tool</slogan>
       <highlightJs>true</highlightJs>
@@ -22,22 +22,14 @@
     <name>SchemaCrawler</name>
     <!-- <src>images/schemacrawler.png</src> <href>http://www.schemacrawler.com</href> -->
   </bannerLeft>
-  <bannerRight>
-    <name>SourceForge</name>
-    <src>
-      <![CDATA[http://sourceforge.net/sflogo.php?group_id=148383&type=5]]>
-    </src>
-  </bannerRight>
   <poweredBy>
     <logo name="Maven" href="http://maven.apache.org/"
       img="http://maven.apache.org/images/logos/maven-button-1.png" />
-    <logo name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/"
-      img="http://images.sourceforge.net/images/project-support.jpg" />
   </poweredBy>
   <body>
     <head>
       <link rel="meta" title="DOAP" href="doap_schemacrawler-all.rdf" type="application/rdf+xml" />
-      <link rel="shortcut icon" href="http://schemacrawler.sourceforge.net/favicon.ico" />
+      <link rel="shortcut icon" href="http://www.schemacrawler.com/favicon.ico" />
       <script type="text/javascript"> var _gaq = _gaq || []; _gaq.push(['_setAccount',
         'UA-22913512-1']); _gaq.push(['_trackPageview']); (function() { var ga =
         document.createElement('script'); ga.type = 'text/javascript'; ga.async
@@ -65,7 +57,7 @@
       <item name="Database System Support" href="database-support.html" />
       <item name="Download" href="http://www.schemacrawler.com/files/" />
       <item name="Change History" href="changes-report.html" />
-      <item name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/" />
+      <item name="Consulting" href="mailto:sualeh@hotmail.com?Subject=Consulting%20for%20SchemaCrawler" />
     </menu>
     <menu name="Special Features">
       <item name="Text Output" href="output.html" />
@@ -85,8 +77,8 @@
       <item name="Get Help"
         href="https://sourceforge.net/p/schemacrawler/discussion/495990/" />
       <item name="Javadocs" href="apidocs/index.html" />
-      <item name="Git Source Code" href="https://sourceforge.net/p/schemacrawler/code_git/" />
-      <item name="Project Page on SourceForge" href="http://www.schemacrawler.com/" />
+      <item name="Source Code" href="https://github.com/sualeh/SchemaCrawler" />
+      <item name="Project Page on GitHub" href="https://github.com/sualeh/SchemaCrawler" />
     </menu>
   </body>
 </project>

@@ -3,7 +3,7 @@
 ## Introduction
 
 Please review the [SchemaCrawler 
-website](http://schemacrawler.sourceforge.net/) for FAQs, how-tos, and 
+website](http://www.schemacrawler.com/) for FAQs, how-tos, and 
 so on. This download contains the main SchemaCrawler distribution, as 
 well as examples. You can extend the SchemaCrawler distribution by 
 downloading additional libraries that SchemaCrawler integrates with, 

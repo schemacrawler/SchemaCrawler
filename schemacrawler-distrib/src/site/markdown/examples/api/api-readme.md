@@ -12,5 +12,5 @@ alternative to using JDBC metadata.
 
 ## How to Experiment
 1. Try uncommenting the code block in `ApiExample.java` that modifies the default options. 
-2. Read the [SchemaCrawler javadoc](http://schemacrawler.sourceforge.net/apidocs/index.html), and 
+2. Read the [SchemaCrawler javadoc](http://www.schemacrawler.com/apidocs/index.html), and 
    edit `ApiExample.java` to print more details. 
