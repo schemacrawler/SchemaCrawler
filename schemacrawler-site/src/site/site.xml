@@ -20,7 +20,7 @@
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
-    <!-- <src>images/schemacrawler.png</src> <href>http://sourceforge.net/projects/schemacrawler</href> -->
+    <!-- <src>images/schemacrawler.png</src> <href>http://www.schemacrawler.com</href> -->
   </bannerLeft>
   <bannerRight>
     <name>SourceForge</name>
@@ -56,14 +56,14 @@
     </head>
     <links>
       <item name="Consulting" href="mailto:sualeh@hotmail.com?Subject=Consulting%20for%20SchemaCrawler" />
-      <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
+      <item name="Download" href="http://www.schemacrawler.com/files/" />
     </links>
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
       <item name="Who Uses" href="who-uses.html" />
       <item name="Database System Support" href="database-support.html" />
-      <item name="Download" href="http://sourceforge.net/projects/schemacrawler/files/" />
+      <item name="Download" href="http://www.schemacrawler.com/files/" />
       <item name="Change History" href="changes-report.html" />
       <item name="Support SchemaCrawler" href="http://sourceforge.net/p/schemacrawler/donate/" />
     </menu>
@@ -86,7 +86,7 @@
         href="https://sourceforge.net/p/schemacrawler/discussion/495990/" />
       <item name="Javadocs" href="apidocs/index.html" />
       <item name="Git Source Code" href="https://sourceforge.net/p/schemacrawler/code_git/" />
-      <item name="Project Page on SourceForge" href="http://sourceforge.net/projects/schemacrawler/" />
+      <item name="Project Page on SourceForge" href="http://www.schemacrawler.com/" />
     </menu>
   </body>
 </project>
