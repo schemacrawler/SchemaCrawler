@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -62,11 +61,18 @@ public class TablesReducer
     removeForeignKeys(allTables);
   }
 
-  private Collection<Table> doReduce(final Collection<? extends Table> allTables)
+  private Collection<Table>
+    doReduce(final Collection<? extends Table> allTables)
   {
     // Filter tables, keeping the ones we need
-    final Set<Table> reducedTables = allTables.stream().filter(tableFilter)
-      .collect(Collectors.toSet());
+    final Set<Table> reducedTables = new HashSet<>();
+    for (final Table table: allTables)
+    {
+      if (tableFilter.test(table))
+      {
+        reducedTables.add(table);
+      }
+    }
 
     // Add in referenced tables
     final int childTableFilterDepth = options.getChildTableFilterDepth();
@@ -95,9 +101,9 @@ public class TablesReducer
     return keepTables;
   }
 
-  private Collection<Table> includeRelatedTables(final TableRelationshipType tableRelationshipType,
-                                                 final int depth,
-                                                 final Set<Table> greppedTables)
+  private Collection<Table>
+    includeRelatedTables(final TableRelationshipType tableRelationshipType,
+                         final int depth, final Set<Table> greppedTables)
   {
     final Set<Table> includedTables = new HashSet<>();
     includedTables.addAll(greppedTables);
