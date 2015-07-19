@@ -10,6 +10,13 @@
         SchemaCrawler is now supported on Java SE 8 or better only.
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        The SchemaCrawler project has been moved to GitHub.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Database specific overrides are not not in SchemaCrawlerOptions, and can be passed in along with 
+        the database connection if needed.
+      ]]></action>               
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New -title command-line argument to show a custom title on output and diagrams.
       ]]></action>
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
@@ -21,7 +28,16 @@
       ]]></action>  
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Rename indices to indexes consistently in method names.
-      ]]></action>                                                           
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        All references to parent objects are soft references, to allow for more efficient memory management and serialization.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        All references to parent objects are soft references, to allow for more efficient memory management and serialization.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Shell scripts sc.sh and sc.cmd renamed to schemacrawler.sh and schemacrawler.cmd, since they clash with system utilities.                     
+      ]]></action>                                                  
      </release>   
      <release version="12.06.03" date="2015-03-27" description="Fixing links on website.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
