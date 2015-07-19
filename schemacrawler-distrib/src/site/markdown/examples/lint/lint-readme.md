@@ -19,4 +19,4 @@ below to run SchemaCrawler Lint.
   -cp .;..\_schemacrawler\lib\*.jar 
   schemacrawler.Main -server=hsqldb -database=schemacrawler
   -user=sa -password= -infolevel=standard -command=lint`  
-3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](http://schemacrawler.sourceforge.net/lint.html). 
+3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](http://www.schemacrawler.com/lint.html). 
