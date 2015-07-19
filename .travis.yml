@@ -8,6 +8,6 @@ notifications:
     on_success: [change] # default: change [always|never|change] 
     on_failure: [change] # default: always [always|never|change] 
 before_install:
-	- sudo apt-get update -qq
-	- sudo apt-get install -qq graphviz
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq graphviz
   - mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
