@@ -36,10 +36,10 @@ public class TitleTest
     throws Exception
   {
     final OutputFormat[] outputFormats = new OutputFormat[] {
-        TextOutputFormat.text,
-        TextOutputFormat.html,
-        TextOutputFormat.json,
-        GraphOutputFormat.dot
+                                                              TextOutputFormat.text,
+                                                              TextOutputFormat.html,
+                                                              TextOutputFormat.json,
+                                                              GraphOutputFormat.scdot
     };
 
     final Map<String, String> args = new HashMap<String, String>();
@@ -49,15 +49,12 @@ public class TitleTest
 
     final List<String> failures = new ArrayList<>();
     for (final String command: new String[] {
-        "schema", "list"
+                                              "schema", "list"
     })
     {
       for (final OutputFormat outputFormat: outputFormats)
       {
-        run(args,
-            null,
-            command,
-            outputFormat,
+        run(args, null, command, outputFormat,
             "commandLineWithTitle_" + command + "." + outputFormat.getFormat(),
             failures);
       }
@@ -82,12 +79,10 @@ public class TitleTest
   }
 
   private void run(final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final String command,
-                   final OutputFormat outputFormat,
-                   final String referenceFile,
+                   final Map<String, String> config, final String command,
+                   final OutputFormat outputFormat, final String referenceFile,
                    final List<String> allFailures)
-    throws Exception
+                     throws Exception
   {
 
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
@@ -114,8 +109,8 @@ public class TitleTest
 
       Main.main(flattenCommandlineArgs(argsMap));
 
-      final List<String> failures = out.collectFailures(TITLE_OUTPUT
-                                                        + referenceFile);
+      final List<String> failures = out
+        .collectFailures(TITLE_OUTPUT + referenceFile);
       allFailures.addAll(failures);
     }
   }

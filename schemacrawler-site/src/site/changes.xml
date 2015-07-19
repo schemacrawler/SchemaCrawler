@@ -15,7 +15,10 @@
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Database specific overrides are not not in SchemaCrawlerOptions, and can be passed in along with 
         the database connection if needed.
-      ]]></action>               
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        SchemaCrawler has a new project to demonstrate how to programatically diff schemas.
+      ]]></action>                   
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New -title command-line argument to show a custom title on output and diagrams.
       ]]></action>
