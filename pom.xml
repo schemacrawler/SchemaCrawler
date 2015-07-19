@@ -49,9 +49,7 @@
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
     </repository>
   </distributionManagement>
-  <modules>
-    <module>schemacrawler-testdb</module>
-    
+  <modules>    
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>
@@ -72,17 +70,29 @@
     <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-h2</module>
     
-    <module>schemacrawler-diff</module>
-
     <module>schemacrawler-archetype-maven-project</module>
     <module>schemacrawler-archetype-plugin-command</module>
     <module>schemacrawler-archetype-plugin-lint</module>
     <module>schemacrawler-archetype-plugin-dbconnector</module>
-
-    <module>schemacrawler-docs</module>
-    <module>schemacrawler-site</module>
-    <module>schemacrawler-distrib</module>
   </modules>
+  <profiles>
+    <profile>
+      <id>complete-deployment-build</id>
+      <activation>
+        <property>
+          <name>complete-deployment-build</name>
+        </property>
+      </activation>      
+      <modules>
+        <module>schemacrawler-testdb</module>      
+        <module>schemacrawler-diff</module>
+        
+        <module>schemacrawler-docs</module>
+        <module>schemacrawler-site</module>
+        <module>schemacrawler-distrib</module>        
+      </modules>
+    </profile>
+  </profiles>  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
