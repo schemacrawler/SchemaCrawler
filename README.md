@@ -12,7 +12,7 @@ SchemaCrawler comes with a set of command-line tools that allow database
 metadata to be output as [plain text,](http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.text) 
 [comma-separated text (CSV),](http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.csv) 
 [HTML5,](http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.html)
-[HTML5 with embedded diagrams,](http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.htmlx) or 
+<a href="http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.htmlx">HTML5 with embedded diagrams,</a> or 
 [JavaScript object notation (JSON).](http://sualeh.github.io/SchemaCrawler/snapshot-examples/snapshot.json)
 The HTML5 output is a combination of valid XML (that
 can be manipulated by XML tools or XSLT), and HTML that can be viewed in a
