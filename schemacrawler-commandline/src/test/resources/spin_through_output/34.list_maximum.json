@@ -968,7 +968,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10194"
+          "name": "SYS_IDX_10195"
         },
         {
           "columns": [
@@ -1602,7 +1602,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-04-25T12:31:08.646",
+    "crawlTimestamp": "2015-07-19 23:46:08",
     "title": ""
   },
   "routines": [

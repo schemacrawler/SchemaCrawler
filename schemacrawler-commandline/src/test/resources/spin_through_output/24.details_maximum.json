@@ -1795,7 +1795,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10194",
+          "name": "SYS_IDX_10195",
           "definition": ""
         },
         {
@@ -2581,7 +2581,7 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.3.2",
+    "databaseProductVersion": "2.3.3",
     "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
@@ -2627,7 +2627,6 @@
           "hsqldb.default_table_type",
           "hsqldb.defrag_limit",
           "hsqldb.digest",
-          "hsqldb.files_check",
           "hsqldb.files_space",
           "hsqldb.full_log_replay",
           "hsqldb.inc_backup",
@@ -2637,6 +2636,7 @@
           "hsqldb.lock_file",
           "hsqldb.log_data",
           "hsqldb.log_size",
+          "hsqldb.min_reuse",
           "hsqldb.nio_data_file",
           "hsqldb.nio_max_size",
           "hsqldb.result_max_memory_rows",
@@ -3557,7 +3557,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-04-25T12:31:08.374",
+    "crawlTimestamp": "2015-07-19 23:46:08",
     "title": ""
   },
   "routines": [
@@ -3922,7 +3922,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.3.2",
+    "driverVersion": "2.3.3",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
