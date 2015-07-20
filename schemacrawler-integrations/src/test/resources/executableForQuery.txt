@@ -65,6 +65,7 @@ PUBLIC	INFORMATION_SCHEMA	SYSTEM_COMMENTS	SYSTEM TABLE	comments on tables, views
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_CONNECTION_PROPERTIES	SYSTEM TABLE	properties defined for the current connection	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_CROSSREFERENCE	SYSTEM TABLE	a description of how the accessible tables defined within this database import visible columns to enforce referential integrity	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_INDEXINFO	SYSTEM TABLE	information about the indicies of each accessible table defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
+PUBLIC	INFORMATION_SCHEMA	SYSTEM_INDEXSTATS	SYSTEM TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PRIMARYKEYS	SYSTEM TABLE	the visible columns of the primary key of each accessible table defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROCEDURECOLUMNS	SYSTEM TABLE	a description of the return type, parameters and result columns of each accessible callable procedure, SQL function, trigger body and UDT method defined within this database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	SYSTEM_PROCEDURES	SYSTEM TABLE	the procedures, SQL functions, trigger body routines and UDT methods defined within the database	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL

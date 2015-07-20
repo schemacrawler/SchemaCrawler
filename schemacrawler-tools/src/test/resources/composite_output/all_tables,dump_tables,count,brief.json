@@ -1040,6 +1040,21 @@
       [
         "PUBLIC",
         "INFORMATION_SCHEMA",
+        "SYSTEM_INDEXSTATS",
+        "SYSTEM TABLE",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "MEMORY",
+        true,
+        null
+      ],
+      [
+        "PUBLIC",
+        "INFORMATION_SCHEMA",
         "SYSTEM_PRIMARYKEYS",
         "SYSTEM TABLE",
         "the visible columns of the primary key of each accessible table defined within this database",
