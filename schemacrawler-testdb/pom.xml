@@ -19,7 +19,7 @@
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.3.2</version>
+      <version>2.3.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -31,7 +31,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.35</version>
+      <version>5.1.36</version>
       <scope>provided</scope>
     </dependency>
     <!--
