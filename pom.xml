@@ -135,7 +135,6 @@
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
       <version>2.3.3</version>
-      <classifier>jdk6debug</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
