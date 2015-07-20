@@ -34,8 +34,8 @@ public final class ApiExample
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
     // Get the schema definition
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connection, null, options);
+    final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection,
+                                                            options);
 
     for (final Schema schema: catalog.getSchemas())
     {
