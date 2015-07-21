@@ -21,7 +21,7 @@ public class AdditionalExecutable
 
   private static final Logger LOGGER = Logger.getLogger(AdditionalExecutable.class.getName());
 	  
-  private static final String COMMAND = "additional";
+  static final String COMMAND = "additional";
 
   protected AdditionalExecutable()
   {
