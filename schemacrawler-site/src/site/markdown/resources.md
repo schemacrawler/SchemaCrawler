@@ -9,7 +9,7 @@ To read more about SchemaCrawler, you can read:
  release of the SchemaCrawler API, but the concepts are the same.)
 - The SchemaCrawler API [javadocs](apidocs/index.html) .
 - Download the [SchemaCrawler
- examples](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/)
+ examples](http://github.com/sualeh/SchemaCrawler/releases/)
  for an overview of all SchemaCrawler features and capabilities.
 
 # SchemaCrawler Slides

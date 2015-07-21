@@ -247,7 +247,7 @@
         </p>
         <p>
           <i>For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          <a href="http://github.com/sualeh/SchemaCrawler/releases/">SchemaCrawler examples</a>
           download, in the
             <code>examples\javascript</code>, <code>examples\groovy</code>, 
             <code>examples\ruby</code> and <code>examples\python</code>
@@ -272,7 +272,7 @@
         <p>
           <i>
             For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          <a href="http://github.com/sualeh/SchemaCrawler/releases/">SchemaCrawler examples</a>
           download, in the
             <code>examples\api</code>
             directory.
@@ -288,7 +288,7 @@
           designed to be used programmatically with the
           <a href="http://www.springframework.org/">Spring Framework</a>
           . For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          <a href="http://github.com/sualeh/SchemaCrawler/releases/">SchemaCrawler examples</a>
           download, in the
           <code>examples\spring</code>
           directory.
@@ -297,7 +297,7 @@
           SchemaCrawler comes pre-built with integration with
           <a href="http://velocity.apache.org/">Apache Velocity.</a>
           This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the
-          <a href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/">SchemaCrawler examples</a>
+          <a href="http://github.com/sualeh/SchemaCrawler/releases/">SchemaCrawler examples</a>
           download, in the
           <code>examples\velocity</code>
           directory.

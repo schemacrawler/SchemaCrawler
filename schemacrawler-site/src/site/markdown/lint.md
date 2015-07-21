@@ -19,7 +19,7 @@ design issues. You can extend this by creating your own jar that contains lint
 checks.
 
 For more details, see lint example in the 
-[SchemaCrawler examples](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/) 
+[SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) 
 download.
 
 ## SchemaCrawler Lint Reports
