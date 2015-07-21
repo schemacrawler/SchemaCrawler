@@ -321,7 +321,7 @@
       var self = this;
 
       // Enable anchor clicks in the injected caption html.
-      // Thanks Nate Wright for the fix. @https://github.com/NateWr
+      // Thanks Nate Wright for the fix. @http://github.com/NateWr
       if (typeof this.album[this.currentImageIndex].title !== 'undefined' && this.album[this.currentImageIndex].title !== "") {
         this.$lightbox.find('.lb-caption')
           .html(this.album[this.currentImageIndex].title)

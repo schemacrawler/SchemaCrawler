@@ -36,7 +36,7 @@ SchemaCrawler in the open source projects.
 
 - [jQAssistant](http://jqassistant.org/)
 - [Datasource-Plug-In for Codenvy IDE 3](https://codenvy.com/)
-- [A large number of projects on GitHub](https://github.com/search?l=&o=desc&q=schemacrawler.schema&ref=advsearch&s=indexed&type=Code&utf8=%E2%9C%93)
+- [A large number of projects on GitHub](http://github.com/search?l=&o=desc&q=schemacrawler.schema&ref=advsearch&s=indexed&type=Code&utf8=%E2%9C%93)
 - [Jule,](http://code.google.com/p/jule/) a code generator in Java. 
 - [JEQUEL,](http://www.jequel.de/) Java Embedded QUEry Language. 
 - [CodeGenerator4j,](http://code.google.com/p/anhquan/wiki/CodeGenerator4j) a Java tool to 
