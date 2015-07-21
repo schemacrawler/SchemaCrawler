@@ -8,8 +8,8 @@ You can use these archetypes to very quickly create a new SchemaCrawler lint plu
 1. Install [Apache Maven](http://maven.apache.org/), and make sure that Apache Maven is on your PATH 
 2. Make sure that java is on your PATH
 3. Start a command shell in the `new-lint-plugin` example directory 
-4. Run `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-lint-plugin 
-  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-lint 
+4. Run `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-lint-plugin
+  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-lint -DarchetypeVersion=14.01.01
   -DinteractiveMode=false` to generate your new SchemaCrawler lint plugin project (you can use any groupId and artifactId that you like)
 5. Check the output your new Apache Maven project
 6. Build your lint jar file, using `mvn package`
