@@ -99,7 +99,7 @@ source directory, and install them locally.
 - SchemaCrawler is grateful to Adrien Sales for developing the [Debian schemacrawler package].
 - SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
 
-[Debian schemacrawler package]: https://github.com/adriens/schemacrawler-deb
+[Debian schemacrawler package]: http://github.com/adriens/schemacrawler-deb
 [FAQs]: faq.html
 [resources]: resources.html
 [SchemaCrawler examples]: http://github.com/sualeh/SchemaCrawler/releases/

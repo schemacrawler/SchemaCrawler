@@ -48,14 +48,14 @@
     </head>
     <links>
       <item name="Consulting" href="consulting.html" />
-      <item name="Download" href="https://github.com/sualeh/SchemaCrawler/releases/" />
+      <item name="Download" href="http://github.com/sualeh/SchemaCrawler/releases/" />
     </links>
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
       <item name="Who Uses" href="who-uses.html" />
       <item name="Database System Support" href="database-support.html" />
-      <item name="Download" href="https://github.com/sualeh/SchemaCrawler/releases/" />
+      <item name="Download" href="http://github.com/sualeh/SchemaCrawler/releases/" />
       <item name="Change History" href="changes-report.html" />
       <item name="Consulting" href="consulting.html" />
     </menu>
@@ -77,8 +77,7 @@
       <item name="Get Help"
         href="https://sourceforge.net/p/schemacrawler/discussion/495990/" />
       <item name="Javadocs" href="apidocs/index.html" />
-      <item name="Source Code" href="https://github.com/sualeh/SchemaCrawler" />
-      <item name="Project Page on GitHub" href="https://github.com/sualeh/SchemaCrawler" />
+      <item name="Project Page on GitHub" href="http://github.com/sualeh/SchemaCrawler" />
     </menu>
   </body>
 </project>
