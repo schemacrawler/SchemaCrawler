@@ -367,7 +367,7 @@ schemacrawler.format.hide_constraint_names=false
           </code>
           . See the Velocity example in the
           <a
-            href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/"
+            href="http://github.com/sualeh/SchemaCrawler/releases/"
           >SchemaCrawler examples</a>
           download.
         </p>
@@ -383,7 +383,7 @@ schemacrawler.format.hide_constraint_names=false
           <a href="http://www.graphviz.org/">Graphviz</a>
           to produce graph images. See the diagram example in the
           <a
-            href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/"
+            href="http://github.com/sualeh/SchemaCrawler/releases/"
           >SchemaCrawler examples</a>
           download.
           For more details, see the <a href="diagramming.html">diagram section</a>.
@@ -435,7 +435,7 @@ schemacrawler.format.hide_constraint_names=false
           <i>
             See the api example in the
             <a
-              href="https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/"
+              href="http://github.com/sualeh/SchemaCrawler/releases/"
             >SchemaCrawler examples</a>
             download.
           </i>
