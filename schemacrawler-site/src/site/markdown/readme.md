@@ -27,7 +27,7 @@ read the [how-tos] section.
 
 ## Cross-platform Install
 Installing SchemaCrawler is as simple as unzipping a file. First, 
-[download SchemaCrawler](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/),
+[download SchemaCrawler](http://github.com/sualeh/SchemaCrawler/releases/),
 and unzip it into a directory. You will have an examples folder, and with it, the SchemaCrawler
 distribution, in a directory called `_schemacrawler`. You can make a copy of this `_schemacrawler`
 directory to any location on your hard-disk, and rename the directory to something appropriate.
@@ -102,7 +102,7 @@ source directory, and install them locally.
 [Debian schemacrawler package]: https://github.com/adriens/schemacrawler-deb
 [FAQs]: faq.html
 [resources]: resources.html
-[SchemaCrawler examples]: https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/
+[SchemaCrawler examples]: http://github.com/sualeh/SchemaCrawler/releases/
 [ant]: http://ant.apache.org/
 [Maven]: http://maven.apache.org/
 [Groovy]: http://groovy.codehaus.org/
@@ -111,7 +111,7 @@ source directory, and install them locally.
 [Graphviz]: http://www.graphviz.org/
 [Spring Framework]: http://www.springsource.org/spring-framework
 [Apache Velocity]: http://velocity.apache.org/
-[SchemaCrawler examples]: https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/
+[SchemaCrawler examples]: http://github.com/sualeh/SchemaCrawler/releases/
 [Apache Maven]: http://maven.apache.org/
 [OSGi bundle]: http://en.wikipedia.org/wiki/OSGi#Bundles
 [m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/

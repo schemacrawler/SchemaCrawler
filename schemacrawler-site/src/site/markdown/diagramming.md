@@ -13,7 +13,7 @@ you can simply regenerate the diagram, without having to know the exact changes 
 To use generate SchemaCrawler diagrams, for install [Graphviz](http://www.graphviz.org/).
 Then you can run SchemaCrawler with the correct command-line options - for example,
 `-command graph -outputformat png -outputfile=graph.png` See the diagram example
-in the [SchemaCrawler examples](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/)
+in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
 download. An example of a SchemaCrawler database diagram is below.
 
 You can provide additional GraphViz command-line options using the `SC_GRAPHVIZ_OPTS`
@@ -32,7 +32,7 @@ schemacrawler.format.show_unqualified_names=true
 ```
 
 For more details, see the diagram example in the
-[SchemaCrawler examples](https://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20Examples/)
+[SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
 download.
 
 <a href="images/diagram.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
