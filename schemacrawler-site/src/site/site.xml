@@ -47,17 +47,17 @@
       <link rel="stylesheet" href="./css/sc_site.css" />
     </head>
     <links>
-      <item name="Consulting" href="mailto:sualeh@hotmail.com?Subject=Consulting%20for%20SchemaCrawler" />
-      <item name="Download" href="http://www.schemacrawler.com/files/" />
+      <item name="Consulting" href="consulting.html" />
+      <item name="Download" href="https://github.com/sualeh/SchemaCrawler/releases/" />
     </links>
     <menu name="SchemaCrawler">
       <item name="About SchemaCrawler" href="index.html" />
       <item name="Readme" href="readme.html" />
       <item name="Who Uses" href="who-uses.html" />
       <item name="Database System Support" href="database-support.html" />
-      <item name="Download" href="http://www.schemacrawler.com/files/" />
+      <item name="Download" href="https://github.com/sualeh/SchemaCrawler/releases/" />
       <item name="Change History" href="changes-report.html" />
-      <item name="Consulting" href="mailto:sualeh@hotmail.com?Subject=Consulting%20for%20SchemaCrawler" />
+      <item name="Consulting" href="consulting.html" />
     </menu>
     <menu name="Special Features">
       <item name="Text Output" href="output.html" />
