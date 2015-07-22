@@ -21,7 +21,7 @@ browser. All formats are designed to be easy to
 schemas that may have been output in the same format.
 
 SchemaCrawler is also a Java API that makes working with database metadata as
-easy as working with plain old Java objects. In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your pom.xml.
+easy as working with plain old Java objects. In order to use SchemaCrawler in your [Apache Maven](https://maven.apache.org/) projects, add a dependency to SchemaCrawler in your pom.xml.
 
 <div class="source"><pre>
 &lt;dependencies&gt;
