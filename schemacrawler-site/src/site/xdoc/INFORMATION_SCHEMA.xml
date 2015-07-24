@@ -34,16 +34,14 @@
 					download.
 				</p>
 				<p>
-					For example, if you had defined a connection called
-					<code>hsqldb</code>
-					, going against the HSQLDB database, and wanted to get view
+					For example, if you want to get view
 					definitions in the schema output, you would create a property in your
 					<code>schemacrawler.config.properties</code>
 					file like this:
 				</p>
 				<source>
           <![CDATA[        
-hsqldb.select.INFORMATION_SCHEMA.VIEWS=\
+select.INFORMATION_SCHEMA.VIEWS=\
   SELECT \
     * \
   FROM \
