@@ -77,7 +77,7 @@
       <id>complete-deployment-build</id>
       <activation>
         <property>
-          <name>complete-deployment-build</name>
+          <name>complete</name>
         </property>
       </activation>
       <modules>
