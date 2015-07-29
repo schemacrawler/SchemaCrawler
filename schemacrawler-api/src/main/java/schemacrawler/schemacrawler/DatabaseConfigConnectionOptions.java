@@ -39,8 +39,6 @@ public final class DatabaseConfigConnectionOptions
   private static final String HOST = "host";
   private static final String PORT = "port";
   private static final String DATABASE = "database";
-  private static final String USER = "user";
-  private static final String PASSWORD = "password";
   private static final String URLX = "urlx";
 
   public DatabaseConfigConnectionOptions(final Map<String, String> properties)
@@ -48,8 +46,6 @@ public final class DatabaseConfigConnectionOptions
   {
     super(properties);
 
-    setUser(properties.get(USER));
-    setPassword(properties.get(PASSWORD));
     setConnectionProperties(properties.get(URLX));
   }
 

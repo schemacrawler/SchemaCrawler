@@ -52,6 +52,8 @@ abstract class BaseDatabaseConnectionOptions
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
   private static final String URL = "url";
+  private static final String USER = "user";
+  private static final String PASSWORD = "password";
 
   protected static final Map<String, String> toMap(final String connectionUrl)
   {
@@ -77,6 +79,9 @@ abstract class BaseDatabaseConnectionOptions
       throw new IllegalArgumentException("No connection properties provided");
     }
 
+    setUser(properties.get(USER));
+    setPassword(properties.get(PASSWORD));
+
     connectionProperties = new HashMap<>(properties);
     TemplatingUtility.substituteVariables(connectionProperties);
   }
@@ -89,14 +94,15 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   @Override
-  public final Connection getConnection(final String user, final String password)
-    throws SQLException
+  public final Connection getConnection(final String user,
+                                        final String password)
+                                          throws SQLException
   {
-    if (user == null)
+    if (isBlank(user))
     {
       LOGGER.log(Level.WARNING, "Database user is not provided");
     }
-    if (password == null)
+    if (isBlank(password))
     {
       LOGGER.log(Level.WARNING, "Database password is not provided");
     }
@@ -107,22 +113,24 @@ abstract class BaseDatabaseConnectionOptions
       connectionUrl = getConnectionUrl();
       if (isBlank(connectionUrl))
       {
-        throw new IllegalArgumentException("No connection URL provided");
+        throw new IllegalArgumentException("No database connection URL provided");
       }
     }
     catch (final Exception e)
     {
-      throw new SQLException(String.format("Could not connect to database, for user %s",
-                                           user),
-                             e);
+      throw new SQLException(String
+        .format("Could not connect to database, for user \'%s\'", user), e);
     }
 
     final Properties jdbcConnectionProperties = createConnectionProperties(user,
                                                                            password);
     try
     {
-      LOGGER.log(Level.INFO, String
-        .format("Making connection to %s, with user %s", connectionUrl, user));
+      LOGGER.log(Level.INFO,
+                 String.format(
+                               "Making connection to %s, for user \'%s\', with properties %s",
+                               connectionUrl, user,
+                               safeProperties(jdbcConnectionProperties)));
       final Connection connection = DriverManager
         .getConnection(connectionUrl, jdbcConnectionProperties);
 
@@ -133,10 +141,9 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final SQLException e)
     {
-      jdbcConnectionProperties.remove("password");
-      throw new SchemaCrawlerSQLException(String.format("Could not connect to %s, with properties %s",
-                                                        connectionUrl,
-                                                        jdbcConnectionProperties),
+      throw new SchemaCrawlerSQLException(String
+        .format("Could not connect to %s, for user \'%s\', with properties %s",
+                connectionUrl, user, safeProperties(jdbcConnectionProperties)),
                                           e);
     }
   }
@@ -151,7 +158,8 @@ abstract class BaseDatabaseConnectionOptions
       .extractTemplateVariables(connectionUrl);
     if (!unmatchedVariables.isEmpty())
     {
-      throw new IllegalArgumentException(String.format("Insufficient parameters for database connection URL: missing %s",
+      throw new IllegalArgumentException(String.format(
+                                                       "Insufficient parameters for database connection URL: missing %s",
                                                        unmatchedVariables));
     }
 
@@ -169,8 +177,7 @@ abstract class BaseDatabaseConnectionOptions
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not find a suitable JDBC driver for database connection URL, "
-                                              + getConnectionUrl(),
-                                          e);
+                                          + getConnectionUrl(), e);
     }
   }
 
@@ -297,13 +304,11 @@ abstract class BaseDatabaseConnectionOptions
 
   private Properties createConnectionProperties(final String user,
                                                 final String password)
-    throws SQLException
+                                                  throws SQLException
   {
-    final List<String> skipProperties = Arrays.asList("server",
-                                                      "host",
-                                                      "port",
-                                                      "database",
-                                                      "urlx");
+    final List<String> skipProperties = Arrays
+      .asList("server", "host", "port", "database", "urlx", "user", "password",
+              "url");
     final Driver jdbcDriver = getJdbcDriver();
     final DriverPropertyInfo[] propertyInfo = jdbcDriver
       .getPropertyInfo(getConnectionUrl(), new Properties());
@@ -351,12 +356,22 @@ abstract class BaseDatabaseConnectionOptions
       return;
     }
     final DatabaseMetaData dbMetaData = connection.getMetaData();
-    LOGGER.log(Level.INFO, String
-      .format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
-              dbMetaData.getDatabaseProductName(),
-              dbMetaData.getDatabaseProductVersion(),
-              dbMetaData.getDriverName(),
-              dbMetaData.getDriverVersion()));
+    LOGGER.log(Level.INFO,
+               String.format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
+                             dbMetaData.getDatabaseProductName(),
+                             dbMetaData.getDatabaseProductVersion(),
+                             dbMetaData.getDriverName(),
+                             dbMetaData.getDriverVersion()));
+  }
+
+  private Properties safeProperties(final Properties properties)
+  {
+    final Properties logProperties = new Properties(properties);
+    if (properties.contains("password"))
+    {
+      logProperties.put("password", "*****");
+    }
+    return logProperties;
   }
 
 }
