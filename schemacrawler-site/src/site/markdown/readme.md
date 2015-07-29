@@ -78,11 +78,12 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
 
 ## Gradle Projects
 In order to use SchemaCrawler in your [Gradle](https://gradle.org/) projects, add a dependency to SchemaCrawler in your `build.gradle`.
-```
+
+<div class="source"><pre>
 dependencies {
-    compile group: 'us.fatehi', name: 'schemacrawler', version: '14.01.02'
+  compile group: 'us.fatehi', name: 'schemacrawler', version: '14.01.02'
 }
-```
+</pre></div>
 
 ## OSGi
 The SchemaCrawler jar file is bundled as an [OSGi bundle], and can be deployed into your OSGi Service Platform 
