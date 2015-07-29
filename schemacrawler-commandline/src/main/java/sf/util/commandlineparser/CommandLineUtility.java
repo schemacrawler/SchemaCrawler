@@ -58,8 +58,8 @@ public class CommandLineUtility
     }
 
     final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager
-      .getLoggerNames());
+    final List<String> loggerNames = Collections
+      .list(logManager.getLoggerNames());
     for (final String loggerName: loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);
@@ -77,7 +77,8 @@ public class CommandLineUtility
     rootLogger.setLevel(applicationLogLevel);
   }
 
-  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
+  public static String[]
+    flattenCommandlineArgs(final Map<String, String> argsMap)
   {
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: argsMap.entrySet())
@@ -123,14 +124,32 @@ public class CommandLineUtility
       return;
     }
 
-    final List<String> argsList = new ArrayList<>(Arrays.asList(args));
-    for (final Iterator<String> iterator = argsList.iterator(); iterator
-      .hasNext();)
+    final List<String> argsList = new ArrayList<>();
+    for (final Iterator<String> iterator = Arrays.asList(args)
+      .iterator(); iterator.hasNext();)
     {
       final String arg = iterator.next();
-      if (arg == null || arg.startsWith("-password="))
+      if (arg == null)
       {
-        iterator.remove();
+        continue;
+      }
+      else if (arg.startsWith("-password="))
+      {
+        argsList.add("-password=*****");
+      }
+      else if (arg.startsWith("-password"))
+      {
+        argsList.add("-password");
+        if (iterator.hasNext())
+        {
+          // Skip over the password
+          iterator.next();
+          argsList.add("*****");
+        }
+      }
+      else
+      {
+        argsList.add(arg);
       }
     }
 
@@ -156,14 +175,13 @@ public class CommandLineUtility
         systemProperties.put(name, (String) propertyValue.getValue());
       }
     }
+    LOGGER.log(Level.CONFIG, "System properties: \n"
+                             + join(systemProperties, System.lineSeparator()));
     LOGGER.log(Level.CONFIG,
-               "System properties: \n"
-                   + join(systemProperties, System.lineSeparator()));
-    LOGGER.log(Level.CONFIG,
-               "Classpath: \n"
-                   + join(System.getProperty("java.class.path")
-                            .split(File.pathSeparator),
-                          System.lineSeparator()));
+               "Classpath: \n" + join(
+                                      System.getProperty("java.class.path")
+                                        .split(File.pathSeparator),
+                                      System.lineSeparator()));
   }
 
   private CommandLineUtility()
