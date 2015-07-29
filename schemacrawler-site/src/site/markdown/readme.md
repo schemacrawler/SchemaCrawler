@@ -55,8 +55,15 @@ You can run SchemaCrawler using the `schemacrawler` command, which will be on th
 
 # Using SchemaCrawler in Your Projects
 
+## Jars from the Central Repository
+
+[All of the SchemaCrawler jars](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*) 
+are available on the Maven Central Repository. 
+They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven] projects, or with any other
+build system that supports the Central Repository.
+
 ## Maven Projects
-In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your pom.xml.
+In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your `pom.xml`.
 
 <div class="source"><pre>
 &lt;dependencies&gt;
@@ -69,8 +76,13 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
 &lt;/dependencies&gt;
 </pre></div>
 
-[All of the SchemaCrawler jars](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*) 
-are available on the Maven Central Repository.
+## Gradle Projects
+In order to use SchemaCrawler in your [Gradle](https://gradle.org/) projects, add a dependency to SchemaCrawler in your `build.gradle`.
+```
+dependencies {
+    compile group: 'us.fatehi', name: 'schemacrawler', version: '14.01.02'
+}
+```
 
 ## OSGi
 The SchemaCrawler jar file is bundled as an [OSGi bundle], and can be deployed into your OSGi Service Platform 
