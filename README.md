@@ -17,7 +17,7 @@ easy as working with plain old Java objects. In order to use SchemaCrawler in yo
   &lt;dependency&gt;
     &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
     &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
-    &lt;version&gt;14.01.01&lt;/version&gt;
+    &lt;version&gt;14.01.02&lt;/version&gt;
   &lt;/dependency&gt;
 &lt;/dependencies&gt;
 </pre></div>
