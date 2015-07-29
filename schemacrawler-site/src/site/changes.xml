@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.01.01" date="2015-05-05" description="Java SE 8 support.">
+     <release version="14.01.02" date="2015-07-28" description="Bug fixes for connection URL.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Bug fix for connecting to a database using a URL.
+      ]]></action>                                                  
+     </release>     
+     <release version="14.01.01" date="2015-07-16" description="Java SE 8 support.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         SchemaCrawler is now supported on Java SE 8 or better only.
       ]]></action>  
