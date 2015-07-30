@@ -57,6 +57,8 @@ You can run SchemaCrawler using the `schemacrawler` command, which will be on th
 
 ## Jars from the Central Repository
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/us.fatehi/schemacrawler/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*)
+
 [All of the SchemaCrawler jars](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*) 
 are available on the Maven Central Repository. 
 They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven] projects, or with any other
