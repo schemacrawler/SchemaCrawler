@@ -6,13 +6,15 @@ os:
   - osx
 sudo: false
 notifications:
-    on_success: [change] # default: change [always|never|change] 
-    on_failure: [change] # default: always [always|never|change] 
+    on_success: [change] # default: change [always|never|change]
+    on_failure: [change] # default: always [always|never|change]
 addons:
   apt:
     packages:
       - graphviz
 before_install:
   - mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
-install: 
+install:
   - mvn install
+after_success:
+  - mvn clean test jacoco:report coveralls:report
