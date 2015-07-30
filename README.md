@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/sualeh/SchemaCrawler.svg?branch=master)](https://travis-ci.org/sualeh/SchemaCrawler)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/us.fatehi/schemacrawler/badge.svg)](https://maven-badges.herokuapp.com/maven-central/us.fatehi/schemacrawler)
 
 # SchemaCrawler
 
