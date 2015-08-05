@@ -316,7 +316,7 @@ final class TableRetriever
         final SchemaReference schemaReference = new SchemaReference(catalogName,
                                                                     schemaName);
         final Optional<Schema> schemaOptional = catalog
-          .getSchema(schemaReference.getFullName());
+          .lookupSchema(schemaReference.getFullName());
         if (!schemaOptional.isPresent())
         {
           LOGGER.log(Level.FINER, String.format("Cannot locate schema: %s.%s",

@@ -34,20 +34,6 @@ public interface Catalog
 {
 
   /**
-   * Gets the column data types defined in the schema, by name.
-   *
-   * @param name
-   *        Name
-   * @return Column data type, or null if not found
-   */
-  @Deprecated
-  default ColumnDataType getColumnDataType(final Schema schema,
-                                           final String name)
-  {
-    return lookupColumnDataType(schema, name).orElse(null);
-  }
-
-  /**
    * Gets the column data types
    *
    * @return Column data types
@@ -66,19 +52,6 @@ public interface Catalog
   DatabaseInfo getDatabaseInfo();
 
   JdbcDriverInfo getJdbcDriverInfo();
-
-  /**
-   * Gets a column by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Routine, or null if not found.
-   */
-  @Deprecated
-  default Routine getRoutine(final Schema schema, final String name)
-  {
-    return lookupRoutine(schema, name).orElse(null);
-  }
 
   /**
    * Gets the routine.
@@ -101,7 +74,7 @@ public interface Catalog
    *        Schema name
    * @return Schema.
    */
-  Optional<? extends Schema> getSchema(String name);
+  Optional<? extends Schema> lookupSchema(String name);
 
   SchemaCrawlerInfo getSchemaCrawlerInfo();
 
@@ -111,19 +84,6 @@ public interface Catalog
    * @return Schemas
    */
   Collection<Schema> getSchemas();
-
-  /**
-   * Gets a sequence by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Sequence, or null if not found.
-   */
-  @Deprecated
-  default Sequence getSequence(final Schema schema, final String name)
-  {
-    return lookupSequence(schema, name).orElse(null);
-  }
 
   /**
    * Gets the sequences.
@@ -138,19 +98,6 @@ public interface Catalog
    * @return Sequences
    */
   Collection<Sequence> getSequences(Schema schema);
-
-  /**
-   * Gets a synonym by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Synonym, or null if not found.
-   */
-  @Deprecated
-  default Synonym getSynonym(final Schema schema, final String name)
-  {
-    return lookupSynonym(schema, name).orElse(null);
-  }
 
   /**
    * Gets the synonyms.
@@ -173,7 +120,7 @@ public interface Catalog
    *        Column data type name
    * @return Column data type
    */
-  Optional<? extends ColumnDataType> getSystemColumnDataType(String name);
+  Optional<? extends ColumnDataType> lookupSystemColumnDataType(String name);
 
   /**
    * Gets the column data types defined by the RDBMS system.
@@ -181,19 +128,6 @@ public interface Catalog
    * @return Column data types
    */
   Collection<ColumnDataType> getSystemColumnDataTypes();
-
-  /**
-   * Gets a table by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Table, or null if not found.
-   */
-  @Deprecated
-  default Table getTable(final Schema schema, final String name)
-  {
-    return lookupTable(schema, name).orElse(null);
-  }
 
   /**
    * Gets the tables.
