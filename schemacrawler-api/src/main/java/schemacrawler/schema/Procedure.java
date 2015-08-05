@@ -34,20 +34,6 @@ public interface Procedure
 {
 
   /**
-   * Gets a column by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Column, or null if not found.
-   */
-  @Deprecated
-  @Override
-  default ProcedureColumn getColumn(final String name)
-  {
-    return lookupColumn(name).orElse(null);
-  }
-
-  /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the procedure

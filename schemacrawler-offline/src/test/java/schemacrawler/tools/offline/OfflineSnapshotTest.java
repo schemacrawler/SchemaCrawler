@@ -166,7 +166,7 @@ public class OfflineSnapshotTest
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
 
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema", 6, catalog
       .getTables(schema).size());

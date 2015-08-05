@@ -98,7 +98,7 @@ public class TestHsqldbCommandline
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull(schema);
 
     assertEquals(6, catalog.getTables(schema).size());
@@ -106,7 +106,7 @@ public class TestHsqldbCommandline
     assertNotNull(table);
 
     assertEquals(1, table.getTriggers().size());
-    assertNotNull(table.getTrigger("TRG_AUTHORS"));
+    assertNotNull(table.lookupTrigger("TRG_AUTHORS").orElse(null));
 
   }
 

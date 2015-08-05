@@ -41,19 +41,6 @@ public interface Column
   String getDefaultValue();
 
   /**
-   * Gets a privilege by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Privilege, or null if not found.
-   */
-  @Deprecated
-  default Privilege<Column> getPrivilege(final String name)
-  {
-    return lookupPrivilege(name).orElse(null);
-  }
-
-  /**
    * Gets the list of privileges for the table.
    *
    * @return Privileges for the table
