@@ -34,19 +34,6 @@ public interface ResultsColumns
 {
 
   /**
-   * Gets a column by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Column, or null if not found.
-   */
-  @Deprecated
-  default ResultsColumn getColumn(final String name)
-  {
-    return lookupColumn(name).orElse(null);
-  }
-
-  /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the table.

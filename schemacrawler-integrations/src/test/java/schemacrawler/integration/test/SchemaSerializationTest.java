@@ -59,7 +59,7 @@ public class SchemaSerializationTest
     assertNotNull("Could not obtain catalog", catalog);
     assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
 
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema", 6,
                  catalog.getTables(schema).size());
@@ -80,7 +80,7 @@ public class SchemaSerializationTest
     final Catalog deserializedCatalog = xmlCatalog;
     assertNotNull("No database deserialized", deserializedCatalog);
     final Schema deserializedSchema = deserializedCatalog
-      .getSchema("PUBLIC.BOOKS").orElse(null);
+      .lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema", 6,
                  catalog.getTables(deserializedSchema).size());

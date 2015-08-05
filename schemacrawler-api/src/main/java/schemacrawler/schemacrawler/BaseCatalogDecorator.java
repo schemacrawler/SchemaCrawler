@@ -145,9 +145,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends Schema> getSchema(final String name)
+  public Optional<? extends Schema> lookupSchema(final String name)
   {
-    return catalog.getSchema(name);
+    return catalog.lookupSchema(name);
   }
 
   @Override
@@ -196,9 +196,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType> getSystemColumnDataType(final String name)
+  public Optional<? extends ColumnDataType> lookupSystemColumnDataType(final String name)
   {
-    return catalog.getSystemColumnDataType(name);
+    return catalog.lookupSystemColumnDataType(name);
   }
 
   @Override
