@@ -175,10 +175,10 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Catalog#getSchema(java.lang.String)
+   * @see schemacrawler.schema.Catalog#lookupSchema(java.lang.String)
    */
   @Override
-  public Optional<Schema> getSchema(final String name)
+  public Optional<Schema> lookupSchema(final String name)
   {
     return schemas.stream().filter(schema -> schema.getFullName().equals(name))
       .findFirst();
@@ -259,10 +259,10 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Catalog#getSystemColumnDataType(java.lang.String)
+   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
    */
   @Override
-  public Optional<MutableColumnDataType> getSystemColumnDataType(final String name)
+  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
   {
     return lookupColumnDataType(new SchemaReference(), name);
   }

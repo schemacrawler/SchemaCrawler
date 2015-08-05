@@ -35,19 +35,6 @@ public interface Table
 {
 
   /**
-   * Gets a column by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Column, or null if not found.
-   */
-  @Deprecated
-  default Column getColumn(final String name)
-  {
-    return lookupColumn(name).orElse(null);
-  }
-
-  /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the table
@@ -61,19 +48,6 @@ public interface Table
    * @return Exported foreign keys of the table.
    */
   Collection<ForeignKey> getExportedForeignKeys();
-
-  /**
-   * Gets a foreign key by name.
-   *
-   * @param name
-   *        Name
-   * @return Foreign key, or null if not found.
-   */
-  @Deprecated
-  default ForeignKey getForeignKey(final String name)
-  {
-    return lookupForeignKey(name).orElse(null);
-  }
 
   /**
    * Gets the list of foreign keys. Same as calling
@@ -92,19 +66,6 @@ public interface Table
   Collection<ForeignKey> getImportedForeignKeys();
 
   /**
-   * Gets an index by unqualified name.
-   *
-   * @param name
-   *        Name
-   * @return Index, or null if not found.
-   */
-  @Deprecated
-  default Index getIndex(final String name)
-  {
-    return lookupIndex(name).orElse(null);
-  }
-
-  /**
    * Gets the list of indexes.
    *
    * @return Indexes of the table.
@@ -117,19 +78,6 @@ public interface Table
    * @return Primary key
    */
   PrimaryKey getPrimaryKey();
-
-  /**
-   * Gets a privilege by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Privilege, or null if not found.
-   */
-  @Deprecated
-  default Privilege<Table> getPrivilege(final String name)
-  {
-    return lookupPrivilege(name).orElse(null);
-  }
 
   /**
    * Gets the list of privileges.
@@ -163,19 +111,6 @@ public interface Table
    * @return Table type.
    */
   TableType getTableType();
-
-  /**
-   * Gets a trigger by unqualified name.
-   *
-   * @param name
-   *        Unqualified name
-   * @return Trigger, or null if not found.
-   */
-  @Deprecated
-  default Trigger getTrigger(final String name)
-  {
-    return lookupTrigger(name).orElse(null);
-  }
 
   /**
    * Gets the list of triggers.

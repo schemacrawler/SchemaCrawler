@@ -78,7 +78,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull(catalog);
-    final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertNotNull(schema);
     final Table table = catalog.lookupTable(schema, "AUTHORS").get();
     assertNotNull(table);
@@ -264,7 +264,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
-      final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
+      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Sequence[] sequences = catalog.getSequences(schema)
         .toArray(new Sequence[0]);
@@ -324,7 +324,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
-      final Schema schema = catalog.getSchema("PUBLIC.BOOKS").get();
+      final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Synonym[] synonyms = catalog.getSynonyms(schema)
         .toArray(new Synonym[0]);
