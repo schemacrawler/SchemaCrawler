@@ -25,7 +25,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.DirectedGraph;
+import sf.util.graph.DirectedGraph;
 
 public class LinterTableCycles
   extends BaseLinter
