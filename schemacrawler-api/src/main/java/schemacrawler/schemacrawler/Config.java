@@ -393,15 +393,6 @@ public final class Config
     put(propertyName, Boolean.toString(value));
   }
 
-  public void setDefaultValue(final String propertyName,
-                              final String defaultValue)
-  {
-    if (get(propertyName) == null)
-    {
-      put(propertyName, defaultValue);
-    }
-  }
-
   public <E extends Enum<E>> void setEnumValue(final String propertyName,
                                                final E value)
   {

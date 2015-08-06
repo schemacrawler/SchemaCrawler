@@ -20,27 +20,20 @@ package schemacrawler.crawl;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.SchemaReference;
 
-@Ignore("Slow test")
-public class EqualsHashCodeTest
+public class SchemaReferenceTest
 {
 
   @Test
   public void schemaRef()
   {
-    final SchemaReference[] schemaRefs = new SchemaReference[] {
-        new SchemaReference("catalog", "schema"),
-        new SchemaReference(null, "schema"),
-        new SchemaReference("catalog", null)
-    };
-    for (final SchemaReference schemaRef: schemaRefs)
-    {
-      assertEquals(schemaRef.toString(), schemaRef.getFullName());
-    }
+    assertEquals("catalog.schema",
+                 new SchemaReference("catalog", "schema").getFullName());
+    assertEquals("schema", new SchemaReference(null, "schema").getFullName());
+    assertEquals("catalog", new SchemaReference("catalog", null).getFullName());
   }
 
 }
