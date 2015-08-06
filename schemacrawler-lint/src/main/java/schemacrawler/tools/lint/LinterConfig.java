@@ -25,6 +25,7 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 import schemacrawler.schemacrawler.Config;
+import sf.util.ObjectToString;
 
 public class LinterConfig
   implements Serializable
@@ -72,6 +73,12 @@ public class LinterConfig
   public void setSeverity(final LintSeverity severity)
   {
     this.severity = severity;
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }
