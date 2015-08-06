@@ -20,7 +20,13 @@
 package schemacrawler.tools.lint.executable;
 
 
-import java.io.FileReader;
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.isRegularFile;
+import static java.nio.file.Files.newBufferedReader;
+import static sf.util.Utility.isBlank;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,14 +38,13 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.Utility;
 
 public class LintExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(LintExecutable.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(LintExecutable.class.getName());
 
   public static final String COMMAND = "lint";
   private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
@@ -85,8 +90,8 @@ public class LintExecutable
     final LintOptions lintOptions;
     if (this.lintOptions == null)
     {
-      lintOptions = new LintOptionsBuilder()
-        .fromConfig(additionalConfiguration).toOptions();
+      lintOptions = new LintOptionsBuilder().fromConfig(additionalConfiguration)
+        .toOptions();
     }
     else
     {
@@ -133,16 +138,30 @@ public class LintExecutable
     try
     {
       linterConfigsFile = System.getProperty(CONFIG_LINTER_CONFIGS_FILE);
-      if (!Utility.isBlank(linterConfigsFile))
+      if (!isBlank(linterConfigsFile))
       {
-        linterConfigs.parse(new FileReader(linterConfigsFile));
+        final Path linterConfigsFilePath = Paths.get(linterConfigsFile)
+          .toAbsolutePath();
+        if (isRegularFile(linterConfigsFilePath)
+            && isReadable(linterConfigsFilePath))
+        {
+          linterConfigs.parse(newBufferedReader(linterConfigsFilePath));
+        }
+        else
+        {
+          LOGGER
+            .log(Level.WARNING,
+                 "Could not find linter configs file, " + linterConfigsFile);
+        }
+
       }
       return linterConfigs;
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could not load linter configs from file "
-                                + linterConfigsFile, e);
+      LOGGER.log(Level.WARNING, "Could not load linter configs from file, "
+                                + linterConfigsFile,
+                 e);
       return linterConfigs;
     }
   }

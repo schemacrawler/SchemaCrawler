@@ -36,14 +36,12 @@ public abstract class BaseLinter
   implements Linter
 {
 
-  private static final Logger LOGGER = Logger.getLogger(BaseLinter.class
-    .getName());
-
-  private LintCollector collector;
-
-  private LintSeverity severity = LintSeverity.medium;
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
+  private LintCollector collector;
+  private LintSeverity severity = LintSeverity.medium;
 
   @Override
   public void config(final LinterConfig linterConfig)
@@ -101,14 +99,11 @@ public abstract class BaseLinter
     }
   };
 
-  protected <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
-                                                                                            final String message,
-                                                                                            final V value)
+  protected <N extends NamedObject & AttributedObject, V extends Serializable>
+    void addLint(final N namedObject, final String message, final V value)
   {
     LOGGER.log(Level.FINE, String.format("Found lint for %s: %s --> %s",
-                                         namedObject,
-                                         message,
-                                         value));
+                                         namedObject, message, value));
     if (collector != null)
     {
       final Lint<V> lint = newLint(namedObject.getFullName(), message, value);
@@ -140,9 +135,8 @@ public abstract class BaseLinter
   {
   }
 
-  private <V extends Serializable> Lint<V> newLint(final String objectName,
-                                                   final String message,
-                                                   final V value)
+  private <V extends Serializable> Lint<V>
+    newLint(final String objectName, final String message, final V value)
   {
     return new SimpleLint<>(getId(), objectName, getSeverity(), message, value);
   }
