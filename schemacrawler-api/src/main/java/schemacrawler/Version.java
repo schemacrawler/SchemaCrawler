@@ -118,15 +118,4 @@ public final class Version
     // Prevent external instantiation
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return about();
-  }
-
 }
