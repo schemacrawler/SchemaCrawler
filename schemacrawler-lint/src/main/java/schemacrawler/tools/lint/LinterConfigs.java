@@ -45,14 +45,15 @@ import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(LinterConfig.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(LinterConfig.class.getName());
 
   private static Element getSubElement(final Element element,
                                        final String tagName)
@@ -77,7 +78,8 @@ public class LinterConfigs
     return subElement;
   }
 
-  private static String getTextValue(final Element element, final String tagName)
+  private static String getTextValue(final Element element,
+                                     final String tagName)
   {
     final String text;
     final Element subElement = getSubElement(element, tagName);
@@ -158,10 +160,9 @@ public class LinterConfigs
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.CONFIG, String
-          .format("Could not set a severity of %s for linter %s",
-                  severityValue,
-                  linterId));
+        LOGGER.log(Level.CONFIG,
+                   String.format("Could not set a severity of %s for linter %s",
+                                 severityValue, linterId));
       }
     }
 
@@ -233,6 +234,12 @@ public class LinterConfigs
   public int size()
   {
     return linterConfigsMap.size();
+  }
+
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }
