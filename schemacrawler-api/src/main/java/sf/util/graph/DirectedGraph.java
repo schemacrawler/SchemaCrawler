@@ -18,7 +18,7 @@
  *
  */
 
-package sf.util;
+package sf.util.graph;
 
 
 import java.util.ArrayList;
@@ -31,184 +31,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import sf.util.GraphException;
+
 public class DirectedGraph<T extends Comparable<? super T>>
 {
 
-  /**
-   * Directed edge in a graph.
-   */
-  public class DirectedEdge
-  {
-
-    private final Vertex from;
-    private final Vertex to;
-
-    DirectedEdge(final Vertex from, final Vertex to)
-    {
-      this.from = from;
-      this.to = to;
-    }
-
-    @Override
-    public boolean equals(final Object obj)
-    {
-      if (this == obj)
-      {
-        return true;
-      }
-      if (obj == null)
-      {
-        return false;
-      }
-      final DirectedEdge other = (DirectedEdge) obj;
-      if (from == null)
-      {
-        if (other.from != null)
-        {
-          return false;
-        }
-      }
-      else if (!from.equals(other.from))
-      {
-        return false;
-      }
-      if (to == null)
-      {
-        if (other.to != null)
-        {
-          return false;
-        }
-      }
-      else if (!to.equals(other.to))
-      {
-        return false;
-      }
-      return true;
-    }
-
-    public Vertex getFrom()
-    {
-      return from;
-    }
-
-    public Vertex getTo()
-    {
-      return to;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (from == null? 0: from.hashCode());
-      result = prime * result + (to == null? 0: to.hashCode());
-      return result;
-    }
-
-    public boolean isFrom(final Vertex vertex)
-    {
-      return vertex != null && vertex.equals(from);
-    }
-
-    public boolean isTo(final Vertex vertex)
-    {
-      return vertex != null && vertex.equals(to);
-    }
-
-    @Override
-    public String toString()
-    {
-      return "(" + from + " --> " + to + ")";
-    }
-
-  }
-
-  /**
-   * Vertex in a graph.
-   */
-  public class Vertex
-  {
-
-    private final T value;
-    private TraversalState traversalState = TraversalState.notStarted;
-
-    Vertex(final T value)
-    {
-      this.value = value;
-    }
-
-    @Override
-    public boolean equals(final Object obj)
-    {
-      if (this == obj)
-      {
-        return true;
-      }
-      if (obj == null)
-      {
-        return false;
-      }
-      final Vertex other = (Vertex) obj;
-      if (value == null)
-      {
-        if (other.value != null)
-        {
-          return false;
-        }
-      }
-      else if (!value.equals(other.value))
-      {
-        return false;
-      }
-      return true;
-    }
-
-    public T getValue()
-    {
-      return value;
-    }
-
-    @Override
-    public int hashCode()
-    {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + (value == null? 0: value.hashCode());
-      return result;
-    }
-
-    @Override
-    public String toString()
-    {
-      return value.toString();
-    }
-
-    TraversalState getTraversalState()
-    {
-      return traversalState;
-    }
-
-    void setTraversalState(final TraversalState traversalState)
-    {
-      this.traversalState = traversalState;
-    }
-
-  }
-
-  /**
-   * Traversal state when detecting cycle.
-   */
-  private enum TraversalState
-  {
-
-    notStarted,
-    inProgress,
-    complete;
-  }
-
-  private final Map<T, Vertex> verticesMap;
-  private final Set<DirectedEdge> edges;
+  private final Map<T, Vertex<T>> verticesMap;
+  private final Set<DirectedEdge<T>> edges;
 
   public DirectedGraph()
   {
@@ -228,7 +57,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   {
     if (!from.equals(to))
     {
-      edges.add(new DirectedEdge(addVertex(from), addVertex(to)));
+      edges.add(new DirectedEdge<T>(addVertex(from), addVertex(to)));
     }
   }
 
@@ -239,16 +68,16 @@ public class DirectedGraph<T extends Comparable<? super T>>
    *        Vertex value
    * @return The newly added vertex
    */
-  public Vertex addVertex(final T value)
+  public Vertex<T> addVertex(final T value)
   {
-    final Vertex vertex;
+    final Vertex<T> vertex;
     if (verticesMap.containsKey(value))
     {
       vertex = verticesMap.get(value);
     }
     else
     {
-      vertex = new Vertex(value);
+      vertex = new Vertex<T>(value);
       verticesMap.put(value, vertex);
     }
     return vertex;
@@ -261,8 +90,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
    */
   public boolean containsCycle()
   {
-    final Collection<Vertex> vertices = clearTraversalStates();
-    for (final Vertex vertex: vertices)
+    final Collection<Vertex<T>> vertices = clearTraversalStates();
+    for (final Vertex<T> vertex: vertices)
     {
       if (vertex.getTraversalState() == TraversalState.notStarted)
       {
@@ -283,11 +112,11 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   public DirectedGraph<T> subGraph(final T value, final int depth)
   {
-    final Collection<Vertex> vertices = clearTraversalStates();
+    final Collection<Vertex<T>> vertices = clearTraversalStates();
     visitForSubGraph(verticesMap.get(value), depth);
 
-    final Set<Vertex> subGraphVertices = new HashSet<>();
-    for (final Vertex currentVertex: vertices)
+    final Set<Vertex<T>> subGraphVertices = new HashSet<>();
+    for (final Vertex<T> currentVertex: vertices)
     {
       if (currentVertex.getTraversalState() == TraversalState.complete)
       {
@@ -296,10 +125,10 @@ public class DirectedGraph<T extends Comparable<? super T>>
     }
 
     final DirectedGraph<T> subGraph = new DirectedGraph<>();
-    for (final DirectedEdge edge: edges)
+    for (final DirectedEdge<T> edge: edges)
     {
-      final Vertex from = edge.getFrom();
-      final Vertex to = edge.getTo();
+      final Vertex<T> from = edge.getFrom();
+      final Vertex<T> to = edge.getTo();
       if (subGraphVertices.contains(from) && subGraphVertices.contains(to))
       {
         subGraph.addDirectedEdge(from.getValue(), to.getValue());
@@ -321,8 +150,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
     final int collectionSize = verticesMap.size();
 
-    final Collection<Vertex> vertices = new ArrayList<>(verticesMap.values());
-    final Collection<DirectedEdge> edges = new ArrayList<>(this.edges);
+    final Collection<Vertex<T>> vertices = new ArrayList<>(verticesMap.values());
+    final Collection<DirectedEdge<T>> edges = new ArrayList<>(this.edges);
     final List<T> sortedValues = new ArrayList<>(collectionSize);
 
     while (!vertices.isEmpty())
@@ -331,10 +160,10 @@ public class DirectedGraph<T extends Comparable<? super T>>
       final List<T> nodesAtLevel = new ArrayList<>(collectionSize);
 
       // Remove unattached nodes
-      for (final Iterator<Vertex> iterator = vertices.iterator(); iterator
+      for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
         .hasNext();)
       {
-        final Vertex vertex = iterator.next();
+        final Vertex<T> vertex = iterator.next();
         if (isUnattachedNode(vertex, edges))
         {
           nodesAtLevel.add(vertex.getValue());
@@ -343,8 +172,8 @@ public class DirectedGraph<T extends Comparable<? super T>>
       }
 
       // Find all nodes at the current level
-      final List<Vertex> startNodes = new ArrayList<>(collectionSize);
-      for (final Vertex vertex: vertices)
+      final List<Vertex<T>> startNodes = new ArrayList<>(collectionSize);
+      for (final Vertex<T> vertex: vertices)
       {
         if (isStartNode(vertex, edges))
         {
@@ -352,7 +181,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
         }
       }
 
-      for (final Vertex vertex: startNodes)
+      for (final Vertex<T> vertex: startNodes)
       {
         // Save the vertex value
         nodesAtLevel.add(vertex.getValue());
@@ -369,23 +198,23 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return sortedValues;
   }
 
-  private Collection<Vertex> clearTraversalStates()
+  private Collection<Vertex<T>> clearTraversalStates()
   {
-    final Collection<Vertex> vertices = verticesMap.values();
-    for (final Vertex vertex: vertices)
+    final Collection<Vertex<T>> vertices = verticesMap.values();
+    for (final Vertex<T> vertex: vertices)
     {
       vertex.setTraversalState(TraversalState.notStarted);
     }
     return vertices;
   }
 
-  private void dropOutEdges(final Vertex vertex,
-                            final Collection<DirectedEdge> edges)
+  private void dropOutEdges(final Vertex<T> vertex,
+                            final Collection<DirectedEdge<T>> edges)
   {
-    for (final Iterator<DirectedEdge> iterator = edges.iterator(); iterator
+    for (final Iterator<DirectedEdge<T>> iterator = edges.iterator(); iterator
       .hasNext();)
     {
-      final DirectedEdge edge = iterator.next();
+      final DirectedEdge<T> edge = iterator.next();
       if (edge.isFrom(vertex))
       {
         iterator.remove();
@@ -393,10 +222,10 @@ public class DirectedGraph<T extends Comparable<? super T>>
     }
   }
 
-  private boolean isStartNode(final Vertex vertex,
-                              final Collection<DirectedEdge> edges)
+  private boolean isStartNode(final Vertex<T> vertex,
+                              final Collection<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge edge: edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isTo(vertex))
       {
@@ -406,10 +235,10 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return true;
   }
 
-  private boolean isUnattachedNode(final Vertex vertex,
-                                   final Collection<DirectedEdge> edges)
+  private boolean isUnattachedNode(final Vertex<T> vertex,
+                                   final Collection<DirectedEdge<T>> edges)
   {
-    for (final DirectedEdge edge: edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isTo(vertex) || edge.isFrom(vertex))
       {
@@ -419,15 +248,15 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return true;
   }
 
-  private boolean visitForCyles(final Vertex vertex)
+  private boolean visitForCyles(final Vertex<T> vertex)
   {
     vertex.setTraversalState(TraversalState.inProgress);
 
-    for (final DirectedEdge edge: edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isFrom(vertex))
       {
-        final Vertex to = edge.getTo();
+        final Vertex<T> to = edge.getTo();
         if (to.getTraversalState() == TraversalState.inProgress)
         {
           return true;
@@ -447,14 +276,14 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return false;
   }
 
-  private void visitForSubGraph(final Vertex vertex, final int depth)
+  private void visitForSubGraph(final Vertex<T> vertex, final int depth)
   {
     vertex.setTraversalState(TraversalState.complete);
     if (depth == 0)
     {
       return;
     }
-    for (final DirectedEdge edge: edges)
+    for (final DirectedEdge<T> edge: edges)
     {
       if (edge.isFrom(vertex))
       {

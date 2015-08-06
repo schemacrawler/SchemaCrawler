@@ -26,8 +26,8 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import sf.util.DirectedGraph;
 import sf.util.GraphException;
+import sf.util.graph.DirectedGraph;
 
 public class DirectedGraphTest
 {
