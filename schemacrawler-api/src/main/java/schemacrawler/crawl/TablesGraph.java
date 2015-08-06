@@ -10,8 +10,8 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import sf.util.DirectedGraph;
 import sf.util.GraphException;
+import sf.util.graph.DirectedGraph;
 
 final class TablesGraph
   extends DirectedGraph<Table>

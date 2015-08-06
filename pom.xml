@@ -113,7 +113,15 @@
               <maxmem>256m</maxmem>
               <!-- aggregated reports for multi-module projects -->
               <aggregate>true</aggregate>
-            </configuration>
+              <instrumentation>
+                <ignores>
+                  <ignore>schemacrawler.*.test.*</ignore>
+                </ignores>
+                <excludes>
+                  <exclude>**/*Test.class</exclude>
+                </excludes>
+              </instrumentation>
+            </configuration>            
           </plugin>
           <plugin>
               <groupId>org.eluder.coveralls</groupId>
