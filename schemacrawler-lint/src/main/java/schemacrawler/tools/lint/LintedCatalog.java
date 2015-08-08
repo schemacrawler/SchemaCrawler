@@ -31,8 +31,8 @@ public final class LintedCatalog
   extends BaseCatalogDecorator
 {
 
-  private static final Logger LOGGER = Logger.getLogger(LintedCatalog.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(LintedCatalog.class.getName());
 
   private static final long serialVersionUID = -3953296149824921463L;
 
@@ -55,13 +55,10 @@ public final class LintedCatalog
       // Configure linter
       if (linterConfigs != null)
       {
-        linter.config(linterConfigs.get(linter.getId()));
+        linter.configure(linterConfigs.get(linter.getId()));
       }
-      // Do linting
-      if (linter.getSeverity() != LintSeverity.off)
-      {
-        linter.lint(catalog);
-      }
+
+      linter.lint(catalog);
     }
 
   }

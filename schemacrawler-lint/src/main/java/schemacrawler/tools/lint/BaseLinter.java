@@ -41,15 +41,18 @@ public abstract class BaseLinter
 
   private Catalog catalog;
   private LintCollector collector;
+  private boolean isRunLinter = true;
+
   private LintSeverity severity = LintSeverity.medium;
 
   @Override
-  public void config(final LinterConfig linterConfig)
+  public void configure(final LinterConfig linterConfig)
   {
     if (linterConfig != null)
     {
+      setRunLinter(linterConfig.isRunLinter());
       setSeverity(linterConfig.getSeverity());
-      config(linterConfig.getConfig());
+      configure(linterConfig.getConfig());
     }
   }
 
@@ -72,8 +75,19 @@ public abstract class BaseLinter
   }
 
   @Override
+  public boolean isRunLinter()
+  {
+    return isRunLinter;
+  }
+
+  @Override
   public final void lint(final Catalog catalog)
   {
+    if (!isRunLinter)
+    {
+      return;
+    }
+
     this.catalog = requireNonNull(catalog, "No catalog provided");
     start();
     for (final Table table: catalog.getTables())
@@ -90,15 +104,6 @@ public abstract class BaseLinter
     collector = lintCollector;
   }
 
-  @Override
-  public final void setSeverity(final LintSeverity severity)
-  {
-    if (severity != null)
-    {
-      this.severity = severity;
-    }
-  };
-
   protected <N extends NamedObject & AttributedObject, V extends Serializable>
     void addLint(final N namedObject, final String message, final V value)
   {
@@ -109,7 +114,7 @@ public abstract class BaseLinter
       final Lint<V> lint = newLint(namedObject.getFullName(), message, value);
       collector.addLint(namedObject, lint);
     }
-  };
+  }
 
   protected <V extends Serializable> void addLint(final String message,
                                                   final V value)
@@ -120,10 +125,10 @@ public abstract class BaseLinter
     }
   }
 
-  protected void config(final Config config)
+  protected void configure(final Config config)
   {
 
-  }
+  };
 
   protected void end()
   {
@@ -131,8 +136,21 @@ public abstract class BaseLinter
 
   protected abstract void lint(Table table);
 
+  protected final void setSeverity(final LintSeverity severity)
+  {
+    if (severity != null)
+    {
+      this.severity = severity;
+    }
+  }
+
   protected void start()
   {
+  }
+
+  void setRunLinter(final boolean isRunLinter)
+  {
+    this.isRunLinter = isRunLinter;
   }
 
   private <V extends Serializable> Lint<V>

@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -39,6 +38,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -49,7 +49,6 @@ import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterConfigs
-  implements Iterable<LinterConfig>
 {
 
   private static final Logger LOGGER = Logger
@@ -134,9 +133,15 @@ public class LinterConfigs
     {
       for (int i = 0; i < linterNodesList.getLength(); i++)
       {
-        final Element linterElement = (Element) linterNodesList.item(i);
-        final LinterConfig linterConfig = parseLinterConfig(linterElement);
-        linterConfigs.add(linterConfig);
+        final Node node = linterNodesList.item(i);
+        if (node instanceof Element)
+        {
+          final LinterConfig linterConfig = parseLinterConfig((Element) node);
+          if (linterConfig != null)
+          {
+            linterConfigs.add(linterConfig);
+          }
+        }
       }
     }
 
@@ -147,11 +152,37 @@ public class LinterConfigs
   {
     requireNonNull(linterElement, "No linter configuration provided");
 
-    final String linterId = linterElement.getAttribute("id");
-    final LinterConfig linterConfig = new LinterConfig(linterId);
+    final String linterId;
+    if (linterElement.hasAttribute("id"))
+    {
+      linterId = linterElement.getAttribute("id");
+    }
+    else
+    {
+      linterId = null;
+    }
+    if (isBlank(linterId))
+    {
+      LOGGER.log(Level.CONFIG,
+                 "Not running linter, since linter id is not provided");
+      return new LinterConfig("<unknown>", false);
+    }
+
+    final boolean runLinter;
+    if (linterElement.hasAttribute("runLinter"))
+    {
+      runLinter = Boolean.valueOf(linterElement.getAttribute("runLinter"));
+    }
+    else
+    {
+      // Run linter by default
+      runLinter = true;
+    }
+
+    final LinterConfig linterConfig = new LinterConfig(linterId, runLinter);
 
     final String severityValue = getTextValue(linterElement, "severity");
-    if (!Utility.isBlank(severityValue))
+    if (!isBlank(severityValue))
     {
       try
       {
@@ -188,25 +219,9 @@ public class LinterConfigs
     linterConfigsMap = new HashMap<>();
   }
 
-  public boolean containsLinterConfig(final String linterId)
-  {
-    return linterConfigsMap.containsKey(linterId);
-  }
-
   public LinterConfig get(final String linterId)
   {
     return linterConfigsMap.get(linterId);
-  }
-
-  public boolean isEmpty()
-  {
-    return linterConfigsMap.isEmpty();
-  }
-
-  @Override
-  public Iterator<LinterConfig> iterator()
-  {
-    return linterConfigsMap.values().iterator();
   }
 
   public void parse(final Reader reader)
@@ -231,6 +246,10 @@ public class LinterConfigs
     }
   }
 
+  /**
+   * @return
+   * @see java.util.Map#size()
+   */
   public int size()
   {
     return linterConfigsMap.size();
