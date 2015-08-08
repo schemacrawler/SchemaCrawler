@@ -26,7 +26,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public interface Linter
 {
 
-  void config(LinterConfig linterConfig);
+  void configure(LinterConfig linterConfig);
 
   String getDescription();
 
@@ -41,8 +41,8 @@ public interface Linter
   void lint(Catalog catalog)
     throws SchemaCrawlerException;
 
-  void setLintCollector(LintCollector lintCollector);
+  boolean isRunLinter();
 
-  void setSeverity(LintSeverity severity);
+  void setLintCollector(LintCollector lintCollector);
 
 }
