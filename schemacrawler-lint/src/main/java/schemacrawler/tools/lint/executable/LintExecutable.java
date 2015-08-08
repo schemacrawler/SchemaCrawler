@@ -153,8 +153,12 @@ public class LintExecutable
             .log(Level.WARNING,
                  "Could not find linter configs file, " + linterConfigsFile);
         }
-
       }
+      else
+      {
+        LOGGER.log(Level.CONFIG, "Using default linter configs");
+      }
+
       return linterConfigs;
     }
     catch (final Exception e)
