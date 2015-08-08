@@ -47,7 +47,6 @@ public class LintExecutable
     .getLogger(LintExecutable.class.getName());
 
   public static final String COMMAND = "lint";
-  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
 
   private LintOptions lintOptions;
 
@@ -60,6 +59,9 @@ public class LintExecutable
   public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
+    // Read lint options from the config
+    lintOptions = getLintOptions();
+
     final LinterConfigs linterConfigs = readLinterConfigs();
     final LintedCatalog catalog = new LintedCatalog(db, linterConfigs);
 
@@ -109,7 +111,6 @@ public class LintExecutable
     throws SchemaCrawlerException
   {
     final LintTraversalHandler formatter;
-    final LintOptions lintOptions = getLintOptions();
 
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
@@ -137,7 +138,7 @@ public class LintExecutable
     String linterConfigsFile = null;
     try
     {
-      linterConfigsFile = System.getProperty(CONFIG_LINTER_CONFIGS_FILE);
+      linterConfigsFile = lintOptions.getLinterConfigs();
       if (!isBlank(linterConfigsFile))
       {
         final Path linterConfigsFilePath = Paths.get(linterConfigsFile)

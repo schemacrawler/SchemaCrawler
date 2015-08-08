@@ -28,4 +28,27 @@ public class LintOptions
 
   private static final long serialVersionUID = -5917925090616219096L;
 
+  private String linterConfigs;
+
+  /**
+   * Gets the path to the linter configs file.
+   * 
+   * @return Path to the linter configs file.
+   */
+  public String getLinterConfigs()
+  {
+    return linterConfigs;
+  }
+
+  /**
+   * Sets the path to the linter configs file.
+   * 
+   * @param linterConfigs
+   *        Path to the linter configs file.
+   */
+  public void setLinterConfigs(String linterConfigs)
+  {
+    this.linterConfigs = linterConfigs;
+  }
+
 }
