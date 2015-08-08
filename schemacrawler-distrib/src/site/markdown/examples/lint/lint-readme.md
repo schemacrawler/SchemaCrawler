@@ -14,9 +14,6 @@ below to run SchemaCrawler Lint.
 1. Create the SchemaCrawler Lint report in HTML5 and JSON formats. 
 2. Create a customized SchemaCrawler Lint report using a linter configuration file. 
   1. Start a command shell in the `lint` example directory.
-  2. To find schema design issues, run 
-  `java -Dschemacrawer.linter_configs.file=schemacrawler-linter-configs.xml 
-  -cp .;..\_schemacrawler\lib\*.jar 
-  schemacrawler.Main -server=hsqldb -database=schemacrawler
-  -user=sa -password= -infolevel=standard -command=lint`  
+  2. To find schema design issues, run with an additional command-line option,
+  `-linterconfigs=schemacrawler-linter-configs.xml`
 3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](http://www.schemacrawler.com/lint.html). 

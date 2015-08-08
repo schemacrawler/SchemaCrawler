@@ -20,15 +20,63 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.Map;
+
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public class LintOptionsBuilder
   extends BaseTextOptionsBuilder<LintOptions>
 {
 
+  private static final String CLI_LINTER_CONFIGS = "linterconfigs";
+  private static final String LINTER_CONFIGS = SCHEMACRAWLER_FORMAT_PREFIX
+                                               + CLI_LINTER_CONFIGS;
+
   public LintOptionsBuilder()
   {
     super(new LintOptions());
+  }
+
+  @Override
+  public LintOptionsBuilder fromConfig(final Map<String, String> map)
+  {
+    if (map == null)
+    {
+      return this;
+    }
+    super.fromConfig(map);
+
+    final Config config = new Config(map);
+    if (config.containsKey(CLI_LINTER_CONFIGS))
+    {
+      // Honor command-line option first
+      options.setLinterConfigs(config.getStringValue(CLI_LINTER_CONFIGS, ""));
+    }
+    else
+    {
+      // Otherwise, take option from SchemaCrawler configuration file
+      options.setLinterConfigs(config.getStringValue(LINTER_CONFIGS, ""));
+    }
+
+    return this;
+  }
+
+  @Override
+  public Config toConfig()
+  {
+    final Config config = super.toConfig();
+    config.setStringValue(LINTER_CONFIGS, options.getLinterConfigs());
+    return config;
+  }
+
+  /**
+   * Whether to show LOBs.
+   */
+  public LintOptionsBuilder withLinterConfigs(final String linterConfigs)
+  {
+    options.setLinterConfigs(linterConfigs);
+    return this;
   }
 
 }

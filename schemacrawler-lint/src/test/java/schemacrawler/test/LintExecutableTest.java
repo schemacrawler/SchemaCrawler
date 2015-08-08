@@ -24,18 +24,17 @@ package schemacrawler.test;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -43,24 +42,11 @@ public class LintExecutableTest
   extends BaseExecutableTest
 {
 
-  private static final String CONFIG_LINTER_CONFIGS_FILE = "schemacrawer.linter_configs.file";
-
-  private static void removeLinterConfig()
-  {
-    System.getProperties().remove(CONFIG_LINTER_CONFIGS_FILE);
-  }
-
-  @Before
-  public void before()
-  {
-    removeLinterConfig();
-  }
-
   @Test
   public void commandlineLintReport()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text, false,
                                             "executableForLint");
   }
 
@@ -68,35 +54,30 @@ public class LintExecutableTest
   public void commandlineLintReportWithConfig()
     throws Exception
   {
-    useLinterConfigFile();
-
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text, true,
                                             "executableForLintWithConfig");
-
-    removeLinterConfig();
   }
 
   @Test
   public void executableLintReport()
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text, "executableForLint");
+    executeLintExecutable(TextOutputFormat.text, false, "executableForLint");
   }
 
   @Test
   public void executableLintReportWithConfig()
     throws Exception
   {
-    useLinterConfigFile();
-
-    executeLintExecutable(TextOutputFormat.text, "executableForLintWithConfig");
-
-    removeLinterConfig();
+    executeLintExecutable(TextOutputFormat.text, true,
+                          "executableForLintWithConfig");
   }
 
-  private void executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
-                                                       final String referenceFileName)
-    throws Exception
+  private void
+    executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
+                                            final boolean linterconfigs,
+                                            final String referenceFileName)
+                                              throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
@@ -111,6 +92,12 @@ public class LintExecutableTest
       argsMap.put("outputformat", outputFormat.getFormat());
       argsMap.put("outputfile", out.toString());
 
+      if (linterconfigs)
+      {
+        final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+        argsMap.put("linterconfigs", linterConfigsFile.toString());
+      }
+
       Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(referenceFileName + ".txt");
@@ -118,19 +105,22 @@ public class LintExecutableTest
   }
 
   private void executeLintExecutable(final OutputFormat outputFormat,
+                                     final boolean linterconfigs,
                                      final String referenceFileName)
-    throws Exception
+                                       throws Exception
   {
-    executeExecutable(new SchemaCrawlerExecutable("lint"),
-                      outputFormat.getFormat(),
-                      referenceFileName + ".txt");
-  }
+    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+    if (linterconfigs)
+    {
+      final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+      final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
+      optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
-  private void useLinterConfigFile()
-    throws IOException
-  {
-    final Path file = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
-    System.setProperty(CONFIG_LINTER_CONFIGS_FILE, file.toString());
+      lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
+    }
+
+    executeExecutable(lintExecutable, outputFormat.getFormat(),
+                      referenceFileName + ".txt");
   }
 
 }
