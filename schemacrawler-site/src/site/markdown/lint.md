@@ -30,10 +30,10 @@ examples/lint_report.txt) , [HTML5](lint-report-examples/lint_report.html) or
 example reports.)
 
 SchemaCrawler linters can be configured (both severity, and thresholds) using
-an [XML configuration file.](schemacrawler-linter-configs.xml) You can provide
-a system property, `schemacrawer.linter_configs.file`, pointing to the path of
-the SchemaCrawler linter XML configuration file. On the command-line, you can
-use `-Dschemacrawer.linter_configs.file=[path]`.
+an [XML configuration file.](schemacrawler-linter-configs.xml) You can run SchemaCrawler
+lint with an additional command-line option, for example, 
+`-linterconfigs=[path to linter XML configuration file]`, 
+pointing to the path of the SchemaCrawler linter XML configuration file.
 
 ## Lint Checks
 
