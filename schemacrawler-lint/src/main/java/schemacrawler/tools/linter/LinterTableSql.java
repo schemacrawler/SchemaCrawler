@@ -79,7 +79,13 @@ public class LinterTableSql
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
   {
+    if (isBlank(sql))
+    {
+      return;
+    }
+
     requireNonNull(table, "No table provided");
+    requireNonNull(connection, "No connection provided");
 
     final Query query = new Query(message, sql);
     final Object queryResult = query.executeForScalar(connection, table);
