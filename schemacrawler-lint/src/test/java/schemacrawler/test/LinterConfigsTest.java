@@ -114,11 +114,13 @@ public class LinterConfigsTest
       if (linterConfig.getId().equals("linter.Linter1"))
       {
         assertEquals(LintSeverity.medium, linterConfig.getSeverity());
+        assertTrue(linterConfig.isRunLinter());
       }
 
       if (linterConfig.getId().equals("linter.Linter2"))
       {
         assertTrue(linterConfig.getSeverity() == null);
+        assertTrue(!linterConfig.isRunLinter());
         assertEquals(".*",
                      linterConfig.getConfig().getStringValue("exclude", null));
       }
@@ -126,6 +128,7 @@ public class LinterConfigsTest
       if (linterConfig.getId().equals("linter.Linter3"))
       {
         assertEquals(LintSeverity.high, linterConfig.getSeverity());
+        assertTrue(linterConfig.isRunLinter());
       }
     }
   }
