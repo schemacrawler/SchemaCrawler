@@ -165,21 +165,16 @@ public class LinterConfigs
     {
       LOGGER.log(Level.CONFIG,
                  "Not running linter, since linter id is not provided");
-      return new LinterConfig("<unknown>", false);
+      return new LinterConfig("<unknown>");
     }
 
-    final boolean runLinter;
-    if (linterElement.hasAttribute("runLinter"))
-    {
-      runLinter = Boolean.valueOf(linterElement.getAttribute("runLinter"));
-    }
-    else
-    {
-      // Run linter by default
-      runLinter = true;
-    }
+    final LinterConfig linterConfig = new LinterConfig(linterId);
 
-    final LinterConfig linterConfig = new LinterConfig(linterId, runLinter);
+    final String runLinterValue = getTextValue(linterElement, "run");
+    if (!isBlank(runLinterValue))
+    {
+      linterConfig.setRunLinter(Boolean.valueOf(runLinterValue));
+    }
 
     final String severityValue = getTextValue(linterElement, "severity");
     if (!isBlank(severityValue))
