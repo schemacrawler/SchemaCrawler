@@ -24,7 +24,7 @@ import java.sql.ResultSet;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.operation.Query;
+import schemacrawler.utility.Query;
 
 public interface DataTraversalHandler
   extends TraversalHandler

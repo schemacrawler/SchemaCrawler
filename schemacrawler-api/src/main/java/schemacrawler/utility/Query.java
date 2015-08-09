@@ -19,10 +19,17 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package schemacrawler.tools.text.operation;
+package schemacrawler.utility;
 
+
+import static sf.util.DatabaseUtility.executeSqlForLong;
+import static sf.util.DatabaseUtility.executeSqlForScalar;
+import static sf.util.TemplatingUtility.expandTemplate;
+import static sf.util.TemplatingUtility.extractTemplateVariables;
+import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +39,7 @@ import java.util.Set;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
-import schemacrawler.utility.NamedObjectSort;
-import sf.util.TemplatingUtility;
-import sf.util.Utility;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
@@ -47,8 +52,9 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private static String getColumnsListAsString(final List<Column> columns,
-                                               final boolean omitLargeObjectColumns)
+  private static String
+    getColumnsListAsString(final List<Column> columns,
+                           final boolean omitLargeObjectColumns)
   {
     final StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < columns.size(); i++)
@@ -56,7 +62,8 @@ public final class Query
       final Column column = columns.get(i);
       final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
         .getJavaSqlType().getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns && javaSqlTypeGroup == JavaSqlTypeGroup.large_object))
+      if (!(omitLargeObjectColumns
+            && javaSqlTypeGroup == JavaSqlTypeGroup.large_object))
       {
         if (i > 0)
         {
@@ -72,18 +79,17 @@ public final class Query
   private final String query;
 
   /**
-   * Definition of a query, including a name, and parameterized or
-   * regular SQL.
+   * Definition of a query, including a name, and parameterized or regular SQL.
    *
    * @param name
    *        Query name.
    * @param query
    *        Query SQL.
    */
-  Query(final String name, final String query)
+  public Query(final String name, final String query)
   {
-    final boolean isNameProvided = !Utility.isBlank(name);
-    final boolean isQueryProvided = !Utility.isBlank(query);
+    final boolean isNameProvided = !isBlank(name);
+    final boolean isQueryProvided = !isBlank(query);
     if (isNameProvided && isQueryProvided)
     {
       this.name = name;
@@ -97,6 +103,30 @@ public final class Query
     {
       throw new IllegalArgumentException("No SQL found for query");
     }
+  }
+
+  public long executeForLong(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    return executeSqlForLong(connection, getQuery());
+  }
+
+  public long executeForLong(final Connection connection, final Table table)
+    throws SchemaCrawlerException
+  {
+    return executeSqlForLong(connection, getQuery(table, true));
+  }
+
+  public Object executeForScalar(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    return executeSqlForScalar(connection, getQuery());
+  }
+
+  public Object executeForScalar(final Connection connection, final Table table)
+    throws SchemaCrawlerException
+  {
+    return executeSqlForScalar(connection, getQuery(table, true));
   }
 
   /**
@@ -116,7 +146,7 @@ public final class Query
    */
   public String getQuery()
   {
-    return TemplatingUtility.expandTemplate(query);
+    return expandTemplate(query);
   }
 
   /**
@@ -124,10 +154,10 @@ public final class Query
    *
    * @param table
    *        Table information
-   * @return Ready-to-execute quer
+   * @return Ready-to-execute query
    */
-  public String getQueryForTable(final Table table,
-                                 final boolean isAlphabeticalSortForTableColumns)
+  public String getQuery(final Table table,
+                         final boolean isAlphabeticalSortForTableColumns)
   {
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
@@ -149,21 +179,21 @@ public final class Query
     }
 
     String sql = query;
-    sql = TemplatingUtility.expandTemplate(sql, tableProperties);
-    sql = TemplatingUtility.expandTemplate(sql);
+    sql = expandTemplate(sql, tableProperties);
+    sql = expandTemplate(sql);
 
     return sql;
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether
-   * it should be run once for each table.
+   * Determines if this query has substitutable parameters, and whether it
+   * should be run once for each table.
    *
    * @return If the query is to be run over each table
    */
   public boolean isQueryOver()
   {
-    final Set<String> keys = TemplatingUtility.extractTemplateVariables(query);
+    final Set<String> keys = extractTemplateVariables(query);
     return keys.contains("table");
   }
 

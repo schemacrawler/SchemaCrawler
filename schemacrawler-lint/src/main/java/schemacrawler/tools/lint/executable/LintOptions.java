@@ -32,7 +32,7 @@ public class LintOptions
 
   /**
    * Gets the path to the linter configs file.
-   * 
+   *
    * @return Path to the linter configs file.
    */
   public String getLinterConfigs()
@@ -42,11 +42,11 @@ public class LintOptions
 
   /**
    * Sets the path to the linter configs file.
-   * 
+   *
    * @param linterConfigs
    *        Path to the linter configs file.
    */
-  public void setLinterConfigs(String linterConfigs)
+  public void setLinterConfigs(final String linterConfigs)
   {
     this.linterConfigs = linterConfigs;
   }

@@ -77,6 +77,11 @@ public final class LinterRegistry
     linterRegistry = loadLinterRegistry();
   }
 
+  public Set<String> allRegisteredLinters()
+  {
+    return new HashSet<>(linterRegistry.keySet());
+  }
+
   public boolean hasLinter(final String linterId)
   {
     return linterRegistry.containsKey(linterId);
@@ -103,11 +108,6 @@ public final class LinterRegistry
     {
       return null;
     }
-  }
-
-  public Set<String> allRegisteredLinters()
-  {
-    return new HashSet<>(linterRegistry.keySet());
   }
 
 }

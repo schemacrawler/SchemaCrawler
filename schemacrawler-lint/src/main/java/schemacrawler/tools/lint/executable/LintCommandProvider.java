@@ -30,7 +30,8 @@ public class LintCommandProvider
 {
 
   @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+  public Executable configureNewExecutable(
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final LintExecutable executable = new LintExecutable();

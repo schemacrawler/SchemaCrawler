@@ -40,8 +40,8 @@ public class SimpleLintCollector
       return null;
     }
 
-    final List<Lint<?>> lints = new ArrayList<>(namedObject.getAttribute(LINT_KEY,
-                                                                         new ArrayList<Lint<?>>()));
+    final List<Lint<?>> lints = new ArrayList<>(namedObject
+      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>()));
     Collections.sort(lints);
     return lints;
   }
@@ -54,8 +54,8 @@ public class SimpleLintCollector
   }
 
   @Override
-  public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
-                                                                 final Lint<?> lint)
+  public <N extends NamedObject & AttributedObject> void
+    addLint(final N namedObject, final Lint<?> lint)
   {
     if (namedObject != null && lint != null
         && namedObject.getFullName().equals(lint.getObjectName()))

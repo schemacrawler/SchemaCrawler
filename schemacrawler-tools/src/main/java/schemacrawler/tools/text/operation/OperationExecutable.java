@@ -38,6 +38,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Query;
 
 /**
  * Basic SchemaCrawler executor.
@@ -84,7 +85,7 @@ public final class OperationExecutable
 
         for (final Table table: tables)
         {
-          final String sql = query.getQueryForTable(table, operationOptions
+          final String sql = query.getQuery(table, operationOptions
             .isAlphabeticalSortForTableColumns());
 
           LOGGER.log(Level.FINE,

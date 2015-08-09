@@ -20,6 +20,8 @@
 package schemacrawler.tools.lint;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -38,10 +40,10 @@ public interface Linter
 
   String getSummary();
 
-  void lint(Catalog catalog)
-    throws SchemaCrawlerException;
-
   boolean isRunLinter();
+
+  void lint(Catalog catalog, Connection connection)
+    throws SchemaCrawlerException;
 
   void setLintCollector(LintCollector lintCollector);
 
