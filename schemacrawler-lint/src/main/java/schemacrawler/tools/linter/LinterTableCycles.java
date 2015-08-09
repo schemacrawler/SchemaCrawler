@@ -21,6 +21,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
@@ -71,8 +72,9 @@ public class LinterTableCycles
     {
       for (final ForeignKeyColumnReference columnReference: foreignKey)
       {
-        tablesGraph.addDirectedEdge(columnReference.getPrimaryKeyColumn()
-          .getParent(), columnReference.getForeignKeyColumn().getParent());
+        tablesGraph
+          .addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
+                           columnReference.getForeignKeyColumn().getParent());
       }
     }
 

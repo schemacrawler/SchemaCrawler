@@ -33,6 +33,7 @@ import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Query;
 
 /**
  * Text formatting of data.
@@ -87,7 +88,7 @@ final class DataTextFormatter
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.tools.text.operation.Query,
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.utility.Query,
    *      java.sql.ResultSet)
    */
   @Override

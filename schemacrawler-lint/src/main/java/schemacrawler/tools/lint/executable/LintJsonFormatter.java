@@ -40,8 +40,9 @@ final class LintJsonFormatter
   implements LintTraversalHandler
 {
 
-  LintJsonFormatter(final LintOptions options, final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+  LintJsonFormatter(final LintOptions options,
+                    final OutputOptions outputOptions)
+                      throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
   }
@@ -127,8 +128,8 @@ final class LintJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER
-            .log(Level.FINER, "Error outputting Lint: " + e.getMessage(), e);
+          LOGGER.log(Level.FINER, "Error outputting Lint: " + e.getMessage(),
+                     e);
         }
       }
     }

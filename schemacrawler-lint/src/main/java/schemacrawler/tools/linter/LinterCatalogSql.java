@@ -17,74 +17,69 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
-import java.io.Serializable;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.BaseLinterCatalog;
+import schemacrawler.utility.Query;
 
-public abstract class BaseLinterTable
+public class LinterCatalogSql
   extends BaseLinterCatalog
 {
 
-  private Catalog catalog;
+  private String message;
+  private String sql;
 
   @Override
-  public final void lint(final Catalog catalog, final Connection connection)
-    throws SchemaCrawlerException
+  public String getDescription()
   {
-    if (!isRunLinter())
-    {
-      return;
-    }
-
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-    start();
-    for (final Table table: catalog.getTables())
-    {
-      lint(table, connection);
-    }
-    end();
-    this.catalog = null;
+    return getSummary();
   }
 
-  protected <V extends Serializable> void addCatalogLint(final String message,
-                                                         final V value)
+  @Override
+  public String getSummary()
   {
-    if (catalog != null)
+    return message;
+  }
+
+  @Override
+  public void lint(final Catalog catalog, final Connection connection)
+    throws SchemaCrawlerException
+  {
+    requireNonNull(catalog, "No catalog provided");
+
+    final Query query = new Query(message, sql);
+    final Object queryResult = query.executeForScalar(connection);
+    if (queryResult != null)
     {
-      addLint(catalog, message, value);
+      addLint(catalog, getSummary() + " " + queryResult, true);
     }
   }
 
   @Override
   protected void configure(final Config config)
   {
+    requireNonNull(config, "No configuration provided");
 
-  };
+    message = config.getStringValue("message", null);
+    if (isBlank(message))
+    {
+      throw new IllegalArgumentException("No message provided");
+    }
 
-  protected void end()
-  {
-  }
-
-  protected abstract void lint(Table table)
-    throws SchemaCrawlerException;
-
-  protected void lint(final Table table, final Connection connection)
-    throws SchemaCrawlerException
-  {
-    lint(table);
-  }
-
-  protected void start()
-  {
+    sql = config.getStringValue("sql", null);
+    if (isBlank(sql))
+    {
+      throw new IllegalArgumentException("No SQL provided");
+    }
   }
 
 }

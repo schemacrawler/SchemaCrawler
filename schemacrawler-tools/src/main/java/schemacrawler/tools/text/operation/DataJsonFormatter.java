@@ -33,6 +33,7 @@ import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Query;
 
 /**
  * Text formatting of data.
@@ -83,7 +84,7 @@ final class DataJsonFormatter
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.tools.text.operation.Query,
+   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.utility.Query,
    *      java.sql.ResultSet)
    */
   @Override
