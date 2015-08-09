@@ -54,7 +54,13 @@ public class LinterCatalogSql
   public void lint(final Catalog catalog, final Connection connection)
     throws SchemaCrawlerException
   {
+    if (isBlank(sql))
+    {
+      return;
+    }
+
     requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
 
     final Query query = new Query(message, sql);
     final Object queryResult = query.executeForScalar(connection);

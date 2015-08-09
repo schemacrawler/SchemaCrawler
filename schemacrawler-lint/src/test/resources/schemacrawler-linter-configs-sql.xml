@@ -1,0 +1,83 @@
+<schemacrawler-linter-configs>
+  <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <config>
+      <property name="message">message A</property>
+      <property name="sql">SELECT TOP 1 1 FROM ${table}</property>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <config>
+      <property name="message">message B</property>
+      <property name="sql">SELECT TOP 1 2 FROM ${table}</property>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <config>
+      <property name="message">message C</property>
+      <property name="sql">SELECT TOP 1 1 FROM ${table} WHERE 1 != 1</property>
+    </config>
+  </linter>  
+
+  <linter id="schemacrawler.tools.linter.LinterForeignKeyMismatch">
+    <run>false</run>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterNullColumnsInIndex">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterNullIntendedColumns">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterRedundantIndexes">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableCycles">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter
+    id="schemacrawler.tools.linter.LinterTableWithIncrementingColumns">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableWithQuotedNames">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableWithSingleColumn">
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterTooManyLobs">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterColumnTypes">
+    <run>false</run>
+    <config>
+    </config>
+  </linter>
+  <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
+    <run>false</run>
+    <severity>critical</severity>
+    <config>
+    </config>
+  </linter>
+</schemacrawler-linter-configs>
