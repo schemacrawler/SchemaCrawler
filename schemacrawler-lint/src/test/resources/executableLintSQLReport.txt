@@ -1,0 +1,84 @@
+
+
+Lints
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	single column	
+
+
+
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	single column	
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+

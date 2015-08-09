@@ -66,35 +66,32 @@ public final class LintedCatalog
 
     final List<Linter> linters = new ArrayList<>();
 
-    final Set<String> registeredLinters = new LinterRegistry()
-      .allRegisteredLinters();
+    final LinterRegistry linterRegistry = new LinterRegistry();
+    final Set<String> registeredLinters = linterRegistry.allRegisteredLinters();
 
     // Add all configured linters, with as many instances as were configured
     for (final LinterConfig linterConfig: linterConfigs)
     {
       final String linterId = linterConfig.getId();
-      final boolean found = registeredLinters.remove(linterId);
-      if (!found)
-      {
-        LOGGER.log(Level.CONFIG,
-                   String.format("Cannot find linter, %s", linterId));
-        continue;
-      }
+      registeredLinters.remove(linterId);
 
-      final Linter linter = newLinter(new LinterRegistry(), linterId);
-      // Configure linter
-      if (linterConfigs != null)
+      final Linter linter = newLinter(linterRegistry, linterId);
+      if (linter != null)
       {
-        linter.configure(linterConfig);
-      }
+        // Configure linter
+        if (linterConfigs != null)
+        {
+          linter.configure(linterConfig);
+        }
 
-      linters.add(linter);
+        linters.add(linter);
+      }
     }
 
     // Add in all remaining linters that were not configured
     for (final String linterId: registeredLinters)
     {
-      final Linter linter = newLinter(new LinterRegistry(), linterId);
+      final Linter linter = newLinter(linterRegistry, linterId);
       linters.add(linter);
     }
 
@@ -115,7 +112,14 @@ public final class LintedCatalog
   private Linter newLinter(final LinterRegistry registry, final String linterId)
   {
     final Linter linter = registry.newLinter(linterId);
-    linter.setLintCollector(collector);
+    if (linter != null)
+    {
+      linter.setLintCollector(collector);
+    }
+    else
+    {
+      LOGGER.log(Level.FINE, String.format("Cannot find linter, %s", linterId));
+    }
     return linter;
   }
 
