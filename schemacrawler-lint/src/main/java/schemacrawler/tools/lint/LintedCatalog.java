@@ -20,6 +20,9 @@
 package schemacrawler.tools.lint;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,27 +48,59 @@ public final class LintedCatalog
 
     collector = new SimpleLintCollector();
 
-    final LinterRegistry registry = new LinterRegistry();
-    for (final String linterId: registry)
+    final List<Linter> linters = new ArrayList<>();
+
+    final Set<String> registeredLinters = new LinterRegistry()
+      .allRegisteredLinters();
+
+    // Add all configured linters, with as many instances as were configured
+    for (final LinterConfig linterConfig: linterConfigs)
     {
-      final Linter linter = registry.lookupLinter(linterId);
-      LOGGER.log(Level.FINE,
-                 String.format("Linting with %s", linter.getClass().getName()));
-      linter.setLintCollector(collector);
+      final String linterId = linterConfig.getId();
+      final boolean found = registeredLinters.remove(linterId);
+      if (!found)
+      {
+        LOGGER.log(Level.CONFIG,
+                   String.format("Cannot find linter, %s", linterId));
+        continue;
+      }
+
+      final Linter linter = newLinter(new LinterRegistry(), linterId);
       // Configure linter
       if (linterConfigs != null)
       {
-        linter.configure(linterConfigs.get(linter.getId()));
+        linter.configure(linterConfig);
       }
 
-      linter.lint(catalog);
+      linters.add(linter);
     }
 
+    // Add in all remaining linters that were not configured
+    for (final String linterId: registeredLinters)
+    {
+      final Linter linter = newLinter(new LinterRegistry(), linterId);
+      linters.add(linter);
+    }
+
+    // Perform lint
+    for (final Linter linter: linters)
+    {
+      LOGGER.log(Level.FINE,
+                 String.format("Linting with %s", linter.getClass().getName()));
+      linter.lint(catalog);
+    }
   }
 
   public LintCollector getCollector()
   {
     return collector;
+  }
+
+  private Linter newLinter(final LinterRegistry registry, final String linterId)
+  {
+    final Linter linter = registry.newLinter(linterId);
+    linter.setLintCollector(collector);
+    return linter;
   }
 
 }
