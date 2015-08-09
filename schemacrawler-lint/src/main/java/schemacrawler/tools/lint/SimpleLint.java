@@ -43,10 +43,8 @@ public final class SimpleLint<V extends Serializable>
   private final String message;
   private final V value;
 
-  public SimpleLint(final String id,
-                    final String objectName,
-                    final LintSeverity severity,
-                    final String message,
+  public SimpleLint(final String id, final String objectName,
+                    final LintSeverity severity, final String message,
                     final V value)
   {
     if (isBlank(id))
@@ -226,9 +224,9 @@ public final class SimpleLint<V extends Serializable>
       if (valueClass.isArray()
           && NamedObject.class.isAssignableFrom(valueClass.getComponentType()))
       {
-        valueObject = Arrays.asList(Arrays.copyOf((Object[]) value,
-                                                  ((Object[]) value).length,
-                                                  NamedObject[].class));
+        valueObject = Arrays
+          .asList(Arrays.copyOf((Object[]) value, ((Object[]) value).length,
+                                NamedObject[].class));
       }
 
       if (NamedObject.class.isAssignableFrom(valueClass))

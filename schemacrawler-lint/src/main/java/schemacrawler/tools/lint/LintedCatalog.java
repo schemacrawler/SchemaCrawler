@@ -20,6 +20,10 @@
 package schemacrawler.tools.lint;
 
 
+import static sf.util.DatabaseUtility.checkConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -41,12 +45,24 @@ public final class LintedCatalog
 
   private final LintCollector collector;
 
-  public LintedCatalog(final Catalog catalog, final LinterConfigs linterConfigs)
-    throws SchemaCrawlerException
+  public LintedCatalog(final Catalog catalog, final Connection connection,
+                       final LinterConfigs linterConfigs)
+                         throws SchemaCrawlerException
   {
     super(catalog);
 
     collector = new SimpleLintCollector();
+
+    try
+    {
+      checkConnection(connection);
+    }
+    catch (final NullPointerException | SQLException e)
+    {
+      // The offline snapshot executable may not have a live connection,
+      // so we cannot fail with an exception. Log and continue.
+      LOGGER.log(Level.WARNING, "No connection provided", e);
+    }
 
     final List<Linter> linters = new ArrayList<>();
 
@@ -87,7 +103,7 @@ public final class LintedCatalog
     {
       LOGGER.log(Level.FINE,
                  String.format("Linting with %s", linter.getClass().getName()));
-      linter.lint(catalog);
+      linter.lint(catalog, connection);
     }
   }
 

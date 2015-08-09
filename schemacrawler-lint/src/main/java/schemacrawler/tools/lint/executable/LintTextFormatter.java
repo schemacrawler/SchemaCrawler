@@ -44,8 +44,9 @@ final class LintTextFormatter
   implements LintTraversalHandler
 {
 
-  LintTextFormatter(final LintOptions options, final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+  LintTextFormatter(final LintOptions options,
+                    final OutputOptions outputOptions)
+                      throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
   }
@@ -59,9 +60,7 @@ final class LintTextFormatter
     {
       formattingHelper.writeObjectStart();
 
-      formattingHelper.writeObjectNameRow("",
-                                          "Database",
-                                          "[database]",
+      formattingHelper.writeObjectNameRow("", "Database", "[database]",
                                           Color.white);
 
       printLints(lints);
@@ -86,10 +85,8 @@ final class LintTextFormatter
       formattingHelper.println();
 
       final String tableType = "[" + table.getTableType() + "]";
-      formattingHelper.writeObjectNameRow(nodeId(table),
-                                          table.getFullName(),
-                                          tableType,
-                                          colorMap.getColor(table));
+      formattingHelper.writeObjectNameRow(nodeId(table), table.getFullName(),
+                                          tableType, colorMap.getColor(table));
       printLints(lints);
       formattingHelper.writeObjectEnd();
     }
@@ -148,8 +145,7 @@ final class LintTextFormatter
         }
         else
         {
-          formattingHelper.writeRow("",
-                                    lint.getMessage(),
+          formattingHelper.writeRow("", lint.getMessage(),
                                     lint.getValueAsString());
         }
       }

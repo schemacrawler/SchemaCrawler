@@ -21,6 +21,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
