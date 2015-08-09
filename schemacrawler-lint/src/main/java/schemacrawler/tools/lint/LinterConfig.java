@@ -34,18 +34,18 @@ public class LinterConfig
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String id;
-  private final boolean runLinter;
+  private boolean runLinter;
   private LintSeverity severity;
   private final Config config;
 
-  public LinterConfig(final String id, final boolean runLinter)
+  public LinterConfig(final String id)
   {
     if (isBlank(id))
     {
       throw new IllegalArgumentException("No linter id provided");
     }
     this.id = id;
-    this.runLinter = runLinter;
+    runLinter = true; // default value
     config = new Config();
   }
 
@@ -75,6 +75,11 @@ public class LinterConfig
     {
       config.putAll(config2);
     }
+  }
+
+  public void setRunLinter(final boolean runLinter)
+  {
+    this.runLinter = runLinter;
   }
 
   public void setSeverity(final LintSeverity severity)
