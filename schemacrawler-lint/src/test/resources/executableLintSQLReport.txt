@@ -37,7 +37,6 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
                                                           [lint, medium]
 	message A 1	
-	message B 2	
 
 
 

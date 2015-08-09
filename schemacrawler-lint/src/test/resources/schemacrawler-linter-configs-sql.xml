@@ -2,10 +2,11 @@
   <linter id="schemacrawler.tools.linter.LinterTableSql">
     <config>
       <property name="message">message A</property>
-      <property name="sql">SELECT TOP 1 1 FROM ${table}</property>
+      <property name="sql"><![CDATA[SELECT TOP 1 1 FROM ${table}]]></property>
     </config>
   </linter>
   <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
     <config>
       <property name="message">message B</property>
       <property name="sql">SELECT TOP 1 2 FROM ${table}</property>

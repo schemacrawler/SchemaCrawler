@@ -27,6 +27,8 @@ import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.InclusionRule;
 
 public abstract class BaseLinterCatalog
   implements Linter
@@ -36,11 +38,17 @@ public abstract class BaseLinterCatalog
     .getLogger(BaseLinterCatalog.class.getName());
 
   private LintCollector collector;
-  private boolean isRunLinter = true;
-  private LintSeverity severity = LintSeverity.medium;
+  private boolean isRunLinter;
+  private LintSeverity severity;
+
+  protected BaseLinterCatalog()
+  {
+    isRunLinter = true;
+    severity = LintSeverity.medium;
+  }
 
   @Override
-  public final void configure(final LinterConfig linterConfig)
+  public void configure(final LinterConfig linterConfig)
   {
     if (linterConfig != null)
     {
@@ -66,6 +74,12 @@ public abstract class BaseLinterCatalog
   public final LintSeverity getSeverity()
   {
     return severity;
+  }
+
+  @Override
+  public InclusionRule getTableInclusionRule()
+  {
+    return new IncludeAll();
   }
 
   @Override

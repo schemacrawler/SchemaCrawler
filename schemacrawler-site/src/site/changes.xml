@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.02.01" date="2015-08-09" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added a SQL Lint.
+      ]]></action>                                                  
+     </release>    
      <release version="14.01.02" date="2015-07-28" description="Bug fixes for connection URL.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Bug fix for connecting to a database using a URL.

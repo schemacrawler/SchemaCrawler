@@ -21,7 +21,6 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
@@ -66,7 +65,7 @@ public class LinterConfigsTest
 
       if (linterConfig.getId().equals("linter.Linter3"))
       {
-        assertNull(linterConfig.getSeverity());
+        assertEquals(LintSeverity.medium, linterConfig.getSeverity());
       }
     }
   }
@@ -119,7 +118,7 @@ public class LinterConfigsTest
 
       if (linterConfig.getId().equals("linter.Linter2"))
       {
-        assertTrue(linterConfig.getSeverity() == null);
+        assertEquals(LintSeverity.medium, linterConfig.getSeverity());
         assertTrue(!linterConfig.isRunLinter());
         assertEquals(".*",
                      linterConfig.getConfig().getStringValue("exclude", null));
