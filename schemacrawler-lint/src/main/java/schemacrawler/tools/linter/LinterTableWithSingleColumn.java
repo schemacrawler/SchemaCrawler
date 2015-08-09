@@ -33,12 +33,6 @@ public class LinterTableWithSingleColumn
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "single column";

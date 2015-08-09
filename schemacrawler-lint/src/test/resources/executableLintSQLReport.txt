@@ -3,6 +3,12 @@
 Lints
 ========================================================================
 
+Database                                                      [database]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message for SQL catalog lint 1	
+
 
 
 PUBLIC.BOOKS.AUTHORS                                             [table]

@@ -32,12 +32,6 @@ public class LinterTableWithNoIndexes
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "no indexes";

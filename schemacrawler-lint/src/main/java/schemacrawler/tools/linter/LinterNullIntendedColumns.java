@@ -35,12 +35,6 @@ public class LinterNullIntendedColumns
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "column where NULL may be intended";
