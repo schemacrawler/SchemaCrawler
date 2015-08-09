@@ -32,10 +32,6 @@ public interface LintCollector
   <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
                                                           final Lint<?> lint);
 
-  void clear();
-
-  boolean isEmpty();
-
   int size();
 
 }

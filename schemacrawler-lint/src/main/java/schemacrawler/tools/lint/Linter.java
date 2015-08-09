@@ -35,8 +35,6 @@ public interface Linter
 
   String getId();
 
-  LintCollector getLintCollector();
-
   LintSeverity getSeverity();
 
   String getSummary();

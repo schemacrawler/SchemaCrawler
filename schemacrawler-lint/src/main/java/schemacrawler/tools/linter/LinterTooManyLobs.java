@@ -43,12 +43,6 @@ public class LinterTooManyLobs
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "too many binary objects";
