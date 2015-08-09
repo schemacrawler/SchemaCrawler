@@ -69,28 +69,6 @@ public class SimpleLintCollector
     }
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.lint.LintCollector#clear()
-   */
-  @Override
-  public void clear()
-  {
-    lints.clear();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.lint.LintCollector#isEmpty()
-   */
-  @Override
-  public boolean isEmpty()
-  {
-    return lints.isEmpty();
-  }
-
   @Override
   public Iterator<Lint<?>> iterator()
   {

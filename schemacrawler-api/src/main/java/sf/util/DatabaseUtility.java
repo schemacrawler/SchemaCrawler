@@ -159,6 +159,11 @@ public final class DatabaseUtility
       final Statement statement = createStatement(connection);
       final ResultSet resultSet = executeSql(statement, sql);)
     {
+      if (resultSet == null)
+      {
+        return null;
+      }
+
       // Error checking
       if (resultSet.getMetaData().getColumnCount() != 1)
       {

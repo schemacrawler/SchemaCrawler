@@ -39,12 +39,6 @@ public class LinterCatalogSql
   private String sql;
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return message;

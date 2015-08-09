@@ -47,12 +47,6 @@ public class LinterRedundantIndexes
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "redundant index";

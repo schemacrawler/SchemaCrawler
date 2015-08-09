@@ -59,15 +59,15 @@ public abstract class BaseLinterCatalog
   }
 
   @Override
-  public String getId()
+  public String getDescription()
   {
-    return getClass().getName();
+    return getSummary();
   }
 
   @Override
-  public LintCollector getLintCollector()
+  public String getId()
   {
-    return collector;
+    return getClass().getName();
   }
 
   @Override

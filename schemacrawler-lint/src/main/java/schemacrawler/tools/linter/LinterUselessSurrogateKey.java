@@ -32,12 +32,6 @@ public class LinterUselessSurrogateKey
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "useless surrogate key";
