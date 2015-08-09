@@ -24,11 +24,11 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 import sf.util.graph.DirectedGraph;
 
 public class LinterTableCycles
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   private DirectedGraph<Table> tablesGraph;
@@ -52,7 +52,7 @@ public class LinterTableCycles
 
     if (tablesGraph.containsCycle())
     {
-      addLint(getSummary(), Boolean.TRUE);
+      addCatalogLint(getSummary(), Boolean.TRUE);
     }
 
     tablesGraph = null;

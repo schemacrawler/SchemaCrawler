@@ -30,11 +30,11 @@ import java.util.TreeSet;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 import sf.util.Multimap;
 
 public class LinterColumnTypes
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   private Multimap<String, ColumnDataType> columnTypes;
@@ -62,7 +62,7 @@ public class LinterColumnTypes
       final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry.getValue());
       if (currentColumnTypes.size() > 1)
       {
-        addLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
+        addCatalogLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
       }
     }
 

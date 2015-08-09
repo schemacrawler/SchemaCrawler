@@ -25,10 +25,10 @@ import java.util.Collection;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 
 public class LinterTableWithNoIndexes
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   @Override

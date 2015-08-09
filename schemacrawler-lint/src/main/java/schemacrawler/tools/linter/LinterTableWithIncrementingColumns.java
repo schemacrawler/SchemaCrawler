@@ -35,12 +35,12 @@ import java.util.regex.Pattern;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 import sf.util.Multimap;
 import sf.util.Utility;
 
 public class LinterTableWithIncrementingColumns
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   private class IncrementingColumn
