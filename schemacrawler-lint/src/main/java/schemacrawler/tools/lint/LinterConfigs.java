@@ -26,9 +26,8 @@ import static sf.util.Utility.isBlank;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,6 +48,7 @@ import sf.util.ObjectToString;
 import sf.util.Utility;
 
 public class LinterConfigs
+  implements Iterable<LinterConfig>
 {
 
   private static final Logger LOGGER = Logger
@@ -212,16 +212,17 @@ public class LinterConfigs
     return dom;
   }
 
-  private final Map<String, LinterConfig> linterConfigsMap;
+  private final List<LinterConfig> linterConfigs;
 
   public LinterConfigs()
   {
-    linterConfigsMap = new HashMap<>();
+    linterConfigs = new ArrayList<>();
   }
 
-  public LinterConfig get(final String linterId)
+  @Override
+  public Iterator<LinterConfig> iterator()
   {
-    return linterConfigsMap.get(linterId);
+    return linterConfigs.iterator();
   }
 
   public void parse(final Reader reader)
@@ -242,7 +243,7 @@ public class LinterConfigs
     final List<LinterConfig> linterConfigs = parseDocument(document);
     for (final LinterConfig linterConfig: linterConfigs)
     {
-      linterConfigsMap.put(linterConfig.getId(), linterConfig);
+      this.linterConfigs.add(linterConfig);
     }
   }
 
@@ -252,7 +253,7 @@ public class LinterConfigs
    */
   public int size()
   {
-    return linterConfigsMap.size();
+    return linterConfigs.size();
   }
 
   @Override
