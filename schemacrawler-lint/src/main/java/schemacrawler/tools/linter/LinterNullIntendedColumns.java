@@ -27,11 +27,11 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 import sf.util.Utility;
 
 public class LinterNullIntendedColumns
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   @Override

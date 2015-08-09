@@ -29,10 +29,10 @@ import java.util.List;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.BaseLinterTable;
 
 public class LinterNullColumnsInIndex
-  extends BaseLinter
+  extends BaseLinterTable
 {
 
   @Override
