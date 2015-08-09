@@ -42,8 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public final class DatabaseUtility
 {
 
-  private static final Logger LOGGER = Logger.getLogger(DatabaseUtility.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(DatabaseUtility.class.getName());
 
   public static void checkConnection(final Connection connection)
     throws SQLException
@@ -64,7 +64,7 @@ public final class DatabaseUtility
 
   public static void executeScriptFromResource(final Connection connection,
                                                final String scriptResource)
-    throws SchemaCrawlerException
+                                                 throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);)
     {
@@ -89,8 +89,9 @@ public final class DatabaseUtility
     }
   }
 
-  public static ResultSet executeSql(final Statement statement, final String sql)
-    throws SchemaCrawlerException
+  public static ResultSet executeSql(final Statement statement,
+                                     final String sql)
+                                       throws SchemaCrawlerException
   {
     ResultSet results = null;
     if (statement == null)
@@ -115,10 +116,9 @@ public final class DatabaseUtility
       else
       {
         final int updateCount = statement.getUpdateCount();
-        LOGGER.log(Level.FINE, String
-          .format("No results. Update count of %d for query: %s",
-                  updateCount,
-                  sql));
+        LOGGER.log(Level.FINE,
+                   String.format("No results. Update count of %d for query: %s",
+                                 updateCount, sql));
       }
 
       SQLWarning sqlWarning = statement.getWarnings();
@@ -137,22 +137,52 @@ public final class DatabaseUtility
     }
   }
 
-  public static long executeSqlForScalar(final Connection connection,
-                                         final String sql)
-    throws SchemaCrawlerException
+  public static long executeSqlForLong(final Connection connection,
+                                       final String sql)
+                                         throws SchemaCrawlerException
   {
-    try (final Statement statement = createStatement(connection);
-        final ResultSet resultSet = executeSql(statement, sql);)
+    final Object longValue = executeSqlForScalar(connection, sql);
+    // Error checking
+    if (longValue == null || !(longValue instanceof Number))
     {
+      throw new SchemaCrawlerException("Cannot get an integer value result from SQL");
+    }
+
+    return ((Number) longValue).longValue();
+  }
+
+  public static Object executeSqlForScalar(final Connection connection,
+                                           final String sql)
+                                             throws SchemaCrawlerException
+  {
+    try (
+      final Statement statement = createStatement(connection);
+      final ResultSet resultSet = executeSql(statement, sql);)
+    {
+      // Error checking
+      if (resultSet.getMetaData().getColumnCount() != 1)
+      {
+        throw new SchemaCrawlerException("Too many columns of data returned");
+      }
+
+      final Object scalar;
       if (resultSet.next())
       {
-        final long scalar = resultSet.getLong(1);
-        return scalar;
+        scalar = resultSet.getObject(1);
       }
       else
       {
-        throw new SQLException("No rows of data returned");
+        LOGGER.log(Level.WARNING, "No rows of data returned: " + sql);
+        scalar = null;
       }
+
+      // Error checking
+      if (resultSet.next())
+      {
+        throw new SchemaCrawlerException("Too many rows of data returned");
+      }
+
+      return scalar;
     }
     catch (final SQLException e)
     {

@@ -99,8 +99,9 @@ public class LinterTableWithIncrementingColumns
     }
   }
 
-  private void addIncrementingColumnsLints(final Table table,
-                                           final List<IncrementingColumn> incrementingColumnsList)
+  private void
+    addIncrementingColumnsLints(final Table table,
+                                final List<IncrementingColumn> incrementingColumnsList)
   {
 
     int minIncrement = Integer.MAX_VALUE;
@@ -126,8 +127,7 @@ public class LinterTableWithIncrementingColumns
     // Check for increments that are not consecutive
     if (maxIncrement - minIncrement + 1 != incrementingColumnsList.size())
     {
-      addLint(table,
-              "incrementing columns are not consecutive",
+      addLint(table, "incrementing columns are not consecutive",
               incrementingColumns);
     }
 
@@ -137,12 +137,10 @@ public class LinterTableWithIncrementingColumns
     final int columnSize = incrementingColumns.get(0).getSize();
     for (int i = 1; i < incrementingColumns.size(); i++)
     {
-      if (!columnDataType
-        .equals(incrementingColumns.get(i).getColumnDataType())
+      if (!columnDataType.equals(incrementingColumns.get(i).getColumnDataType())
           || columnSize != incrementingColumns.get(i).getSize())
       {
-        addLint(table,
-                "incrementing columns don't have the same data-type",
+        addLint(table, "incrementing columns don't have the same data-type",
                 incrementingColumns);
         break;
       }
@@ -150,7 +148,8 @@ public class LinterTableWithIncrementingColumns
 
   }
 
-  private Multimap<String, IncrementingColumn> findIncrementingColumns(final List<Column> columns)
+  private Multimap<String, IncrementingColumn>
+    findIncrementingColumns(final List<Column> columns)
   {
     if (columns == null || columns.size() <= 1)
     {
@@ -171,7 +170,8 @@ public class LinterTableWithIncrementingColumns
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
           incrementingColumnsMap
-            .put(columnNameBase, incrementingColumnsMap.get(columnNameBase) + 1);
+            .put(columnNameBase,
+                 incrementingColumnsMap.get(columnNameBase) + 1);
         }
         else
         {
@@ -180,7 +180,8 @@ public class LinterTableWithIncrementingColumns
       }
     }
 
-    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap.keySet());
+    final Set<String> columnNameBases = new HashSet<>(incrementingColumnsMap
+      .keySet());
     for (final String columnNameBase: columnNameBases)
     {
       if (incrementingColumnsMap.get(columnNameBase) == 1)
@@ -196,8 +197,8 @@ public class LinterTableWithIncrementingColumns
       final String columnName = Utility.convertForComparison(column.getName());
       if (incrementingColumnsMap.containsKey(columnName))
       {
-        incrementingColumns
-          .add(columnName, new IncrementingColumn("0", column));
+        incrementingColumns.add(columnName,
+                                new IncrementingColumn("0", column));
       }
       final Matcher matcher = pattern.matcher(columnName);
       if (matcher.matches())
@@ -206,9 +207,9 @@ public class LinterTableWithIncrementingColumns
         final String columnIncrement = matcher.group(2);
         if (incrementingColumnsMap.containsKey(columnNameBase))
         {
-          incrementingColumns.add(columnNameBase,
-                                  new IncrementingColumn(columnIncrement,
-                                                         column));
+          incrementingColumns
+            .add(columnNameBase,
+                 new IncrementingColumn(columnIncrement, column));
         }
       }
     }

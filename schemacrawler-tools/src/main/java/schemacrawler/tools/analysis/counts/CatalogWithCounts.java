@@ -23,7 +23,7 @@ package schemacrawler.tools.analysis.counts;
 
 import static schemacrawler.tools.analysis.counts.CountsUtility.addCountToTable;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.DatabaseUtility.executeSqlForScalar;
+import static sf.util.DatabaseUtility.executeSqlForLong;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.tools.text.operation.Query;
+import schemacrawler.utility.Query;
 
 public final class CatalogWithCounts
   extends BaseCatalogDecorator
@@ -81,8 +81,8 @@ public final class CatalogWithCounts
     {
       try
       {
-        final long count = executeSqlForScalar(connection,
-                                               query.getQueryForTable(table,
+        final long count = executeSqlForLong(connection,
+                                               query.getQuery(table,
                                                                       false));
         counts.put(table, count);
         addCountToTable(table, count);

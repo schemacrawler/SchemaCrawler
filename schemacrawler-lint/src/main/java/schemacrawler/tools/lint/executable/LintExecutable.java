@@ -63,7 +63,8 @@ public class LintExecutable
     lintOptions = getLintOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs();
-    final LintedCatalog catalog = new LintedCatalog(db, linterConfigs);
+    final LintedCatalog catalog = new LintedCatalog(db, connection,
+                                                    linterConfigs);
 
     final LintTraversalHandler formatter = getSchemaTraversalHandler();
 

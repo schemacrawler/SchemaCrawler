@@ -21,23 +21,22 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.sql.Connection;
 
-import schemacrawler.schema.Column;
-import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinterTable;
-import sf.util.Multimap;
+import schemacrawler.utility.Query;
 
-public class LinterColumnTypes
+public class LinterTableSql
   extends BaseLinterTable
 {
 
-  private Multimap<String, ColumnDataType> columnTypes;
+  private String message;
+  private String sql;
 
   @Override
   public String getDescription()
@@ -48,48 +47,46 @@ public class LinterColumnTypes
   @Override
   public String getSummary()
   {
-    return "column with same name but different data types";
+    return message;
   }
 
   @Override
-  protected void end()
+  protected void configure(final Config config)
   {
-    requireNonNull(columnTypes, "Not initialized");
+    requireNonNull(config, "No configuration provided");
 
-    for (final Entry<String, List<ColumnDataType>> entry: columnTypes
-      .entrySet())
+    message = config.getStringValue("message", null);
+    if (isBlank(message))
     {
-      final SortedSet<ColumnDataType> currentColumnTypes = new TreeSet<>(entry
-        .getValue());
-      if (currentColumnTypes.size() > 1)
-      {
-        addCatalogLint(getSummary(), entry.getKey() + " " + currentColumnTypes);
-      }
+      throw new IllegalArgumentException("No message provided");
     }
 
-    columnTypes = null;
-
-    super.end();
+    sql = config.getStringValue("sql", null);
+    if (isBlank(sql))
+    {
+      throw new IllegalArgumentException("No SQL provided");
+    }
   }
 
   @Override
   protected void lint(final Table table)
+    throws SchemaCrawlerException
   {
-    requireNonNull(table, "No table provided");
-    requireNonNull(columnTypes, "Not initialized");
-
-    for (final Column column: table.getColumns())
-    {
-      columnTypes.add(column.getName(), column.getColumnDataType());
-    }
+    throw new SchemaCrawlerException("Cannot lint without a database connection");
   }
 
   @Override
-  protected void start()
+  protected void lint(final Table table, final Connection connection)
+    throws SchemaCrawlerException
   {
-    super.start();
+    requireNonNull(table, "No table provided");
 
-    columnTypes = new Multimap<>();
+    final Query query = new Query(message, sql);
+    final Object queryResult = query.executeForScalar(connection, table);
+    if (queryResult != null)
+    {
+      addLint(table, getSummary() + " " + queryResult, true);
+    }
   }
 
 }
