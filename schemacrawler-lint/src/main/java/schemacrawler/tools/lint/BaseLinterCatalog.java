@@ -20,33 +20,27 @@
 package schemacrawler.tools.lint;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.AttributedObject;
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 
-public abstract class BaseLinter
+public abstract class BaseLinterCatalog
   implements Linter
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(BaseLinter.class.getName());
+    .getLogger(BaseLinterCatalog.class.getName());
 
-  private Catalog catalog;
   private LintCollector collector;
   private boolean isRunLinter = true;
-
   private LintSeverity severity = LintSeverity.medium;
 
   @Override
-  public void configure(final LinterConfig linterConfig)
+  public final void configure(final LinterConfig linterConfig)
   {
     if (linterConfig != null)
     {
@@ -75,37 +69,20 @@ public abstract class BaseLinter
   }
 
   @Override
-  public boolean isRunLinter()
+  public final boolean isRunLinter()
   {
     return isRunLinter;
   }
 
   @Override
-  public final void lint(final Catalog catalog)
-  {
-    if (!isRunLinter)
-    {
-      return;
-    }
-
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-    start();
-    for (final Table table: catalog.getTables())
-    {
-      lint(table);
-    }
-    end();
-    this.catalog = null;
-  }
-
-  @Override
-  public void setLintCollector(final LintCollector lintCollector)
+  public final void setLintCollector(final LintCollector lintCollector)
   {
     collector = lintCollector;
   }
 
-  protected <N extends NamedObject & AttributedObject, V extends Serializable>
-    void addLint(final N namedObject, final String message, final V value)
+  protected final <
+    N extends NamedObject & AttributedObject, V extends Serializable> void
+    addLint(final N namedObject, final String message, final V value)
   {
     LOGGER.log(Level.FINE, String.format("Found lint for %s: %s --> %s",
                                          namedObject, message, value));
@@ -116,25 +93,15 @@ public abstract class BaseLinter
     }
   }
 
-  protected <V extends Serializable> void addLint(final String message,
-                                                  final V value)
-  {
-    if (catalog != null)
-    {
-      addLint(catalog, message, value);
-    }
-  }
-
   protected void configure(final Config config)
   {
 
   };
 
-  protected void end()
+  protected final void setRunLinter(final boolean isRunLinter)
   {
+    this.isRunLinter = isRunLinter;
   }
-
-  protected abstract void lint(Table table);
 
   protected final void setSeverity(final LintSeverity severity)
   {
@@ -142,15 +109,6 @@ public abstract class BaseLinter
     {
       this.severity = severity;
     }
-  }
-
-  protected void start()
-  {
-  }
-
-  void setRunLinter(final boolean isRunLinter)
-  {
-    this.isRunLinter = isRunLinter;
   }
 
   private <V extends Serializable> Lint<V>

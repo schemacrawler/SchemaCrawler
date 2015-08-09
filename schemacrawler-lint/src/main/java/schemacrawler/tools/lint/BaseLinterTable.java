@@ -17,43 +17,64 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.linter;
+package schemacrawler.tools.lint;
 
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
+import java.io.Serializable;
 
-import schemacrawler.schema.Column;
+import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.schemacrawler.Config;
 
-public class LinterTableWithSingleColumn
-  extends BaseLinterTable
+public abstract class BaseLinterTable
+  extends BaseLinterCatalog
 {
 
-  @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
+  private Catalog catalog;
 
   @Override
-  public String getSummary()
+  public final void lint(final Catalog catalog)
   {
-    return "single column";
-  }
-
-  @Override
-  protected void lint(final Table table)
-  {
-    requireNonNull(table, "No table provided");
-
-    final List<Column> columns = table.getColumns();
-    if (columns.size() <= 1)
+    if (!isRunLinter())
     {
-      addLint(table, getSummary(), true);
+      return;
     }
+
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+    start();
+    for (final Table table: catalog.getTables())
+    {
+      lint(table);
+    }
+    end();
+    this.catalog = null;
+  }
+
+  protected <V extends Serializable> void addCatalogLint(final String message,
+                                                         final V value)
+  {
+    if (catalog != null)
+    {
+      addLint(catalog, message, value);
+    }
+  }
+
+  @Override
+  protected void configure(final Config config)
+  {
+
+  };
+
+  protected void end()
+  {
+  }
+
+  protected abstract void lint(Table table);
+
+  protected void start()
+  {
   }
 
 }
