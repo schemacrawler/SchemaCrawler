@@ -43,12 +43,6 @@ public class LinterForeignKeyMismatch
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "foreign key and primary key have different data types";

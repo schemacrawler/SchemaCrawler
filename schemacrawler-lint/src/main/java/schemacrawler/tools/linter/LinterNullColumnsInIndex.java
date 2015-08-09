@@ -36,12 +36,6 @@ public class LinterNullColumnsInIndex
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "unique index with nullable columns";

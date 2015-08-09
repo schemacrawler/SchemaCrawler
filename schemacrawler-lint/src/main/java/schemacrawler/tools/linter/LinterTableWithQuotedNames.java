@@ -34,12 +34,6 @@ public class LinterTableWithQuotedNames
 {
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "spaces in name, or reserved word";

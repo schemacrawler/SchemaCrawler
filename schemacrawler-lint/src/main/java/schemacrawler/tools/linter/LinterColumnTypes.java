@@ -40,12 +40,6 @@ public class LinterColumnTypes
   private Multimap<String, ColumnDataType> columnTypes;
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "column with same name but different data types";

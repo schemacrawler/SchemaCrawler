@@ -35,12 +35,6 @@ public class LinterTableCycles
   private DirectedGraph<Table> tablesGraph;
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "cycles in table relationships";

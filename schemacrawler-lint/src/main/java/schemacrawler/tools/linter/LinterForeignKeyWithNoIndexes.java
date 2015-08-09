@@ -45,12 +45,6 @@ public class LinterForeignKeyWithNoIndexes
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "foreign key with no index";
