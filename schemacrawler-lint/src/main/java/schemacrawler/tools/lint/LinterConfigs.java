@@ -94,110 +94,6 @@ public class LinterConfigs
     return text;
   }
 
-  private static Config parseConfig(final Element configElement)
-  {
-    final Config config = new Config();
-    if (configElement == null)
-    {
-      return config;
-    }
-
-    final NodeList propertiesList = configElement
-      .getElementsByTagName("property");
-    if (propertiesList != null && propertiesList.getLength() > 0)
-    {
-      for (int i = 0; i < propertiesList.getLength(); i++)
-      {
-        final Element propertyElement = (Element) propertiesList.item(i);
-        final String name = propertyElement.getAttribute("name");
-        final String value = propertyElement.getFirstChild().getNodeValue();
-        if (!Utility.isBlank(name))
-        {
-          config.put(name, value);
-        }
-      }
-    }
-
-    return config;
-  }
-
-  private static List<LinterConfig> parseDocument(final Document document)
-  {
-    requireNonNull(document, "No document provided");
-
-    final List<LinterConfig> linterConfigs = new ArrayList<>();
-
-    final Element root = document.getDocumentElement();
-    final NodeList linterNodesList = root.getElementsByTagName("linter");
-    if (linterNodesList != null && linterNodesList.getLength() > 0)
-    {
-      for (int i = 0; i < linterNodesList.getLength(); i++)
-      {
-        final Node node = linterNodesList.item(i);
-        if (node instanceof Element)
-        {
-          final LinterConfig linterConfig = parseLinterConfig((Element) node);
-          if (linterConfig != null)
-          {
-            linterConfigs.add(linterConfig);
-          }
-        }
-      }
-    }
-
-    return linterConfigs;
-  }
-
-  private static LinterConfig parseLinterConfig(final Element linterElement)
-  {
-    requireNonNull(linterElement, "No linter configuration provided");
-
-    final String linterId;
-    if (linterElement.hasAttribute("id"))
-    {
-      linterId = linterElement.getAttribute("id");
-    }
-    else
-    {
-      linterId = null;
-    }
-    if (isBlank(linterId))
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Not running linter, since linter id is not provided");
-      return new LinterConfig("<unknown>");
-    }
-
-    final LinterConfig linterConfig = new LinterConfig(linterId);
-
-    final String runLinterValue = getTextValue(linterElement, "run");
-    if (!isBlank(runLinterValue))
-    {
-      linterConfig.setRunLinter(Boolean.valueOf(runLinterValue));
-    }
-
-    final String severityValue = getTextValue(linterElement, "severity");
-    if (!isBlank(severityValue))
-    {
-      try
-      {
-        final LintSeverity severity = LintSeverity.valueOf(severityValue);
-        linterConfig.setSeverity(severity);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.CONFIG,
-                   String.format("Could not set a severity of %s for linter %s",
-                                 severityValue, linterId));
-      }
-    }
-
-    final Config config = parseConfig(getSubElement(linterElement, "config"));
-    linterConfig.putAll(config);
-
-    return linterConfig;
-  }
-
   private static Document parseXml(final InputSource xmlStream)
     throws ParserConfigurationException, SAXException, IOException
   {
@@ -255,6 +151,158 @@ public class LinterConfigs
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  private Config parseConfig(final Element configElement)
+  {
+    final Config config = new Config();
+    if (configElement == null)
+    {
+      return config;
+    }
+
+    final NodeList propertiesList = configElement
+      .getElementsByTagName("property");
+    if (propertiesList != null && propertiesList.getLength() > 0)
+    {
+      for (int i = 0; i < propertiesList.getLength(); i++)
+      {
+        final Element propertyElement = (Element) propertiesList.item(i);
+        final String name = propertyElement.getAttribute("name");
+        final String value = propertyElement.getFirstChild().getNodeValue();
+        if (!Utility.isBlank(name))
+        {
+          config.put(name, value);
+        }
+      }
+    }
+
+    return config;
+  }
+
+  private List<LinterConfig> parseDocument(final Document document)
+  {
+    requireNonNull(document, "No document provided");
+
+    final List<LinterConfig> linterConfigs = new ArrayList<>();
+
+    final Element root = document.getDocumentElement();
+    final NodeList linterNodesList = root.getElementsByTagName("linter");
+    if (linterNodesList != null && linterNodesList.getLength() > 0)
+    {
+      for (int i = 0; i < linterNodesList.getLength(); i++)
+      {
+        final Node node = linterNodesList.item(i);
+        if (node instanceof Element)
+        {
+          final LinterConfig linterConfig = parseLinterConfig((Element) node);
+          if (linterConfig != null)
+          {
+            linterConfigs.add(linterConfig);
+          }
+        }
+      }
+    }
+
+    return linterConfigs;
+  }
+
+  private LinterConfig parseLinterConfig(final Element linterElement)
+  {
+    requireNonNull(linterElement, "No linter configuration provided");
+
+    final String linterId = parseLinterId(linterElement);
+    if (isBlank(linterId))
+    {
+      LOGGER.log(Level.CONFIG,
+                 "Not running linter, since linter id is not provided");
+      return new LinterConfig("<unknown>");
+    }
+
+    final LinterConfig linterConfig = new LinterConfig(linterId);
+
+    final Boolean runLinter = parseRunLinter(linterElement);
+    linterConfig.setRunLinter(runLinter);
+
+    final LintSeverity severity = parseSeverity(linterElement, linterId);
+    linterConfig.setSeverity(severity);
+
+    final String tableInclusionPattern = parseTablePattern(linterElement,
+                                                           "table-inclusion-pattern");
+    linterConfig.setTableInclusionPattern(tableInclusionPattern);
+
+    final String tableExclusionPattern = parseTablePattern(linterElement,
+                                                           "table-exclusion-pattern");
+    linterConfig.setTableExclusionPattern(tableExclusionPattern);
+
+    final Config config = parseConfig(getSubElement(linterElement, "config"));
+    linterConfig.putAll(config);
+
+    return linterConfig;
+  }
+
+  private String parseLinterId(final Element linterElement)
+  {
+    final String linterId;
+    if (linterElement.hasAttribute("id"))
+    {
+      linterId = linterElement.getAttribute("id");
+    }
+    else
+    {
+      linterId = null;
+    }
+    return linterId;
+  }
+
+  private boolean parseRunLinter(final Element linterElement)
+  {
+    final boolean runLinter;
+    final String runLinterValue = getTextValue(linterElement, "run");
+    if (!isBlank(runLinterValue))
+    {
+      runLinter = Boolean.valueOf(runLinterValue);
+    }
+    else
+    {
+      runLinter = true;
+    }
+    return runLinter;
+  }
+
+  private LintSeverity parseSeverity(final Element linterElement,
+                                     final String linterId)
+  {
+    LintSeverity severity = LintSeverity.medium;
+    final String severityValue = getTextValue(linterElement, "severity");
+    if (!isBlank(severityValue))
+    {
+      try
+      {
+        severity = LintSeverity.valueOf(severityValue);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.CONFIG,
+                   String.format("Could not set a severity of %s for linter %s",
+                                 severityValue, linterId));
+      }
+    }
+    return severity;
+  }
+
+  private String parseTablePattern(final Element linterElement,
+                                   final String elementName)
+  {
+    final String tablePatternValue = getTextValue(linterElement, elementName);
+    if (isBlank(tablePatternValue))
+    {
+      return null;
+    }
+    else
+    {
+      return tablePatternValue;
+    }
   }
 
 }

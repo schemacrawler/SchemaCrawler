@@ -24,17 +24,47 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public abstract class BaseLinterTable
   extends BaseLinterCatalog
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(BaseLinterTable.class.getName());
+
   private Catalog catalog;
+  private InclusionRule tableInclusionRule;
+
+  protected BaseLinterTable()
+  {
+    tableInclusionRule = new IncludeAll();
+  }
+
+  @Override
+  public void configure(final LinterConfig linterConfig)
+  {
+    super.configure(linterConfig);
+    if (linterConfig != null)
+    {
+      tableInclusionRule = new RegularExpressionRule(linterConfig
+        .getTableInclusionPattern(), linterConfig.getTableExclusionPattern());
+    }
+  }
+
+  @Override
+  public InclusionRule getTableInclusionRule()
+  {
+    return tableInclusionRule;
+  }
 
   @Override
   public final void lint(final Catalog catalog, final Connection connection)
@@ -49,7 +79,16 @@ public abstract class BaseLinterTable
     start();
     for (final Table table: catalog.getTables())
     {
-      lint(table, connection);
+      if (tableInclusionRule.test(table.getFullName()))
+      {
+        lint(table, connection);
+      }
+      else
+      {
+        LOGGER
+          .log(Level.FINE,
+               String.format("Excluding table %s for lint %s", table, getId()));
+      }
     }
     end();
     this.catalog = null;
@@ -63,12 +102,6 @@ public abstract class BaseLinterTable
       addLint(catalog, message, value);
     }
   }
-
-  @Override
-  protected void configure(final Config config)
-  {
-
-  };
 
   protected void end()
   {
