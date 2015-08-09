@@ -37,6 +37,8 @@ public class LinterConfig
   private boolean runLinter;
   private LintSeverity severity;
   private final Config config;
+  private String tableInclusionPattern;
+  private String tableExclusionPattern;
 
   public LinterConfig(final String id)
   {
@@ -64,6 +66,16 @@ public class LinterConfig
     return severity;
   }
 
+  public String getTableExclusionPattern()
+  {
+    return tableExclusionPattern;
+  }
+
+  public String getTableInclusionPattern()
+  {
+    return tableInclusionPattern;
+  }
+
   public boolean isRunLinter()
   {
     return runLinter;
@@ -85,6 +97,16 @@ public class LinterConfig
   public void setSeverity(final LintSeverity severity)
   {
     this.severity = severity;
+  }
+
+  public void setTableExclusionPattern(final String tableExclusionPattern)
+  {
+    this.tableExclusionPattern = tableExclusionPattern;
+  }
+
+  public void setTableInclusionPattern(final String tableInclusionPattern)
+  {
+    this.tableInclusionPattern = tableInclusionPattern;
   }
 
   @Override
