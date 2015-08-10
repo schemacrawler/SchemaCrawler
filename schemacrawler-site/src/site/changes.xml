@@ -5,10 +5,17 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.02.01" date="2015-08-09" description="Enhancements to SchemaCrawler Lint.">
+     <release version="14.02.01" date="2015-08-10" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added a SQL Lint.
-      ]]></action>                                                  
+        Added a custom SQL Lint, to allow for data lints.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New lint command-line option, -linterconfigs=<path> to specify the location of the
+        linter XML configuration file.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Ability to specify table inclusion rules for lints.
+      ]]></action>                                                               
      </release>    
      <release version="14.01.02" date="2015-07-28" description="Bug fixes for connection URL.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[

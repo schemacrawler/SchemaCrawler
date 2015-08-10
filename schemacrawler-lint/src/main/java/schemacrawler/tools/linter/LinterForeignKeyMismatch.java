@@ -30,11 +30,11 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterForeignKeyMismatch
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   public LinterForeignKeyMismatch()
