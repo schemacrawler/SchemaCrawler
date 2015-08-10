@@ -34,17 +34,17 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
-public abstract class BaseLinterTable
+public abstract class BaseLinter
   extends BaseLinterCatalog
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(BaseLinterTable.class.getName());
+    .getLogger(BaseLinter.class.getName());
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;
 
-  protected BaseLinterTable()
+  protected BaseLinter()
   {
     tableInclusionRule = new IncludeAll();
   }

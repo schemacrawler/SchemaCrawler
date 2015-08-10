@@ -28,11 +28,11 @@ import java.sql.Connection;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.utility.Query;
 
 public class LinterTableSql
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   private String message;

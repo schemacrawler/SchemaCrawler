@@ -28,11 +28,11 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterTooManyLobs
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   private static final int MAX_LOBS_IN_TABLE = 1;

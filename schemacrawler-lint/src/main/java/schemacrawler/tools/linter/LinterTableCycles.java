@@ -25,11 +25,11 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import sf.util.graph.DirectedGraph;
 
 public class LinterTableCycles
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   private DirectedGraph<Table> tablesGraph;

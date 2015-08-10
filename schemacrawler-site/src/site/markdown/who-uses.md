@@ -1,5 +1,9 @@
 # Who Uses SchemaCrawler
 
+## Ecosystem
+
+See details on the [SchemaCrawler Ecosystem](ecosystem.html).
+
 ## Question from Users
 
 SchemaCrawler questions from users.
@@ -34,8 +38,8 @@ Photograph courtesy of Adrien Sales.
 
 SchemaCrawler in the open source projects.
 
+- [Datasource-Plug-In for Codenvy IDE](https://codenvy.com/)
 - [jQAssistant](http://jqassistant.org/)
-- [Datasource-Plug-In for Codenvy IDE 3](https://codenvy.com/)
 - [A large number of projects on GitHub](http://github.com/search?l=&o=desc&q=schemacrawler.schema&ref=advsearch&s=indexed&type=Code&utf8=%E2%9C%93)
 - [Jule,](http://code.google.com/p/jule/) a code generator in Java. 
 - [JEQUEL,](http://www.jequel.de/) Java Embedded QUEry Language. 
@@ -46,7 +50,7 @@ SchemaCrawler in the open source projects.
 
 SchemaCrawler in the press, and in online articles and blogs.
 
--  [ Atlassian JIRA database schema ](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
+-  [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
 -  Luxembourg Java Users Group presentation on [ Make daily development easier and smarter ](http://www.yajug.org/confluence/download/attachments/917512/20081016_Eclipse_SDK.pdf?version=1)
 -  Mynitor's May 2, 2010 [ Tool of the week - SchemaCrawler ](http://www.mynitor.com/2010/05/02/tool-of-the-week-schemacrawler/)
 -  Tweets from [Claudio Bastos Iorio](https://twitter.com/selecters75/status/218357126823817218) , [ William Chinelato ](http://twitter.com/willchinelato/status/12117092941) , [ Stig Kleppe Jørgensen ](http://twitter.com/#!/stigkj/statuses/70973992479109121) , [ sourceforge ](http://twitter.com/#!/sourceforge/statuses/75995352091729921) , [ Marek Tomaš ](https://twitter.com/marektomas/status/240462380365119489)
