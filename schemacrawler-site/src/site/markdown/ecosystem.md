@@ -11,7 +11,7 @@ However, this is a registry of plugins and extensions to SchemaCrawler.
 
 ### SchemaCrawler Additional Lints
 [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additionnallints) is maintained by
-Michèle Barre <Michele.Barre at gmail.com>.
+Michèle Barré <Michele.Barre at gmail.com>.
 
 
 ## Installation Packages
