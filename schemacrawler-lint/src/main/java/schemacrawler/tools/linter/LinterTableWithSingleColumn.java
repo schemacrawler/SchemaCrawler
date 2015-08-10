@@ -26,10 +26,10 @@ import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithSingleColumn
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   @Override

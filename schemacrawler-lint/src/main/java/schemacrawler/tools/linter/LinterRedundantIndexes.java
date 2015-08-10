@@ -33,12 +33,12 @@ import java.util.Set;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.MetaDataUtility;
 
 public class LinterRedundantIndexes
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   public LinterRedundantIndexes()

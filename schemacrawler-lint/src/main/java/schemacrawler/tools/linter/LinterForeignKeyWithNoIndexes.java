@@ -32,11 +32,11 @@ import java.util.List;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import schemacrawler.tools.lint.BaseLinterTable;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
 public class LinterForeignKeyWithNoIndexes
-  extends BaseLinterTable
+  extends BaseLinter
 {
 
   public LinterForeignKeyWithNoIndexes()
