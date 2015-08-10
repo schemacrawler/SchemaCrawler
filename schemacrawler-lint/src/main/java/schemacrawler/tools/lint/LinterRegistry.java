@@ -87,6 +87,12 @@ public final class LinterRegistry
     return linterRegistry.containsKey(linterId);
   }
 
+  @Deprecated
+  public Linter lookupLinter(final String linterId)
+  {
+    return newLinter(linterId);
+  }
+
   public Linter newLinter(final String linterId)
   {
     if (hasLinter(linterId))
