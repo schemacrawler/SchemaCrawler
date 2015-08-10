@@ -23,7 +23,6 @@ package schemacrawler.tools.analysis.counts;
 
 import static schemacrawler.tools.analysis.counts.CountsUtility.addCountToTable;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.DatabaseUtility.executeSqlForLong;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -47,17 +46,16 @@ public final class CatalogWithCounts
   extends BaseCatalogDecorator
 {
 
-  private static final Logger LOGGER = Logger.getLogger(CatalogWithCounts.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(CatalogWithCounts.class.getName());
 
   private static final long serialVersionUID = -3953296149824921463L;
 
   private final Map<Table, Long> counts;
 
-  public CatalogWithCounts(final Catalog catalog,
-                           final Connection connection,
+  public CatalogWithCounts(final Catalog catalog, final Connection connection,
                            final SchemaCrawlerOptions options)
-    throws SchemaCrawlerException
+                             throws SchemaCrawlerException
   {
     super(catalog);
 
@@ -81,9 +79,7 @@ public final class CatalogWithCounts
     {
       try
       {
-        final long count = executeSqlForLong(connection,
-                                               query.getQuery(table,
-                                                                      false));
+        final long count = query.executeForLong(connection, table);
         counts.put(table, count);
         addCountToTable(table, count);
       }
@@ -93,8 +89,8 @@ public final class CatalogWithCounts
       }
     }
 
-    reduce(Table.class, new TablesReducer(options,
-                                          new TableCountFilter(options)));
+    reduce(Table.class,
+           new TablesReducer(options, new TableCountFilter(options)));
   }
 
   public Map<Table, Long> getCounts()
