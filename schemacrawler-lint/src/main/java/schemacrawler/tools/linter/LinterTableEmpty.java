@@ -23,51 +23,46 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.Utility;
+import schemacrawler.utility.Query;
 
-public class LinterNullIntendedColumns
+public class LinterTableEmpty
   extends BaseLinter
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(LinterTableEmpty.class.getName());
 
   @Override
   public String getSummary()
   {
-    return "column where NULL may be intended";
+    return "empty table";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
+    requireNonNull(connection, "No connection provided");
 
-    final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
-      .getColumns());
-    for (final Column column: nullDefaultValueMayBeIntendedColumns)
+    final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
+    try
     {
-      addLint(table, getSummary(), column);
-    }
-  }
-
-  private List<Column>
-    findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
-  {
-    final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
-    for (final Column column: columns)
-    {
-      final String columnDefaultValue = column.getDefaultValue();
-      if (!Utility.isBlank(columnDefaultValue)
-          && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
+      final long count = query.executeForLong(connection, table);
+      if (count == 0)
       {
-        nullDefaultValueMayBeIntendedColumns.add(column);
+        addLint(table, getSummary(), true);
       }
     }
-    return nullDefaultValueMayBeIntendedColumns;
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not get count for " + table, e);
+    }
   }
 
 }

@@ -63,7 +63,7 @@ public class LintTest
                                                            getConnection(),
                                                            new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(24, lintCollector.size());
+    assertEquals(29, lintCollector.size());
 
     try (final TestWriter out = new TestWriter("text");)
     {

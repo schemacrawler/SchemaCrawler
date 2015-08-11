@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import java.sql.Connection;
 import java.util.Collection;
 
 import schemacrawler.schema.Index;
@@ -38,7 +39,7 @@ public class LinterTableWithNoIndexes
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     if (table != null && !(table instanceof View))
     {

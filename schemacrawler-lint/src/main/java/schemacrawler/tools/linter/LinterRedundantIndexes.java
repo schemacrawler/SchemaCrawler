@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,7 +54,7 @@ public class LinterRedundantIndexes
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     if (table != null && !(table instanceof View))
     {

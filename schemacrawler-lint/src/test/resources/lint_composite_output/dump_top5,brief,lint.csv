@@ -155,6 +155,7 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 ------------------------------------------------------------------------
 ""
 "","[lint, medium]"
+"",empty table,""
 "",useless surrogate key,PK_EXTRA_PK
 
 
@@ -163,6 +164,7 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 ------------------------------------------------------------------------
 ""
 "","[lint, medium]"
+"",empty table,""
 "",no indexes,""
 "","spaces in name, or reserved word","""Global Counts"""
 "","spaces in name, or reserved word","""Global Count"""
@@ -174,6 +176,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS,[table]
 ------------------------------------------------------------------------
 ""
 "","[lint, medium]"
+"",empty table,""
 "","spaces in name, or reserved word","""UPDATE"""
 "","[lint, low]"
 "",too many binary objects,"""UPDATE"", PRESS_RELEASE"
@@ -190,6 +193,7 @@ PUBLIC.FOR_LINT.WRITERS,[table]
 "",unique index with nullable columns,IDX_U_WRITERS
 "",column where NULL may be intended,ADDRESS2
 "",column where NULL may be intended,COUNTRY
+"",empty table,""
 "",incrementing columns,"ADDRESS1, ADDRESS2"
 "",incrementing columns,"PHONE1, PHONE2"
 "",incrementing columns,"FAX, FAX3"
@@ -207,4 +211,6 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
 ""
 "","[lint, high]"
 "",foreign key and primary key have different data types,FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+"","[lint, medium]"
+"",empty table,""
 

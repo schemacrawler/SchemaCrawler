@@ -107,8 +107,12 @@ public abstract class BaseLinter
   {
   }
 
-  protected abstract void lint(Table table)
-    throws SchemaCrawlerException;
+  @Deprecated
+  protected void lint(Table table)
+    throws SchemaCrawlerException
+  {
+
+  }
 
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
