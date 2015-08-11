@@ -22,6 +22,8 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
+
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
@@ -56,7 +58,7 @@ public class LinterTableCycles
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
     requireNonNull(tablesGraph, "Not initialized");

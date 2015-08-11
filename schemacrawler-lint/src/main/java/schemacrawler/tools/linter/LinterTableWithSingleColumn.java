@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.util.List;
 
 import schemacrawler.schema.Column;
@@ -39,7 +40,7 @@ public class LinterTableWithSingleColumn
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
 

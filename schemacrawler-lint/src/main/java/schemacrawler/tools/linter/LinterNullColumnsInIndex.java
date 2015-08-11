@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +43,7 @@ public class LinterNullColumnsInIndex
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
 

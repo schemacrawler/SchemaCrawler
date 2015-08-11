@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
@@ -67,7 +68,7 @@ public class LinterColumnTypes
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
     requireNonNull(columnTypes, "Not initialized");
