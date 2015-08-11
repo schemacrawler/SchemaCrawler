@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class LinterForeignKeyMismatch
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connections)
   {
     requireNonNull(table, "No table provided");
 

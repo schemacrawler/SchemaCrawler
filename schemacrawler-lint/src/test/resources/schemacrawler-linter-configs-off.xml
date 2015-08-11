@@ -57,6 +57,9 @@
     <config>
     </config>
   </linter>
+  <linter id="schemacrawler.tools.linter.LinterTableEmpty">
+    <run>false</run>
+  </linter>  
   <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
     <run>false</run>
     <severity>critical</severity>

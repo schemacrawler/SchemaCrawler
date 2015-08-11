@@ -1,8 +1,11 @@
+[PUBLIC.FOR_LINT."Global Counts"] empty table
 [PUBLIC.FOR_LINT."Global Counts"] no indexes
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Counts"
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
 [PUBLIC.FOR_LINT."Global Counts"] single column
+[PUBLIC.FOR_LINT.EXTRA_PK] empty table
 [PUBLIC.FOR_LINT.EXTRA_PK] useless surrogate key: PK_EXTRA_PK
+[PUBLIC.FOR_LINT.PUBLICATIONS] empty table
 [PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"
 [PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: "UPDATE", PRESS_RELEASE
 [PUBLIC.FOR_LINT.WRITERS] foreign key and primary key have different data types: FK_WRITERS_PUBLICATION
@@ -10,6 +13,7 @@
 [PUBLIC.FOR_LINT.WRITERS] unique index with nullable columns: IDX_U_WRITERS
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: COUNTRY
+[PUBLIC.FOR_LINT.WRITERS] empty table
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: ADDRESS1, ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: FAX, FAX3
@@ -20,5 +24,6 @@
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: FAX, FAX3
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] foreign key and primary key have different data types: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] empty table
 [catalog] column with same name but different data types: ID [BIGINT, INTEGER]
 [catalog] cycles in table relationships

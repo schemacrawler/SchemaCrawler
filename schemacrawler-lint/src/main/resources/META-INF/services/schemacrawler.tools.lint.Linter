@@ -13,3 +13,4 @@ schemacrawler.tools.linter.LinterColumnTypes
 schemacrawler.tools.linter.LinterUselessSurrogateKey
 schemacrawler.tools.linter.LinterCatalogSql
 schemacrawler.tools.linter.LinterTableSql
+schemacrawler.tools.linter.LinterTableEmpty

@@ -22,6 +22,7 @@ package schemacrawler.tools.linter;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -80,7 +81,7 @@ public class LinterTableWithIncrementingColumns
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
 
