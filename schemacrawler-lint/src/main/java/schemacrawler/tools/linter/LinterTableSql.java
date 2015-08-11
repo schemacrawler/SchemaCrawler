@@ -63,13 +63,6 @@ public class LinterTableSql
   }
 
   @Override
-  protected void lint(final Table table)
-    throws SchemaCrawlerException
-  {
-    throw new SchemaCrawlerException("Cannot lint without a database connection");
-  }
-
-  @Override
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
   {

@@ -25,6 +25,7 @@ import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +52,7 @@ public class LinterForeignKeyWithNoIndexes
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
 
