@@ -235,7 +235,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-07-19 23:37:00</td>
+		<td class='property_value'>2015-08-10 23:22:33</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1859,6 +1859,18 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>ID ←(0..many) <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID</a></td>
 		<td class='type'></td>
 	</tr>
@@ -1939,6 +1951,188 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Privileges and Grants</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2EACE;'><span id='publicationwriters_db3a2e4' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>FOR_LINT.PUBLICATIONWRITERS.WRITERID IS NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2174,6 +2368,18 @@ td.section {
 	<tr>
 		<td class='spacer'></td>
 		<td class='subname'>ID ←(0..many) <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>
@@ -4873,6 +5079,10 @@ td.section {
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
+		<td class='property_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</td>
+		<td class='property_value right'>empty</td>
+	</tr>
+	<tr>
 		<td class='property_name'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='property_value right'>empty</td>
 	</tr>
@@ -5697,6 +5907,18 @@ td.section {
 		<th>PRICE</th>
 		<th>UPDATE</th>
 		<th>PRESS_RELEASE</th>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</span></caption>
+
+	<tr>
+		<th>PUBLICATIONID</th>
+		<th>WRITERID</th>
 	</tr>
 </table>
 <p>&#160;</p>

@@ -25,6 +25,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 
                                                             [lint, high]
 	redundant index	SYS_IDX_10116
+	no primary key	
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
 
@@ -44,6 +45,8 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
+                                                            [lint, high]
+	no primary key	
                                                           [lint, medium]
 	empty table	
 	no indexes	
@@ -65,6 +68,8 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
+                                                            [lint, high]
+	no primary key	
                                                           [lint, medium]
 	empty table	
 	no indexes	
@@ -85,11 +90,19 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 
 
 
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key and primary key have different data types	FK_WRITERS_PUBLICATION
+	foreign key data type different from primary key	FK_WRITERS_PUBLICATION
 	redundant index	IDX_A1_WRITERS
                                                           [lint, medium]
 	unique index with nullable columns	IDX_U_WRITERS
@@ -112,7 +125,15 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+	foreign key data type different from primary key	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
                                                           [lint, medium]
 	empty table	
+
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+	no primary key	
 

@@ -139,6 +139,9 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATION                             [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 

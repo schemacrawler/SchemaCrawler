@@ -101,6 +101,18 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
+      "name": "PUBLICATIONWRITERS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table",
@@ -159,7 +171,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-04-25T12:30:56.411",
+    "crawlTimestamp": "2015-08-10 23:29:42",
     "title": ""
   },
   "routines": [

@@ -4,6 +4,8 @@
 package ${package};
 
 
+import java.sql.Connection;
+
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 
@@ -12,12 +14,6 @@ public class AdditionalLinter
 {
 
   private static final Logger LOGGER = Logger.getLogger(AdditionalLinter.class.getName());
-	  
-  @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
 
   @Override
   public String getSummary()
@@ -26,7 +22,7 @@ public class AdditionalLinter
   }
 
   @Override
-  protected void lint(final Table table)
+  protected void lint(final Table table, final Connection connection)
   {
     if (table != null)
     {

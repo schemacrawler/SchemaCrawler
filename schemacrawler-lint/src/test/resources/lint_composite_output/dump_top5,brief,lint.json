@@ -28,6 +28,14 @@
     },
     {
       "columnNames": [
+        "PUBLICATIONID",
+        "WRITERID"
+      ],
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "rows": []
+    },
+    {
+      "columnNames": [
         "ID",
         "FIRSTNAME",
         "LASTNAME",
@@ -151,6 +159,15 @@
           "updateRule": "no action"
         },
         {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
           "name": "FK_WRITERS_PUBLICATION",
           "deleteRule": "no action",
           "columnReferences": [{
@@ -209,6 +226,57 @@
     {
       "foreignKeys": [
         {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "PUBLICATIONWRITERS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [
+        {
           "name": "FK_WRITERS_PUBLICATION",
           "deleteRule": "no action",
           "columnReferences": [{
@@ -232,6 +300,15 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
         },
@@ -431,6 +508,12 @@
     {
       "lints": [
         {
+          "severity": "high",
+          "description": "no primary key",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
+          "value": ""
+        },
+        {
           "severity": "medium",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
@@ -491,10 +574,21 @@
       "type": "table"
     },
     {
+      "lints": [{
+        "severity": "medium",
+        "description": "empty table",
+        "id": "schemacrawler.tools.linter.LinterTableEmpty",
+        "value": "true"
+      }],
+      "name": "PUBLICATIONWRITERS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table"
+    },
+    {
       "lints": [
         {
           "severity": "high",
-          "description": "foreign key and primary key have different data types",
+          "description": "foreign key data type different from primary key",
           "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "value": "FK_WRITERS_PUBLICATION"
         },
@@ -591,7 +685,7 @@
       "lints": [
         {
           "severity": "high",
-          "description": "foreign key and primary key have different data types",
+          "description": "foreign key data type different from primary key",
           "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
         },

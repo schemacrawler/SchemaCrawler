@@ -132,10 +132,28 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATION                             [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+  PUBLICATIONID                     INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Foreign Keys
+
+FK_PUBLICATION                             [foreign key, with no action]
+  PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
+
+FK_WRITER                                  [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
 
@@ -167,6 +185,9 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+
+FK_WRITER                                  [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              

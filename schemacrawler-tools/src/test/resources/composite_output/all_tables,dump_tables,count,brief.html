@@ -401,6 +401,21 @@ td.section {
 	<tr>
 		<td>PUBLIC</td>
 		<td>FOR_LINT</td>
+		<td>PUBLICATIONWRITERS</td>
+		<td>TABLE</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td class='data_null'>NULL</td>
+		<td>MEMORY</td>
+		<td>false</td>
+		<td class='data_null'>NULL</td>
+	</tr>
+	<tr>
+		<td>PUBLIC</td>
+		<td>FOR_LINT</td>
 		<td>TEMP1</td>
 		<td>GLOBAL TEMPORARY</td>
 		<td class='data_null'>NULL</td>
@@ -2661,6 +2676,18 @@ td.section {
 
 
 <table>
+  <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</span></caption>
+
+	<tr>
+		<th>PUBLICATIONID</th>
+		<th>WRITERID</th>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
   <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span></caption>
 
 	<tr>
@@ -3028,6 +3055,10 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>PUBLIC.FOR_LINT.PUBLICATIONS</td>
+		<td class='property_value right'>empty</td>
+	</tr>
+	<tr>
+		<td class='property_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</td>
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
@@ -3458,6 +3489,18 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -3471,6 +3514,54 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>FK_PUBLICATIONS_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2EACE;'><span id='publicationwriters_db3a2e4' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -3589,6 +3680,18 @@ td.section {
 	<tr>
 		<td class='spacer'></td>
 		<td class='subname'>ID ←(0..many) <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID</a></td>
 		<td class='type'></td>
 	</tr>
 	<tr>

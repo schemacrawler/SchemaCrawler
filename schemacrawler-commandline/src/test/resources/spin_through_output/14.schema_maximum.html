@@ -235,7 +235,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-07-19 23:46:06</td>
+		<td class='property_value'>2015-08-10 23:29:54</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -973,7 +973,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10181</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10190</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -985,7 +985,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10187</td>
+		<td colspan='2' class='name'>SYS_IDX_10196</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -997,7 +997,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10185</td>
+		<td colspan='2' class='name'>SYS_IDX_10194</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1015,21 +1015,21 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10178</td>
+		<td colspan='2' class='name'>SYS_CT_10187</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10179</td>
+		<td colspan='2' class='name'>SYS_CT_10188</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10180</td>
+		<td colspan='2' class='name'>SYS_CT_10189</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 </table>
@@ -1133,6 +1133,18 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_WRITERS_PUBLICATION</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -1208,6 +1220,104 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>SYS_CT_10170</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2EACE;'><span id='publicationwriters_db3a2e4' class='caption_name'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_PUBLICATION</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLIC.FOR_LINT.PUBLICATIONS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10184</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10182</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>WRITERID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10177</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10178</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 </table>
@@ -1372,6 +1482,18 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='2' class='name'>FK_WRITER</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
@@ -1402,7 +1524,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10195</td>
+		<td colspan='2' class='name'>SYS_IDX_10204</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1605,7 +1727,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10199</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1617,7 +1739,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10192</td>
+		<td colspan='2' class='name'>SYS_IDX_10201</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1635,7 +1757,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10189</td>
+		<td colspan='2' class='name'>SYS_CT_10198</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 </table>
