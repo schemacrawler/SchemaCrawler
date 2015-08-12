@@ -92,5 +92,8 @@
   </linter>
   <linter id="schemacrawler.tools.linter.LinterTableWithNoPrimaryKey">
     <run>false</run>
-  </linter>    
+  </linter> 
+  <linter id="schemacrawler.tools.linter.LinterTableAllNullableColumns">
+    <run>false</run>
+  </linter>     
 </schemacrawler-linter-configs>
