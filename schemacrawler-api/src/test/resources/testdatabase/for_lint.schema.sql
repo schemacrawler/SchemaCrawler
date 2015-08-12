@@ -39,6 +39,15 @@ CREATE TABLE Publications
 )
 ;
 
+CREATE TABLE PublicationWriters
+(
+  PublicationId INTEGER NOT NULL,
+  WriterId BIGINT NOT NULL,
+  CONSTRAINT FK_Writer FOREIGN KEY (WriterId) REFERENCES Writers (Id),
+  CONSTRAINT FK_Publication FOREIGN KEY (PublicationId) REFERENCES Publications (Id)
+)
+;
+
 CREATE TABLE "Global Counts"
 (
   "Global Count" INTEGER

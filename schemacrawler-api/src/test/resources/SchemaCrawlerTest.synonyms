@@ -1,12 +1,12 @@
 synonym: AUTHORS
   class: MutableTable
-synonym: BOOKAUTHORS
-  class: MutableTable
 synonym: BOOKS
   class: MutableTable
+synonym: EXTRA_PK
+  class: 
 synonym: "Global Counts"
   class: 
 synonym: PUBLICATIONS
   class: 
-synonym: TEMP1
-  class: 
+synonym: PUBLISHERS
+  class: MutableTable

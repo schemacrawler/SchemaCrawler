@@ -159,6 +159,12 @@ DESCRIPTION	ID	PRESS_RELEASE	PRICE	PUBLICATIONDATE	TITLE	UPDATE	WRITERID
 
 
 
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                                      
+------------------------------------------------------------------------
+PUBLICATIONID	WRITERID
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ADDRESS1	ADDRESS2	CITY	COUNTRY	EMAIL1	EMAIL2	FAX	FAX3	FIRSTNAME	HOMEEMAIL11	HOMEEMAIL12	ID	LASTNAME	PHONE1	PHONE2	POSTALCODE	PUBLICATION_ID	STATE

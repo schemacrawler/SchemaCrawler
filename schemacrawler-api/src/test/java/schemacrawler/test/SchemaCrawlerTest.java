@@ -140,7 +140,8 @@ public class SchemaCrawlerTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
@@ -169,7 +170,8 @@ public class SchemaCrawlerTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
@@ -291,7 +293,7 @@ public class SchemaCrawlerTest
     {
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
       databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withSynonymsSql("SELECT LIMIT 1 3                                  \n"
+        .withSynonymsSql("SELECT TOP 3                                      \n"
                          + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
                          + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
                          + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
@@ -303,7 +305,7 @@ public class SchemaCrawlerTest
                          + "WHERE                                           \n"
                          + "  TABLE_SCHEMA = 'BOOKS'                        \n"
                          + "UNION                                           \n"
-                         + "SELECT LIMIT 1 3                                \n"
+                         + "SELECT TOP 3                                    \n"
                          + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
                          + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
                          + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
@@ -537,7 +539,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
     schemaCrawlerOptionsBuilder.tableTypes("VIEW");
-    schemaCrawlerOptionsBuilder.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptionsBuilder
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
       .toOptions(), schemaCrawlerOptionsBuilder.toOptions());

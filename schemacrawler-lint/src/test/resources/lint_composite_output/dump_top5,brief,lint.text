@@ -23,6 +23,12 @@ ID	TITLE	DESCRIPTION	WRITERID	PUBLICATIONDATE	PRICE
 
 
 
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                                      
+------------------------------------------------------------------------
+PUBLICATIONID	WRITERID
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
@@ -81,10 +87,28 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATION                             [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+  PUBLICATIONID                     INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Foreign Keys
+
+FK_PUBLICATION                             [foreign key, with no action]
+  PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
+
+FK_WRITER                                  [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
 
@@ -116,6 +140,9 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+
+FK_WRITER                                  [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
@@ -163,6 +190,8 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
+                                                            [lint, high]
+	no primary key	
                                                           [lint, medium]
 	empty table	
 	no indexes	
@@ -183,11 +212,19 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 
 
 
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key and primary key have different data types	FK_WRITERS_PUBLICATION
+	foreign key data type different from primary key	FK_WRITERS_PUBLICATION
 	redundant index	IDX_A1_WRITERS
                                                           [lint, medium]
 	unique index with nullable columns	IDX_U_WRITERS
@@ -210,7 +247,7 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	foreign key and primary key have different data types	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
+	foreign key data type different from primary key	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
                                                           [lint, medium]
 	empty table	
 

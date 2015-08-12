@@ -624,7 +624,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10181"
+          "name": "SYS_IDX_PK_EXTRA_PK_10190"
         },
         {
           "columns": {
@@ -632,7 +632,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10187"
+          "name": "SYS_IDX_10196"
         },
         {
           "columns": {
@@ -640,7 +640,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_10185"
+          "name": "SYS_IDX_10194"
         }
       ],
       "columns": [
@@ -696,15 +696,15 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10178",
+          "name": "SYS_CT_10187",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10179",
+          "name": "SYS_CT_10188",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10180",
+          "name": "SYS_CT_10189",
           "type": "check"
         }
       ],
@@ -748,6 +748,15 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
           }],
           "updateRule": "no action"
         },
@@ -917,6 +926,94 @@
     {
       "foreignKeys": [
         {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10184"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10182"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "PUBLICATIONWRITERS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "name": "FK_PUBLICATION",
+          "type": "foreign_key"
+        },
+        {
+          "name": "FK_WRITER",
+          "type": "foreign_key"
+        },
+        {
+          "name": "SYS_CT_10177",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10178",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [
+        {
           "name": "FK_WRITERS_PUBLICATION",
           "deleteRule": "no action",
           "columnReferences": [{
@@ -940,6 +1037,15 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
         },
@@ -968,7 +1074,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10195"
+          "name": "SYS_IDX_10204"
         },
         {
           "columns": [
@@ -1300,7 +1406,7 @@
             "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190"
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10199"
         },
         {
           "columns": {
@@ -1308,7 +1414,7 @@
             "name": "ΣΥΓΓΡΑΦΈΑΣ"
           },
           "unique": false,
-          "name": "SYS_IDX_10192"
+          "name": "SYS_IDX_10201"
         }
       ],
       "columns": [
@@ -1360,7 +1466,7 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10189",
+          "name": "SYS_CT_10198",
           "type": "check"
         }
       ],
@@ -1602,7 +1708,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-07-19 23:46:02",
+    "crawlTimestamp": "2015-08-10 23:29:50",
     "title": ""
   },
   "routines": [

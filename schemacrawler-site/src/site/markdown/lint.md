@@ -60,7 +60,7 @@ The checks are:
 - Tables that have too many large objects (CLOBs or BLOBs), since these could result in 
   additional reads when returning query results.
   (Linter id "schemacrawler.tools.linter.LinterTooManyLobs")
-- Tables foreign key and primary key have different data types.
+- Tables where the foreign key column data type is different from the referenced primary key column data type.
   (Linter id "schemacrawler.tools.linter.LinterForeignKeyMismatch")
 - Columns in different tables, that have the same name but have different data types.
   (Linter id "schemacrawler.tools.linter.LinterColumnTypes")
@@ -75,7 +75,12 @@ The checks are:
   (Linter id "schemacrawler.tools.linter.LinterUselessSurrogateKey")
 - Tables with no indexes.
   (Linter id "schemacrawler.tools.linter.LinterTableWithNoIndexes")
-
+- Tables with no primary key. If a table is a relationship table with no attributes, it will not
+  be flagged.
+  (Linter id "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey")  
+- Empty tables with no data.
+  (Linter id "schemacrawler.tools.linter.LinterTableEmpty")
+    
 ## Lint Configuration
 
 You can customize SchemaCrawler lints using an XML configuration file. You can specify the 

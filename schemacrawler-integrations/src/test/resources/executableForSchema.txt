@@ -206,22 +206,22 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_EXTRA_PK_10181                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10190                                 [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_10187                                         [non-unique index]
+SYS_IDX_10196                                         [non-unique index]
 3   PUBLICATIONID                     ascending                   
 
-SYS_IDX_10185                                         [non-unique index]
+SYS_IDX_10194                                         [non-unique index]
 2   WRITERID                          ascending                   
 
 Table Constraints
 
-SYS_CT_10178                                          [check constraint]
+SYS_CT_10187                                          [check constraint]
 
-SYS_CT_10179                                          [check constraint]
+SYS_CT_10188                                          [check constraint]
 
-SYS_CT_10180                                          [check constraint]
+SYS_CT_10189                                          [check constraint]
 
 
 
@@ -252,6 +252,9 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATION                             [foreign key, with no action]
+ 1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
@@ -273,6 +276,35 @@ SYS_CT_10168                                          [check constraint]
 SYS_CT_10169                                          [check constraint]
 
 SYS_CT_10170                                          [check constraint]
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+1   PUBLICATIONID                     INTEGER NOT NULL            
+2   WRITERID                          BIGINT NOT NULL             
+
+Foreign Keys
+
+FK_PUBLICATION                             [foreign key, with no action]
+ 1  PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
+
+FK_WRITER                                  [foreign key, with no action]
+ 1  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+Indexes
+
+SYS_IDX_10184                                         [non-unique index]
+1   PUBLICATIONID                     ascending                   
+
+SYS_IDX_10182                                         [non-unique index]
+2   WRITERID                          ascending                   
+
+Table Constraints
+
+SYS_CT_10177                                          [check constraint]
+
+SYS_CT_10178                                          [check constraint]
 
 
 
@@ -313,6 +345,9 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
 
+FK_WRITER                                  [foreign key, with no action]
+ 1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
+
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 
@@ -321,7 +356,7 @@ Indexes
 SYS_IDX_PK_WRITERS_10161                                  [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_10195                                         [non-unique index]
+SYS_IDX_10204                                         [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -376,15 +411,15 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 Indexes
 
-SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190                     [unique index]
+SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10199                     [unique index]
 1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
 
-SYS_IDX_10192                                         [non-unique index]
+SYS_IDX_10201                                         [non-unique index]
 3   ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
 
 Table Constraints
 
-SYS_CT_10189                                          [check constraint]
+SYS_CT_10198                                          [check constraint]
 
 
 

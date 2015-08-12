@@ -1132,17 +1132,17 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10178",
+          "name": "SYS_CT_10187",
           "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10179",
+          "name": "SYS_CT_10188",
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10180",
+          "name": "SYS_CT_10189",
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
           "type": "check"
         }
@@ -1155,7 +1155,7 @@
             "ordinal": 1
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10181",
+          "name": "SYS_IDX_PK_EXTRA_PK_10190",
           "definition": ""
         },
         {
@@ -1165,7 +1165,7 @@
             "ordinal": 3
           },
           "unique": false,
-          "name": "SYS_IDX_10187",
+          "name": "SYS_IDX_10196",
           "definition": ""
         },
         {
@@ -1175,7 +1175,7 @@
             "ordinal": 2
           },
           "unique": false,
-          "name": "SYS_IDX_10185",
+          "name": "SYS_IDX_10194",
           "definition": ""
         }
       ],
@@ -1328,6 +1328,16 @@
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "keySequence": 1,
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "keySequence": 1,
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
           }],
           "updateRule": "no action"
         },
@@ -1570,6 +1580,158 @@
       ],
       "foreignKeys": [
         {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "keySequence": 1,
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "keySequence": 1,
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false,
+          "ordinal": 1
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false,
+          "ordinal": 2
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "name": "FK_PUBLICATION",
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "name": "FK_WRITER",
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "name": "SYS_CT_10177",
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10178",
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.WRITERID IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID",
+            "ordinal": 1
+          },
+          "unique": false,
+          "name": "SYS_IDX_10184",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID",
+            "ordinal": 2
+          },
+          "unique": false,
+          "name": "SYS_IDX_10182",
+          "definition": ""
+        }
+      ],
+      "name": "PUBLICATIONWRITERS",
+      "definition": "",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "weakAssociations": [],
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [
+        {
           "name": "FK_WRITERS_PUBLICATION",
           "deleteRule": "no action",
           "columnReferences": [{
@@ -1596,6 +1758,16 @@
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "keySequence": 1,
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "keySequence": 1,
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
         },
@@ -1891,7 +2063,7 @@
             "ordinal": 18
           },
           "unique": false,
-          "name": "SYS_IDX_10195",
+          "name": "SYS_IDX_10204",
           "definition": ""
         },
         {
@@ -2102,7 +2274,7 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10189",
+          "name": "SYS_CT_10198",
           "definition": "FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ IS NOT NULL",
           "type": "check"
         }
@@ -2115,7 +2287,7 @@
             "ordinal": 1
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190",
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10199",
           "definition": ""
         },
         {
@@ -2125,7 +2297,7 @@
             "ordinal": 3
           },
           "unique": false,
-          "name": "SYS_IDX_10192",
+          "name": "SYS_IDX_10201",
           "definition": ""
         }
       ],
@@ -3681,7 +3853,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-07-19 23:37:03",
+    "crawlTimestamp": "2015-08-10 23:22:35",
     "title": ""
   },
   "routines": [
@@ -3878,6 +4050,10 @@
     },
     {
       "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "value": 0
     },
     {
@@ -4671,6 +4847,14 @@
         "PRESS_RELEASE"
       ],
       "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "rows": []
+    },
+    {
+      "columnNames": [
+        "PUBLICATIONID",
+        "WRITERID"
+      ],
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "rows": []
     },
     {

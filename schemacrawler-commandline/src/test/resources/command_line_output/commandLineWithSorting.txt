@@ -133,7 +133,25 @@ Foreign Keys
   ID <--(0..many) EXTRA_PK.PUBLICATIONID                              
 
                                            [foreign key, with no action]
+  ID <--(0..many) PUBLICATIONWRITERS.PUBLICATIONID                              
+
+                                           [foreign key, with no action]
   ID <--(0..many) WRITERS.PUBLICATION_ID                              
+
+                                           [foreign key, with no action]
+  WRITERID (0..many)--> WRITERS.ID                              
+
+
+
+PUBLICATIONWRITERS                                               [table]
+------------------------------------------------------------------------
+  PUBLICATIONID                     INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  PUBLICATIONID (0..many)--> PUBLICATIONS.ID                              
 
                                            [foreign key, with no action]
   WRITERID (0..many)--> WRITERS.ID                              
@@ -167,6 +185,9 @@ Foreign Keys
 
                                            [foreign key, with no action]
   ID <--(0..many) PUBLICATIONS.WRITERID                              
+
+                                           [foreign key, with no action]
+  ID <--(0..many) PUBLICATIONWRITERS.WRITERID                              
 
                                            [foreign key, with no action]
   ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
