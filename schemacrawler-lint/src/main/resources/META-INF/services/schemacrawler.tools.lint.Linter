@@ -5,6 +5,7 @@ schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
 schemacrawler.tools.linter.LinterNullColumnsInIndex
 schemacrawler.tools.linter.LinterNullIntendedColumns
 schemacrawler.tools.linter.LinterRedundantIndexes
+schemacrawler.tools.linter.LinterTableAllNullableColumns
 schemacrawler.tools.linter.LinterTableCycles
 schemacrawler.tools.linter.LinterTableEmpty
 schemacrawler.tools.linter.LinterTableSql
