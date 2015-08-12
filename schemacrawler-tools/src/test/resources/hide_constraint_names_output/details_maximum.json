@@ -1230,6 +1230,14 @@
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
           "updateRule": "no action"
@@ -1445,6 +1453,144 @@
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.WRITERID IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          },
+          "unique": false,
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID"
+          },
+          "unique": false,
+          "definition": ""
+        }
+      ],
+      "name": "PUBLICATIONWRITERS",
+      "definition": "",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "weakAssociations": [],
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID"
           }],
           "updateRule": "no action"
@@ -1462,6 +1608,14 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
         },
@@ -3453,7 +3607,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-07-19 23:37:01",
+    "crawlTimestamp": "2015-08-10 23:22:33",
     "title": ""
   },
   "routines": [
@@ -3644,6 +3798,10 @@
     },
     {
       "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "value": 0
     },
     {
@@ -4437,6 +4595,14 @@
         "PRESS_RELEASE"
       ],
       "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "rows": []
+    },
+    {
+      "columnNames": [
+        "PUBLICATIONID",
+        "WRITERID"
+      ],
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "rows": []
     },
     {

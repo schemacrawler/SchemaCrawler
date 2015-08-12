@@ -18,6 +18,7 @@ PUBLIC	BOOKS	TEMP_AUTHOR_LIST	GLOBAL TEMPORARY	NULL	NULL	NULL	NULL	NULL	NULL	MEM
 PUBLIC	FOR_LINT	EXTRA_PK	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	Global Counts	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	PUBLICATIONS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
+PUBLIC	FOR_LINT	PUBLICATIONWRITERS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	TEMP1	GLOBAL TEMPORARY	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	DELETE
 PUBLIC	FOR_LINT	WRITERS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
@@ -278,6 +279,12 @@ ID	TITLE	DESCRIPTION	WRITERID	PUBLICATIONDATE	PRICE
 
 
 
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                                      
+------------------------------------------------------------------------
+PUBLICATIONID	WRITERID
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
@@ -356,6 +363,7 @@ PUBLIC.BOOKS.PUBLISHERS                                          20 rows
 PUBLIC.FOR_LINT.EXTRA_PK                                           empty
 PUBLIC.FOR_LINT."Global Counts"                                    empty
 PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                                 empty
 PUBLIC.FOR_LINT.WRITERS                                            empty
 PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                               empty
 PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
@@ -495,10 +503,28 @@ Foreign Keys
 FK_PUBLICATION_JOIN                        [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID                              
 
+FK_PUBLICATION                             [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID                              
+
 FK_WRITERS_PUBLICATION                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.WRITERS.PUBLICATION_ID                              
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
+  WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+  PUBLICATIONID                     INTEGER NOT NULL            
+  WRITERID                          BIGINT NOT NULL             
+
+Foreign Keys
+
+FK_PUBLICATION                             [foreign key, with no action]
+  PUBLICATIONID (0..many)--> PUBLIC.FOR_LINT.PUBLICATIONS.ID                              
+
+FK_WRITER                                  [foreign key, with no action]
   WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
 
 
@@ -530,6 +556,9 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID                              
+
+FK_WRITER                                  [foreign key, with no action]
+  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
 
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
