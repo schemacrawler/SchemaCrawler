@@ -25,9 +25,9 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_PUBLICATION_JOIN
     constraint: FK_WRITER_JOIN
     constraint: PK_EXTRA_PK
-    constraint: SYS_CT_10178
-    constraint: SYS_CT_10179
-    constraint: SYS_CT_10180
+    constraint: SYS_CT_10187
+    constraint: SYS_CT_10188
+    constraint: SYS_CT_10189
   table: PUBLIC.FOR_LINT."Global Counts"
   table: PUBLIC.FOR_LINT.PUBLICATIONS
     constraint: FK_PUBLICATIONS_WRITER
@@ -35,6 +35,11 @@ schema: PUBLIC.FOR_LINT
     constraint: SYS_CT_10168
     constraint: SYS_CT_10169
     constraint: SYS_CT_10170
+  table: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
+    constraint: FK_PUBLICATION
+    constraint: FK_WRITER
+    constraint: SYS_CT_10177
+    constraint: SYS_CT_10178
   table: PUBLIC.FOR_LINT.WRITERS
     constraint: CHECK_UPPERCASE_STATE
     constraint: FK_WRITERS_PUBLICATION
@@ -47,7 +52,7 @@ schema: PUBLIC.FOR_LINT
   table: PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
     constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
     constraint: PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    constraint: SYS_CT_10189
+    constraint: SYS_CT_10198
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

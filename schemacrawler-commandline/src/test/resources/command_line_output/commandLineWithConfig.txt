@@ -80,6 +80,9 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
   ID <-- PUBLICATIONS.WRITERID                                  
 
+FK_WRITER                                  [foreign key, with no action]
+  ID <-- PUBLICATIONWRITERS.WRITERID                              
+
 FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
   ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
 

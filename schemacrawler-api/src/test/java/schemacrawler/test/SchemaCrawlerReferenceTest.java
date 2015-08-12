@@ -70,7 +70,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(19, fkReferenceCount);
+    assertEquals(23, fkReferenceCount);
   }
 
   @Test
@@ -209,13 +209,14 @@ public class SchemaCrawlerReferenceTest
     assertEquals(1, fkReferenceCount);
   }
 
-  private void assertReferencedColumnDoesNotExist(final Catalog catalog,
-                                                  final Column column,
-                                                  final boolean assertDataNotLoaded)
+  private void
+    assertReferencedColumnDoesNotExist(final Catalog catalog,
+                                       final Column column,
+                                       final boolean assertDataNotLoaded)
   {
     final Table table = column.getParent();
     assertNull("Primary key table table should not be in the database - "
-                   + table.getName(),
+               + table.getName(),
                catalog.lookupTable(table.getSchema(), table.getName())
                  .orElse(null));
     assertTrue("Column references do not match",

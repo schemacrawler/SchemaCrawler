@@ -122,6 +122,20 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
+      "name": "PUBLICATIONWRITERS",
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "definition": "",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "weakAssociations": [],
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "definition": "",
@@ -194,7 +208,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-07-19 23:45:53",
+    "crawlTimestamp": "2015-08-10 23:29:42",
     "title": ""
   },
   "routines": [

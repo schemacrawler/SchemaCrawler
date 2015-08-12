@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-07-19 23:46:04</td>
+		<td align='left'>2015-08-10 23:29:52</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -285,7 +285,32 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
   "extra_pk_334890da":"publicationid_d4d93213.start":w -> "publications_949377f7":"id_f5162672.end":e [label=<FK_PUBLICATION_JOIN> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "publicationwriters_db3a2e4":"publicationid_880eea9d.start":w -> "publications_949377f7":"id_f5162672.end":e [label=<FK_PUBLICATION> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "writers_bf84ac10":"publication_id_b1bcb5cc.start":w -> "publications_949377f7":"id_f5162672.end":e [label=<FK_WRITERS_PUBLICATION> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+
+
+  /* PUBLIC.FOR_LINT.PUBLICATIONWRITERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "publicationwriters_db3a2e4" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#F2EACE' align='left'><b><i>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</i></b></td>
+		<td bgcolor='#F2EACE' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='publicationid_880eea9d.start' align='left'>PUBLICATIONID</td>
+		<td align='left'> </td>
+		<td port='publicationid_880eea9d.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='writerid_1b8ea098.start' align='left'>WRITERID</td>
+		<td align='left'> </td>
+		<td port='writerid_1b8ea098.end' align='left'>BIGINT NOT NULL</td>
+	</tr>
+      </table>
+    >
+  ];
+
 
 
   /* PUBLIC.FOR_LINT.WRITERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
@@ -347,6 +372,7 @@ digraph "SchemaCrawler_Diagram" {
 
   "extra_pk_334890da":"writerid_b8c70762.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_WRITER_JOIN> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "publications_949377f7":"writerid_1c21d0e5.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_PUBLICATIONS_WRITER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "publicationwriters_db3a2e4":"writerid_1b8ea098.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_WRITER> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "πίνακαβάσησδεδομένων_199e00a3":"συγγραφέασ_854cb951.start":w -> "writers_bf84ac10":"id_3033cfb9.end":e [label=<FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
