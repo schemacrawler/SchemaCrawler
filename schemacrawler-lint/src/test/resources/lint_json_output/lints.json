@@ -30,6 +30,12 @@
         },
         {
           "severity": "medium",
+          "description": "table with all nullable columns",
+          "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
+          "value": "\"Global Counts\""
+        },
+        {
+          "severity": "medium",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
           "value": "true"
@@ -203,6 +209,12 @@
           "description": "foreign key data type different from primary key",
           "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
+        },
+        {
+          "severity": "medium",
+          "description": "table with all nullable columns",
+          "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
+          "value": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
         },
         {
           "severity": "medium",

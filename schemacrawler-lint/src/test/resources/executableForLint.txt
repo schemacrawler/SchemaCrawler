@@ -48,11 +48,20 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
                                                             [lint, high]
 	no primary key	
                                                           [lint, medium]
+	table with all nullable columns	"Global Counts"
 	empty table	
 	no indexes	
 	spaces in name, or reserved word	"Global Counts"
 	spaces in name, or reserved word	"Global Count"
 	single column	
+
+
+
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	table with all nullable columns	PUBLISHERS
 
 
 
@@ -71,6 +80,7 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
                                                             [lint, high]
 	no primary key	
                                                           [lint, medium]
+	table with all nullable columns	"Global Counts"
 	empty table	
 	no indexes	
 	spaces in name, or reserved word	"Global Counts"
@@ -127,6 +137,7 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
                                                             [lint, high]
 	foreign key data type different from primary key	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
                                                           [lint, medium]
+	table with all nullable columns	ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
 	empty table	
 
 
