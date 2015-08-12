@@ -417,7 +417,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-10 23:12:31",
+    "crawlTimestamp": "2015-08-11 22:40:52",
     "title": ""
   }
 },
@@ -478,6 +478,12 @@
           "description": "no primary key",
           "id": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
           "value": ""
+        },
+        {
+          "severity": "medium",
+          "description": "table with all nullable columns",
+          "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
+          "value": "\"Global Counts\""
         },
         {
           "severity": "medium",
@@ -654,6 +660,12 @@
           "description": "foreign key data type different from primary key",
           "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
+        },
+        {
+          "severity": "medium",
+          "description": "table with all nullable columns",
+          "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
+          "value": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
         },
         {
           "severity": "medium",
