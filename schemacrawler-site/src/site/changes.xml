@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.02.02" date="2015-08-14" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new lints for empty tables, tables where all columns are nullable, and tables with no
+        primary keys.
+      ]]></action>                                                            
+     </release>    
      <release version="14.02.01" date="2015-08-10" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added a custom SQL Lint, to allow for data lints.
