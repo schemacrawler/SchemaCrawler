@@ -72,8 +72,17 @@ public final class LintedCatalog
     // Add all configured linters, with as many instances as were configured
     for (final LinterConfig linterConfig: linterConfigs)
     {
+      // First remove the linter id, because it is "seen",
+      // whether it needs to be run or not
       final String linterId = linterConfig.getId();
       registeredLinters.remove(linterId);
+
+      if (!linterConfig.isRunLinter())
+      {
+        LOGGER.log(Level.FINE, String
+          .format("Not running configured linter, %s", linterConfig));
+        continue;
+      }
 
       final Linter linter = newLinter(linterRegistry, linterId);
       if (linter != null)

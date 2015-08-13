@@ -38,12 +38,10 @@ public abstract class BaseLinterCatalog
     .getLogger(BaseLinterCatalog.class.getName());
 
   private LintCollector collector;
-  private boolean isRunLinter;
   private LintSeverity severity;
 
   protected BaseLinterCatalog()
   {
-    isRunLinter = true;
     severity = LintSeverity.medium;
   }
 
@@ -52,7 +50,6 @@ public abstract class BaseLinterCatalog
   {
     if (linterConfig != null)
     {
-      setRunLinter(linterConfig.isRunLinter());
       setSeverity(linterConfig.getSeverity());
       configure(linterConfig.getConfig());
     }
@@ -83,12 +80,6 @@ public abstract class BaseLinterCatalog
   }
 
   @Override
-  public final boolean isRunLinter()
-  {
-    return isRunLinter;
-  }
-
-  @Override
   public final void setLintCollector(final LintCollector lintCollector)
   {
     collector = lintCollector;
@@ -111,11 +102,6 @@ public abstract class BaseLinterCatalog
   {
 
   };
-
-  protected final void setRunLinter(final boolean isRunLinter)
-  {
-    this.isRunLinter = isRunLinter;
-  }
 
   protected final void setSeverity(final LintSeverity severity)
   {
