@@ -41,8 +41,6 @@ public interface Linter
 
   InclusionRule getTableInclusionRule();
 
-  boolean isRunLinter();
-
   void lint(Catalog catalog, Connection connection)
     throws SchemaCrawlerException;
 

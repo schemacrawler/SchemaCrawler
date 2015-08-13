@@ -80,7 +80,10 @@ The checks are:
   (Linter id "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey")  
 - Empty tables with no data.
   (Linter id "schemacrawler.tools.linter.LinterTableEmpty")
-    
+- Tables that have all columns that are nullable, besides the primary key may contain no useful data,
+  and could indicate a schema design smell.
+  (Linter id "schemacrawler.tools.linter.LinterTableAllNullableColumns")
+     
 ## Lint Configuration
 
 You can customize SchemaCrawler lints using an XML configuration file. You can specify the 
