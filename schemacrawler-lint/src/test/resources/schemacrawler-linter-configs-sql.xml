@@ -18,13 +18,27 @@
       <property name="sql">SELECT TOP 1 1 FROM ${table} WHERE 1 != 1</property>
     </config>
   </linter>  
+  <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <run>false</run>
+    <config>
+      <property name="message">message D</property>
+      <property name="sql">SELECT TOP 1 2 FROM ${table}</property>
+    </config>
+  </linter>   
   <linter id="schemacrawler.tools.linter.LinterCatalogSql">
     <config>
       <property name="message">message for SQL catalog lint</property>
       <property name="sql">SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES</property>
     </config>
   </linter>  
-  
+  <linter id="schemacrawler.tools.linter.LinterCatalogSql">
+    <run>false</run>
+    <config>
+      <property name="message">message for SQL catalog lint</property>
+      <property name="sql">SELECT TOP 1 2 FROM INFORMATION_SCHEMA.TABLES</property>
+    </config>
+  </linter>  
+    
   <linter id="schemacrawler.tools.linter.LinterForeignKeyMismatch">
     <run>false</run>
   </linter>

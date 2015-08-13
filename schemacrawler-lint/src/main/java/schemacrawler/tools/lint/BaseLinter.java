@@ -70,12 +70,8 @@ public abstract class BaseLinter
   public final void lint(final Catalog catalog, final Connection connection)
     throws SchemaCrawlerException
   {
-    if (!isRunLinter())
-    {
-      return;
-    }
-
     this.catalog = requireNonNull(catalog, "No catalog provided");
+
     start();
     for (final Table table: catalog.getTables())
     {
