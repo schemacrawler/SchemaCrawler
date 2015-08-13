@@ -172,6 +172,7 @@ public final class Query
         tableProperties.put("schema", table.getSchema().getFullName());
       }
       tableProperties.put("table", table.getFullName());
+      tableProperties.put("tablename", table.getName());
       tableProperties.put("columns", getColumnsListAsString(columns, false));
       tableProperties.put("orderbycolumns",
                           getColumnsListAsString(columns, true));
