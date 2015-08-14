@@ -27,8 +27,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.Query;
 
 public class LinterTableEmpty
@@ -42,6 +44,13 @@ public class LinterTableEmpty
   public String getSummary()
   {
     return "empty table";
+  }
+
+  @Override
+  protected void configure(final Config config)
+  {
+    super.configure(config);
+    setSeverity(LintSeverity.low);
   }
 
   @Override
