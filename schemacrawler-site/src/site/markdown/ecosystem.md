@@ -7,6 +7,14 @@ Development Departement of [La Ville de Noumea](http://www.noumea.nc/).
 
 However, this is a registry of plugins and extensions to SchemaCrawler.
 
+## Custom SchemaCrawler Plugins
+
+### SchemaCrawler Plugin for neo4j
+
+[schemacrawler-plugin-neo4j](https://github.com/adriens/schemacrawler-plugin-neo4j) is maintained by
+Adrien Sales <Adrien.Sales at GMail>. This plugin dumps database structure into a neo4j database. 
+Once this done, you can view it in neo4j web console, or perform CYPHER queries on it.
+
 ## Custom SchemaCrawler Lints
 
 ### SchemaCrawler Additional Lints
