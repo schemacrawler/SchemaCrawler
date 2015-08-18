@@ -116,8 +116,9 @@ public class SchemaCrawlerOutputTest
 
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
         schemaCrawlerOptions
-          .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
-        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+          .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+        schemaCrawlerOptions
+          .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
         schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
@@ -176,8 +177,11 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+      schemaTextOptionsBuilder.sortTables();
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
@@ -187,8 +191,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
-        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-          .toConfig());
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
@@ -232,7 +235,7 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
@@ -276,7 +279,8 @@ public class SchemaCrawlerOutputTest
                                                             testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
 
@@ -333,8 +337,11 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+      schemaTextOptionsBuilder.sortTables();
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
@@ -344,8 +351,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
-        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-          .toConfig());
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
@@ -391,20 +397,22 @@ public class SchemaCrawlerOutputTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setSequenceInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setSynonymInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+      schemaTextOptionsBuilder.sortTables();
+
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
-        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-          .toConfig());
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
@@ -452,8 +460,11 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS"));
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+      schemaTextOptionsBuilder.sortTables();
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
                                                                              + ","
@@ -463,8 +474,7 @@ public class SchemaCrawlerOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       executable
-        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-          .toConfig());
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 

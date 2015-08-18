@@ -91,6 +91,8 @@ public class TitleTest
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("infolevel", "maximum");
+      argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
+      argsMap.put("sorttables", "true");
       argsMap.put("command", command);
       argsMap.put("outputformat", outputFormat.getFormat());
       argsMap.put("outputfile", out.toString());

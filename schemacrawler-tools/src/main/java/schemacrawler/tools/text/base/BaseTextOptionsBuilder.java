@@ -28,7 +28,7 @@ import java.util.Map;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
 
-public class BaseTextOptionsBuilder<O extends BaseTextOptions>
+public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   implements OptionsBuilder<BaseTextOptions>
 {
 

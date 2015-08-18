@@ -28,7 +28,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,6 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
 
 /**
@@ -81,17 +85,15 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
-        final Collection<Table> tables = catalog.getTables();
-
-        for (final Table table: tables)
+        for (Table table: getSortedTables(catalog))
         {
-          final String sql = query.getQuery(table, operationOptions
-            .isAlphabeticalSortForTableColumns());
+          final String sql = query
+            .getQuery(table,
+                      operationOptions.isAlphabeticalSortForTableColumns());
 
           LOGGER.log(Level.FINE,
                      String.format("Executing query for table %s: %s",
-                                   table.getFullName(),
-                                   sql));
+                                   table.getFullName(), sql));
           try (final ResultSet results = executeSql(statement, sql);)
           {
             handler.handleData(table, results);
@@ -116,6 +118,16 @@ public final class OperationExecutable
     }
   }
 
+  private List<? extends Table> getSortedTables(final Catalog catalog)
+  {
+    final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
+    Collections.sort(tables,
+                     NamedObjectSort
+                       .getNamedObjectSort(getOperationOptions()
+                         .isAlphabeticalSortForTables()));
+    return tables;
+  }
+
   public final OperationOptions getOperationOptions()
   {
     loadOperationOptions();
@@ -138,14 +150,12 @@ public final class OperationExecutable
       .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
-      formatter = new DataJsonFormatter(operation,
-                                        operationOptions,
+      formatter = new DataJsonFormatter(operation, operationOptions,
                                         outputOptions);
     }
     else
     {
-      formatter = new DataTextFormatter(operation,
-                                        operationOptions,
+      formatter = new DataTextFormatter(operation, operationOptions,
                                         outputOptions);
     }
     return formatter;

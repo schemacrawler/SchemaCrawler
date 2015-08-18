@@ -47,8 +47,7 @@ public class TemplatingIntegrationTest
   public void commandlineFreeMarker()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile("freemarker",
-                                            "plaintextschema.ftl",
+    executeCommandlineAndCheckForOutputFile("freemarker", "plaintextschema.ftl",
                                             "executableForFreeMarker");
   }
 
@@ -65,8 +64,7 @@ public class TemplatingIntegrationTest
   public void commandlineVelocity()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile("velocity",
-                                            "plaintextschema.vm",
+    executeCommandlineAndCheckForOutputFile("velocity", "plaintextschema.vm",
                                             "executableForVelocity");
   }
 
@@ -97,10 +95,11 @@ public class TemplatingIntegrationTest
                                            "executableForVelocity");
   }
 
-  private void executeCommandlineAndCheckForOutputFile(final String command,
-                                                       final String outputFormatValue,
-                                                       final String referenceFileName)
-    throws Exception
+  private void
+    executeCommandlineAndCheckForOutputFile(final String command,
+                                            final String outputFormatValue,
+                                            final String referenceFileName)
+                                              throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -108,7 +107,6 @@ public class TemplatingIntegrationTest
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
       argsMap.put("password", "");
-
       argsMap.put("infolevel", "standard");
       argsMap.put("command", command);
       argsMap.put("sortcolumns", "true");
@@ -121,10 +119,11 @@ public class TemplatingIntegrationTest
     }
   }
 
-  private void executeExecutableAndCheckForOutputFile(final Executable executable,
-                                                      final String outputFormatValue,
-                                                      final String referenceFileName)
-    throws Exception
+  private void
+    executeExecutableAndCheckForOutputFile(final Executable executable,
+                                           final String outputFormatValue,
+                                           final String referenceFileName)
+                                             throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {

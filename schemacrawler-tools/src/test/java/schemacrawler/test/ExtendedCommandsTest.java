@@ -23,6 +23,8 @@ package schemacrawler.test;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 
@@ -34,8 +36,14 @@ public class ExtendedCommandsTest
   public void executableJavaScript()
     throws Exception
   {
-    executeExecutable(new ScriptExecutable(),
-                      "/plaintextschema.js",
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
+    final ScriptExecutable executable = new ScriptExecutable();
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    executeExecutable(executable, "/plaintextschema.js",
                       "executableForJavaScript.txt");
   }
 

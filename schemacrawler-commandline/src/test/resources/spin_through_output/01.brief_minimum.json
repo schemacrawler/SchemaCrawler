@@ -13,6 +13,15 @@
     {
       "foreignKeys": [],
       "columns": [],
+      "name": "AUTHORSLIST",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "columns": [],
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table",
@@ -117,19 +126,10 @@
       "type": "table",
       "remarks": "",
       "primaryKey": {}
-    },
-    {
-      "foreignKeys": [],
-      "columns": [],
-      "name": "AUTHORSLIST",
-      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "type": "view",
-      "remarks": "",
-      "primaryKey": {}
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-10 23:29:41",
+    "crawlTimestamp": "2015-08-17 19:41:13",
     "title": ""
   },
   "routines": [

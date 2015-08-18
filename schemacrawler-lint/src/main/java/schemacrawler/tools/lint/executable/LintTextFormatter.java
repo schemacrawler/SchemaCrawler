@@ -37,6 +37,7 @@ import schemacrawler.tools.lint.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
+import schemacrawler.utility.NamedObjectSort;
 import sf.util.Multimap;
 
 final class LintTextFormatter
@@ -68,13 +69,24 @@ final class LintTextFormatter
     }
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
-   */
   @Override
-  public void handle(final Table table)
+  public void handle(final Collection<? extends Table> tables)
+    throws SchemaCrawlerException
+  {
+    if (tables == null || tables.isEmpty())
+    {
+      return;
+    }
+    final List<? extends Table> tablesList = new ArrayList<>(tables);
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+    for (Table table: tablesList)
+    {
+      handle(table);
+    }
+  }
+
+  private void handle(final Table table)
   {
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())

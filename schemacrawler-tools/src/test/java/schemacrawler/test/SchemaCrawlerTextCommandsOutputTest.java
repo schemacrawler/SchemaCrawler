@@ -21,17 +21,14 @@
 package schemacrawler.test;
 
 
-import static java.nio.file.Files.exists;
-import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
-
-import java.nio.file.Path;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -119,35 +116,20 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void streamedOutput()
     throws Exception
   {
-    final Path dummyOutputFile = createTempFile("dummy", "data");
-    try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
-    {
-      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                            dummyOutputFile);
-      outputOptions.setWriter(writer);
-
-      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
-      commonTextOptions.hideInfo();
-      commonTextOptions.hideHeader();
-      commonTextOptions.hideFooter();
-
-      final String command = SchemaTextDetailType.brief.name();
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-      executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(commonTextOptions.toConfig());
-      executable.execute(getConnection());
-
-      assertTrue(!exists(dummyOutputFile));
-
-      writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
-    }
+    textOutputTest(SchemaTextDetailType.brief.name(), new Config());
   }
 
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
-    try (final TestWriter writer = new TestWriter(TextOutputFormat.text.getFormat());)
+    try (
+      final TestWriter writer = new TestWriter(TextOutputFormat.text
+        .getFormat());)
     {
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
                                                             writer);
 
@@ -156,9 +138,11 @@ public class SchemaCrawlerTextCommandsOutputTest
       commonTextOptions.hideInfo();
       commonTextOptions.hideHeader();
       commonTextOptions.hideFooter();
+      commonTextOptions.sortTables();
       config.putAll(commonTextOptions.toConfig());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(config);
       executable.setOutputOptions(outputOptions);
       executable.execute(getConnection());
