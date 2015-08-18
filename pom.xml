@@ -7,7 +7,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>14.02.02</version>
+  <version>14.03.01</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>http://schemacrawler.sourceforge.net</url>
