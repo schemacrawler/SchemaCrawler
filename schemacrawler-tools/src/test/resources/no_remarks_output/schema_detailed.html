@@ -382,6 +382,129 @@ td.section {
 
 
 <table>
+  <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>FIRSTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>LASTNAME</td>
+		<td class='type'>VARCHAR(20)</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>"UPDATE"</td>
+		<td class='type'>CLOB</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID (0..many)→ <a href='#authors_dba8a1ff'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID (0..many)→ <a href='#books_afd2ba21'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10118</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10116</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>BOOKID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>AUTHORID</td>
+		<td class='type'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -590,129 +713,6 @@ td.section {
 		<td class='spacer'></td>
 		<td class='subname'></td>
 		<td class='type'>auto-incremented</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>BOOKID</td>
-		<td class='type'>INTEGER NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>INTEGER NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>"UPDATE"</td>
-		<td class='type'>CLOB</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Foreign Keys</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>AUTHORID (0..many)→ <a href='#authors_dba8a1ff'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_Y_BOOK</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>BOOKID (0..many)→ <a href='#books_afd2ba21'>PUBLIC.BOOKS.BOOKS.ID</a></td>
-		<td class='type'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Indexes</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10118</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10116</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>BOOKID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>UIDX_BOOKAUTHORS</td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>BOOKID</td>
-		<td class='type'>ascending</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>ascending</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>INTEGER</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(20)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR(20)</td>
 	</tr>
 </table>
 <p>&#160;</p>
