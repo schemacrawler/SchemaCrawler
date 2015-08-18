@@ -196,7 +196,8 @@ class MutableTable
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
-  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<Table>
+    getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
     final Set<Table> relatedTables = new HashSet<>();
     if (tableRelationshipType != null
@@ -450,15 +451,16 @@ class MutableTable
     }
   }
 
-  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
+  private Collection<ForeignKey>
+    getForeignKeys(final TableAssociationType tableAssociationType)
   {
     final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
       .values());
     if (tableAssociationType != null
         && tableAssociationType != TableAssociationType.all)
     {
-      for (final Iterator<ForeignKey> iterator = foreignKeysList.iterator(); iterator
-        .hasNext();)
+      for (final Iterator<ForeignKey> iterator = foreignKeysList
+        .iterator(); iterator.hasNext();)
       {
         final ForeignKey mutableForeignKey = iterator.next();
         boolean isExportedKey = false;
