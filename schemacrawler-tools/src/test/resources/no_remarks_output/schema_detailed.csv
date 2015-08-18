@@ -44,6 +44,42 @@ IDX_A_AUTHORS,[non-unique index]
 
 
 
+PUBLIC.BOOKS.AUTHORSLIST,[view]
+------------------------------------------------------------------------
+"",ID,INTEGER
+"",FIRSTNAME,VARCHAR(20)
+"",LASTNAME,VARCHAR(20)
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS,[table]
+------------------------------------------------------------------------
+"",BOOKID,INTEGER NOT NULL
+"",AUTHORID,INTEGER NOT NULL
+"","""UPDATE""",CLOB
+""
+Foreign Keys
+""
+FK_Z_AUTHOR,"[foreign key, with no action]"
+"",AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID,""
+""
+FK_Y_BOOK,"[foreign key, with no action]"
+"",BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID,""
+""
+Indexes
+""
+SYS_IDX_10118,[non-unique index]
+"",AUTHORID,ascending
+""
+SYS_IDX_10116,[non-unique index]
+"",BOOKID,ascending
+""
+UIDX_BOOKAUTHORS,[unique index]
+"",BOOKID,ascending
+"",AUTHORID,ascending
+
+
+
 PUBLIC.BOOKS.BOOKS,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER NOT NULL
@@ -103,42 +139,6 @@ Indexes
 SYS_IDX_SYS_PK_10092_10093,[unique index]
 "",ID,ascending
 "","",auto-incremented
-
-
-
-PUBLIC.BOOKS.BOOKAUTHORS,[table]
-------------------------------------------------------------------------
-"",BOOKID,INTEGER NOT NULL
-"",AUTHORID,INTEGER NOT NULL
-"","""UPDATE""",CLOB
-""
-Foreign Keys
-""
-FK_Z_AUTHOR,"[foreign key, with no action]"
-"",AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID,""
-""
-FK_Y_BOOK,"[foreign key, with no action]"
-"",BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID,""
-""
-Indexes
-""
-SYS_IDX_10118,[non-unique index]
-"",AUTHORID,ascending
-""
-SYS_IDX_10116,[non-unique index]
-"",BOOKID,ascending
-""
-UIDX_BOOKAUTHORS,[unique index]
-"",BOOKID,ascending
-"",AUTHORID,ascending
-
-
-
-PUBLIC.BOOKS.AUTHORSLIST,[view]
-------------------------------------------------------------------------
-"",ID,INTEGER
-"",FIRSTNAME,VARCHAR(20)
-"",LASTNAME,VARCHAR(20)
 
 
 

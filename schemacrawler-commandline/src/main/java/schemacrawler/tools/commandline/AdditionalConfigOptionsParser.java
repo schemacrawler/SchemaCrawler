@@ -64,10 +64,15 @@ public final class AdditionalConfigOptionsParser
     }
     if (config.hasValue("sorttables"))
     {
+      // Special treatment, since -sorttables is true by default in the options
       final boolean booleanValue = config.getBooleanValue("sorttables", true);
       if (booleanValue)
       {
         textOptionsBuilder.sortTables();
+      }
+      else
+      {
+        textOptionsBuilder.naturalSortTables();
       }
     }
     if (config.hasValue("sortcolumns"))
@@ -88,8 +93,8 @@ public final class AdditionalConfigOptionsParser
     }
     if (config.hasValue("portablenames"))
     {
-      final boolean booleanValue = config
-        .getBooleanValue("portablenames", true);
+      final boolean booleanValue = config.getBooleanValue("portablenames",
+                                                          true);
       if (booleanValue)
       {
         textOptionsBuilder.portableNames();

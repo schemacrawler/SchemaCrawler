@@ -111,15 +111,19 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
       .setShowUnqualifiedNames(config.getBooleanValue(SHOW_UNQUALIFIED_NAMES));
 
     options.setAlphabeticalSortForTables(config
-      .getBooleanValue(SORT_ALPHABETICALLY_TABLES, true));
+      .getBooleanValue(SORT_ALPHABETICALLY_TABLES,
+                       options.isAlphabeticalSortForTables()));
     options.setAlphabeticalSortForTableColumns(config
-      .getBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS));
+      .getBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
+                       options.isAlphabeticalSortForTableColumns()));
 
     options.setAlphabeticalSortForRoutines(config
-      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINES));
+      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
+                       options.isAlphabeticalSortForRoutines()));
 
     options.setAlphabeticalSortForRoutineColumns(config
-      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS));
+      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
+                       options.isAlphabeticalSortForRoutineColumns()));
 
     return this;
   }
@@ -151,6 +155,12 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public BaseTextOptionsBuilder<O> sortTables()
   {
     options.setAlphabeticalSortForTables(true);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> naturalSortTables()
+  {
+    options.setAlphabeticalSortForTables(false);
     return this;
   }
 
