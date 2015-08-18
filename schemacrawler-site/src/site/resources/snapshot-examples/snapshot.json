@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "14.02.02",
+    "productVersion": "14.03.01",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -1026,17 +1026,6 @@
       ],
       "columns": [
         {
-          "size": 32,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ID",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
           "size": 64,
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -1053,6 +1042,17 @@
           "databaseSpecificType": "INTEGER",
           "dataType": "INTEGER",
           "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
@@ -1079,18 +1079,18 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10178",
-          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "type": "check"
-        },
-        {
-          "name": "SYS_CT_10179",
+          "name": "SYS_CT_10187",
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10180",
+          "name": "SYS_CT_10188",
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10189",
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
           "type": "check"
         }
       ],
@@ -1101,7 +1101,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10181",
+          "name": "SYS_IDX_PK_EXTRA_PK_10190",
           "definition": ""
         },
         {
@@ -1110,7 +1110,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10187",
+          "name": "SYS_IDX_10196",
           "definition": ""
         },
         {
@@ -1119,7 +1119,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_10185",
+          "name": "SYS_IDX_10194",
           "definition": ""
         }
       ],
@@ -1269,6 +1269,15 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.EXTRA_PK.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
           }],
           "updateRule": "no action"
         },
@@ -1498,6 +1507,152 @@
       ],
       "foreignKeys": [
         {
+          "name": "FK_PUBLICATION",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "WRITERID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "name": "FK_PUBLICATION",
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "name": "FK_WRITER",
+          "definition": "",
+          "type": "foreign_key"
+        },
+        {
+          "name": "SYS_CT_10177",
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10178",
+          "definition": "FOR_LINT.PUBLICATIONWRITERS.WRITERID IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10184",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "WRITERID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10182",
+          "definition": ""
+        }
+      ],
+      "name": "PUBLICATIONWRITERS",
+      "definition": "",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "weakAssociations": [],
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "DBA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [
+        {
           "name": "FK_WRITERS_PUBLICATION",
           "deleteRule": "no action",
           "columnReferences": [{
@@ -1521,6 +1676,15 @@
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.WRITERID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_WRITER",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
+            "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
         },
@@ -1795,7 +1959,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10194",
+          "name": "SYS_IDX_10204",
           "definition": ""
         },
         {
@@ -1991,7 +2155,7 @@
           "type": "primary_key"
         },
         {
-          "name": "SYS_CT_10189",
+          "name": "SYS_CT_10198",
           "definition": "FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ IS NOT NULL",
           "type": "check"
         }
@@ -2003,7 +2167,7 @@
             "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10190",
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10199",
           "definition": ""
         },
         {
@@ -2012,7 +2176,7 @@
             "name": "ΣΥΓΓΡΑΦΈΑΣ"
           },
           "unique": false,
-          "name": "SYS_IDX_10192",
+          "name": "SYS_IDX_10201",
           "definition": ""
         }
       ],
@@ -2581,7 +2745,7 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.3.2",
+    "databaseProductVersion": "2.3.3",
     "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
@@ -2627,7 +2791,6 @@
           "hsqldb.default_table_type",
           "hsqldb.defrag_limit",
           "hsqldb.digest",
-          "hsqldb.files_check",
           "hsqldb.files_space",
           "hsqldb.full_log_replay",
           "hsqldb.inc_backup",
@@ -2637,6 +2800,7 @@
           "hsqldb.lock_file",
           "hsqldb.log_data",
           "hsqldb.log_size",
+          "hsqldb.min_reuse",
           "hsqldb.nio_data_file",
           "hsqldb.nio_max_size",
           "hsqldb.result_max_memory_rows",
@@ -3557,7 +3721,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-07-19 21:01:10",
+    "crawlTimestamp": "2015-08-17 21:48:29",
     "title": "Details of Example Database"
   },
   "routines": [
@@ -3904,7 +4068,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.3.2",
+    "driverVersion": "2.3.3",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
@@ -4002,6 +4166,10 @@
       "value": 0
     },
     {
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
+      "value": 0
+    },
+    {
       "title": "PUBLIC.FOR_LINT.WRITERS",
       "value": 0
     },
@@ -4015,7 +4183,7 @@
     },
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
-      "value": 40
+      "value": 20
     }
   ],
   "description": "Row Count"
@@ -4768,9 +4936,9 @@
     },
     {
       "columnNames": [
-        "ID",
         "WRITERID",
-        "PUBLICATIONID"
+        "PUBLICATIONID",
+        "ID"
       ],
       "title": "PUBLIC.FOR_LINT.EXTRA_PK",
       "rows": []
@@ -4792,6 +4960,14 @@
         "PRESS_RELEASE"
       ],
       "title": "PUBLIC.FOR_LINT.PUBLICATIONS",
+      "rows": []
+    },
+    {
+      "columnNames": [
+        "PUBLICATIONID",
+        "WRITERID"
+      ],
+      "title": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "rows": []
     },
     {
@@ -4979,20 +5155,6 @@
           "13078",
           "USA",
           1,
-          "2001-07-18",
-          18257
-        ],
-        [
-          "13078",
-          "USA",
-          1,
-          "2001-09-29",
-          14895
-        ],
-        [
-          "13078",
-          "USA",
-          1,
           "2001-09-29",
           14895
         ],
@@ -5002,20 +5164,6 @@
           6,
           "2003-12-28",
           6083
-        ],
-        [
-          "13078",
-          "USA",
-          6,
-          "2003-12-28",
-          6083
-        ],
-        [
-          "13078",
-          "USA",
-          6,
-          "2006-06-11",
-          7840
         ],
         [
           "13078",
@@ -5035,20 +5183,6 @@
           "17131",
           "USA",
           2,
-          "2002-04-30",
-          17887
-        ],
-        [
-          "17131",
-          "USA",
-          2,
-          "2004-11-13",
-          16317
-        ],
-        [
-          "17131",
-          "USA",
-          2,
           "2004-11-13",
           16317
         ],
@@ -5058,20 +5192,6 @@
           7,
           "2000-03-08",
           6951
-        ],
-        [
-          "17131",
-          "USA",
-          7,
-          "2000-03-08",
-          6951
-        ],
-        [
-          "17131",
-          "USA",
-          7,
-          "2003-03-21",
-          18431
         ],
         [
           "17131",
@@ -5091,20 +5211,6 @@
           "20239",
           "USA",
           3,
-          "2004-08-28",
-          18747
-        ],
-        [
-          "20239",
-          "USA",
-          3,
-          "2005-07-27",
-          6712
-        ],
-        [
-          "20239",
-          "USA",
-          3,
           "2005-07-27",
           6712
         ],
@@ -5114,20 +5220,6 @@
           8,
           "2008-03-29",
           11013
-        ],
-        [
-          "20239",
-          "USA",
-          8,
-          "2008-03-29",
-          11013
-        ],
-        [
-          "20239",
-          "USA",
-          8,
-          "2008-08-15",
-          17514
         ],
         [
           "20239",
@@ -5147,20 +5239,6 @@
           "24179",
           "USA",
           4,
-          "2005-12-24",
-          11103
-        ],
-        [
-          "24179",
-          "USA",
-          4,
-          "2009-02-14",
-          5885
-        ],
-        [
-          "24179",
-          "USA",
-          4,
           "2009-02-14",
           5885
         ],
@@ -5170,20 +5248,6 @@
           9,
           "2000-05-16",
           13595
-        ],
-        [
-          "24179",
-          "USA",
-          9,
-          "2000-05-16",
-          13595
-        ],
-        [
-          "24179",
-          "USA",
-          9,
-          "2004-04-10",
-          14069
         ],
         [
           "24179",
@@ -5203,20 +5267,6 @@
           "26131",
           "USA",
           5,
-          "2001-12-02",
-          14798
-        ],
-        [
-          "26131",
-          "USA",
-          5,
-          "2004-11-03",
-          15348
-        ],
-        [
-          "26131",
-          "USA",
-          5,
           "2004-11-03",
           15348
         ],
@@ -5226,20 +5276,6 @@
           10,
           "2000-09-20",
           14476
-        ],
-        [
-          "26131",
-          "USA",
-          10,
-          "2000-09-20",
-          14476
-        ],
-        [
-          "26131",
-          "USA",
-          10,
-          "2005-12-03",
-          17069
         ],
         [
           "26131",
