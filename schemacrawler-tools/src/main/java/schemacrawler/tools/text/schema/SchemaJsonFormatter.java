@@ -93,10 +93,9 @@ final class SchemaJsonFormatter
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                        throws SchemaCrawlerException
   {
-    super(options,
-          schemaTextDetailType == SchemaTextDetailType.details,
+    super(options, schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
@@ -125,24 +124,22 @@ final class SchemaJsonFormatter
         jsonColumnDataType.put("databaseSpecificTypeName",
                                databaseSpecificTypeName);
         jsonColumnDataType
-          .put("basedOn", columnDataType.getBaseType() == null? ""
-                                                              : columnDataType
-                                                                .getBaseType()
-                                                                .getName());
+          .put("basedOn",
+               columnDataType.getBaseType() == null? "": columnDataType
+                 .getBaseType().getName());
         jsonColumnDataType.put("userDefined", columnDataType.isUserDefined());
         jsonColumnDataType.put("createParameters",
                                columnDataType.getCreateParameters());
         jsonColumnDataType.put("nullable", columnDataType.isNullable());
         jsonColumnDataType.put("autoIncrementable",
                                columnDataType.isAutoIncrementable());
-        jsonColumnDataType.put("searchable", columnDataType.getSearchable()
-          .toString());
+        jsonColumnDataType.put("searchable",
+                               columnDataType.getSearchable().toString());
       }
       catch (final JSONException e)
       {
         LOGGER.log(Level.FINER,
-                   "Error outputting ColumnDataType: " + e.getMessage(),
-                   e);
+                   "Error outputting ColumnDataType: " + e.getMessage(), e);
       }
     }
   }
@@ -177,8 +174,8 @@ final class SchemaJsonFormatter
 
         final List<? extends RoutineColumn<? extends Routine>> columns = routine
           .getColumns();
-        Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-          .isAlphabeticalSortForRoutineColumns()));
+        Collections.sort(columns, NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForRoutineColumns()));
         for (final RoutineColumn<?> column: columns)
         {
           jsonParameters.put(handleRoutineColumn(column));
@@ -232,8 +229,8 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER, "Error outputting Sequence: " + e.getMessage(), e);
+      LOGGER.log(Level.FINER, "Error outputting Sequence: " + e.getMessage(),
+                 e);
     }
 
   }
@@ -280,14 +277,24 @@ final class SchemaJsonFormatter
 
   }
 
-  /**
-   * Provides information on the database schema.
-   *
-   * @param table
-   *        Table metadata.
-   */
   @Override
-  public void handle(final Table table)
+  public void handle(final Collection<? extends Table> tables)
+    throws SchemaCrawlerException
+  {
+    if (tables == null || tables.isEmpty())
+    {
+      return;
+    }
+    final List<? extends Table> tablesList = new ArrayList<>(tables);
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+    for (Table table: tablesList)
+    {
+      handle(table);
+    }
+  }
+
+  private void handle(final Table table)
   {
     final JSONObject jsonTable = new JSONObject();
 
@@ -306,8 +313,8 @@ final class SchemaJsonFormatter
       final JSONArray jsonColumns = new JSONArray();
       jsonTable.put("columns", jsonColumns);
       final List<Column> columns = table.getColumns();
-      Collections.sort(columns, NamedObjectSort.getNamedObjectSort(options
-        .isAlphabeticalSortForTableColumns()));
+      Collections.sort(columns, NamedObjectSort
+        .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
       for (final Column column: columns)
       {
         if (isBrief && !isColumnSignificant(column))
@@ -336,8 +343,8 @@ final class SchemaJsonFormatter
         jsonTable.put("indexes", jsonIndexes);
         final Collection<Index> indexesCollection = table.getIndexes();
         final List<Index> indexes = new ArrayList<>(indexesCollection);
-        Collections.sort(indexes, NamedObjectSort.getNamedObjectSort(options
-          .isAlphabeticalSortForIndexes()));
+        Collections.sort(indexes, NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
         for (final Index index: indexes)
         {
           jsonIndexes.put(handleIndex(index));
@@ -445,7 +452,8 @@ final class SchemaJsonFormatter
   {
   }
 
-  private JSONArray handleColumnReferences(final BaseForeignKey<? extends ColumnReference> foreignKey)
+  private JSONArray
+    handleColumnReferences(final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     final JSONArray jsonColumnReferences = new JSONArray();
     for (final ColumnReference columnReference: foreignKey)
@@ -488,19 +496,19 @@ final class SchemaJsonFormatter
       catch (final JSONException e)
       {
         LOGGER.log(Level.FINER,
-                   "Error outputting ColumnReference: " + e.getMessage(),
-                   e);
+                   "Error outputting ColumnReference: " + e.getMessage(), e);
       }
     }
     return jsonColumnReferences;
   }
 
-  private JSONArray handleForeignKeys(final Collection<ForeignKey> foreignKeysCollection)
+  private JSONArray
+    handleForeignKeys(final Collection<ForeignKey> foreignKeysCollection)
   {
     final JSONArray jsonFks = new JSONArray();
     final List<ForeignKey> foreignKeys = new ArrayList<>(foreignKeysCollection);
-    Collections.sort(foreignKeys, NamedObjectSort.getNamedObjectSort(options
-      .isAlphabeticalSortForForeignKeys()));
+    Collections.sort(foreignKeys, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForForeignKeys()));
     for (final ForeignKey foreignKey: foreignKeys)
     {
       if (foreignKey != null)
@@ -531,8 +539,7 @@ final class SchemaJsonFormatter
         catch (final JSONException e)
         {
           LOGGER.log(Level.FINER,
-                     "Error outputting ForeignKey: " + e.getMessage(),
-                     e);
+                     "Error outputting ForeignKey: " + e.getMessage(), e);
         }
       }
     }
@@ -589,10 +596,11 @@ final class SchemaJsonFormatter
     try
     {
       jsonColumn.put("name", column.getName());
-      jsonColumn.put("dataType", column.getColumnDataType().getJavaSqlType()
-        .getJavaSqlTypeName());
-      jsonColumn.put("databaseSpecificType", column.getColumnDataType()
-        .getDatabaseSpecificTypeName());
+      jsonColumn
+        .put("dataType",
+             column.getColumnDataType().getJavaSqlType().getJavaSqlTypeName());
+      jsonColumn.put("databaseSpecificType",
+                     column.getColumnDataType().getDatabaseSpecificTypeName());
       jsonColumn.put("width", column.getWidth());
       jsonColumn.put("type", column.getColumnType().toString());
       if (options.isShowOrdinalNumbers())
@@ -603,8 +611,7 @@ final class SchemaJsonFormatter
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting routine column: " + e.getMessage(),
-                 e);
+                 "Error outputting routine column: " + e.getMessage(), e);
     }
 
     return jsonColumn;
@@ -620,15 +627,16 @@ final class SchemaJsonFormatter
 
       if (column instanceof IndexColumn)
       {
-        jsonColumn.put("sortSequence", ((IndexColumn) column).getSortSequence()
-          .name());
+        jsonColumn.put("sortSequence",
+                       ((IndexColumn) column).getSortSequence().name());
       }
       else
       {
         jsonColumn.put("dataType", column.getColumnDataType().getJavaSqlType()
           .getJavaSqlTypeName());
-        jsonColumn.put("databaseSpecificType", column.getColumnDataType()
-          .getDatabaseSpecificTypeName());
+        jsonColumn
+          .put("databaseSpecificType",
+               column.getColumnDataType().getDatabaseSpecificTypeName());
         jsonColumn.put("width", column.getWidth());
         jsonColumn.put("size", column.getSize());
         jsonColumn.put("decimalDigits", column.getDecimalDigits());
@@ -649,7 +657,8 @@ final class SchemaJsonFormatter
     return jsonColumn;
   }
 
-  private JSONObject handleTableConstraint(final TableConstraint tableConstraint)
+  private JSONObject
+    handleTableConstraint(final TableConstraint tableConstraint)
   {
 
     final JSONObject jsonTableConstraint = new JSONObject();
@@ -684,8 +693,7 @@ final class SchemaJsonFormatter
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting TableConstraint: " + e.getMessage(),
-                 e);
+                 "Error outputting TableConstraint: " + e.getMessage(), e);
     }
 
     return jsonTableConstraint;
@@ -726,8 +734,7 @@ final class SchemaJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER.log(Level.FINER,
-                     "Error outputting Trigger: " + e.getMessage(),
+          LOGGER.log(Level.FINER, "Error outputting Trigger: " + e.getMessage(),
                      e);
         }
       }
@@ -735,8 +742,9 @@ final class SchemaJsonFormatter
     return jsonTriggers;
   }
 
-  private JSONArray handleWeakAssociations(final Collection<WeakAssociationForeignKey> weakAssociationsCollection)
-    throws JSONException
+  private JSONArray
+    handleWeakAssociations(final Collection<WeakAssociationForeignKey> weakAssociationsCollection)
+      throws JSONException
   {
     final JSONArray jsonFks = new JSONArray();
 
@@ -755,9 +763,8 @@ final class SchemaJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER.log(Level.FINER,
-                     "Error outputting WeakAssociationForeignKey: "
-                         + e.getMessage(),
+          LOGGER.log(Level.FINER, "Error outputting WeakAssociationForeignKey: "
+                                  + e.getMessage(),
                      e);
         }
       }
@@ -768,7 +775,7 @@ final class SchemaJsonFormatter
 
   private void printDefinition(final DefinedObject definedObject,
                                final JSONObject jsonObject)
-    throws JSONException
+                                 throws JSONException
   {
     if (!isVerbose)
     {
@@ -780,7 +787,7 @@ final class SchemaJsonFormatter
 
   private void printRemarks(final DatabaseObject object,
                             final JSONObject jsonObject)
-    throws JSONException
+                              throws JSONException
   {
     if (object == null || options.isHideRemarks())
     {

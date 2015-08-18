@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-08-10 23:29:44</td>
+		<td align='left'>2015-08-16 11:53:12</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -55,6 +55,20 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td colspan='3' align='left'>Contact details for book authors</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "authorslist_b29d331d" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[view]</td>
 	</tr>
       </table>
     >
@@ -232,20 +246,6 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td colspan='2' bgcolor='#F2DDCE' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALES</i></b></td>
 		<td bgcolor='#F2DDCE' align='right'>[table]</td>
-	</tr>
-      </table>
-    >
-  ];
-
-
-
-  /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "authorslist_b29d331d" [
-    label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
-	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
-		<td bgcolor='#CEE2F2' align='right'>[view]</td>
 	</tr>
       </table>
     >

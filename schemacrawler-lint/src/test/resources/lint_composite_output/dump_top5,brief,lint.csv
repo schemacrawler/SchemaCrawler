@@ -7,7 +7,7 @@ Query
 
 PUBLIC.FOR_LINT.EXTRA_PK,""
 ------------------------------------------------------------------------
-ID,WRITERID,PUBLICATIONID
+WRITERID,PUBLICATIONID,ID
 
 
 
@@ -48,9 +48,9 @@ Tables
 
 PUBLIC.FOR_LINT.EXTRA_PK,[table]
 ------------------------------------------------------------------------
-"",ID,INTEGER NOT NULL
 "",WRITERID,BIGINT NOT NULL
 "",PUBLICATIONID,INTEGER NOT NULL
+"",ID,INTEGER NOT NULL
 ""
 Primary Key
 ""

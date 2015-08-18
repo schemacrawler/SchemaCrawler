@@ -78,10 +78,7 @@ public class SchemaTraverser
     if (!tables.isEmpty())
     {
       handler.handleTablesStart();
-      for (final Table table: tables)
-      {
-        handler.handle(table);
-      }
+      handler.handle(tables);
       handler.handleTablesEnd();
     }
 

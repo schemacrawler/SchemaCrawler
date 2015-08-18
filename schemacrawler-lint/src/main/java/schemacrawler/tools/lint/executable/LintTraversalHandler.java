@@ -1,6 +1,8 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.Collection;
+
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintedCatalog;
@@ -13,7 +15,7 @@ public interface LintTraversalHandler
   void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException;
 
-  void handle(final Table table)
+  void handle(final Collection<? extends Table> table)
     throws SchemaCrawlerException;
 
   void handleEnd()
