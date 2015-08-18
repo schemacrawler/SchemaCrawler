@@ -4,7 +4,7 @@ package schemacrawler.schema;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public interface CrawlHeaderInfo
+public interface CrawlInfo
   extends Serializable
 {
 

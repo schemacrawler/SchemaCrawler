@@ -1,4 +1,4 @@
-print catalog.crawlHeaderInfo
+print catalog.crawlInfo
 
 for table in catalog.tables:
   print ''

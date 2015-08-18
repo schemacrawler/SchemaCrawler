@@ -1,6 +1,6 @@
 UTF-8: ¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯
 
-${catalog.crawlHeaderInfo}
+${catalog.crawlInfo}
 
 <#list catalog.schemas as schema>
 <#list catalog.getTables(schema) as table>- ${table}

@@ -59,7 +59,7 @@ public class CoverageTest
     list.add(null);
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test(expected = SQLException.class)
   public void retrieverConnection()
     throws SQLException
   {

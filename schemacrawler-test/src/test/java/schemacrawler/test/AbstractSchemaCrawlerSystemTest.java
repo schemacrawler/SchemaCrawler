@@ -107,7 +107,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
     try
     {
       final Catalog catalog = SchemaCrawlerUtility
-        .getCatalog(connection, null, schemaCrawlerOptions);
+        .getCatalog(connection, schemaCrawlerOptions);
       return catalog;
     }
     catch (final Exception e)

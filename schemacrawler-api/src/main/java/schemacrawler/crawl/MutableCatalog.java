@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
@@ -82,7 +82,7 @@ final class MutableCatalog
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
-  private ImmutableCrawlHeaderInfo crawlHeaderInfo;
+  private ImmutableCrawlInfo crawlInfo;
   private final Set<Schema> schemas;
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
@@ -125,9 +125,9 @@ final class MutableCatalog
   }
 
   @Override
-  public CrawlHeaderInfo getCrawlHeaderInfo()
+  public CrawlInfo getCrawlInfo()
   {
-    return crawlHeaderInfo;
+    return crawlInfo;
   }
 
   @Override
@@ -466,7 +466,7 @@ final class MutableCatalog
 
   void setCrawlHeaderInfo(final String title)
   {
-    crawlHeaderInfo = new ImmutableCrawlHeaderInfo(schemaCrawlerInfo,
+    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo,
                                                    jdbcDriverInfo,
                                                    databaseInfo,
                                                    title);

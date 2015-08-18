@@ -47,7 +47,7 @@ public interface Catalog
    */
   Collection<ColumnDataType> getColumnDataTypes(Schema schema);
 
-  CrawlHeaderInfo getCrawlHeaderInfo();
+  CrawlInfo getCrawlInfo();
 
   DatabaseInfo getDatabaseInfo();
 

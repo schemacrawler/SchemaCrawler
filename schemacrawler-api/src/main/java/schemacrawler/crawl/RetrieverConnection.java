@@ -37,6 +37,7 @@ import java.util.stream.Stream;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
@@ -53,9 +54,10 @@ final class RetrieverConnection
   private static final Logger LOGGER = Logger
     .getLogger(RetrieverConnection.class.getName());
 
-  private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                                    final DatabaseMetaData metaData)
-                                                      throws SQLException
+  private static String
+    lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                                final DatabaseMetaData metaData)
+                                  throws SQLException
   {
     String identifierQuoteString;
     if (databaseSpecificOverrideOptions != null
@@ -77,8 +79,9 @@ final class RetrieverConnection
     return identifierQuoteString;
   }
 
-  private static List<String> lookupReservedWords(final DatabaseMetaData metaData)
-    throws SQLException
+  private static List<String>
+    lookupReservedWords(final DatabaseMetaData metaData)
+      throws SQLException
   {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
       .getResourceAsStream("/sql2003_reserved_words.txt")));
@@ -89,7 +92,8 @@ final class RetrieverConnection
       .sorted().collect(Collectors.toList()));
   }
 
-  private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  private static boolean lookupSupportsCatalogs(
+                                                final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                 final DatabaseMetaData metaData)
                                                   throws SQLException
   {
@@ -106,7 +110,8 @@ final class RetrieverConnection
     return supportsCatalogs;
   }
 
-  private static boolean lookupSupportsSchemas(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  private static boolean lookupSupportsSchemas(
+                                               final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                final DatabaseMetaData metaData)
                                                  throws SQLException
   {
@@ -146,7 +151,14 @@ final class RetrieverConnection
       schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
 
-    checkConnection(connection);
+    try
+    {
+      checkConnection(connection);
+    }
+    catch (SchemaCrawlerException e)
+    {
+      throw new SQLException("Bad database connection", e);
+    }
     this.connection = connection;
     metaData = connection.getMetaData();
 
@@ -203,7 +215,7 @@ final class RetrieverConnection
    *
    * @return INFORMATION_SCHEMA views selects
    */
-  InformationSchemaViews getInformationSchemaViews()
+    InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
   }

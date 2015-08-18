@@ -10,7 +10,7 @@
 
   <body>
   
-    <pre th:text="${catalog.crawlHeaderInfo}">System Information</pre>
+    <pre th:text="${catalog.crawlInfo}">System Information</pre>
   
     <span th:each="schema: ${catalog.schemas}">
       <h1 th:text="${schema.fullName}">Schema</h1>
