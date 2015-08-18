@@ -20,7 +20,7 @@
 package schemacrawler.tools.traversal;
 
 
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
@@ -35,7 +35,7 @@ public interface TraversalHandler
   void end()
     throws SchemaCrawlerException;
 
-  void handle(CrawlHeaderInfo crawlHeaderInfo)
+  void handle(CrawlInfo crawlInfo)
     throws SchemaCrawlerException;
 
   void handle(DatabaseInfo databaseInfo)

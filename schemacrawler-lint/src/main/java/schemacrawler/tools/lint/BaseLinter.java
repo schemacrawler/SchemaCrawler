@@ -28,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -104,9 +104,9 @@ public abstract class BaseLinter
   {
   }
 
-  protected CrawlHeaderInfo getCrawlHeaderInfo()
+  protected CrawlInfo getCrawlInfo()
   {
-    return catalog.getCrawlHeaderInfo();
+    return catalog.getCrawlInfo();
   }
 
   @Deprecated

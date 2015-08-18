@@ -29,19 +29,19 @@ import java.util.logging.Logger;
 import org.junit.Rule;
 import org.junit.Test;
 
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class ResultColumnsTest
   extends BaseDatabaseTest
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ResultColumnsTest.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(ResultColumnsTest.class.getName());
 
   @Rule
   public TestName testName = new TestName();
@@ -65,12 +65,13 @@ public class ResultColumnsTest
                          + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                          + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-      try (final Connection connection = getConnection();
-          final Statement statement = connection.createStatement();
-          final ResultSet resultSet = statement.executeQuery(sql);)
+      try (
+        final Connection connection = getConnection();
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = statement.executeQuery(sql);)
       {
 
-        final ResultsColumns resultColumns = SchemaCrawlerUtility
+        final ResultsColumns resultColumns = SchemaCrawler
           .getResultColumns(resultSet);
 
         assertNotNull("Could not obtain result columns", resultColumns);
@@ -80,12 +81,10 @@ public class ResultColumnsTest
         {
           LOGGER.log(Level.FINE, column.toString());
           out.println("column: " + column.getFullName());
-          out.println("  database type: "
-                      + column.getColumnDataType()
-                        .getDatabaseSpecificTypeName());
-          out.println("  type: "
-                      + column.getColumnDataType().getJavaSqlType()
-                        .getJavaSqlTypeName());
+          out.println("  database type: " + column.getColumnDataType()
+            .getDatabaseSpecificTypeName());
+          out.println("  type: " + column.getColumnDataType().getJavaSqlType()
+            .getJavaSqlTypeName());
         }
       }
 

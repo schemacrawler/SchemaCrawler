@@ -46,12 +46,19 @@ public final class DatabaseUtility
     .getLogger(DatabaseUtility.class.getName());
 
   public static void checkConnection(final Connection connection)
-    throws SQLException
+    throws SchemaCrawlerException
   {
-    requireNonNull(connection, "No connection provided");
-    if (connection.isClosed())
+    try
     {
-      throw new SQLException("Connection is closed");
+      requireNonNull(connection, "No connection provided");
+      if (connection.isClosed())
+      {
+        throw new SQLException("Connection is closed");
+      }
+    }
+    catch (final NullPointerException | SQLException e)
+    {
+      throw new SchemaCrawlerException("Bad database connection", e);
     }
   }
 
