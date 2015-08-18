@@ -164,6 +164,140 @@
       }
     },
     {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        }
+      ],
+      "name": "AUTHORSLIST",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [
+        {
+          "name": "FK_Z_AUTHOR",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_Y_BOOK",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
+          }],
+          "updateRule": "no action"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "AUTHORID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10118"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "BOOKID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10116"
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "BOOKID"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "AUTHORID"
+            }
+          ],
+          "unique": true,
+          "name": "UIDX_BOOKAUTHORS"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "BOOKID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "AUTHORID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
+        {
+          "size": 1073741824,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "dataType": "CLOB",
+          "name": "\"UPDATE\"",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        }
+      ],
+      "name": "BOOKAUTHORS",
+      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "primaryKey": {}
+    },
+    {
       "foreignKeys": [
         {
           "name": "FK_Y_BOOK",
@@ -361,140 +495,6 @@
         "unique": true,
         "name": "SYS_PK_10092"
       }
-    },
-    {
-      "foreignKeys": [
-        {
-          "name": "FK_Z_AUTHOR",
-          "deleteRule": "no action",
-          "columnReferences": [{
-            "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
-            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID"
-          }],
-          "updateRule": "no action"
-        },
-        {
-          "name": "FK_Y_BOOK",
-          "deleteRule": "no action",
-          "columnReferences": [{
-            "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-            "fkColumn": "PUBLIC.BOOKS.BOOKAUTHORS.BOOKID"
-          }],
-          "updateRule": "no action"
-        }
-      ],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "AUTHORID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10118"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "BOOKID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10116"
-        },
-        {
-          "columns": [
-            {
-              "sortSequence": "ascending",
-              "name": "BOOKID"
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "AUTHORID"
-            }
-          ],
-          "unique": true,
-          "name": "UIDX_BOOKAUTHORS"
-        }
-      ],
-      "columns": [
-        {
-          "size": 32,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "BOOKID",
-          "width": "",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        },
-        {
-          "size": 32,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "AUTHORID",
-          "width": "",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        },
-        {
-          "size": 1073741824,
-          "nullable": true,
-          "databaseSpecificType": "CLOB",
-          "dataType": "CLOB",
-          "name": "\"UPDATE\"",
-          "width": "",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        }
-      ],
-      "name": "BOOKAUTHORS",
-      "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
-      "type": "table",
-      "triggers": [],
-      "tableConstraints": [],
-      "primaryKey": {}
-    },
-    {
-      "foreignKeys": [],
-      "indexes": [],
-      "columns": [
-        {
-          "size": 32,
-          "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ID",
-          "width": "",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        },
-        {
-          "size": 20,
-          "nullable": true,
-          "databaseSpecificType": "VARCHAR",
-          "dataType": "VARCHAR",
-          "name": "FIRSTNAME",
-          "width": "(20)",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        },
-        {
-          "size": 20,
-          "nullable": true,
-          "databaseSpecificType": "VARCHAR",
-          "dataType": "VARCHAR",
-          "name": "LASTNAME",
-          "width": "(20)",
-          "decimalDigits": 0,
-          "autoIncremented": false
-        }
-      ],
-      "name": "AUTHORSLIST",
-      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "type": "view",
-      "triggers": [],
-      "tableConstraints": [],
-      "primaryKey": {}
     }
   ],
   "routines": [
