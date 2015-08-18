@@ -1177,8 +1177,8 @@
   </jdbcDriverInfo>
   <schemaCrawlerInfo id="227">
     <schemaCrawlerProductName>SchemaCrawler</schemaCrawlerProductName>
-    <schemaCrawlerVersion>14.02.02</schemaCrawlerVersion>
-    <schemaCrawlerAbout>SchemaCrawler 14.02.02&#xd;
+    <schemaCrawlerVersion>14.03.01</schemaCrawlerVersion>
+    <schemaCrawlerAbout>SchemaCrawler 14.03.01&#xd;
 Copyright (c) 2000-2015, Sualeh Fatehi.&#xd;
 &#xd;
 SchemaCrawler is a database schema discovery and comprehension tool. &#xd;

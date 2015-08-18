@@ -5,6 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.03.01" date="2015-08-17" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new lints for empty tables, tables where all columns are nullable, and tables with no
+        primary keys.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New SchemaCrawlerUtility methods to get database system specific functionality.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Renaming CrawlHeaderInfo to CrawlInfo, and making it available in linters.
+      ]]></action>                                                                          
+     </release>   
      <release version="14.02.02" date="2015-08-14" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new lints for empty tables, tables where all columns are nullable, and tables with no
