@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -91,10 +91,10 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   }
 
   @Override
-  public void handle(final CrawlHeaderInfo crawlHeaderInfo)
+  public void handle(final CrawlInfo crawlInfo)
     throws SchemaCrawlerException
   {
-    if (options.isNoInfo() || crawlHeaderInfo == null)
+    if (options.isNoInfo() || crawlInfo == null)
     {
       return;
     }
@@ -105,9 +105,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
 
       jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
-                                      formatTimestamp(crawlHeaderInfo
+                                      formatTimestamp(crawlInfo
                                         .getCrawlTimestamp()));
-      jsonSchemaCrawlerHeaderInfo.put("title", crawlHeaderInfo.getTitle());
+      jsonSchemaCrawlerHeaderInfo.put("title", crawlInfo.getTitle());
     }
     catch (final JSONException e)
     {

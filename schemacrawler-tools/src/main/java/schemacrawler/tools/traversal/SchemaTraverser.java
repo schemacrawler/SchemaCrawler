@@ -72,7 +72,7 @@ public class SchemaTraverser
     handler.begin();
 
     handler.handleHeaderStart();
-    handler.handle(catalog.getCrawlHeaderInfo());
+    handler.handle(catalog.getCrawlInfo());
     handler.handleHeaderEnd();
 
     if (!tables.isEmpty())

@@ -28,12 +28,12 @@ import java.util.logging.Level;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
 
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.Utility;
 
 public abstract class BaseDatabaseTest
@@ -86,14 +86,15 @@ public abstract class BaseDatabaseTest
                       schemaCrawlerOptions);
   }
 
-  protected Catalog getCatalog(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  protected Catalog getCatalog(
+                               final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
                                  throws SchemaCrawlerException
   {
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(),
-                  databaseSpecificOverrideOptions,
-                  schemaCrawlerOptions);
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
+                                                          databaseSpecificOverrideOptions);
+    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+
     return catalog;
   }
 

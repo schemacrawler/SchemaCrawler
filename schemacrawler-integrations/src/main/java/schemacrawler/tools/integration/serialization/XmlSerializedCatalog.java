@@ -34,10 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
@@ -45,6 +41,10 @@ import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.converters.collections.MapConverter;
 import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.BaseCatalogDecorator;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Decorates a database to allow for serialization to and from XML.
@@ -97,8 +97,7 @@ public final class XmlSerializedCatalog
           return source.toString();
         }
 
-      },
-                                5000);
+      }, 5000);
       xStream.registerConverter(new CollectionConverter(xStream.getMapper())
       {
         @Override
@@ -141,8 +140,10 @@ public final class XmlSerializedCatalog
           for (final Object object: entryList)
           {
             final Map.Entry entry = (Map.Entry) object;
-            ExtendedHierarchicalStreamWriterHelper.startNode(writer, mapper()
-              .serializedClass(Map.Entry.class), Map.Entry.class);
+            ExtendedHierarchicalStreamWriterHelper.startNode(writer,
+                                                             mapper()
+                                                               .serializedClass(Map.Entry.class),
+                                                             Map.Entry.class);
 
             writeItem(entry.getKey(), context, writer);
             writeItem(entry.getValue(), context, writer);
@@ -153,23 +154,15 @@ public final class XmlSerializedCatalog
       }, 5000);
 
       final String[] mutable = new String[] {
-          "tableConstraint",
-          "column",
-          "columnDataType",
-          "catalog",
-          "foreignKey",
-          "foreignKeyColumnReference",
-          "index",
-          "indexColumn",
-          "primaryKey",
-          "privilege",
-          "procedure",
-          "procedureColumn",
-          "resultsColumn",
-          "resultsColumns",
-          "table",
-          "trigger",
-          "view",
+                                              "tableConstraint", "column",
+                                              "columnDataType", "catalog",
+                                              "foreignKey",
+                                              "foreignKeyColumnReference",
+                                              "index", "indexColumn",
+                                              "primaryKey", "privilege",
+                                              "procedure", "procedureColumn",
+                                              "resultsColumn", "resultsColumns",
+                                              "table", "trigger", "view",
       };
       for (final String xmlElement: mutable)
       {
@@ -179,10 +172,10 @@ public final class XmlSerializedCatalog
                                     + xmlElement.substring(1)));
       }
       final String[] immutable = new String[] {
-          "databaseProperty",
-          "jdbcDriverProperty",
-          "schemaCrawlerInfo",
-          "crawlHeaderInfo",
+                                                "databaseProperty",
+                                                "jdbcDriverProperty",
+                                                "schemaCrawlerInfo",
+                                                "crawlInfo",
       };
       for (final String xmlElement: immutable)
       {
