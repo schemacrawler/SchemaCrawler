@@ -1,6 +1,6 @@
 var printCatalog = function()
 {
-  print(catalog.crawlHeaderInfo);
+  print(catalog.crawlInfo);
   
   var schemas = catalog.schemas.toArray();
   for ( var i = 0; i < schemas.length; i++)

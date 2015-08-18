@@ -28,7 +28,7 @@ import java.util.Optional;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.NamedObject;
@@ -91,9 +91,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public CrawlHeaderInfo getCrawlHeaderInfo()
+  public CrawlInfo getCrawlInfo()
   {
-    return catalog.getCrawlHeaderInfo();
+    return catalog.getCrawlInfo();
   }
 
   @Override

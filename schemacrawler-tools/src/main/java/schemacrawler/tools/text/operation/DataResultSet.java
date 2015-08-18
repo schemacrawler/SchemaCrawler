@@ -40,10 +40,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.utility.BinaryData;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 /**
  * Text formatting of data.
@@ -53,8 +53,8 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 final class DataResultSet
 {
 
-  private static final Logger LOGGER = Logger.getLogger(DataResultSet.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(DataResultSet.class.getName());
 
   private final ResultSet rows;
   private final List<ResultsColumn> resultsColumns;
@@ -65,7 +65,7 @@ final class DataResultSet
   {
     this.rows = requireNonNull(rows, "Cannot use null results");
     this.showLobs = showLobs;
-    resultsColumns = SchemaCrawlerUtility.getResultColumns(rows).getColumns();
+    resultsColumns = SchemaCrawler.getResultColumns(rows).getColumns();
   }
 
   public String[] getColumnNames()
@@ -157,8 +157,8 @@ final class DataResultSet
         columnData = readStream(stream);
       }
     }
-    else if (javaSqlType == Types.LONGNVARCHAR
-             || javaSqlType == Types.LONGVARCHAR)
+    else
+      if (javaSqlType == Types.LONGNVARCHAR || javaSqlType == Types.LONGVARCHAR)
     {
       final InputStream stream = rows.getAsciiStream(i + 1);
       if (rows.wasNull() || stream == null)
@@ -244,8 +244,7 @@ final class DataResultSet
         catch (final SQLFeatureNotSupportedException e)
         {
           LOGGER.log(Level.FINEST,
-                     "Could not read CLOB data, as character stream",
-                     e);
+                     "Could not read CLOB data, as character stream", e);
           rdr = null;
         }
         if (rdr == null)
@@ -257,8 +256,7 @@ final class DataResultSet
           catch (final SQLFeatureNotSupportedException e)
           {
             LOGGER.log(Level.FINEST,
-                       "Could not read CLOB data, as ASCII stream",
-                       e);
+                       "Could not read CLOB data, as ASCII stream", e);
             rdr = null;
           }
         }
@@ -293,8 +291,8 @@ final class DataResultSet
   }
 
   /**
-   * Reads data from an input stream into a string. Default system
-   * encoding is assumed.
+   * Reads data from an input stream into a string. Default system encoding is
+   * assumed.
    *
    * @param columnData
    *        Column data object returned by JDBC

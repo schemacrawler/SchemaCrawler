@@ -26,7 +26,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import schemacrawler.schema.CrawlHeaderInfo;
+import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
@@ -36,8 +36,8 @@ import schemacrawler.schema.SchemaCrawlerInfo;
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-final class ImmutableCrawlHeaderInfo
-  implements CrawlHeaderInfo
+final class ImmutableCrawlInfo
+  implements CrawlInfo
 {
 
   private static final long serialVersionUID = 5982990326485881993L;
@@ -48,7 +48,7 @@ final class ImmutableCrawlHeaderInfo
   private final String title;
   private final LocalDateTime crawlTimestamp;
 
-  ImmutableCrawlHeaderInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
+  ImmutableCrawlInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
                            final JdbcDriverInfo jdbcDriverInfo,
                            final DatabaseInfo databaseInfo,
                            final String title)

@@ -23,7 +23,6 @@ package schemacrawler.tools.lint;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -57,7 +56,7 @@ public final class LintedCatalog
     {
       checkConnection(connection);
     }
-    catch (final NullPointerException | SQLException e)
+    catch (final SchemaCrawlerException e)
     {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.
