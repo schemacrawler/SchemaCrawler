@@ -24,17 +24,6 @@
       ],
       "columns": [
         {
-          "size": 32,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ID",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
           "size": 64,
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -51,6 +40,17 @@
           "databaseSpecificType": "INTEGER",
           "dataType": "INTEGER",
           "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
@@ -417,7 +417,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-11 22:40:52",
+    "crawlTimestamp": "2015-08-17 19:53:53",
     "title": ""
   }
 },

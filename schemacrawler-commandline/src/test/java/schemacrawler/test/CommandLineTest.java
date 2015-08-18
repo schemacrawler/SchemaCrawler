@@ -137,6 +137,7 @@ public class CommandLineTest
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.TRUE.toString());
+      argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
       argsMap.put("infolevel", "maximum");
       argsMap.put("command", "brief");
       argsMap.put("outputformat", "text");

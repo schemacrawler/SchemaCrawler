@@ -47,64 +47,6 @@ SYS_PK_10092                                               [primary key]
 
 
 
-"Global Counts"                                                  [table]
-------------------------------------------------------------------------
-
-
-
-WRITERS                                                          [table]
-------------------------------------------------------------------------
-  ID                                BIGINT NOT NULL             
-  FIRSTNAME                         VARCHAR(20) NOT NULL        
-  LASTNAME                          VARCHAR(20) NOT NULL        
-  CITY                              VARCHAR(50)                 
-  STATE                             VARCHAR(2)                  
-  POSTALCODE                        VARCHAR(10)                 
-  COUNTRY                           VARCHAR(50)                 
-  EMAIL1                            VARCHAR(10)                 
-  PUBLICATION_ID                    BIGINT NOT NULL             
-
-Primary Key
-
-PK_WRITERS                                                 [primary key]
-  ID                                ascending                   
-
-Foreign Keys
-
-FK_WRITERS_PUBLICATION                     [foreign key, with no action]
-  PUBLICATION_ID (0..many)--> PUBLICATIONS.ID                              
-
-FK_WRITER_JOIN                             [foreign key, with no action]
-  ID <-- EXTRA_PK.WRITERID                                      
-
-FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
-  ID <-- PUBLICATIONS.WRITERID                                  
-
-FK_WRITER                                  [foreign key, with no action]
-  ID <-- PUBLICATIONWRITERS.WRITERID                              
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
-  ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
-
-
-
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                             [table]
-------------------------------------------------------------------------
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
-
-Primary Key
-
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-Foreign Keys
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> WRITERS.ID                              
-
-
-
 Routines
 ========================================================================
 

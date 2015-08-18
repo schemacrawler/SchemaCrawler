@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -89,7 +90,8 @@ public class SchemaCrawlerXmlOutputTest
 
   private void checkValidXmlOutput(final String command,
                                    final List<String> failures)
-    throws IOException, Exception, SchemaCrawlerException
+                                     throws IOException, Exception,
+                                     SchemaCrawlerException
   {
     final String referenceFile = command + ".html";
     final Path testOutputFile = createTempFile(referenceFile,
@@ -103,6 +105,8 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    options
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
@@ -116,8 +120,7 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
-                                  testOutputFile,
+    failures.addAll(compareOutput(XML_OUTPUT + referenceFile, testOutputFile,
                                   TextOutputFormat.html.getFormat()));
   }
 

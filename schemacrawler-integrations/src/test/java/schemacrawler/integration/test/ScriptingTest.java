@@ -23,6 +23,8 @@ package schemacrawler.integration.test;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 
@@ -34,17 +36,26 @@ public class ScriptingTest
   public void executableGroovy()
     throws Exception
   {
-    executeExecutable(new ScriptExecutable(),
-                      "/plaintextschema.groovy",
+    executeExecutable(createScriptExecutable(), "/plaintextschema.groovy",
                       "script_output.txt");
+  }
+
+  private ScriptExecutable createScriptExecutable()
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
+    final ScriptExecutable scriptExecutable = new ScriptExecutable();
+    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    return scriptExecutable;
   }
 
   @Test
   public void executablePython()
     throws Exception
   {
-    executeExecutable(new ScriptExecutable(),
-                      "/plaintextschema.py",
+    executeExecutable(createScriptExecutable(), "/plaintextschema.py",
                       "script_output.txt");
   }
 
@@ -52,8 +63,7 @@ public class ScriptingTest
   public void executableRuby()
     throws Exception
   {
-    executeExecutable(new ScriptExecutable(),
-                      "/plaintextschema.rb",
+    executeExecutable(createScriptExecutable(), "/plaintextschema.rb",
                       "script_output_rb.txt");
   }
 

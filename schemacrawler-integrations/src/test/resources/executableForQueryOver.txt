@@ -143,7 +143,7 @@ ID	PUBLISHER
 
 PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
-ID	WRITERID	PUBLICATIONID
+WRITERID	PUBLICATIONID	ID
 
 
 

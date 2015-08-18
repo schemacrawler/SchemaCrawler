@@ -1026,17 +1026,6 @@
       ],
       "columns": [
         {
-          "size": 32,
-          "nullable": false,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ID",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
           "size": 64,
           "nullable": false,
           "databaseSpecificType": "BIGINT",
@@ -1053,6 +1042,17 @@
           "databaseSpecificType": "INTEGER",
           "dataType": "INTEGER",
           "name": "PUBLICATIONID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
@@ -1080,17 +1080,17 @@
         },
         {
           "name": "SYS_CT_10187",
-          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
-          "type": "check"
-        },
-        {
-          "name": "SYS_CT_10188",
           "definition": "FOR_LINT.EXTRA_PK.WRITERID IS NOT NULL",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10189",
+          "name": "SYS_CT_10188",
           "definition": "FOR_LINT.EXTRA_PK.PUBLICATIONID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10189",
+          "definition": "FOR_LINT.EXTRA_PK.ID IS NOT NULL",
           "type": "check"
         }
       ],
@@ -3721,7 +3721,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-10 23:29:55",
+    "crawlTimestamp": "2015-08-16 11:53:24",
     "title": ""
   },
   "routines": [
