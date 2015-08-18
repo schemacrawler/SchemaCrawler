@@ -17,6 +17,18 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
+      "name": "AUTHORSLIST",
+      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "type": "view",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table",
@@ -156,22 +168,10 @@
       "tableConstraints": [],
       "remarks": "",
       "primaryKey": {}
-    },
-    {
-      "foreignKeys": [],
-      "indexes": [],
-      "columns": [],
-      "name": "AUTHORSLIST",
-      "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
-      "type": "view",
-      "triggers": [],
-      "tableConstraints": [],
-      "remarks": "",
-      "primaryKey": {}
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-10 23:29:42",
+    "crawlTimestamp": "2015-08-17 19:41:13",
     "title": ""
   },
   "routines": [

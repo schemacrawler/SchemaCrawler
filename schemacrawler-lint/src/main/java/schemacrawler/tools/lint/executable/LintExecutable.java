@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedCatalog;
@@ -78,10 +77,7 @@ public class LintExecutable
 
     formatter.handleStart();
     formatter.handle(catalog);
-    for (final Table table: catalog.getTables())
-    {
-      formatter.handle(table);
-    }
+    formatter.handle(catalog.getTables());
     formatter.handleEnd();
 
     formatter.end();

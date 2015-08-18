@@ -23,6 +23,12 @@ package schemacrawler.tools.text.schema;
 
 
 import static sf.util.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlHeaderInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -39,6 +45,7 @@ import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
+import schemacrawler.utility.NamedObjectSort;
 
 /**
  * Text formatting of schema.
@@ -67,10 +74,9 @@ final class SchemaListFormatter
   SchemaListFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                        throws SchemaCrawlerException
   {
-    super(options,
-          schemaTextDetailType == SchemaTextDetailType.details,
+    super(options, schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
   }
@@ -187,9 +193,8 @@ final class SchemaListFormatter
   @Override
   public void handle(final Routine routine)
   {
-    final String routineTypeDetail = String.format("%s, %s",
-                                                   routine.getRoutineType(),
-                                                   routine.getReturnType());
+    final String routineTypeDetail = String
+      .format("%s, %s", routine.getRoutineType(), routine.getReturnType());
     final String routineName;
     if (options.isShowUnqualifiedNames())
     {
@@ -257,13 +262,24 @@ final class SchemaListFormatter
     printRemarks(synonym);
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Table)
-   */
   @Override
-  public void handle(final Table table)
+  public void handle(final Collection<? extends Table> tables)
+    throws SchemaCrawlerException
+  {
+    if (tables == null || tables.isEmpty())
+    {
+      return;
+    }
+    final List<? extends Table> tablesList = new ArrayList<>(tables);
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+    for (Table table: tablesList)
+    {
+      handle(table);
+    }
+  }
+
+  private void handle(final Table table)
   {
     final String tableName;
     if (options.isShowUnqualifiedNames())

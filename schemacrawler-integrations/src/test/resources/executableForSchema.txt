@@ -187,14 +187,14 @@ Table Constraints
 
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
-1   ID                                INTEGER NOT NULL            
-2   WRITERID                          BIGINT NOT NULL             
-3   PUBLICATIONID                     INTEGER NOT NULL            
+1   WRITERID                          BIGINT NOT NULL             
+2   PUBLICATIONID                     INTEGER NOT NULL            
+3   ID                                INTEGER NOT NULL            
 
 Primary Key
 
 PK_EXTRA_PK                                                [primary key]
-1   ID                                ascending                   
+3   ID                                ascending                   
 
 Foreign Keys
 
@@ -207,13 +207,13 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 Indexes
 
 SYS_IDX_PK_EXTRA_PK_10190                                 [unique index]
-1   ID                                ascending                   
+3   ID                                ascending                   
 
 SYS_IDX_10196                                         [non-unique index]
-3   PUBLICATIONID                     ascending                   
+2   PUBLICATIONID                     ascending                   
 
 SYS_IDX_10194                                         [non-unique index]
-2   WRITERID                          ascending                   
+1   WRITERID                          ascending                   
 
 Table Constraints
 
