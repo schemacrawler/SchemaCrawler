@@ -109,17 +109,9 @@ public abstract class BaseLinter
     return catalog.getCrawlInfo();
   }
 
-  @Deprecated
-  protected void lint(final Table table)
-    throws SchemaCrawlerException
-  {
-
-  }
-
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
   {
-    lint(table);
   }
 
   protected void start()
