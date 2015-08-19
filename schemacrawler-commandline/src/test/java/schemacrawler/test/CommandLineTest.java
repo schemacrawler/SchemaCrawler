@@ -54,6 +54,110 @@ public class CommandLineTest
   }
 
   @Test
+  public void commandLineRoutinesWithColumnsSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("tables", "");
+    args.put("sortcolumns", Boolean.TRUE.toString());
+    // Testing no tables, all routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineRoutinesWithoutColumnsSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("tables", "");
+    args.put("sortcolumns", Boolean.FALSE.toString());
+    // Testing no tables, all routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineRoutinesWithoutSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("tables", "");
+    args.put("sortroutines", Boolean.FALSE.toString());
+    // Testing no tables, all routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineRoutinesWithSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("tables", "");
+    args.put("sortroutines", Boolean.TRUE.toString());
+    // Testing no tables, all routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineTablesWithColumnsSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("routines", "");
+    args.put("sortcolumns", Boolean.TRUE.toString());
+    // Testing all tables, no routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineTablesWithoutColumnsSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("routines", "");
+    args.put("sortcolumns", Boolean.FALSE.toString());
+    // Testing all tables, no routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineTablesWithoutSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("routines", "");
+    args.put("sorttables", Boolean.FALSE.toString());
+    // Testing all tables, no routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
+  public void commandLineTablesWithSorting()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("routines", "");
+    args.put("sorttables", Boolean.TRUE.toString());
+    // Testing all tables, no routines
+    // Testing no sequences, synonyms
+
+    run(args, null);
+  }
+
+  @Test
   public void commandLineWithConfig()
     throws Exception
   {
@@ -96,58 +200,6 @@ public class CommandLineTest
     args.put("routines", "");
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
-
-    run(args, null);
-  }
-
-  @Test
-  public void commandLineWithTableSorting()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", Boolean.TRUE.toString());
-    args.put("sorttables", Boolean.TRUE.toString());
-    // Testing all tables, routines
-    // Testing no sequences, synonyms
-
-    run(args, null);
-  }
-
-  @Test
-  public void commandLineWithoutTableSorting()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", Boolean.TRUE.toString());
-    args.put("sorttables", Boolean.FALSE.toString());
-    // Testing all tables, routines
-    // Testing no sequences, synonyms
-
-    run(args, null);
-  }
-
-  @Test
-  public void commandLineWithTableColumnsSorting()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", Boolean.TRUE.toString());
-    args.put("sortcolumns", Boolean.TRUE.toString());
-    // Testing all tables, routines
-    // Testing no sequences, synonyms
-
-    run(args, null);
-  }
-
-  @Test
-  public void commandLineWithoutTableColumnsSorting()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<String, String>();
-    args.put("portablenames", Boolean.TRUE.toString());
-    args.put("sortcolumns", Boolean.FALSE.toString());
-    // Testing all tables, routines
-    // Testing no sequences, synonyms
 
     run(args, null);
   }
