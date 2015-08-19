@@ -20,6 +20,8 @@
 package schemacrawler.server.derby;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -33,6 +35,12 @@ public final class DerbyDatabaseConnector
           "/help/Connections.derby.txt",
           "/schemacrawler-derby.config.properties",
           "/derby.information_schema");
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:derby:.*");
   }
 
 }

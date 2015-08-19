@@ -20,6 +20,8 @@
 package schemacrawler.server.sybaseiq;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
@@ -58,6 +60,12 @@ public final class SybaseIQDatabaseConnector
     super(SYBASEIQ_SERVER_TYPE, "/help/Connections.sybaseiq.txt",
           new SybaseIQDatabaseSystemConnector("/schemacrawler-sybaseiq.config.properties",
                                               "/sybaseiq.information_schema"));
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:sybase:.*");
   }
 
 }

@@ -22,6 +22,7 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.util.ArrayList;
@@ -39,8 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.DatabaseServerType;
 
 /**
- * Registry for mapping database connectors from DatabaseConnector-line
- * switch.
+ * Registry for mapping database connectors from DatabaseConnector-line switch.
  *
  * @author Sualeh Fatehi
  */
@@ -67,8 +67,9 @@ public final class DatabaseConnectorRegistry
           .getDatabaseServerType().getDatabaseSystemIdentifier();
         try
         {
-          LOGGER.log(Level.CONFIG, "Loading database connector, "
-                                   + databaseSystemIdentifier + "="
+          LOGGER.log(Level.CONFIG,
+                     "Loading database connector, " + databaseSystemIdentifier
+                                   + "="
                                    + databaseConnector.getClass().getName());
           // Validate that the JDBC driver is available
           databaseConnector.getDatabaseSystemConnector()
@@ -79,9 +80,11 @@ public final class DatabaseConnectorRegistry
         }
         catch (final Exception e)
         {
-          LOGGER.log(Level.CONFIG, "Could not load database connector, "
+          LOGGER.log(Level.CONFIG,
+                     "Could not load database connector, "
                                    + databaseSystemIdentifier + "="
-                                   + databaseConnector.getClass().getName(), e);
+                                   + databaseConnector.getClass().getName(),
+                     e);
         }
       }
     }
@@ -103,18 +106,20 @@ public final class DatabaseConnectorRegistry
     logRegisteredJdbcDrivers();
   }
 
-  public boolean hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
+  public boolean
+    hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
   {
     if (databaseServerType == null
         || databaseServerType.isUnknownDatabaseSystem())
     {
       return false;
     }
-    return databaseConnectorRegistry.containsKey(databaseServerType
-      .getDatabaseSystemIdentifier());
+    return databaseConnectorRegistry
+      .containsKey(databaseServerType.getDatabaseSystemIdentifier());
   }
 
-  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  public boolean
+    hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
   {
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
@@ -125,7 +130,34 @@ public final class DatabaseConnectorRegistry
     return lookupAvailableDatabaseConnectors().iterator();
   }
 
-  public DatabaseConnector lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  public DatabaseConnector
+    lookupDatabaseSystemIdentifier(final Connection connection)
+  {
+    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+      .values())
+    {
+      if (databaseConnector.getDatabaseServerType().isUnknownDatabaseSystem())
+      {
+        continue;
+      }
+      try
+      {
+        if (databaseConnector.isConnectionForConnector(connection))
+        {
+          return databaseConnector;
+        }
+      }
+      catch (final SchemaCrawlerException e)
+      {
+        // Ignore and continue
+        continue;
+      }
+    }
+    return DatabaseConnector.UNKNOWN;
+  }
+
+  public DatabaseConnector
+    lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
   {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
     {
@@ -149,8 +181,7 @@ public final class DatabaseConnectorRegistry
       final List<String> drivers = new ArrayList<>();
       for (final Driver driver: Collections.list(DriverManager.getDrivers()))
       {
-        drivers.add(String.format("%s %d.%d",
-                                  driver.getClass().getName(),
+        drivers.add(String.format("%s %d.%d", driver.getClass().getName(),
                                   driver.getMajorVersion(),
                                   driver.getMinorVersion()));
       }
