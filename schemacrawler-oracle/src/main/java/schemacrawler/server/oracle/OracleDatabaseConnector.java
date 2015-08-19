@@ -20,6 +20,8 @@
 package schemacrawler.server.oracle;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
@@ -36,8 +38,7 @@ public final class OracleDatabaseConnector
     private OracleDatabaseSystemConnector(final String configResource,
                                           final String informationSchemaViewsResourceFolder)
     {
-      super(ORACLE_SERVER_TYPE,
-            configResource,
+      super(ORACLE_SERVER_TYPE, configResource,
             informationSchemaViewsResourceFolder);
     }
 
@@ -54,12 +55,17 @@ public final class OracleDatabaseConnector
 
   public OracleDatabaseConnector()
   {
-    super(ORACLE_SERVER_TYPE,
-          "/help/Connections.oracle.txt",
+    super(ORACLE_SERVER_TYPE, "/help/Connections.oracle.txt",
           new OracleDatabaseSystemConnector("/schemacrawler-oracle.config.properties",
                                             "/oracle.information_schema"));
 
     System.setProperty("oracle.jdbc.Trace", "true");
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:oracle:.*");
   }
 
 }

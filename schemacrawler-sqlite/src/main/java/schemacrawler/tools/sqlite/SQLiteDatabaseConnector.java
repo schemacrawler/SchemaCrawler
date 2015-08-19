@@ -20,6 +20,8 @@
 package schemacrawler.tools.sqlite;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
@@ -66,6 +68,12 @@ public final class SQLiteDatabaseConnector
     {
       throw new RuntimeException("Could not load SQLite JDBC driver", e);
     }
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:sqlite:.*");
   }
 
 }

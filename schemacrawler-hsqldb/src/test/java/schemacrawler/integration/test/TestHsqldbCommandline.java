@@ -5,15 +5,18 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -21,6 +24,7 @@ import java.util.Properties;
 import org.junit.Test;
 
 import schemacrawler.Main;
+import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -91,10 +95,16 @@ public class TestHsqldbCommandline
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
+    final Connection connection = getConnection();
+    checkConnection(connection);
+    requireNonNull(databaseSpecificOverrideOptions,
+                   "No database specific override options provided");
+    
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
+                                                          databaseSpecificOverrideOptions);
+    final Catalog catalog1 = schemaCrawler.crawl(schemaCrawlerOptions);
 
-    final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(getConnection(), databaseSpecificOverrideOptions,
-                  schemaCrawlerOptions);
+    final Catalog catalog = catalog1;
     assertNotNull(catalog);
 
     assertEquals(6, catalog.getSchemas().size());

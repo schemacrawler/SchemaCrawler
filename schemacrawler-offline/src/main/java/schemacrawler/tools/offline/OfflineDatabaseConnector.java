@@ -20,6 +20,8 @@
 package schemacrawler.tools.offline;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -33,8 +35,7 @@ public final class OfflineDatabaseConnector
   {
     super(new DatabaseServerType("offline", "Offline Snapshot"),
           "/help/Connections.offline.txt",
-          "/schemacrawler-offline.config.properties",
-          null);
+          "/schemacrawler-offline.config.properties", null);
   }
 
   @Override
@@ -42,6 +43,12 @@ public final class OfflineDatabaseConnector
     throws SchemaCrawlerException
   {
     return new OfflineSnapshotCommandLine(args);
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:offline:.*");
   }
 
 }

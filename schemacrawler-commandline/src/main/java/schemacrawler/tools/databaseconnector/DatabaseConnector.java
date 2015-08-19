@@ -22,17 +22,30 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.options.DatabaseServerType;
+import sf.util.DatabaseUtility;
 
 public abstract class DatabaseConnector
 {
 
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
+
+    @Override
+    protected Pattern getConnectionUrlPattern()
+    {
+      return Pattern.compile(".*");
+    }
+
   };
   private final DatabaseServerType dbServerType;
   private final String connectionHelpResource;
@@ -86,6 +99,33 @@ public abstract class DatabaseConnector
     return dbServerType;
   }
 
+  protected abstract Pattern getConnectionUrlPattern();
+
+  public final boolean isConnectionForConnector(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    DatabaseUtility.checkConnection(connection);
+    try
+    {
+      final String url = connection.getMetaData().getURL();
+      if (isBlank(url))
+      {
+        throw new SchemaCrawlerException("Cannot check database connection URL");
+      }
+      final Pattern connectionUrlPattern = getConnectionUrlPattern();
+      if (connectionUrlPattern == null)
+      {
+        throw new IllegalArgumentException("No connection URL pattern provided");
+      }
+      return connectionUrlPattern.matcher(url).matches();
+    }
+    catch (SQLException e)
+    {
+      throw new SchemaCrawlerException("Cannot check database connection URL",
+                                       e);
+    }
+  }
+
   public DatabaseSystemConnector getDatabaseSystemConnector()
   {
     return dbSystemConnector;
@@ -99,10 +139,9 @@ public abstract class DatabaseConnector
 
   public CommandLine newHelpCommandLine(final String[] args,
                                         final boolean showVersionOnly)
-    throws SchemaCrawlerException
+                                          throws SchemaCrawlerException
   {
-    return new SchemaCrawlerHelpCommandLine(args,
-                                            dbServerType,
+    return new SchemaCrawlerHelpCommandLine(args, dbServerType,
                                             connectionHelpResource,
                                             showVersionOnly);
   }
