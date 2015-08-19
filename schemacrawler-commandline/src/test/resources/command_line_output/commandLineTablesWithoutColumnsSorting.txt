@@ -1,0 +1,123 @@
+
+
+Tables
+========================================================================
+
+
+
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+Contact details for book authors
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         VARCHAR(20) NOT NULL        
+  LASTNAME                          VARCHAR(20) NOT NULL        
+  CITY                              VARCHAR(50)                 
+  STATE                             VARCHAR(2)                  
+  POSTALCODE                        VARCHAR(10)                 
+  COUNTRY                           VARCHAR(50)                 
+
+Primary Key
+
+PK_AUTHORS                                                 [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+Relationship between books and their authors, along with the latest updated information
+  BOOKID                            INTEGER NOT NULL            
+  AUTHORID                          INTEGER NOT NULL            
+
+Foreign Keys
+
+FK_Z_AUTHOR                                [foreign key, with no action]
+  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+Details for published books
+  ID                                INTEGER NOT NULL            
+                                    Unique (internal) id for book
+  PREVIOUSEDITIONID                 INTEGER                     
+
+Primary Key
+
+PK_BOOKS                                                   [primary key]
+  ID                                ascending                   
+
+Foreign Keys
+
+FK_Y_BOOK                                  [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
+
+FK_PREVIOUSEDITION                         [foreign key, with no action]
+  ID <--(0..1) PREVIOUSEDITIONID                                
+
+
+
+PUBLIC.BOOKS."Global Counts"                                     [table]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.PUBLISHERS                                          [table]
+------------------------------------------------------------------------
+List of book publishers
+  ID                                INTEGER NOT NULL            
+                                    auto-incremented            
+                                    Unique (internal) id for book publisher
+
+Primary Key
+
+SYS_PK_10092                                               [primary key]
+  ID                                ascending                   
+                                    auto-incremented            
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+  POSTALCODE                        ascending                   
+  COUNTRY                           ascending                   
+
+Foreign Keys
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
+
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+  POSTALCODE                        VARCHAR(10) NOT NULL        
+  COUNTRY                           VARCHAR(50) NOT NULL        
+
+Foreign Keys
+
+FK_SALES_REGIONS                           [foreign key, with no action]
+  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
