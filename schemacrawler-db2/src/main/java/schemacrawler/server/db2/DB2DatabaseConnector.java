@@ -20,6 +20,8 @@
 package schemacrawler.server.db2;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -29,10 +31,14 @@ public final class DB2DatabaseConnector
 
   public DB2DatabaseConnector()
   {
-    super(new DatabaseServerType("db2", "IBM DB2"),
-          "/help/Connections.db2.txt",
-          "/schemacrawler-db2.config.properties",
-          "/db2.information_schema");
+    super(new DatabaseServerType("db2", "IBM DB2"), "/help/Connections.db2.txt",
+          "/schemacrawler-db2.config.properties", "/db2.information_schema");
+  }
+
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:db2:.*");
   }
 
 }
