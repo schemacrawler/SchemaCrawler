@@ -24,6 +24,8 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -49,6 +51,8 @@ public class LintTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
+      .setTableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"));
+    schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
@@ -56,14 +60,14 @@ public class LintTest
     assertEquals(1, catalog.getSchemas().size());
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
     assertNotNull("FOR_LINT schema not found", schema);
-    assertEquals("FOR_LINT tables not found", 6,
+    assertEquals("FOR_LINT tables not found", 7,
                  catalog.getTables(schema).size());
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
                                                            new LinterConfigs());
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(33, lintCollector.size());
+    assertEquals(47, lintCollector.size());
 
     try (final TestWriter out = new TestWriter("text");)
     {

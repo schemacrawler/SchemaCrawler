@@ -23,65 +23,63 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
-import schemacrawler.schema.ForeignKey;
-import schemacrawler.schema.ForeignKeyColumnReference;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.graph.DirectedGraph;
+import schemacrawler.tools.lint.LintSeverity;
 
-public class LinterTableCycles
+/**
+ * Check that tables and columns) have remarks.
+ *
+ * @author Michèle Barré, Sualeh Fatehi
+ */
+public class LinterTableWithNoRemarks
   extends BaseLinter
 {
 
-  private DirectedGraph<Table> tablesGraph;
+  public LinterTableWithNoRemarks()
+  {
+    setSeverity(LintSeverity.low);
+  }
 
   @Override
   public String getSummary()
   {
-    return "cycles in table relationships";
-  }
-
-  @Override
-  protected void end()
-  {
-    requireNonNull(tablesGraph, "Not initialized");
-
-    if (tablesGraph.containsCycle())
-    {
-      addCatalogLint(getSummary(), true);
-    }
-
-    tablesGraph = null;
-
-    super.end();
+    return "should have remarks";
   }
 
   @Override
   protected void lint(final Table table, final Connection connection)
   {
     requireNonNull(table, "No table provided");
-    requireNonNull(tablesGraph, "Not initialized");
 
-    tablesGraph.addVertex(table);
-    for (final ForeignKey foreignKey: table.getForeignKeys())
+    if (!table.hasRemarks())
     {
-      for (final ForeignKeyColumnReference columnReference: foreignKey)
-      {
-        tablesGraph
-          .addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
-                           columnReference.getForeignKeyColumn().getParent());
-      }
+      addLint(table, getDescription(), true);
     }
 
+    final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(table
+      .getColumns());
+    if (!columnsWithNoRemarks.isEmpty())
+    {
+      addLint(table, getDescription(), columnsWithNoRemarks);
+    }
   }
 
-  @Override
-  protected void start()
+  private ArrayList<String> findColumnsWithNoRemarks(final List<Column> columns)
   {
-    super.start();
-
-    tablesGraph = new DirectedGraph<>();
+    final ArrayList<String> names = new ArrayList<>();
+    for (final Column column: columns)
+    {
+      if (!column.hasRemarks())
+      {
+        names.add(column.getName());
+      }
+    }
+    return names;
   }
 
 }

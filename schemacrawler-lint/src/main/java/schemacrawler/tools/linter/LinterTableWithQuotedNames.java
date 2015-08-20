@@ -45,13 +45,14 @@ public class LinterTableWithQuotedNames
   {
     requireNonNull(table, "No table provided");
 
-    final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
-      .getColumns());
     final String tableName = table.getName();
     if (isQuotedName(tableName))
     {
-      spacesInNamesList.add(0, tableName);
+      addLint(table, getSummary(), true);
     }
+
+    final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
+      .getColumns());
     for (final String spacesInName: spacesInNamesList)
     {
       addLint(table, getSummary(), spacesInName);

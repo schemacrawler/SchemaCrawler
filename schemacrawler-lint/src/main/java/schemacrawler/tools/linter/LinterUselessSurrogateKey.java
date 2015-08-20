@@ -24,14 +24,19 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterUselessSurrogateKey
   extends BaseLinter
 {
+
+  public LinterUselessSurrogateKey()
+  {
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  }
 
   @Override
   public String getSummary()
@@ -53,7 +58,7 @@ public class LinterUselessSurrogateKey
   private boolean hasUselessSurrogateKey(final Table table)
   {
 
-    if (!(table instanceof View) && table.getPrimaryKey() != null)
+    if (table.getPrimaryKey() != null)
     {
       boolean hasUselessSurrogateKey = true;
       for (final Column column: table.getColumns())

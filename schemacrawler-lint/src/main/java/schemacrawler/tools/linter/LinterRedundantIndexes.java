@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
 import java.sql.Connection;
@@ -31,9 +32,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.MetaDataUtility;
@@ -45,6 +46,7 @@ public class LinterRedundantIndexes
   public LinterRedundantIndexes()
   {
     setSeverity(LintSeverity.high);
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
@@ -56,23 +58,24 @@ public class LinterRedundantIndexes
   @Override
   protected void lint(final Table table, final Connection connection)
   {
-    if (table != null && !(table instanceof View))
+    requireNonNull(table, "No table provided");
+
+    final Set<Index> redundantIndexes = findRedundantIndexes(table.getIndexes());
+    for (final Index index: redundantIndexes)
     {
-      final Collection<Index> indexes = table.getIndexes();
-      if (indexes.size() > 0)
-      {
-        final Set<Index> redundantIndexes = findRedundantIndexes(indexes);
-        for (final Index index: redundantIndexes)
-        {
-          addLint(table, getSummary(), index);
-        }
-      }
+      addLint(table, getSummary(), index);
     }
   }
 
   private Set<Index> findRedundantIndexes(final Collection<Index> indexes)
   {
     final Set<Index> redundantIndexes = new HashSet<>();
+
+    if (indexes == null || indexes.isEmpty())
+    {
+      return redundantIndexes;
+    }
+
     final Map<Index, List<String>> indexColumns = new HashMap<>(indexes.size());
     for (final Index index: indexes)
     {
