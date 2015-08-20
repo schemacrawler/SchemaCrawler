@@ -235,7 +235,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-08-17 19:53:52</td>
+		<td class='property_value'>2015-08-20 19:01:26</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -256,6 +256,9 @@ td.section {
 <table>
   <caption style='background-color: #F2EACE;'><span id='extra_pk_334890da' class='caption_name'>PUBLIC.FOR_LINT.EXTRA_PK</span> <span class='caption_description'>[table]</span></caption>
 
+	<tr>
+		<td colspan='3'>Extra table with just a primary key</td>
+	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='subname'>WRITERID</td>
@@ -732,13 +735,22 @@ td.section {
 	</tr>
 	<tr>
 		<td></td>
+		<td>useless surrogate key</td>
+		<td>PK_EXTRA_PK</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td></td>
 		<td>empty table</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td></td>
-		<td>useless surrogate key</td>
-		<td>PK_EXTRA_PK</td>
+		<td>should have remarks</td>
+		<td>WRITERID, PUBLICATIONID, ID</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -767,11 +779,6 @@ td.section {
 	<tr>
 		<td></td>
 		<td>table with all nullable columns</td>
-		<td>"Global Counts"</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>empty table</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -782,7 +789,7 @@ td.section {
 	<tr>
 		<td></td>
 		<td>spaces in name, or reserved word</td>
-		<td>"Global Counts"</td>
+		<td></td>
 	</tr>
 	<tr>
 		<td></td>
@@ -793,6 +800,25 @@ td.section {
 		<td></td>
 		<td>single column</td>
 		<td></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>empty table</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>"Global Count"</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -811,17 +837,27 @@ td.section {
 	</tr>
 	<tr>
 		<td></td>
-		<td>empty table</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
 		<td>spaces in name, or reserved word</td>
 		<td>"UPDATE"</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>empty table</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE</td>
 	</tr>
 	<tr>
 		<td></td>
@@ -841,12 +877,22 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='2' class='name'></td>
-		<td class='description right'>[lint, medium]</td>
+		<td class='description right'>[lint, low]</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>empty table</td>
 		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>PUBLICATIONID, WRITERID</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -894,11 +940,6 @@ td.section {
 	</tr>
 	<tr>
 		<td></td>
-		<td>empty table</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
 		<td>incrementing columns</td>
 		<td>ADDRESS1, ADDRESS2</td>
 	</tr>
@@ -942,6 +983,25 @@ td.section {
 		<td>incrementing columns don't have the same data-type</td>
 		<td>EMAIL1, EMAIL2</td>
 	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>empty table</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -969,12 +1029,26 @@ td.section {
 	<tr>
 		<td></td>
 		<td>table with all nullable columns</td>
-		<td>ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, low]</td>
 	</tr>
 	<tr>
 		<td></td>
 		<td>empty table</td>
 		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ</td>
 	</tr>
 </table>
 <p>&#160;</p>

@@ -24,9 +24,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
@@ -37,6 +37,7 @@ public class LinterTableWithNoPrimaryKey
   public LinterTableWithNoPrimaryKey()
   {
     setSeverity(LintSeverity.high);
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
   }
 
   @Override
@@ -58,13 +59,13 @@ public class LinterTableWithNoPrimaryKey
 
     if (hasNoPrimaryKey(table))
     {
-      addLint(table, getSummary(), table.getPrimaryKey());
+      addLint(table, getSummary(), true);
     }
   }
 
   private boolean hasNoPrimaryKey(final Table table)
   {
-    if (!(table instanceof View) && table.getPrimaryKey() == null)
+    if (table.getPrimaryKey() == null)
     {
       boolean hasDataColumn = false;
       for (final Column column: table.getColumns())

@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
@@ -44,10 +45,12 @@ public abstract class BaseLinter
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;
+  private TableTypesFilter tableTypesFilter;
 
   protected BaseLinter()
   {
-    tableInclusionRule = new IncludeAll();
+    setTableInclusionRule(null);
+    setTableTypesFilter(null);
   }
 
   @Override
@@ -56,8 +59,8 @@ public abstract class BaseLinter
     super.configure(linterConfig);
     if (linterConfig != null)
     {
-      tableInclusionRule = new RegularExpressionRule(linterConfig
-        .getTableInclusionPattern(), linterConfig.getTableExclusionPattern());
+      setTableInclusionRule(new RegularExpressionRule(linterConfig
+        .getTableInclusionPattern(), linterConfig.getTableExclusionPattern()));
     }
   }
 
@@ -76,7 +79,8 @@ public abstract class BaseLinter
     start();
     for (final Table table: catalog.getTables())
     {
-      if (tableInclusionRule.test(table.getFullName()))
+      if (tableInclusionRule.test(table.getFullName())
+          && tableTypesFilter.test(table))
       {
         lint(table, connection);
       }
@@ -109,9 +113,38 @@ public abstract class BaseLinter
     return catalog.getCrawlInfo();
   }
 
+  protected TableTypesFilter getTableTypesFilter()
+  {
+    return tableTypesFilter;
+  }
+
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
   {
+  }
+
+  protected void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  {
+    if (tableInclusionRule == null)
+    {
+      this.tableInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.tableInclusionRule = tableInclusionRule;
+    }
+  }
+
+  protected void setTableTypesFilter(final TableTypesFilter tableTypesFilter)
+  {
+    if (tableTypesFilter == null)
+    {
+      this.tableTypesFilter = new TableTypesFilter();
+    }
+    else
+    {
+      this.tableTypesFilter = tableTypesFilter;
+    }
   }
 
   protected void start()
