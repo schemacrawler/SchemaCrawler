@@ -20,6 +20,7 @@
 package schemacrawler.filter;
 
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -27,11 +28,16 @@ import java.util.function.Predicate;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-class TableTypesFilter
+public class TableTypesFilter
   implements Predicate<Table>
 {
 
   private final Collection<String> tableTypes;
+
+  public TableTypesFilter()
+  {
+    tableTypes = null;
+  }
 
   public TableTypesFilter(final SchemaCrawlerOptions options)
   {
@@ -57,6 +63,24 @@ class TableTypesFilter
     }
   }
 
+  public TableTypesFilter(final String... tableTypesFiltered)
+  {
+    if (tableTypesFiltered != null)
+    {
+      final Collection<String> tableTypesOptions = Arrays
+        .asList(tableTypesFiltered);
+      tableTypes = new HashSet<>();
+      for (final String tableType: tableTypesOptions)
+      {
+        tableTypes.add(tableType.toLowerCase());
+      }
+    }
+    else
+    {
+      tableTypes = null;
+    }
+  }
+
   /**
    * Check for table limiting rules.
    *
@@ -71,8 +95,8 @@ class TableTypesFilter
 
     if (tableTypes != null)
     {
-      include = tableTypes.contains(table.getTableType().getTableType()
-        .toLowerCase());
+      include = tableTypes
+        .contains(table.getTableType().getTableType().toLowerCase());
     }
     else
     {

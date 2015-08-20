@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
@@ -34,6 +35,11 @@ import sf.util.Utility;
 public class LinterNullIntendedColumns
   extends BaseLinter
 {
+
+  public LinterNullIntendedColumns()
+  {
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  }
 
   @Override
   public String getSummary()

@@ -1,22 +1,31 @@
 [PUBLIC.FOR_LINT."Global Counts"] no primary key
-[PUBLIC.FOR_LINT."Global Counts"] table with all nullable columns: "Global Counts"
-[PUBLIC.FOR_LINT."Global Counts"] empty table
+[PUBLIC.FOR_LINT."Global Counts"] table with all nullable columns
 [PUBLIC.FOR_LINT."Global Counts"] no indexes
-[PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Counts"
+[PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
 [PUBLIC.FOR_LINT."Global Counts"] single column
-[PUBLIC.FOR_LINT.EXTRA_PK] empty table
+[PUBLIC.FOR_LINT."Global Counts"] empty table
+[PUBLIC.FOR_LINT."Global Counts"] should have remarks
+[PUBLIC.FOR_LINT."Global Counts"] should have remarks: "Global Count"
 [PUBLIC.FOR_LINT.EXTRA_PK] useless surrogate key: PK_EXTRA_PK
-[PUBLIC.FOR_LINT.PUBLICATIONS] empty table
+[PUBLIC.FOR_LINT.EXTRA_PK] empty table
+[PUBLIC.FOR_LINT.EXTRA_PK] should have remarks: WRITERID, PUBLICATIONID, ID
 [PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"
+[PUBLIC.FOR_LINT.PUBLICATIONS] empty table
+[PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks
+[PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks: ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
 [PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: "UPDATE", PRESS_RELEASE
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] empty table
+[PUBLIC.FOR_LINT.PUBLICATIONWRITERS] should have remarks
+[PUBLIC.FOR_LINT.PUBLICATIONWRITERS] should have remarks: PUBLICATIONID, WRITERID
+[PUBLIC.FOR_LINT.TEMP1] table with all nullable columns
+[PUBLIC.FOR_LINT.TEMP1] should have remarks
+[PUBLIC.FOR_LINT.TEMP1] should have remarks: ID, SCORES, NAMES, DATA
 [PUBLIC.FOR_LINT.WRITERS] foreign key data type different from primary key: FK_WRITERS_PUBLICATION
 [PUBLIC.FOR_LINT.WRITERS] redundant index: IDX_A1_WRITERS
 [PUBLIC.FOR_LINT.WRITERS] unique index with nullable columns: IDX_U_WRITERS
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: COUNTRY
-[PUBLIC.FOR_LINT.WRITERS] empty table
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: ADDRESS1, ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: FAX, FAX3
@@ -26,8 +35,13 @@
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: FAX, FAX3
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns don't have the same data-type: EMAIL1, EMAIL2
+[PUBLIC.FOR_LINT.WRITERS] empty table
+[PUBLIC.FOR_LINT.WRITERS] should have remarks
+[PUBLIC.FOR_LINT.WRITERS] should have remarks: ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] foreign key data type different from primary key: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
-[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] table with all nullable columns: ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] table with all nullable columns
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] empty table
+[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks
+[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks: ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
 [catalog] column with same name but different data types: ID [BIGINT, INTEGER]
 [catalog] cycles in table relationships
