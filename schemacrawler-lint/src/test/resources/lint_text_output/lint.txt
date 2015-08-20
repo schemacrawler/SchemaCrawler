@@ -16,8 +16,10 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	empty table	
 	useless surrogate key	PK_EXTRA_PK
+                                                             [lint, low]
+	empty table	
+	should have remarks	WRITERID, PUBLICATIONID, ID
 
 
 
@@ -27,12 +29,15 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
                                                             [lint, high]
 	no primary key	
                                                           [lint, medium]
-	table with all nullable columns	"Global Counts"
-	empty table	
+	table with all nullable columns	
 	no indexes	
-	spaces in name, or reserved word	"Global Counts"
+	spaces in name, or reserved word	
 	spaces in name, or reserved word	"Global Count"
 	single column	
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	"Global Count"
 
 
 
@@ -40,9 +45,11 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	empty table	
 	spaces in name, or reserved word	"UPDATE"
                                                              [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
 	too many binary objects	"UPDATE", PRESS_RELEASE
 
 
@@ -50,8 +57,10 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
+	should have remarks	
+	should have remarks	PUBLICATIONID, WRITERID
 
 
 
@@ -65,7 +74,6 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 	unique index with nullable columns	IDX_U_WRITERS
 	column where NULL may be intended	ADDRESS2
 	column where NULL may be intended	COUNTRY
-	empty table	
 	incrementing columns	ADDRESS1, ADDRESS2
 	incrementing columns	PHONE1, PHONE2
 	incrementing columns	FAX, FAX3
@@ -75,6 +83,10 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 	incrementing columns don't have the same data-type	PHONE1, PHONE2
 	incrementing columns don't have the same data-type	FAX, FAX3
 	incrementing columns don't have the same data-type	EMAIL1, EMAIL2
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
 
 
 
@@ -84,6 +96,9 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
                                                             [lint, high]
 	foreign key data type different from primary key	FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
                                                           [lint, medium]
-	table with all nullable columns	ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+	table with all nullable columns	
+                                                             [lint, low]
 	empty table	
+	should have remarks	
+	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
 

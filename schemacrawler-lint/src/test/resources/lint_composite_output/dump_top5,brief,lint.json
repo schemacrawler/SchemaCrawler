@@ -128,7 +128,7 @@
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table",
-      "remarks": "",
+      "remarks": "Extra table with just a primary key",
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
@@ -490,15 +490,21 @@
       "lints": [
         {
           "severity": "medium",
+          "description": "useless surrogate key",
+          "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
+          "value": "PK_EXTRA_PK"
+        },
+        {
+          "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
           "value": "true"
         },
         {
-          "severity": "medium",
-          "description": "useless surrogate key",
-          "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
-          "value": "PK_EXTRA_PK"
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "WRITERID, PUBLICATIONID, ID"
         }
       ],
       "name": "EXTRA_PK",
@@ -511,18 +517,12 @@
           "severity": "high",
           "description": "no primary key",
           "id": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
-          "value": ""
+          "value": "true"
         },
         {
           "severity": "medium",
           "description": "table with all nullable columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
-          "value": "\"Global Counts\""
-        },
-        {
-          "severity": "medium",
-          "description": "empty table",
-          "id": "schemacrawler.tools.linter.LinterTableEmpty",
           "value": "true"
         },
         {
@@ -535,7 +535,7 @@
           "severity": "medium",
           "description": "spaces in name, or reserved word",
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "value": "\"Global Counts\""
+          "value": "true"
         },
         {
           "severity": "medium",
@@ -548,6 +548,24 @@
           "description": "single column",
           "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
           "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "empty table",
+          "id": "schemacrawler.tools.linter.LinterTableEmpty",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "\"Global Count\""
         }
       ],
       "name": "\"Global Counts\"",
@@ -558,15 +576,27 @@
       "lints": [
         {
           "severity": "medium",
+          "description": "spaces in name, or reserved word",
+          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
+          "value": "\"UPDATE\""
+        },
+        {
+          "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
           "value": "true"
         },
         {
-          "severity": "medium",
-          "description": "spaces in name, or reserved word",
-          "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "value": "\"UPDATE\""
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, \"UPDATE\", PRESS_RELEASE"
         },
         {
           "severity": "low",
@@ -580,12 +610,26 @@
       "type": "table"
     },
     {
-      "lints": [{
-        "severity": "medium",
-        "description": "empty table",
-        "id": "schemacrawler.tools.linter.LinterTableEmpty",
-        "value": "true"
-      }],
+      "lints": [
+        {
+          "severity": "low",
+          "description": "empty table",
+          "id": "schemacrawler.tools.linter.LinterTableEmpty",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "PUBLICATIONID, WRITERID"
+        }
+      ],
       "name": "PUBLICATIONWRITERS",
       "fullName": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS",
       "type": "table"
@@ -621,12 +665,6 @@
           "description": "column where NULL may be intended",
           "id": "schemacrawler.tools.linter.LinterNullIntendedColumns",
           "value": "COUNTRY"
-        },
-        {
-          "severity": "medium",
-          "description": "empty table",
-          "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
         },
         {
           "severity": "medium",
@@ -681,6 +719,24 @@
           "description": "incrementing columns don't have the same data-type",
           "id": "schemacrawler.tools.linter.LinterTableWithIncrementingColumns",
           "value": "EMAIL1, EMAIL2"
+        },
+        {
+          "severity": "low",
+          "description": "empty table",
+          "id": "schemacrawler.tools.linter.LinterTableEmpty",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID"
         }
       ],
       "name": "WRITERS",
@@ -699,13 +755,25 @@
           "severity": "medium",
           "description": "table with all nullable columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
-          "value": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+          "value": "true"
         },
         {
-          "severity": "medium",
+          "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
           "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "true"
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ"
         }
       ],
       "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",

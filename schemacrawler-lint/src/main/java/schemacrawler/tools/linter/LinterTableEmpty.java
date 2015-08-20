@@ -26,8 +26,8 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
@@ -40,17 +40,16 @@ public class LinterTableEmpty
   private static final Logger LOGGER = Logger
     .getLogger(LinterTableEmpty.class.getName());
 
+  public LinterTableEmpty()
+  {
+    setSeverity(LintSeverity.low);
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  }
+
   @Override
   public String getSummary()
   {
     return "empty table";
-  }
-
-  @Override
-  protected void configure(final Config config)
-  {
-    super.configure(config);
-    setSeverity(LintSeverity.low);
   }
 
   @Override

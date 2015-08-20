@@ -23,14 +23,19 @@ package schemacrawler.tools.linter;
 import java.sql.Connection;
 import java.util.Collection;
 
+import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
 import schemacrawler.tools.lint.BaseLinter;
 
 public class LinterTableWithNoIndexes
   extends BaseLinter
 {
+
+  public LinterTableWithNoIndexes()
+  {
+    setTableTypesFilter(new TableTypesFilter("TABLE"));
+  }
 
   @Override
   public String getSummary()
@@ -41,7 +46,7 @@ public class LinterTableWithNoIndexes
   @Override
   protected void lint(final Table table, final Connection connection)
   {
-    if (table != null && !(table instanceof View))
+    if (table != null)
     {
       final Collection<Index> indexes = table.getIndexes();
       if (table.getPrimaryKey() == null && indexes.isEmpty())
