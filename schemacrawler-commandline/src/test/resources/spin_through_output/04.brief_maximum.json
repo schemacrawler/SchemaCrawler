@@ -315,7 +315,7 @@
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table",
-      "remarks": "",
+      "remarks": "Extra table with just a primary key",
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
@@ -777,7 +777,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-16 11:53:23",
+    "crawlTimestamp": "2015-08-20 21:48:41",
     "title": ""
   },
   "routines": [

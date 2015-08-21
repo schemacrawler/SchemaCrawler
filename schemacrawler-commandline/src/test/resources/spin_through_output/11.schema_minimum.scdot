@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-08-16 11:53:12</td>
+		<td align='left'>2015-08-20 21:48:30</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -148,6 +148,9 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td colspan='2' bgcolor='#F2EACE' align='left'><b><i>PUBLIC.FOR_LINT.EXTRA_PK</i></b></td>
 		<td bgcolor='#F2EACE' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td colspan='3' align='left'>Extra table with just a primary key</td>
 	</tr>
       </table>
     >
