@@ -6,4 +6,4 @@
 /tables[Books] (CHANGED)
 /tables[Books]/columns[Books.Description] (CHANGED)
 /tables[BookAuthors] (CHANGED)
-/tables[BookAuthors]/columns[BookAuthors.UPDATE] (ADDED)
+/tables[BookAuthors]/columns[BookAuthors."UPDATE"] (ADDED)

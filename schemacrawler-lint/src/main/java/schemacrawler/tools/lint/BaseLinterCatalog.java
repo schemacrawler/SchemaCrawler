@@ -20,6 +20,8 @@
 package schemacrawler.tools.lint;
 
 
+import static sf.util.Utility.readResourceFully;
+
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +60,19 @@ public abstract class BaseLinterCatalog
   @Override
   public String getDescription()
   {
-    return getSummary();
+    final String descriptionResource = String
+      .format("/help/%s.txt", this.getClass().getName().replace(".", "/"));
+
+    final String descriptionText;
+    if (BaseLinterCatalog.class.getResource(descriptionResource) == null)
+    {
+      return getSummary();
+    }
+    else
+    {
+      descriptionText = readResourceFully(descriptionResource);
+    }
+    return descriptionText;
   }
 
   @Override
