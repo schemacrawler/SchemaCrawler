@@ -60,10 +60,11 @@ public class LinterRedundantIndexes
   {
     requireNonNull(table, "No table provided");
 
-    final Set<Index> redundantIndexes = findRedundantIndexes(table.getIndexes());
+    final Set<Index> redundantIndexes = findRedundantIndexes(table
+      .getIndexes());
     for (final Index index: redundantIndexes)
     {
-      addLint(table, getSummary(), index);
+      addTableLint(table, getSummary(), index);
     }
   }
 

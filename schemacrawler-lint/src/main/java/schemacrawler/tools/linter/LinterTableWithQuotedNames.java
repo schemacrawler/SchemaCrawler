@@ -48,14 +48,14 @@ public class LinterTableWithQuotedNames
     final String tableName = table.getName();
     if (isQuotedName(tableName))
     {
-      addLint(table, getSummary(), true);
+      addTableLint(table, getSummary());
     }
 
     final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
       .getColumns());
     for (final String spacesInName: spacesInNamesList)
     {
-      addLint(table, getSummary(), spacesInName);
+      addTableLint(table, getSummary(), spacesInName);
     }
   }
 

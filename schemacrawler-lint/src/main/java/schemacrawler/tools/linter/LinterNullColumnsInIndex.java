@@ -51,7 +51,7 @@ public class LinterNullColumnsInIndex
       .getIndexes());
     for (final Index index: nullableColumnsInUniqueIndex)
     {
-      addLint(table, getSummary(), index);
+      addTableLint(table, getSummary(), index);
     }
   }
 
