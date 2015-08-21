@@ -20,6 +20,7 @@
 package schemacrawler.tools.lint;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -40,13 +41,13 @@ public class SimpleLintCollector
       return null;
     }
 
-    final List<Lint<?>> lints = new ArrayList<>(namedObject
-      .getAttribute(LINT_KEY, new ArrayList<Lint<?>>()));
+    final List<Lint<? extends Serializable>> lints = new ArrayList<>(namedObject
+      .getAttribute(LINT_KEY, new ArrayList<>()));
     Collections.sort(lints);
     return lints;
   }
 
-  private final List<Lint<?>> lints;
+  private final List<Lint<? extends Serializable>> lints;
 
   public SimpleLintCollector()
   {
@@ -70,7 +71,7 @@ public class SimpleLintCollector
   }
 
   @Override
-  public Iterator<Lint<?>> iterator()
+  public Iterator<Lint<? extends Serializable>> iterator()
   {
     Collections.sort(lints);
     return lints.iterator();

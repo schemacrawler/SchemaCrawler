@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import sf.util.ObjectToString;
 
@@ -43,9 +44,11 @@ public final class SimpleLint<V extends Serializable>
   private final String message;
   private final V value;
 
-  public SimpleLint(final String id, final String objectName,
-                    final LintSeverity severity, final String message,
-                    final V value)
+  public <N extends NamedObject & AttributedObject> SimpleLint(final String id,
+                                                               final N namedObject,
+                                                               final LintSeverity severity,
+                                                               final String message,
+                                                               final V value)
   {
     if (isBlank(id))
     {
@@ -53,7 +56,8 @@ public final class SimpleLint<V extends Serializable>
     }
     this.id = id;
 
-    this.objectName = requireNonNull(objectName, "Object name not provided");
+    requireNonNull(namedObject, "Named object not provided");
+    this.objectName = namedObject.getFullName();
 
     if (severity == null)
     {
@@ -211,6 +215,12 @@ public final class SimpleLint<V extends Serializable>
   public final V getValue()
   {
     return value;
+  }
+
+  @Override
+  public final boolean hasValue()
+  {
+    return value == null;
   }
 
   @Override

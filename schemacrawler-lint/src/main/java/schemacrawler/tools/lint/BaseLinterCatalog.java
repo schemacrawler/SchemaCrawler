@@ -93,7 +93,8 @@ public abstract class BaseLinterCatalog
                                          namedObject, message, value));
     if (collector != null)
     {
-      final Lint<V> lint = newLint(namedObject.getFullName(), message, value);
+      final Lint<V> lint = new SimpleLint<>(getId(), namedObject, getSeverity(),
+                                            message, value);
       collector.addLint(namedObject, lint);
     }
   }
@@ -109,12 +110,6 @@ public abstract class BaseLinterCatalog
     {
       this.severity = severity;
     }
-  }
-
-  private <V extends Serializable> Lint<V>
-    newLint(final String objectName, final String message, final V value)
-  {
-    return new SimpleLint<>(getId(), objectName, getSeverity(), message, value);
   }
 
 }
