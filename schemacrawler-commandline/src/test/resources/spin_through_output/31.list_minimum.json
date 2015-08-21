@@ -82,7 +82,7 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
-      "remarks": "",
+      "remarks": "Extra table with just a primary key",
       "primaryKey": {}
     },
     {
@@ -171,7 +171,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-17 19:41:14",
+    "crawlTimestamp": "2015-08-20 21:48:28",
     "title": ""
   },
   "routines": [

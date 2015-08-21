@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-08-16 11:53:17</td>
+		<td align='left'>2015-08-20 21:48:34</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -323,6 +323,9 @@ digraph "SchemaCrawler_Diagram" {
 		<td bgcolor='#F2EACE' align='right'>[table]</td>
 	</tr>
 	<tr>
+		<td colspan='3' align='left'>Extra table with just a primary key</td>
+	</tr>
+	<tr>
 		<td port='writerid_b8c70762.start' align='left'>WRITERID</td>
 		<td align='left'> </td>
 		<td port='writerid_b8c70762.end' align='left'>BIGINT NOT NULL</td>
@@ -379,6 +382,11 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='title_fd427981.start' align='left'>TITLE</td>
 		<td align='left'> </td>
 		<td port='title_fd427981.end' align='left'>VARCHAR(255) NOT NULL</td>
+	</tr>
+	<tr>
+		<td align='left'></td>
+		<td align='left'> </td>
+		<td align='left'>Publication title</td>
 	</tr>
 	<tr>
 		<td port='description_d3f90c65.start' align='left'>DESCRIPTION</td>
