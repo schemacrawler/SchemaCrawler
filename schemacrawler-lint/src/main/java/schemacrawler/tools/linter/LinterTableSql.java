@@ -78,7 +78,7 @@ public class LinterTableSql
     final Object queryResult = query.executeForScalar(connection, table);
     if (queryResult != null)
     {
-      addLint(table, getSummary() + " " + queryResult, true);
+      addTableLint(table, getSummary() + " " + queryResult);
     }
   }
 

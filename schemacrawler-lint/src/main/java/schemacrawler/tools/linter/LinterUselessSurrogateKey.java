@@ -51,7 +51,7 @@ public class LinterUselessSurrogateKey
 
     if (hasUselessSurrogateKey(table))
     {
-      addLint(table, getSummary(), table.getPrimaryKey());
+      addTableLint(table, getSummary(), table.getPrimaryKey());
     }
   }
 

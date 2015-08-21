@@ -218,12 +218,6 @@ public final class SimpleLint<V extends Serializable>
   }
 
   @Override
-  public final boolean hasValue()
-  {
-    return value == null;
-  }
-
-  @Override
   public String getValueAsString()
   {
     if (value != null)
@@ -282,6 +276,12 @@ public final class SimpleLint<V extends Serializable>
     result = prime * result + (severity == null? 0: severity.hashCode());
     result = prime * result + (value == null? 0: value.hashCode());
     return result;
+  }
+
+  @Override
+  public final boolean hasValue()
+  {
+    return value == null;
   }
 
   @Override

@@ -56,7 +56,7 @@ public class LinterNullIntendedColumns
       .getColumns());
     for (final Column column: nullDefaultValueMayBeIntendedColumns)
     {
-      addLint(table, getSummary(), column);
+      addTableLint(table, getSummary(), column);
     }
   }
 

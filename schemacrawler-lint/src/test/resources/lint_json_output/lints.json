@@ -13,7 +13,7 @@
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -32,25 +32,25 @@
           "severity": "high",
           "description": "no primary key",
           "id": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "medium",
           "description": "table with all nullable columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "medium",
           "description": "no indexes",
           "id": "schemacrawler.tools.linter.LinterTableWithNoIndexes",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "medium",
           "description": "spaces in name, or reserved word",
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "medium",
@@ -62,19 +62,19 @@
           "severity": "medium",
           "description": "single column",
           "id": "schemacrawler.tools.linter.LinterTableWithSingleColumn",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -99,13 +99,13 @@
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -130,13 +130,13 @@
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -239,13 +239,13 @@
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -270,19 +270,19 @@
           "severity": "medium",
           "description": "table with all nullable columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "true"
+          "value": ""
         },
         {
           "severity": "low",
@@ -307,7 +307,7 @@
         "severity": "medium",
         "description": "cycles in table relationships",
         "id": "schemacrawler.tools.linter.LinterTableCycles",
-        "value": "true"
+        "value": ""
       }
     ]}
 }]

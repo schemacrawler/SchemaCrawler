@@ -47,7 +47,7 @@ public class LinterTableAllNullableColumns
 
     if (!(table instanceof View) && hasAllNullableColumns(table.getColumns()))
     {
-      addLint(table, getSummary(), true);
+      addTableLint(table, getSummary());
     }
   }
 
