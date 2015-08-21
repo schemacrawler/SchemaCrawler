@@ -49,7 +49,7 @@ public class LinterTableCycles
 
     if (tablesGraph.containsCycle())
     {
-      addCatalogLint(getSummary(), true);
+      addCatalogLint(getSummary());
     }
 
     tablesGraph = null;

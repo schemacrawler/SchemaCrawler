@@ -12,10 +12,10 @@ public interface LintTraversalHandler
   extends TraversalHandler
 {
 
-  void handle(final LintedCatalog catalog)
+  void handle(final Collection<? extends Table> table)
     throws SchemaCrawlerException;
 
-  void handle(final Collection<? extends Table> table)
+  void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException;
 
   void handleEnd()

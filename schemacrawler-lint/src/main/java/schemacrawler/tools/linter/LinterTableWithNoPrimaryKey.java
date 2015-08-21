@@ -59,7 +59,7 @@ public class LinterTableWithNoPrimaryKey
 
     if (hasNoPrimaryKey(table))
     {
-      addLint(table, getSummary(), true);
+      addTableLint(table, getSummary());
     }
   }
 

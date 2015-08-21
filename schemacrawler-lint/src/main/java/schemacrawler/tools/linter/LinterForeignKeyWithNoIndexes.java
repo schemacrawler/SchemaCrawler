@@ -59,7 +59,7 @@ public class LinterForeignKeyWithNoIndexes
     final List<ForeignKey> foreignKeysWithoutIndexes = findForeignKeysWithoutIndexes(table);
     for (final ForeignKey foreignKey: foreignKeysWithoutIndexes)
     {
-      addLint(table, getSummary(), foreignKey);
+      addTableLint(table, getSummary(), foreignKey);
     }
   }
 

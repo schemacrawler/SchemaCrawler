@@ -52,6 +52,23 @@ final class LintJsonFormatter
   }
 
   @Override
+  public void handle(final Collection<? extends Table> tables)
+    throws SchemaCrawlerException
+  {
+    if (tables == null || tables.isEmpty())
+    {
+      return;
+    }
+    final List<? extends Table> tablesList = new ArrayList<>(tables);
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+    for (final Table table: tablesList)
+    {
+      handle(table);
+    }
+  }
+
+  @Override
   public void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
@@ -74,20 +91,13 @@ final class LintJsonFormatter
   }
 
   @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
+  public void handleEnd()
   {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
+  }
+
+  @Override
+  public void handleStart()
+  {
   }
 
   private void handle(final Table table)
@@ -112,16 +122,6 @@ final class LintJsonFormatter
         LOGGER.log(Level.FINER, "Error outputting Table: " + e.getMessage(), e);
       }
     }
-  }
-
-  @Override
-  public void handleEnd()
-  {
-  }
-
-  @Override
-  public void handleStart()
-  {
   }
 
   private JSONArray handleLints(final Collection<Lint<?>> lints)

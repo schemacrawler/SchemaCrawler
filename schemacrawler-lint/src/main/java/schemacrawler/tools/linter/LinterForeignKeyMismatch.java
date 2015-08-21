@@ -57,7 +57,7 @@ public class LinterForeignKeyMismatch
     final List<ForeignKey> mismatchedForeignKeys = findMismatchedForeignKeys(table);
     for (final ForeignKey foreignKey: mismatchedForeignKeys)
     {
-      addLint(table, getSummary(), foreignKey);
+      addTableLint(table, getSummary(), foreignKey);
     }
   }
 

@@ -58,14 +58,14 @@ public class LinterTableWithNoRemarks
 
     if (!table.hasRemarks())
     {
-      addLint(table, getDescription(), true);
+      addTableLint(table, getDescription());
     }
 
     final ArrayList<String> columnsWithNoRemarks = findColumnsWithNoRemarks(table
       .getColumns());
     if (!columnsWithNoRemarks.isEmpty())
     {
-      addLint(table, getDescription(), columnsWithNoRemarks);
+      addTableLint(table, getDescription(), columnsWithNoRemarks);
     }
   }
 
