@@ -23,7 +23,7 @@ package schemacrawler.tools.lint;
 import java.io.Serializable;
 
 public interface Lint<V extends Serializable>
-  extends Serializable, Comparable<Lint<?>>
+  extends Serializable, Comparable<Lint<? extends Serializable>>
 {
 
   String getId();
@@ -37,5 +37,7 @@ public interface Lint<V extends Serializable>
   V getValue();
 
   String getValueAsString();
+
+  boolean hasValue();
 
 }
