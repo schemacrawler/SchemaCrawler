@@ -12,7 +12,7 @@ schema:
   table: BookAuthors
       column: BookAuthors.BookId
       column: BookAuthors.AuthorId
-      column: BookAuthors.UPDATE
+      column: BookAuthors."UPDATE"
   table: Books
       column: Books.Id
       column: Books.Title
