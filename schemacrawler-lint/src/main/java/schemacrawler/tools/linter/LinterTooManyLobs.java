@@ -29,6 +29,7 @@ import java.util.List;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 
@@ -36,11 +37,21 @@ public class LinterTooManyLobs
   extends BaseLinter
 {
 
-  private static final int MAX_LOBS_IN_TABLE = 1;
+  private int maxLargeObjectsInTable;
 
   public LinterTooManyLobs()
   {
     setSeverity(LintSeverity.low);
+
+    maxLargeObjectsInTable = 1;
+  }
+
+  @Override
+  protected void configure(final Config config)
+  {
+    requireNonNull(config, "No configuration provided");
+
+    maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
   }
 
   @Override
@@ -55,7 +66,7 @@ public class LinterTooManyLobs
     requireNonNull(table, "No table provided");
 
     final ArrayList<Column> lobColumns = findLobColumns(table.getColumns());
-    if (lobColumns.size() > MAX_LOBS_IN_TABLE)
+    if (lobColumns.size() > maxLargeObjectsInTable)
     {
       addTableLint(table, getSummary(), lobColumns);
     }
