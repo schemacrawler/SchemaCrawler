@@ -117,13 +117,13 @@ public class LinterTableWithIncrementingColumns
       }
     }
     Collections.sort(incrementingColumns);
-    addLint(table, getSummary(), incrementingColumns);
+    addTableLint(table, getSummary(), incrementingColumns);
 
     // Check for increments that are not consecutive
     if (maxIncrement - minIncrement + 1 != incrementingColumnsList.size())
     {
-      addLint(table, "incrementing columns are not consecutive",
-              incrementingColumns);
+      addTableLint(table, "incrementing columns are not consecutive",
+                   incrementingColumns);
     }
 
     // Check for consistent column data-types
@@ -135,8 +135,9 @@ public class LinterTableWithIncrementingColumns
       if (!columnDataType.equals(incrementingColumns.get(i).getColumnDataType())
           || columnSize != incrementingColumns.get(i).getSize())
       {
-        addLint(table, "incrementing columns don't have the same data-type",
-                incrementingColumns);
+        addTableLint(table,
+                     "incrementing columns don't have the same data-type",
+                     incrementingColumns);
         break;
       }
     }

@@ -53,6 +53,23 @@ final class LintTextFormatter
   }
 
   @Override
+  public void handle(final Collection<? extends Table> tables)
+    throws SchemaCrawlerException
+  {
+    if (tables == null || tables.isEmpty())
+    {
+      return;
+    }
+    final List<? extends Table> tablesList = new ArrayList<>(tables);
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
+    for (final Table table: tablesList)
+    {
+      handle(table);
+    }
+  }
+
+  @Override
   public void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
@@ -64,41 +81,6 @@ final class LintTextFormatter
       formattingHelper.writeObjectNameRow("", "Database", "[database]",
                                           Color.white);
 
-      printLints(lints);
-      formattingHelper.writeObjectEnd();
-    }
-  }
-
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
-  }
-
-  private void handle(final Table table)
-  {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
-    if (lints != null && !lints.isEmpty())
-    {
-      formattingHelper.writeObjectStart();
-
-      formattingHelper.println();
-      formattingHelper.println();
-
-      final String tableType = "[" + table.getTableType() + "]";
-      formattingHelper.writeObjectNameRow(nodeId(table), table.getFullName(),
-                                          tableType, colorMap.getColor(table));
       printLints(lints);
       formattingHelper.writeObjectEnd();
     }
@@ -123,6 +105,24 @@ final class LintTextFormatter
   public void handleStart()
   {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
+  }
+
+  private void handle(final Table table)
+  {
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    if (lints != null && !lints.isEmpty())
+    {
+      formattingHelper.writeObjectStart();
+
+      formattingHelper.println();
+      formattingHelper.println();
+
+      final String tableType = "[" + table.getTableType() + "]";
+      formattingHelper.writeObjectNameRow(nodeId(table), table.getFullName(),
+                                          tableType, colorMap.getColor(table));
+      printLints(lints);
+      formattingHelper.writeObjectEnd();
+    }
   }
 
   private void printLints(final Collection<Lint<?>> lints)

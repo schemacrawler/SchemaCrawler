@@ -57,7 +57,7 @@ public class LinterTooManyLobs
     final ArrayList<Column> lobColumns = findLobColumns(table.getColumns());
     if (lobColumns.size() > MAX_LOBS_IN_TABLE)
     {
-      addLint(table, getSummary(), lobColumns);
+      addTableLint(table, getSummary(), lobColumns);
     }
   }
 

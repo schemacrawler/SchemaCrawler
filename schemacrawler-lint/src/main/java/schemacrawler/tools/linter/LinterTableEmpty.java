@@ -64,7 +64,7 @@ public class LinterTableEmpty
       final long count = query.executeForLong(connection, table);
       if (count == 0)
       {
-        addLint(table, getSummary(), true);
+        addTableLint(table, getSummary());
       }
     }
     catch (final SchemaCrawlerException e)

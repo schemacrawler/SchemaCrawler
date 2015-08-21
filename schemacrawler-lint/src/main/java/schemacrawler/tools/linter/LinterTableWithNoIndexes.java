@@ -51,7 +51,7 @@ public class LinterTableWithNoIndexes
       final Collection<Index> indexes = table.getIndexes();
       if (table.getPrimaryKey() == null && indexes.isEmpty())
       {
-        addLint(table, getSummary(), true);
+        addTableLint(table, getSummary());
       }
     }
   }

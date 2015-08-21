@@ -95,13 +95,26 @@ public abstract class BaseLinter
     this.catalog = null;
   }
 
-  protected <V extends Serializable> void addCatalogLint(final String message,
-                                                         final V value)
+  protected final void addCatalogLint(final String message)
   {
-    if (catalog != null)
-    {
-      addLint(catalog, message, value);
-    }
+    addLint(catalog, message, null);
+  }
+
+  protected final <V extends Serializable> void
+    addCatalogLint(final String message, final V value)
+  {
+    addLint(catalog, message, value);
+  }
+
+  protected final void addTableLint(final Table table, final String message)
+  {
+    addLint(table, message, null);
+  }
+
+  protected final <V extends Serializable> void
+    addTableLint(final Table table, final String message, final V value)
+  {
+    addLint(table, message, value);
   }
 
   protected void end()
