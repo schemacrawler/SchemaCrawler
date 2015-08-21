@@ -61,7 +61,7 @@
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table",
-      "remarks": "",
+      "remarks": "Extra table with just a primary key",
       "primaryKey": {}
     },
     {
@@ -129,7 +129,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-17 19:41:13",
+    "crawlTimestamp": "2015-08-20 21:48:27",
     "title": ""
   },
   "routines": [

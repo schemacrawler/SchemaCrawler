@@ -63,6 +63,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
   TITLE                             VARCHAR(255) NOT NULL       
+                                    Publication title           
   DESCRIPTION                       VARCHAR(255)                
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONDATE                   DATE                        

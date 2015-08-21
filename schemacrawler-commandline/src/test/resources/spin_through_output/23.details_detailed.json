@@ -763,7 +763,7 @@
           "type": "check"
         }
       ],
-      "remarks": "",
+      "remarks": "Extra table with just a primary key",
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
@@ -878,7 +878,7 @@
           "name": "TITLE",
           "width": "(255)",
           "decimalDigits": 0,
-          "remarks": "",
+          "remarks": "Publication title",
           "autoIncremented": false
         },
         {
@@ -2035,7 +2035,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-16 11:53:19",
+    "crawlTimestamp": "2015-08-20 21:48:36",
     "title": ""
   },
   "routines": [
