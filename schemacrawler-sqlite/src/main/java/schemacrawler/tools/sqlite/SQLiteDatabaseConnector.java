@@ -22,7 +22,10 @@ package schemacrawler.tools.sqlite;
 
 import java.util.regex.Pattern;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.DatabaseServerType;
@@ -53,6 +56,29 @@ public final class SQLiteDatabaseConnector
       return databaseSpecificOverrideOptionsBuilder;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see schemacrawler.tools.databaseconnector.DatabaseSystemConnector#newDatabaseConnectionOptions(schemacrawler.schemacrawler.Config)
+     */
+    @Override
+    public ConnectionOptions
+      newDatabaseConnectionOptions(Config additionalConfig)
+        throws SchemaCrawlerException
+    {
+      try
+      {
+        Class.forName("org.sqlite.JDBC");
+      }
+      catch (final ClassNotFoundException e)
+      {
+        throw new SchemaCrawlerException("Could not load SQLite JDBC driver",
+                                         e);
+      }
+
+      return super.newDatabaseConnectionOptions(additionalConfig);
+    }
+
   }
 
   public SQLiteDatabaseConnector()
@@ -60,14 +86,6 @@ public final class SQLiteDatabaseConnector
     super(SQLITE_SERVER_TYPE, "/help/Connections.sqlite.txt",
           new SQLiteDatabaseSystemConnector("/schemacrawler-sqlite.config.properties",
                                             "/sqlite.information_schema"));
-    try
-    {
-      Class.forName("org.sqlite.JDBC");
-    }
-    catch (final ClassNotFoundException e)
-    {
-      throw new RuntimeException("Could not load SQLite JDBC driver", e);
-    }
   }
 
   @Override

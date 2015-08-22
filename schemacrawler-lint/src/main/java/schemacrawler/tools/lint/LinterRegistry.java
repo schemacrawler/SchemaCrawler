@@ -24,6 +24,7 @@ package schemacrawler.tools.lint;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
@@ -38,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  * @author Sualeh Fatehi
  */
 public final class LinterRegistry
+  implements Iterable<String>
 {
 
   private static final Logger LOGGER = Logger
@@ -87,10 +89,10 @@ public final class LinterRegistry
     return linterRegistry.containsKey(linterId);
   }
 
-  @Deprecated
-  public Linter lookupLinter(final String linterId)
+  @Override
+  public Iterator<String> iterator()
   {
-    return newLinter(linterId);
+    return allRegisteredLinters().iterator();
   }
 
   public Linter newLinter(final String linterId)
