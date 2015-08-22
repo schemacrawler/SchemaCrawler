@@ -1,0 +1,1 @@
+Checks for tables and columns with no remarks. 

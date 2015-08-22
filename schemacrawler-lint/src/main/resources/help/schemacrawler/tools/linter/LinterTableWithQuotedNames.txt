@@ -1,0 +1,2 @@
+Checks for tables that have spaces in table or column names, or names 
+that are reserved words in the ANSI SQL standard. 
