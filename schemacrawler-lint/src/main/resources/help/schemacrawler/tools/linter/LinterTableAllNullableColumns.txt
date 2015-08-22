@@ -1,0 +1,2 @@
+Tables that have all columns besides the primary key that are nullable, 
+may contain no useful data, and could indicate a schema design smell. 
