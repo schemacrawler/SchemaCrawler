@@ -1,0 +1,9 @@
+Checks for tables that have too many large objects (CLOBs or BLOBs), 
+since these could result in additional reads when returning query 
+results. By default, this is more than one such column.
+Example configuration:
+<linter id="schemacrawler.tools.linter.LinterTooManyLobs">
+  <config>
+    <property name="max-large-objects">3</property>
+  </config>
+</linter>  

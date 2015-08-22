@@ -1,0 +1,2 @@
+Looks for columns in different tables, that have the same name but have 
+different data types. 

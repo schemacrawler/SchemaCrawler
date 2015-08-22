@@ -1,0 +1,2 @@
+Checks for tables with no primary keys. Tables that purely model 
+relationships, without any attributes are ignored. 
