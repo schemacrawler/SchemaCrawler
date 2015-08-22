@@ -1,0 +1,5 @@
+Checks for tables with incrementing column names, for example, a table 
+with column names like CONTACT1, CONTACT2 and so on can indicate 
+de-normalization. Additionally, SchemaCrawler Lint will check that the 
+data-types of all incrementing columns are the same, and that no numbers 
+are skipped. 

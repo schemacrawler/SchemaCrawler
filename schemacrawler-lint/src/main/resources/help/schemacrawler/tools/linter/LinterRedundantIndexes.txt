@@ -1,0 +1,4 @@
+Checks for tables with redundant indexes. A redundant index is one where 
+the sequence of columns is the same as the first few columns of another 
+index. For example, the index INDEX_B(COL1) is not needed when you have 
+another index, INDEX_A(COL1, COL2). 

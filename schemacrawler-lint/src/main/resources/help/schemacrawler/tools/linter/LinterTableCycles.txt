@@ -1,0 +1,2 @@
+Checks for cyclical relationships between tables, which could cause 
+issues with deletes and inserts. 
