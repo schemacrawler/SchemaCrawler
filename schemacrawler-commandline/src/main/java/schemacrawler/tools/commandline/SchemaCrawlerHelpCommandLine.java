@@ -23,6 +23,7 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -39,16 +40,15 @@ public final class SchemaCrawlerHelpCommandLine
   implements CommandLine
 {
 
-  private static void showHelp(final String helpResource)
+  private static String loadHelpText(final String helpResource)
   {
     if (isBlank(helpResource)
         || SchemaCrawlerHelpCommandLine.class.getResource(helpResource) == null)
     {
-      return;
+      return "";
     }
 
-    final String helpText = readResourceFully(helpResource);
-    System.out.println(helpText);
+    return readResourceFully(helpResource);
   }
 
   private final String command;
@@ -57,8 +57,8 @@ public final class SchemaCrawlerHelpCommandLine
   private final DatabaseServerType dbServerType;
 
   /**
-   * Loads objects from command-line options. Optionally loads the
-   * config from the classpath.
+   * Loads objects from command-line options. Optionally loads the config from
+   * the classpath.
    *
    * @param args
    *        Command line arguments.
@@ -75,7 +75,7 @@ public final class SchemaCrawlerHelpCommandLine
                                       final DatabaseServerType dbServerType,
                                       final String connectionHelpResource,
                                       final boolean showVersionOnly)
-    throws SchemaCrawlerException
+                                        throws SchemaCrawlerException
   {
     requireNonNull(args, "No command-line arguments provided");
 
@@ -115,10 +115,10 @@ public final class SchemaCrawlerHelpCommandLine
 
     if (dbServerType != null && !dbServerType.isUnknownDatabaseSystem())
     {
-      System.out.println("SchemaCrawler for "
-                         + dbServerType.getDatabaseSystemName());
+      System.out
+        .println("SchemaCrawler for " + dbServerType.getDatabaseSystemName());
     }
-    showHelp("/help/SchemaCrawler.txt");
+    System.out.println(loadHelpText("/help/SchemaCrawler.txt"));
     System.out.println();
     if (showVersionOnly)
     {
@@ -128,7 +128,7 @@ public final class SchemaCrawlerHelpCommandLine
     if (isBlank(connectionHelpResource))
     {
       final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
-      showHelp("/help/Connections.txt");
+      System.out.println(loadHelpText("/help/Connections.txt"));
       System.out.println("  Available servers are: ");
       for (final String availableServer: databaseConnectorRegistry)
       {
@@ -138,14 +138,14 @@ public final class SchemaCrawlerHelpCommandLine
     }
     else
     {
-      showHelp(connectionHelpResource);
+      System.out.println(loadHelpText(connectionHelpResource));
     }
-    showHelp("/help/SchemaCrawlerOptions.txt");
-    showHelp("/help/Config.txt");
-    showHelp("/help/ApplicationOptions.txt");
+    System.out.println(loadHelpText("/help/SchemaCrawlerOptions.txt"));
+    System.out.println(loadHelpText("/help/Config.txt"));
+    System.out.println(loadHelpText("/help/ApplicationOptions.txt"));
     if (!commandRegistry.hasCommand(command))
     {
-      showHelp("/help/Command.txt");
+      System.out.println(loadHelpText("/help/Command.txt"));
       System.out.println("  Available commands are: ");
       for (final String availableCommand: commandRegistry)
       {
@@ -156,7 +156,11 @@ public final class SchemaCrawlerHelpCommandLine
     else
     {
       final String helpResource = commandRegistry.getHelpResource(command);
-      showHelp(helpResource);
+      System.out.println(loadHelpText(helpResource));
+
+      final String helpAdditionalText = commandRegistry
+        .getHelpAdditionalText(command);
+      System.out.println(helpAdditionalText);
     }
 
     System.exit(0);
