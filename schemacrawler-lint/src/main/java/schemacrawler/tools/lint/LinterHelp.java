@@ -4,17 +4,31 @@ package schemacrawler.tools.lint;
 public class LinterHelp
 {
 
-  public static void main(final String[] args)
+  public static String getLinterHelpText()
     throws Exception
   {
+    final StringBuilder buffer = new StringBuilder();
+
+    buffer.append("--- Available Linters ---").append(System.lineSeparator())
+      .append(System.lineSeparator());
+
     final LinterRegistry registry = new LinterRegistry();
     for (final String linterId: registry)
     {
       final Linter linter = registry.newLinter(linterId);
-      System.out.println(linter.getId());
-      System.out.println(linter.getDescription());
-      System.out.println();
+
+      buffer.append("Linter: ").append(linter.getId())
+        .append(System.lineSeparator());
+      buffer.append(linter.getDescription()).append(System.lineSeparator());
     }
+
+    return buffer.toString();
+  }
+
+  public static void main(String[] args)
+    throws Exception
+  {
+    System.out.println(getLinterHelpText());
   }
 
   private LinterHelp()

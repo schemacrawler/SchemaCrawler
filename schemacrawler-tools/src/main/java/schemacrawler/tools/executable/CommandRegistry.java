@@ -47,8 +47,8 @@ public final class CommandRegistry
   implements Iterable<String>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(CommandRegistry.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(CommandRegistry.class.getName());
 
   private static Map<String, CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
@@ -60,8 +60,8 @@ public final class CommandRegistry
               new SchemaExecutableCommandProvider("schema"),
               new SchemaExecutableCommandProvider("details"),
 
-              new ExecutableCommandProvider("count",
-                                            "schemacrawler.tools.text.operation.OperationExecutable"),
+    new ExecutableCommandProvider("count",
+                                  "schemacrawler.tools.text.operation.OperationExecutable"),
               new ExecutableCommandProvider("dump",
                                             "schemacrawler.tools.text.operation.OperationExecutable"),
               new ExecutableCommandProvider("script",
@@ -76,8 +76,7 @@ public final class CommandRegistry
       for (final CommandProvider commandRegistryEntry: serviceLoader)
       {
         final String executableCommand = commandRegistryEntry.getCommand();
-        LOGGER.log(Level.FINER, "Loading executable, " + executableCommand
-                                + "="
+        LOGGER.log(Level.FINER, "Loading executable, " + executableCommand + "="
                                 + commandRegistryEntry.getClass().getName());
         commandProviders.add(commandRegistryEntry);
       }
@@ -133,7 +132,7 @@ public final class CommandRegistry
   Executable configureNewExecutable(final String command,
                                     final SchemaCrawlerOptions schemaCrawlerOptions,
                                     final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                                      throws SchemaCrawlerException
   {
     final CommandProvider commandProvider;
     if (commandRegistry.containsKey(command))
@@ -152,9 +151,25 @@ public final class CommandRegistry
 
   private Collection<String> lookupAvailableCommands()
   {
-    final List<String> availableCommands = new ArrayList<>(commandRegistry.keySet());
+    final List<String> availableCommands = new ArrayList<>(commandRegistry
+      .keySet());
     Collections.sort(availableCommands);
     return availableCommands;
+  }
+
+  public String getHelpAdditionalText(String command)
+  {
+    final String helpAdditionalText;
+    if (commandRegistry.containsKey(command))
+    {
+      helpAdditionalText = commandRegistry.get(command).getHelpAdditionalText();
+    }
+    else
+    {
+      helpAdditionalText = null;
+    }
+
+    return helpAdditionalText;
   }
 
 }
