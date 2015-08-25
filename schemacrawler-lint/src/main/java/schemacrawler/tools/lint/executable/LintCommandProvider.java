@@ -20,14 +20,21 @@
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.OutputOptions;
 
 public class LintCommandProvider
   implements CommandProvider
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(LintCommandProvider.class.getName());
 
   @Override
   public Executable configureNewExecutable(
@@ -50,6 +57,20 @@ public class LintCommandProvider
   public String getCommand()
   {
     return LintExecutable.COMMAND;
+  }
+
+  @Override
+  public String getHelpAdditionalText()
+  {
+    try
+    {
+      return LinterHelp.getLinterHelpText();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.FINE, "Cannot get linter help", e);
+      return "";
+    }
   }
 
   @Override
