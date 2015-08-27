@@ -64,9 +64,9 @@ class MutableIndex
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since indexes are not always explicitly named in databases,
-   * the sorting routine orders the indexes by the names of the columns
-   * in the index.
+   * Note: Since indexes are not always explicitly named in databases, the
+   * sorting routine orders the indexes by the names of the columns in the
+   * index.
    * </p>
    */
   @Override
@@ -163,17 +163,6 @@ class MutableIndex
   public final int getPages()
   {
     return pages;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
-   */
-  @Override
-  public final IndexType getType()
-  {
-    return getIndexType();
   }
 
   @Override

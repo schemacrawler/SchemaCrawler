@@ -85,12 +85,6 @@ class MutableTableConstraint
   }
 
   @Override
-  public TableConstraintType getType()
-  {
-    return getTableConstraintType();
-  }
-
-  @Override
   public boolean hasDefinition()
   {
     return definition.length() > 0;
@@ -118,7 +112,8 @@ class MutableTableConstraint
     return initiallyDeferred;
   }
 
-  public void setTableConstraintType(final TableConstraintType tableConstraintType)
+  public void
+    setTableConstraintType(final TableConstraintType tableConstraintType)
   {
     this.tableConstraintType = tableConstraintType;
   }

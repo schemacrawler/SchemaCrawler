@@ -34,42 +34,53 @@ public interface Index
 {
 
   /**
-   * Gets the cardinality. When the index type is statistic, then this
-   * is the number of rows in the table; otherwise, it is the number of
-   * unique values in the index.
+   * Gets the cardinality. When the index type is statistic, then this is the
+   * number of rows in the table; otherwise, it is the number of unique values
+   * in the index.
    *
    * @return Cardinality
    */
-  int getCardinality();
+    int getCardinality();
 
   /**
    * Gets the list of columns in ordinal order.
    *
    * @return Columns of the index.
    */
-  List<IndexColumn> getColumns();
+    List<IndexColumn> getColumns();
 
   /**
    * Gets the index type.
    *
    * @return Index type.
    */
-  IndexType getIndexType();
+    IndexType getIndexType();
 
   /**
-   * Gets the pages. When the index type is statistic, then this is the
-   * number of pages used for the table, otherwise it is the number of
-   * pages used for the current index.
+   * Gets the pages. When the index type is statistic, then this is the number
+   * of pages used for the table, otherwise it is the number of pages used for
+   * the current index.
    *
    * @return Pages
    */
-  int getPages();
+    int getPages();
 
   /**
    * If the index is unique.
    *
    * @return If the index is unique
    */
-  boolean isUnique();
+    boolean isUnique();
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.TypedObject#getType()
+   */
+  @Override
+  default IndexType getType()
+  {
+    return getIndexType();
+  }
 
 }
