@@ -20,7 +20,7 @@
 package schemacrawler.schema;
 
 
-public interface TypedObject<T>
+public interface TypedObject<T extends Comparable<? super T>>
 {
 
   /**
@@ -28,6 +28,6 @@ public interface TypedObject<T>
    *
    * @return Type of the object
    */
-  T getType();
+    T getType();
 
 }
