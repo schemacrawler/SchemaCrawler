@@ -69,8 +69,9 @@ public final class Main
         .lookupDatabaseSystemIdentifier(dbServerType
           .getDatabaseSystemIdentifier());
 
-      final boolean showHelp = args.length == 0 || args.length == 1
-                               && Main.class.getCanonicalName().equals(args[0])
+      final boolean showHelp = args.length == 0
+                               || args.length == 1 && Main.class
+                                 .getCanonicalName().equals(args[0])
                                || applicationOptions.isShowHelp();
 
       final CommandLine commandLine;
@@ -90,9 +91,9 @@ public final class Main
     {
       final String errorMessage = e.getMessage();
       System.err.println(errorMessage);
-      System.err.println("Re-run SchemaCrawler with the -? option for help");
+      System.err.println("Re-run SchemaCrawler with the\n-?\noption for help");
       System.err
-        .println("Or, re-run SchemaCrawler with the -loglevel=CONFIG option for details on the error");
+        .println("Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
       logSafeArguments(Level.SEVERE, args);
     }
 
