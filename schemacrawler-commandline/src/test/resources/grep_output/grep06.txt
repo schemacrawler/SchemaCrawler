@@ -151,11 +151,11 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
-  ID                                ascending                   
-
 SYS_IDX_10175                                         [non-unique index]
   WRITERID                          ascending                   
+
+SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
+  ID                                ascending                   
 
 Table Constraints
 

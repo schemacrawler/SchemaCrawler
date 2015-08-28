@@ -171,12 +171,12 @@
       }],
       "tableConstraints": [
         {
-          "name": "CHECK_UPPERCASE_STATE",
-          "type": "check"
-        },
-        {
           "name": "PK_AUTHORS",
           "type": "primary_key"
+        },
+        {
+          "name": "CHECK_UPPERCASE_STATE",
+          "type": "check"
         },
         {
           "name": "SYS_CT_10094",
@@ -492,12 +492,12 @@
       "triggers": [],
       "tableConstraints": [
         {
-          "name": "FK_PREVIOUSEDITION",
-          "type": "foreign_key"
-        },
-        {
           "name": "PK_BOOKS",
           "type": "primary_key"
+        },
+        {
+          "name": "FK_PREVIOUSEDITION",
+          "type": "foreign_key"
         },
         {
           "name": "SYS_CT_10102",
@@ -621,6 +621,14 @@
         {
           "columns": {
             "sortSequence": "ascending",
+            "name": "WRITERID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10194"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
             "name": "ID"
           },
           "unique": true,
@@ -633,14 +641,6 @@
           },
           "unique": false,
           "name": "SYS_IDX_10196"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "WRITERID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10194"
         }
       ],
       "columns": [
@@ -684,16 +684,16 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "name": "PK_EXTRA_PK",
+          "type": "primary_key"
+        },
+        {
           "name": "FK_PUBLICATION_JOIN",
           "type": "foreign_key"
         },
         {
           "name": "FK_WRITER_JOIN",
           "type": "foreign_key"
-        },
-        {
-          "name": "PK_EXTRA_PK",
-          "type": "primary_key"
         },
         {
           "name": "SYS_CT_10187",
@@ -783,18 +783,18 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
-          },
-          "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10171"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
             "name": "WRITERID"
           },
           "unique": false,
           "name": "SYS_IDX_10175"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_PUBLICATIONS_10171"
         }
       ],
       "columns": [
@@ -893,12 +893,12 @@
       "triggers": [],
       "tableConstraints": [
         {
-          "name": "FK_PUBLICATIONS_WRITER",
-          "type": "foreign_key"
-        },
-        {
           "name": "PK_PUBLICATIONS",
           "type": "primary_key"
+        },
+        {
+          "name": "FK_PUBLICATIONS_WRITER",
+          "type": "foreign_key"
         },
         {
           "name": "SYS_CT_10168",
@@ -948,18 +948,18 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PUBLICATIONID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10184"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
             "name": "WRITERID"
           },
           "unique": false,
           "name": "SYS_IDX_10182"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10184"
         }
       ],
       "columns": [
@@ -1347,16 +1347,16 @@
       "triggers": [],
       "tableConstraints": [
         {
-          "name": "CHECK_UPPERCASE_STATE",
-          "type": "check"
+          "name": "PK_WRITERS",
+          "type": "primary_key"
         },
         {
           "name": "FK_WRITERS_PUBLICATION",
           "type": "foreign_key"
         },
         {
-          "name": "PK_WRITERS",
-          "type": "primary_key"
+          "name": "CHECK_UPPERCASE_STATE",
+          "type": "check"
         },
         {
           "name": "SYS_CT_10156",
@@ -1458,12 +1458,12 @@
       "triggers": [],
       "tableConstraints": [
         {
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-          "type": "foreign_key"
-        },
-        {
           "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
           "type": "primary_key"
+        },
+        {
+          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+          "type": "foreign_key"
         },
         {
           "name": "SYS_CT_10198",
@@ -1708,47 +1708,10 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-20 21:48:41",
+    "crawlTimestamp": "2015-08-27 13:10:34",
     "title": ""
   },
   "routines": [
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "parameters": [
-        {
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ONE",
-          "width": "",
-          "type": "in"
-        },
-        {
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "TWO",
-          "width": "",
-          "type": "in"
-        }
-      ],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
@@ -1784,6 +1747,43 @@
         }
       ],
       "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "parameters": [
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ONE",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "TWO",
+          "width": "",
+          "type": "in"
+        }
+      ],
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {

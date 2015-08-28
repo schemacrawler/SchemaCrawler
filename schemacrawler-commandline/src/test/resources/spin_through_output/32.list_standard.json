@@ -552,6 +552,14 @@
         {
           "columns": {
             "sortSequence": "ascending",
+            "name": "WRITERID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10194"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
             "name": "ID"
           },
           "unique": true,
@@ -564,14 +572,6 @@
           },
           "unique": false,
           "name": "SYS_IDX_10196"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "WRITERID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10194"
         }
       ],
       "columns": [
@@ -689,18 +689,18 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
-          },
-          "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10171"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
             "name": "WRITERID"
           },
           "unique": false,
           "name": "SYS_IDX_10175"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_PUBLICATIONS_10171"
         }
       ],
       "columns": [
@@ -833,18 +833,18 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PUBLICATIONID"
-          },
-          "unique": false,
-          "name": "SYS_IDX_10184"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
             "name": "WRITERID"
           },
           "unique": false,
           "name": "SYS_IDX_10182"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PUBLICATIONID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10184"
         }
       ],
       "columns": [
@@ -1496,47 +1496,10 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-20 21:48:32",
+    "crawlTimestamp": "2015-08-27 13:10:21",
     "title": ""
   },
   "routines": [
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "parameters": [
-        {
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ONE",
-          "width": "",
-          "type": "in"
-        },
-        {
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "TWO",
-          "width": "",
-          "type": "in"
-        }
-      ],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
@@ -1572,6 +1535,43 @@
         }
       ],
       "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "parameters": [
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ONE",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "TWO",
+          "width": "",
+          "type": "in"
+        }
+      ],
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
+      "returnType": "does not return a table",
       "remarks": ""
     },
     {
