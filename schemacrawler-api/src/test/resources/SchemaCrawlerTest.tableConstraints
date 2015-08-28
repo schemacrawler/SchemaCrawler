@@ -1,37 +1,37 @@
 schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.AUTHORS
-    constraint: CHECK_UPPERCASE_STATE
     constraint: PK_AUTHORS
+    constraint: CHECK_UPPERCASE_STATE
     constraint: SYS_CT_10094
     constraint: SYS_CT_10095
     constraint: SYS_CT_10096
-  table: PUBLIC.BOOKS.AUTHORSLIST
   table: PUBLIC.BOOKS.BOOKAUTHORS
     constraint: FK_Y_BOOK
     constraint: FK_Z_AUTHOR
     constraint: SYS_CT_10111
     constraint: SYS_CT_10112
   table: PUBLIC.BOOKS.BOOKS
-    constraint: FK_PREVIOUSEDITION
     constraint: PK_BOOKS
+    constraint: FK_PREVIOUSEDITION
     constraint: SYS_CT_10102
     constraint: SYS_CT_10103
     constraint: SYS_CT_10104
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     constraint: SYS_PK_10092
+  table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.FOR_LINT
   table: PUBLIC.FOR_LINT.EXTRA_PK
+    constraint: PK_EXTRA_PK
     constraint: FK_PUBLICATION_JOIN
     constraint: FK_WRITER_JOIN
-    constraint: PK_EXTRA_PK
     constraint: SYS_CT_10187
     constraint: SYS_CT_10188
     constraint: SYS_CT_10189
   table: PUBLIC.FOR_LINT."Global Counts"
   table: PUBLIC.FOR_LINT.PUBLICATIONS
-    constraint: FK_PUBLICATIONS_WRITER
     constraint: PK_PUBLICATIONS
+    constraint: FK_PUBLICATIONS_WRITER
     constraint: SYS_CT_10168
     constraint: SYS_CT_10169
     constraint: SYS_CT_10170
@@ -41,17 +41,17 @@ schema: PUBLIC.FOR_LINT
     constraint: SYS_CT_10177
     constraint: SYS_CT_10178
   table: PUBLIC.FOR_LINT.WRITERS
-    constraint: CHECK_UPPERCASE_STATE
-    constraint: FK_WRITERS_PUBLICATION
     constraint: PK_WRITERS
+    constraint: FK_WRITERS_PUBLICATION
+    constraint: CHECK_UPPERCASE_STATE
     constraint: SYS_CT_10156
     constraint: SYS_CT_10157
     constraint: SYS_CT_10158
     constraint: SYS_CT_10159
     constraint: SYS_CT_10160
   table: PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
     constraint: PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
     constraint: SYS_CT_10198
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC

@@ -3064,20 +3064,6 @@
   ],
   "routines": [
     {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
@@ -3089,6 +3075,20 @@
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
       "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table",
       "remarks": ""
     }
   ],
