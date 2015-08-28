@@ -23,9 +23,11 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.TypedObject;
 
 /**
  * Represents a database object.
@@ -57,11 +59,28 @@ abstract class AbstractDatabaseObject
 
     if (obj instanceof DatabaseObject)
     {
-      final int compareTo = getSchema()
+      final int schemaCompareTo = getSchema()
         .compareTo(((DatabaseObject) obj).getSchema());
-      if (compareTo != 0)
+      if (schemaCompareTo != 0)
       {
-        return compareTo;
+        return schemaCompareTo;
+      }
+      if (this instanceof TypedObject && obj instanceof TypedObject)
+      {
+        try
+        {
+          final int typeCompareTo = ((TypedObject) this).getType()
+            .compareTo(((TypedObject) obj).getType());
+          if (typeCompareTo != 0)
+          {
+            return typeCompareTo;
+          }
+        }
+        catch (final Exception e)
+        {
+          // Ignore, since getType() may not be implemented by partial database
+          // objects
+        }
       }
     }
 

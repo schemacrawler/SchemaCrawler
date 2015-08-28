@@ -31,10 +31,10 @@ public enum TableConstraintType
 {
 
   unknown("unknown"),
-  check("CHECK"),
-  unique("UNIQUE"),
   primary_key("PRIMARY KEY"),
-  foreign_key("FOREIGN KEY");
+  foreign_key("FOREIGN KEY"),
+  unique("UNIQUE"),
+  check("CHECK"),;
 
   private static final Logger LOGGER = Logger
     .getLogger(TableConstraintType.class.getName());

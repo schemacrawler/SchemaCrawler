@@ -171,12 +171,12 @@
       }],
       "tableConstraints": [
         {
-          "name": "CHECK_UPPERCASE_STATE",
-          "type": "check"
-        },
-        {
           "name": "PK_AUTHORS",
           "type": "primary_key"
+        },
+        {
+          "name": "CHECK_UPPERCASE_STATE",
+          "type": "check"
         },
         {
           "name": "SYS_CT_10094",
@@ -492,12 +492,12 @@
       "triggers": [],
       "tableConstraints": [
         {
-          "name": "FK_PREVIOUSEDITION",
-          "type": "foreign_key"
-        },
-        {
           "name": "PK_BOOKS",
           "type": "primary_key"
+        },
+        {
+          "name": "FK_PREVIOUSEDITION",
+          "type": "foreign_key"
         },
         {
           "name": "SYS_CT_10102",
@@ -824,7 +824,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-16 11:51:59",
+    "crawlTimestamp": "2015-08-27 13:10:40",
     "title": "Database Design for Books and Publishers"
   }
 }]
