@@ -35,8 +35,8 @@ public final class TableType
   private final String tableType;
 
   /**
-   * Constructor for table type. This is case-sensitive. A blank string
-   * results in an unknown table type.
+   * Constructor for table type. This is case-sensitive. A blank string results
+   * in an unknown table type.
    */
   public TableType(final String tableType)
   {
@@ -67,7 +67,16 @@ public final class TableType
     {
       return 1;
     }
-    return toString().compareTo(other.toString());
+    final String thisToString = toString();
+    final int compareTo = thisToString.compareTo(other.toString());
+    if (compareTo != 0 && "TABLE".equalsIgnoreCase(thisToString))
+    {
+      return -1;
+    }
+    else
+    {
+      return compareTo;
+    }
   }
 
   /**
@@ -130,8 +139,8 @@ public final class TableType
   }
 
   /**
-   * Checks if a string is equal to this table type. This is a
-   * case-insensitive check.
+   * Checks if a string is equal to this table type. This is a case-insensitive
+   * check.
    *
    * @return True if the string is the same as this table type
    */
