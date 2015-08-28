@@ -363,25 +363,11 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-16 09:54:05",
+    "crawlTimestamp": "2015-08-27 11:51:35",
     "title": ""
   },
   "routines": [
     {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
@@ -393,6 +379,20 @@
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "type": "procedure",
       "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "returnType": "does not return a table",
       "remarks": ""
     }
   ],

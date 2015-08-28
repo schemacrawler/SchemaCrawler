@@ -207,14 +207,14 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 Indexes
 
+SYS_IDX_10194                                         [non-unique index]
+1   WRITERID                          ascending                   
+
 SYS_IDX_PK_EXTRA_PK_10190                                 [unique index]
 3   ID                                ascending                   
 
 SYS_IDX_10196                                         [non-unique index]
 2   PUBLICATIONID                     ascending                   
-
-SYS_IDX_10194                                         [non-unique index]
-1   WRITERID                          ascending                   
 
 Table Constraints
 
@@ -265,11 +265,11 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
-1   ID                                ascending                   
-
 SYS_IDX_10175                                         [non-unique index]
 4   WRITERID                          ascending                   
+
+SYS_IDX_PK_PUBLICATIONS_10171                             [unique index]
+1   ID                                ascending                   
 
 Table Constraints
 
@@ -296,11 +296,11 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_10184                                         [non-unique index]
-1   PUBLICATIONID                     ascending                   
-
 SYS_IDX_10182                                         [non-unique index]
 2   WRITERID                          ascending                   
+
+SYS_IDX_10184                                         [non-unique index]
+1   PUBLICATIONID                     ascending                   
 
 Table Constraints
 
@@ -495,19 +495,6 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-1   ONE                               INTEGER, in                 
-2   TWO                               INTEGER, in                 
-
-
-
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-1   ONE                               INTEGER, in                 
-
-
-
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 1   PUBLISHER                         VARCHAR, out                
@@ -518,6 +505,19 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 1   NEWPUBLISHER                      VARCHAR, in                 
 2   PUBLISHER                         VARCHAR, out                
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+1   ONE                               INTEGER, in                 
+2   TWO                               INTEGER, in                 
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+1   ONE                               INTEGER, in                 
 
 
 

@@ -128,22 +128,22 @@ Routines
 
 
 
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-
-
-
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-
-
-
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
 
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
+------------------------------------------------------------------------
+
+
+
+PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
 
 
