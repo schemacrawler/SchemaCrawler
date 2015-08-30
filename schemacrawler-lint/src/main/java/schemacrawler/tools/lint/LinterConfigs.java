@@ -110,6 +110,14 @@ public class LinterConfigs
     linterConfigs = new ArrayList<>();
   }
 
+  public void add(final LinterConfig linterConfig)
+  {
+    if (linterConfig != null)
+    {
+      linterConfigs.add(linterConfig);
+    }
+  }
+
   @Override
   public Iterator<LinterConfig> iterator()
   {

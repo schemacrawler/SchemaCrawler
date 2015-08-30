@@ -27,6 +27,7 @@
 [PUBLIC.FOR_LINT.WRITERS] unique index with nullable columns: IDX_U_WRITERS
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] column where NULL may be intended: COUNTRY
+[PUBLIC.FOR_LINT.WRITERS] badly named column: COUNTRY
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: ADDRESS1, ADDRESS2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: PHONE1, PHONE2
 [PUBLIC.FOR_LINT.WRITERS] incrementing columns: FAX, FAX3
