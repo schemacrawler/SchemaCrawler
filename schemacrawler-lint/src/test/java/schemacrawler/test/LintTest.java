@@ -37,6 +37,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedCatalog;
+import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 
 public class LintTest
@@ -63,11 +64,16 @@ public class LintTest
     assertEquals("FOR_LINT tables not found", 7,
                  catalog.getTables(schema).size());
 
+    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfig linterConfig = new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
+    linterConfig.put("bad-column-names", ".*\\.COUNTRY");
+    linterConfigs.add(linterConfig);
+
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
-                                                           new LinterConfigs());
+                                                           linterConfigs);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(48, lintCollector.size());
+    assertEquals(49, lintCollector.size());
 
     try (final TestWriter out = new TestWriter("text");)
     {
