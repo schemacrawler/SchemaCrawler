@@ -10,6 +10,7 @@
 [PUBLIC.FOR_LINT.EXTRA_PK] useless surrogate key: PK_EXTRA_PK
 [PUBLIC.FOR_LINT.EXTRA_PK] empty table
 [PUBLIC.FOR_LINT.EXTRA_PK] should have remarks: WRITERID, PUBLICATIONID, ID
+[PUBLIC.FOR_LINT.EXTRA_PK] primary key not first
 [PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"
 [PUBLIC.FOR_LINT.PUBLICATIONS] empty table
 [PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks
