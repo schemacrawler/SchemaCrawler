@@ -42,12 +42,6 @@ public class LinterTableWithPrimaryKeyNotFirst
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "primary key not first";
