@@ -81,12 +81,14 @@ public class LinterConfig
     return runLinter;
   }
 
-  public void putAll(final Config config2)
+  public void put(final String key, final String value)
   {
-    if (config != null)
-    {
-      config.putAll(config2);
-    }
+    config.put(key, value);
+  }
+
+  public void putAll(final Config config)
+  {
+    this.config.putAll(config);
   }
 
   public void setRunLinter(final boolean runLinter)
