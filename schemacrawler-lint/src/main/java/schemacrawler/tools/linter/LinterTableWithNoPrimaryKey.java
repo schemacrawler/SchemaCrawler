@@ -41,12 +41,6 @@ public class LinterTableWithNoPrimaryKey
   }
 
   @Override
-  public String getDescription()
-  {
-    return getSummary();
-  }
-
-  @Override
   public String getSummary()
   {
     return "no primary key";
