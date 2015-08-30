@@ -417,7 +417,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-29 22:59:00",
+    "crawlTimestamp": "2015-08-30 00:18:16",
     "title": ""
   }
 },
@@ -471,6 +471,12 @@
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
           "value": "WRITERID, PUBLICATIONID, ID"
+        },
+        {
+          "severity": "low",
+          "description": "primary key not first",
+          "id": "schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst",
+          "value": ""
         }
       ],
       "name": "EXTRA_PK",
