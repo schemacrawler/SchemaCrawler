@@ -36,7 +36,7 @@
         },
         {
           "severity": "medium",
-          "description": "table with all nullable columns",
+          "description": "all data columns are nullable",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
           "value": ""
         },
@@ -268,7 +268,7 @@
         },
         {
           "severity": "medium",
-          "description": "table with all nullable columns",
+          "description": "all data columns are nullable",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
           "value": ""
         },
