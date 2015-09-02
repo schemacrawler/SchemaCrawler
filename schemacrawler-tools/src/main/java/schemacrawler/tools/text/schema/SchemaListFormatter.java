@@ -24,11 +24,6 @@ package schemacrawler.tools.text.schema;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -45,7 +40,6 @@ import schemacrawler.tools.text.base.BaseFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
-import schemacrawler.utility.NamedObjectSort;
 
 /**
  * Text formatting of schema.
@@ -262,24 +256,7 @@ final class SchemaListFormatter
     printRemarks(synonym);
   }
 
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
-  }
-
-  private void handle(final Table table)
+  public void handle(final Table table)
   {
     final String tableName;
     if (options.isShowUnqualifiedNames())
