@@ -277,24 +277,7 @@ final class SchemaJsonFormatter
 
   }
 
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
-  }
-
-  private void handle(final Table table)
+  public void handle(final Table table)
   {
     final JSONObject jsonTable = new JSONObject();
 
@@ -374,7 +357,7 @@ final class SchemaJsonFormatter
               final JSONObject jsonPrivilege = new JSONObject();
               jsonTable.accumulate("privileges", jsonPrivilege);
               jsonPrivilege.put("name", privilege.getName());
-              for (final Grant grant: privilege.getGrants())
+              for (final Grant<?> grant: privilege.getGrants())
               {
                 final JSONObject jsonGrant = new JSONObject();
                 jsonPrivilege.accumulate("grants", jsonGrant);

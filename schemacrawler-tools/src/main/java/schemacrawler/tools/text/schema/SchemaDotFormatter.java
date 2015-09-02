@@ -127,24 +127,7 @@ public final class SchemaDotFormatter
   {
   }
 
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
-  }
-
-  private void handle(final Table table)
+  public void handle(final Table table)
   {
 
     final String tableName;
