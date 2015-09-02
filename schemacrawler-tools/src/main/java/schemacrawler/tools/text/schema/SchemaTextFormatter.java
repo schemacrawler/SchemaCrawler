@@ -272,24 +272,7 @@ final class SchemaTextFormatter
     formattingHelper.writeObjectEnd();
   }
 
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
-    {
-      handle(table);
-    }
-  }
-
-  private void handle(final Table table)
+  public void handle(final Table table)
   {
     final String tableName;
     if (options.isShowUnqualifiedNames())
@@ -726,7 +709,7 @@ final class SchemaTextFormatter
       {
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(privilege.getName(), "[privilege]");
-        for (final Grant grant: privilege.getGrants())
+        for (final Grant<?> grant: privilege.getGrants())
         {
           final String grantedFrom = String
             .format("%s %s %s%s", grant.getGrantor(),

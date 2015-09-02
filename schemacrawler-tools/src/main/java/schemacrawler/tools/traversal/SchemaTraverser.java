@@ -22,21 +22,29 @@ package schemacrawler.tools.traversal;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.NamedObjectSort;
 
 public class SchemaTraverser
 {
 
   private Catalog catalog;
   private SchemaTraversalHandler handler;
+  private Comparator<NamedObject> tablesComparator;
+  private Comparator<NamedObject> routinesComparator;
 
   public Catalog getCatalog()
   {
@@ -48,6 +56,16 @@ public class SchemaTraverser
     return handler;
   }
 
+  public Comparator<NamedObject> getRoutinesComparator()
+  {
+    return routinesComparator;
+  }
+
+  public Comparator<NamedObject> getTablesComparator()
+  {
+    return tablesComparator;
+  }
+
   public void setCatalog(final Catalog catalog)
   {
     this.catalog = requireNonNull(catalog, "No catalog provided");
@@ -56,6 +74,18 @@ public class SchemaTraverser
   public void setHandler(final SchemaTraversalHandler handler)
   {
     this.handler = requireNonNull(handler, "No handler provided");
+  }
+
+  public void
+    setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
+  {
+    this.routinesComparator = requireNonNull(routinesComparator);
+  }
+
+  public void
+    setTablesComparator(final Comparator<NamedObject> tablesComparator)
+  {
+    this.tablesComparator = requireNonNull(tablesComparator);
   }
 
   public final void traverse()
@@ -77,18 +107,30 @@ public class SchemaTraverser
 
     if (!tables.isEmpty())
     {
+
       handler.handleTablesStart();
-      handler.handle(tables);
+
+      final List<? extends Table> tablesList = new ArrayList<>(tables);
+      Collections.sort(tablesList, tablesComparator);
+      for (Table table: tablesList)
+      {
+        handler.handle(table);
+      }
+
       handler.handleTablesEnd();
     }
 
     if (!routines.isEmpty())
     {
       handler.handleRoutinesStart();
-      for (final Routine routine: routines)
+
+      final List<? extends Routine> routinesList = new ArrayList<>(routines);
+      Collections.sort(routinesList, routinesComparator);
+      for (Routine routine: routinesList)
       {
         handler.handle(routine);
       }
+
       handler.handleRoutinesEnd();
     }
 
@@ -129,6 +171,12 @@ public class SchemaTraverser
     handler.handleInfoEnd();
 
     handler.end();
+  }
+
+  public SchemaTraverser()
+  {
+    tablesComparator = NamedObjectSort.natural;
+    routinesComparator = NamedObjectSort.natural;
   }
 
 }

@@ -45,6 +45,7 @@ import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
+import schemacrawler.utility.NamedObjectSort;
 
 /**
  * Main executor for the graphing integration.
@@ -57,8 +58,8 @@ public final class GraphExecutable
 
   static final String COMMAND = "graph";
 
-  private static final Logger LOGGER = Logger.getLogger(GraphExecutable.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(GraphExecutable.class.getName());
 
   private GraphOptions graphOptions;
 
@@ -83,8 +84,8 @@ public final class GraphExecutable
     InfoLevel infoLevel;
     try
     {
-      infoLevel = InfoLevel.valueOf(schemaCrawlerOptions.getSchemaInfoLevel()
-        .getTag());
+      infoLevel = InfoLevel
+        .valueOf(schemaCrawlerOptions.getSchemaInfoLevel().getTag());
     }
     catch (final Exception e)
     {
@@ -94,8 +95,7 @@ public final class GraphExecutable
     if (infoLevel == InfoLevel.maximum)
     {
       final Catalog catalogAssociations = new CatalogWithAssociations(db);
-      catalog = new CatalogWithCounts(catalogAssociations,
-                                      connection,
+      catalog = new CatalogWithCounts(catalogAssociations, connection,
                                       schemaCrawlerOptions);
     }
     else
@@ -125,6 +125,11 @@ public final class GraphExecutable
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(catalog);
     traverser.setHandler(formatter);
+    traverser.setTablesComparator(NamedObjectSort
+      .getNamedObjectSort(getGraphOptions().isAlphabeticalSortForTables()));
+    traverser.setRoutinesComparator(NamedObjectSort
+      .getNamedObjectSort(getGraphOptions().isAlphabeticalSortForRoutines()));
+
     traverser.traverse();
 
     // Create graph image
@@ -189,7 +194,7 @@ public final class GraphExecutable
   private void generateDiagram(final GraphOptions graphOptions,
                                final GraphOutputFormat graphOutputFormat,
                                final Path dotFile)
-    throws IOException
+                                 throws IOException
   {
 
     if (graphOutputFormat == GraphOutputFormat.scdot)
@@ -213,8 +218,7 @@ public final class GraphExecutable
     if (exitCode != 0)
     {
       throw new IOException(String.format("Process returned exit code %d%n%s",
-                                          exitCode,
-                                          processError));
+                                          exitCode, processError));
     }
     if (!isBlank(processError))
     {
@@ -236,8 +240,9 @@ public final class GraphExecutable
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+  private SchemaTraversalHandler
+    getSchemaTraversalHandler(final OutputOptions outputOptions)
+      throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
@@ -248,8 +253,7 @@ public final class GraphExecutable
       schemaTextDetailType = graphOptions.getSchemaTextDetailType();
     }
 
-    formatter = new SchemaDotFormatter(schemaTextDetailType,
-                                       graphOptions,
+    formatter = new SchemaDotFormatter(schemaTextDetailType, graphOptions,
                                        outputOptions);
 
     return formatter;

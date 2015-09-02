@@ -28,15 +28,20 @@ import static sf.util.Utility.isBlank;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.utility.NamedObjectSort;
 
 public class LintExecutable
   extends BaseStagedExecutable
@@ -77,7 +82,16 @@ public class LintExecutable
 
     formatter.handleStart();
     formatter.handle(catalog);
-    formatter.handle(catalog.getTables());
+
+    final List<? extends Table> tablesList = new ArrayList<>(catalog
+      .getTables());
+    Collections.sort(tablesList, NamedObjectSort
+      .getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
+    for (Table table: tablesList)
+    {
+      formatter.handle(table);
+    }
+
     formatter.handleEnd();
 
     formatter.end();
