@@ -21,10 +21,7 @@
 package schemacrawler.tools.lint.executable;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Table;
@@ -37,7 +34,6 @@ import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
-import schemacrawler.utility.NamedObjectSort;
 
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
@@ -49,23 +45,6 @@ final class LintJsonFormatter
                       throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
-  }
-
-  @Override
-  public void handle(final Collection<? extends Table> tables)
-    throws SchemaCrawlerException
-  {
-    if (tables == null || tables.isEmpty())
-    {
-      return;
-    }
-    final List<? extends Table> tablesList = new ArrayList<>(tables);
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTables()));
-    for (final Table table: tablesList)
-    {
-      handle(table);
-    }
   }
 
   @Override
@@ -100,7 +79,8 @@ final class LintJsonFormatter
   {
   }
 
-  private void handle(final Table table)
+  @Override
+  public void handle(final Table table)
   {
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())

@@ -20,8 +20,6 @@
 package schemacrawler.tools.traversal;
 
 
-import java.util.Collection;
-
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Sequence;
@@ -69,7 +67,7 @@ public interface SchemaTraversalHandler
    * @param table
    *        Table metadata.
    */
-    void handle(final Collection<? extends Table> table)
+    void handle(final Table table)
       throws SchemaCrawlerException;
 
   void handleColumnDataTypesEnd()
