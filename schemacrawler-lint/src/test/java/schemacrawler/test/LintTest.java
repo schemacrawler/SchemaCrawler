@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -83,6 +84,46 @@ public class LintTest
       }
 
       out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.txt");
+    }
+  }
+
+  @Test
+  public void lintsWithExcludedColumns()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
+      .setTableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"));
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    schemaCrawlerOptions
+      .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull(catalog);
+    assertEquals(1, catalog.getSchemas().size());
+    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertNotNull("FOR_LINT schema not found", schema);
+    assertEquals("FOR_LINT tables not found", 7,
+                 catalog.getTables(schema).size());
+
+    final LinterConfigs linterConfigs = new LinterConfigs();
+
+    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
+                                                           getConnection(),
+                                                           linterConfigs);
+    final LintCollector lintCollector = lintedDatabase.getCollector();
+    assertEquals(38, lintCollector.size());
+
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      for (final Lint<?> lint: lintCollector)
+      {
+        out.println(lint);
+      }
+
+      out.assertEquals(LINTS_OUTPUT
+                       + "schemacrawler.lints.excluded_columns.txt");
     }
   }
 
