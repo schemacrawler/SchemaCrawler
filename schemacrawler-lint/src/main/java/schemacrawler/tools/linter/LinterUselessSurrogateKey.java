@@ -61,7 +61,7 @@ public class LinterUselessSurrogateKey
     if (table.getPrimaryKey() != null)
     {
       boolean hasUselessSurrogateKey = true;
-      for (final Column column: table.getColumns())
+      for (final Column column: getColumns(table))
       {
         if (column.isPartOfPrimaryKey())
         {

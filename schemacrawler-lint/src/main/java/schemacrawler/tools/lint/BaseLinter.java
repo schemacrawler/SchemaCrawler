@@ -24,16 +24,20 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Column;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public abstract class BaseLinter
@@ -45,12 +49,14 @@ public abstract class BaseLinter
 
   private Catalog catalog;
   private InclusionRule tableInclusionRule;
+  private InclusionRule columnInclusionRule;
   private TableTypesFilter tableTypesFilter;
 
   protected BaseLinter()
   {
-    setTableInclusionRule(null);
     setTableTypesFilter(null);
+    setTableInclusionRule(null);
+    setColumnInclusionRule(null);
   }
 
   @Override
@@ -59,15 +65,9 @@ public abstract class BaseLinter
     super.configure(linterConfig);
     if (linterConfig != null)
     {
-      setTableInclusionRule(new RegularExpressionRule(linterConfig
-        .getTableInclusionPattern(), linterConfig.getTableExclusionPattern()));
+      setTableInclusionRule(linterConfig.getTableInclusionRule());
+      setColumnInclusionRule(linterConfig.getColumnInclusionRule());
     }
-  }
-
-  @Override
-  public InclusionRule getTableInclusionRule()
-  {
-    return tableInclusionRule;
   }
 
   @Override
@@ -121,6 +121,26 @@ public abstract class BaseLinter
   {
   }
 
+  protected List<Column> getColumns(final Table table)
+  {
+    if (table == null)
+    {
+      return Collections.emptyList();
+    }
+
+    final List<Column> columns = new ArrayList<>(table.getColumns());
+    for (final Iterator<Column> iterator = columns.iterator(); iterator
+      .hasNext();)
+    {
+      final Column column = iterator.next();
+      if (!includeColumn(column))
+      {
+        iterator.remove();
+      }
+    }
+    return columns;
+  }
+
   protected CrawlInfo getCrawlInfo()
   {
     return catalog.getCrawlInfo();
@@ -131,9 +151,31 @@ public abstract class BaseLinter
     return tableTypesFilter;
   }
 
+  protected boolean includeColumn(final Column column)
+  {
+    return column != null && columnInclusionRule.test(column.getFullName());
+  }
+
+  protected boolean includeTable(final Table table)
+  {
+    return table != null && tableInclusionRule.test(table.getFullName());
+  }
+
   protected void lint(final Table table, final Connection connection)
     throws SchemaCrawlerException
   {
+  }
+
+  protected void setColumnInclusionRule(final InclusionRule columnInclusionRule)
+  {
+    if (columnInclusionRule == null)
+    {
+      this.columnInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.columnInclusionRule = columnInclusionRule;
+    }
   }
 
   protected void setTableInclusionRule(final InclusionRule tableInclusionRule)

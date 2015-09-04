@@ -25,7 +25,7 @@ public class LinterHelp
     return buffer.toString();
   }
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
     throws Exception
   {
     System.out.println(getLinterHelpText());

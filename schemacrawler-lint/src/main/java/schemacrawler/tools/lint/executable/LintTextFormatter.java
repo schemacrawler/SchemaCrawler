@@ -68,6 +68,25 @@ final class LintTextFormatter
     }
   }
 
+  @Override
+  public void handle(final Table table)
+  {
+    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    if (lints != null && !lints.isEmpty())
+    {
+      formattingHelper.writeObjectStart();
+
+      formattingHelper.println();
+      formattingHelper.println();
+
+      final String tableType = "[" + table.getTableType() + "]";
+      formattingHelper.writeObjectNameRow(nodeId(table), table.getFullName(),
+                                          tableType, colorMap.getColor(table));
+      printLints(lints);
+      formattingHelper.writeObjectEnd();
+    }
+  }
+
   /**
    * {@inheritDoc}
    *
@@ -87,25 +106,6 @@ final class LintTextFormatter
   public void handleStart()
   {
     formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Lints");
-  }
-
-  @Override
-  public void handle(final Table table)
-  {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
-    if (lints != null && !lints.isEmpty())
-    {
-      formattingHelper.writeObjectStart();
-
-      formattingHelper.println();
-      formattingHelper.println();
-
-      final String tableType = "[" + table.getTableType() + "]";
-      formattingHelper.writeObjectNameRow(nodeId(table), table.getFullName(),
-                                          tableType, colorMap.getColor(table));
-      printLints(lints);
-      formattingHelper.writeObjectEnd();
-    }
   }
 
   private void printLints(final Collection<Lint<?>> lints)
