@@ -5,7 +5,6 @@ no rows of data are returned, it means that there are no issues.
 Example configuration:
 <linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
   <config>
-    <property name="message">message for SQL catalog lint</property>
-    <property name="sql">SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES</property>
+    <property name="bad-column-names"><![CDATA[.*\.ID]]></property>
   </config>
-</linter>  
+</linter>

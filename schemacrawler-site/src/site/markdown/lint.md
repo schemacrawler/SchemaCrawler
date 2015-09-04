@@ -33,7 +33,9 @@ SchemaCrawler linters can be configured (both severity, and thresholds) using
 an [XML configuration file.](schemacrawler-linter-configs.xml) You can run SchemaCrawler
 lint with an additional command-line option, for example, 
 `-linterconfigs=[path to linter XML configuration file]`, 
-pointing to the path of the SchemaCrawler linter XML configuration file.
+pointing to the path of the SchemaCrawler linter XML configuration file. You can
+configure whether or not to run a linter, change a linter's severity, or exclude
+certain tables and columns from the linter using the configuration file.
 
 ## Lint Checks
 
@@ -48,10 +50,12 @@ because you want columns with complete names, such as `ORDER_ID`.
 If you want to detect columns named `ID`, you could use configuration as
 shown in the example below.   
 Example configuration:
+
 ```
-<linter id="schemacrawler.tools.linter.LinterCatalogSql">
+<linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
   <config>
-    <property name="bad-column-names">.*\.ID</property>
+    <property name="message">message for SQL catalog lint</property>
+    <property name="sql"><![CDATA[SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES]]></property>
   </config>
 </linter>
 ```
@@ -100,9 +104,11 @@ no rows of data are returned, it means that there are no issues.
 Notice the use of `${table}` to indicate the name of the table the lint
 is running against.   
 Example configuration:
+
 ```
 <schemacrawler-linter-configs>
   <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
     <config>
       <property name="message">message for custom SQL lint</property>
       <property name="sql"><![CDATA[SELECT TOP 1 1 FROM ${table}]]></property>
@@ -117,11 +123,11 @@ return exactly one column and one row of data in the results. If one row
 is returned, it means that the lint has detected a problem. However, if
 no rows of data are returned, it means that there are no issues.   
 Example configuration:
+
 ```
 <linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
   <config>
-    <property name="message">message for SQL catalog lint</property>
-    <property name="sql">SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES</property>
+    <property name="bad-column-names"><![CDATA[.*\.ID]]></property>
   </config>
 </linter>
 ```
@@ -160,6 +166,7 @@ Checks for tables that have too many large objects (CLOBs or BLOBs),
 since these could result in additional reads when returning query
 results. By default, this is more than one such column.   
 Example configuration:
+
 ```
 <linter id="schemacrawler.tools.linter.LinterTooManyLobs">
   <config>
