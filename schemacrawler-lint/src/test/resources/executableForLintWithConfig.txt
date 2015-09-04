@@ -5,11 +5,55 @@ Lints
 
 
 
+PUBLIC.BOOKS.AUTHORS                                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY
+
+
+
+PUBLIC.BOOKS.AUTHORSLIST                                          [view]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	
+	should have remarks	ID, FIRSTNAME, LASTNAME
+
+
+
+PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	BOOKID, AUTHORID, "UPDATE"
+
+
+
+PUBLIC.BOOKS.BOOKS                                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	PREVIOUSEDITIONID
+
+
+
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	"Global Count"
 	single column	
+
+
+
+PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	WRITERID, PUBLICATIONID, ID
 
 
 
@@ -17,5 +61,66 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	"Global Count"
 	single column	
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
+
+
+
+PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	PUBLICATIONID, WRITERID
+
+
+
+PUBLIC.FOR_LINT.WRITERS                                          [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
+
+
+
+PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
+
+
+
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	
+	should have remarks	CITY, STATE, POSTALCODE, COUNTRY
+
+
+
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	should have remarks	
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT
 
