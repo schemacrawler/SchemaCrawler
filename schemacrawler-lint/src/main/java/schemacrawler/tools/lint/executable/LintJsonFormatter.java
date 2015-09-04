@@ -70,16 +70,6 @@ final class LintJsonFormatter
   }
 
   @Override
-  public void handleEnd()
-  {
-  }
-
-  @Override
-  public void handleStart()
-  {
-  }
-
-  @Override
   public void handle(final Table table)
   {
     final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
@@ -102,6 +92,16 @@ final class LintJsonFormatter
         LOGGER.log(Level.FINER, "Error outputting Table: " + e.getMessage(), e);
       }
     }
+  }
+
+  @Override
+  public void handleEnd()
+  {
+  }
+
+  @Override
+  public void handleStart()
+  {
   }
 
   private JSONArray handleLints(final Collection<Lint<?>> lints)

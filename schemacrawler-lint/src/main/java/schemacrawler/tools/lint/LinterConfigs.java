@@ -235,13 +235,21 @@ public class LinterConfigs
     final LintSeverity severity = parseSeverity(linterElement, linterId);
     linterConfig.setSeverity(severity);
 
-    final String tableInclusionPattern = parseTablePattern(linterElement,
-                                                           "table-inclusion-pattern");
+    final String tableInclusionPattern = parseRegularExpressionPattern(linterElement,
+                                                                       "table-inclusion-pattern");
     linterConfig.setTableInclusionPattern(tableInclusionPattern);
 
-    final String tableExclusionPattern = parseTablePattern(linterElement,
-                                                           "table-exclusion-pattern");
+    final String tableExclusionPattern = parseRegularExpressionPattern(linterElement,
+                                                                       "table-exclusion-pattern");
     linterConfig.setTableExclusionPattern(tableExclusionPattern);
+
+    final String columnInclusionPattern = parseRegularExpressionPattern(linterElement,
+                                                                        "column-inclusion-pattern");
+    linterConfig.setColumnInclusionPattern(columnInclusionPattern);
+
+    final String columnExclusionPattern = parseRegularExpressionPattern(linterElement,
+                                                                        "column-exclusion-pattern");
+    linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
     final Config config = parseConfig(getSubElement(linterElement, "config"));
     linterConfig.putAll(config);
@@ -299,17 +307,17 @@ public class LinterConfigs
     return severity;
   }
 
-  private String parseTablePattern(final Element linterElement,
-                                   final String elementName)
+  private String parseRegularExpressionPattern(final Element linterElement,
+                                               final String elementName)
   {
-    final String tablePatternValue = getTextValue(linterElement, elementName);
-    if (isBlank(tablePatternValue))
+    final String patternValue = getTextValue(linterElement, elementName);
+    if (isBlank(patternValue))
     {
       return null;
     }
     else
     {
-      return tablePatternValue;
+      return patternValue;
     }
   }
 

@@ -23,7 +23,6 @@ package schemacrawler.tools.lint;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface Linter
@@ -38,8 +37,6 @@ public interface Linter
   LintSeverity getSeverity();
 
   String getSummary();
-
-  InclusionRule getTableInclusionRule();
 
   void lint(Catalog catalog, Connection connection)
     throws SchemaCrawlerException;

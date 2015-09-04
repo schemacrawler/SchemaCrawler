@@ -45,7 +45,7 @@ public class LinterTableAllNullableColumns
   {
     requireNonNull(table, "No table provided");
 
-    if (!(table instanceof View) && hasAllNullableColumns(table.getColumns()))
+    if (!(table instanceof View) && hasAllNullableColumns(getColumns(table)))
     {
       addTableLint(table, getSummary());
     }
