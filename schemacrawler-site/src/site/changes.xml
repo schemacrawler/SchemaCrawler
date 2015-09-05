@@ -7,6 +7,15 @@
   <body>
      <release version="14.03.01" date="2015-08-17" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added detailed lint help, which is available from the command-line, using -help -command=lint.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added configuration for LinterTooManyLobs.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new lint for specifying a list of reserved words for column names.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new lints for empty tables, tables where all columns are nullable, and tables with no
         primary keys.
       ]]></action> 
@@ -15,7 +24,11 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Renaming CrawlHeaderInfo to CrawlInfo, and making it available in linters.
-      ]]></action>                                                                          
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed issues with sorting tables and routines alphabetically. Sorting alphabetically also
+        sorts by object type.
+      ]]></action> 
      </release>   
      <release version="14.02.02" date="2015-08-14" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
