@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 os:
   - linux
-  - osx
+#  - osx
 sudo: false
 notifications:
     on_success: [change] # default: change [always|never|change]
