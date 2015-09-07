@@ -52,7 +52,7 @@ shown in the example below.
 Example configuration:
 
 ```
-<linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
+<linter id="schemacrawler.tools.linter.LinterCatalogSql">
   <config>
     <property name="message">message for SQL catalog lint</property>
     <property name="sql"><![CDATA[SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES]]></property>
