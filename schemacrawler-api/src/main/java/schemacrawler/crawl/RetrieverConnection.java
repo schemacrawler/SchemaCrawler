@@ -80,16 +80,27 @@ final class RetrieverConnection
   }
 
   private static List<String>
-    lookupReservedWords(final DatabaseMetaData metaData)
-      throws SQLException
+    lookupReservedWords(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                        final DatabaseMetaData metaData)
+                          throws SQLException
   {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
       .getResourceAsStream("/sql2003_reserved_words.txt")));
 
-    return Collections.unmodifiableList(Stream
-      .concat(Stream.of(metaData.getSQLKeywords().split(",")), reader.lines())
-      .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
-      .sorted().collect(Collectors.toList()));
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions.isSupportsReservedWords())
+    {
+      return Collections.unmodifiableList(reader.lines()
+        .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
+        .sorted().collect(Collectors.toList()));
+    }
+    else
+    {
+      return Collections.unmodifiableList(Stream
+        .concat(Stream.of(metaData.getSQLKeywords().split(",")), reader.lines())
+        .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
+        .sorted().collect(Collectors.toList()));
+    }
   }
 
   private static boolean lookupSupportsCatalogs(
@@ -194,7 +205,8 @@ final class RetrieverConnection
     LOGGER.log(Level.CONFIG,
                String.format("Supported table types are %s", tableTypes));
 
-    reservedWords = lookupReservedWords(metaData);
+    reservedWords = lookupReservedWords(databaseSpecificOverrideOptions,
+                                        metaData);
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();

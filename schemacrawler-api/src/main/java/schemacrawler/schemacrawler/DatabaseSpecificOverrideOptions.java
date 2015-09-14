@@ -11,21 +11,24 @@ public final class DatabaseSpecificOverrideOptions
 
   private final Boolean supportsSchemas;
   private final Boolean supportsCatalogs;
+  private final Boolean supportsReservedWords;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
   public DatabaseSpecificOverrideOptions()
   {
-    this(null, null, null, null);
+    this(null, null, null, null, null);
   }
 
   protected DatabaseSpecificOverrideOptions(final Boolean supportsSchemas,
                                             final Boolean supportsCatalogs,
+                                            final Boolean supportsReservedWords,
                                             final String identifierQuoteString,
                                             final InformationSchemaViews informationSchemaViews)
   {
     this.supportsSchemas = supportsSchemas;
     this.supportsCatalogs = supportsCatalogs;
+    this.supportsReservedWords = supportsReservedWords;
     this.identifierQuoteString = identifierQuoteString;
     this.informationSchemaViews = informationSchemaViews == null? new InformationSchemaViews()
                                                                 : informationSchemaViews;
@@ -60,6 +63,11 @@ public final class DatabaseSpecificOverrideOptions
     return supportsSchemas != null;
   }
 
+  public boolean hasOverrideForSupportsReservedWords()
+  {
+    return supportsReservedWords != null;
+  }
+
   public boolean isSupportsCatalogs()
   {
     if (supportsCatalogs == null)
@@ -76,6 +84,15 @@ public final class DatabaseSpecificOverrideOptions
       return true;
     }
     return supportsSchemas;
+  }
+
+  public boolean isSupportsReservedWords()
+  {
+    if (supportsReservedWords == null)
+    {
+      return true;
+    }
+    return supportsReservedWords;
   }
 
 }
