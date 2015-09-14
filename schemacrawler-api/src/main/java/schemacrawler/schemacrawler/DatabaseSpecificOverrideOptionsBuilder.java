@@ -9,6 +9,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private Boolean supportsSchemas;
   private Boolean supportsCatalogs;
+  private Boolean supportsReservedWords;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -77,6 +78,26 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   /**
    * Overrides the JDBC driver provided information about whether the database
+   * supports reserved words.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportsReservedWords()
+  {
+    supportsReservedWords = Boolean.FALSE;
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports reserved words.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder supportsReservedWords()
+  {
+    supportsReservedWords = Boolean.TRUE;
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
    * supports schema.
    */
   public DatabaseSpecificOverrideOptionsBuilder supportsSchemas()
@@ -96,6 +117,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   {
     return new DatabaseSpecificOverrideOptions(supportsSchemas,
                                                supportsCatalogs,
+                                               supportsReservedWords,
                                                identifierQuoteString,
                                                informationSchemaViewsBuilder
                                                  .toOptions());
@@ -121,6 +143,12 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
   {
     supportsSchemas = null;
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withoutSupportsReservedWords()
+  {
+    supportsReservedWords = null;
     return this;
   }
 
