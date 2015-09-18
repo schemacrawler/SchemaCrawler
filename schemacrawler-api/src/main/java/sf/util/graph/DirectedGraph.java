@@ -17,43 +17,39 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-
 package sf.util.graph;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
-
-import sf.util.GraphException;
 
 public class DirectedGraph<T extends Comparable<? super T>>
 {
 
+  private final String name;
   private final Map<T, Vertex<T>> verticesMap;
   private final Set<DirectedEdge<T>> edges;
 
-  public DirectedGraph()
+  public DirectedGraph(final String name)
   {
+    this.name = name;
     verticesMap = new HashMap<>();
     edges = new HashSet<>();
   }
 
   /**
-   * Adds vertices, and a directed edge between them.
-   *
+   * Adds vertices, and a directed edge between them. Simple directed graphs do
+   * not allow self-loops. https://en.wikipedia.org/wiki/Loop_(graph_theory)
+   * 
    * @param from
    *        Vertex value at the start of the edge
    * @param to
    *        Vertex value at the end of the edge
    */
-  public void addDirectedEdge(final T from, final T to)
+  public void addEdge(final T from, final T to)
   {
     if (!from.equals(to))
     {
@@ -83,214 +79,80 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return vertex;
   }
 
+  public Set<DirectedEdge<T>> edgeSet()
+  {
+    return new HashSet<>(edges);
+  }
+
+  public Set<DirectedEdge<T>> getIncomingEdges(final Vertex<T> vertexTo)
+  {
+    Objects.requireNonNull(vertexTo);
+
+    final Set<DirectedEdge<T>> incomingEdges = new HashSet<>();
+    for (final DirectedEdge<T> edge: edges)
+    {
+      if (edge.getTo().equals(vertexTo))
+      {
+        incomingEdges.add(edge);
+      }
+    }
+    return incomingEdges;
+  }
+
   /**
-   * Checks if the graph contains a cycle.
-   *
-   * @return true if the graph contains a cycle, false otherwise
+   * @return the name
    */
-  public boolean containsCycle()
+  public String getName()
   {
-    final Collection<Vertex<T>> vertices = clearTraversalStates();
-    for (final Vertex<T> vertex: vertices)
-    {
-      if (vertex.getTraversalState() == TraversalState.notStarted)
-      {
-        if (visitForCyles(vertex))
-        {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    return name;
   }
 
-  public DirectedGraph<T> subGraph(final T value)
+  public Set<DirectedEdge<T>> getOutgoingEdges(final Vertex<T> vertexFrom)
   {
-    return subGraph(value, -1);
-  }
+    Objects.requireNonNull(vertexFrom);
 
-  public DirectedGraph<T> subGraph(final T value, final int depth)
-  {
-    final Collection<Vertex<T>> vertices = clearTraversalStates();
-    visitForSubGraph(verticesMap.get(value), depth);
-
-    final Set<Vertex<T>> subGraphVertices = new HashSet<>();
-    for (final Vertex<T> currentVertex: vertices)
-    {
-      if (currentVertex.getTraversalState() == TraversalState.complete)
-      {
-        subGraphVertices.add(currentVertex);
-      }
-    }
-
-    final DirectedGraph<T> subGraph = new DirectedGraph<>();
+    final Set<DirectedEdge<T>> outgoingEdges = new HashSet<>();
     for (final DirectedEdge<T> edge: edges)
     {
-      final Vertex<T> from = edge.getFrom();
-      final Vertex<T> to = edge.getTo();
-      if (subGraphVertices.contains(from) && subGraphVertices.contains(to))
+      if (edge.getFrom().equals(vertexFrom))
       {
-        subGraph.addDirectedEdge(from.getValue(), to.getValue());
+        outgoingEdges.add(edge);
       }
     }
-    // In case this is an isolated node
-    subGraph.addVertex(value);
-
-    return subGraph;
+    return outgoingEdges;
   }
 
-  public List<T> topologicalSort()
-    throws GraphException
+  @Override
+  public String toString()
   {
-    if (containsCycle())
+    final StringBuilder writer = new StringBuilder();
+    writer.append("digraph {\n");
+    if (name != null && !name.isEmpty())
     {
-      throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
+      writer.append(String.format("  [label=\"%s\"]\n", name));
     }
-
-    final int collectionSize = verticesMap.size();
-
-    final Collection<Vertex<T>> vertices = new ArrayList<>(verticesMap.values());
-    final Collection<DirectedEdge<T>> edges = new ArrayList<>(this.edges);
-    final List<T> sortedValues = new ArrayList<>(collectionSize);
-
-    while (!vertices.isEmpty())
+    // writer.append(" graph [rankdir=\"LR\"];\n");
+    for (final Vertex<T> vertex: verticesMap.values())
     {
-
-      final List<T> nodesAtLevel = new ArrayList<>(collectionSize);
-
-      // Remove unattached nodes
-      for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
-        .hasNext();)
+      writer.append("  ").append(vertex);
+      if (vertex.hasAttribute("fillcolor"))
       {
-        final Vertex<T> vertex = iterator.next();
-        if (isUnattachedNode(vertex, edges))
-        {
-          nodesAtLevel.add(vertex.getValue());
-          iterator.remove();
-        }
+        writer.append(String.format(" [fillcolor=%s, style=filled]",
+                                    vertex.getAttribute("fillcolor")));
       }
-
-      // Find all nodes at the current level
-      final List<Vertex<T>> startNodes = new ArrayList<>(collectionSize);
-      for (final Vertex<T> vertex: vertices)
-      {
-        if (isStartNode(vertex, edges))
-        {
-          startNodes.add(vertex);
-        }
-      }
-
-      for (final Vertex<T> vertex: startNodes)
-      {
-        // Save the vertex value
-        nodesAtLevel.add(vertex.getValue());
-        // Remove all out edges
-        dropOutEdges(vertex, edges);
-        // Remove the vertex itself
-        vertices.remove(vertex);
-      }
-
-      Collections.sort(nodesAtLevel);
-      sortedValues.addAll(nodesAtLevel);
-    }
-
-    return sortedValues;
-  }
-
-  private Collection<Vertex<T>> clearTraversalStates()
-  {
-    final Collection<Vertex<T>> vertices = verticesMap.values();
-    for (final Vertex<T> vertex: vertices)
-    {
-      vertex.setTraversalState(TraversalState.notStarted);
-    }
-    return vertices;
-  }
-
-  private void dropOutEdges(final Vertex<T> vertex,
-                            final Collection<DirectedEdge<T>> edges)
-  {
-    for (final Iterator<DirectedEdge<T>> iterator = edges.iterator(); iterator
-      .hasNext();)
-    {
-      final DirectedEdge<T> edge = iterator.next();
-      if (edge.isFrom(vertex))
-      {
-        iterator.remove();
-      }
-    }
-  }
-
-  private boolean isStartNode(final Vertex<T> vertex,
-                              final Collection<DirectedEdge<T>> edges)
-  {
-    for (final DirectedEdge<T> edge: edges)
-    {
-      if (edge.isTo(vertex))
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private boolean isUnattachedNode(final Vertex<T> vertex,
-                                   final Collection<DirectedEdge<T>> edges)
-  {
-    for (final DirectedEdge<T> edge: edges)
-    {
-      if (edge.isTo(vertex) || edge.isFrom(vertex))
-      {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private boolean visitForCyles(final Vertex<T> vertex)
-  {
-    vertex.setTraversalState(TraversalState.inProgress);
-
-    for (final DirectedEdge<T> edge: edges)
-    {
-      if (edge.isFrom(vertex))
-      {
-        final Vertex<T> to = edge.getTo();
-        if (to.getTraversalState() == TraversalState.inProgress)
-        {
-          return true;
-        }
-        else if (to.getTraversalState() == TraversalState.notStarted)
-        {
-          if (visitForCyles(to))
-          {
-            return true;
-          }
-        }
-      }
-    }
-
-    vertex.setTraversalState(TraversalState.complete);
-
-    return false;
-  }
-
-  private void visitForSubGraph(final Vertex<T> vertex, final int depth)
-  {
-    vertex.setTraversalState(TraversalState.complete);
-    if (depth == 0)
-    {
-      return;
+      writer.append(";\n");
     }
     for (final DirectedEdge<T> edge: edges)
     {
-      if (edge.isFrom(vertex))
-      {
-        visitForSubGraph(edge.getTo(), depth - 1);
-      }
+      writer.append("  ").append(edge).append(";\n");
     }
+    writer.append("}\n");
+    return writer.toString();
+  }
 
+  public Set<Vertex<T>> vertexSet()
+  {
+    return new HashSet<>(verticesMap.values());
   }
 
 }

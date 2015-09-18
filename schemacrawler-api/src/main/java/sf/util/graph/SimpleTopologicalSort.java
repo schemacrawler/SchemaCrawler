@@ -1,0 +1,144 @@
+/*
+ *
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2015, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
+package sf.util.graph;
+
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+public class SimpleTopologicalSort<T extends Comparable<? super T>>
+{
+
+  private final DirectedGraph<T> graph;
+
+  public SimpleTopologicalSort(final DirectedGraph<T> graph)
+  {
+    this.graph = Objects.requireNonNull(graph);
+  }
+
+  public List<T> topologicalSort()
+    throws GraphException
+  {
+    if (containsCycle())
+    {
+      throw new GraphException("Graph contains a cycle, so cannot be topologically sorted");
+    }
+
+    final Collection<Vertex<T>> vertices = graph.vertexSet();
+    final int collectionSize = vertices.size();
+
+    final Collection<DirectedEdge<T>> edges = new ArrayList<>(graph.edgeSet());
+    final List<T> sortedValues = new ArrayList<>(collectionSize);
+
+    while (!vertices.isEmpty())
+    {
+
+      final List<T> nodesAtLevel = new ArrayList<>(collectionSize);
+
+      // Remove unattached nodes
+      for (final Iterator<Vertex<T>> iterator = vertices.iterator(); iterator
+        .hasNext();)
+      {
+        final Vertex<T> vertex = iterator.next();
+        if (isUnattachedNode(vertex, edges))
+        {
+          nodesAtLevel.add(vertex.getValue());
+          iterator.remove();
+        }
+      }
+
+      // Find all nodes at the current level
+      final List<Vertex<T>> startNodes = new ArrayList<>(collectionSize);
+      for (final Vertex<T> vertex: vertices)
+      {
+        if (isStartNode(vertex, edges))
+        {
+          startNodes.add(vertex);
+        }
+      }
+
+      for (final Vertex<T> vertex: startNodes)
+      {
+        // Save the vertex value
+        nodesAtLevel.add(vertex.getValue());
+        // Remove all out edges
+        dropOutEdges(vertex, edges);
+        // Remove the vertex itself
+        vertices.remove(vertex);
+      }
+
+      Collections.sort(nodesAtLevel);
+      sortedValues.addAll(nodesAtLevel);
+    }
+
+    return sortedValues;
+  }
+
+  private boolean containsCycle()
+  {
+    final SimpleCycleDetector<T> cycleDetector = new SimpleCycleDetector<>(graph);
+    return cycleDetector.containsCycle();
+  }
+
+  private void dropOutEdges(final Vertex<T> vertex,
+                            final Collection<DirectedEdge<T>> edges)
+  {
+    for (final Iterator<DirectedEdge<T>> iterator = edges.iterator(); iterator
+      .hasNext();)
+    {
+      final DirectedEdge<T> edge = iterator.next();
+      if (edge.isFrom(vertex))
+      {
+        iterator.remove();
+      }
+    }
+  }
+
+  private boolean isStartNode(final Vertex<T> vertex,
+                              final Collection<DirectedEdge<T>> edges)
+  {
+    for (final DirectedEdge<T> edge: edges)
+    {
+      if (edge.isTo(vertex))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private boolean isUnattachedNode(final Vertex<T> vertex,
+                                   final Collection<DirectedEdge<T>> edges)
+  {
+    for (final DirectedEdge<T> edge: edges)
+    {
+      if (edge.isTo(vertex) || edge.isFrom(vertex))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+}
