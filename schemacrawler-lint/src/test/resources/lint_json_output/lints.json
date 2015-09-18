@@ -313,7 +313,7 @@
         "severity": "medium",
         "description": "cycles in table relationships",
         "id": "schemacrawler.tools.linter.LinterTableCycles",
-        "value": ""
+        "value": "PUBLICATIONS, WRITERS"
       }
     ]}
 }]

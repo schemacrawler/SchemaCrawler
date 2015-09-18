@@ -35,4 +35,4 @@
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks: ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
 [catalog] column with same name but different data types: ID [BIGINT, INTEGER]
-[catalog] cycles in table relationships
+[catalog] cycles in table relationships: PUBLICATIONS, WRITERS

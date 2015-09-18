@@ -23,12 +23,16 @@ package schemacrawler.tools.linter;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.graph.DirectedGraph;
+import sf.util.graph.TarjanStronglyConnectedComponentFinder;
 
 public class LinterTableCycles
   extends BaseLinter
@@ -47,9 +51,14 @@ public class LinterTableCycles
   {
     requireNonNull(tablesGraph, "Not initialized");
 
-    if (tablesGraph.containsCycle())
+    final Collection<List<Table>> sccs = new TarjanStronglyConnectedComponentFinder<>(tablesGraph)
+      .detectCycles();
+    if (!sccs.isEmpty())
     {
-      addCatalogLint(getSummary());
+      for (List<Table> list: sccs)
+      {
+        addCatalogLint(getSummary(), new ArrayList<>(list));
+      }
     }
 
     tablesGraph = null;
@@ -68,9 +77,8 @@ public class LinterTableCycles
     {
       for (final ForeignKeyColumnReference columnReference: foreignKey)
       {
-        tablesGraph
-          .addDirectedEdge(columnReference.getPrimaryKeyColumn().getParent(),
-                           columnReference.getForeignKeyColumn().getParent());
+        tablesGraph.addEdge(columnReference.getPrimaryKeyColumn().getParent(),
+                            columnReference.getForeignKeyColumn().getParent());
       }
     }
 
@@ -81,7 +89,7 @@ public class LinterTableCycles
   {
     super.start();
 
-    tablesGraph = new DirectedGraph<>();
+    tablesGraph = new DirectedGraph<>(getId());
   }
 
 }

@@ -175,7 +175,7 @@ Database                                                      [database]
 
                                                           [lint, medium]
 	column with same name but different data types	ID [BIGINT, INTEGER]
-	cycles in table relationships	
+	cycles in table relationships	PUBLICATIONS, WRITERS
 
 
 
