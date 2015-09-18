@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.03.02" date="2015-09-17" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better excludes for system schemas in Oracle.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Added ability to report on tables causing a cycle in a lint, using Tarjan's algorithm.
+      ]]></action>
+     </release>    
      <release version="14.03.01" date="2015-08-17" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added detailed lint help, which is available from the command-line, using -help -command=lint.
