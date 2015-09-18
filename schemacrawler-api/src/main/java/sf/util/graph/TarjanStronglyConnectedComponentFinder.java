@@ -31,7 +31,7 @@ import java.util.Stack;
  * Implementation of <a href=
  * "https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm">
  * Tarjan's algorithm</a>
- * 
+ *
  * @author Sualeh Fatehi
  * @param <T>
  *        Any comparable class

@@ -78,7 +78,7 @@ public enum IndexColumnSortSequence
    *
    * @return Index sort sequence code
    */
-  String getCode()
+    String getCode()
   {
     return code;
   }

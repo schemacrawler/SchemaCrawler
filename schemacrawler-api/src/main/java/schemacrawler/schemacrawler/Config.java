@@ -320,16 +320,18 @@ public final class Config
     }
   }
 
-  public InclusionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
-                                                      final String excludePatternProperty)
+  public InclusionRule
+    getInclusionRuleDefaultExclude(final String includePatternProperty,
+                                   final String excludePatternProperty)
   {
     return new RegularExpressionRule(getStringValue(includePatternProperty, ""),
                                      getStringValue(excludePatternProperty,
                                                     ".*"));
   }
 
-  public InclusionRule getInclusionRuleOrNull(final String includePatternProperty,
-                                              final String excludePatternProperty)
+  public InclusionRule
+    getInclusionRuleOrNull(final String includePatternProperty,
+                           final String excludePatternProperty)
   {
     final String includePattern = getStringValue(includePatternProperty, null);
     final String excludePattern = getStringValue(excludePatternProperty, null);

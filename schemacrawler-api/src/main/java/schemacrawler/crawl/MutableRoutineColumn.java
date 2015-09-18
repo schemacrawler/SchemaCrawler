@@ -25,8 +25,8 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 
 /**
- * Represents a column in a database routine. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database routine. Created from metadata returned by
+ * a JDBC call.
  *
  * @author Sualeh Fatehi
  */

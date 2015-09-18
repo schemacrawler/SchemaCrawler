@@ -23,6 +23,26 @@ public class DatabaseSpecificOverrideOptionsBuilder
     fromConfig(map);
   }
 
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports catalogs.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
+  {
+    supportsCatalogs = Boolean.FALSE;
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the database
+   * supports schema.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
+  {
+    supportsSchemas = Boolean.FALSE;
+    return this;
+  }
+
   @Override
   public DatabaseSpecificOverrideOptionsBuilder
     fromConfig(final Map<String, String> map)
@@ -52,26 +72,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
   {
     supportsCatalogs = Boolean.TRUE;
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
-  {
-    supportsSchemas = Boolean.FALSE;
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
-  {
-    supportsCatalogs = Boolean.FALSE;
     return this;
   }
 

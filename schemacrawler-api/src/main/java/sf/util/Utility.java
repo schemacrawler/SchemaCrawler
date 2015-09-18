@@ -219,8 +219,8 @@ public final class Utility
 
     final StringBuilder buffer = new StringBuilder();
     final Set<Entry<String, String>> entrySet = map.entrySet();
-    for (final Iterator<Entry<String, String>> iterator = entrySet.iterator(); iterator
-      .hasNext();)
+    for (final Iterator<Entry<String, String>> iterator = entrySet
+      .iterator(); iterator.hasNext();)
     {
       final Entry<String, String> entry = iterator.next();
       buffer.append(entry.getKey()).append("=").append(entry.getValue());
@@ -292,8 +292,8 @@ public final class Utility
   public static void setApplicationLogLevel(final Level logLevel)
   {
     final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections.list(logManager
-      .getLoggerNames());
+    final List<String> loggerNames = Collections
+      .list(logManager.getLoggerNames());
     for (final String loggerName: loggerNames)
     {
       final Logger logger = logManager.getLogger(loggerName);

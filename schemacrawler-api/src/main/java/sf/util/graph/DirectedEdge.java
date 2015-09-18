@@ -37,7 +37,7 @@ public final class DirectedEdge<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -93,7 +93,7 @@ public final class DirectedEdge<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
