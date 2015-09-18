@@ -10,18 +10,21 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
-import sf.util.GraphException;
 import sf.util.graph.DirectedGraph;
+import sf.util.graph.GraphException;
+import sf.util.graph.SimpleTopologicalSort;
 
 final class TablesGraph
   extends DirectedGraph<Table>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TablesGraph.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TablesGraph.class.getName());
 
   TablesGraph(final NamedObjectList<MutableTable> tables)
   {
+    super("catalog");
+
     if (tables == null)
     {
       return;
@@ -34,8 +37,8 @@ final class TablesGraph
       {
         for (final ForeignKeyColumnReference columnRef: foreignKey)
         {
-          addDirectedEdge(columnRef.getPrimaryKeyColumn().getParent(),
-                          columnRef.getForeignKeyColumn().getParent());
+          addEdge(columnRef.getPrimaryKeyColumn().getParent(),
+                  columnRef.getForeignKeyColumn().getParent());
         }
       }
     }
@@ -45,7 +48,7 @@ final class TablesGraph
   /**
    * Set the sort order for tables and views.
    */
-  void setTablesSortIndexes()
+    void setTablesSortIndexes()
   {
     try
     {
@@ -77,6 +80,12 @@ final class TablesGraph
     {
       LOGGER.log(Level.CONFIG, e.getMessage());
     }
+  }
+
+  private List<Table> topologicalSort()
+    throws GraphException
+  {
+    return new SimpleTopologicalSort<>(this).topologicalSort();
   }
 
 }
