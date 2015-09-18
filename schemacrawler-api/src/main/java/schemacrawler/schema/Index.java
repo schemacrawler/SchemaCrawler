@@ -66,13 +66,6 @@ public interface Index
     int getPages();
 
   /**
-   * If the index is unique.
-   *
-   * @return If the index is unique
-   */
-    boolean isUnique();
-
-  /**
    * {@inheritDoc}
    *
    * @see schemacrawler.schema.TypedObject#getType()
@@ -82,5 +75,12 @@ public interface Index
   {
     return getIndexType();
   }
+
+  /**
+   * If the index is unique.
+   *
+   * @return If the index is unique
+   */
+    boolean isUnique();
 
 }

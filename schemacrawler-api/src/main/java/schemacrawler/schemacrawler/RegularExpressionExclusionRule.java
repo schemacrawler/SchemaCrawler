@@ -24,8 +24,8 @@ package schemacrawler.schemacrawler;
 import java.util.regex.Pattern;
 
 /**
- * Specifies exclusion patterns that can be applied to the names,
- * definitions, and other attributes of named objects.
+ * Specifies exclusion patterns that can be applied to the names, definitions,
+ * and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */

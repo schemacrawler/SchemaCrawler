@@ -34,8 +34,8 @@ import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
- * A retriever that uses database metadata to get the extended details
- * about the database routines.
+ * A retriever that uses database metadata to get the extended details about the
+ * database routines.
  *
  * @author Sualeh Fatehi
  */
@@ -48,7 +48,7 @@ final class RoutineExtRetriever
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
                       final MutableCatalog catalog)
-    throws SQLException
+                        throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -59,8 +59,8 @@ final class RoutineExtRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveRoutineInformation()
-    throws SQLException
+    void retrieveRoutineInformation()
+      throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -77,9 +77,10 @@ final class RoutineExtRetriever
       .getRoutinesSql();
 
     final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           routineDefinitionsSql)))
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                         routineDefinitionsSql)))
     {
       while (results.next())
       {
@@ -87,7 +88,8 @@ final class RoutineExtRetriever
           .getString("ROUTINE_CATALOG"));
         final String schemaName = quotedName(results
           .getString("ROUTINE_SCHEMA"));
-        final String routineName = quotedName(results.getString("ROUTINE_NAME"));
+        final String routineName = quotedName(results
+          .getString("ROUTINE_NAME"));
         final String specificName = quotedName(results
           .getString("SPECIFIC_NAME"));
 
@@ -98,8 +100,8 @@ final class RoutineExtRetriever
         if (routineOptional.isPresent())
         {
           final MutableRoutine routine = routineOptional.get();
-          LOGGER.log(Level.FINER, "Retrieving routine information: "
-                                  + routineName);
+          LOGGER.log(Level.FINER,
+                     "Retrieving routine information: " + routineName);
           final RoutineBodyType routineBodyType = results
             .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");

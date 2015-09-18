@@ -32,8 +32,8 @@ import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
 
 /**
- * JDBC driver information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * JDBC driver information. Created from metadata returned by a JDBC call, and
+ * other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -143,7 +143,8 @@ final class MutableJdbcDriverInfo
    * @param jdbcDriverProperty
    *        JDBC driver property
    */
-  void addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty)
+    void
+      addJdbcDriverProperty(final ImmutableJdbcDriverProperty jdbcDriverProperty)
   {
     jdbcDriverProperties.add(jdbcDriverProperty);
   }

@@ -58,12 +58,8 @@ final class DatabaseInfoRetriever
     .getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods = Arrays
-    .asList("getDatabaseProductName",
-            "getDatabaseProductVersion",
-            "getURL",
-            "getUserName",
-            "getDriverName",
-            "getDriverVersion");
+    .asList("getDatabaseProductName", "getDatabaseProductVersion", "getURL",
+            "getUserName", "getDriverName", "getDriverVersion");
 
   /**
    * Checks if a method is a result set method.
@@ -72,7 +68,8 @@ final class DatabaseInfoRetriever
    *        Method
    * @return Whether a method is a result set method
    */
-  private static boolean isDatabasePropertiesResultSetMethod(final Method method)
+  private static boolean
+    isDatabasePropertiesResultSetMethod(final Method method)
   {
     final Class<?> returnType = method.getReturnType();
     final boolean isPropertiesResultSetMethod = returnType
@@ -138,12 +135,12 @@ final class DatabaseInfoRetriever
     return isDatabasePropertyResultSetType;
   }
 
-  private static ImmutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
-                                                                         final Method method,
-                                                                         final int resultSetType,
-                                                                         final String resultSetTypeName)
-                                                                           throws IllegalAccessException,
-                                                                           InvocationTargetException
+  private static ImmutableDatabaseProperty
+    retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
+                                  final Method method, final int resultSetType,
+                                  final String resultSetTypeName)
+                                    throws IllegalAccessException,
+                                    InvocationTargetException
   {
     final String name = method.getName() + "For" + resultSetTypeName
                         + "ResultSets";
@@ -166,8 +163,8 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveAdditionalDatabaseInfo()
-    throws SQLException
+    void retrieveAdditionalDatabaseInfo()
+      throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
@@ -226,26 +223,22 @@ final class DatabaseInfoRetriever
             LOGGER.log(Level.FINER,
                        "Retrieving database property using method: " + method);
           }
-          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
-                                                         method,
+          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData, method,
                                                          ResultSet.TYPE_FORWARD_ONLY,
                                                          "TYPE_FORWARD_ONLY"));
           dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
+            .add(retrieveResultSetTypeProperty(dbMetaData, method,
                                                ResultSet.TYPE_SCROLL_INSENSITIVE,
                                                "TYPE_SCROLL_INSENSITIVE"));
           dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
+            .add(retrieveResultSetTypeProperty(dbMetaData, method,
                                                ResultSet.TYPE_SCROLL_SENSITIVE,
                                                "TYPE_SCROLL_SENSITIVE"));
         }
       }
       catch (final IllegalAccessException | InvocationTargetException e)
       {
-        LOGGER.log(Level.FINE,
-                   "Could not execute method, " + method,
+        LOGGER.log(Level.FINE, "Could not execute method, " + method,
                    e.getCause());
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
@@ -277,8 +270,8 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveAdditionalJdbcDriverInfo()
-    throws SQLException
+    void retrieveAdditionalJdbcDriverInfo()
+      throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
@@ -299,8 +292,7 @@ final class DatabaseInfoRetriever
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain JDBC driver information",
+        LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information",
                    e);
       }
     }
@@ -318,8 +310,8 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveDatabaseInfo()
-    throws SQLException
+    void retrieveDatabaseInfo()
+      throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
 
@@ -336,8 +328,8 @@ final class DatabaseInfoRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveJdbcDriverInfo()
-    throws SQLException
+    void retrieveJdbcDriverInfo()
+      throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final String url = dbMetaData.getURL();
@@ -362,8 +354,8 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    * @throws SchemaCrawlerException
    */
-  void retrieveSystemColumnDataTypes()
-    throws SQLException, SchemaCrawlerException
+    void retrieveSystemColumnDataTypes()
+      throws SQLException, SchemaCrawlerException
   {
     final Schema systemSchema = new SchemaReference();
 
@@ -395,8 +387,7 @@ final class DatabaseInfoRetriever
         final int dataType = results.getInt("DATA_TYPE", 0);
         LOGGER.log(Level.FINER,
                    String.format("Retrieving data type: %s (with type id %d)",
-                                 typeName,
-                                 dataType));
+                                 typeName, dataType));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
@@ -459,8 +450,9 @@ final class DatabaseInfoRetriever
                                             throws SQLException
   {
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName, schemaName, "%", null));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getUDTs(catalogName, schemaName, "%", null));)
     {
       while (results.next())
       {

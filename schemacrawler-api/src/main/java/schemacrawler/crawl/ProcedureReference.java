@@ -2,6 +2,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Procedure;
 
 class ProcedureReference

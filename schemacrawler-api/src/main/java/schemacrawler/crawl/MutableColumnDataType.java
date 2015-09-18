@@ -43,8 +43,8 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaCrawler.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawler.class.getName());
 
   private JavaSqlType javaSqlType;
 
@@ -385,8 +385,8 @@ final class MutableColumnDataType
       }
       catch (final ClassNotFoundException e)
       {
-        LOGGER.log(Level.FINE, "Could not load mapped class, "
-                               + mappedClassName, e);
+        LOGGER.log(Level.FINE,
+                   "Could not load mapped class, " + mappedClassName, e);
         javaSqlTypeMappedClass = Object.class;
       }
     }

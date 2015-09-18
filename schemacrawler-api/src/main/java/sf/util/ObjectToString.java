@@ -38,8 +38,8 @@ import java.util.logging.Logger;
 public final class ObjectToString
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ObjectToString.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(ObjectToString.class.getName());
 
   public static String toString(final Object object)
   {
@@ -54,8 +54,7 @@ public final class ObjectToString
     return buffer.toString();
   }
 
-  private static void appendFields(final Object object,
-                                   final int indent,
+  private static void appendFields(final Object object, final int indent,
                                    final StringBuilder buffer)
   {
     if (object == null)
@@ -104,8 +103,7 @@ public final class ObjectToString
     buffer.append(indent(indent)).append(']');
   }
 
-  private static void appendHeader(final Object object,
-                                   final int indent,
+  private static void appendHeader(final Object object, final int indent,
                                    final StringBuilder buffer)
   {
     if (object != null)
@@ -132,8 +130,7 @@ public final class ObjectToString
     }
   }
 
-  private static void appendObject(final Object object,
-                                   final int indent,
+  private static void appendObject(final Object object, final int indent,
                                    final StringBuilder buffer)
   {
     final Class<?> objectClass = object.getClass();
@@ -158,16 +155,11 @@ public final class ObjectToString
     {
       buffer.append(object.toString());
     }
-    else if (Arrays.asList(Integer.class,
-                           Long.class,
-                           Double.class,
-                           Float.class,
-                           Boolean.class,
-                           Character.class,
-                           Byte.class,
-                           Void.class,
-                           Short.class,
-                           String.class).contains(objectClass))
+    else
+      if (Arrays.asList(Integer.class, Long.class, Double.class, Float.class,
+                        Boolean.class, Character.class, Byte.class, Void.class,
+                        Short.class, String.class)
+        .contains(objectClass))
     {
       buffer.append(object.toString());
     }
@@ -254,9 +246,9 @@ public final class ObjectToString
       }
     }
     // Sort fields
-    Collections.sort(allFields,
-                     (field1, field2) -> field1.getName().compareTo(field2
-                       .getName()));
+    Collections
+      .sort(allFields,
+            (field1, field2) -> field1.getName().compareTo(field2.getName()));
 
     return allFields.toArray(new Field[allFields.size()]);
   }

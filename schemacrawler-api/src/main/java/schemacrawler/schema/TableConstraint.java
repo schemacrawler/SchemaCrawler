@@ -47,6 +47,12 @@ public interface TableConstraint
    */
     TableConstraintType getTableConstraintType();
 
+  @Override
+  default TableConstraintType getType()
+  {
+    return getTableConstraintType();
+  }
+
   /**
    * Whether the constraint is deferrable.
    *
@@ -60,11 +66,5 @@ public interface TableConstraint
    * @return Whether the constraint is initially deferred
    */
     boolean isInitiallyDeferred();
-
-  @Override
-  default TableConstraintType getType()
-  {
-    return getTableConstraintType();
-  }
 
 }
