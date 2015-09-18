@@ -9,7 +9,8 @@ public class SchemaCrawlerSQLException
 
   private static final long serialVersionUID = 3424948223257267142L;
 
-  public SchemaCrawlerSQLException(final String reason, final SQLException cause)
+  public SchemaCrawlerSQLException(final String reason,
+                                   final SQLException cause)
   {
     super(reason, cause);
   }

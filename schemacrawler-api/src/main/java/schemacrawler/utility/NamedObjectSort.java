@@ -57,7 +57,8 @@ public enum NamedObjectSort
     }
   };
 
-  public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
+  public static NamedObjectSort
+    getNamedObjectSort(final boolean alphabeticalSort)
   {
     if (alphabeticalSort)
     {
@@ -72,8 +73,7 @@ public enum NamedObjectSort
   /**
    * {@inheritDoc}
    *
-   * @see java.util.Comparator#compare(java.lang.Object,
-   *      java.lang.Object)
+   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
   @Override
   public abstract int compare(final NamedObject namedObject1,

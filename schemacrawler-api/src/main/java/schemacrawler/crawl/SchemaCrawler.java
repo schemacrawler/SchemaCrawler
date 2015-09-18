@@ -211,8 +211,7 @@ public final class SchemaCrawler
         }
         if (routineTypes.contains(RoutineType.function))
         {
-          retriever.retrieveFunctions(schema.getCatalogName(),
-                                      schema.getName(),
+          retriever.retrieveFunctions(schema.getCatalogName(), schema.getName(),
                                       options.getRoutineInclusionRule());
         }
       }
@@ -226,9 +225,8 @@ public final class SchemaCrawler
               && routineTypes.contains(RoutineType.procedure))
           {
             retriever
-              .retrieveProcedureColumns((MutableProcedure) routine,
-                                        options
-                                          .getRoutineColumnInclusionRule());
+              .retrieveProcedureColumns((MutableProcedure) routine, options
+                .getRoutineColumnInclusionRule());
           }
 
           if (routine instanceof MutableFunction
@@ -390,8 +388,7 @@ public final class SchemaCrawler
 
       for (final Schema schema: retriever.getSchemas())
       {
-        retriever.retrieveTables(schema.getCatalogName(),
-                                 schema.getName(),
+        retriever.retrieveTables(schema.getCatalogName(), schema.getName(),
                                  options.getTableNamePattern(),
                                  options.getTableTypes(),
                                  options.getTableInclusionRule());
@@ -502,6 +499,21 @@ public final class SchemaCrawler
    *
    * @param connection
    *        An database connection.
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    this.connection = requireNonNull(connection, "No connection specified");
+    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
+  }
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   *
+   * @param connection
+   *        An database connection.
    * @param databaseSpecificOverrideOptions
    *        Database specific overrides
    * @throws SchemaCrawlerException
@@ -514,21 +526,6 @@ public final class SchemaCrawler
     this.connection = requireNonNull(connection, "No connection specified");
     this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
                                                           "No database specific overrides provided");
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   *
-   * @param connection
-   *        An database connection.
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    this.connection = requireNonNull(connection, "No connection specified");
-    this.databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
   }
 
   /**

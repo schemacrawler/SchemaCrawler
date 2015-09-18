@@ -38,14 +38,14 @@ public interface ResultsColumns
    *
    * @return Columns of the table.
    */
-  List<ResultsColumn> getColumns();
+    List<ResultsColumn> getColumns();
 
   /**
    * Gets a comma-separated list of columns.
    *
    * @return Comma-separated list of columns
    */
-  String getColumnsListAsString();
+    String getColumnsListAsString();
 
   /**
    * Gets a column by name.
@@ -54,6 +54,6 @@ public interface ResultsColumns
    *        Name
    * @return Column.
    */
-  Optional<? extends ResultsColumn> lookupColumn(String name);
+    Optional<? extends ResultsColumn> lookupColumn(String name);
 
 }

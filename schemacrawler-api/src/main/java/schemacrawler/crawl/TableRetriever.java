@@ -45,8 +45,8 @@ import schemacrawler.utility.MetaDataUtility;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the
- * database tables.
+ * A retriever uses database metadata to get the details about the database
+ * tables.
  *
  * @author Sualeh Fatehi
  */
@@ -54,19 +54,19 @@ final class TableRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TableRetriever.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TableRetriever.class.getName());
 
   TableRetriever(final RetrieverConnection retrieverConnection,
                  final MutableCatalog catalog)
-    throws SQLException
+                   throws SQLException
   {
     super(retrieverConnection, catalog);
   }
 
   void retrieveColumns(final MutableTable table,
                        final InclusionRule columnInclusionRule)
-    throws SQLException
+                         throws SQLException
   {
     final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                true);
@@ -77,11 +77,11 @@ final class TableRetriever
       return;
     }
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                  unquotedName(table.getSchema().getName()),
-                  unquotedName(table.getName()),
-                  null));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getName()),
+                    unquotedName(table.getName()), null));)
     {
       while (results.next())
       {
@@ -96,8 +96,7 @@ final class TableRetriever
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
         LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
-                                              tableName,
-                                              columnName));
+                                              tableName, columnName));
 
         MutableColumn column;
 
@@ -116,15 +115,18 @@ final class TableRetriever
           final int size = results.getInt("COLUMN_SIZE", 0);
           final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
           final boolean isNullable = results
-            .getInt("NULLABLE", DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+            .getInt("NULLABLE",
+                    DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
           final boolean isAutoIncremented = results
             .getBoolean("IS_AUTOINCREMENT");
           final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
           final String remarks = results.getString("REMARKS");
 
           column.setOrdinalPosition(ordinalPosition);
-          column.setColumnDataType(lookupOrCreateColumnDataType(table
-            .getSchema(), dataType, typeName));
+          column
+            .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                            dataType,
+                                                            typeName));
           column.setSize(size);
           column.setDecimalDigits(decimalDigits);
           column.setNullable(isNullable);
@@ -145,8 +147,7 @@ final class TableRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                              + table,
-                                          e);
+                                          + table, e);
     }
 
   }
@@ -161,31 +162,22 @@ final class TableRetriever
     final DatabaseMetaData metaData = getMetaData();
     try
     {
-      results = new MetadataResultSet(metaData.getImportedKeys(unquotedName(table
-                                                                 .getSchema()
-                                                                 .getCatalogName()),
-                                                               unquotedName(table
-                                                                 .getSchema()
-                                                                 .getName()),
-                                                               unquotedName(table
-                                                                 .getName())));
+      results = new MetadataResultSet(metaData
+        .getImportedKeys(unquotedName(table.getSchema().getCatalogName()),
+                         unquotedName(table.getSchema().getName()),
+                         unquotedName(table.getName())));
       createForeignKeys(results, foreignKeys);
 
-      results = new MetadataResultSet(metaData.getExportedKeys(unquotedName(table
-                                                                 .getSchema()
-                                                                 .getCatalogName()),
-                                                               unquotedName(table
-                                                                 .getSchema()
-                                                                 .getName()),
-                                                               unquotedName(table
-                                                                 .getName())));
+      results = new MetadataResultSet(metaData
+        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
+                         unquotedName(table.getSchema().getName()),
+                         unquotedName(table.getName())));
       createForeignKeys(results, foreignKeys);
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve forign keys for table "
-                                              + table,
-                                          e);
+                                          + table, e);
     }
   }
 
@@ -225,10 +217,11 @@ final class TableRetriever
   void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                      unquotedName(table.getSchema().getName()),
-                      unquotedName(table.getName())));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                        unquotedName(table.getSchema().getName()),
+                        unquotedName(table.getName())));)
     {
 
       MutablePrimaryKey primaryKey;
@@ -266,18 +259,16 @@ final class TableRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
-                                              + table,
-                                          e);
+                                          + table, e);
     }
 
   }
 
-  void retrieveTables(final String catalogName,
-                      final String schemaName,
+  void retrieveTables(final String catalogName, final String schemaName,
                       final String tableNamePattern,
                       final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
-    throws SQLException
+                        throws SQLException
   {
     final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
                                                                              false);
@@ -294,22 +285,21 @@ final class TableRetriever
       .filterUnknown(tableTypes);
     LOGGER.log(Level.FINER, String
       .format("Retrieving table types: %s",
-              filteredTableTypes == null? "<<all>>": Arrays
-                .asList(filteredTableTypes)));
+              filteredTableTypes == null? "<<all>>"
+                                        : Arrays.asList(filteredTableTypes)));
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTables(unquotedName(catalogName),
-                 unquotedName(schemaName),
-                 tableNamePattern,
-                 filteredTableTypes));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getTables(unquotedName(catalogName), unquotedName(schemaName),
+                   tableNamePattern, filteredTableTypes));)
     {
       while (results.next())
       {
         // "TABLE_CAT", "TABLE_SCHEM"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving table: %s.%s",
-                                              schemaName,
-                                              tableName));
+        LOGGER
+          .log(Level.FINER,
+               String.format("Retrieving table: %s.%s", schemaName, tableName));
         final String tableTypeString = results.getString("TABLE_TYPE");
         final String remarks = results.getString("REMARKS");
 
@@ -320,8 +310,7 @@ final class TableRetriever
         if (!schemaOptional.isPresent())
         {
           LOGGER.log(Level.FINER, String.format("Cannot locate schema: %s.%s",
-                                                catalogName,
-                                                schemaName));
+                                                catalogName, schemaName));
           continue;
         }
 
@@ -350,9 +339,10 @@ final class TableRetriever
     }
   }
 
-  private void createForeignKeys(final MetadataResultSet results,
-                                 final NamedObjectList<MutableForeignKey> foreignKeys)
-    throws SQLException
+  private void
+    createForeignKeys(final MetadataResultSet results,
+                      final NamedObjectList<MutableForeignKey> foreignKeys)
+                        throws SQLException
   {
     try
     {
@@ -365,7 +355,8 @@ final class TableRetriever
           .getString("PKTABLE_CAT"));
         final String pkTableSchemaName = quotedName(results
           .getString("PKTABLE_SCHEM"));
-        final String pkTableName = quotedName(results.getString("PKTABLE_NAME"));
+        final String pkTableName = quotedName(results
+          .getString("PKTABLE_NAME"));
         final String pkColumnName = quotedName(results
           .getString("PKCOLUMN_NAME"));
 
@@ -373,28 +364,25 @@ final class TableRetriever
           .getString("FKTABLE_CAT"));
         final String fkTableSchemaName = quotedName(results
           .getString("FKTABLE_SCHEM"));
-        final String fkTableName = quotedName(results.getString("FKTABLE_NAME"));
+        final String fkTableName = quotedName(results
+          .getString("FKTABLE_NAME"));
         final String fkColumnName = quotedName(results
           .getString("FKCOLUMN_NAME"));
 
         final int keySequence = results.getInt("KEY_SEQ", 0);
-        final int updateRule = results.getInt("UPDATE_RULE",
-                                              ForeignKeyUpdateRule.unknown
-                                                .getId());
-        final int deleteRule = results.getInt("DELETE_RULE",
-                                              ForeignKeyUpdateRule.unknown
-                                                .getId());
+        final int updateRule = results
+          .getInt("UPDATE_RULE", ForeignKeyUpdateRule.unknown.getId());
+        final int deleteRule = results
+          .getInt("DELETE_RULE", ForeignKeyUpdateRule.unknown.getId());
         final int deferrability = results
           .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
 
         final Column pkColumn = lookupOrCreateColumn(pkTableCatalogName,
                                                      pkTableSchemaName,
-                                                     pkTableName,
-                                                     pkColumnName);
+                                                     pkTableName, pkColumnName);
         final Column fkColumn = lookupOrCreateColumn(fkTableCatalogName,
                                                      fkTableSchemaName,
-                                                     fkTableName,
-                                                     fkColumnName);
+                                                     fkTableName, fkColumnName);
 
         // Make a direct connection between the two columns
         if (pkColumn != null && fkColumn != null)
@@ -421,8 +409,8 @@ final class TableRetriever
           foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
           foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
           foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-          foreignKey.setDeferrability(ForeignKeyDeferrability
-            .valueOf(deferrability));
+          foreignKey
+            .setDeferrability(ForeignKeyDeferrability.valueOf(deferrability));
           foreignKey.addAttributes(results.getAttributes());
 
           if (fkColumn instanceof MutableColumn)
@@ -456,7 +444,7 @@ final class TableRetriever
 
   private void createIndexes(final MutableTable table,
                              final MetadataResultSet results)
-    throws SQLException
+                               throws SQLException
   {
     try
     {
@@ -465,8 +453,7 @@ final class TableRetriever
         // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         String indexName = quotedName(results.getString("INDEX_NAME"));
         LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s",
-                                              table.getFullName(),
-                                              indexName));
+                                              table.getFullName(), indexName));
 
         // Work-around PostgreSQL JDBC driver bugs by unquoting column
         // names first
@@ -496,9 +483,8 @@ final class TableRetriever
           final MutableColumn column = columnOptional.get();
           if (Utility.isBlank(indexName))
           {
-            indexName = String.format("SC_%s",
-                                      Integer.toHexString(column.getFullName()
-                                        .hashCode()).toUpperCase());
+            indexName = String.format("SC_%s", Integer
+              .toHexString(column.getFullName().hashCode()).toUpperCase());
           }
 
           final Optional<MutableIndex> indexOptional = table
@@ -556,9 +542,8 @@ final class TableRetriever
       column = new MutableColumn(table, columnName);
       if (add)
       {
-        LOGGER.log(Level.FINER,
-                   String.format("Adding column to table: %s",
-                                 column.getFullName()));
+        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
+                                              column.getFullName()));
         table.addColumn(column);
       }
     }
@@ -566,14 +551,13 @@ final class TableRetriever
   }
 
   /**
-   * Looks up a column in the database. If the column and table are not
-   * found, they are created, and added to the schema. This is prevent
-   * foreign key relationships from having a null pointer.
+   * Looks up a column in the database. If the column and table are not found,
+   * they are created, and added to the schema. This is prevent foreign key
+   * relationships from having a null pointer.
    */
-  private Column lookupOrCreateColumn(final String catalogName,
-                                      final String schemaName,
-                                      final String tableName,
-                                      final String columnName)
+  private Column
+    lookupOrCreateColumn(final String catalogName, final String schemaName,
+                         final String tableName, final String columnName)
   {
     Column column = null;
 
@@ -598,11 +582,10 @@ final class TableRetriever
       column = new ColumnPartial(table, columnName);
       ((TablePartial) table).addColumn(column);
 
-      LOGGER
-        .log(Level.FINER,
-             String
-               .format("Creating column reference for a column that is referenced by a foreign key: %s",
-                       column.getFullName()));
+      LOGGER.log(Level.FINER,
+                 String.format(
+                               "Creating column reference for a column that is referenced by a foreign key: %s",
+                               column.getFullName()));
     }
     return column;
   }
@@ -611,20 +594,19 @@ final class TableRetriever
     throws SQLException
   {
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
-                    unique,
-                    true/* approximate */));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
+                      unquotedName(table.getSchema().getName()),
+                      unquotedName(table.getName()), unique,
+                      true/* approximate */));)
     {
       createIndexes(table, results);
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
-                                              + table,
-                                          e);
+                                          + table, e);
     }
 
   }
@@ -633,16 +615,17 @@ final class TableRetriever
     throws SQLException
   {
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(null, null, table.getName(), unique, true/* approximate */));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getIndexInfo(null, null, table.getName(), unique,
+                      true/* approximate */));)
     {
       createIndexes(table, results);
     }
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
-                                              + table,
-                                          e);
+                                          + table, e);
     }
 
   }

@@ -90,7 +90,7 @@ final class RetrieverConnection
     {
       sqlKeywords = metaData.getSQLKeywords();
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
     }
@@ -164,7 +164,7 @@ final class RetrieverConnection
     {
       checkConnection(connection);
     }
-    catch (SchemaCrawlerException e)
+    catch (final SchemaCrawlerException e)
     {
       throw new SQLException("Bad database connection", e);
     }
