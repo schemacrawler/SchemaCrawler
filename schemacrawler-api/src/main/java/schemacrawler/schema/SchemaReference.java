@@ -58,8 +58,8 @@ public final class SchemaReference
     }
     else
     {
-      return getFullName().replaceAll("\"", "").compareTo(otherSchemaRef
-        .getFullName().replaceAll("\"", ""));
+      return getFullName().replaceAll("\"", "")
+        .compareTo(otherSchemaRef.getFullName().replaceAll("\"", ""));
     }
   }
 

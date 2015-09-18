@@ -22,8 +22,8 @@ package schemacrawler.schema;
 
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
  *
  * @author Sualeh Fatehi
  */
@@ -36,6 +36,6 @@ public interface ForeignKeyColumnReference
    *
    * @return Foreign key sequence
    */
-  int getKeySequence();
+    int getKeySequence();
 
 }

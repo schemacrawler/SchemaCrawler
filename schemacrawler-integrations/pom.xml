@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>3.0.0.ALPHA01</version>
+      <version>3.0.0.ALPHA02</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -75,7 +75,7 @@
     <dependency>
       <groupId>org.python</groupId>
       <artifactId>jython-standalone</artifactId>
-      <version>2.7.0</version>
+      <version>2.7.1b1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

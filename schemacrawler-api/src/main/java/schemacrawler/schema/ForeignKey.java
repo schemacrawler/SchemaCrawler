@@ -36,20 +36,20 @@ public interface ForeignKey
    *
    * @return Deferrability
    */
-  ForeignKeyDeferrability getDeferrability();
+    ForeignKeyDeferrability getDeferrability();
 
   /**
    * Gets the delete rule.
    *
    * @return Delete rule
    */
-  ForeignKeyUpdateRule getDeleteRule();
+    ForeignKeyUpdateRule getDeleteRule();
 
   /**
    * Gets the update rule.
    *
    * @return Update rule
    */
-  ForeignKeyUpdateRule getUpdateRule();
+    ForeignKeyUpdateRule getUpdateRule();
 
 }

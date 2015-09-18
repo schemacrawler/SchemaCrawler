@@ -38,46 +38,44 @@ public interface JdbcDriverInfo
    *
    * @return Database connection URL
    */
-  String getConnectionUrl();
+    String getConnectionUrl();
 
   /**
    * Gets the class name of the JDBC driver.
    *
    * @return Class name of the JDBC driver
    */
-  String getDriverClassName();
+    String getDriverClassName();
 
   /**
    * Gets the name of the JDBC driver.
    *
    * @return Driver name
    */
-  String getDriverName();
+    String getDriverName();
 
   /**
    * Gets all the JDBC driver properties, and their values.
    *
    * @return JDBC driver properties
    */
-  Collection<JdbcDriverProperty> getDriverProperties();
+    Collection<JdbcDriverProperty> getDriverProperties();
 
   /**
    * Gets the JDBC driver version.
    *
    * @return Driver version.
    */
-  String getDriverVersion();
+    String getDriverVersion();
 
   /**
-   * Reports whether this JDBC driver is a genuine JDBC
-   * Compliant<sup><font size=-2>TM</font></sup> driver.
-   * <P>
-   * JDBC compliance requires full support for the JDBC API and full
-   * support for SQL 92 Entry Level.
+   * Reports whether this JDBC driver is a genuine JDBC Compliant
+   * <sup><font size=-2>TM</font></sup> driver. <P> JDBC compliance requires
+   * full support for the JDBC API and full support for SQL 92 Entry Level.
    *
    * @return <code>true</code> if this driver is JDBC Compliant;
    *         <code>false</code> otherwise
    */
-  boolean isJdbcCompliant();
+    boolean isJdbcCompliant();
 
 }

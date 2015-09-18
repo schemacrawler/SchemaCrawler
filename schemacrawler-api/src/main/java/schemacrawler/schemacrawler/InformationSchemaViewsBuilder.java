@@ -128,6 +128,18 @@ public final class InformationSchemaViewsBuilder
   }
 
   @Override
+  public Config toConfig()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public InformationSchemaViews toOptions()
+  {
+    return new InformationSchemaViews(informationSchemaQueries);
+  }
+
+  @Override
   public String toString()
   {
     return ObjectToString.toString(informationSchemaQueries);
@@ -304,18 +316,6 @@ public final class InformationSchemaViewsBuilder
   {
     informationSchemaQueries.put(VIEWS, sql);
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public InformationSchemaViews toOptions()
-  {
-    return new InformationSchemaViews(informationSchemaQueries);
   }
 
 }

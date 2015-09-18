@@ -38,27 +38,27 @@ public interface DatabaseInfo
    *
    * @return Name of the RDBMS vendor and product
    */
-  String getProductName();
+    String getProductName();
 
   /**
    * Gets the RDBMS product version.
    *
    * @return RDBMS product version
    */
-  String getProductVersion();
+    String getProductVersion();
 
   /**
    * Gets all database properties.
    *
    * @return Database properties
    */
-  Collection<DatabaseProperty> getProperties();
+    Collection<DatabaseProperty> getProperties();
 
   /**
    * Gets the user name as known to this database.
    *
    * @return Database user name
    */
-  String getUserName();
+    String getUserName();
 
 }

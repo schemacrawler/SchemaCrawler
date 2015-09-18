@@ -44,8 +44,8 @@ class DatabaseObjectReference<D extends DatabaseObject>
   }
 
   /**
-   * {@inheritDoc} Modification over the Reference, always returns a
-   * non-null value.
+   * {@inheritDoc} Modification over the Reference, always returns a non-null
+   * value.
    *
    * @see java.lang.ref.SoftReference#get()
    */

@@ -37,27 +37,27 @@ public interface Sequence
    *
    * @return Increment of the sequence.
    */
-  long getIncrement();
+    long getIncrement();
 
   /**
    * Gets the maximum value of the sequence.
    *
    * @return Maximum value of the sequence.
    */
-  BigInteger getMaximumValue();
+    BigInteger getMaximumValue();
 
   /**
    * Gets the minimum value of the sequence.
    *
    * @return Minimum value of the sequence.
    */
-  BigInteger getMinimumValue();
+    BigInteger getMinimumValue();
 
   /**
-   * Indicates whether or not the sequence can continue to generate
-   * values after reaching its maximum or minimum value. return True if
-   * the sequence continues to generate values.
+   * Indicates whether or not the sequence can continue to generate values after
+   * reaching its maximum or minimum value. return True if the sequence
+   * continues to generate values.
    */
-  boolean isCycle();
+    boolean isCycle();
 
 }

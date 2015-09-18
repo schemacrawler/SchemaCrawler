@@ -61,8 +61,7 @@ public final class JavaSqlType
 
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
-  public JavaSqlType(final int javaSqlType,
-                     final String javaSqlTypeName,
+  public JavaSqlType(final int javaSqlType, final String javaSqlTypeName,
                      final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
@@ -162,9 +161,7 @@ public final class JavaSqlType
   @Override
   public String toString()
   {
-    return String.format("%s\t%d\t%s",
-                         javaSqlTypeName,
-                         javaSqlType,
+    return String.format("%s\t%d\t%s", javaSqlTypeName, javaSqlType,
                          javaSqlTypeGroup);
   }
 

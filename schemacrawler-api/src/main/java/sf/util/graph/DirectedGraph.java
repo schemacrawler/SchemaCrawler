@@ -43,7 +43,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   /**
    * Adds vertices, and a directed edge between them. Simple directed graphs do
    * not allow self-loops. https://en.wikipedia.org/wiki/Loop_(graph_theory)
-   * 
+   *
    * @param from
    *        Vertex value at the start of the edge
    * @param to

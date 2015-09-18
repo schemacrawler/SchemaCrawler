@@ -48,8 +48,8 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 /**
- * Database and connection information. Created from metadata returned
- * by a JDBC call, and other sources of information.
+ * Database and connection information. Created from metadata returned by a JDBC
+ * call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -175,18 +175,6 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Catalog#lookupSchema(java.lang.String)
-   */
-  @Override
-  public Optional<Schema> lookupSchema(final String name)
-  {
-    return schemas.stream().filter(schema -> schema.getFullName().equals(name))
-      .findFirst();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Catalog#getSchemaCrawlerInfo()
    */
   @Override
@@ -259,17 +247,6 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
-   */
-  @Override
-  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
-  {
-    return lookupColumnDataType(new SchemaReference(), name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
    * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
@@ -308,8 +285,8 @@ final class MutableCatalog
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   @Override
-  public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
-                                                              final String name)
+  public Optional<MutableColumnDataType>
+    lookupColumnDataType(final Schema schema, final String name)
   {
     return columnDataTypes.lookup(schema, name);
   }
@@ -322,6 +299,18 @@ final class MutableCatalog
                                                 final String name)
   {
     return routines.lookup(schema, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Catalog#lookupSchema(java.lang.String)
+   */
+  @Override
+  public Optional<Schema> lookupSchema(final String name)
+  {
+    return schemas.stream().filter(schema -> schema.getFullName().equals(name))
+      .findFirst();
   }
 
   /**
@@ -348,6 +337,18 @@ final class MutableCatalog
                                                 final String name)
   {
     return synonyms.lookup(schemaRef, name);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
+   */
+  @Override
+  public Optional<MutableColumnDataType>
+    lookupSystemColumnDataType(final String name)
+  {
+    return lookupColumnDataType(new SchemaReference(), name);
   }
 
   /**
@@ -466,10 +467,8 @@ final class MutableCatalog
 
   void setCrawlHeaderInfo(final String title)
   {
-    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo,
-                                                   jdbcDriverInfo,
-                                                   databaseInfo,
-                                                   title);
+    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo, jdbcDriverInfo,
+                                       databaseInfo, title);
   }
 
 }

@@ -263,7 +263,7 @@ class NamedObjectList<N extends NamedObject>
    *        Fully qualified name
    * @return Named object
    */
-  Optional<N> lookup(final String fullName)
+    Optional<N> lookup(final String fullName)
   {
     final String key = makeLookupKey(fullName);
     return internalGet(key);
@@ -284,7 +284,7 @@ class NamedObjectList<N extends NamedObject>
    *
    * @return All named objects
    */
-  List<N> values()
+    List<N> values()
   {
     final List<N> all = new ArrayList<>(objects.values());
     Collections.sort(all);

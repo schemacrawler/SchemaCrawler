@@ -37,6 +37,6 @@ public interface BaseForeignKey<R extends ColumnReference>
    *
    * @return Column pairs
    */
-  List<R> getColumnReferences();
+    List<R> getColumnReferences();
 
 }
