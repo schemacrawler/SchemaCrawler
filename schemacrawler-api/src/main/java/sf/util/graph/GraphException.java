@@ -17,18 +17,14 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package sf.util;
+package sf.util.graph;
 
 
 public class GraphException
   extends Exception
 {
 
-  private static final long serialVersionUID = 3629161382294452029L;
-
-  public GraphException()
-  {
-  }
+  private static final long serialVersionUID = 5978689857777212149L;
 
   public GraphException(final String message)
   {
