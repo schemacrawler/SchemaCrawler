@@ -28,6 +28,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
@@ -129,6 +130,16 @@ public final class InformationSchemaViews
   public String getExtTablesSql()
   {
     return informationSchemaQueries.get(EXT_TABLES);
+  }
+
+  /**
+   * Gets the foreign keys SQL from the additional configuration.
+   *
+   * @return foreign keys SQL.
+   */
+  public String getForeignKeysSql()
+  {
+    return informationSchemaQueries.get(FOREIGN_KEYS);
   }
 
   /**
@@ -245,6 +256,11 @@ public final class InformationSchemaViews
   public boolean hasExtTablesSql()
   {
     return informationSchemaQueries.containsKey(EXT_TABLES);
+  }
+
+  public boolean hasForeignKeysSql()
+  {
+    return informationSchemaQueries.containsKey(FOREIGN_KEYS);
   }
 
   public boolean hasOverrideTypeInfoSql()
