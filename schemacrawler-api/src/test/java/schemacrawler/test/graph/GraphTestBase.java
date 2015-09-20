@@ -13,13 +13,15 @@ import sf.util.graph.TarjanStronglyConnectedComponentFinder;
 abstract class GraphTestBase
 {
 
+  private final boolean DEBUG = false;
+
   protected <T extends Comparable<? super T>> boolean
     containsCycleSimple(final DirectedGraph<T> graph)
   {
     final boolean containsCycle = new SimpleCycleDetector<>(graph)
       .containsCycle();
 
-    if (containsCycle)
+    if (DEBUG && containsCycle)
     {
       System.out.println(graph);
     }
@@ -33,8 +35,11 @@ abstract class GraphTestBase
     final Collection<List<T>> sccs = new TarjanStronglyConnectedComponentFinder<T>(graph)
       .detectCycles();
 
-    System.out.print(graph.getName());
-    System.out.println(sccs);
+    if (DEBUG)
+    {
+      System.out.print(graph.getName());
+      System.out.println(sccs);
+    }
 
     return !sccs.isEmpty();
   }
