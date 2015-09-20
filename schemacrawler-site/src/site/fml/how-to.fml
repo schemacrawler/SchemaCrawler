@@ -480,7 +480,7 @@ for (final Schema schema: catalog.getSchemas())
   <dependency>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler</artifactId>
-    <version>14.03.02</version>
+    <version>14.03.03</version>
   </dependency>
 </dependencies>
         ]]></source>

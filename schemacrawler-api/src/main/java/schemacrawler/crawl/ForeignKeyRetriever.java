@@ -232,7 +232,7 @@ final class ForeignKeyRetriever
       }
       catch (final SQLException e)
       {
-        throw new SchemaCrawlerSQLException("Could not retrieve forign keys for table "
+        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
                                             + table, e);
       }
 
@@ -246,7 +246,7 @@ final class ForeignKeyRetriever
       }
       catch (final SQLException e)
       {
-        throw new SchemaCrawlerSQLException("Could not retrieve forign keys for table "
+        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
                                             + table, e);
       }
     }
