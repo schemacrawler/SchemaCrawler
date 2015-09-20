@@ -236,6 +236,9 @@ final class ForeignKeyRetriever
                                             + table, e);
       }
 
+      // We need to get exported keys as well, since if only a single table is
+      // selected, we have not retrieved it's keys that are imported by other
+      // tables.
       try (
         final MetadataResultSet results = new MetadataResultSet(metaData
           .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
