@@ -152,35 +152,6 @@ final class TableRetriever
 
   }
 
-  void retrieveForeignKeys(final MutableTable table)
-    throws SQLException
-  {
-
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-    MetadataResultSet results;
-
-    final DatabaseMetaData metaData = getMetaData();
-    try
-    {
-      results = new MetadataResultSet(metaData
-        .getImportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));
-      createForeignKeys(results, foreignKeys);
-
-      results = new MetadataResultSet(metaData
-        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));
-      createForeignKeys(results, foreignKeys);
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not retrieve forign keys for table "
-                                          + table, e);
-    }
-  }
-
   void retrieveIndexes(final MutableTable table, final boolean unique)
     throws SQLException
   {
@@ -339,109 +310,6 @@ final class TableRetriever
     }
   }
 
-  private void
-    createForeignKeys(final MetadataResultSet results,
-                      final NamedObjectList<MutableForeignKey> foreignKeys)
-                        throws SQLException
-  {
-    try
-    {
-      while (results.next())
-      {
-        String foreignKeyName = quotedName(results.getString("FK_NAME"));
-        LOGGER.log(Level.FINER, "Retrieving foreign key: " + foreignKeyName);
-
-        final String pkTableCatalogName = quotedName(results
-          .getString("PKTABLE_CAT"));
-        final String pkTableSchemaName = quotedName(results
-          .getString("PKTABLE_SCHEM"));
-        final String pkTableName = quotedName(results
-          .getString("PKTABLE_NAME"));
-        final String pkColumnName = quotedName(results
-          .getString("PKCOLUMN_NAME"));
-
-        final String fkTableCatalogName = quotedName(results
-          .getString("FKTABLE_CAT"));
-        final String fkTableSchemaName = quotedName(results
-          .getString("FKTABLE_SCHEM"));
-        final String fkTableName = quotedName(results
-          .getString("FKTABLE_NAME"));
-        final String fkColumnName = quotedName(results
-          .getString("FKCOLUMN_NAME"));
-
-        final int keySequence = results.getInt("KEY_SEQ", 0);
-        final int updateRule = results
-          .getInt("UPDATE_RULE", ForeignKeyUpdateRule.unknown.getId());
-        final int deleteRule = results
-          .getInt("DELETE_RULE", ForeignKeyUpdateRule.unknown.getId());
-        final int deferrability = results
-          .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
-
-        final Column pkColumn = lookupOrCreateColumn(pkTableCatalogName,
-                                                     pkTableSchemaName,
-                                                     pkTableName, pkColumnName);
-        final Column fkColumn = lookupOrCreateColumn(fkTableCatalogName,
-                                                     fkTableSchemaName,
-                                                     fkTableName, fkColumnName);
-
-        // Make a direct connection between the two columns
-        if (pkColumn != null && fkColumn != null)
-        {
-          if (Utility.isBlank(foreignKeyName))
-          {
-            foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
-                                                                     fkColumn);
-          }
-
-          final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
-            .lookup(foreignKeyName);
-          final MutableForeignKey foreignKey;
-          if (foreignKeyOptional.isPresent())
-          {
-            foreignKey = foreignKeyOptional.get();
-          }
-          else
-          {
-            foreignKey = new MutableForeignKey(foreignKeyName);
-            foreignKeys.add(foreignKey);
-          }
-
-          foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
-          foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-          foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-          foreignKey
-            .setDeferrability(ForeignKeyDeferrability.valueOf(deferrability));
-          foreignKey.addAttributes(results.getAttributes());
-
-          if (fkColumn instanceof MutableColumn)
-          {
-            ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
-            ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
-          }
-          else if (fkColumn instanceof ColumnPartial)
-          {
-            ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
-            ((TablePartial) fkColumn.getParent()).addForeignKey(foreignKey);
-          }
-
-          if (pkColumn instanceof MutableColumn)
-          {
-            ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
-          }
-          else if (pkColumn instanceof ColumnPartial)
-          {
-            ((TablePartial) pkColumn.getParent()).addForeignKey(foreignKey);
-          }
-        }
-      }
-    }
-    finally
-    {
-      results.close();
-    }
-
-  }
-
   private void createIndexes(final MutableTable table,
                              final MetadataResultSet results)
                                throws SQLException
@@ -546,46 +414,6 @@ final class TableRetriever
                                               column.getFullName()));
         table.addColumn(column);
       }
-    }
-    return column;
-  }
-
-  /**
-   * Looks up a column in the database. If the column and table are not found,
-   * they are created, and added to the schema. This is prevent foreign key
-   * relationships from having a null pointer.
-   */
-  private Column
-    lookupOrCreateColumn(final String catalogName, final String schemaName,
-                         final String tableName, final String columnName)
-  {
-    Column column = null;
-
-    final SchemaReference schema = new SchemaReference(catalogName, schemaName);
-    final Optional<MutableTable> tableOptional = catalog.lookupTable(schema,
-                                                                     tableName);
-    if (tableOptional.isPresent())
-    {
-      final Table table = tableOptional.get();
-      final Optional<? extends Column> columnOptional = table
-        .lookupColumn(columnName);
-      if (columnOptional.isPresent())
-      {
-        column = columnOptional.get();
-      }
-    }
-
-    if (column == null)
-    {
-      // Create the table and column, but do not add it to the schema
-      final Table table = new TablePartial(schema, tableName);
-      column = new ColumnPartial(table, columnName);
-      ((TablePartial) table).addColumn(column);
-
-      LOGGER.log(Level.FINER,
-                 String.format(
-                               "Creating column reference for a column that is referenced by a foreign key: %s",
-                               column.getFullName()));
     }
     return column;
   }
