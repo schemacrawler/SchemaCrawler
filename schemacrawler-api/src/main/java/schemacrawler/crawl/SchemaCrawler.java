@@ -380,10 +380,12 @@ public final class SchemaCrawler
     LOGGER.log(Level.INFO, "Retrieving tables");
 
     final TableRetriever retriever;
+    final ForeignKeyRetriever fkRetriever;
     final TableExtRetriever retrieverExtra;
     try
     {
       retriever = new TableRetriever(retrieverConnection, catalog);
+      fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog);
       retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
 
       for (final Schema schema: retriever.getSchemas())
@@ -403,13 +405,6 @@ public final class SchemaCrawler
         }
       }
 
-      if (!infoLevel.isRetrieveForeignKeys())
-      {
-        LOGGER
-          .log(Level.WARNING,
-               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
-      }
-
       for (final MutableTable table: allTables)
       {
         final boolean isView = table instanceof MutableView;
@@ -423,11 +418,21 @@ public final class SchemaCrawler
             //
             table.replacePrimaryKey();
           }
-          if (infoLevel.isRetrieveForeignKeys())
-          {
-            retriever.retrieveForeignKeys(table);
-          }
         }
+      }
+
+      if (infoLevel.isRetrieveForeignKeys())
+      {
+        if (infoLevel.isRetrieveTableColumns())
+        {
+          fkRetriever.retrieveForeignKeys(allTables);
+        }
+      }
+      else
+      {
+        LOGGER
+          .log(Level.WARNING,
+               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
 
       final TablesGraph tablesGraph = new TablesGraph(allTables);
