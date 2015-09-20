@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.03.03" date="2015-09-20" description="Faster retrieval of foreign keys.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        An attempt at faster retrieval of foreign keys in Oracle.
+      ]]></action>  
+     </release>    
      <release version="14.03.02" date="2015-09-17" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Better excludes for system schemas in Oracle.
