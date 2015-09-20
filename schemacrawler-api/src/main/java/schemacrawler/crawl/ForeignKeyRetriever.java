@@ -22,9 +22,12 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.executeSql;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +38,7 @@ import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.MetaDataUtility;
 import sf.util.Utility;
@@ -60,11 +64,21 @@ final class ForeignKeyRetriever
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)
-    throws SQLException
+    throws SchemaCrawlerSQLException
   {
     requireNonNull(allTables);
 
-    retrieveForeignKeysUsingDatabaseMetadata(allTables);
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasForeignKeysSql())
+    {
+      retrieveForeignKeysUsingDatabaseMetadata(allTables);
+    }
+    else
+    {
+      retrieveForeignKeysUsingSql(informationSchemaViews);
+    }
   }
 
   private void
@@ -252,6 +266,27 @@ final class ForeignKeyRetriever
         throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
                                             + table, e);
       }
+    }
+  }
+
+  private void
+    retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
+      throws SchemaCrawlerSQLException
+  {
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    final String fkSql = informationSchemaViews.getForeignKeysSql();
+    final Connection connection = getDatabaseConnection();
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                         fkSql));)
+    {
+      createForeignKeys(results, foreignKeys);
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve foreign keys from SQL:\n"
+                                          + fkSql, e);
     }
   }
 
