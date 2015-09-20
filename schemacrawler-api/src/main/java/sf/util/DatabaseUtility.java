@@ -98,7 +98,6 @@ public final class DatabaseUtility
 
   public static ResultSet executeSql(final Statement statement,
                                      final String sql)
-                                       throws SchemaCrawlerException
   {
     ResultSet results = null;
     if (statement == null)
