@@ -273,8 +273,11 @@ final class ForeignKeyRetriever
     retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
       throws SchemaCrawlerSQLException
   {
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final String fkSql = informationSchemaViews.getForeignKeysSql();
+    LOGGER.log(Level.FINER, String
+      .format("Executing SQL to retrieve foreign keys: %n%s", fkSql));
+
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();
     try (
       final Statement statement = connection.createStatement();
