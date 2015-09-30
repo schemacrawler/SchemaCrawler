@@ -20,12 +20,7 @@
   <version />
   <bannerLeft>
     <name>SchemaCrawler</name>
-    <!-- <src>images/schemacrawler.png</src> <href>http://www.schemacrawler.com</href> -->
   </bannerLeft>
-  <poweredBy>
-    <logo name="Maven" href="http://maven.apache.org/"
-      img="http://maven.apache.org/images/logos/maven-button-1.png" />
-  </poweredBy>
   <body>
     <head>
       <link rel="meta" title="DOAP" href="doap_schemacrawler-all.rdf" type="application/rdf+xml" />
