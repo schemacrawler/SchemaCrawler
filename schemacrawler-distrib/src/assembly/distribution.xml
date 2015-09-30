@@ -226,6 +226,8 @@
     <property name="website.apidocs.location"
               location="${SchemaCrawler.home}/schemacrawler-api/target/apidocs" />
 
+    <!-- No-op if the directories already exist, but do this so that
+         downstream steps do not fail -->
     <mkdir dir="${website.staging.dir}" />
     <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
