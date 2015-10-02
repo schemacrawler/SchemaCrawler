@@ -215,8 +215,10 @@ abstract class BaseDatabaseConnectionOptions
     return false;
   }
 
-  public void setConnectionProperties(final String connectionPropertiesString)
+  private Properties
+    parseConnectionProperties(final String connectionPropertiesString)
   {
+    final Properties urlxProperties = new Properties();
     if (!isBlank(connectionPropertiesString))
     {
       for (final String property: connectionPropertiesString.split(";"))
@@ -236,11 +238,13 @@ abstract class BaseDatabaseConnectionOptions
             {
               value = null;
             }
-            connectionProperties.put(key, value);
+            urlxProperties.put(key, value);
           }
         }
       }
     }
+
+    return urlxProperties;
   }
 
   @Override
@@ -344,6 +348,10 @@ abstract class BaseDatabaseConnectionOptions
         }
       }
     }
+
+    final Properties urlxConnectionProperties = parseConnectionProperties(connectionProperties
+      .get("urlx"));
+    jdbcConnectionProperties.putAll(urlxConnectionProperties);
 
     return jdbcConnectionProperties;
   }

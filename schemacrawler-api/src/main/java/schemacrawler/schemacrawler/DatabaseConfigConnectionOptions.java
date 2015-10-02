@@ -45,8 +45,6 @@ public final class DatabaseConfigConnectionOptions
     throws SchemaCrawlerException
   {
     super(properties);
-
-    setConnectionProperties(properties.get(URLX));
   }
 
   public String getDatabase()
@@ -57,6 +55,11 @@ public final class DatabaseConfigConnectionOptions
   public String getHost()
   {
     return connectionProperties.get(HOST);
+  }
+
+  public String getUrlX()
+  {
+    return connectionProperties.get(URLX);
   }
 
   public int getPort()

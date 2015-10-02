@@ -24,6 +24,7 @@ package schemacrawler;
 import static java.util.Objects.requireNonNull;
 import static sf.util.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static sf.util.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static sf.util.commandlineparser.CommandLineUtility.logSafeArguments;
 import static sf.util.commandlineparser.CommandLineUtility.logSystemProperties;
 
@@ -95,6 +96,7 @@ public final class Main
       System.err
         .println("Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
       logSafeArguments(Level.SEVERE, args);
+      logFullStackTrace(Level.SEVERE, e);
     }
 
   }
