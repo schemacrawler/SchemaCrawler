@@ -113,6 +113,20 @@ public class CommandLineUtility
     return config;
   }
 
+  public static void logFullStackTrace(final Level level, final Throwable t)
+  {
+    if (level == null || !LOGGER.isLoggable(level))
+    {
+      return;
+    }
+    if (t == null)
+    {
+      return;
+    }
+
+    LOGGER.log(level, t.getMessage(), t);
+  }
+
   public static void logSafeArguments(final Level level, final String[] args)
   {
     if (args == null)
