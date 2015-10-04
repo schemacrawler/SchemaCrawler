@@ -22,7 +22,8 @@ package schemacrawler.tools.text.utility;
 
 
 import static java.nio.file.Files.copy;
-import static java.nio.file.Paths.get;
+
+import java.nio.file.Paths;
 
 public final class WriteStylesheetFile
 {
@@ -30,7 +31,16 @@ public final class WriteStylesheetFile
   public static void main(final String[] args)
     throws Exception
   {
-    copy(WriteStylesheetFile.class.getResourceAsStream("/sc.css"), get(args[0]));
+    try
+    {
+      copy(WriteStylesheetFile.class.getResourceAsStream("/sc.css"),
+           Paths.get(args[0]));
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 
 }
