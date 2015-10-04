@@ -20,6 +20,9 @@
 package schemacrawler.tools.iosource;
 
 
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isDirectory;
+import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -35,7 +38,8 @@ import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class CompressedFileOutputResource
   implements OutputResource
@@ -45,11 +49,23 @@ public class CompressedFileOutputResource
     .getLogger(CompressedFileOutputResource.class.getName());
 
   private final Path outputFile;
+  private final String internalPath;
 
-  public CompressedFileOutputResource(final Path filePath)
+  public CompressedFileOutputResource(final Path filePath,
+                                      final String internalPath)
+                                        throws IOException
   {
     outputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
+    final Path parentPath = filePath.getParent();
+    if (!exists(parentPath) || !isWritable(parentPath)
+        || !isDirectory(parentPath))
+    {
+      throw new IOException("Cannot write file, " + filePath);
+    }
+
+    this.internalPath = requireNonNull(internalPath,
+                                       "No internal file path provided");
   }
 
   @Override
@@ -66,21 +82,24 @@ public class CompressedFileOutputResource
   @Override
   public Writer openOutputWriter(final Charset charset,
                                  final boolean appendOutput)
-    throws IOException
+                                   throws IOException
   {
     if (appendOutput)
     {
       throw new IOException("Cannot append to compressed file");
     }
     final OpenOption[] openOptions = new OpenOption[] {
-        WRITE, CREATE, TRUNCATE_EXISTING
+                                                        WRITE, CREATE,
+                                                        TRUNCATE_EXISTING
     };
     final OutputStream fileStream = newOutputStream(outputFile, openOptions);
-    final Writer writer = new OutputStreamWriter(new GZIPOutputStream(fileStream,
-                                                                      true),
-                                                 charset);
-    LOGGER.log(Level.INFO, "Opened output writer to compressed file, "
-                           + outputFile);
+
+    final ZipOutputStream zipOutputStream = new ZipOutputStream(fileStream);
+    zipOutputStream.putNextEntry(new ZipEntry(internalPath));
+
+    final Writer writer = new OutputStreamWriter(zipOutputStream, charset);
+    LOGGER.log(Level.INFO,
+               "Opened output writer to compressed file, " + outputFile);
     return writer;
   }
 

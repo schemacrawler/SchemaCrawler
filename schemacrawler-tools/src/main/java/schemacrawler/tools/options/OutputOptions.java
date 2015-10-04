@@ -58,6 +58,8 @@ public class OutputOptions
   implements Options
 {
 
+  private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";
+
   private static final long serialVersionUID = 7018337388923813055L;
 
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
@@ -91,12 +93,10 @@ public class OutputOptions
       configProperties = config;
     }
 
-    setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
-                                                     StandardCharsets.UTF_8
-                                                       .name()));
-    setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                      StandardCharsets.UTF_8
-                                                        .name()));
+    setInputEncoding(configProperties
+      .getStringValue(SC_INPUT_ENCODING, StandardCharsets.UTF_8.name()));
+    setOutputEncoding(configProperties
+      .getStringValue(SC_OUTPUT_ENCODING, StandardCharsets.UTF_8.name()));
   }
 
   /**
@@ -171,11 +171,13 @@ public class OutputOptions
   }
 
   public void forceCompressedOutputFile()
+    throws IOException
   {
     if (!(outputResource instanceof CompressedFileOutputResource))
     {
       final Path outputFile = getOutputFile();
-      outputResource = new CompressedFileOutputResource(outputFile);
+      outputResource = new CompressedFileOutputResource(outputFile,
+                                                        SCHEMACRAWLER_DATA);
     }
   }
 
@@ -251,8 +253,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the input reader. If the input resource is null, first set it
-   * to a value based off the output format value.
+   * Gets the input reader. If the input resource is null, first set it to a
+   * value based off the output format value.
    *
    * @throws SchemaCrawlerException
    */
@@ -263,8 +265,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set
-   * it to console output.
+   * Gets the output reader. If the output resource is null, first set it to
+   * console output.
    *
    * @throws SchemaCrawlerException
    */
@@ -275,23 +277,21 @@ public class OutputOptions
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set
-   * it to console output.
+   * Gets the output reader. If the output resource is null, first set it to
+   * console output.
    *
    * @throws SchemaCrawlerException
    */
   public OutputWriter openNewOutputWriter(final boolean appendOutput)
     throws SchemaCrawlerException
   {
-    return new OutputWriter(obtainOutputResource(),
-                            getOutputCharset(),
+    return new OutputWriter(obtainOutputResource(), getOutputCharset(),
                             appendOutput);
   }
 
   /**
-   * Sets the name of the input file for compressed input. It is
-   * important to note that the input encoding should be available at
-   * this point.
+   * Sets the name of the input file for compressed input. It is important to
+   * note that the input encoding should be available at this point.
    *
    * @param outputFileName
    *        Output file name.
@@ -302,21 +302,24 @@ public class OutputOptions
     throws IOException
   {
     requireNonNull(inputFile, "No input file provided");
-    inputResource = new CompressedFileInputResource(inputFile);
+    inputResource = new CompressedFileInputResource(inputFile,
+                                                    SCHEMACRAWLER_DATA);
   }
 
   /**
-   * Sets the name of the output file for compressed output. It is
-   * important to note that the output encoding should be available at
-   * this point.
+   * Sets the name of the output file for compressed output. It is important to
+   * note that the output encoding should be available at this point.
    *
    * @param outputFileName
    *        Output file name.
+   * @throws IOException
    */
   public void setCompressedOutputFile(final Path outputFile)
+    throws IOException
   {
     requireNonNull(outputFile, "No output file provided");
-    outputResource = new CompressedFileOutputResource(outputFile);
+    outputResource = new CompressedFileOutputResource(outputFile,
+                                                      SCHEMACRAWLER_DATA);
   }
 
   public void setConsoleOutput()
@@ -337,8 +340,7 @@ public class OutputOptions
   }
 
   /**
-   * Set character encoding for input files, such as scripts and
-   * templates.
+   * Set character encoding for input files, such as scripts and templates.
    *
    * @param inputEncoding
    *        Input encoding
@@ -356,8 +358,8 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the input file. It is important to note that the
-   * input encoding should be available at this point.
+   * Sets the name of the input file. It is important to note that the input
+   * encoding should be available at this point.
    *
    * @param inputFileName
    *        Input file name.
@@ -377,13 +379,13 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the input resource, first from a file, failing
-   * which from the classpath. It is important to note that the input
-   * encoding should be available at this point.
+   * Sets the name of the input resource, first from a file, failing which from
+   * the classpath. It is important to note that the input encoding should be
+   * available at this point.
    *
    * @param inputResourceName
-   *        Input resource name, which could be a file path, or a
-   *        classpath resource.
+   *        Input resource name, which could be a file path, or a classpath
+   *        resource.
    * @throws IOException
    *         When the resource cannot be accessed
    */
@@ -433,8 +435,8 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the output file. It is important to note that the
-   * output encoding should be available at this point.
+   * Sets the name of the output file. It is important to note that the output
+   * encoding should be available at this point.
    *
    * @param outputFileName
    *        Output file name.
@@ -476,8 +478,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the input resource. If the input resource is null, first set
-   * it to a value based off the output format value.
+   * Gets the input resource. If the input resource is null, first set it to a
+   * value based off the output format value.
    */
   private InputResource obtainInputResource()
   {
@@ -496,8 +498,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the output resource. If the output resource is null, first set
-   * it to console output.
+   * Gets the output resource. If the output resource is null, first set it to
+   * console output.
    */
   private OutputResource obtainOutputResource()
   {
