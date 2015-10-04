@@ -33,7 +33,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.GZIPInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class CompressedFileInputResource
   implements InputResource
@@ -43,9 +44,11 @@ public class CompressedFileInputResource
     .getLogger(CompressedFileInputResource.class.getName());
 
   private final Path inputFile;
+  private final String internalPath;
 
-  public CompressedFileInputResource(final Path filePath)
-    throws IOException
+  public CompressedFileInputResource(final Path filePath,
+                                     final String internalPath)
+                                       throws IOException
   {
     inputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
@@ -53,6 +56,9 @@ public class CompressedFileInputResource
     {
       throw new IOException("Cannot read file, " + filePath);
     }
+
+    this.internalPath = requireNonNull(internalPath,
+                                       "No internal file path provided");
   }
 
   @Override
@@ -71,10 +77,17 @@ public class CompressedFileInputResource
     throws IOException
   {
     final InputStream fileStream = newInputStream(inputFile);
-    final Reader reader = new InputStreamReader(new GZIPInputStream(fileStream),
-                                                charset);
-    LOGGER.log(Level.INFO, "Opened input reader to compressed file, "
-                           + inputFile);
+
+    final ZipInputStream zipInputStream = new ZipInputStream(fileStream);
+    final ZipEntry zipEntry = zipInputStream.getNextEntry();
+    if (zipEntry == null || !zipEntry.getName().equals(internalPath))
+    {
+      throw new IOException("Zip file does not contain " + internalPath);
+    }
+
+    final Reader reader = new InputStreamReader(zipInputStream, charset);
+    LOGGER.log(Level.INFO,
+               "Opened input reader to compressed file, " + inputFile);
     return reader;
   }
 

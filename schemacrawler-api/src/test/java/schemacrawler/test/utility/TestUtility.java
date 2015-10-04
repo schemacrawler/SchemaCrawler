@@ -65,6 +65,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.ZipInputStream;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -397,8 +398,10 @@ public final class TestUtility
     final BufferedReader bufferedReader;
     if (isCompressed)
     {
-      final InputStream inputStream = new GZIPInputStream(newInputStream(testOutputTempFile,
-                                                                         StandardOpenOption.READ));
+      final ZipInputStream inputStream = new ZipInputStream(newInputStream(testOutputTempFile,
+                                                                           StandardOpenOption.READ));
+      inputStream.getNextEntry();
+
       bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
                                                                 StandardCharsets.UTF_8));
     }
