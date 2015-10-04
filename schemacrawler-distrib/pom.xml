@@ -5,7 +5,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>14.03.03</version>
+    <version>14.04.01</version>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
   <packaging>pom</packaging>
@@ -306,7 +306,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.5</version>
+        <version>1.6</version>
         <configuration>
           <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>
