@@ -94,7 +94,7 @@ public class LintExecutableTest
 
       if (linterconfigs)
       {
-        final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+        final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-test.xml");
         argsMap.put("linterconfigs", linterConfigsFile.toString());
       }
 
@@ -112,7 +112,7 @@ public class LintExecutableTest
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
     if (linterconfigs)
     {
-      final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-off.xml");
+      final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-test.xml");
       final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 

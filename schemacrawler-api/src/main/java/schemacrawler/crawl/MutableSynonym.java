@@ -22,13 +22,13 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Synonym;
 
 /**
- * Represents a database synonym. Created from metadata returned by a
- * JDBC call.
+ * Represents a database synonym. Created from metadata returned by a JDBC call.
  *
  * @author Matt Albrecht, Sualeh Fatehi
  */

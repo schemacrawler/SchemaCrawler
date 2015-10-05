@@ -43,8 +43,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the
- * database procedures.
+ * A retriever uses database metadata to get the details about the database
+ * procedures.
  *
  * @author Sualeh Fatehi
  */
@@ -52,19 +52,19 @@ final class RoutineRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger.getLogger(RoutineRetriever.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(RoutineRetriever.class.getName());
 
   RoutineRetriever(final RetrieverConnection retrieverConnection,
                    final MutableCatalog catalog)
-    throws SQLException
+                     throws SQLException
   {
     super(retrieverConnection, catalog);
   }
 
   void retrieveFunctionColumns(final MutableFunction function,
                                final InclusionRule columnInclusionRule)
-    throws SQLException
+                                 throws SQLException
   {
     final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                        true);
@@ -77,11 +77,11 @@ final class RoutineRetriever
     }
 
     int ordinalNumber = 0;
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
-                          unquotedName(function.getSchema().getName()),
-                          unquotedName(function.getName()),
-                          null));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
+                            unquotedName(function.getSchema().getName()),
+                            unquotedName(function.getName()), null));)
     {
       while (results.next())
       {
@@ -97,8 +97,7 @@ final class RoutineRetriever
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
                                                                        columnName);
-        if (columnFilter.test(column)
-            && function.getName().equals(functionName)
+        if (columnFilter.test(column) && function.getName().equals(functionName)
             && belongsToSchema(function, columnCatalogName, schemaName))
         {
           if (!Utility.isBlank(specificName)
@@ -119,8 +118,11 @@ final class RoutineRetriever
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column.setFunctionColumnType(FunctionColumnType.valueOf(columnType));
-          column.setColumnDataType(lookupOrCreateColumnDataType(function
-            .getSchema(), dataType, typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(
+                                                                function
+                                                                  .getSchema(),
+                                                                dataType,
+                                                                typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -135,8 +137,7 @@ final class RoutineRetriever
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions",
-                 e);
+                 "JDBC driver does not support retrieving functions", e);
     }
     catch (final SQLException e)
     {
@@ -150,17 +151,15 @@ final class RoutineRetriever
       else
       {
         throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
-                                                + function,
-                                            e);
+                                            + function, e);
       }
     }
 
   }
 
-  void retrieveFunctions(final String catalogName,
-                         final String schemaName,
+  void retrieveFunctions(final String catalogName, final String schemaName,
                          final InclusionRule routineInclusionRule)
-    throws SQLException
+                           throws SQLException
   {
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                    false);
@@ -171,8 +170,10 @@ final class RoutineRetriever
       return;
     }
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getFunctions(unquotedName(catalogName), unquotedName(schemaName),
+                      "%"));)
     {
       while (results.next())
       {
@@ -181,7 +182,8 @@ final class RoutineRetriever
           .getString("FUNCTION_NAME"));
         LOGGER.log(Level.FINER, "Retrieving function: " + functionName);
         final short functionType = results
-          .getShort("FUNCTION_TYPE", (short) FunctionReturnType.unknown.getId());
+          .getShort("FUNCTION_TYPE",
+                    (short) FunctionReturnType.unknown.getId());
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
@@ -202,8 +204,7 @@ final class RoutineRetriever
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions",
-                 e);
+                 "JDBC driver does not support retrieving functions", e);
     }
     catch (final SQLException e)
     {
@@ -211,8 +212,7 @@ final class RoutineRetriever
       if ("HYC00".equalsIgnoreCase(e.getSQLState()))
       {
         LOGGER.log(Level.WARNING,
-                   "JDBC driver does not support retrieving functions",
-                   e);
+                   "JDBC driver does not support retrieving functions", e);
       }
       else
       {
@@ -224,7 +224,7 @@ final class RoutineRetriever
 
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule)
-    throws SQLException
+                                  throws SQLException
   {
     final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                         true);
@@ -237,11 +237,11 @@ final class RoutineRetriever
     }
 
     int ordinalNumber = 0;
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
-                           unquotedName(procedure.getSchema().getName()),
-                           unquotedName(procedure.getName()),
-                           null));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getProcedureColumns(unquotedName(procedure.getSchema()
+          .getCatalogName()), unquotedName(procedure.getSchema().getName()),
+                             unquotedName(procedure.getName()), null));)
     {
       while (results.next())
       {
@@ -280,8 +280,11 @@ final class RoutineRetriever
           column.setOrdinalPosition(ordinalNumber++);
           column
             .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
-          column.setColumnDataType(lookupOrCreateColumnDataType(procedure
-            .getSchema(), dataType, typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(
+                                                                procedure
+                                                                  .getSchema(),
+                                                                dataType,
+                                                                typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -296,16 +299,14 @@ final class RoutineRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for procedure "
-                                              + procedure,
-                                          e);
+                                          + procedure, e);
     }
 
   }
 
-  void retrieveProcedures(final String catalogName,
-                          final String schemaName,
+  void retrieveProcedures(final String catalogName, final String schemaName,
                           final InclusionRule routineInclusionRule)
-    throws SQLException
+                            throws SQLException
   {
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                      false);
@@ -316,8 +317,10 @@ final class RoutineRetriever
       return;
     }
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedures(unquotedName(catalogName), unquotedName(schemaName), "%"));)
+    try (
+      final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getProcedures(unquotedName(catalogName), unquotedName(schemaName),
+                       "%"));)
     {
       while (results.next())
       {

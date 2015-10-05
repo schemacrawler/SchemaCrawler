@@ -29,6 +29,7 @@ import static schemacrawler.test.utility.TestUtility.validateDiagram;
 import static sf.util.Utility.readFully;
 
 import java.io.FileReader;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -59,7 +60,7 @@ public class SchemaCrawlerExecutableChainTest
     executable.execute(getConnection());
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\""
-                     + System.lineSeparator(),
+                 + System.lineSeparator(),
                  readFully(new FileReader(testOutputFile.toFile())));
 
     final List<String> failures = compareOutput("schema.txt",
@@ -70,7 +71,9 @@ public class SchemaCrawlerExecutableChainTest
       fail(failures.toString());
     }
 
-    validateDiagram(Paths.get("schema.png"));
+    final Path diagramFile = Paths.get("schema.png");
+    validateDiagram(diagramFile);
+    Files.deleteIfExists(diagramFile);
   }
 
 }

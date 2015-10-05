@@ -44,7 +44,7 @@ public class LinterTableWithSingleColumn
   {
     requireNonNull(table, "No table provided");
 
-    final List<Column> columns = table.getColumns();
+    final List<Column> columns = getColumns(table);
     if (columns.size() <= 1)
     {
       addTableLint(table, getSummary());

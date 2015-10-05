@@ -39,8 +39,8 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
- * A retriever that uses database metadata to get the extended details
- * about the database sequences.
+ * A retriever that uses database metadata to get the extended details about the
+ * database sequences.
  *
  * @author Sualeh Fatehi
  */
@@ -48,12 +48,12 @@ final class SequenceRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SequenceRetriever.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SequenceRetriever.class.getName());
 
   SequenceRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog)
-    throws SQLException
+                      throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -66,8 +66,8 @@ final class SequenceRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-  void retrieveSequenceInformation(final InclusionRule sequenceInclusionRule)
-    throws SQLException
+    void retrieveSequenceInformation(final InclusionRule sequenceInclusionRule)
+      throws SQLException
   {
     final InclusionRuleFilter<Sequence> sequenceFilter = new InclusionRuleFilter<>(sequenceInclusionRule,
                                                                                    false);
@@ -93,9 +93,10 @@ final class SequenceRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    try (final Statement statement = connection.createStatement();
-        MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                     sequencesDefinitionSql));)
+    try (
+      final Statement statement = connection.createStatement();
+      MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                   sequencesDefinitionSql));)
     {
       while (results.next())
       {

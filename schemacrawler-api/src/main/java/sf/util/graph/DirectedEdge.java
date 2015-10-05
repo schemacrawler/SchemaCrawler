@@ -1,3 +1,22 @@
+/*
+ *
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2015, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
 package sf.util.graph;
 
 
@@ -18,11 +37,11 @@ public final class DirectedEdge<T>
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
-  public boolean equals(Object obj)
+  public boolean equals(final Object obj)
   {
     if (this == obj)
     {
@@ -36,7 +55,7 @@ public final class DirectedEdge<T>
     {
       return false;
     }
-    DirectedEdge other = (DirectedEdge) obj;
+    final DirectedEdge<T> other = (DirectedEdge<T>) obj;
     if (from == null)
     {
       if (other.from != null)
@@ -62,19 +81,19 @@ public final class DirectedEdge<T>
     return true;
   }
 
-  public Vertex getFrom()
+  public Vertex<T> getFrom()
   {
     return from;
   }
 
-  public Vertex getTo()
+  public Vertex<T> getTo()
   {
     return to;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see java.lang.Object#hashCode()
    */
   @Override
@@ -82,17 +101,17 @@ public final class DirectedEdge<T>
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + ((from == null)? 0: from.hashCode());
-    result = prime * result + ((to == null)? 0: to.hashCode());
+    result = prime * result + (from == null? 0: from.hashCode());
+    result = prime * result + (to == null? 0: to.hashCode());
     return result;
   }
 
-  public boolean isFrom(final Vertex vertex)
+  public boolean isFrom(final Vertex<T> vertex)
   {
     return vertex != null && vertex.equals(from);
   }
 
-  public boolean isTo(final Vertex vertex)
+  public boolean isTo(final Vertex<T> vertex)
   {
     return vertex != null && vertex.equals(to);
   }
@@ -100,7 +119,7 @@ public final class DirectedEdge<T>
   @Override
   public String toString()
   {
-    return "(" + from + " --> " + to + ")";
+    return from + " -> " + to;
   }
 
 }

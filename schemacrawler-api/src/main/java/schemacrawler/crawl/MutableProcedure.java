@@ -34,8 +34,8 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a
- * JDBC call.
+ * Represents a database procedure. Created from metadata returned by a JDBC
+ * call.
  *
  * @author Sualeh Fatehi
  */

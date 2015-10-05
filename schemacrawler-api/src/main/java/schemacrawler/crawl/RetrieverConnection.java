@@ -81,13 +81,22 @@ final class RetrieverConnection
 
   private static List<String>
     lookupReservedWords(final DatabaseMetaData metaData)
-      throws SQLException
   {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
       .getResourceAsStream("/sql2003_reserved_words.txt")));
 
+    String sqlKeywords = "";
+    try
+    {
+      sqlKeywords = metaData.getSQLKeywords();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
+    }
+
     return Collections.unmodifiableList(Stream
-      .concat(Stream.of(metaData.getSQLKeywords().split(",")), reader.lines())
+      .concat(Stream.of(sqlKeywords.split(",")), reader.lines())
       .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
       .sorted().collect(Collectors.toList()));
   }
@@ -155,7 +164,7 @@ final class RetrieverConnection
     {
       checkConnection(connection);
     }
-    catch (SchemaCrawlerException e)
+    catch (final SchemaCrawlerException e)
     {
       throw new SQLException("Bad database connection", e);
     }

@@ -417,7 +417,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-30 00:18:16",
+    "crawlTimestamp": "2015-09-17 21:10:32",
     "title": ""
   }
 },
@@ -764,7 +764,7 @@
         "severity": "medium",
         "description": "cycles in table relationships",
         "id": "schemacrawler.tools.linter.LinterTableCycles",
-        "value": ""
+        "value": "PUBLICATIONS, WRITERS"
       }
     ]}
 }]

@@ -43,8 +43,8 @@ final class ColumnPartial
 
   ColumnPartial(final Column column)
   {
-    this(requireNonNull(column, "No column provided").getParent(), column
-      .getName());
+    this(requireNonNull(column, "No column provided").getParent(),
+         column.getName());
     addAttributes(column.getAttributes());
   }
 

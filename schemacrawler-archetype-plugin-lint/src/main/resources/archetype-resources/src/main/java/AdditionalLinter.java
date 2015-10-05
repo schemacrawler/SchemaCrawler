@@ -5,6 +5,8 @@ package ${package};
 
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
