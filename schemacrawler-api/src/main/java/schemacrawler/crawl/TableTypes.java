@@ -36,8 +36,8 @@ import schemacrawler.schema.TableType;
 class TableTypes
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TableTypes.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TableTypes.class.getName());
 
   private final Collection<TableType> tableTypes;
 
@@ -47,8 +47,9 @@ class TableTypes
 
     if (connection != null)
     {
-      try (final ResultSet tableTypesResults = connection.getMetaData()
-        .getTableTypes();)
+      try (
+        final ResultSet tableTypesResults = connection.getMetaData()
+          .getTableTypes();)
       {
         final List<String> tableTypesList = RetrieverUtility
           .readResultsVector(tableTypesResults);
@@ -59,8 +60,7 @@ class TableTypes
       catch (final Exception e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not obtain table types from connection",
-                   e);
+                   "Could not obtain table types from connection", e);
       }
     }
   }
@@ -72,14 +72,14 @@ class TableTypes
   }
 
   /**
-   * Converts an array of table types to an array of their corresponding
-   * string values.
+   * Converts an array of table types to an array of their corresponding string
+   * values.
    *
    * @param tableTypeStrings
    *        Array of table types
    * @return Array of string table types
    */
-  String[] filterUnknown(final Collection<String> tableTypeStrings)
+    String[] filterUnknown(final Collection<String> tableTypeStrings)
   {
     if (tableTypeStrings == null)
     {
@@ -104,12 +104,12 @@ class TableTypes
   }
 
   /**
-   * Looks up a table type, from the provided string. Returns unknown if
-   * no match is found.
+   * Looks up a table type, from the provided string. Returns unknown if no
+   * match is found.
    *
    * @return Matched table type, or unknown
    */
-  TableType lookupTableType(final String tableTypeString)
+    TableType lookupTableType(final String tableTypeString)
   {
     return tableTypes.stream()
       .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny()

@@ -3,6 +3,9 @@
 #set( $symbol_escape = '\' )
 package ${package};
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
@@ -10,17 +13,24 @@ import schemacrawler.tools.options.DatabaseServerType;
 public final class NewDBDatabaseConnector
   extends DatabaseConnector
 {
-	
-  private static final Logger LOGGER = Logger.getLogger(NewDBDatabaseConnector.class.getName());
-	  
+
+  private static final Logger LOGGER = Logger
+    .getLogger(NewDBDatabaseConnector.class.getName());
+
   public NewDBDatabaseConnector()
   {
     super(new DatabaseServerType("newdb", "NewDB"),
           "/help/Connections.newdb.txt",
           "/schemacrawler-newdb.config.properties",
           "/newdb.information_schema");
-	// SchemaCrawler will control output of log messages if you use JDK logging
-	LOGGER.log(Level.INFO, "Loaded pluging for newdb");    
+    // SchemaCrawler will control output of log messages if you use JDK logging
+    LOGGER.log(Level.INFO, "Loaded pluging for newdb");
   }
 
+  @Override
+  protected Pattern getConnectionUrlPattern()
+  {
+    return Pattern.compile("jdbc:newdb:.*");
+  }
+  
 }

@@ -65,7 +65,7 @@ public class LinterTooManyLobs
   {
     requireNonNull(table, "No table provided");
 
-    final ArrayList<Column> lobColumns = findLobColumns(table.getColumns());
+    final ArrayList<Column> lobColumns = findLobColumns(getColumns(table));
     if (lobColumns.size() > maxLargeObjectsInTable)
     {
       addTableLint(table, getSummary(), lobColumns);

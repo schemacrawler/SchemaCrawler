@@ -26,8 +26,8 @@ import schemacrawler.schema.FunctionColumn;
 import schemacrawler.schema.FunctionColumnType;
 
 /**
- * Represents a column in a database function. Created from metadata
- * returned by a JDBC call.
+ * Represents a column in a database function. Created from metadata returned by
+ * a JDBC call.
  *
  * @author Sualeh Fatehi
  */

@@ -31,20 +31,20 @@ public interface Grant<D extends DatabaseObject>
    *
    * @return Grantee
    */
-  String getGrantee();
+    String getGrantee();
 
   /**
    * Gets the grantor.
    *
    * @return Grantor
    */
-  String getGrantor();
+    String getGrantor();
 
   /**
    * If the privilege is grantable.
    *
    * @return Is grantable
    */
-  boolean isGrantable();
+    boolean isGrantable();
 
 }

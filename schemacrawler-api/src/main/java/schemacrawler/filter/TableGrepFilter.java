@@ -34,8 +34,8 @@ class TableGrepFilter
   implements Predicate<Table>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TableGrepFilter.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TableGrepFilter.class.getName());
 
   private final boolean invertMatch;
   private final InclusionRule grepColumnInclusionRule;
@@ -50,9 +50,8 @@ class TableGrepFilter
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table
-   * column inclusion rule is found, and at least one column matches the
-   * rule.
+   * Special case for "grep" like functionality. Handle table if a table column
+   * inclusion rule is found, and at least one column matches the rule.
    *
    * @param options
    *        Options

@@ -43,15 +43,15 @@ final class SchemaRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger.getLogger(SchemaRetriever.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaRetriever.class.getName());
 
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
 
   SchemaRetriever(final RetrieverConnection retrieverConnection,
                   final MutableCatalog catalog)
-    throws SQLException
+                    throws SQLException
   {
     super(retrieverConnection, catalog);
 
@@ -67,8 +67,8 @@ final class SchemaRetriever
    * @throws SQLException
    *         On an exception
    */
-  void retrieveSchemas(final InclusionRule schemaInclusionRule)
-    throws SQLException
+    void retrieveSchemas(final InclusionRule schemaInclusionRule)
+      throws SQLException
   {
     final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule,
                                                                                true);
@@ -88,8 +88,8 @@ final class SchemaRetriever
     }
 
     // Filter out schemas
-    for (final Iterator<SchemaReference> iterator = schemaRefs.iterator(); iterator
-      .hasNext();)
+    for (final Iterator<SchemaReference> iterator = schemaRefs
+      .iterator(); iterator.hasNext();)
     {
       final SchemaReference schemaRef = iterator.next();
       if (!schemaFilter.test(schemaRef))
@@ -166,10 +166,10 @@ final class SchemaRetriever
           {
             catalogName = null;
           }
-          final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
+          final String schemaName = quotedName(results
+            .getString("TABLE_SCHEM"));
           LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                                catalogName,
-                                                schemaName));
+                                                catalogName, schemaName));
           if (catalogName == null)
           {
             if (allCatalogNames.isEmpty())
@@ -180,8 +180,8 @@ final class SchemaRetriever
             {
               for (final String expectedCatalogName: allCatalogNames)
               {
-                schemaRefs.add(new SchemaReference(expectedCatalogName,
-                                                   schemaName));
+                schemaRefs
+                  .add(new SchemaReference(expectedCatalogName, schemaName));
               }
             }
           }
@@ -197,8 +197,7 @@ final class SchemaRetriever
       for (final String catalogName: allCatalogNames)
       {
         LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                              catalogName,
-                                              null));
+                                              catalogName, null));
         schemaRefs.add(new SchemaReference(catalogName, null));
       }
     }
@@ -221,17 +220,18 @@ final class SchemaRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           schemataSql));)
+    try (
+      final Statement statement = connection.createStatement();
+      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                         schemataSql));)
     {
       while (results.next())
       {
-        final String catalogName = quotedName(results.getString("CATALOG_NAME"));
+        final String catalogName = quotedName(results
+          .getString("CATALOG_NAME"));
         final String schemaName = quotedName(results.getString("SCHEMA_NAME"));
         LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                              catalogName,
-                                              schemaName));
+                                              catalogName, schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
     }

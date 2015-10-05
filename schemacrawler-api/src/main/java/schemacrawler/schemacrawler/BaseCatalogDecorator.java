@@ -145,12 +145,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends Schema> lookupSchema(final String name)
-  {
-    return catalog.lookupSchema(name);
-  }
-
-  @Override
   public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return catalog.getSchemaCrawlerInfo();
@@ -196,12 +190,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType> lookupSystemColumnDataType(final String name)
-  {
-    return catalog.lookupSystemColumnDataType(name);
-  }
-
-  @Override
   public Collection<ColumnDataType> getSystemColumnDataTypes()
   {
     return catalog.getSystemColumnDataTypes();
@@ -226,8 +214,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType> lookupColumnDataType(final Schema schema,
-                                                                 final String name)
+  public Optional<? extends ColumnDataType>
+    lookupColumnDataType(final Schema schema, final String name)
   {
     return catalog.lookupColumnDataType(schema, name);
   }
@@ -237,6 +225,12 @@ public abstract class BaseCatalogDecorator
                                                    final String name)
   {
     return catalog.lookupRoutine(schema, name);
+  }
+
+  @Override
+  public Optional<? extends Schema> lookupSchema(final String name)
+  {
+    return catalog.lookupSchema(name);
   }
 
   /**
@@ -258,6 +252,13 @@ public abstract class BaseCatalogDecorator
                                                    final String name)
   {
     return catalog.lookupSynonym(schema, name);
+  }
+
+  @Override
+  public Optional<? extends ColumnDataType>
+    lookupSystemColumnDataType(final String name)
+  {
+    return catalog.lookupSystemColumnDataType(name);
   }
 
   @Override
