@@ -36,6 +36,6 @@ public interface ProcedureColumn
    * @return Procedure type.
    */
   @Override
-  ProcedureColumnType getColumnType();
+    ProcedureColumnType getColumnType();
 
 }

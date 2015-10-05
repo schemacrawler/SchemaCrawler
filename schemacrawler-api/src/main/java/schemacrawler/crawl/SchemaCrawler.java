@@ -211,8 +211,7 @@ public final class SchemaCrawler
         }
         if (routineTypes.contains(RoutineType.function))
         {
-          retriever.retrieveFunctions(schema.getCatalogName(),
-                                      schema.getName(),
+          retriever.retrieveFunctions(schema.getCatalogName(), schema.getName(),
                                       options.getRoutineInclusionRule());
         }
       }
@@ -226,9 +225,8 @@ public final class SchemaCrawler
               && routineTypes.contains(RoutineType.procedure))
           {
             retriever
-              .retrieveProcedureColumns((MutableProcedure) routine,
-                                        options
-                                          .getRoutineColumnInclusionRule());
+              .retrieveProcedureColumns((MutableProcedure) routine, options
+                .getRoutineColumnInclusionRule());
           }
 
           if (routine instanceof MutableFunction
@@ -382,16 +380,17 @@ public final class SchemaCrawler
     LOGGER.log(Level.INFO, "Retrieving tables");
 
     final TableRetriever retriever;
+    final ForeignKeyRetriever fkRetriever;
     final TableExtRetriever retrieverExtra;
     try
     {
       retriever = new TableRetriever(retrieverConnection, catalog);
+      fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog);
       retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
 
       for (final Schema schema: retriever.getSchemas())
       {
-        retriever.retrieveTables(schema.getCatalogName(),
-                                 schema.getName(),
+        retriever.retrieveTables(schema.getCatalogName(), schema.getName(),
                                  options.getTableNamePattern(),
                                  options.getTableTypes(),
                                  options.getTableInclusionRule());
@@ -404,13 +403,6 @@ public final class SchemaCrawler
         {
           retriever.retrieveColumns(table, options.getColumnInclusionRule());
         }
-      }
-
-      if (!infoLevel.isRetrieveForeignKeys())
-      {
-        LOGGER
-          .log(Level.WARNING,
-               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
 
       for (final MutableTable table: allTables)
@@ -426,11 +418,21 @@ public final class SchemaCrawler
             //
             table.replacePrimaryKey();
           }
-          if (infoLevel.isRetrieveForeignKeys())
-          {
-            retriever.retrieveForeignKeys(table);
-          }
         }
+      }
+
+      if (infoLevel.isRetrieveForeignKeys())
+      {
+        if (infoLevel.isRetrieveTableColumns())
+        {
+          fkRetriever.retrieveForeignKeys(allTables);
+        }
+      }
+      else
+      {
+        LOGGER
+          .log(Level.WARNING,
+               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
       }
 
       final TablesGraph tablesGraph = new TablesGraph(allTables);
@@ -502,6 +504,21 @@ public final class SchemaCrawler
    *
    * @param connection
    *        An database connection.
+   * @throws SchemaCrawlerException
+   *         On a crawler exception
+   */
+  public SchemaCrawler(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    this.connection = requireNonNull(connection, "No connection specified");
+    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
+  }
+
+  /**
+   * Constructs a SchemaCrawler object, from a connection.
+   *
+   * @param connection
+   *        An database connection.
    * @param databaseSpecificOverrideOptions
    *        Database specific overrides
    * @throws SchemaCrawlerException
@@ -514,21 +531,6 @@ public final class SchemaCrawler
     this.connection = requireNonNull(connection, "No connection specified");
     this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
                                                           "No database specific overrides provided");
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   *
-   * @param connection
-   *        An database connection.
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    this.connection = requireNonNull(connection, "No connection specified");
-    this.databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
   }
 
   /**

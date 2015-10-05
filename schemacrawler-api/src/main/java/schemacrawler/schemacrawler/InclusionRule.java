@@ -25,12 +25,11 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the
- * names, definitions, and other attributes of named objects.
+ * Specifies inclusion and exclusion patterns that can be applied to the names,
+ * definitions, and other attributes of named objects.
  * <p>
- * The text to check, which could be the fully qualified name of the
- * named object, the definition, or some other attribute of the named
- * object.
+ * The text to check, which could be the fully qualified name of the named
+ * object, the definition, or some other attribute of the named object.
  *
  * @author Sualeh Fatehi
  */

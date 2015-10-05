@@ -23,12 +23,13 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 
 /**
- * Represents the dependent of a database object, such as a column or an
- * index, which are dependents of a table.
+ * Represents the dependent of a database object, such as a column or an index,
+ * which are dependents of a table.
  *
  * @author Sualeh Fatehi
  */

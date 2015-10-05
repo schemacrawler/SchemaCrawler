@@ -30,9 +30,9 @@ public final class SchemasReducer
 
   public SchemasReducer(final SchemaCrawlerOptions options)
   {
-    super(options == null
-                         ? schema -> true
-                         : new InclusionRuleFilter<>(options.getSchemaInclusionRule(),
-                                                     true));
+    super(options == null? schema -> true: new InclusionRuleFilter<>(
+                                                                     options
+                                                                       .getSchemaInclusionRule(),
+                                                                     true));
   }
 }

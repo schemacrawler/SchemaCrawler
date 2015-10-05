@@ -58,7 +58,8 @@
     </config>
   </linter>
   <linter id="schemacrawler.tools.linter.LinterTableEmpty">
-    <run>false</run>
+    <table-exclusion-pattern><![CDATA[.*EXTRA_PK]]></table-exclusion-pattern>
+    <run>true</run>
   </linter>  
   <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
     <run>false</run>
@@ -73,7 +74,8 @@
     <run>false</run>
   </linter>  
   <linter id="schemacrawler.tools.linter.LinterTableWithNoRemarks">
-    <run>false</run>
+    <column-exclusion-pattern><![CDATA[.*EXTRA_PK\.PUBLICATIONID]]></column-exclusion-pattern>
+    <run>true</run>
   </linter>  
   <linter id="schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst">
     <run>false</run>

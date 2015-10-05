@@ -13,34 +13,34 @@ public interface CrawlInfo
    *
    * @return Timestamp
    */
-  LocalDateTime getCrawlTimestamp();
+    LocalDateTime getCrawlTimestamp();
 
   /**
    * Gets the name of the RDBMS vendor and product.
    *
    * @return Name of the RDBMS vendor and product
    */
-  String getDatabaseInfo();
+    String getDatabaseInfo();
 
   /**
    * Gets the name of the JDBC driver.
    *
    * @return Driver name
    */
-  String getJdbcDriverInfo();
+    String getJdbcDriverInfo();
 
   /**
    * Gets the SchemaCrawler version.
    *
    * @return SchemaCrawler version
    */
-  String getSchemaCrawlerInfo();
+    String getSchemaCrawlerInfo();
 
   /**
    * Gets the title.
    *
    * @return Title
    */
-  String getTitle();
+    String getTitle();
 
 }

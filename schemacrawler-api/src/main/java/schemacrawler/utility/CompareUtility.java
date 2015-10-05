@@ -26,8 +26,8 @@ import java.util.List;
 public class CompareUtility
 {
 
-  public static <T extends Comparable<? super T>> int compareLists(final List<? extends T> list1,
-                                                                   final List<? extends T> list2)
+  public static <T extends Comparable<? super T>> int
+    compareLists(final List<? extends T> list1, final List<? extends T> list2)
   {
 
     if (list1 == null)

@@ -73,7 +73,7 @@ public class LinterColumnTypes
     requireNonNull(table, "No table provided");
     requireNonNull(columnTypes, "Not initialized");
 
-    for (final Column column: table.getColumns())
+    for (final Column column: getColumns(table))
     {
       columnTypes.add(column.getName(), column.getColumnDataType());
     }

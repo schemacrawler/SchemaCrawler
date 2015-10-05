@@ -28,9 +28,9 @@ import java.io.StringReader;
 import sf.util.Utility;
 
 /**
- * Version information for this product. Has methods to obtain
- * information about the product, as well as a main method, so it can be
- * called from the command-line.
+ * Version information for this product. Has methods to obtain information about
+ * the product, as well as a main method, so it can be called from the
+ * command-line.
  *
  * @author Sualeh Fatehi
  */
@@ -59,14 +59,14 @@ public final class Version
       else
       {
         productLine = new String[] {
-            PRODUCTNAME, ""
+                                     PRODUCTNAME, ""
         };
       }
     }
     catch (final IOException e)
     {
       productLine = new String[] {
-          PRODUCTNAME, ""
+                                   PRODUCTNAME, ""
       };
     }
     VERSION = productLine[1];

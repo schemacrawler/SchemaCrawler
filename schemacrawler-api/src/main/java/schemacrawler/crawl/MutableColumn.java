@@ -30,8 +30,8 @@ import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Table;
 
 /**
- * Represents a column in a database table or routine. Created from
- * metadata returned by a JDBC call.
+ * Represents a column in a database table or routine. Created from metadata
+ * returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */
@@ -186,7 +186,7 @@ class MutableColumn
    * @param isAutoIncremented
    *        the isAutoIncremented to set
    */
-  void setAutoIncremented(final boolean isAutoIncremented)
+    void setAutoIncremented(final boolean isAutoIncremented)
   {
     this.isAutoIncremented = isAutoIncremented;
   }
@@ -200,7 +200,7 @@ class MutableColumn
    * @param isGenerated
    *        the isGenerated to set
    */
-  void setGenerated(final boolean isGenerated)
+    void setGenerated(final boolean isGenerated)
   {
     this.isGenerated = isGenerated;
   }

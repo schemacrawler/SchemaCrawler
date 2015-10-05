@@ -66,8 +66,8 @@ class ImmutableDatabaseProperty
     }
     else
     {
-      return getDescription().toLowerCase().compareTo(otherDbProperty
-        .getDescription().toLowerCase());
+      return getDescription().toLowerCase()
+        .compareTo(otherDbProperty.getDescription().toLowerCase());
     }
   }
 
@@ -86,8 +86,8 @@ class ImmutableDatabaseProperty
 
     for (final Entry<String, String> acronym: acronyms)
     {
-      description = description
-        .replaceAll(acronym.getKey(), acronym.getValue());
+      description = description.replaceAll(acronym.getKey(),
+                                           acronym.getValue());
     }
 
     final int strLen = description.length();
@@ -110,8 +110,8 @@ class ImmutableDatabaseProperty
     {
       description = description.replaceAll(acronym.getValue().toLowerCase(),
                                            acronym.getKey());
-      description = description
-        .replaceAll(acronym.getValue(), acronym.getKey());
+      description = description.replaceAll(acronym.getValue(),
+                                           acronym.getKey());
     }
 
     description = description.trim();

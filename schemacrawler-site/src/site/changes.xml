@@ -5,7 +5,34 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.04.01" date="2015-10-03" description="Miscellaneous fixes.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixing broken -urlx switch.
+      ]]></action>  
+     </release>   
+     <release version="14.03.03" date="2015-09-20" description="Faster retrieval of foreign keys.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        An attempt at faster retrieval of foreign keys in Oracle.
+      ]]></action>  
+     </release>    
+     <release version="14.03.02" date="2015-09-17" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Better excludes for system schemas in Oracle.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Added ability to report on tables causing a cycle in a lint, using Tarjan's algorithm.
+      ]]></action>
+     </release>    
      <release version="14.03.01" date="2015-08-17" description="Enhancements to SchemaCrawler Lint.">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added detailed lint help, which is available from the command-line, using -help -command=lint.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added configuration for LinterTooManyLobs.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new lint for specifying a list of reserved words for column names.
+      ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new lints for empty tables, tables where all columns are nullable, and tables with no
         primary keys.
@@ -15,7 +42,11 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Renaming CrawlHeaderInfo to CrawlInfo, and making it available in linters.
-      ]]></action>                                                                          
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed issues with sorting tables and routines alphabetically. Sorting alphabetically also
+        sorts by object type.
+      ]]></action> 
      </release>   
      <release version="14.02.02" date="2015-08-14" description="Enhancements to SchemaCrawler Lint.">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
