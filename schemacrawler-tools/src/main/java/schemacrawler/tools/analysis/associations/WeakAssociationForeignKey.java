@@ -56,9 +56,9 @@ public class WeakAssociationForeignKey
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since foreign keys are not always explicitly named in
-   * databases, the sorting routine orders the foreign keys by the names
-   * of the columns in the foreign keys.
+   * Note: Since foreign keys are not always explicitly named in databases, the
+   * sorting routine orders the foreign keys by the names of the columns in the
+   * foreign keys.
    * </p>
    */
   @Override
@@ -69,7 +69,7 @@ public class WeakAssociationForeignKey
       return -1;
     }
 
-    final BaseForeignKey other = (BaseForeignKey) obj;
+    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
     final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
     final List<? extends ColumnReference> otherColumnReferences = other
       .getColumnReferences();

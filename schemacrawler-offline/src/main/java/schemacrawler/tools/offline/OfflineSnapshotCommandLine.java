@@ -22,8 +22,6 @@ package schemacrawler.tools.offline;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.logging.Logger;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -44,9 +42,6 @@ import sf.util.commandlineparser.CommandLineUtility;
 public final class OfflineSnapshotCommandLine
   implements CommandLine
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(OfflineSnapshotCommandLine.class.getName());
 
   private final String command;
   private final Config config;

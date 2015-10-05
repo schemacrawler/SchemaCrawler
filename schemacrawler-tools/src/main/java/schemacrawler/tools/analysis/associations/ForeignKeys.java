@@ -35,12 +35,10 @@ import schemacrawler.schema.Table;
 final class ForeignKeys
 {
 
-  private final List<Table> tables;
   private final Collection<ColumnReference> foreignKeys;
 
   ForeignKeys(final List<Table> tables)
   {
-    this.tables = requireNonNull(tables);
     foreignKeys = mapForeignKeyColumns(tables);
   }
 
@@ -70,8 +68,11 @@ final class ForeignKeys
     return foreignKeys.toString();
   }
 
-  private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables)
+  private Collection<ColumnReference>
+    mapForeignKeyColumns(final List<Table> tables)
   {
+    requireNonNull(tables);
+
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
     for (final Table table: tables)
     {
