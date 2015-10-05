@@ -37,7 +37,6 @@ import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class TestHsqldbCommandline
   extends BaseDatabaseTest
@@ -99,7 +98,7 @@ public class TestHsqldbCommandline
     checkConnection(connection);
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific override options provided");
-    
+
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           databaseSpecificOverrideOptions);
     final Catalog catalog1 = schemaCrawler.crawl(schemaCrawlerOptions);
