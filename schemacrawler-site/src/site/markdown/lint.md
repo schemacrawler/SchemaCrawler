@@ -33,7 +33,9 @@ SchemaCrawler linters can be configured (both severity, and thresholds) using
 an [XML configuration file.](schemacrawler-linter-configs.xml) You can run SchemaCrawler
 lint with an additional command-line option, for example, 
 `-linterconfigs=[path to linter XML configuration file]`, 
-pointing to the path of the SchemaCrawler linter XML configuration file.
+pointing to the path of the SchemaCrawler linter XML configuration file. You can
+configure whether or not to run a linter, change a linter's severity, or exclude
+certain tables and columns from the linter using the configuration file.
 
 ## Lint Checks
 
@@ -41,97 +43,72 @@ SchemaCrawler Lint has a number of lint checks built-in. These are prioritized
 as critical, high, medium and low. The results are shown on the lint report.
 The checks are:
 
-- Tables with incrementing column names, for example, a table with column names like CONTACT1, CONTACT2 
-  and so on can indicate de-normalization.  
-  Additionally, SchemaCrawler Lint will check that the data-types of all incrementing columns are the same, 
-  and that no numbers are skipped.
-  (Linter id "schemacrawler.tools.linter.LinterTableWithIncrementingColumns")
-- Tables with no columns at all, or just a single column could indicate a schema design smell.
-  (Linter id "schemacrawler.tools.linter.LinterTableWithSingleColumn")
-- Tables with no indexes.
-  (Linter id "schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes")
-- Tables where the default value is 'NULL' instead of NULL may indicate a error when creating a table.
-  (Linter id "schemacrawler.tools.linter.LinterNullIntendedColumns")
-- Tables that have nullable columns in a unique index.
-  (Linter id "schemacrawler.tools.linter.LinterNullColumnsInIndex")
-- Tables that have spaces in table or column names, or names that are reserved words in the 
-  ANSI SQL standard.
-  (Linter id "schemacrawler.tools.linter.LinterTableWithQuotedNames")
-- Tables that have too many large objects (CLOBs or BLOBs), since these could result in 
-  additional reads when returning query results.
-  (Linter id "schemacrawler.tools.linter.LinterTooManyLobs")
-- Tables where the foreign key column data type is different from the referenced primary key column data type.
-  (Linter id "schemacrawler.tools.linter.LinterForeignKeyMismatch")
-- Columns in different tables, that have the same name but have different data types.
-  (Linter id "schemacrawler.tools.linter.LinterColumnTypes")
-- Cyclical relationships between tables, which could cause issues with deletes and inserts.
-  (Linter id "schemacrawler.tools.linter.LinterTableCycles")
-- Tables with redundant indexes.  
-  A redundant index is one where the sequence of columns is 
-  the same as the first few columns of another index. For example, the index `INDEX_B(COL1)` is 
-  not needed when you have another index, `INDEX_A(COL1, COL2)`.
-  (Linter id "schemacrawler.tools.linter.LinterRedundantIndexes")
-- Relationship tables with just foreign keys and no attributes, but still have a primary key.
-  (Linter id "schemacrawler.tools.linter.LinterUselessSurrogateKey")
-- Tables with no indexes.
-  (Linter id "schemacrawler.tools.linter.LinterTableWithNoIndexes")
-- Tables with no primary key. If a table is a relationship table with no attributes, it will not
-  be flagged.
-  (Linter id "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey")  
-- Empty tables with no data.
-  (Linter id "schemacrawler.tools.linter.LinterTableEmpty")
-- Tables that have all columns that are nullable, besides the primary key may contain no useful data,
-  and could indicate a schema design smell.
-  (Linter id "schemacrawler.tools.linter.LinterTableAllNullableColumns")
-     
-## Lint Configuration
-
-You can customize SchemaCrawler lints using an XML configuration file. You can specify the 
-path and filename of the configuration file using the `-linterconfigs=<path>` 
-command-line option.
-
-Here is an example:
+**Linter:** *schemacrawler.tools.linter.LinterCatalogSql*    
+Checks for columns that should not be named according to certain patterns.
+For example, you may have a policy that no column can be named `ID`,
+because you want columns with complete names, such as `ORDER_ID`.
+If you want to detect columns named `ID`, you could use configuration as
+shown in the example below.   
+Example configuration:
 
 ```
-<schemacrawler-linter-configs>
-  <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
-    <run>true</run>
-    <severity>medium</severity>
-    <table-inclusion-pattern><![CDATA[.*]]></table-inclusion-pattern>
-    <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
-  </linter>
-</schemacrawler-linter-configs>
+<linter id="schemacrawler.tools.linter.LinterCatalogSql">
+  <config>
+    <property name="message">message for SQL catalog lint</property>
+    <property name="sql"><![CDATA[SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES]]></property>
+  </config>
+</linter>
 ```
 
-With this lint configuration, you can
+**Linter:** *schemacrawler.tools.linter.LinterColumnTypes*   
+Looks for columns in different tables, that have the same name but have
+different data types.
 
-- Use `<run>` to indicate whether or not to execute a certain lint. The
-  default is to run every lint.
-- Set the severity, which can be one of either low, medium, high, or critical.
-  Most lints default to a medium severity.
-- Set table inclusion and exclusion patterns. These are regular expressions that
-  match the fully qualified table name. The lint will run against the table 
-  only if it matches the inclusion rule. The default is to include every
-  table, and exclude none.
+**Linter:** *schemacrawler.tools.linter.LinterForeignKeyMismatch*   
+Checks tables where the foreign key column data type is different from
+the referenced primary key column data type.
 
+**Linter:** *schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes*   
+Checks for tables where foreign keys have no indexes. This may cause
+inefficient lookups.
 
-## Custom SQL Lints
+**Linter:** *schemacrawler.tools.linter.LinterNullColumnsInIndex*    
+Checks for tables that have nullable columns in a unique index.
 
-SchemaCrawler allows you to define your own lints using SQL statements. These can run either 
-against a table, or against the entire catalog. Custom SQL lints allow you to lint your 
-data. For example, you may want to flag any table that does not have any data.
+**Linter:** *schemacrawler.tools.linter.LinterNullIntendedColumns*    
+Checks for tables where the default value is ‘NULL’ instead of NULL,
+since this may indicate a error when creating a table.
 
-The SQL statement must return exactly one column and one row of data in the results. If one 
-row is returned, it means that the lint has detected a problem. However, if no rows of data 
-are returned, it means that there are no issues. Custom SQL lints are configured in the XML 
-configuration file.
+**Linter:** *schemacrawler.tools.linter.LinterRedundantIndexes*   
+Checks for tables with redundant indexes. A redundant index is one where
+the sequence of columns is the same as the first few columns of another
+index. For example, the index `INDEX_B(COL1)` is not needed when you have
+another index, `INDEX_A(COL1, COL2)`.
 
-This is an example configuration of a SQL lint, that runs against a table. Notice the use of 
-`${table}` to indicate the name of the table the lint is running against.
+**Linter:** *schemacrawler.tools.linter.LinterTableAllNullableColumns*   
+Tables that have all columns besides the primary key that are nullable,
+may contain no useful data, and could indicate a schema design smell.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableCycles*   
+Checks for cyclical relationships between tables, which could cause
+issues with deletes and inserts.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableEmpty*   
+Checks for empty tables with no data.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableSql*   
+Allows you to run SQL against the database. The SQL statement must
+return exactly one column and one row of data in the results. If one row
+is returned, it means that the lint has detected a problem. However, if
+no rows of data are returned, it means that there are no issues.
+Notice the use of `${table}` to indicate the name of the table the lint
+is running against.   
+Example configuration:
 
 ```
 <schemacrawler-linter-configs>
   <linter id="schemacrawler.tools.linter.LinterTableSql">
+    <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
     <config>
       <property name="message">message for custom SQL lint</property>
       <property name="sql"><![CDATA[SELECT TOP 1 1 FROM ${table}]]></property>
@@ -140,19 +117,68 @@ This is an example configuration of a SQL lint, that runs against a table. Notic
 </schemacrawler-linter-configs>
 ```
 
-This is an example configuration of a SQL lint, that runs against the database. Notice that 
-there is no `${table}` in the SQL statement.
+**Linter:** *schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns*   
+Allows you to run SQL against the database. The SQL statement must
+return exactly one column and one row of data in the results. If one row
+is returned, it means that the lint has detected a problem. However, if
+no rows of data are returned, it means that there are no issues.   
+Example configuration:
 
 ```
-<schemacrawler-linter-configs>
-  <linter id="schemacrawler.tools.linter.LinterCatalogSql">
-    <config>
-      <property name="message">message for SQL catalog lint</property>
-      <property name="sql">SELECT TOP 1 1 FROM INFORMATION_SCHEMA.TABLES</property>
-    </config>
-  </linter>  
-</schemacrawler-linter-configs>
+<linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
+  <config>
+    <property name="bad-column-names"><![CDATA[.*\.ID]]></property>
+  </config>
+</linter>
 ```
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithIncrementingColumns*   
+Checks for tables with incrementing column names, for example, a table
+with column names like `CONTACT1`, `CONTACT2` and so on can indicate
+de-normalization. Additionally, SchemaCrawler Lint will check that the
+data-types of all incrementing columns are the same, and that no numbers
+are skipped.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithNoIndexes*   
+Checks for tables with no indexes.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithNoPrimaryKey*   
+Checks for tables with no primary keys. Tables that purely model
+relationships, without any attributes are ignored.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithNoRemarks*   
+Checks for tables and columns with no remarks.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst*   
+Checks for tables where the primary key columns are not first, since
+this is the convention.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithQuotedNames*   
+Checks for tables that have spaces in table or column names, or names
+that are reserved words in the ANSI SQL standard.
+
+**Linter:** *schemacrawler.tools.linter.LinterTableWithSingleColumn*   
+Checks for tables with no columns at all, or just a single column, since
+that could indicate a schema design smell.
+
+**Linter:** *schemacrawler.tools.linter.LinterTooManyLobs*   
+Checks for tables that have too many large objects (CLOBs or BLOBs),
+since these could result in additional reads when returning query
+results. By default, this is more than one such column.   
+Example configuration:
+
+```
+<linter id="schemacrawler.tools.linter.LinterTooManyLobs">
+  <config>
+    <property name="max-large-objects">3</property>
+  </config>
+</linter>
+```
+
+**Linter:** *schemacrawler.tools.linter.LinterUselessSurrogateKey*   
+Checks for relationship tables with just foreign keys and no attributes,
+but still have a primary key.
+
 
 ## Lint Extensions
 

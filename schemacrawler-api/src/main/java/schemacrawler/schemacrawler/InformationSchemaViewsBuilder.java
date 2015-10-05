@@ -28,6 +28,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
@@ -128,6 +129,18 @@ public final class InformationSchemaViewsBuilder
   }
 
   @Override
+  public Config toConfig()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public InformationSchemaViews toOptions()
+  {
+    return new InformationSchemaViews(informationSchemaQueries);
+  }
+
+  @Override
   public String toString()
   {
     return ObjectToString.toString(informationSchemaQueries);
@@ -193,6 +206,18 @@ public final class InformationSchemaViewsBuilder
   public InformationSchemaViewsBuilder withExtTablesSql(final String sql)
   {
     informationSchemaQueries.put(EXT_TABLES, sql);
+    return this;
+  }
+
+  /**
+   * Sets the view definitions SQL.
+   *
+   * @param sql
+   *        View definitions SQL.
+   */
+  public InformationSchemaViewsBuilder withForeignKeysSql(final String sql)
+  {
+    informationSchemaQueries.put(FOREIGN_KEYS, sql);
     return this;
   }
 
@@ -304,18 +329,6 @@ public final class InformationSchemaViewsBuilder
   {
     informationSchemaQueries.put(VIEWS, sql);
     return this;
-  }
-
-  @Override
-  public Config toConfig()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public InformationSchemaViews toOptions()
-  {
-    return new InformationSchemaViews(informationSchemaQueries);
   }
 
 }

@@ -23,11 +23,11 @@ package schemacrawler.tools.lint;
 
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,7 +81,7 @@ public final class LinterRegistry
 
   public Set<String> allRegisteredLinters()
   {
-    return new HashSet<>(linterRegistry.keySet());
+    return new TreeSet<>(linterRegistry.keySet());
   }
 
   public boolean hasLinter(final String linterId)

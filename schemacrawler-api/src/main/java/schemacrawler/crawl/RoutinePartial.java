@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
@@ -37,8 +38,8 @@ abstract class RoutinePartial
 
   RoutinePartial(final Routine routine)
   {
-    this(requireNonNull(routine, "No routine provided").getSchema(), routine
-      .getName());
+    this(requireNonNull(routine, "No routine provided").getSchema(),
+         routine.getName());
     addAttributes(routine.getAttributes());
   }
 

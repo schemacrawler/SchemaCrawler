@@ -45,8 +45,8 @@ public final class JavaSqlTypes
   implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
-  private static final Logger LOGGER = Logger.getLogger(JavaSqlTypes.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(JavaSqlTypes.class.getName());
 
   private static Map<String, Integer> createJavaSqlTypesMap()
   {
@@ -61,8 +61,8 @@ public final class JavaSqlTypes
       }
       catch (final SecurityException | IllegalAccessException e)
       {
-        LOGGER.log(Level.WARNING, "Could not access java.sql.Types, field "
-                                  + field, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not access java.sql.Types, field " + field, e);
         // continue
       }
     }
@@ -218,8 +218,8 @@ public final class JavaSqlTypes
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information,
-   * including the mapped Java class.
+   * Lookup java.sql.Types type, and return more detailed information, including
+   * the mapped Java class.
    *
    * @param typeName
    *        java.sql.Types type name

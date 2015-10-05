@@ -34,8 +34,7 @@ import schemacrawler.utility.JavaSqlTypes;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about a result
- * set.
+ * A retriever uses database metadata to get the details about a result set.
  *
  * @author Sualeh Fatehi
  */
@@ -53,17 +52,16 @@ final class ResultsRetriever
   }
 
   /**
-   * Retrieves a list of columns from the results. There is no attempt
-   * to share table objects, since the tables cannot have children that
-   * are ResultColumns. Likewise, there is no attempt to share column
-   * data types.
+   * Retrieves a list of columns from the results. There is no attempt to share
+   * table objects, since the tables cannot have children that are
+   * ResultColumns. Likewise, there is no attempt to share column data types.
    *
    * @return List of columns from the results
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  ResultsColumns retrieveResults()
-    throws SQLException
+    ResultsColumns retrieveResults()
+      throws SQLException
   {
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");
@@ -105,7 +103,8 @@ final class ResultsRetriever
       column.setLabel(resultsMetaData.getColumnLabel(i));
       column.setDisplaySize(resultsMetaData.getColumnDisplaySize(i));
 
-      final boolean isNullable = resultsMetaData.isNullable(i) == ResultSetMetaData.columnNullable;
+      final boolean isNullable = resultsMetaData
+        .isNullable(i) == ResultSetMetaData.columnNullable;
       column.setAutoIncrement(resultsMetaData.isAutoIncrement(i));
       column.setCaseSensitive(resultsMetaData.isCaseSensitive(i));
       column.setCurrency(resultsMetaData.isCurrency(i));

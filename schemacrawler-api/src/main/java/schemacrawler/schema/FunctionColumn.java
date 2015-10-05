@@ -36,6 +36,6 @@ public interface FunctionColumn
    * @return Function column type.
    */
   @Override
-  FunctionColumnType getColumnType();
+    FunctionColumnType getColumnType();
 
 }

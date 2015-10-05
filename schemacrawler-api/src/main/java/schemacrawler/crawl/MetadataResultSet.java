@@ -41,10 +41,9 @@ import java.util.logging.Logger;
 import sf.util.Utility;
 
 /**
- * A wrapper around a JDBC resultset obtained from a database metadata
- * call. This allows type-safe methods to obtain boolean, integer and
- * string data, while abstracting away the quirks of the JDBC metadata
- * API.
+ * A wrapper around a JDBC resultset obtained from a database metadata call.
+ * This allows type-safe methods to obtain boolean, integer and string data,
+ * while abstracting away the quirks of the JDBC metadata API.
  *
  * @author Sualeh Fatehi
  */
@@ -52,8 +51,8 @@ final class MetadataResultSet
   implements AutoCloseable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(MetadataResultSet.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
 
@@ -99,9 +98,9 @@ final class MetadataResultSet
   }
 
   /**
-   * Releases this <code>ResultSet</code> object's database and JDBC
-   * resources immediately instead of waiting for this to happen when it
-   * is automatically closed.
+   * Releases this <code>ResultSet</code> object's database and JDBC resources
+   * immediately instead of waiting for this to happen when it is automatically
+   * closed.
    *
    * @throws SQLException
    *         On an exception
@@ -114,13 +113,12 @@ final class MetadataResultSet
   }
 
   /**
-   * Gets unread (and therefore unmapped) columns from the database
-   * metadata resultset, and makes them available as addiiotnal
-   * attributes.
+   * Gets unread (and therefore unmapped) columns from the database metadata
+   * resultset, and makes them available as addiiotnal attributes.
    *
    * @return Map of additional attributes to the database object
    */
-  Map<String, Object> getAttributes()
+    Map<String, Object> getAttributes()
   {
     final Map<String, Object> attributes = new HashMap<>();
     for (final String columnName: resultSetColumns)
@@ -136,13 +134,12 @@ final class MetadataResultSet
         {
           /*
            * MySQL connector is broken and can cause
-           * ArrayIndexOutOfBoundsExceptions for no good reason (tested
-           * with connector 5.1.26 and server version 5.0.95). Ignoring
-           * the exception, we can still get some useful data out of the
-           * database.
+           * ArrayIndexOutOfBoundsExceptions for no good reason (tested with
+           * connector 5.1.26 and server version 5.0.95). Ignoring the
+           * exception, we can still get some useful data out of the database.
            */
-          LOGGER.log(Level.WARNING, "Could not read value for column "
-                                    + columnName, e);
+          LOGGER.log(Level.WARNING,
+                     "Could not read value for column " + columnName, e);
         }
       }
     }
@@ -171,14 +168,13 @@ final class MetadataResultSet
   }
 
   /**
-   * Checks if the value of a column from the result set evaluates to
-   * true.
+   * Checks if the value of a column from the result set evaluates to true.
    *
    * @param columnName
    *        Column name to check
    * @return Whether the string evaluates to true
    */
-  boolean getBoolean(final String columnName)
+    boolean getBoolean(final String columnName)
   {
     boolean value = false;
     if (useColumn(columnName))
@@ -189,9 +185,10 @@ final class MetadataResultSet
         final String stringBooleanValue;
         if (results.wasNull() || booleanValue == null)
         {
-          LOGGER.log(Level.FINE, String
-            .format("NULL value for column %s, so evaluating to 'false'",
-                    columnName));
+          LOGGER.log(Level.FINE,
+                     String.format(
+                                   "NULL value for column %s, so evaluating to 'false'",
+                                   columnName));
           stringBooleanValue = null;
         }
         else
@@ -214,8 +211,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read boolean value for column "
-                                  + columnName, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not read boolean value for column " + columnName, e);
       }
     }
     return value;
@@ -254,17 +251,16 @@ final class MetadataResultSet
   }
 
   /**
-   * Reads the value of a column from the result set as an integer. If
-   * the value was null, returns the default.
+   * Reads the value of a column from the result set as an integer. If the value
+   * was null, returns the default.
    *
    * @param columnName
    *        Column name
    * @param defaultValue
    *        Default value
-   * @return Integer value of the column, or the default if not
-   *         available
+   * @return Integer value of the column, or the default if not available
    */
-  int getInt(final String columnName, final int defaultValue)
+    int getInt(final String columnName, final int defaultValue)
   {
     int value = defaultValue;
     if (useColumn(columnName))
@@ -274,25 +270,25 @@ final class MetadataResultSet
         value = results.getInt(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINE, String
-            .format("NULL int value for column %s, so using default %d",
-                    columnName,
-                    defaultValue));
+          LOGGER.log(Level.FINE,
+                     String.format(
+                                   "NULL int value for column %s, so using default %d",
+                                   columnName, defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read integer value for column "
-                                  + columnName, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not read integer value for column " + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a long. If the
-   * value was null, returns the default.
+   * Reads the value of a column from the result set as a long. If the value was
+   * null, returns the default.
    *
    * @param columnName
    *        Column name
@@ -300,7 +296,7 @@ final class MetadataResultSet
    *        Default value
    * @return Long value of the column, or the default if not available
    */
-  long getLong(final String columnName, final long defaultValue)
+    long getLong(final String columnName, final long defaultValue)
   {
     long value = defaultValue;
     if (useColumn(columnName))
@@ -310,25 +306,25 @@ final class MetadataResultSet
         value = results.getLong(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINE, String
-            .format("NULL long value for column %s, so using default %d",
-                    columnName,
-                    defaultValue));
+          LOGGER.log(Level.FINE,
+                     String.format(
+                                   "NULL long value for column %s, so using default %d",
+                                   columnName, defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read long value for column "
-                                  + columnName, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not read long value for column " + columnName, e);
       }
     }
     return value;
   }
 
   /**
-   * Reads the value of a column from the result set as a short. If the
-   * value was null, returns the default.
+   * Reads the value of a column from the result set as a short. If the value
+   * was null, returns the default.
    *
    * @param columnName
    *        Column name
@@ -336,7 +332,7 @@ final class MetadataResultSet
    *        Default value
    * @return Short value of the column, or the default if not available
    */
-  short getShort(final String columnName, final short defaultValue)
+    short getShort(final String columnName, final short defaultValue)
   {
     short value = defaultValue;
     if (useColumn(columnName))
@@ -346,17 +342,17 @@ final class MetadataResultSet
         value = results.getShort(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINE, String
-            .format("NULL short value for column %s, so using default %d",
-                    columnName,
-                    defaultValue));
+          LOGGER.log(Level.FINE,
+                     String.format(
+                                   "NULL short value for column %s, so using default %d",
+                                   columnName, defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read short value for column "
-                                  + columnName, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not read short value for column " + columnName, e);
       }
     }
     return value;
@@ -369,7 +365,7 @@ final class MetadataResultSet
    *        Column name
    * @return String value of the column, or null if not available
    */
-  String getString(final String columnName)
+    String getString(final String columnName)
   {
     String value = null;
     if (useColumn(columnName))
@@ -379,9 +375,10 @@ final class MetadataResultSet
         value = results.getString(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINE, String
-            .format("NULL value for column %s, so using null string",
-                    columnName));
+          LOGGER.log(Level.FINE,
+                     String.format(
+                                   "NULL value for column %s, so using null string",
+                                   columnName));
           value = null;
         }
 
@@ -392,8 +389,8 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING, "Could not read string value for column "
-                                  + columnName, e);
+        LOGGER.log(Level.WARNING,
+                   "Could not read string value for column " + columnName, e);
       }
     }
     return value;
@@ -401,18 +398,18 @@ final class MetadataResultSet
 
   /**
    * Moves the cursor down one row from its current position. A
-   * <code>ResultSet</code> cursor is initially positioned before the
-   * first row; the first call to the method <code>next</code> makes the
-   * first row the current row; the second call makes the second row the
-   * current row, and so on.
+   * <code>ResultSet</code> cursor is initially positioned before the first row;
+   * the first call to the method <code>next</code> makes the first row the
+   * current row; the second call makes the second row the current row, and so
+   * on.
    *
    * @return <code>true</code> if the new current row is valid;
    *         <code>false</code> if there are no more rows
    * @throws SQLException
    *         On a database access error
    */
-  boolean next()
-    throws SQLException
+    boolean next()
+      throws SQLException
   {
     readColumns = new HashSet<>();
     return results.next();

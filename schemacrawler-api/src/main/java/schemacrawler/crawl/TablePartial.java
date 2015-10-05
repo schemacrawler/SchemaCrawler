@@ -57,8 +57,8 @@ final class TablePartial
 
   TablePartial(final Table table)
   {
-    this(requireNonNull(table, "No table provided").getSchema(), table
-      .getName());
+    this(requireNonNull(table, "No table provided").getSchema(),
+         table.getName());
     addAttributes(table.getAttributes());
   }
 
@@ -111,7 +111,8 @@ final class TablePartial
   }
 
   @Override
-  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<Table>
+    getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
     throw new NotLoadedException();
   }

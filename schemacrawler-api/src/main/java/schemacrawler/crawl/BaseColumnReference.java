@@ -21,12 +21,13 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
 /**
- * Represents a single column mapping from a primary key column to a
- * foreign key column.
+ * Represents a single column mapping from a primary key column to a foreign key
+ * column.
  *
  * @author Sualeh Fatehi
  */
@@ -62,13 +63,13 @@ public abstract class BaseColumnReference
     int compare = 0;
     if (compare == 0)
     {
-      compare = primaryKeyColumn.getFullName().compareTo(columnRef
-        .getPrimaryKeyColumn().getFullName());
+      compare = primaryKeyColumn.getFullName()
+        .compareTo(columnRef.getPrimaryKeyColumn().getFullName());
     }
     if (compare == 0)
     {
-      compare = foreignKeyColumn.getFullName().compareTo(columnRef
-        .getForeignKeyColumn().getFullName());
+      compare = foreignKeyColumn.getFullName()
+        .compareTo(columnRef.getForeignKeyColumn().getFullName());
     }
     return compare;
   }

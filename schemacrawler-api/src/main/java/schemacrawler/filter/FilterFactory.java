@@ -29,7 +29,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public class FilterFactory
 {
 
-  public static Predicate<Routine> routineFilter(final SchemaCrawlerOptions options)
+  public static Predicate<Routine>
+    routineFilter(final SchemaCrawlerOptions options)
   {
     final Predicate<Routine> routineFilter = new RoutineTypesFilter(options)
       .and(new DatabaseObjectFilter<Routine>(options,

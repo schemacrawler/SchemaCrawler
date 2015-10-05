@@ -87,7 +87,7 @@ public class LintExecutable
       .getTables());
     Collections.sort(tablesList, NamedObjectSort
       .getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
-    for (Table table: tablesList)
+    for (final Table table: tablesList)
     {
       formatter.handle(table);
     }

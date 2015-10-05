@@ -25,6 +25,8 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionRule;
 import sf.util.ObjectToString;
 
 public class LinterConfig
@@ -39,6 +41,8 @@ public class LinterConfig
   private final Config config;
   private String tableInclusionPattern;
   private String tableExclusionPattern;
+  private String columnInclusionPattern;
+  private String columnExclusionPattern;
 
   public LinterConfig(final String id)
   {
@@ -49,6 +53,12 @@ public class LinterConfig
     this.id = id;
     runLinter = true; // default value
     config = new Config();
+  }
+
+  public InclusionRule getColumnInclusionRule()
+  {
+    return new RegularExpressionRule(columnInclusionPattern,
+                                     columnExclusionPattern);
   }
 
   public Config getConfig()
@@ -66,14 +76,10 @@ public class LinterConfig
     return severity;
   }
 
-  public String getTableExclusionPattern()
+  public InclusionRule getTableInclusionRule()
   {
-    return tableExclusionPattern;
-  }
-
-  public String getTableInclusionPattern()
-  {
-    return tableInclusionPattern;
+    return new RegularExpressionRule(tableInclusionPattern,
+                                     tableExclusionPattern);
   }
 
   public boolean isRunLinter()
@@ -89,6 +95,16 @@ public class LinterConfig
   public void putAll(final Config config)
   {
     this.config.putAll(config);
+  }
+
+  public void setColumnExclusionPattern(final String columnExclusionPattern)
+  {
+    this.columnExclusionPattern = columnExclusionPattern;
+  }
+
+  public void setColumnInclusionPattern(final String columnInclusionPattern)
+  {
+    this.columnInclusionPattern = columnInclusionPattern;
   }
 
   public void setRunLinter(final boolean runLinter)
