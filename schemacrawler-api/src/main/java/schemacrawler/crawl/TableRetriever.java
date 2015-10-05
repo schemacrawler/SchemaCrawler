@@ -31,8 +31,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.ForeignKeyDeferrability;
-import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
@@ -41,7 +39,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import schemacrawler.utility.MetaDataUtility;
 import sf.util.Utility;
 
 /**
