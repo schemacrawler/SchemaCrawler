@@ -28,7 +28,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -85,8 +84,6 @@ public abstract class AbstractSchemaCrawlerSystemTest
   protected SchemaCrawlerOptions createOptions(final String dataSourceName,
                                                final String schemaInclusion)
   {
-    final Config config = (Config) appContext
-      .getBean(dataSourceName + ".properties");
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());

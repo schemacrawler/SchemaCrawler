@@ -25,7 +25,6 @@ package schemacrawler.tools.text.schema;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -345,7 +344,7 @@ public final class SchemaDotFormatter
 
   private void
     printForeignKeys(final Table table,
-                     final Collection<? extends BaseForeignKey> foreignKeys)
+                     final Collection<? extends BaseForeignKey<?>> foreignKeys)
   {
     for (final BaseForeignKey<? extends ColumnReference> foreignKey: foreignKeys)
     {
