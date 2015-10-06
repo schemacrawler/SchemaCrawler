@@ -36,8 +36,8 @@ public class FileInputResource
   implements InputResource
 {
 
-  private static final Logger LOGGER = Logger.getLogger(FileInputResource.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(FileInputResource.class.getName());
 
   private final Path inputFile;
 
@@ -52,37 +52,31 @@ public class FileInputResource
     }
   }
 
-  @Override
-  public String getDescription()
-  {
-    return inputFile.toString();
-  }
-
   public Path getInputFile()
   {
     return inputFile;
   }
 
   @Override
-  public Reader openInputReader(final Charset charset)
+  public Reader openNewInputReader(final Charset charset)
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
     final Reader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.INFO, "Opened input reader to file, " + inputFile);
-    return reader;
-  }
 
-  @Override
-  public boolean shouldCloseReader()
-  {
-    return true;
+    return new InputReader(getDescription(), reader, true);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return inputFile.toString();
   }
 
 }

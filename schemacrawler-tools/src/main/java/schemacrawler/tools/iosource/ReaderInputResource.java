@@ -44,29 +44,22 @@ public class ReaderInputResource
   }
 
   @Override
-  public String getDescription()
-  {
-    return "<reader>";
-  }
-
-  @Override
-  public Reader openInputReader(final Charset charset)
+  public Reader openNewInputReader(final Charset charset)
     throws IOException
   {
     LOGGER.log(Level.INFO, "Input to provided reader");
-    return new BufferedReader(reader);
-  }
-
-  @Override
-  public boolean shouldCloseReader()
-  {
-    return false;
+    return new InputReader(getDescription(), new BufferedReader(reader), false);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return "<reader>";
   }
 
 }

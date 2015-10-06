@@ -61,19 +61,13 @@ public class CompressedFileInputResource
                                        "No internal file path provided");
   }
 
-  @Override
-  public String getDescription()
-  {
-    return inputFile.toString();
-  }
-
   public Path getInputFile()
   {
     return inputFile;
   }
 
   @Override
-  public Reader openInputReader(final Charset charset)
+  public Reader openNewInputReader(final Charset charset)
     throws IOException
   {
     final InputStream fileStream = newInputStream(inputFile);
@@ -88,19 +82,19 @@ public class CompressedFileInputResource
     final Reader reader = new InputStreamReader(zipInputStream, charset);
     LOGGER.log(Level.INFO,
                "Opened input reader to compressed file, " + inputFile);
-    return reader;
-  }
 
-  @Override
-  public boolean shouldCloseReader()
-  {
-    return true;
+    return new InputReader(getDescription(), reader, true);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return inputFile.toString();
   }
 
 }
