@@ -50,51 +50,40 @@ public class FileOutputResource
       .toAbsolutePath();
   }
 
-  @Override
-  public String getDescription()
-  {
-    return outputFile.toString();
-  }
-
   public Path getOutputFile()
   {
     return outputFile;
   }
 
   @Override
-  public Writer openOutputWriter(final Charset charset,
-                                 final boolean appendOutput)
-    throws IOException
+  public Writer openNewOutputWriter(final Charset charset,
+                                    final boolean appendOutput)
+                                      throws IOException
   {
     requireNonNull(charset, "No output charset provided");
     final OpenOption[] openOptions;
     if (appendOutput)
     {
-      openOptions = new OpenOption[] {
-          WRITE, CREATE, APPEND
-      };
+      openOptions = new OpenOption[] { WRITE, CREATE, APPEND };
     }
     else
     {
-      openOptions = new OpenOption[] {
-          WRITE, CREATE, TRUNCATE_EXISTING
-      };
+      openOptions = new OpenOption[] { WRITE, CREATE, TRUNCATE_EXISTING };
     }
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
     LOGGER.log(Level.INFO, "Opened output writer to file, " + outputFile);
-    return writer;
-  }
-
-  @Override
-  public boolean shouldCloseWriter()
-  {
-    return true;
+    return new OutputWriter(getDescription(), writer, true);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return outputFile.toString();
   }
 
 }

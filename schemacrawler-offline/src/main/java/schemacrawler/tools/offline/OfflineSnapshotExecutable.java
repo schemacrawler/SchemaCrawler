@@ -25,6 +25,8 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -48,7 +50,6 @@ import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.iosource.InputReader;
 import schemacrawler.tools.options.OutputOptions;
 
 /**
@@ -145,7 +146,16 @@ public class OfflineSnapshotExecutable
   private Catalog loadCatalog()
     throws SchemaCrawlerException
   {
-    final InputReader snapshotReader = inputOptions.openNewInputReader();
+    final Reader snapshotReader;
+    try
+    {
+      snapshotReader = inputOptions.openNewInputReader();
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerException("Cannot open input reader", e);
+    }
+
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(snapshotReader);
     return xmlDatabase;
   }

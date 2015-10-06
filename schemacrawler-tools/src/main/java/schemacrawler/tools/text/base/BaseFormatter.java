@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isLowerCase;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -35,7 +36,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                            throws SchemaCrawlerException
   {
     this.options = requireNonNull(options, "Options not provided");
 
@@ -47,8 +48,15 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
 
-    out = new PrintWriter(outputOptions.openNewOutputWriter(options
-      .isAppendOutput()), true);
+    try
+    {
+      out = new PrintWriter(outputOptions
+        .openNewOutputWriter(options.isAppendOutput()), true);
+    }
+    catch (IOException e)
+    {
+      throw new SchemaCrawlerException("Cannot open output writer", e);
+    }
 
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
@@ -79,8 +87,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected String columnNullable(final String columnTypeName,
                                   final boolean isNullable)
   {
-    return isNullable? "": isLowerCase(columnTypeName)? " not null"
-                                                      : " NOT NULL";
+    return isNullable? ""
+                     : isLowerCase(columnTypeName)? " not null": " NOT NULL";
   }
 
   protected String formatTimestamp(final TemporalAccessor timestamp)
@@ -91,8 +99,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected boolean isColumnSignificant(final Column column)
   {
     return column != null
-           && (column.isPartOfPrimaryKey() || column.isPartOfForeignKey() || column
-             .isPartOfIndex());
+           && (column.isPartOfPrimaryKey() || column.isPartOfForeignKey()
+               || column.isPartOfIndex());
   }
 
   protected String nodeId(final DatabaseObject dbObject)

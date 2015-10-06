@@ -68,30 +68,24 @@ public class CompressedFileOutputResource
                                        "No internal file path provided");
   }
 
-  @Override
-  public String getDescription()
-  {
-    return outputFile.toString();
-  }
-
   public Path getOutputFile()
   {
     return outputFile;
   }
 
   @Override
-  public Writer openOutputWriter(final Charset charset,
-                                 final boolean appendOutput)
-                                   throws IOException
+  public Writer openNewOutputWriter(final Charset charset,
+                                    final boolean appendOutput)
+                                      throws IOException
   {
     if (appendOutput)
     {
       throw new IOException("Cannot append to compressed file");
     }
     final OpenOption[] openOptions = new OpenOption[] {
-                                                        WRITE, CREATE,
-                                                        TRUNCATE_EXISTING
-    };
+                                                        WRITE,
+                                                        CREATE,
+                                                        TRUNCATE_EXISTING };
     final OutputStream fileStream = newOutputStream(outputFile, openOptions);
 
     final ZipOutputStream zipOutputStream = new ZipOutputStream(fileStream);
@@ -100,19 +94,18 @@ public class CompressedFileOutputResource
     final Writer writer = new OutputStreamWriter(zipOutputStream, charset);
     LOGGER.log(Level.INFO,
                "Opened output writer to compressed file, " + outputFile);
-    return writer;
-  }
-
-  @Override
-  public boolean shouldCloseWriter()
-  {
-    return true;
+    return new OutputWriter(getDescription(), writer, true);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return outputFile.toString();
   }
 
 }

@@ -24,11 +24,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public final class OutputWriter
   extends Writer
@@ -36,33 +33,19 @@ public final class OutputWriter
 
   private static final Logger LOGGER = Logger
     .getLogger(ConsoleOutputResource.class.getName());
+
+  private final String description;
   private final Writer writer;
+  private final boolean shouldCloseWriter;
   private boolean isClosed;
 
-  private final OutputResource outputResource;
-
-  public OutputWriter(final OutputResource outputResource,
-                      final Charset outputCharset)
-    throws SchemaCrawlerException
+  public OutputWriter(final String description,
+                      final Writer writer,
+                      final boolean shouldCloseWriter)
   {
-    this(outputResource, outputCharset, false);
-  }
-
-  public OutputWriter(final OutputResource outputResource,
-                      final Charset outputCharset,
-                      final boolean appendOutput)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      this.outputResource = requireNonNull(outputResource,
-                                           "No output resource provided");
-      writer = outputResource.openOutputWriter(outputCharset, appendOutput);
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
+    this.description = requireNonNull(description, "No description provided");
+    this.writer = requireNonNull(writer, "No writer provided");
+    this.shouldCloseWriter = shouldCloseWriter;
   }
 
   @Override
@@ -95,7 +78,7 @@ public final class OutputWriter
   {
     flush();
 
-    if (outputResource.shouldCloseWriter())
+    if (shouldCloseWriter)
     {
       LOGGER.log(Level.INFO, "Closing output writer");
       writer.close();
@@ -121,7 +104,7 @@ public final class OutputWriter
   @Override
   public String toString()
   {
-    return outputResource.toString();
+    return description;
   }
 
   @Override
@@ -170,9 +153,8 @@ public final class OutputWriter
   {
     if (!isClosed)
     {
-      throw new IllegalStateException(String.format("Output writer \"%s\" was not closed",
-                                                    outputResource
-                                                      .getDescription()));
+      throw new IllegalStateException(String
+        .format("Output writer \"%s\" was not closed", description));
     }
     super.finalize();
   }
@@ -186,7 +168,7 @@ public final class OutputWriter
     if (isClosed)
     {
       throw new IOException(String.format("Output writer \"%s\" is not open",
-                                          outputResource.getDescription()));
+                                          description));
     }
   }
 
