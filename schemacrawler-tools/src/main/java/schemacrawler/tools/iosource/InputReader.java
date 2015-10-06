@@ -25,44 +25,35 @@ import static java.util.Objects.requireNonNull;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public class InputReader
   extends Reader
 {
 
-  private static final Logger LOGGER = Logger.getLogger(InputReader.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(InputReader.class.getName());
 
+  private final String description;
   private final Reader reader;
+  private final boolean shouldCloseReader;
   private boolean isClosed;
-  private final InputResource inputResource;
 
-  public InputReader(final InputResource inputResource,
-                     final Charset inputCharset)
-    throws SchemaCrawlerException
+  public InputReader(final String description,
+                     final Reader reader,
+                     final boolean shouldCloseReader)
   {
-    try
-    {
-      this.inputResource = requireNonNull(inputResource,
-                                          "No input resource provided");
-      reader = inputResource.openInputReader(inputCharset);
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
+    this.description = requireNonNull(description, "No description provided");
+    this.reader = requireNonNull(reader, "No reader provided");
+    this.shouldCloseReader = shouldCloseReader;
   }
 
   @Override
   public void close()
     throws IOException
   {
-    if (inputResource.shouldCloseReader())
+    if (shouldCloseReader)
     {
       LOGGER.log(Level.INFO, "Closing input reader");
       reader.close();
@@ -150,7 +141,7 @@ public class InputReader
   @Override
   public String toString()
   {
-    return inputResource.toString();
+    return description;
   }
 
   @Override
@@ -159,9 +150,8 @@ public class InputReader
   {
     if (!isClosed)
     {
-      throw new IllegalStateException(String.format("Input reader \"%s\" was not closed",
-                                                    inputResource
-                                                      .getDescription()));
+      throw new IllegalStateException(String
+        .format("Input reader \"%s\" was not closed", description));
     }
     super.finalize();
   }
@@ -175,7 +165,7 @@ public class InputReader
     if (isClosed)
     {
       throw new IOException(String.format("Input reader \"%s\" is not open",
-                                          inputResource.getDescription()));
+                                          description));
     }
   }
 

@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
@@ -42,10 +43,8 @@ import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
-import schemacrawler.tools.iosource.InputReader;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
-import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.iosource.WriterOutputResource;
 import sf.util.ObjectToString;
 
@@ -253,45 +252,46 @@ public class OutputOptions
   }
 
   /**
-   * Gets the input reader. If the input resource is null, first set it to a
-   * value based off the output format value.
+   * Gets the input reader. If the input resource is null, first set it
+   * to a value based off the output format value.
    *
    * @throws SchemaCrawlerException
    */
-  public InputReader openNewInputReader()
-    throws SchemaCrawlerException
+  public Reader openNewInputReader()
+    throws IOException
   {
-    return new InputReader(obtainInputResource(), getInputCharset());
+    return obtainInputResource().openNewInputReader(getInputCharset());
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set it to
-   * console output.
+   * Gets the output reader. If the output resource is null, first set
+   * it to console output.
    *
    * @throws SchemaCrawlerException
    */
-  public OutputWriter openNewOutputWriter()
-    throws SchemaCrawlerException
+  public Writer openNewOutputWriter()
+    throws IOException
   {
-    return new OutputWriter(obtainOutputResource(), getOutputCharset());
+    return openNewOutputWriter(false);
   }
 
   /**
-   * Gets the output reader. If the output resource is null, first set it to
-   * console output.
+   * Gets the output reader. If the output resource is null, first set
+   * it to console output.
    *
    * @throws SchemaCrawlerException
    */
-  public OutputWriter openNewOutputWriter(final boolean appendOutput)
-    throws SchemaCrawlerException
+  public Writer openNewOutputWriter(final boolean appendOutput)
+    throws IOException
   {
-    return new OutputWriter(obtainOutputResource(), getOutputCharset(),
-                            appendOutput);
+    return obtainOutputResource().openNewOutputWriter(getOutputCharset(),
+                                                   appendOutput);
   }
 
   /**
-   * Sets the name of the input file for compressed input. It is important to
-   * note that the input encoding should be available at this point.
+   * Sets the name of the input file for compressed input. It is
+   * important to note that the input encoding should be available at
+   * this point.
    *
    * @param outputFileName
    *        Output file name.
@@ -307,8 +307,9 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the output file for compressed output. It is important to
-   * note that the output encoding should be available at this point.
+   * Sets the name of the output file for compressed output. It is
+   * important to note that the output encoding should be available at
+   * this point.
    *
    * @param outputFileName
    *        Output file name.
@@ -340,7 +341,8 @@ public class OutputOptions
   }
 
   /**
-   * Set character encoding for input files, such as scripts and templates.
+   * Set character encoding for input files, such as scripts and
+   * templates.
    *
    * @param inputEncoding
    *        Input encoding
@@ -358,8 +360,8 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the input file. It is important to note that the input
-   * encoding should be available at this point.
+   * Sets the name of the input file. It is important to note that the
+   * input encoding should be available at this point.
    *
    * @param inputFileName
    *        Input file name.
@@ -379,13 +381,13 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the input resource, first from a file, failing which from
-   * the classpath. It is important to note that the input encoding should be
-   * available at this point.
+   * Sets the name of the input resource, first from a file, failing
+   * which from the classpath. It is important to note that the input
+   * encoding should be available at this point.
    *
    * @param inputResourceName
-   *        Input resource name, which could be a file path, or a classpath
-   *        resource.
+   *        Input resource name, which could be a file path, or a
+   *        classpath resource.
    * @throws IOException
    *         When the resource cannot be accessed
    */
@@ -435,8 +437,8 @@ public class OutputOptions
   }
 
   /**
-   * Sets the name of the output file. It is important to note that the output
-   * encoding should be available at this point.
+   * Sets the name of the output file. It is important to note that the
+   * output encoding should be available at this point.
    *
    * @param outputFileName
    *        Output file name.
@@ -478,8 +480,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the input resource. If the input resource is null, first set it to a
-   * value based off the output format value.
+   * Gets the input resource. If the input resource is null, first set
+   * it to a value based off the output format value.
    */
   private InputResource obtainInputResource()
   {
@@ -498,8 +500,8 @@ public class OutputOptions
   }
 
   /**
-   * Gets the output resource. If the output resource is null, first set it to
-   * console output.
+   * Gets the output resource. If the output resource is null, first set
+   * it to console output.
    */
   private OutputResource obtainOutputResource()
   {

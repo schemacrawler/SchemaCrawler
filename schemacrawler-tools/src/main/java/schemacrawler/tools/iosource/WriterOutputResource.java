@@ -44,30 +44,25 @@ public class WriterOutputResource
   }
 
   @Override
-  public String getDescription()
-  {
-    return "<writer>";
-  }
-
-  @Override
-  public Writer openOutputWriter(final Charset charset,
-                                 final boolean appendOutput)
-    throws IOException
+  public Writer openNewOutputWriter(final Charset charset,
+                                    final boolean appendOutput)
+                                      throws IOException
   {
     LOGGER.log(Level.INFO, "Output to provided writer");
-    return new BufferedWriter(writer);
-  }
-
-  @Override
-  public boolean shouldCloseWriter()
-  {
-    return false;
+    return new OutputWriter(getDescription(),
+                            new BufferedWriter(writer),
+                            false);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return "<writer>";
   }
 
 }

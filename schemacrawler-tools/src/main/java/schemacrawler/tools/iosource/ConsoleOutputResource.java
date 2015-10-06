@@ -36,31 +36,24 @@ public class ConsoleOutputResource
     .getLogger(ConsoleOutputResource.class.getName());
 
   @Override
-  public String getDescription()
-  {
-    return "<console>";
-  }
-
-  @Override
-  public Writer openOutputWriter(final Charset charset,
-                                 final boolean appendOutput)
-    throws IOException
+  public Writer openNewOutputWriter(final Charset charset,
+                                    final boolean appendOutput)
+                                      throws IOException
   {
     final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
     LOGGER.log(Level.INFO, "Opened output writer to console");
-    return writer;
-  }
-
-  @Override
-  public boolean shouldCloseWriter()
-  {
-    return false;
+    return new OutputWriter(getDescription(), writer, false);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return "<console>";
   }
 
 }

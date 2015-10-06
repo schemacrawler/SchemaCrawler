@@ -45,7 +45,8 @@ public class ClasspathInputResource
   {
     this.classpathResource = requireNonNull(classpathResource,
                                             "No classpath resource provided");
-    if (ClasspathInputResource.class.getResource(this.classpathResource) == null)
+    if (ClasspathInputResource.class
+      .getResource(this.classpathResource) == null)
     {
       throw new IOException("Cannot read classpath resource, "
                             + this.classpathResource);
@@ -53,13 +54,7 @@ public class ClasspathInputResource
   }
 
   @Override
-  public String getDescription()
-  {
-    return InputReader.class.getResource(classpathResource).toExternalForm();
-  }
-
-  @Override
-  public Reader openInputReader(final Charset charset)
+  public Reader openNewInputReader(final Charset charset)
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
@@ -67,21 +62,22 @@ public class ClasspathInputResource
       .getResourceAsStream(classpathResource);
     final Reader reader = new BufferedReader(new InputStreamReader(inputStream,
                                                                    charset));
-    LOGGER.log(Level.INFO, "Opened input reader to classpath resource, "
-                           + classpathResource);
-    return reader;
-  }
+    LOGGER
+      .log(Level.INFO,
+           "Opened input reader to classpath resource, " + classpathResource);
 
-  @Override
-  public boolean shouldCloseReader()
-  {
-    return true;
+    return new InputReader(getDescription(), reader, true);
   }
 
   @Override
   public String toString()
   {
     return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return InputReader.class.getResource(classpathResource).toExternalForm();
   }
 
 }
