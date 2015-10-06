@@ -27,11 +27,7 @@ import java.nio.charset.Charset;
 public interface InputResource
 {
 
-  String getDescription();
-
-  Reader openInputReader(Charset charset)
+  Reader openNewInputReader(Charset charset)
     throws IOException;
-
-  boolean shouldCloseReader();
 
 }

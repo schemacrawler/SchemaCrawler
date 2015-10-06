@@ -12,6 +12,7 @@ import static sf.util.Utility.copy;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -21,7 +22,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedGraphExecutable
@@ -55,11 +55,12 @@ public class EmbeddedGraphExecutable
     chain.executeOn(catalog, connection);
 
     // Interleave HTML and SVG
-    try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
-                                                                      StandardCharsets.UTF_8,
-                                                                      WRITE,
-                                                                      CREATE,
-                                                                      TRUNCATE_EXISTING);
+    try (
+        final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
+                                                                     StandardCharsets.UTF_8,
+                                                                     WRITE,
+                                                                     CREATE,
+                                                                     TRUNCATE_EXISTING);
         final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
                                                                     StandardCharsets.UTF_8);
         final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
@@ -76,7 +77,7 @@ public class EmbeddedGraphExecutable
       }
     }
 
-    try (final OutputWriter writer = outputOptions.openNewOutputWriter();)
+    try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       copy(newBufferedReader(finalHtmlFile, StandardCharsets.UTF_8), writer);
     }
@@ -84,7 +85,7 @@ public class EmbeddedGraphExecutable
 
   private void insertSvg(final BufferedWriter finalHtmlFileWriter,
                          final BufferedReader baseSvgFileReader)
-    throws IOException
+                           throws IOException
   {
     finalHtmlFileWriter.append(System.lineSeparator());
     boolean skipLines = true;

@@ -49,7 +49,6 @@ import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
-import schemacrawler.tools.iosource.OutputWriter;
 import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest
@@ -174,9 +173,10 @@ public class OfflineSnapshotTest
     serializedDatabaseFile = createTempFile("schemacrawler", "ser");
 
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
-    final Writer writer = new OutputWriter(new CompressedFileOutputResource(serializedDatabaseFile,
-                                                                            "schemacrawler.data"),
-                                           StandardCharsets.UTF_8);
+    final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
+                                                           "schemacrawler.data")
+                                                             .openNewOutputWriter(StandardCharsets.UTF_8,
+                                                                               false);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML", 0,
