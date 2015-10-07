@@ -20,8 +20,6 @@
 package schemacrawler.server.h2;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -31,15 +29,9 @@ public final class H2DatabaseConnector
 
   public H2DatabaseConnector()
   {
-    super(new DatabaseServerType("h2", "H2 Database Engine"),
+    super(new DatabaseServerType("h2", "H2 Database Engine", "jdbc:h2:"),
           "/help/Connections.h2.txt", "/schemacrawler-h2.config.properties",
           null);
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:h2:.*");
   }
 
 }
