@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.commandlineparser.CommandLineUtility;
@@ -110,7 +109,7 @@ public final class SchemaCrawlerCommandLine
     initialize(executableForList);
     executables.add(executableForList);
 
-    executableForList = new SchemaCrawlerExecutable(command);
+    executableForList = dbSystemConnector.newExecutable(command);
     initialize(executableForList);
     executables.add(executableForList);
 
