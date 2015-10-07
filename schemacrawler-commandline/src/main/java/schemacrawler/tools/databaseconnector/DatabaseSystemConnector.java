@@ -33,6 +33,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public class DatabaseSystemConnector
@@ -55,8 +56,8 @@ public class DatabaseSystemConnector
 
     @Override
     public void
-      execute(Connection connection,
-              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+      execute(final Connection connection,
+              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
                 throws Exception
     {
       // No-op
@@ -101,20 +102,6 @@ public class DatabaseSystemConnector
   }
 
   /**
-   * Gets the complete bundled database specific configuration set, including
-   * the SQL for information schema views.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder
-    getDatabaseSpecificOverrideOptionsBuilder()
-  {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-      .fromResourceFolder(informationSchemaViewsResourceFolder);
-
-    return databaseSpecificOverrideOptionsBuilder;
-  }
-
-  /**
    * Gets the complete bundled database configuration set. This is useful in
    * building the SchemaCrawler options.
    */
@@ -127,6 +114,20 @@ public class DatabaseSystemConnector
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
+  }
+
+  /**
+   * Gets the complete bundled database specific configuration set, including
+   * the SQL for information schema views.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder
+    getDatabaseSpecificOverrideOptionsBuilder()
+  {
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .fromResourceFolder(informationSchemaViewsResourceFolder);
+
+    return databaseSpecificOverrideOptionsBuilder;
   }
 
   /**
@@ -159,6 +160,12 @@ public class DatabaseSystemConnector
     }
 
     return connectionOptions;
+  }
+
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new SchemaCrawlerExecutable(command);
   }
 
   public Executable newPostExecutable()

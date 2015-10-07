@@ -83,6 +83,10 @@ public class OfflineSnapshotExecutable
   {
     checkConnection(connection);
 
+    inputOptions = new OutputOptions();
+    inputOptions.setCompressedInputFile(((OfflineConnection) connection)
+      .getOfflineDatabasePath());
+
     final Catalog catalog = loadCatalog();
 
     executeOn(catalog, connection);
@@ -135,11 +139,11 @@ public class OfflineSnapshotExecutable
 
   private void checkConnection(final Connection connection)
   {
-    if (connection != null)
+    if (connection == null || !(connection instanceof OfflineConnection))
     {
       LOGGER
-        .log(Level.CONFIG,
-             "No database connection should be provided for the offline snapshot");
+        .log(Level.SEVERE,
+             "Offline database connection not provided for the offline snapshot");
     }
   }
 
