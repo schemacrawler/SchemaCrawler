@@ -22,30 +22,58 @@ package schemacrawler.tools.offline;
 
 import static sf.util.Utility.isBlank;
 
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OfflineDriver
   implements Driver
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(OfflineDriver.class.getName());
+
+  private static final String JDBC_URL_PREFIX = "jdbc:offline:";
+
+  static
+  {
+    try
+    {
+      DriverManager.registerDriver(new OfflineDriver());
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.SEVERE, "Cannot register offline driver", e);
+    }
+  }
+
   @Override
   public boolean acceptsURL(final String url)
     throws SQLException
   {
-    return !isBlank(url) && url.startsWith("jdbc:offline:");
+    return !isBlank(url) && url.startsWith(JDBC_URL_PREFIX);
   }
 
   @Override
   public Connection connect(final String url, final Properties info)
     throws SQLException
   {
-    return null;
+    if (acceptsURL(url))
+    {
+      final String path = url.substring(JDBC_URL_PREFIX.length());
+      return new OfflineConnection(Paths.get(path));
+    }
+    else
+    {
+      return null;
+    }
   }
 
   @Override
@@ -70,7 +98,7 @@ public class OfflineDriver
   @Override
   public DriverPropertyInfo[] getPropertyInfo(final String url,
                                               final Properties info)
-    throws SQLException
+                                                throws SQLException
   {
     return new DriverPropertyInfo[0];
   }

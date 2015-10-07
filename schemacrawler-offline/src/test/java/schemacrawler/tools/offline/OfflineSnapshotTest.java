@@ -40,19 +40,21 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest
-  extends BaseExecutableTest
+  extends BaseDatabaseTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
@@ -65,6 +67,7 @@ public class OfflineSnapshotTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("server", "offline");
       argsMap.put("database", serializedDatabaseFile.toString());
 
       argsMap.put("infolevel", "maximum");
@@ -72,8 +75,9 @@ public class OfflineSnapshotTest
       argsMap.put("outputformat", "text");
       argsMap.put("outputfile", out.toString());
 
-      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(flattenCommandlineArgs(argsMap));
-      commandLine.execute();
+      argsMap.put("loglevel", "warning");
+
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
     }
@@ -86,6 +90,7 @@ public class OfflineSnapshotTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("server", "offline");
       argsMap.put("database", serializedDatabaseFile.toString());
 
       argsMap.put("noinfo", "true");
@@ -96,8 +101,7 @@ public class OfflineSnapshotTest
       argsMap.put("tables", ".*SALES");
       argsMap.put("outputfile", out.toString());
 
-      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(flattenCommandlineArgs(argsMap));
-      commandLine.execute();
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt");
     }
@@ -109,25 +113,24 @@ public class OfflineSnapshotTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Map<String, String> args = new HashMap<>();
-      args.put("database", serializedDatabaseFile.toString());
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("server", "offline");
+      argsMap.put("database", serializedDatabaseFile.toString());
 
-      args.put("noinfo", "true");
-      args.put("infolevel", "maximum");
-      args.put("command", "list");
-      args.put("outputformat", "text");
-      args.put("schemas", "PUBLIC.BOOKS");
-      args.put("outputfile", out.toString());
+      argsMap.put("noinfo", "true");
+      argsMap.put("infolevel", "maximum");
+      argsMap.put("command", "list");
+      argsMap.put("outputformat", "text");
+      argsMap.put("schemas", "PUBLIC.BOOKS");
+      argsMap.put("outputfile", out.toString());
 
       final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: args.entrySet())
+      for (final Map.Entry<String, String> arg: argsMap.entrySet())
       {
         argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
       }
 
-      final OfflineSnapshotCommandLine commandLine = new OfflineSnapshotCommandLine(argsList
-        .toArray(new String[0]));
-      commandLine.execute();
+      Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT
                        + "offlineWithSchemaFilters.txt");
@@ -176,12 +179,29 @@ public class OfflineSnapshotTest
     final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
                                                            "schemacrawler.data")
                                                              .openNewOutputWriter(StandardCharsets.UTF_8,
-                                                                               false);
+                                                                                  false);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML", 0,
                   size(serializedDatabaseFile));
 
+  }
+
+  protected void executeExecutable(final Executable executable,
+                                   final String outputFormatValue,
+                                   final String referenceFileName)
+                                     throws Exception
+  {
+    try (final TestWriter out = new TestWriter(outputFormatValue);)
+    {
+      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
+                                                            out);
+
+      executable.setOutputOptions(outputOptions);
+      executable.execute(new OfflineConnection(serializedDatabaseFile));
+
+      out.assertEquals(referenceFileName);
+    }
   }
 
 }
