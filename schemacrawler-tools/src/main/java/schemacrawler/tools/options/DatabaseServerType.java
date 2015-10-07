@@ -21,7 +21,14 @@ package schemacrawler.tools.options;
 
 
 import static sf.util.Utility.isBlank;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.DatabaseUtility;
 
 public final class DatabaseServerType
   implements Options
@@ -30,12 +37,14 @@ public final class DatabaseServerType
   private static final long serialVersionUID = 2160456864554076419L;
 
   public static final DatabaseServerType UNKNOWN = new DatabaseServerType();
-  private final String databaseSystemIdentifier;
 
+  private final String databaseSystemIdentifier;
   private final String databaseSystemName;
+  private final Pattern connectionUrlPattern;
 
   public DatabaseServerType(final String databaseSystemIdentifier,
-                            final String databaseSystemName)
+                            final String databaseSystemName,
+                            final String connectionUrlPrefix)
   {
     if (isBlank(databaseSystemIdentifier))
     {
@@ -48,12 +57,24 @@ public final class DatabaseServerType
       throw new IllegalArgumentException("No database system name provided");
     }
     this.databaseSystemName = databaseSystemName;
+
+    if (isBlank(connectionUrlPrefix))
+    {
+      throw new IllegalArgumentException("No JDBC connection URL prefix provided");
+    }
+    connectionUrlPattern = Pattern.compile(connectionUrlPrefix + ".*");
   }
 
   private DatabaseServerType()
   {
     databaseSystemIdentifier = null;
     databaseSystemName = null;
+    connectionUrlPattern = null;
+  }
+
+  public final Pattern getConnectionUrlPattern()
+  {
+    return connectionUrlPattern;
   }
 
   public String getDatabaseSystemIdentifier()
@@ -64,6 +85,31 @@ public final class DatabaseServerType
   public String getDatabaseSystemName()
   {
     return databaseSystemName;
+  }
+
+  public final boolean isConnectionForConnector(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    DatabaseUtility.checkConnection(connection);
+    try
+    {
+      final String url = connection.getMetaData().getURL();
+      if (isBlank(url))
+      {
+        throw new SchemaCrawlerException("Cannot check database connection URL");
+      }
+      final Pattern connectionUrlPattern = getConnectionUrlPattern();
+      if (connectionUrlPattern == null)
+      {
+        throw new IllegalArgumentException("No connection URL pattern provided");
+      }
+      return connectionUrlPattern.matcher(url).matches();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Cannot check database connection URL",
+                                       e);
+    }
   }
 
   public boolean isUnknownDatabaseSystem()

@@ -20,8 +20,6 @@
 package schemacrawler.server.hsqldb;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -31,16 +29,10 @@ public final class HyperSQLDatabaseConnector
 
   public HyperSQLDatabaseConnector()
   {
-    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
+    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase", "jdbc:hsqldb:"),
           "/help/Connections.hsqldb.txt",
           "/schemacrawler-hsqldb.config.properties",
           "/hsqldb.information_schema");
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:hsqldb:.*");
   }
 
 }
