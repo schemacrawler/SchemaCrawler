@@ -20,8 +20,6 @@
 package schemacrawler.server.postgresql;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -31,16 +29,11 @@ public final class PostgreSQLDatabaseConnector
 
   public PostgreSQLDatabaseConnector()
   {
-    super(new DatabaseServerType("postgresql", "PostgreSQL"),
+    super(new DatabaseServerType("postgresql", "PostgreSQL",
+                                 "jdbc:postgresql:"),
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema");
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:postgresql:.*");
   }
 
 }

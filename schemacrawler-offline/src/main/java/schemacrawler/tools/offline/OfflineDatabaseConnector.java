@@ -20,8 +20,6 @@
 package schemacrawler.tools.offline;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
@@ -51,19 +49,14 @@ public final class OfflineDatabaseConnector
   }
 
   private static final DatabaseServerType OFFLINE_SERVER_TYPE = new DatabaseServerType("offline",
-                                                                                       "Offline");
+                                                                                       "Offline",
+                                                                                       "jdbc:offline:");
 
   public OfflineDatabaseConnector()
   {
     super(OFFLINE_SERVER_TYPE, "/help/Connections.offline.txt",
           new OfflineDatabaseSystemConnector("/schemacrawler-offline.config.properties",
                                              null));
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:offline:.*");
   }
 
 }
