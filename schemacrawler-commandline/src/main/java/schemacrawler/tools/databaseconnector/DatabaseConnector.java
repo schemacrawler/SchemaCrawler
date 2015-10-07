@@ -28,9 +28,6 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.CommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.options.DatabaseServerType;
 import sf.util.DatabaseUtility;
 
@@ -94,12 +91,20 @@ public abstract class DatabaseConnector
     dbSystemConnector = DatabaseSystemConnector.UNKNOWN;
   }
 
+  public String getConnectionHelpResource()
+  {
+    return connectionHelpResource;
+  }
+
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
   }
 
-  protected abstract Pattern getConnectionUrlPattern();
+  public DatabaseSystemConnector getDatabaseSystemConnector()
+  {
+    return dbSystemConnector;
+  }
 
   public final boolean isConnectionForConnector(final Connection connection)
     throws SchemaCrawlerException
@@ -119,31 +124,13 @@ public abstract class DatabaseConnector
       }
       return connectionUrlPattern.matcher(url).matches();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       throw new SchemaCrawlerException("Cannot check database connection URL",
                                        e);
     }
   }
 
-  public DatabaseSystemConnector getDatabaseSystemConnector()
-  {
-    return dbSystemConnector;
-  }
-
-  public CommandLine newCommandLine(final String[] args)
-    throws SchemaCrawlerException
-  {
-    return new SchemaCrawlerCommandLine(dbSystemConnector, args);
-  }
-
-  public CommandLine newHelpCommandLine(final String[] args,
-                                        final boolean showVersionOnly)
-                                          throws SchemaCrawlerException
-  {
-    return new SchemaCrawlerHelpCommandLine(args, dbServerType,
-                                            connectionHelpResource,
-                                            showVersionOnly);
-  }
+  protected abstract Pattern getConnectionUrlPattern();
 
 }
