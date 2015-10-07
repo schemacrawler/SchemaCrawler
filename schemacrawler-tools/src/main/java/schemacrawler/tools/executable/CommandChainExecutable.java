@@ -31,6 +31,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 
+/**
+ * Allows chaining multiple executables together, that produce different
+ * artifacts, such as an image and a HTML file.
+ */
 public final class CommandChainExecutable
   extends BaseCommandChainExecutable
 {
@@ -46,20 +50,21 @@ public final class CommandChainExecutable
   public final Executable addNext(final String command,
                                   final OutputFormat outputFormat,
                                   final Path outputFile)
-    throws SchemaCrawlerException
+                                    throws SchemaCrawlerException
   {
     requireNonNull(command, "No command provided");
     requireNonNull(outputFormat, "No output format provided");
     requireNonNull(outputFile, "No output file provided");
 
-    return addNext(command, outputFormat.getFormat(), outputFile.normalize()
-      .toAbsolutePath().toString());
+    return addNext(command,
+                   outputFormat.getFormat(),
+                   outputFile.normalize().toAbsolutePath().toString());
   }
 
   public final Executable addNext(final String command,
                                   final String outputFormat,
                                   final String outputFileName)
-    throws SchemaCrawlerException
+                                    throws SchemaCrawlerException
   {
     try
     {
@@ -80,10 +85,11 @@ public final class CommandChainExecutable
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(String.format("Cannot chain executable, unknown command, %s - %s - %s",
-                                                     command,
-                                                     outputFormat,
-                                                     outputFileName));
+      throw new SchemaCrawlerException(String
+        .format("Cannot chain executable, unknown command, %s - %s - %s",
+                command,
+                outputFormat,
+                outputFileName));
     }
   }
 

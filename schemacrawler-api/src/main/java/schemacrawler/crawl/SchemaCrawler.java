@@ -504,21 +504,6 @@ public final class SchemaCrawler
    *
    * @param connection
    *        An database connection.
-   * @throws SchemaCrawlerException
-   *         On a crawler exception
-   */
-  public SchemaCrawler(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    this.connection = requireNonNull(connection, "No connection specified");
-    databaseSpecificOverrideOptions = new DatabaseSpecificOverrideOptions();
-  }
-
-  /**
-   * Constructs a SchemaCrawler object, from a connection.
-   *
-   * @param connection
-   *        An database connection.
    * @param databaseSpecificOverrideOptions
    *        Database specific overrides
    * @throws SchemaCrawlerException
