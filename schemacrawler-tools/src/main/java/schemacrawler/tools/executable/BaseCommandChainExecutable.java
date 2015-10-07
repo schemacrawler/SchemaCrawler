@@ -30,6 +30,11 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
+/**
+ * Allows chaining multiple executables with the same configuration. The
+ * catalog is obtained just once, and passed on from executable to
+ * executable for efficiency in execution.
+ */
 abstract class BaseCommandChainExecutable
   extends BaseStagedExecutable
 {
@@ -60,7 +65,7 @@ abstract class BaseCommandChainExecutable
 
   protected final void executeChain(final Catalog catalog,
                                     final Connection connection)
-    throws Exception
+                                      throws Exception
   {
     if (executables.isEmpty())
     {

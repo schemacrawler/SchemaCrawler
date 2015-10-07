@@ -77,16 +77,4 @@ public abstract class BaseStagedExecutable
     executeOn(catalog, connection);
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#execute(Connection)
-   */
-  @Override
-  public final void execute(final Connection connection)
-    throws Exception
-  {
-    execute(connection, new DatabaseSpecificOverrideOptions());
-  }
-
 }
