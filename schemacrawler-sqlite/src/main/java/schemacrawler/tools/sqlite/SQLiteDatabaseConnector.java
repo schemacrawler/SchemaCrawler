@@ -20,8 +20,6 @@
 package schemacrawler.tools.sqlite;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
@@ -35,7 +33,8 @@ public final class SQLiteDatabaseConnector
 {
 
   private static final DatabaseServerType SQLITE_SERVER_TYPE = new DatabaseServerType("sqlite",
-                                                                                      "SQLite");
+                                                                                      "SQLite",
+                                                                                      "jdbc:sqlite:");
 
   private static final class SQLiteDatabaseSystemConnector
     extends DatabaseSystemConnector
@@ -86,12 +85,6 @@ public final class SQLiteDatabaseConnector
     super(SQLITE_SERVER_TYPE, "/help/Connections.sqlite.txt",
           new SQLiteDatabaseSystemConnector("/schemacrawler-sqlite.config.properties",
                                             "/sqlite.information_schema"));
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:sqlite:.*");
   }
 
 }

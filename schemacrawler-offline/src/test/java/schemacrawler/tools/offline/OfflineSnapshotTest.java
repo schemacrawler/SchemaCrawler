@@ -75,8 +75,6 @@ public class OfflineSnapshotTest
       argsMap.put("outputformat", "text");
       argsMap.put("outputfile", out.toString());
 
-      argsMap.put("loglevel", "warning");
-
       Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "details.txt");

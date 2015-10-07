@@ -20,8 +20,6 @@
 package schemacrawler.server.sqlserver;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -31,16 +29,11 @@ public final class SqlServerDatabaseConnector
 
   public SqlServerDatabaseConnector()
   {
-    super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
+    super(new DatabaseServerType("sqlserver", "Microsoft SQL Server",
+                                 "jdbc:jtds:sqlserver:"),
           "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema");
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:jtds:sqlserver:.*");
   }
 
 }

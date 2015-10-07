@@ -20,8 +20,6 @@
 package schemacrawler.server.mysql;
 
 
-import java.util.regex.Pattern;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -31,16 +29,10 @@ public final class MySQLDatabaseConnector
 
   public MySQLDatabaseConnector()
   {
-    super(new DatabaseServerType("mysql", "MySQL"),
+    super(new DatabaseServerType("mysql", "MySQL", "jdbc:mysql:"),
           "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
           "/mysql.information_schema");
-  }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:mysql:.*");
   }
 
 }
