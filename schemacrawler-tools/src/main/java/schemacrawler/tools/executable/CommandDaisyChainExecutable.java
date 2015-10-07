@@ -8,6 +8,10 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 
+/**
+ * Allows chaining multiple executables together, that produce shared
+ * artifacts, such as a single HTML file.
+ */
 public final class CommandDaisyChainExecutable
   extends BaseCommandChainExecutable
 {
@@ -95,8 +99,8 @@ public final class CommandDaisyChainExecutable
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(String.format("Cannot chain executable, unknown command, %s",
-                                                     command));
+      throw new SchemaCrawlerException(String
+        .format("Cannot chain executable, unknown command, %s", command));
     }
   }
 
