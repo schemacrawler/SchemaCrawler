@@ -34,6 +34,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.DatabaseServerTypeParser;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
+import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
@@ -79,12 +81,14 @@ public final class Main
       if (showHelp)
       {
         final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-        commandLine = dbConnector.newHelpCommandLine(args, showVersionOnly);
+        commandLine = new SchemaCrawlerHelpCommandLine(args, dbConnector
+          .getDatabaseServerType(), dbConnector.getConnectionHelpResource(),
+                                                       showVersionOnly);
       }
       else
       {
-        commandLine = dbConnector
-          .newCommandLine(flattenCommandlineArgs(config));
+        commandLine = new SchemaCrawlerCommandLine(dbConnector
+          .getDatabaseSystemConnector(), flattenCommandlineArgs(config));
       }
       commandLine.execute();
     }
