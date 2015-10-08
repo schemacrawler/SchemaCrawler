@@ -22,7 +22,6 @@ package schemacrawler.server.oracle;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -30,35 +29,21 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final class OracleDatabaseSystemConnector
-    extends DatabaseSystemConnector
-  {
-    private OracleDatabaseSystemConnector(final String configResource,
-                                          final String informationSchemaViewsResourceFolder)
-    {
-      super(ORACLE_SERVER_TYPE, configResource,
-            informationSchemaViewsResourceFolder);
-    }
-
-    @Override
-    public Executable newExecutable(final String command)
-      throws SchemaCrawlerException
-    {
-      return new OracleExecutable(command);
-    }
-  }
-
-  private static final DatabaseServerType ORACLE_SERVER_TYPE = new DatabaseServerType("oracle",
-                                                                                      "Oracle",
-                                                                                      "jdbc:oracle:");
-
   public OracleDatabaseConnector()
   {
-    super(ORACLE_SERVER_TYPE, "/help/Connections.oracle.txt",
-          new OracleDatabaseSystemConnector("/schemacrawler-oracle.config.properties",
-                                            "/oracle.information_schema"));
+    super(new DatabaseServerType("oracle", "Oracle", "jdbc:oracle:"),
+          "/help/Connections.oracle.txt",
+          "/schemacrawler-oracle.config.properties",
+          "/oracle.information_schema");
 
     System.setProperty("oracle.jdbc.Trace", "true");
+  }
+
+  @Override
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new OracleExecutable(command);
   }
 
 }

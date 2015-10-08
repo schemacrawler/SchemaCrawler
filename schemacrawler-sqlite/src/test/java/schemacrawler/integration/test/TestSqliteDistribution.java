@@ -2,7 +2,6 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
@@ -19,35 +18,28 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class TestSqliteDistribution
 {
 
-  private DatabaseSystemConnector databaseSystemConnector;
+  private DatabaseConnector dbConnector;
 
   @Before
   public void setup()
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseSystemIdentifier("sqlite");
-    databaseSystemConnector = databaseSystemIdentifier
-      .getDatabaseSystemConnector();
+    dbConnector = registry.lookupDatabaseSystemIdentifier("sqlite");
   }
 
   @Test
   public void testIdentifierQuoteString()
     throws Exception
   {
-    assertEquals("\"",
-                 databaseSystemConnector
-                   .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-                   .getIdentifierQuoteString());
+    assertEquals("\"", dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().getIdentifierQuoteString());
   }
 
   @Test
@@ -77,12 +69,10 @@ public class TestSqliteDistribution
   public void testSupports()
     throws Exception
   {
-    assertTrue(!databaseSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-      .hasOverrideForSupportsCatalogs());
-    assertTrue(!databaseSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-      .hasOverrideForSupportsSchemas());
+    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().hasOverrideForSupportsCatalogs());
+    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().hasOverrideForSupportsSchemas());
   }
 
 }

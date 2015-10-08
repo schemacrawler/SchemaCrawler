@@ -90,7 +90,7 @@ public class PrimaryKeyWeakAssociationsTest
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
       final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
-        .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
+        .newDatabaseConnectionOptions(config);
 
       final Catalog baseCatalog = SchemaCrawlerUtility
         .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);

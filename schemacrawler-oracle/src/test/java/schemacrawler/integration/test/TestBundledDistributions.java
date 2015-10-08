@@ -20,7 +20,7 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("oracle");
     assertEquals(12,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                 databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
   }
