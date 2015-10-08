@@ -53,8 +53,8 @@ public final class ApplicationOptionsParser
     final String logLevelString = config.getStringValue("loglevel", "OFF");
     if (!isBlank(logLevelString))
     {
-      final Level applicationLogLevel = Level.parse(logLevelString
-        .toUpperCase());
+      final Level applicationLogLevel = Level
+        .parse(logLevelString.toUpperCase());
       options.setApplicationLogLevel(applicationLogLevel);
     }
 

@@ -22,47 +22,18 @@ package schemacrawler.tools.databaseconnector;
 
 import static java.util.Objects.requireNonNull;
 
-import java.sql.Connection;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public class DatabaseSystemConnector
 {
-
-  private final class NoOpExecutable
-    extends BaseExecutable
-  {
-    private NoOpExecutable(final String command)
-    {
-      super(command);
-    }
-
-    @Override
-    public void execute(final Connection connection)
-      throws Exception
-    {
-      // No-op
-    }
-
-    @Override
-    public void
-      execute(final Connection connection,
-              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                throws Exception
-    {
-      // No-op
-    }
-  }
 
   protected static final DatabaseSystemConnector UNKNOWN = new DatabaseSystemConnector();
   private final DatabaseServerType dbServerType;
@@ -166,18 +137,6 @@ public class DatabaseSystemConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
-  }
-
-  public Executable newPostExecutable()
-    throws SchemaCrawlerException
-  {
-    return new NoOpExecutable("no-op");
-  }
-
-  public Executable newPreExecutable()
-    throws SchemaCrawlerException
-  {
-    return new NoOpExecutable("no-op");
   }
 
 }
