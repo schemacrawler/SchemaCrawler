@@ -67,7 +67,8 @@ public class LintExecutable
     lintOptions = getLintOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs();
-    final LintedCatalog catalog = new LintedCatalog(db, connection,
+    final LintedCatalog catalog = new LintedCatalog(db,
+                                                    connection,
                                                     linterConfigs);
 
     final LintTraversalHandler formatter = getSchemaTraversalHandler();
@@ -85,8 +86,10 @@ public class LintExecutable
 
     final List<? extends Table> tablesList = new ArrayList<>(catalog
       .getTables());
-    Collections.sort(tablesList, NamedObjectSort
-      .getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
+    Collections
+      .sort(tablesList,
+            NamedObjectSort
+              .getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
     for (final Table table: tablesList)
     {
       formatter.handle(table);
@@ -175,9 +178,10 @@ public class LintExecutable
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING, "Could not load linter configs from file, "
-                                + linterConfigsFile,
-                 e);
+      LOGGER
+        .log(Level.WARNING,
+             "Could not load linter configs from file, " + linterConfigsFile,
+             e);
       return linterConfigs;
     }
   }

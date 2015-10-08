@@ -86,8 +86,10 @@ public final class SchemaCrawlerCommandLine
     // provided configuration, and bundled configuration
     connectionOptions = dbConnector.newDatabaseConnectionOptions(config);
 
-    // Get partially built database specific options, built from the classpath
-    // resources, and then override from config loaded in from command-line
+    // Get partially built database specific options, built from the
+    // classpath
+    // resources, and then override from config loaded in from
+    // command-line
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.fromConfig(config);

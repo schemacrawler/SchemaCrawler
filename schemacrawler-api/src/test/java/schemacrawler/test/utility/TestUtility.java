@@ -36,7 +36,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
@@ -82,6 +81,8 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
+import static java.util.Objects.requireNonNull;
+
 public final class TestUtility
 {
 
@@ -115,8 +116,7 @@ public final class TestUtility
                                                .compile("<polyline fill=.*"),
                                              Pattern
                                                .compile("<polygon fill=.*"),
-                                             Pattern.compile(".*&#xd;"),
-  };
+                                             Pattern.compile(".*&#xd;"), };
 
   public static void clean(final String dirname)
     throws Exception
@@ -138,14 +138,17 @@ public final class TestUtility
                                            final String outputFormat)
                                              throws Exception
   {
-    return compareOutput(referenceFile, testOutputTempFile, outputFormat,
+    return compareOutput(referenceFile,
+                         testOutputTempFile,
+                         outputFormat,
                          false);
   }
 
-  public static List<String>
-    compareOutput(final String referenceFile, final Path testOutputTempFile,
-                  final String outputFormat, final boolean isCompressed)
-                    throws Exception
+  public static List<String> compareOutput(final String referenceFile,
+                                           final Path testOutputTempFile,
+                                           final String outputFormat,
+                                           final boolean isCompressed)
+                                             throws Exception
   {
 
     requireNonNull(referenceFile, "Reference file is not defined");
@@ -196,7 +199,9 @@ public final class TestUtility
         .resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
-      move(testOutputTempFile, testOutputTargetFilePath, ATOMIC_MOVE,
+      move(testOutputTempFile,
+           testOutputTargetFilePath,
+           ATOMIC_MOVE,
            REPLACE_EXISTING);
 
       if (!contentEquals)
@@ -218,9 +223,8 @@ public final class TestUtility
   public static Path copyResourceToTempFile(final String resource)
     throws IOException
   {
-    try (
-      final InputStream resourceStream = TestUtility.class
-        .getResourceAsStream(resource);)
+    try (final InputStream resourceStream = TestUtility.class
+      .getResourceAsStream(resource);)
     {
       requireNonNull(resourceStream, "Resource not found, " + resource);
       return writeToTempFile(resourceStream);
@@ -286,8 +290,8 @@ public final class TestUtility
 
     int i = 0;
     try (
-      final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
-      final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
+        final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
+        final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
     {
       String expectedline;
       while ((expectedline = expectedBufferedReader.readLine()) != null)
@@ -455,9 +459,8 @@ public final class TestUtility
                                         SAXException, IOException
   {
     final JsonElement jsonElement;
-    try (
-      final Reader reader = readerForFile(testOutputFile);
-      final JsonReader jsonReader = new JsonReader(reader);)
+    try (final Reader reader = readerForFile(testOutputFile);
+        final JsonReader jsonReader = new JsonReader(reader);)
     {
       jsonElement = new JsonParser().parse(jsonReader);
       if (jsonReader.peek() != JsonToken.END_DOCUMENT)
@@ -534,10 +537,10 @@ public final class TestUtility
     final Path tempFile = createTempFile("resource", "data").normalize()
       .toAbsolutePath();
 
-    try (
-      final OutputStream tempFileStream = newOutputStream(tempFile, WRITE,
-                                                          TRUNCATE_EXISTING,
-                                                          CREATE);)
+    try (final OutputStream tempFileStream = newOutputStream(tempFile,
+                                                             WRITE,
+                                                             TRUNCATE_EXISTING,
+                                                             CREATE);)
     {
       fastChannelCopy(Channels.newChannel(resourceStream),
                       Channels.newChannel(tempFileStream));

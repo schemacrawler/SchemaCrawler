@@ -33,7 +33,7 @@ public interface AttributedObject
    *        Attribute name.
    * @return Attribute value.
    */
-    Object getAttribute(String name);
+  Object getAttribute(String name);
 
   /**
    * Gets an attribute.
@@ -49,7 +49,7 @@ public interface AttributedObject
    *
    * @return Map of attributes
    */
-    Map<String, Object> getAttributes();
+  Map<String, Object> getAttributes();
 
   /**
    * Removes an attribute.
@@ -57,7 +57,7 @@ public interface AttributedObject
    * @param name
    *        Attribute name
    */
-    void removeAttribute(String name);
+  void removeAttribute(String name);
 
   /**
    * Sets an attribute.
@@ -67,6 +67,6 @@ public interface AttributedObject
    * @param value
    *        Attribute value
    */
-    void setAttribute(String name, Object value);
+  void setAttribute(String name, Object value);
 
 }

@@ -20,11 +20,11 @@
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
@@ -60,8 +60,7 @@ public class LinterNullIntendedColumns
     }
   }
 
-  private List<Column>
-    findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
+  private List<Column> findNullDefaultValueMayBeIntendedColumns(final List<Column> columns)
   {
     final List<Column> nullDefaultValueMayBeIntendedColumns = new ArrayList<>();
     for (final Column column: columns)

@@ -284,7 +284,8 @@ public final class SchemaCrawlerOptionsParser
     LOGGER.log(Level.INFO,
                String.format(
                              "Overriding %s inclusion rule from command-line to %s",
-                             inclusionRuleName, schemaInclusionRule));
+                             inclusionRuleName,
+                             schemaInclusionRule));
   }
 
 }

@@ -28,6 +28,6 @@ public interface TypedObject<T extends Comparable<? super T>>
    *
    * @return Type of the object
    */
-    T getType();
+  T getType();
 
 }

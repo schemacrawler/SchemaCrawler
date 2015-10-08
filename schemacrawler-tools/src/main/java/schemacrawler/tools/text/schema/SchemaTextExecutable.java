@@ -71,7 +71,8 @@ public final class SchemaTextExecutable
     if (infoLevel == InfoLevel.maximum)
     {
       final Catalog catalogAssociations = new CatalogWithAssociations(db);
-      catalog = new CatalogWithCounts(catalogAssociations, connection,
+      catalog = new CatalogWithCounts(catalogAssociations,
+                                      connection,
                                       schemaCrawlerOptions);
     }
     else
@@ -101,8 +102,7 @@ public final class SchemaTextExecutable
     return schemaTextOptions;
   }
 
-  public final void
-    setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
+  public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
     this.schemaTextOptions = schemaTextOptions;
   }
@@ -132,17 +132,20 @@ public final class SchemaTextExecutable
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
-                                          schemaTextOptions, outputOptions);
+                                          schemaTextOptions,
+                                          outputOptions);
     }
     else if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
-                                          schemaTextOptions, outputOptions);
+                                          schemaTextOptions,
+                                          outputOptions);
     }
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
-                                          schemaTextOptions, outputOptions);
+                                          schemaTextOptions,
+                                          outputOptions);
     }
 
     return formatter;

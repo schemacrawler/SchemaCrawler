@@ -20,11 +20,11 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;

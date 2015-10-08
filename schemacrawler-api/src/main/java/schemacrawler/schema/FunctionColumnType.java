@@ -29,32 +29,32 @@ import java.util.logging.Logger;
  * An enumeration wrapper around procedure column types.
  */
 public enum FunctionColumnType
-  implements RoutineColumnType
+    implements RoutineColumnType
 {
 
-  /**
-   * Unknown.
-   */
+ /**
+  * Unknown.
+  */
   unknown(DatabaseMetaData.functionColumnUnknown, "unknown"),
-  /**
-   * In.
-   */
+ /**
+  * In.
+  */
   in(DatabaseMetaData.functionColumnIn, "in"),
-  /**
-   * In/ out.
-   */
+ /**
+  * In/ out.
+  */
   inOut(DatabaseMetaData.functionColumnInOut, "in/ out"),
-  /**
-   * Out.
-   */
+ /**
+  * Out.
+  */
   out(DatabaseMetaData.functionColumnOut, "out"),
-  /**
-   * Return.
-   */
+ /**
+  * Return.
+  */
   returnValue(DatabaseMetaData.functionColumnResult, "return"),
-  /**
-   * Return.
-   */
+ /**
+  * Return.
+  */
   result(DatabaseMetaData.procedureColumnResult, "result");
 
   private static final Logger LOGGER = Logger

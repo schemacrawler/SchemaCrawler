@@ -31,7 +31,7 @@ public abstract class BaseExecutableTest
   protected void executeExecutable(final Executable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
-    throws Exception
+                                     throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {

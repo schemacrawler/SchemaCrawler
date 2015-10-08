@@ -21,7 +21,6 @@
 package schemacrawler.tools.text.operation;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.readFully;
 
 import java.io.BufferedInputStream;
@@ -39,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
@@ -157,8 +158,8 @@ final class DataResultSet
         columnData = readStream(stream);
       }
     }
-    else
-      if (javaSqlType == Types.LONGNVARCHAR || javaSqlType == Types.LONGVARCHAR)
+    else if (javaSqlType == Types.LONGNVARCHAR
+             || javaSqlType == Types.LONGVARCHAR)
     {
       final InputStream stream = rows.getAsciiStream(i + 1);
       if (rows.wasNull() || stream == null)
@@ -244,7 +245,8 @@ final class DataResultSet
         catch (final SQLFeatureNotSupportedException e)
         {
           LOGGER.log(Level.FINEST,
-                     "Could not read CLOB data, as character stream", e);
+                     "Could not read CLOB data, as character stream",
+                     e);
           rdr = null;
         }
         if (rdr == null)
@@ -256,7 +258,8 @@ final class DataResultSet
           catch (final SQLFeatureNotSupportedException e)
           {
             LOGGER.log(Level.FINEST,
-                       "Could not read CLOB data, as ASCII stream", e);
+                       "Could not read CLOB data, as ASCII stream",
+                       e);
             rdr = null;
           }
         }
@@ -291,8 +294,8 @@ final class DataResultSet
   }
 
   /**
-   * Reads data from an input stream into a string. Default system encoding is
-   * assumed.
+   * Reads data from an input stream into a string. Default system
+   * encoding is assumed.
    *
    * @param columnData
    *        Column data object returned by JDBC

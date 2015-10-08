@@ -43,8 +43,8 @@ public final class TemplatingUtility
   private static final String DELIMITER_END = "}";
 
   /**
-   * Expands a template using system properties. Variables in the template are
-   * in the form of ${variable}.
+   * Expands a template using system properties. Variables in the
+   * template are in the form of ${variable}.
    *
    * @param template
    *        Template to expand.
@@ -56,8 +56,8 @@ public final class TemplatingUtility
   }
 
   /**
-   * Expands a template using variable values in the provided map. Variables in
-   * the template are in the form of ${variable}.
+   * Expands a template using variable values in the provided map.
+   * Variables in the template are in the form of ${variable}.
    *
    * @param template
    *        Template to expand.
@@ -171,9 +171,9 @@ public final class TemplatingUtility
   }
 
   /**
-   * Does one pass over the values in the map, and expands each as a template,
-   * using the rest of the values in the same map. Variables in the template are
-   * in the form of ${variable}.
+   * Does one pass over the values in the map, and expands each as a
+   * template, using the rest of the values in the same map. Variables
+   * in the template are in the form of ${variable}.
    *
    * @param variablesMap
    *        Map to expand.

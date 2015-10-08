@@ -32,35 +32,35 @@ public interface Routine
    *
    * @return Columns of the routine
    */
-    List<? extends RoutineColumn<? extends Routine>> getColumns();
+  List<? extends RoutineColumn<? extends Routine>> getColumns();
 
   /**
    * Gets the routine type.
    *
    * @return Routine type
    */
-    RoutineReturnType getReturnType();
+  RoutineReturnType getReturnType();
 
   /**
    * Gets the type of the routine body.
    *
    * @return Routine body type
    */
-    RoutineBodyType getRoutineBodyType();
+  RoutineBodyType getRoutineBodyType();
 
   /**
    * Gets the routine type.
    *
    * @return Routine type.
    */
-    RoutineType getRoutineType();
+  RoutineType getRoutineType();
 
   /**
    * The name which uniquely identifies this routine within its schema.
    *
    * @return Specific name.
    */
-    String getSpecificName();
+  String getSpecificName();
 
   /**
    * Gets a column by unqualified name.
@@ -69,7 +69,6 @@ public interface Routine
    *        Unqualified name
    * @return Column.
    */
-    Optional<? extends RoutineColumn<? extends Routine>>
-      lookupColumn(String name);
+  Optional<? extends RoutineColumn<? extends Routine>> lookupColumn(String name);
 
 }

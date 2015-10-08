@@ -44,7 +44,8 @@ public final class LintedCatalog
 
   private final LintCollector collector;
 
-  public LintedCatalog(final Catalog catalog, final Connection connection,
+  public LintedCatalog(final Catalog catalog,
+                       final Connection connection,
                        final LinterConfigs linterConfigs)
                          throws SchemaCrawlerException
   {
@@ -68,7 +69,8 @@ public final class LintedCatalog
     final LinterRegistry linterRegistry = new LinterRegistry();
     final Set<String> registeredLinters = linterRegistry.allRegisteredLinters();
 
-    // Add all configured linters, with as many instances as were configured
+    // Add all configured linters, with as many instances as were
+    // configured
     for (final LinterConfig linterConfig: linterConfigs)
     {
       // First remove the linter id, because it is "seen",
@@ -78,8 +80,9 @@ public final class LintedCatalog
 
       if (!linterConfig.isRunLinter())
       {
-        LOGGER.log(Level.FINE, String
-          .format("Not running configured linter, %s", linterConfig));
+        LOGGER.log(Level.FINE,
+                   String.format("Not running configured linter, %s",
+                                 linterConfig));
         continue;
       }
 

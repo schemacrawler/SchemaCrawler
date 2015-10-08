@@ -21,13 +21,13 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.ColumnReference;
@@ -56,9 +56,9 @@ public class WeakAssociationForeignKey
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since foreign keys are not always explicitly named in databases, the
-   * sorting routine orders the foreign keys by the names of the columns in the
-   * foreign keys.
+   * Note: Since foreign keys are not always explicitly named in
+   * databases, the sorting routine orders the foreign keys by the names
+   * of the columns in the foreign keys.
    * </p>
    */
   @Override

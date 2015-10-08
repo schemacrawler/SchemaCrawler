@@ -142,8 +142,7 @@ class MutableTrigger
     this.conditionTiming = conditionTiming;
   }
 
-  void
-    setEventManipulationType(final EventManipulationType eventManipulationType)
+  void setEventManipulationType(final EventManipulationType eventManipulationType)
   {
     this.eventManipulationType = eventManipulationType;
   }

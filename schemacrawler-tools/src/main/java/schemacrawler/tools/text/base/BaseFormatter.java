@@ -1,7 +1,6 @@
 package schemacrawler.tools.text.base;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isLowerCase;
 
@@ -9,6 +8,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -53,7 +54,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       out = new PrintWriter(outputOptions
         .openNewOutputWriter(options.isAppendOutput()), true);
     }
-    catch (IOException e)
+    catch (final IOException e)
     {
       throw new SchemaCrawlerException("Cannot open output writer", e);
     }

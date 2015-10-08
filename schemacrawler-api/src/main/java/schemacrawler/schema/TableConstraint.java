@@ -38,14 +38,14 @@ public interface TableConstraint
    *
    * @return Columns of the table constraint.
    */
-    List<TableConstraintColumn> getColumns();
+  List<TableConstraintColumn> getColumns();
 
   /**
    * Gets the table constraint type.
    *
    * @return Table constraint type
    */
-    TableConstraintType getTableConstraintType();
+  TableConstraintType getTableConstraintType();
 
   @Override
   default TableConstraintType getType()
@@ -58,13 +58,13 @@ public interface TableConstraint
    *
    * @return Whether the constraint is deferrable
    */
-    boolean isDeferrable();
+  boolean isDeferrable();
 
   /**
    * Whether the constraint is initially deferred.
    *
    * @return Whether the constraint is initially deferred
    */
-    boolean isInitiallyDeferred();
+  boolean isInitiallyDeferred();
 
 }

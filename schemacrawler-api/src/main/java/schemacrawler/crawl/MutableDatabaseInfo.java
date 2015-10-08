@@ -32,8 +32,8 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */

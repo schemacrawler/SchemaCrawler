@@ -38,14 +38,14 @@ public interface Catalog
    *
    * @return Column data types
    */
-    Collection<ColumnDataType> getColumnDataTypes();
+  Collection<ColumnDataType> getColumnDataTypes();
 
   /**
    * Gets the column data types defined in the schema, by name.
    *
    * @return Column data types
    */
-    Collection<ColumnDataType> getColumnDataTypes(Schema schema);
+  Collection<ColumnDataType> getColumnDataTypes(Schema schema);
 
   CrawlInfo getCrawlInfo();
 
@@ -58,14 +58,14 @@ public interface Catalog
    *
    * @return Routines
    */
-    Collection<Routine> getRoutines();
+  Collection<Routine> getRoutines();
 
   /**
    * Gets the routine.
    *
    * @return Routines
    */
-    Collection<Routine> getRoutines(Schema schema);
+  Collection<Routine> getRoutines(Schema schema);
 
   SchemaCrawlerInfo getSchemaCrawlerInfo();
 
@@ -74,56 +74,56 @@ public interface Catalog
    *
    * @return Schemas
    */
-    Collection<Schema> getSchemas();
+  Collection<Schema> getSchemas();
 
   /**
    * Gets the sequences.
    *
    * @return Sequences
    */
-    Collection<Sequence> getSequences();
+  Collection<Sequence> getSequences();
 
   /**
    * Gets the sequences.
    *
    * @return Sequences
    */
-    Collection<Sequence> getSequences(Schema schema);
+  Collection<Sequence> getSequences(Schema schema);
 
   /**
    * Gets the synonyms.
    *
    * @return Synonyms
    */
-    Collection<Synonym> getSynonyms();
+  Collection<Synonym> getSynonyms();
 
   /**
    * Gets the synonyms.
    *
    * @return Synonyms
    */
-    Collection<Synonym> getSynonyms(Schema schema);
+  Collection<Synonym> getSynonyms(Schema schema);
 
   /**
    * Gets the column data types defined by the RDBMS system.
    *
    * @return Column data types
    */
-    Collection<ColumnDataType> getSystemColumnDataTypes();
+  Collection<ColumnDataType> getSystemColumnDataTypes();
 
   /**
    * Gets the tables.
    *
    * @return Tables
    */
-    Collection<Table> getTables();
+  Collection<Table> getTables();
 
   /**
    * Gets the tables.
    *
    * @return Tables
    */
-    Collection<Table> getTables(Schema schema);
+  Collection<Table> getTables(Schema schema);
 
   /**
    * Gets the column data types defined in the schema, by name.
@@ -132,8 +132,8 @@ public interface Catalog
    *        Name
    * @return Column data types
    */
-    Optional<? extends ColumnDataType> lookupColumnDataType(Schema schema,
-                                                            String name);
+  Optional<? extends ColumnDataType> lookupColumnDataType(Schema schema,
+                                                          String name);
 
   /**
    * Gets a routine by unqualified name.
@@ -142,7 +142,7 @@ public interface Catalog
    *        Name
    * @return Routine.
    */
-    Optional<? extends Routine> lookupRoutine(Schema schema, String name);
+  Optional<? extends Routine> lookupRoutine(Schema schema, String name);
 
   /**
    * Gets a schema by name.
@@ -151,7 +151,7 @@ public interface Catalog
    *        Schema name
    * @return Schema.
    */
-    Optional<? extends Schema> lookupSchema(String name);
+  Optional<? extends Schema> lookupSchema(String name);
 
   /**
    * Gets the sequence by unqualified name.
@@ -160,7 +160,7 @@ public interface Catalog
    *        Name
    * @return Sequence.
    */
-    Optional<? extends Sequence> lookupSequence(Schema schema, String name);
+  Optional<? extends Sequence> lookupSequence(Schema schema, String name);
 
   /**
    * Gets the synonym by unqualified name.
@@ -169,7 +169,7 @@ public interface Catalog
    *        Name
    * @return Synonym.
    */
-    Optional<? extends Synonym> lookupSynonym(Schema schema, String name);
+  Optional<? extends Synonym> lookupSynonym(Schema schema, String name);
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
@@ -178,7 +178,7 @@ public interface Catalog
    *        Column data type name
    * @return Column data type
    */
-    Optional<? extends ColumnDataType> lookupSystemColumnDataType(String name);
+  Optional<? extends ColumnDataType> lookupSystemColumnDataType(String name);
 
   /**
    * Gets a table by unqualified name.
@@ -187,6 +187,6 @@ public interface Catalog
    *        Name
    * @return Table.
    */
-    Optional<? extends Table> lookupTable(Schema schema, String name);
+  Optional<? extends Table> lookupTable(Schema schema, String name);
 
 }

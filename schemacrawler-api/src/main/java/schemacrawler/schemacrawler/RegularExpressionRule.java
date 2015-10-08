@@ -28,8 +28,8 @@ import java.util.regex.Pattern;
 import sf.util.Utility;
 
 /**
- * Specifies inclusion and exclusion patterns that can be applied to the names,
- * definitions, and other attributes of named objects.
+ * Specifies inclusion and exclusion patterns that can be applied to the
+ * names, definitions, and other attributes of named objects.
  *
  * @author Sualeh Fatehi
  */
@@ -183,7 +183,9 @@ public final class RegularExpressionRule
     if (LOGGER.isLoggable(Level.FINE))
     {
       final StackTraceElement caller = new Exception().getStackTrace()[1];
-      LOGGER.logp(Level.FINE, caller.getClassName(), caller.getMethodName(),
+      LOGGER.logp(Level.FINE,
+                  caller.getClassName(),
+                  caller.getMethodName(),
                   actionMessage);
     }
 
@@ -201,7 +203,8 @@ public final class RegularExpressionRule
     return String.format("%s@%h-include/%s/-exclude/%s/]",
                          getClass().getSimpleName(),
                          System.identityHashCode(this),
-                         patternInclude.pattern(), patternExclude.pattern());
+                         patternInclude.pattern(),
+                         patternExclude.pattern());
   }
 
 }

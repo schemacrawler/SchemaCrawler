@@ -20,13 +20,14 @@
 package schemacrawler.schemacrawler;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.RoutineType;
 import sf.util.ObjectToString;
@@ -175,8 +176,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the schema information level, identifying to what level the schema
-   * should be crawled.
+   * Gets the schema information level, identifying to what level the
+   * schema should be crawled.
    *
    * @return Schema information level.
    */
@@ -233,8 +234,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Returns the table types requested for output. This can be null, if all
-   * supported table types are required in the output.
+   * Returns the table types requested for output. This can be null, if
+   * all supported table types are required in the output.
    *
    * @return All table types requested for output
    */
@@ -276,8 +277,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other non-matching
-   * tables.
+   * Whether grep includes show foreign keys that reference other
+   * non-matching tables.
    */
   public boolean isGrepOnlyMatching()
   {
@@ -290,8 +291,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that is, tables
-   * with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
    *
    * @return Whether to hide empty tables
    */
@@ -323,8 +324,7 @@ public final class SchemaCrawlerOptions
    * @param grepColumnInclusionRule
    *        Column inclusion rule for grep
    */
-  public void
-    setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
+  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
   {
     this.grepColumnInclusionRule = grepColumnInclusionRule;
   }
@@ -335,8 +335,7 @@ public final class SchemaCrawlerOptions
    * @param grepDefinitionInclusionRule
    *        Definition inclusion rule for grep
    */
-  public void
-    setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
+  public void setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
   }
@@ -353,8 +352,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Whether grep includes show foreign keys that reference other non-matching
-   * tables.
+   * Whether grep includes show foreign keys that reference other
+   * non-matching tables.
    *
    * @param grepOnlyMatching
    *        Whether grep includes show foreign keys that reference other
@@ -371,15 +370,14 @@ public final class SchemaCrawlerOptions
    * @param grepRoutineColumnInclusionRule
    *        Routine column inclusion rule for grep
    */
-  public void
-    setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
+  public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
     this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
   }
 
   /**
-   * If infolevel=maximum, this option will remove empty tables (that is, tables
-   * with no rows of data) from the catalog.
+   * If infolevel=maximum, this option will remove empty tables (that
+   * is, tables with no rows of data) from the catalog.
    *
    * @param hideEmptyTables
    *        Whether to hide empty tables
@@ -400,8 +398,7 @@ public final class SchemaCrawlerOptions
    * @param routineColumnInclusionRule
    *        Routine column inclusion rule
    */
-  public void
-    setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
+  public void setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
   {
     this.routineColumnInclusionRule = requireNonNull(routineColumnInclusionRule,
                                                      "Cannot use null value in a setter");
@@ -444,8 +441,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the schema information level, identifying to what level the schema
-   * should be crawled.
+   * Sets the schema information level, identifying to what level the
+   * schema should be crawled.
    *
    * @param schemaInfoLevel
    *        Schema information level.
@@ -461,8 +458,7 @@ public final class SchemaCrawlerOptions
    * @param sequenceInclusionRule
    *        Sequence inclusion rule
    */
-  public void
-    setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
+  public void setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
   {
     this.sequenceInclusionRule = requireNonNull(sequenceInclusionRule,
                                                 "Cannot use null value in a setter");
@@ -493,11 +489,12 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the table name pattern, using the JDBC syntax for wildcards (_ and *).
-   * The table name pattern is case-sensitive, and matches just the table name -
-   * not the fully qualified table name. The table name pattern restricts the
-   * tables retrieved at an early stage in the retrieval process, so it must be
-   * used only when performance needs to be tuned.
+   * Sets the table name pattern, using the JDBC syntax for wildcards (_
+   * and *). The table name pattern is case-sensitive, and matches just
+   * the table name - not the fully qualified table name. The table name
+   * pattern restricts the tables retrieved at an early stage in the
+   * retrieval process, so it must be used only when performance needs
+   * to be tuned.
    *
    * @param tableNamePattern
    *        Table name pattern
@@ -508,12 +505,13 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets table types requested for output from a collection of table types. For
-   * example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL TEMPORARY,ALIAS,SYNONYM
+   * Sets table types requested for output from a collection of table
+   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL
+   * TEMPORARY,ALIAS,SYNONYM
    *
    * @param tableTypes
-   *        Collection of table types. Can be null if all supported table types
-   *        are requested.
+   *        Collection of table types. Can be null if all supported
+   *        table types are requested.
    */
   public void setTableTypes(final Collection<String> tableTypes)
   {

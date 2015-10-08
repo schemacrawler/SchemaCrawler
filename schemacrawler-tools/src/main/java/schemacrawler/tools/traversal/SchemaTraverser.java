@@ -20,13 +20,13 @@
 package schemacrawler.tools.traversal;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -45,6 +45,12 @@ public class SchemaTraverser
   private SchemaTraversalHandler handler;
   private Comparator<NamedObject> tablesComparator;
   private Comparator<NamedObject> routinesComparator;
+
+  public SchemaTraverser()
+  {
+    tablesComparator = NamedObjectSort.natural;
+    routinesComparator = NamedObjectSort.natural;
+  }
 
   public Catalog getCatalog()
   {
@@ -76,14 +82,12 @@ public class SchemaTraverser
     this.handler = requireNonNull(handler, "No handler provided");
   }
 
-  public void
-    setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
+  public void setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
   {
     this.routinesComparator = requireNonNull(routinesComparator);
   }
 
-  public void
-    setTablesComparator(final Comparator<NamedObject> tablesComparator)
+  public void setTablesComparator(final Comparator<NamedObject> tablesComparator)
   {
     this.tablesComparator = requireNonNull(tablesComparator);
   }
@@ -112,7 +116,7 @@ public class SchemaTraverser
 
       final List<? extends Table> tablesList = new ArrayList<>(tables);
       Collections.sort(tablesList, tablesComparator);
-      for (Table table: tablesList)
+      for (final Table table: tablesList)
       {
         handler.handle(table);
       }
@@ -126,7 +130,7 @@ public class SchemaTraverser
 
       final List<? extends Routine> routinesList = new ArrayList<>(routines);
       Collections.sort(routinesList, routinesComparator);
-      for (Routine routine: routinesList)
+      for (final Routine routine: routinesList)
       {
         handler.handle(routine);
       }
@@ -171,12 +175,6 @@ public class SchemaTraverser
     handler.handleInfoEnd();
 
     handler.end();
-  }
-
-  public SchemaTraverser()
-  {
-    tablesComparator = NamedObjectSort.natural;
-    routinesComparator = NamedObjectSort.natural;
   }
 
 }

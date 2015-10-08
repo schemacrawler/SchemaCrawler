@@ -31,29 +31,29 @@ import java.util.logging.Logger;
 public enum ForeignKeyUpdateRule
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown(-1, "unknown"),
-  /**
-   * No action.
-   */
+ /**
+  * No action.
+  */
   noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
-  /**
-   * Cascade.
-   */
+ /**
+  * Cascade.
+  */
   cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
-  /**
-   * Set null.
-   */
+ /**
+  * Set null.
+  */
   setNull(DatabaseMetaData.importedKeySetNull, "set null"),
-  /**
-   * Set default.
-   */
+ /**
+  * Set default.
+  */
   setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
-  /**
-   * Restrict.
-   */
+ /**
+  * Restrict.
+  */
   restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private static final Logger LOGGER = Logger

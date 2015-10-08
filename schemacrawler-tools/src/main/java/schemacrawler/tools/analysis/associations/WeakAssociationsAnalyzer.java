@@ -21,7 +21,6 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
 
 import java.util.Collection;
@@ -32,6 +31,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
@@ -91,8 +92,8 @@ final class WeakAssociationsAnalyzer
     {
       LOGGER.log(Level.FINER,
                  "Column match keys: " + columnMatchKeysMap.toString());
-      LOGGER
-        .log(Level.FINER, "Column match keys: " + tableMatchKeys.toString());
+      LOGGER.log(Level.FINER,
+                 "Column match keys: " + tableMatchKeys.toString());
     }
     for (final Table table: tables)
     {
@@ -134,8 +135,9 @@ final class WeakAssociationsAnalyzer
           if (weakAssociation.isValid()
               && !foreignKeys.contains(weakAssociation))
           {
-            LOGGER.log(Level.FINE, String.format("Found weak association: %s",
-                                                 weakAssociation));
+            LOGGER.log(Level.FINE,
+                       String.format("Found weak association: %s",
+                                     weakAssociation));
             addWeakAssociation(weakAssociation);
           }
         }

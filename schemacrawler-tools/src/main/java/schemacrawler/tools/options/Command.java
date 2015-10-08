@@ -2,6 +2,7 @@ package schemacrawler.tools.options;
 
 
 import static sf.util.Utility.isBlank;
+
 import schemacrawler.schemacrawler.Options;
 
 public final class Command

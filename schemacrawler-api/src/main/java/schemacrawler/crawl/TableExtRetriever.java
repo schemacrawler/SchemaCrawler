@@ -43,8 +43,8 @@ import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 
 /**
- * A retriever uses database metadata to get the extended details about the
- * database tables.
+ * A retriever uses database metadata to get the extended details about
+ * the database tables.
  *
  * @author Sualeh Fatehi
  */
@@ -68,8 +68,8 @@ final class TableExtRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveAdditionalColumnAttributes()
-      throws SQLException
+  void retrieveAdditionalColumnAttributes()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -86,10 +86,9 @@ final class TableExtRetriever
       .getAdditionalColumnAttributesSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         columnAttributesSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           columnAttributesSql));)
     {
 
       while (results.next())
@@ -108,8 +107,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -120,7 +121,9 @@ final class TableExtRetriever
         {
           LOGGER.log(Level.FINE,
                      String.format("Cannot find column, %s.%s.%s.%s",
-                                   catalogName, schemaName, tableName,
+                                   catalogName,
+                                   schemaName,
+                                   tableName,
                                    columnName));
           continue;
         }
@@ -134,7 +137,8 @@ final class TableExtRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
-                 "Could not retrieve additional column attributes", e);
+                 "Could not retrieve additional column attributes",
+                 e);
     }
 
   }
@@ -145,8 +149,8 @@ final class TableExtRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveAdditionalTableAttributes()
-      throws SQLException
+  void retrieveAdditionalTableAttributes()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -163,10 +167,9 @@ final class TableExtRetriever
       .getAdditionalTableAttributesSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         tableAttributesSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableAttributesSql));)
     {
 
       while (results.next())
@@ -184,8 +187,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -196,20 +201,21 @@ final class TableExtRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
-                 "Could not retrieve additional table attributes", e);
+                 "Could not retrieve additional table attributes",
+                 e);
     }
 
   }
 
   /**
-   * Retrieves index information from the database, in the INFORMATION_SCHEMA
-   * format.
+   * Retrieves index information from the database, in the
+   * INFORMATION_SCHEMA format.
    *
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveIndexInformation()
-      throws SQLException
+  void retrieveIndexInformation()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -227,10 +233,9 @@ final class TableExtRetriever
       .getExtIndexesSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         extIndexesInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           extIndexesInformationSql));)
     {
 
       while (results.next())
@@ -247,8 +252,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, indexName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   indexName));
           continue;
         }
 
@@ -260,7 +267,9 @@ final class TableExtRetriever
         {
           LOGGER.log(Level.FINE,
                      String.format("Cannot find index, %s.%s.%s.%s",
-                                   catalogName, schemaName, tableName,
+                                   catalogName,
+                                   schemaName,
+                                   tableName,
                                    indexName));
           continue;
         }
@@ -284,9 +293,8 @@ final class TableExtRetriever
   void retrieveTableColumnPrivileges()
     throws SQLException
   {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumnPrivileges(null, null, "%", "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumnPrivileges(null, null, "%", "%"));)
     {
       createPrivileges(results, true);
     }
@@ -305,8 +313,8 @@ final class TableExtRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveTableConstraintInformation()
-      throws SQLException
+  void retrieveTableConstraintInformation()
+    throws SQLException
   {
     final Map<String, MutableTableConstraint> tableConstraintsMap = new HashMap<>();
 
@@ -315,28 +323,31 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    createTableConstraints(connection, tableConstraintsMap,
+    createTableConstraints(connection,
+                           tableConstraintsMap,
                            informationSchemaViews);
 
     if (!tableConstraintsMap.isEmpty())
     {
-      getTableConstraintsColumns(connection, tableConstraintsMap,
+      getTableConstraintsColumns(connection,
+                                 tableConstraintsMap,
                                  informationSchemaViews);
 
-      getTableConstraintsDefinitions(connection, tableConstraintsMap,
+      getTableConstraintsDefinitions(connection,
+                                     tableConstraintsMap,
                                      informationSchemaViews);
     }
   }
 
   /**
-   * Retrieves table definitions from the database, in the INFORMATION_SCHEMA
-   * format.
+   * Retrieves table definitions from the database, in the
+   * INFORMATION_SCHEMA format.
    *
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveTableDefinitions()
-      throws SQLException
+  void retrieveTableDefinitions()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -354,10 +365,9 @@ final class TableExtRetriever
       .getExtTablesSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         tableDefinitionsInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableDefinitionsInformationSql));)
     {
 
       while (results.next())
@@ -373,8 +383,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -398,9 +410,8 @@ final class TableExtRetriever
   void retrieveTablePrivileges()
     throws SQLException
   {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getTablePrivileges(null, null, "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTablePrivileges(null, null, "%"));)
     {
       createPrivileges(results, false);
     }
@@ -417,8 +428,8 @@ final class TableExtRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveTriggerInformation()
-      throws SQLException
+  void retrieveTriggerInformation()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -435,10 +446,9 @@ final class TableExtRetriever
       .getTriggersSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         triggerInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           triggerInformationSql));)
     {
 
       while (results.next())
@@ -460,8 +470,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -505,14 +517,14 @@ final class TableExtRetriever
   }
 
   /**
-   * Retrieves view information from the database, in the INFORMATION_SCHEMA
-   * format.
+   * Retrieves view information from the database, in the
+   * INFORMATION_SCHEMA format.
    *
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveViewInformation()
-      throws SQLException
+  void retrieveViewInformation()
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -528,10 +540,9 @@ final class TableExtRetriever
     final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         viewInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           viewInformationSql));)
     {
 
       while (results.next())
@@ -547,8 +558,10 @@ final class TableExtRetriever
         if (!viewOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, viewName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   viewName));
           continue;
         }
 
@@ -653,10 +666,9 @@ final class TableExtRetriever
     }
   }
 
-  private void
-    createTableConstraints(final Connection connection,
-                           final Map<String, MutableTableConstraint> tableConstraintsMap,
-                           final InformationSchemaViews informationSchemaViews)
+  private void createTableConstraints(final Connection connection,
+                                      final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                      final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsSql())
     {
@@ -667,10 +679,9 @@ final class TableExtRetriever
 
     final String tableConstraintsInformationSql = informationSchemaViews
       .getTableConstraintsSql();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         tableConstraintsInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableConstraintsInformationSql));)
     {
 
       while (results.next())
@@ -691,8 +702,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -723,15 +736,15 @@ final class TableExtRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING,
-                 "Could not retrieve table constraint information", e);
+                 "Could not retrieve table constraint information",
+                 e);
       return;
     }
   }
 
-  private void
-    getTableConstraintsColumns(final Connection connection,
-                               final Map<String, MutableTableConstraint> tableConstraintsMap,
-                               final InformationSchemaViews informationSchemaViews)
+  private void getTableConstraintsColumns(final Connection connection,
+                                          final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                          final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsColumnsSql())
     {
@@ -743,10 +756,9 @@ final class TableExtRetriever
     final String tableConstraintsColumnsInformationSql = informationSchemaViews
       .getTableConstraintsColumnsSql();
 
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         tableConstraintsColumnsInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           tableConstraintsColumnsInformationSql));)
     {
       while (results.next())
       {
@@ -781,8 +793,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s", catalogName,
-                                   schemaName, tableName));
+                     String.format("Cannot find table, %s.%s.%s",
+                                   catalogName,
+                                   schemaName,
+                                   tableName));
           continue;
         }
 
@@ -794,7 +808,9 @@ final class TableExtRetriever
         {
           LOGGER.log(Level.FINE,
                      String.format("Cannot find column, %s.%s.%s.%s",
-                                   catalogName, schemaName, tableName,
+                                   catalogName,
+                                   schemaName,
+                                   tableName,
                                    columnName));
           continue;
         }
@@ -813,10 +829,9 @@ final class TableExtRetriever
     }
   }
 
-  private void
-    getTableConstraintsDefinitions(final Connection connection,
-                                   final Map<String, MutableTableConstraint> tableConstraintsMap,
-                                   final InformationSchemaViews informationSchemaViews)
+  private void getTableConstraintsDefinitions(final Connection connection,
+                                              final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                              final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasExtTableConstraintsSql())
     {
@@ -828,10 +843,9 @@ final class TableExtRetriever
       .getExtTableConstraintsSql();
 
     // Get check constraint definitions
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         extTableConstraintInformationSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           extTableConstraintInformationSql));)
     {
       while (results.next())
       {

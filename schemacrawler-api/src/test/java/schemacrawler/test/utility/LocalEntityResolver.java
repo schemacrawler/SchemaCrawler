@@ -35,9 +35,8 @@ public class LocalEntityResolver
   public InputSource resolveEntity(final String publicId, final String systemId)
     throws SAXException, IOException
   {
-    final String localResource = "/xhtml1"
-                                 + systemId
-                                   .substring(systemId.lastIndexOf('/'));
+    final String localResource = "/xhtml1" + systemId
+      .substring(systemId.lastIndexOf('/'));
     final InputStream entityStream = LocalEntityResolver.class
       .getResourceAsStream(localResource);
     if (entityStream == null)

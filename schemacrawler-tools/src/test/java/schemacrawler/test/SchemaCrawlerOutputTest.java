@@ -91,8 +91,7 @@ public class SchemaCrawlerOutputTest
                                              queryCommand1 + "," + queryCommand2 + ","
                                                                                   + Operation.count
                                                                                   + ","
-                                                                                  + SchemaTextDetailType.brief,
-    };
+                                                                                  + SchemaTextDetailType.brief, };
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet
@@ -130,7 +129,8 @@ public class SchemaCrawlerOutputTest
 
         failures
           .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                testOutputFile, outputFormat.getFormat()));
+                                testOutputFile,
+                                outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -197,7 +197,8 @@ public class SchemaCrawlerOutputTest
 
       failures
         .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
-                              testOutputFile, outputFormat.getFormat()));
+                              testOutputFile,
+                              outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -245,7 +246,8 @@ public class SchemaCrawlerOutputTest
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
-      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile, testOutputFile,
+      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
+                                    testOutputFile,
                                     outputOptions.getOutputFormatValue()));
     }
     if (failures.size() > 0)
@@ -294,7 +296,8 @@ public class SchemaCrawlerOutputTest
       executable.execute(getConnection());
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
-                                    testOutputFile, outputFormat.getFormat()));
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -356,7 +359,8 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
-                                    testOutputFile, outputFormat.getFormat()));
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -417,7 +421,8 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
-                                    testOutputFile, outputFormat.getFormat()));
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
@@ -479,7 +484,8 @@ public class SchemaCrawlerOutputTest
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
-                                    testOutputFile, outputFormat.getFormat()));
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {

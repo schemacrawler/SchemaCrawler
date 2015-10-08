@@ -222,15 +222,15 @@ abstract class BaseTextFormattingHelper
     // Adjust widths
     if (name.length() > nameWidth && description.length() < descriptionWidth)
     {
-      descriptionWidth = Math.max(description.length(),
-                                  descriptionWidth
-                                      - (name.length() - nameWidth));
+      descriptionWidth = Math
+        .max(description.length(),
+             descriptionWidth - (name.length() - nameWidth));
     }
     if (description.length() > descriptionWidth && name.length() < nameWidth)
     {
-      nameWidth = Math.max(name.length(),
-                           nameWidth
-                               - (description.length() - descriptionWidth));
+      nameWidth = Math
+        .max(name.length(),
+             nameWidth - (description.length() - descriptionWidth));
     }
 
     final TableRow row = new TableRow(outputFormat);
@@ -270,24 +270,23 @@ abstract class BaseTextFormattingHelper
     final int nameWidth = 40;
     final int valueWidth = 70 - nameWidth;
 
-    final Alignment alignmentForValue = valueAlignment == null
-                                                              ? Alignment.inherit
+    final Alignment alignmentForValue = valueAlignment == null? Alignment.inherit
                                                               : valueAlignment;
     final String valueStyle = "property_value"
-                              + (alignmentForValue == Alignment.inherit
-                                                                       ? ""
+                              + (alignmentForValue == Alignment.inherit? ""
                                                                        : " right");
 
     final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(name,
-                          true,
-                          nameWidth,
-                          Alignment.inherit,
-                          false,
-                          "property_name",
-                          Color.white,
-                          1,
-                          outputFormat));
+    row
+      .add(new TableCell(name,
+                         true,
+                         nameWidth,
+                         Alignment.inherit,
+                         false,
+                         "property_name",
+                         Color.white,
+                         1,
+                         outputFormat));
     row.add(new TableCell(value,
                           true,
                           valueWidth,

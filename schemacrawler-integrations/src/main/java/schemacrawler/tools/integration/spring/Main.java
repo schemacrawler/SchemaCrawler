@@ -21,13 +21,14 @@
 package schemacrawler.tools.integration.spring;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 import static sf.util.commandlineparser.CommandLineUtility.logSafeArguments;
 import static sf.util.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -69,9 +70,9 @@ public final class Main
     }
 
     // Spring should use JDK logging, like the rest of SchemaCrawler
-    System.setProperty("org.apache.commons.logging.Log",
-                       org.apache.commons.logging.impl.Jdk14Logger.class
-                         .getName());
+    System
+      .setProperty("org.apache.commons.logging.Log",
+                   org.apache.commons.logging.impl.Jdk14Logger.class.getName());
     applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
     logSystemProperties();
     logSafeArguments(Level.CONFIG, args);

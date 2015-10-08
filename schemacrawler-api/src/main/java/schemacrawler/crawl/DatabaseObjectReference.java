@@ -1,11 +1,11 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -44,8 +44,8 @@ class DatabaseObjectReference<D extends DatabaseObject>
   }
 
   /**
-   * {@inheritDoc} Modification over the Reference, always returns a non-null
-   * value.
+   * {@inheritDoc} Modification over the Reference, always returns a
+   * non-null value.
    *
    * @see java.lang.ref.SoftReference#get()
    */

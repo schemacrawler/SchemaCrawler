@@ -1,11 +1,10 @@
 package schemacrawler.crawl;
 
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-
 import org.junit.Ignore;
 import org.junit.Test;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
 import schemacrawler.schema.SchemaReference;
 
 @Ignore

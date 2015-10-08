@@ -177,13 +177,15 @@ public class JSONArray
     throws JSONException
   {
     final Object object = get(index);
-    if (object.equals(Boolean.FALSE) || object instanceof String
-        && ((String) object).equalsIgnoreCase("false"))
+    if (object.equals(Boolean.FALSE)
+        || object instanceof String
+           && ((String) object).equalsIgnoreCase("false"))
     {
       return false;
     }
-    else if (object.equals(Boolean.TRUE) || object instanceof String
-             && ((String) object).equalsIgnoreCase("true"))
+    else if (object.equals(Boolean.TRUE)
+             || object instanceof String
+                && ((String) object).equalsIgnoreCase("true"))
     {
       return true;
     }
@@ -206,8 +208,8 @@ public class JSONArray
     final Object object = get(index);
     try
     {
-      return object instanceof Number? ((Number) object).doubleValue(): Double
-        .parseDouble((String) object);
+      return object instanceof Number? ((Number) object).doubleValue()
+                                     : Double.parseDouble((String) object);
     }
     catch (final Exception e)
     {
@@ -230,8 +232,8 @@ public class JSONArray
     final Object object = get(index);
     try
     {
-      return object instanceof Number? ((Number) object).intValue(): Integer
-        .parseInt((String) object);
+      return object instanceof Number? ((Number) object).intValue()
+                                     : Integer.parseInt((String) object);
     }
     catch (final Exception e)
     {
@@ -297,8 +299,8 @@ public class JSONArray
     final Object object = get(index);
     try
     {
-      return object instanceof Number? ((Number) object).longValue(): Long
-        .parseLong((String) object);
+      return object instanceof Number? ((Number) object).longValue()
+                                     : Long.parseLong((String) object);
     }
     catch (final Exception e)
     {
@@ -929,8 +931,8 @@ public class JSONArray
    *        The number of spaces to add to each level of indentation.
    * @return a printable, displayable, transmittable representation of
    *         the object, beginning with <code>[</code>&nbsp;<small>(left
-   *         bracket)</small> and ending with <code>]</code>
-   *         &nbsp;<small>(right bracket)</small>.
+   *         bracket)</small> and ending with <code>]</code> &nbsp;
+   *         <small>(right bracket)</small>.
    * @throws JSONException
    */
   public String toString(final int indentFactor)

@@ -256,8 +256,7 @@ final class MutableTableConstraintColumn
    * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
    */
   @Override
-  public Optional<? extends Privilege<Column>>
-    lookupPrivilege(final String name)
+  public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)
   {
     return column.lookupPrivilege(name);
   }

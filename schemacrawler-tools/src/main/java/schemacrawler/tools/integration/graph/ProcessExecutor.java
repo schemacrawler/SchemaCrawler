@@ -66,8 +66,8 @@ public final class ProcessExecutor
 
   }
 
-  private static final Logger LOGGER = Logger.getLogger(ProcessExecutor.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(ProcessExecutor.class.getName());
 
   static private String createCommandLine(final List<String> command)
   {
@@ -137,7 +137,8 @@ public final class ProcessExecutor
 
       return exitCode;
     }
-    catch (final SecurityException | ExecutionException | InterruptedException e)
+    catch (final SecurityException | ExecutionException
+        | InterruptedException e)
     {
       throw new IOException(e.getMessage(), e);
     }

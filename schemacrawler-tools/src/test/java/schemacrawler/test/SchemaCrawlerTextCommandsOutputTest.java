@@ -122,9 +122,8 @@ public class SchemaCrawlerTextCommandsOutputTest
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
-    try (
-      final TestWriter writer = new TestWriter(TextOutputFormat.text
-        .getFormat());)
+    try (final TestWriter writer = new TestWriter(TextOutputFormat.text
+      .getFormat());)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions

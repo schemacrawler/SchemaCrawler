@@ -58,8 +58,8 @@ public final class SchemaCrawlerHelpCommandLine
   private final DatabaseServerType dbServerType;
 
   /**
-   * Loads objects from command-line options. Optionally loads the config from
-   * the classpath.
+   * Loads objects from command-line options. Optionally loads the
+   * config from the classpath.
    *
    * @param args
    *        Command line arguments.

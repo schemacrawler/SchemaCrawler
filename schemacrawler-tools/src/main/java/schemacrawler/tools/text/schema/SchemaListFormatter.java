@@ -70,7 +70,8 @@ final class SchemaListFormatter
                       final OutputOptions outputOptions)
                         throws SchemaCrawlerException
   {
-    super(options, schemaTextDetailType == SchemaTextDetailType.details,
+    super(options,
+          schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
   }
@@ -256,6 +257,7 @@ final class SchemaListFormatter
     printRemarks(synonym);
   }
 
+  @Override
   public void handle(final Table table)
   {
     final String tableName;
