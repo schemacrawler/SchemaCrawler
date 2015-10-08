@@ -20,11 +20,9 @@
 package schemacrawler.tools.commandline;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
@@ -101,35 +99,20 @@ public final class SchemaCrawlerCommandLine
   public void execute()
     throws Exception
   {
-    final List<Executable> executables = new ArrayList<>();
-
-    Executable executableForList;
-
-    executableForList = dbSystemConnector.newPreExecutable();
-    initialize(executableForList);
-    executables.add(executableForList);
-
-    executableForList = dbSystemConnector.newExecutable(command);
-    initialize(executableForList);
-    executables.add(executableForList);
-
-    executableForList = dbSystemConnector.newPostExecutable();
-    initialize(executableForList);
-    executables.add(executableForList);
-
-    if (connectionOptions != null)
-    {
-      try (final Connection connection = connectionOptions.getConnection();)
-      {
-        for (final Executable executable: executables)
-        {
-          executable.execute(connection, databaseSpecificOverrideOptions);
-        }
-      }
-    }
-    else
+    if (connectionOptions == null)
     {
       throw new SchemaCrawlerException("No connection options provided");
+    }
+
+    final Executable executable = dbSystemConnector.newExecutable(command);
+    // Configure
+    executable.setOutputOptions(outputOptions);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
+    // Execute
+    try (final Connection connection = connectionOptions.getConnection();)
+    {
+      executable.execute(connection, databaseSpecificOverrideOptions);
     }
   }
 
@@ -156,22 +139,6 @@ public final class SchemaCrawlerCommandLine
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
-  }
-
-  private void initialize(final Executable executable)
-  {
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (config != null)
-    {
-      executable.setAdditionalConfiguration(config);
-    }
   }
 
   /**
