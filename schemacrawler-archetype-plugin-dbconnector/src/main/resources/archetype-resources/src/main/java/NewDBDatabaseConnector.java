@@ -22,7 +22,8 @@ public final class NewDBDatabaseConnector
     super(new DatabaseServerType("newdb", "NewDB"),
           "/help/Connections.newdb.txt",
           "/schemacrawler-newdb.config.properties",
-          "/newdb.information_schema");
+          "/newdb.information_schema",
+          "jdbc:newdb:.*");
     // SchemaCrawler will control output of log messages if you use JDK logging
     LOGGER.log(Level.INFO, "Loaded pluging for newdb");
   }
