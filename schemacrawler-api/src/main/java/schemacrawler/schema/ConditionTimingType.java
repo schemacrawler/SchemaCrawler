@@ -30,21 +30,21 @@ import java.util.logging.Logger;
 public enum ConditionTimingType
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown("unknown"),
-  /**
-   * Before
-   */
+ /**
+  * Before
+  */
   before("BEFORE"),
-  /**
-   * Instead of
-   */
+ /**
+  * Instead of
+  */
   instead_of("INSTEAD OF"),
-  /**
-   * After
-   */
+ /**
+  * After
+  */
   after("AFTER");
 
   private static final Logger LOGGER = Logger

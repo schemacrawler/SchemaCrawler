@@ -15,8 +15,7 @@ abstract class GraphTestBase
 
   private final boolean DEBUG = false;
 
-  protected <T extends Comparable<? super T>> boolean
-    containsCycleSimple(final DirectedGraph<T> graph)
+  protected <T extends Comparable<? super T>> boolean containsCycleSimple(final DirectedGraph<T> graph)
   {
     final boolean containsCycle = new SimpleCycleDetector<>(graph)
       .containsCycle();
@@ -29,8 +28,7 @@ abstract class GraphTestBase
     return containsCycle;
   }
 
-  protected <T extends Comparable<? super T>> boolean
-    containsCycleTarjan(final DirectedGraph<T> graph)
+  protected <T extends Comparable<? super T>> boolean containsCycleTarjan(final DirectedGraph<T> graph)
   {
     final Collection<List<T>> sccs = new TarjanStronglyConnectedComponentFinder<T>(graph)
       .detectCycles();
@@ -44,9 +42,8 @@ abstract class GraphTestBase
     return !sccs.isEmpty();
   }
 
-  protected <T extends Comparable<? super T>> List<T>
-    topologicalSort(final DirectedGraph<T> graph)
-      throws GraphException
+  protected <T extends Comparable<? super T>> List<T> topologicalSort(final DirectedGraph<T> graph)
+    throws GraphException
   {
     return new SimpleTopologicalSort<>(graph).topologicalSort();
   }

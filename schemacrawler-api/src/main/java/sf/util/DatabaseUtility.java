@@ -20,7 +20,6 @@
 package sf.util;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
@@ -31,6 +30,8 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -124,7 +125,8 @@ public final class DatabaseUtility
         final int updateCount = statement.getUpdateCount();
         LOGGER.log(Level.FINE,
                    String.format("No results. Update count of %d for query: %s",
-                                 updateCount, sql));
+                                 updateCount,
+                                 sql));
       }
 
       SQLWarning sqlWarning = statement.getWarnings();
@@ -161,9 +163,8 @@ public final class DatabaseUtility
                                            final String sql)
                                              throws SchemaCrawlerException
   {
-    try (
-      final Statement statement = createStatement(connection);
-      final ResultSet resultSet = executeSql(statement, sql);)
+    try (final Statement statement = createStatement(connection);
+        final ResultSet resultSet = executeSql(statement, sql);)
     {
       if (resultSet == null)
       {

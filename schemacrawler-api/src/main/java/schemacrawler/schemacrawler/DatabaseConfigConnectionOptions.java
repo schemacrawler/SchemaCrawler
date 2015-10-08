@@ -57,11 +57,6 @@ public final class DatabaseConfigConnectionOptions
     return connectionProperties.get(HOST);
   }
 
-  public String getUrlX()
-  {
-    return connectionProperties.get(URLX);
-  }
-
   public int getPort()
   {
     final String port = connectionProperties.get(PORT);
@@ -73,6 +68,11 @@ public final class DatabaseConfigConnectionOptions
     {
       throw new IllegalArgumentException("Cannot connect to port, " + port);
     }
+  }
+
+  public String getUrlX()
+  {
+    return connectionProperties.get(URLX);
   }
 
   public void setDatabase(final String database)

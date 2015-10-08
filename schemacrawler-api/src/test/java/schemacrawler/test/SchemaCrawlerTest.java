@@ -229,15 +229,18 @@ public class SchemaCrawlerTest
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertTrue("Could not find any tables",
                catalog.getTables(schema1).size() > 0);
-    assertEquals("Wrong number of routines", 4,
+    assertEquals("Wrong number of routines",
+                 4,
                  catalog.getRoutines(schema1).size());
 
     final Schema schema2 = new SchemaReference("PUBLIC", "BOOKS");
 
     assertEquals("Schema not not match", schema1, schema2);
-    assertEquals("Tables do not match", catalog.getTables(schema1),
+    assertEquals("Tables do not match",
+                 catalog.getTables(schema1),
                  catalog.getTables(schema2));
-    assertEquals("Routines do not match", catalog.getRoutines(schema1),
+    assertEquals("Routines do not match",
+                 catalog.getRoutines(schema1),
                  catalog.getRoutines(schema2));
 
     // Try negative test
@@ -390,7 +393,7 @@ public class SchemaCrawlerTest
       final Config config = Config
         .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
 
-      DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -408,21 +411,24 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          out.println(String.format("o--> %s [%s]", table.getFullName(),
+          out.println(String.format("o--> %s [%s]",
+                                    table.getFullName(),
                                     table.getTableType()));
           final SortedMap<String, Object> tableAttributes = new TreeMap<>(table
             .getAttributes());
           for (final Entry<String, Object> tableAttribute: tableAttributes
             .entrySet())
           {
-            out.println(String.format("      ~ %s=%s", tableAttribute.getKey(),
+            out.println(String.format("      ~ %s=%s",
+                                      tableAttribute.getKey(),
                                       tableAttribute.getValue()));
           }
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            out.println(String.format("   o--> %s [%s]", column.getFullName(),
+            out.println(String.format("   o--> %s [%s]",
+                                      column.getFullName(),
                                       column.getColumnDataType()));
             final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
               .getAttributes());
@@ -447,9 +453,12 @@ public class SchemaCrawlerTest
   {
 
     final String[] tableNames = {
-                                  "AUTHORS", "BOOKS", "\"Global Counts\"",
-                                  "PUBLISHERS", "BOOKAUTHORS", "AUTHORSLIST",
-    };
+                                  "AUTHORS",
+                                  "BOOKS",
+                                  "\"Global Counts\"",
+                                  "PUBLISHERS",
+                                  "BOOKAUTHORS",
+                                  "AUTHORSLIST", };
     final Random rnd = new Random();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -471,7 +480,8 @@ public class SchemaCrawlerTest
                      Math.signum(catalog.lookupTable(schema, tableName1)
                        .orElse(null).compareTo(catalog
                          .lookupTable(schema, tableName2).orElse(null))),
-                     Math.signum(i - j), 1e-100);
+                     Math.signum(i - j),
+                     1e-100);
       }
     }
 
@@ -482,7 +492,8 @@ public class SchemaCrawlerTest
       {
         final Table table = tables[tableIdx];
         assertEquals("Table name does not match in iteration " + i,
-                     tableNames[tableIdx], table.getName());
+                     tableNames[tableIdx],
+                     table.getName());
       }
 
       // Shuffle array, and sort it again
@@ -520,7 +531,8 @@ public class SchemaCrawlerTest
       {
         foundTrigger = true;
         assertEquals("Triggers full name does not match",
-                     "PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS", trigger.getFullName());
+                     "PUBLIC.BOOKS.AUTHORS.TRG_AUTHORS",
+                     trigger.getFullName());
         assertEquals("Trigger EventManipulationType does not match",
                      EventManipulationType.delete,
                      trigger.getEventManipulationType());

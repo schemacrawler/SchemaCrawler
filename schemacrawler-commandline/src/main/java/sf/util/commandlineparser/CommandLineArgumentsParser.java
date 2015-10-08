@@ -33,29 +33,35 @@ import java.util.Map;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Command-line options parser. Not POSIX compliant. Follows these POSIX rules:
+ * Command-line options parser. Not POSIX compliant. Follows these POSIX
+ * rules:
  * <ul>
- * <li>Arguments are options if they begin with a hyphen delimiter ('-').</li>
- * <li>Certain options require an argument. For example, the '-o' command of the
- * ld command requires an argument—an output file name.</li>
+ * <li>Arguments are options if they begin with a hyphen delimiter
+ * ('-').</li>
+ * <li>Certain options require an argument. For example, the '-o'
+ * command of the ld command requires an argument—an output file name.
+ * </li>
  * <li>Options typically precede other non-option arguments.</li>
- * <li>Options may be supplied in any order, or appear multiple times. The
- * interpretation is left up to the particular application program.</li>
+ * <li>Options may be supplied in any order, or appear multiple times.
+ * The interpretation is left up to the particular application program.
+ * </li>
  * </ul>
  * Does not honor these POSIX rules:
  * <ul>
- * <li>Multiple options may follow a hyphen delimiter in a single token if the
- * options do not take arguments. Thus, '-abc' is equivalent to '-a -b -c'.</li>
- * <li>Option names are single alphanumeric characters (as for isalnum; see
- * Classification of Characters).</li>
- * <li>An option and its argument may or may not appear as separate tokens. (In
- * other words, the whitespace separating them is optional.) Thus, '-o foo' and
- * '-ofoo' are equivalent.</li>
- * <li>The argument '--' terminates all options; any following arguments are
- * treated as non-option arguments, even if they begin with a hyphen.</li>
- * <li>A token consisting of a single hyphen character is interpreted as an
- * ordinary non-option argument. By convention, it is used to specify input from
- * or output to the standard input and output streams.</li>
+ * <li>Multiple options may follow a hyphen delimiter in a single token
+ * if the options do not take arguments. Thus, '-abc' is equivalent to
+ * '-a -b -c'.</li>
+ * <li>Option names are single alphanumeric characters (as for isalnum;
+ * see Classification of Characters).</li>
+ * <li>An option and its argument may or may not appear as separate
+ * tokens. (In other words, the whitespace separating them is optional.)
+ * Thus, '-o foo' and '-ofoo' are equivalent.</li>
+ * <li>The argument '--' terminates all options; any following arguments
+ * are treated as non-option arguments, even if they begin with a
+ * hyphen.</li>
+ * <li>A token consisting of a single hyphen character is interpreted as
+ * an ordinary non-option argument. By convention, it is used to specify
+ * input from or output to the standard input and output streams.</li>
  * </ul>
  */
 public class CommandLineArgumentsParser

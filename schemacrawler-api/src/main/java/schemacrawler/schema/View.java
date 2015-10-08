@@ -31,18 +31,19 @@ public interface View
 {
 
   /**
-   * Type of WITH CHECK OPTION. Is CASCADE if the original view was created by
-   * using the WITH CHECK OPTION. Otherwise, NONE is returned.
+   * Type of WITH CHECK OPTION. Is CASCADE if the original view was
+   * created by using the WITH CHECK OPTION. Otherwise, NONE is
+   * returned.
    *
    * @return Check option.
    */
-    CheckOptionType getCheckOption();
+  CheckOptionType getCheckOption();
 
   /**
    * Specifies whether the view is updatable.
    *
    * @return Whether the view is updatable.
    */
-    boolean isUpdatable();
+  boolean isUpdatable();
 
 }

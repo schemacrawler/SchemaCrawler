@@ -14,11 +14,11 @@ public interface CommandProvider
 
   String getCommand();
 
-  String getHelpResource();
-
   default String getHelpAdditionalText()
   {
     return "";
   }
+
+  String getHelpResource();
 
 }

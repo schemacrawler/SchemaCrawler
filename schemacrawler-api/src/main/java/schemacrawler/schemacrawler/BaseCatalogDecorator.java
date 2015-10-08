@@ -20,11 +20,11 @@
 package schemacrawler.schemacrawler;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -214,8 +214,8 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType>
-    lookupColumnDataType(final Schema schema, final String name)
+  public Optional<? extends ColumnDataType> lookupColumnDataType(final Schema schema,
+                                                                 final String name)
   {
     return catalog.lookupColumnDataType(schema, name);
   }
@@ -255,8 +255,7 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType>
-    lookupSystemColumnDataType(final String name)
+  public Optional<? extends ColumnDataType> lookupSystemColumnDataType(final String name)
   {
     return catalog.lookupSystemColumnDataType(name);
   }

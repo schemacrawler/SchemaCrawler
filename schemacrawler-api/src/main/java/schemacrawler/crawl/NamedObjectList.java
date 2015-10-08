@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,6 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.NamedObject;
 import sf.util.ObjectToString;
@@ -263,7 +263,7 @@ class NamedObjectList<N extends NamedObject>
    *        Fully qualified name
    * @return Named object
    */
-    Optional<N> lookup(final String fullName)
+  Optional<N> lookup(final String fullName)
   {
     final String key = makeLookupKey(fullName);
     return internalGet(key);
@@ -284,7 +284,7 @@ class NamedObjectList<N extends NamedObject>
    *
    * @return All named objects
    */
-    List<N> values()
+  List<N> values()
   {
     final List<N> all = new ArrayList<>(objects.values());
     Collections.sort(all);

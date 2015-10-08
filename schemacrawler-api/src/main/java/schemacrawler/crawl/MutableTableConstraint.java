@@ -112,8 +112,7 @@ class MutableTableConstraint
     return initiallyDeferred;
   }
 
-  public void
-    setTableConstraintType(final TableConstraintType tableConstraintType)
+  public void setTableConstraintType(final TableConstraintType tableConstraintType)
   {
     this.tableConstraintType = tableConstraintType;
   }

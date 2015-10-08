@@ -91,16 +91,22 @@ public abstract class BaseLinterCatalog
     collector = lintCollector;
   }
 
-  protected final <
-    N extends NamedObject & AttributedObject, V extends Serializable> void
-    addLint(final N namedObject, final String message, final V value)
+  protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
+                                                                                                  final String message,
+                                                                                                  final V value)
   {
-    LOGGER.log(Level.FINE, String.format("Found lint for %s: %s --> %s",
-                                         namedObject, message, value));
+    LOGGER.log(Level.FINE,
+               String.format("Found lint for %s: %s --> %s",
+                             namedObject,
+                             message,
+                             value));
     if (collector != null)
     {
-      final Lint<V> lint = new SimpleLint<>(getId(), namedObject, getSeverity(),
-                                            message, value);
+      final Lint<V> lint = new SimpleLint<>(getId(),
+                                            namedObject,
+                                            getSeverity(),
+                                            message,
+                                            value);
       collector.addLint(namedObject, lint);
     }
   }

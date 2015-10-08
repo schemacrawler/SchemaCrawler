@@ -21,11 +21,11 @@
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;

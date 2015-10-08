@@ -31,23 +31,23 @@ import java.util.logging.Logger;
 public enum ForeignKeyDeferrability
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown(-1, "unknown"),
-  /**
-   * Initially deferred.
-   */
+ /**
+  * Initially deferred.
+  */
   initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
     "initially deferred"),
-  /**
-   * Initially immediate.
-   */
+ /**
+  * Initially immediate.
+  */
   initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
     "initially immediate"),
-  /**
-   * Not deferrable.
-   */
+ /**
+  * Not deferrable.
+  */
   keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
 
   private static final Logger LOGGER = Logger

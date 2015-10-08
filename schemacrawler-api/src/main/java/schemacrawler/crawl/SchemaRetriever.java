@@ -67,8 +67,8 @@ final class SchemaRetriever
    * @throws SQLException
    *         On an exception
    */
-    void retrieveSchemas(final InclusionRule schemaInclusionRule)
-      throws SQLException
+  void retrieveSchemas(final InclusionRule schemaInclusionRule)
+    throws SQLException
   {
     final InclusionRuleFilter<Schema> schemaFilter = new InclusionRuleFilter<>(schemaInclusionRule,
                                                                                true);
@@ -94,7 +94,8 @@ final class SchemaRetriever
       final SchemaReference schemaRef = iterator.next();
       if (!schemaFilter.test(schemaRef))
       {
-        LOGGER.log(Level.FINER, "Dropping schema, since schema is excluded: "
+        LOGGER.log(Level.FINER,
+                   "Dropping schema, since schema is excluded: "
                                 + schemaRef.getFullName());
         iterator.remove();
         // continue
@@ -168,8 +169,10 @@ final class SchemaRetriever
           }
           final String schemaName = quotedName(results
             .getString("TABLE_SCHEM"));
-          LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                                catalogName, schemaName));
+          LOGGER.log(Level.FINER,
+                     String.format("Retrieving schema: %s --> %s",
+                                   catalogName,
+                                   schemaName));
           if (catalogName == null)
           {
             if (allCatalogNames.isEmpty())
@@ -196,8 +199,10 @@ final class SchemaRetriever
     {
       for (final String catalogName: allCatalogNames)
       {
-        LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                              catalogName, null));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving schema: %s --> %s",
+                                 catalogName,
+                                 null));
         schemaRefs.add(new SchemaReference(catalogName, null));
       }
     }
@@ -220,18 +225,19 @@ final class SchemaRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         schemataSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           schemataSql));)
     {
       while (results.next())
       {
         final String catalogName = quotedName(results
           .getString("CATALOG_NAME"));
         final String schemaName = quotedName(results.getString("SCHEMA_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving schema: %s --> %s",
-                                              catalogName, schemaName));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving schema: %s --> %s",
+                                 catalogName,
+                                 schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
     }

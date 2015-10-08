@@ -120,8 +120,10 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    failures.addAll(compareOutput(XML_OUTPUT + referenceFile, testOutputFile,
-                                  TextOutputFormat.html.getFormat()));
+    failures
+      .addAll(compareOutput(XML_OUTPUT + referenceFile,
+                            testOutputFile,
+                            TextOutputFormat.html.getFormat()));
   }
 
 }

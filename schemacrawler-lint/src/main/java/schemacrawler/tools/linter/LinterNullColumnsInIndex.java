@@ -20,12 +20,12 @@
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -55,8 +55,7 @@ public class LinterNullColumnsInIndex
     }
   }
 
-  private List<Index>
-    findNullableColumnsInUniqueIndex(final Collection<Index> indexes)
+  private List<Index> findNullableColumnsInUniqueIndex(final Collection<Index> indexes)
   {
     final List<Index> nullableColumnsInUniqueIndex = new ArrayList<>();
     for (final Index index: indexes)

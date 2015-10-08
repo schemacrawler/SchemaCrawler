@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -50,19 +50,23 @@ final class ImmutableCrawlInfo
 
   ImmutableCrawlInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
                      final JdbcDriverInfo jdbcDriverInfo,
-                     final DatabaseInfo databaseInfo, final String title)
+                     final DatabaseInfo databaseInfo,
+                     final String title)
   {
     requireNonNull(schemaCrawlerInfo);
     this.schemaCrawlerInfo = String
-      .format("%s %s", schemaCrawlerInfo.getSchemaCrawlerProductName(),
+      .format("%s %s",
+              schemaCrawlerInfo.getSchemaCrawlerProductName(),
               schemaCrawlerInfo.getSchemaCrawlerVersion());
 
     requireNonNull(jdbcDriverInfo);
-    this.jdbcDriverInfo = String.format("%s %s", jdbcDriverInfo.getDriverName(),
+    this.jdbcDriverInfo = String.format("%s %s",
+                                        jdbcDriverInfo.getDriverName(),
                                         jdbcDriverInfo.getDriverVersion());
 
     requireNonNull(databaseInfo);
-    this.databaseInfo = String.format("%s %s", databaseInfo.getProductName(),
+    this.databaseInfo = String.format("%s %s",
+                                      databaseInfo.getProductName(),
                                       databaseInfo.getProductVersion());
 
     this.title = title;

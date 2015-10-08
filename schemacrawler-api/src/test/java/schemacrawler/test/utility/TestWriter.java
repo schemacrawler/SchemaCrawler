@@ -7,7 +7,6 @@ import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
@@ -24,6 +23,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.GZIPOutputStream;
+
+import static java.util.Objects.requireNonNull;
 
 public class TestWriter
   extends Writer
@@ -287,11 +288,12 @@ public class TestWriter
   private PrintWriter openOutputWriter(final Path tempFile,
                                        final Charset charset,
                                        final boolean isCompressed)
-    throws IOException
+                                         throws IOException
   {
     final OpenOption[] openOptions = new OpenOption[] {
-        WRITE, CREATE, TRUNCATE_EXISTING
-    };
+                                                        WRITE,
+                                                        CREATE,
+                                                        TRUNCATE_EXISTING };
     final Writer writer;
     if (isCompressed)
     {

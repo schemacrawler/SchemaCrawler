@@ -21,9 +21,9 @@
 package schemacrawler.tools.text.base;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
@@ -68,30 +68,6 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> hideFooter()
-  {
-    options.setNoFooter(true);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> hideHeader()
-  {
-    options.setNoHeader(true);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> hideInfo()
-  {
-    options.setNoInfo(true);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> overwriteOutput()
-  {
-    options.setAppendOutput(false);
-    return this;
-  }
-
   @Override
   public BaseTextOptionsBuilder<O> fromConfig(final Map<String, String> map)
   {
@@ -128,6 +104,36 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
+  public BaseTextOptionsBuilder<O> hideFooter()
+  {
+    options.setNoFooter(true);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> hideHeader()
+  {
+    options.setNoHeader(true);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> hideInfo()
+  {
+    options.setNoInfo(true);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> naturalSortTables()
+  {
+    options.setAlphabeticalSortForTables(false);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> overwriteOutput()
+  {
+    options.setAppendOutput(false);
+    return this;
+  }
+
   public BaseTextOptionsBuilder<O> showFooter()
   {
     options.setNoFooter(false);
@@ -155,12 +161,6 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public BaseTextOptionsBuilder<O> sortTables()
   {
     options.setAlphabeticalSortForTables(true);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> naturalSortTables()
-  {
-    options.setAlphabeticalSortForTables(false);
     return this;
   }
 

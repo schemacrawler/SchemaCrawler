@@ -29,20 +29,20 @@ public interface IndexColumn
    *
    * @return Index
    */
-    Index getIndex();
+  Index getIndex();
 
   /**
    * Ordinal position of the column, in the index.
    *
    * @return Ordinal position
    */
-    int getIndexOrdinalPosition();
+  int getIndexOrdinalPosition();
 
   /**
    * Gets the sort sequence.
    *
    * @return Sort sequence
    */
-    IndexColumnSortSequence getSortSequence();
+  IndexColumnSortSequence getSortSequence();
 
 }

@@ -84,7 +84,7 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
-        for (Table table: getSortedTables(catalog))
+        for (final Table table: getSortedTables(catalog))
         {
           final String sql = query
             .getQuery(table,
@@ -92,7 +92,8 @@ public final class OperationExecutable
 
           LOGGER.log(Level.FINE,
                      String.format("Executing query for table %s: %s",
-                                   table.getFullName(), sql));
+                                   table.getFullName(),
+                                   sql));
           try (final ResultSet results = executeSql(statement, sql);)
           {
             handler.handleData(table, results);
@@ -117,14 +118,6 @@ public final class OperationExecutable
     }
   }
 
-  private List<? extends Table> getSortedTables(final Catalog catalog)
-  {
-    final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
-    Collections.sort(tables, NamedObjectSort
-      .getNamedObjectSort(getOperationOptions().isAlphabeticalSortForTables()));
-    return tables;
-  }
-
   public final OperationOptions getOperationOptions()
   {
     loadOperationOptions();
@@ -147,12 +140,14 @@ public final class OperationExecutable
       .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
-      formatter = new DataJsonFormatter(operation, operationOptions,
+      formatter = new DataJsonFormatter(operation,
+                                        operationOptions,
                                         outputOptions);
     }
     else
     {
-      formatter = new DataTextFormatter(operation, operationOptions,
+      formatter = new DataTextFormatter(operation,
+                                        operationOptions,
                                         outputOptions);
     }
     return formatter;
@@ -199,6 +194,15 @@ public final class OperationExecutable
     }
 
     return query;
+  }
+
+  private List<? extends Table> getSortedTables(final Catalog catalog)
+  {
+    final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
+    Collections.sort(tables,
+                     NamedObjectSort.getNamedObjectSort(getOperationOptions()
+                       .isAlphabeticalSortForTables()));
+    return tables;
   }
 
   private void loadOperationOptions()

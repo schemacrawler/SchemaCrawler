@@ -21,8 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +30,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -48,8 +48,8 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 
 /**
- * Database and connection information. Created from metadata returned by a JDBC
- * call, and other sources of information.
+ * Database and connection information. Created from metadata returned
+ * by a JDBC call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -285,8 +285,8 @@ final class MutableCatalog
    * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   @Override
-  public Optional<MutableColumnDataType>
-    lookupColumnDataType(final Schema schema, final String name)
+  public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
+                                                              final String name)
   {
     return columnDataTypes.lookup(schema, name);
   }
@@ -345,8 +345,7 @@ final class MutableCatalog
    * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
    */
   @Override
-  public Optional<MutableColumnDataType>
-    lookupSystemColumnDataType(final String name)
+  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
   {
     return lookupColumnDataType(new SchemaReference(), name);
   }
@@ -467,8 +466,10 @@ final class MutableCatalog
 
   void setCrawlHeaderInfo(final String title)
   {
-    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo, jdbcDriverInfo,
-                                       databaseInfo, title);
+    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo,
+                                       jdbcDriverInfo,
+                                       databaseInfo,
+                                       title);
   }
 
 }

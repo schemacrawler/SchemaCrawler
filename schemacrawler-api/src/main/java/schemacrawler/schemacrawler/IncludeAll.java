@@ -21,7 +21,8 @@ package schemacrawler.schemacrawler;
 
 
 /**
- * Include all names, definitions, and other attributes of named objects.
+ * Include all names, definitions, and other attributes of named
+ * objects.
  *
  * @author Sualeh Fatehi
  */

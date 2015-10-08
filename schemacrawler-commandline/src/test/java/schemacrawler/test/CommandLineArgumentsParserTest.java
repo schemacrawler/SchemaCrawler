@@ -19,8 +19,9 @@ public class CommandLineArgumentsParserTest
   public void mixed1()
   {
     final String[] args = new String[] {
-        "-blah", "value with spaces", "othernonoption"
-    };
+                                         "-blah",
+                                         "value with spaces",
+                                         "othernonoption" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -41,8 +42,10 @@ public class CommandLineArgumentsParserTest
   public void mixed2()
   {
     final String[] args = new String[] {
-        "-blah", "value with spaces", "othernonoption", "-other option"
-    };
+                                         "-blah",
+                                         "value with spaces",
+                                         "othernonoption",
+                                         "-other option" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -64,9 +67,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void nonOptionArguments1()
   {
-    final String[] args = new String[] {
-      "nonoption with spaces"
-    };
+    final String[] args = new String[] { "nonoption with spaces" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -84,8 +85,8 @@ public class CommandLineArgumentsParserTest
   public void nonOptionArguments2()
   {
     final String[] args = new String[] {
-        "nonoption with spaces", "othernonoption"
-    };
+                                         "nonoption with spaces",
+                                         "othernonoption" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -103,9 +104,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noOption()
   {
-    final String[] args = new String[] {
-      "-=blah"
-    };
+    final String[] args = new String[] { "-=blah" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -124,9 +123,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noOptionOrValue()
   {
-    final String[] args = new String[] {
-      "-"
-    };
+    final String[] args = new String[] { "-" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -145,9 +142,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noOptionOrValueButImplied()
   {
-    final String[] args = new String[] {
-      "-="
-    };
+    final String[] args = new String[] { "-=" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -166,9 +161,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noValue()
   {
-    final String[] args = new String[] {
-      "-blah"
-    };
+    final String[] args = new String[] { "-blah" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -187,9 +180,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noValue2()
   {
-    final String[] args = new String[] {
-        "-blah", "-foo"
-    };
+    final String[] args = new String[] { "-blah", "-foo" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -210,9 +201,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void noValueButImplied()
   {
-    final String[] args = new String[] {
-      "-blah="
-    };
+    final String[] args = new String[] { "-blah=" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -231,9 +220,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void optionAndValue()
   {
-    final String[] args = new String[] {
-      "-blah=3"
-    };
+    final String[] args = new String[] { "-blah=3" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();
@@ -252,9 +239,7 @@ public class CommandLineArgumentsParserTest
   @Test
   public void repeatedOption()
   {
-    final String[] args = new String[] {
-        "-blah=4", "-blah=3"
-    };
+    final String[] args = new String[] { "-blah=4", "-blah=3" };
 
     final CommandLineArgumentsParser parser = new CommandLineArgumentsParser(args);
     parser.parse();

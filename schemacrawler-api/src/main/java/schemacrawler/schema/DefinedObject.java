@@ -9,13 +9,13 @@ public interface DefinedObject
    *
    * @return Definition
    */
-    String getDefinition();
+  String getDefinition();
 
   /**
    * Checks whether there is a definition.
    *
    * @return True if there is a definition
    */
-    boolean hasDefinition();
+  boolean hasDefinition();
 
 }

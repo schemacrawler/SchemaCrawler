@@ -56,7 +56,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   protected BaseJsonFormatter(final O options,
                               final boolean printVerboseDatabaseInfo,
                               final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                                throws SchemaCrawlerException
   {
     super(options, printVerboseDatabaseInfo, outputOptions);
     jsonRoot = new JSONObject();
@@ -104,9 +104,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       final JSONObject jsonSchemaCrawlerHeaderInfo = new JSONObject();
       jsonRoot.put("schemaCrawlerHeaderInfo", jsonSchemaCrawlerHeaderInfo);
 
-      jsonSchemaCrawlerHeaderInfo.put("crawlTimestamp",
-                                      formatTimestamp(crawlInfo
-                                        .getCrawlTimestamp()));
+      jsonSchemaCrawlerHeaderInfo
+        .put("crawlTimestamp", formatTimestamp(crawlInfo.getCrawlTimestamp()));
       jsonSchemaCrawlerHeaderInfo.put("title", crawlInfo.getTitle());
     }
     catch (final JSONException e)

@@ -45,10 +45,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 public final class SchemaCrawlerUtility
 {
 
-  public static Catalog
-    getCatalog(final Connection connection,
-               final SchemaCrawlerOptions schemaCrawlerOptions)
-                 throws SchemaCrawlerException
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
+                                     throws SchemaCrawlerException
   {
     checkConnection(connection);
 

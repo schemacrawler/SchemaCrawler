@@ -31,25 +31,25 @@ import java.util.logging.Logger;
 public enum IndexType
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown(-1),
-  /**
-   * Statistic.
-   */
+ /**
+  * Statistic.
+  */
   statistic(DatabaseMetaData.tableIndexStatistic),
-  /**
-   * Clustered.
-   */
+ /**
+  * Clustered.
+  */
   clustered(DatabaseMetaData.tableIndexClustered),
-  /**
-   * Hashed.
-   */
+ /**
+  * Hashed.
+  */
   hashed(DatabaseMetaData.tableIndexHashed),
-  /**
-   * Other.
-   */
+ /**
+  * Other.
+  */
   other(DatabaseMetaData.tableIndexOther);
 
   private static final Logger LOGGER = Logger

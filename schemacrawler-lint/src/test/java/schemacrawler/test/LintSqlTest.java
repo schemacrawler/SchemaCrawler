@@ -56,7 +56,8 @@ public class LintSqlTest
 
     lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
 
-    executeExecutable(lintExecutable, outputFormat.getFormat(),
+    executeExecutable(lintExecutable,
+                      outputFormat.getFormat(),
                       referenceFileName + ".txt");
   }
 

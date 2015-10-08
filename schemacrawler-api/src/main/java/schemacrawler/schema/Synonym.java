@@ -35,6 +35,6 @@ public interface Synonym
    *
    * @return Referenced object.
    */
-    DatabaseObject getReferencedObject();
+  DatabaseObject getReferencedObject();
 
 }

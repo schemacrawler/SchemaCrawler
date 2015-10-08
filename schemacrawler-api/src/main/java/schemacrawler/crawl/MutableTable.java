@@ -58,9 +58,9 @@ class MutableTable
   private enum TableAssociationType
   {
 
-    all,
-    exported,
-    imported;
+   all,
+   exported,
+   imported;
   }
 
   private static final long serialVersionUID = 3257290248802284852L;
@@ -196,8 +196,7 @@ class MutableTable
    * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
-  public Collection<Table>
-    getRelatedTables(final TableRelationshipType tableRelationshipType)
+  public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
     final Set<Table> relatedTables = new HashSet<>();
     if (tableRelationshipType != null
@@ -451,8 +450,7 @@ class MutableTable
     }
   }
 
-  private Collection<ForeignKey>
-    getForeignKeys(final TableAssociationType tableAssociationType)
+  private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
   {
     final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
       .values());

@@ -37,20 +37,20 @@ public interface SchemaCrawlerInfo
    *
    * @return SchemaCrawler about text
    */
-    String getSchemaCrawlerAbout();
+  String getSchemaCrawlerAbout();
 
   /**
    * Gets the name of the SchemaCrawler product.
    *
    * @return Name of the SchemaCrawler product
    */
-    String getSchemaCrawlerProductName();
+  String getSchemaCrawlerProductName();
 
   /**
    * Gets the SchemaCrawler version.
    *
    * @return SchemaCrawler version
    */
-    String getSchemaCrawlerVersion();
+  String getSchemaCrawlerVersion();
 
 }

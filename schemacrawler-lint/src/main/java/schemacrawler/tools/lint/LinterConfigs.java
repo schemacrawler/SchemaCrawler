@@ -20,7 +20,6 @@
 package schemacrawler.tools.lint;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -41,6 +40,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -271,6 +272,20 @@ public class LinterConfigs
     return linterId;
   }
 
+  private String parseRegularExpressionPattern(final Element linterElement,
+                                               final String elementName)
+  {
+    final String patternValue = getTextValue(linterElement, elementName);
+    if (isBlank(patternValue))
+    {
+      return null;
+    }
+    else
+    {
+      return patternValue;
+    }
+  }
+
   private boolean parseRunLinter(final Element linterElement)
   {
     final boolean runLinter;
@@ -301,24 +316,11 @@ public class LinterConfigs
       {
         LOGGER.log(Level.CONFIG,
                    String.format("Could not set a severity of %s for linter %s",
-                                 severityValue, linterId));
+                                 severityValue,
+                                 linterId));
       }
     }
     return severity;
-  }
-
-  private String parseRegularExpressionPattern(final Element linterElement,
-                                               final String elementName)
-  {
-    final String patternValue = getTextValue(linterElement, elementName);
-    if (isBlank(patternValue))
-    {
-      return null;
-    }
-    else
-    {
-      return patternValue;
-    }
   }
 
 }

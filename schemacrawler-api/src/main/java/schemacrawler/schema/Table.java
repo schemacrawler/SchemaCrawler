@@ -39,15 +39,15 @@ public interface Table
    *
    * @return Columns of the table
    */
-    List<Column> getColumns();
+  List<Column> getColumns();
 
   /**
-   * Gets the list of exported foreign keys. That is, only those whose primary
-   * key is referenced in another table.
+   * Gets the list of exported foreign keys. That is, only those whose
+   * primary key is referenced in another table.
    *
    * @return Exported foreign keys of the table.
    */
-    Collection<ForeignKey> getExportedForeignKeys();
+  Collection<ForeignKey> getExportedForeignKeys();
 
   /**
    * Gets the list of foreign keys. Same as calling
@@ -55,69 +55,69 @@ public interface Table
    *
    * @return Foreign keys of the table.
    */
-    Collection<ForeignKey> getForeignKeys();
+  Collection<ForeignKey> getForeignKeys();
 
   /**
-   * Gets the list of imported foreign keys. That is, only those that reference
-   * a primary key another table.
+   * Gets the list of imported foreign keys. That is, only those that
+   * reference a primary key another table.
    *
    * @return Imported foreign keys of the table.
    */
-    Collection<ForeignKey> getImportedForeignKeys();
+  Collection<ForeignKey> getImportedForeignKeys();
 
   /**
    * Gets the list of indexes.
    *
    * @return Indexes of the table.
    */
-    Collection<Index> getIndexes();
+  Collection<Index> getIndexes();
 
   /**
    * Gets the primary key.
    *
    * @return Primary key
    */
-    PrimaryKey getPrimaryKey();
+  PrimaryKey getPrimaryKey();
 
   /**
    * Gets the list of privileges.
    *
    * @return Privileges for the table.
    */
-    Collection<Privilege<Table>> getPrivileges();
+  Collection<Privilege<Table>> getPrivileges();
 
   /**
-   * Gets the tables related to this one, based on the specified relationship
-   * type. Child tables are those who have a foreign key from this table. Parent
-   * tables are those to which this table has a foreign key.
+   * Gets the tables related to this one, based on the specified
+   * relationship type. Child tables are those who have a foreign key
+   * from this table. Parent tables are those to which this table has a
+   * foreign key.
    *
    * @param tableRelationshipType
    *        Table relationship type
    * @return Related tables.
    */
-    Collection<Table>
-      getRelatedTables(final TableRelationshipType tableRelationshipType);
+  Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType);
 
   /**
    * Gets the constraints for the table.
    *
    * @return Constraints for the table
    */
-    Collection<TableConstraint> getTableConstraints();
+  Collection<TableConstraint> getTableConstraints();
 
   /**
    * Gets the table type.
    *
    * @return Table type.
    */
-    TableType getTableType();
+  TableType getTableType();
 
   /**
    * Gets the list of triggers.
    *
    * @return Triggers for the table.
    */
-    Collection<Trigger> getTriggers();
+  Collection<Trigger> getTriggers();
 
   /**
    * Gets a column by unqualified name.
@@ -126,7 +126,7 @@ public interface Table
    *        Unqualified name
    * @return Column.
    */
-    Optional<? extends Column> lookupColumn(String name);
+  Optional<? extends Column> lookupColumn(String name);
 
   /**
    * Gets a foreign key by name.
@@ -135,7 +135,7 @@ public interface Table
    *        Name
    * @return Foreign key.
    */
-    Optional<? extends ForeignKey> lookupForeignKey(String name);
+  Optional<? extends ForeignKey> lookupForeignKey(String name);
 
   /**
    * Gets an index by unqualified name.
@@ -144,7 +144,7 @@ public interface Table
    *        Name
    * @return Index.
    */
-    Optional<? extends Index> lookupIndex(String name);
+  Optional<? extends Index> lookupIndex(String name);
 
   /**
    * Gets a privilege by unqualified name.
@@ -153,7 +153,7 @@ public interface Table
    *        Name
    * @return Privilege.
    */
-    Optional<? extends Privilege<Table>> lookupPrivilege(String name);
+  Optional<? extends Privilege<Table>> lookupPrivilege(String name);
 
   /**
    * Gets a trigger by unqualified name.
@@ -162,6 +162,6 @@ public interface Table
    *        Name
    * @return Trigger.
    */
-    Optional<? extends Trigger> lookupTrigger(String name);
+  Optional<? extends Trigger> lookupTrigger(String name);
 
 }

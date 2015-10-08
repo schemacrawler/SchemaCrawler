@@ -20,11 +20,11 @@
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
@@ -47,17 +47,17 @@ public class LinterTooManyLobs
   }
 
   @Override
+  public String getSummary()
+  {
+    return "too many binary objects";
+  }
+
+  @Override
   protected void configure(final Config config)
   {
     requireNonNull(config, "No configuration provided");
 
     maxLargeObjectsInTable = config.getIntegerValue("max-large-objects", 1);
-  }
-
-  @Override
-  public String getSummary()
-  {
-    return "too many binary objects";
   }
 
   @Override

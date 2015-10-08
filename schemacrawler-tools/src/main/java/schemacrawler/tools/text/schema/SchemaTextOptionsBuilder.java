@@ -66,30 +66,6 @@ public class SchemaTextOptionsBuilder
     super(options);
   }
 
-  public SchemaTextOptionsBuilder hideRemarks()
-  {
-    options.setHideRemarks(true);
-    return this;
-  }
-
-  public SchemaTextOptionsBuilder noInfo()
-  {
-    options.setNoInfo(true);
-    return this;
-  }
-
-  public SchemaTextOptionsBuilder portableNames()
-  {
-    options.setHideConstraintNames(true);
-    options.setHideForeignKeyNames(true);
-    options.setHideIndexNames(true);
-    options.setHidePrimaryKeyNames(true);
-    options.setHideTriggerNames(true);
-    options.setHideRoutineSpecificNames(true);
-    options.setShowUnqualifiedNames(true);
-    return this;
-  }
-
   @Override
   public SchemaTextOptionsBuilder fromConfig(final Map<String, String> map)
   {
@@ -122,6 +98,30 @@ public class SchemaTextOptionsBuilder
     options.setAlphabeticalSortForIndexes(config
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_INDEXES));
 
+    return this;
+  }
+
+  public SchemaTextOptionsBuilder hideRemarks()
+  {
+    options.setHideRemarks(true);
+    return this;
+  }
+
+  public SchemaTextOptionsBuilder noInfo()
+  {
+    options.setNoInfo(true);
+    return this;
+  }
+
+  public SchemaTextOptionsBuilder portableNames()
+  {
+    options.setHideConstraintNames(true);
+    options.setHideForeignKeyNames(true);
+    options.setHideIndexNames(true);
+    options.setHidePrimaryKeyNames(true);
+    options.setHideTriggerNames(true);
+    options.setHideRoutineSpecificNames(true);
+    options.setShowUnqualifiedNames(true);
     return this;
   }
 

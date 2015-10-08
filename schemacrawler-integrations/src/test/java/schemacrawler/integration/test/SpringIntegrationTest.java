@@ -63,8 +63,10 @@ public class SpringIntegrationTest
         .getBean("databaseSpecificOverrideOptions");
 
       final Executable executable = (Executable) bean;
-      executeAndCheckForOutputFile(beanDefinitionName, executable,
-                                   databaseSpecificOverrideOptions, failures,
+      executeAndCheckForOutputFile(beanDefinitionName,
+                                   executable,
+                                   databaseSpecificOverrideOptions,
+                                   failures,
                                    true);
     }
     if (failures.size() > 0)
@@ -91,8 +93,10 @@ public class SpringIntegrationTest
           .getBean("databaseSpecificOverrideOptions");
 
         final Executable executable = (Executable) bean;
-        executeAndCheckForOutputFile(beanDefinitionName, executable,
-                                     databaseSpecificOverrideOptions, failures,
+        executeAndCheckForOutputFile(beanDefinitionName,
+                                     executable,
+                                     databaseSpecificOverrideOptions,
+                                     failures,
                                      false);
       }
     }
@@ -111,7 +115,8 @@ public class SpringIntegrationTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Unexpected number of tables in the schema", 6,
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
                  catalog.getTables(schema).size());
   }
 
@@ -129,14 +134,16 @@ public class SpringIntegrationTest
 
     if (isCompressedOutput)
     {
-      failures
-        .addAll(compareCompressedOutput(executableName + ".txt", testOutputFile,
-                                        TextOutputFormat.text.name()));
+      failures.addAll(compareCompressedOutput(executableName + ".txt",
+                                              testOutputFile,
+                                              TextOutputFormat.text.name()));
     }
     else
     {
-      failures.addAll(compareOutput(executableName + ".txt", testOutputFile,
-                                    TextOutputFormat.text.name()));
+      failures
+        .addAll(compareOutput(executableName + ".txt",
+                              testOutputFile,
+                              TextOutputFormat.text.name()));
     }
   }
 

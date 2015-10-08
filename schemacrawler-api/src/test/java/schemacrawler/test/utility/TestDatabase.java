@@ -52,8 +52,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public class TestDatabase
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TestDatabase.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TestDatabase.class.getName());
 
   public static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://localhost/schemacrawler";
 
@@ -99,15 +99,14 @@ public class TestDatabase
       @Override
       public FileVisitResult visitFile(final Path file,
                                        final BasicFileAttributes attrs)
-        throws IOException
+                                         throws IOException
       {
         for (final String filename: new String[] {
-            serverFileStem + ".lck",
-            serverFileStem + ".log",
-            serverFileStem + ".lobs",
-            serverFileStem + ".script",
-            serverFileStem + ".properties"
-        })
+                                                   serverFileStem + ".lck",
+                                                   serverFileStem + ".log",
+                                                   serverFileStem + ".lobs",
+                                                   serverFileStem + ".script",
+                                                   serverFileStem + ".properties" })
         {
           if (!attrs.isDirectory() && file.endsWith(filename))
           {
@@ -120,7 +119,7 @@ public class TestDatabase
       @Override
       public FileVisitResult visitFileFailed(final Path file,
                                              final IOException exc)
-        throws IOException
+                                               throws IOException
       {
         return FileVisitResult.CONTINUE;
       }
@@ -234,12 +233,15 @@ public class TestDatabase
     try (final Connection connection = getConnection();)
     {
       for (final String schema: new String[] {
-          "books", "publisher sales", "for_lint",
-      })
+                                               "books",
+                                               "publisher sales",
+                                               "for_lint", })
       {
         for (final String scriptType: new String[] {
-            "pre_schema", "schema", "post_schema", "data",
-        })
+                                                     "pre_schema",
+                                                     "schema",
+                                                     "post_schema",
+                                                     "data", })
         {
           final String scriptResource = String
             .format("/testdatabase/%s.%s.sql", schema, scriptType)

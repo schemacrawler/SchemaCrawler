@@ -42,27 +42,25 @@ public class GrepCommandLineTest
     final List<String> failures = new ArrayList<>();
 
     final String[][] grepArgs = new String[][] {
-        new String[] {
-            "-grepcolumns=.*\\.STREET|.*\\.PRICE", "-routines=",
-        },
-        new String[] {
-            "-grepcolumns=.*\\..*NAME", "-routines=",
-        },
-        new String[] {
-            "-grepdef=.*book authors.*", "-routines=",
-        },
-        new String[] {
-            "-tables=", "-grepinout=.*\\.B_COUNT",
-        },
-        new String[] {
-            "-tables=", "-grepinout=.*\\.B_OFFSET",
-        },
-        new String[] {
-            "-grepcolumns=.*\\.STREET|.*\\.PRICE",
-            "-grepdef=.*book authors.*",
-            "-routines=",
-        },
-    };
+                                                 new String[] {
+                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE",
+                                                                "-routines=", },
+                                                 new String[] {
+                                                                "-grepcolumns=.*\\..*NAME",
+                                                                "-routines=", },
+                                                 new String[] {
+                                                                "-grepdef=.*book authors.*",
+                                                                "-routines=", },
+                                                 new String[] {
+                                                                "-tables=",
+                                                                "-grepinout=.*\\.B_COUNT", },
+                                                 new String[] {
+                                                                "-tables=",
+                                                                "-grepinout=.*\\.B_OFFSET", },
+                                                 new String[] {
+                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE",
+                                                                "-grepdef=.*book authors.*",
+                                                                "-routines=", }, };
     for (int i = 0; i < grepArgs.length; i++)
     {
       final String[] grepArgsForRun = grepArgs[i];
@@ -88,16 +86,18 @@ public class GrepCommandLineTest
       final OutputFormat outputFormat = TextOutputFormat.text;
 
       final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
-          "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
-          "-user=sa",
-          "-password=",
-          "-g=" + additionalProperties.toString(),
-          "-infolevel=" + infoLevel,
-          "-command=" + schemaTextDetailType,
-          "-outputformat=" + outputFormat.getFormat(),
-          "-outputfile=" + testOutputFile.toString(),
-          "-noinfo",
-      }));
+                                                                             "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
+                                                                             "-user=sa",
+                                                                             "-password=",
+                                                                             "-g=" + additionalProperties
+                                                                               .toString(),
+                                                                             "-infolevel=" + infoLevel,
+                                                                             "-command=" + schemaTextDetailType,
+                                                                             "-outputformat=" + outputFormat
+                                                                               .getFormat(),
+                                                                             "-outputfile=" + testOutputFile
+                                                                               .toString(),
+                                                                             "-noinfo", }));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));

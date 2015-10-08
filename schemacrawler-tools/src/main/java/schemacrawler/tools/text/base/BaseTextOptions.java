@@ -84,26 +84,22 @@ public abstract class BaseTextOptions
     return isShowUnqualifiedNames;
   }
 
-  public void
-    setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
+  public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
   {
     this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
   }
 
-  public void
-    setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
+  public void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
   {
     this.isAlphabeticalSortForRoutines = isAlphabeticalSortForRoutines;
   }
 
-  public void
-    setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
+  public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
   {
     this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
   }
 
-  public void
-    setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
+  public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
   {
     this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
   }

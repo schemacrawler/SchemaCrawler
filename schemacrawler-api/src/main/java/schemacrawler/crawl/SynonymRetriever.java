@@ -41,8 +41,8 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.Utility;
 
 /**
- * A retriever that uses database metadata to get the extended details about the
- * database synonyms.
+ * A retriever that uses database metadata to get the extended details
+ * about the database synonyms.
  *
  * @author Matt Albrecht, Sualeh Fatehi
  */
@@ -68,8 +68,8 @@ final class SynonymRetriever
    * @throws SQLException
    *         On a SQL exception
    */
-    void retrieveSynonymInformation(final InclusionRule synonymInclusionRule)
-      throws SQLException
+  void retrieveSynonymInformation(final InclusionRule synonymInclusionRule)
+    throws SQLException
   {
     final InclusionRuleFilter<Synonym> synonymFilter = new InclusionRuleFilter<>(synonymInclusionRule,
                                                                                  false);
@@ -95,10 +95,9 @@ final class SynonymRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    try (
-      final Statement statement = connection.createStatement();
-      MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                   synonymsDefinitionSql));)
+    try (final Statement statement = connection.createStatement();
+        MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                     synonymsDefinitionSql));)
     {
       while (results.next())
       {
@@ -119,7 +118,9 @@ final class SynonymRetriever
         {
           LOGGER.log(Level.FINE,
                      String.format("No reference for synonym, %s.%s.%s",
-                                   catalogName, schemaName, synonymName));
+                                   catalogName,
+                                   schemaName,
+                                   synonymName));
           continue;
         }
 

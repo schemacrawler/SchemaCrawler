@@ -43,8 +43,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * procedures.
+ * A retriever uses database metadata to get the details about the
+ * database procedures.
  *
  * @author Sualeh Fatehi
  */
@@ -77,11 +77,11 @@ final class RoutineRetriever
     }
 
     int ordinalNumber = 0;
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
-                            unquotedName(function.getSchema().getName()),
-                            unquotedName(function.getName()), null));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getFunctionColumns(unquotedName(function.getSchema().getCatalogName()),
+                          unquotedName(function.getSchema().getName()),
+                          unquotedName(function.getName()),
+                          null));)
     {
       while (results.next())
       {
@@ -137,7 +137,8 @@ final class RoutineRetriever
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions", e);
+                 "JDBC driver does not support retrieving functions",
+                 e);
     }
     catch (final SQLException e)
     {
@@ -157,7 +158,8 @@ final class RoutineRetriever
 
   }
 
-  void retrieveFunctions(final String catalogName, final String schemaName,
+  void retrieveFunctions(final String catalogName,
+                         final String schemaName,
                          final InclusionRule routineInclusionRule)
                            throws SQLException
   {
@@ -170,10 +172,8 @@ final class RoutineRetriever
       return;
     }
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getFunctions(unquotedName(catalogName), unquotedName(schemaName),
-                      "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
       while (results.next())
       {
@@ -204,7 +204,8 @@ final class RoutineRetriever
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
       LOGGER.log(Level.WARNING,
-                 "JDBC driver does not support retrieving functions", e);
+                 "JDBC driver does not support retrieving functions",
+                 e);
     }
     catch (final SQLException e)
     {
@@ -212,7 +213,8 @@ final class RoutineRetriever
       if ("HYC00".equalsIgnoreCase(e.getSQLState()))
       {
         LOGGER.log(Level.WARNING,
-                   "JDBC driver does not support retrieving functions", e);
+                   "JDBC driver does not support retrieving functions",
+                   e);
       }
       else
       {
@@ -237,11 +239,11 @@ final class RoutineRetriever
     }
 
     int ordinalNumber = 0;
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getProcedureColumns(unquotedName(procedure.getSchema()
-          .getCatalogName()), unquotedName(procedure.getSchema().getName()),
-                             unquotedName(procedure.getName()), null));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedureColumns(unquotedName(procedure.getSchema().getCatalogName()),
+                           unquotedName(procedure.getSchema().getName()),
+                           unquotedName(procedure.getName()),
+                           null));)
     {
       while (results.next())
       {
@@ -304,7 +306,8 @@ final class RoutineRetriever
 
   }
 
-  void retrieveProcedures(final String catalogName, final String schemaName,
+  void retrieveProcedures(final String catalogName,
+                          final String schemaName,
                           final InclusionRule routineInclusionRule)
                             throws SQLException
   {
@@ -317,10 +320,10 @@ final class RoutineRetriever
       return;
     }
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getProcedures(unquotedName(catalogName), unquotedName(schemaName),
-                       "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedures(unquotedName(catalogName),
+                     unquotedName(schemaName),
+                     "%"));)
     {
       while (results.next())
       {

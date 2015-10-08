@@ -52,9 +52,8 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
-  private static String
-    getColumnsListAsString(final List<Column> columns,
-                           final boolean omitLargeObjectColumns)
+  private static String getColumnsListAsString(final List<Column> columns,
+                                               final boolean omitLargeObjectColumns)
   {
     final StringBuilder buffer = new StringBuilder();
     for (int i = 0; i < columns.size(); i++)
@@ -79,7 +78,8 @@ public final class Query
   private final String query;
 
   /**
-   * Definition of a query, including a name, and parameterized or regular SQL.
+   * Definition of a query, including a name, and parameterized or
+   * regular SQL.
    *
    * @param name
    *        Query name.
@@ -187,8 +187,8 @@ public final class Query
   }
 
   /**
-   * Determines if this query has substitutable parameters, and whether it
-   * should be run once for each table.
+   * Determines if this query has substitutable parameters, and whether
+   * it should be run once for each table.
    *
    * @return If the query is to be run over each table
    */

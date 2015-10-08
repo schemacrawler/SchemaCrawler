@@ -25,14 +25,14 @@ package schemacrawler.tools.options;
  * Enumeration for text format type.
  */
 public enum TextOutputFormat
-  implements OutputFormat
+    implements OutputFormat
 {
 
-  text("Plain text format"),
-  html("HyperText Markup Language (HTML) format"),
-  csv("Comma-separated values (CSV) format"),
-  tsv("Tab-separated values (TSV) format"),
-  json("JavaScript Object Notation (JSON) format"), ;
+ text("Plain text format"),
+ html("HyperText Markup Language (HTML) format"),
+ csv("Comma-separated values (CSV) format"),
+ tsv("Tab-separated values (TSV) format"),
+ json("JavaScript Object Notation (JSON) format"),;
 
   public static TextOutputFormat fromFormat(final String format)
   {

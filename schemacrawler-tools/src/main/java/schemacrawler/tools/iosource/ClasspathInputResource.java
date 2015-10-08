@@ -20,8 +20,6 @@
 package schemacrawler.tools.iosource;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +28,8 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 public class ClasspathInputResource
   implements InputResource

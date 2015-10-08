@@ -49,8 +49,9 @@ class RoutineGrepFilter
   }
 
   /**
-   * Special case for "grep" like functionality. Handle table if a table column
-   * inclusion rule is found, and at least one column matches the rule.
+   * Special case for "grep" like functionality. Handle table if a table
+   * column inclusion rule is found, and at least one column matches the
+   * rule.
    *
    * @param options
    *        Options
@@ -112,7 +113,8 @@ class RoutineGrepFilter
 
     if (!include)
     {
-      LOGGER.log(Level.FINE, "Removing table " + routine
+      LOGGER.log(Level.FINE,
+                 "Removing table " + routine
                              + " since it does not match the grep pattern");
     }
 

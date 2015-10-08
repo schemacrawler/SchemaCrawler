@@ -54,10 +54,9 @@ final class RetrieverConnection
   private static final Logger LOGGER = Logger
     .getLogger(RetrieverConnection.class.getName());
 
-  private static String
-    lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                final DatabaseMetaData metaData)
-                                  throws SQLException
+  private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                                                    final DatabaseMetaData metaData)
+                                                      throws SQLException
   {
     String identifierQuoteString;
     if (databaseSpecificOverrideOptions != null
@@ -79,8 +78,7 @@ final class RetrieverConnection
     return identifierQuoteString;
   }
 
-  private static List<String>
-    lookupReservedWords(final DatabaseMetaData metaData)
+  private static List<String> lookupReservedWords(final DatabaseMetaData metaData)
   {
     final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
       .getResourceAsStream("/sql2003_reserved_words.txt")));
@@ -101,8 +99,7 @@ final class RetrieverConnection
       .sorted().collect(Collectors.toList()));
   }
 
-  private static boolean lookupSupportsCatalogs(
-                                                final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                 final DatabaseMetaData metaData)
                                                   throws SQLException
   {
@@ -119,8 +116,7 @@ final class RetrieverConnection
     return supportsCatalogs;
   }
 
-  private static boolean lookupSupportsSchemas(
-                                               final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  private static boolean lookupSupportsSchemas(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                final DatabaseMetaData metaData)
                                                  throws SQLException
   {
@@ -224,7 +220,7 @@ final class RetrieverConnection
    *
    * @return INFORMATION_SCHEMA views selects
    */
-    InformationSchemaViews getInformationSchemaViews()
+  InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
   }

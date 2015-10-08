@@ -11,7 +11,8 @@ import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 /**
- * Tests from https://github.com/danielrbradley/CycleDetection/blob/master/
+ * Tests from
+ * https://github.com/danielrbradley/CycleDetection/blob/master/
  * StronglyConnectedComponentsTests/StronglyConnectedComponentTests.cs
  */
 public class DirectedGraphTest5

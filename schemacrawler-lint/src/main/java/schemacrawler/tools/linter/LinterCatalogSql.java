@@ -20,10 +20,11 @@
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;

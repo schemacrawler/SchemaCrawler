@@ -77,8 +77,7 @@ public class CommandLineUtility
     rootLogger.setLevel(applicationLogLevel);
   }
 
-  public static String[]
-    flattenCommandlineArgs(final Map<String, String> argsMap)
+  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
   {
     final List<String> argsList = new ArrayList<>();
     for (final Map.Entry<String, String> arg: argsMap.entrySet())
@@ -189,7 +188,8 @@ public class CommandLineUtility
         systemProperties.put(name, (String) propertyValue.getValue());
       }
     }
-    LOGGER.log(Level.CONFIG, "System properties: \n"
+    LOGGER.log(Level.CONFIG,
+               "System properties: \n"
                              + join(systemProperties, System.lineSeparator()));
     LOGGER.log(Level.CONFIG,
                "Classpath: \n" + join(

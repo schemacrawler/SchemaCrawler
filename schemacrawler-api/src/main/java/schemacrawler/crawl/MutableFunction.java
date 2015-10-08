@@ -21,11 +21,11 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
@@ -35,8 +35,8 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database function. Created from metadata returned by a JDBC
- * call.
+ * Represents a database function. Created from metadata returned by a
+ * JDBC call.
  *
  * @author Sualeh Fatehi
  */
@@ -120,7 +120,7 @@ final class MutableFunction
   }
 
   @Override
-    void setRoutineBodyType(final RoutineBodyType routineBodyType)
+  void setRoutineBodyType(final RoutineBodyType routineBodyType)
   {
     this.routineBodyType = routineBodyType;
   }

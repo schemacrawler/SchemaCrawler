@@ -31,8 +31,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.tools.executable.BaseStagedExecutable;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -40,6 +38,8 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import schemacrawler.schema.Catalog;
+import schemacrawler.tools.executable.BaseStagedExecutable;
 
 /**
  * Main executor for the FreeMarker integration.
@@ -63,8 +63,9 @@ public final class FreeMarkerRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog, final Connection connection)
-    throws Exception
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
+                                throws Exception
   {
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
@@ -85,11 +86,11 @@ public final class FreeMarkerRenderer
                                                        "/");
     final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {
-        ctl, ftl
-    });
+                                                                              ctl,
+                                                                              ftl });
     cfg.setTemplateLoader(mtl);
-    cfg
-      .setEncoding(Locale.getDefault(), outputOptions.getInputCharset().name());
+    cfg.setEncoding(Locale.getDefault(),
+                    outputOptions.getInputCharset().name());
     cfg.setStrictSyntaxMode(true);
     cfg.setWhitespaceStripping(true);
 
