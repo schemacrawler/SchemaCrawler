@@ -199,9 +199,8 @@ abstract class BaseTag
     {
       if (characterWidth > 0)
       {
-        final String format = String.format("%%%s%ds",
-                                            align == Alignment.right? "": "-",
-                                            characterWidth);
+        final String format = String
+          .format("%%%s%ds", align == Alignment.right? "": "-", characterWidth);
         return String.format(format, text);
       }
       else

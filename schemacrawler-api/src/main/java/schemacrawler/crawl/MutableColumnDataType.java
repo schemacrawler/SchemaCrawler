@@ -386,7 +386,8 @@ final class MutableColumnDataType
       catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.FINE,
-                   "Could not load mapped class, " + mappedClassName, e);
+                   "Could not load mapped class, " + mappedClassName,
+                   e);
         javaSqlTypeMappedClass = Object.class;
       }
     }

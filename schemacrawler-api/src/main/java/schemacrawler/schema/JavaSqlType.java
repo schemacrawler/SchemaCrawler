@@ -33,19 +33,19 @@ public final class JavaSqlType
 
   public enum JavaSqlTypeGroup
   {
-    unknown,
-    binary,
-    bit,
-    character,
-    id,
-    integer,
-    real,
-    reference,
-    temporal,
-    url,
-    xml,
-    large_object,
-    object;
+   unknown,
+   binary,
+   bit,
+   character,
+   id,
+   integer,
+   real,
+   reference,
+   temporal,
+   url,
+   xml,
+   large_object,
+   object;
   }
 
   private static final long serialVersionUID = 2614819974745473431L;
@@ -61,7 +61,8 @@ public final class JavaSqlType
 
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
-  public JavaSqlType(final int javaSqlType, final String javaSqlTypeName,
+  public JavaSqlType(final int javaSqlType,
+                     final String javaSqlTypeName,
                      final JavaSqlTypeGroup javaSqlTypeGroup)
   {
     this.javaSqlType = javaSqlType;
@@ -161,7 +162,9 @@ public final class JavaSqlType
   @Override
   public String toString()
   {
-    return String.format("%s\t%d\t%s", javaSqlTypeName, javaSqlType,
+    return String.format("%s\t%d\t%s",
+                         javaSqlTypeName,
+                         javaSqlType,
                          javaSqlTypeGroup);
   }
 

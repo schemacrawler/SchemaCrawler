@@ -31,26 +31,26 @@ import java.util.logging.Logger;
 public enum SearchableType
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown(-1, "unknown"),
-  /**
-   * Not searchable.
-   */
+ /**
+  * Not searchable.
+  */
   predNone(DatabaseMetaData.typePredNone, "not searchable"),
-  /**
-   * Only searchable with where .. like.
-   */
+ /**
+  * Only searchable with where .. like.
+  */
   predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
-  /**
-   * Searchable except with where .. like.
-   */
+ /**
+  * Searchable except with where .. like.
+  */
   predBasic(DatabaseMetaData.typePredBasic,
     "searchable except with where .. like"),
-  /**
-   * Searchable.
-   */
+ /**
+  * Searchable.
+  */
   searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private static final Logger LOGGER = Logger

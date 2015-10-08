@@ -82,8 +82,11 @@ public final class Main
       if (showHelp)
       {
         final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-        commandLine = new SchemaCrawlerHelpCommandLine(args, dbConnector
-          .getDatabaseServerType(), dbConnector.getConnectionHelpResource(),
+        commandLine = new SchemaCrawlerHelpCommandLine(args,
+                                                       dbConnector
+                                                         .getDatabaseServerType(),
+                                                       dbConnector
+                                                         .getConnectionHelpResource(),
                                                        showVersionOnly);
       }
       else

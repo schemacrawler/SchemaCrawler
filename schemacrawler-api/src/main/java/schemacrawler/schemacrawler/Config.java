@@ -59,8 +59,8 @@ public final class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
-   * Loads the SchemaCrawler configuration, and override configuration, from
-   * properties files.
+   * Loads the SchemaCrawler configuration, and override configuration,
+   * from properties files.
    *
    * @param configFilenames
    *        Configuration file name.
@@ -87,7 +87,8 @@ public final class Config
   }
 
   /**
-   * Loads the SchemaCrawler configuration, from a properties file stream.
+   * Loads the SchemaCrawler configuration, from a properties file
+   * stream.
    *
    * @param configStream
    *        Configuration stream.
@@ -320,18 +321,16 @@ public final class Config
     }
   }
 
-  public InclusionRule
-    getInclusionRuleDefaultExclude(final String includePatternProperty,
-                                   final String excludePatternProperty)
+  public InclusionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
+                                                      final String excludePatternProperty)
   {
     return new RegularExpressionRule(getStringValue(includePatternProperty, ""),
                                      getStringValue(excludePatternProperty,
                                                     ".*"));
   }
 
-  public InclusionRule
-    getInclusionRuleOrNull(final String includePatternProperty,
-                           final String excludePatternProperty)
+  public InclusionRule getInclusionRuleOrNull(final String includePatternProperty,
+                                              final String excludePatternProperty)
   {
     final String includePattern = getStringValue(includePatternProperty, null);
     final String excludePattern = getStringValue(excludePatternProperty, null);

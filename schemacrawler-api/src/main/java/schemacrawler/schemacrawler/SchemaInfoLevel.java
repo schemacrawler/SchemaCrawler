@@ -172,26 +172,22 @@ public final class SchemaInfoLevel
     return retrieveViewInformation;
   }
 
-  public void
-    setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
+  public void setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
   {
     this.retrieveAdditionalColumnAttributes = retrieveAdditionalColumnAttributes;
   }
 
-  public void
-    setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
+  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
   {
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
   }
 
-  public void
-    setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
+  public void setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
   {
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
   }
 
-  public void
-    setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
+  public void setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
   {
     this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
   }
@@ -211,8 +207,7 @@ public final class SchemaInfoLevel
     this.retrieveIndexes = retrieveIndexes;
   }
 
-  public void
-    setRetrieveIndexInformation(final boolean retrieveIndexInformation)
+  public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
   {
     this.retrieveIndexInformation = retrieveIndexInformation;
   }
@@ -222,8 +217,7 @@ public final class SchemaInfoLevel
     this.retrieveRoutineColumns = retrieveRoutineColumns;
   }
 
-  public void
-    setRetrieveRoutineInformation(final boolean retrieveRoutineInformation)
+  public void setRetrieveRoutineInformation(final boolean retrieveRoutineInformation)
   {
     this.retrieveRoutineInformation = retrieveRoutineInformation;
   }
@@ -233,20 +227,17 @@ public final class SchemaInfoLevel
     this.retrieveRoutines = retrieveRoutines;
   }
 
-  public void
-    setRetrieveSequenceInformation(final boolean retrieveSequenceInformation)
+  public void setRetrieveSequenceInformation(final boolean retrieveSequenceInformation)
   {
     this.retrieveSequenceInformation = retrieveSequenceInformation;
   }
 
-  public void
-    setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
+  public void setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
   {
     this.retrieveSynonymInformation = retrieveSynonymInformation;
   }
 
-  public void
-    setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
+  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
   {
     this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
   }
@@ -256,14 +247,12 @@ public final class SchemaInfoLevel
     this.retrieveTableColumns = retrieveTableColumns;
   }
 
-  public void
-    setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
+  public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
   {
     this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
   }
 
-  public void
-    setRetrieveTableDefinitionsInformation(final boolean retrieveTableDefinitionsInformation)
+  public void setRetrieveTableDefinitionsInformation(final boolean retrieveTableDefinitionsInformation)
   {
     this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
   }
@@ -278,14 +267,12 @@ public final class SchemaInfoLevel
     this.retrieveTables = retrieveTables;
   }
 
-  public void
-    setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
+  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
   {
     this.retrieveTriggerInformation = retrieveTriggerInformation;
   }
 
-  public void
-    setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
+  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
   {
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
   }

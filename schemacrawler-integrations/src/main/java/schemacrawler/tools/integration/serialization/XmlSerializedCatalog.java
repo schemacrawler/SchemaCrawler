@@ -20,8 +20,6 @@
 package schemacrawler.tools.integration.serialization;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -41,6 +39,8 @@ import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.converters.collections.MapConverter;
 import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
@@ -154,16 +154,23 @@ public final class XmlSerializedCatalog
       }, 5000);
 
       final String[] mutable = new String[] {
-                                              "tableConstraint", "column",
-                                              "columnDataType", "catalog",
+                                              "tableConstraint",
+                                              "column",
+                                              "columnDataType",
+                                              "catalog",
                                               "foreignKey",
                                               "foreignKeyColumnReference",
-                                              "index", "indexColumn",
-                                              "primaryKey", "privilege",
-                                              "procedure", "procedureColumn",
-                                              "resultsColumn", "resultsColumns",
-                                              "table", "trigger", "view",
-      };
+                                              "index",
+                                              "indexColumn",
+                                              "primaryKey",
+                                              "privilege",
+                                              "procedure",
+                                              "procedureColumn",
+                                              "resultsColumn",
+                                              "resultsColumns",
+                                              "table",
+                                              "trigger",
+                                              "view", };
       for (final String xmlElement: mutable)
       {
         xStream.alias(xmlElement,
@@ -175,8 +182,7 @@ public final class XmlSerializedCatalog
                                                 "databaseProperty",
                                                 "jdbcDriverProperty",
                                                 "schemaCrawlerInfo",
-                                                "crawlInfo",
-      };
+                                                "crawlInfo", };
       for (final String xmlElement: immutable)
       {
         xStream.alias(xmlElement,
@@ -184,8 +190,10 @@ public final class XmlSerializedCatalog
                                     + xmlElement.substring(0, 1).toUpperCase()
                                     + xmlElement.substring(1)));
       }
-      xStream.alias("grant", Class
-        .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
+      xStream
+        .alias("grant",
+               Class
+                 .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
       xStream.alias("schema",
                     Class.forName("schemacrawler.schema.SchemaReference"));
 

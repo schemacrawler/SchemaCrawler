@@ -29,7 +29,8 @@ import schemacrawler.schema.Schema;
 import sf.util.Utility;
 
 /**
- * Represents a database routine. Created from metadata returned by a JDBC call.
+ * Represents a database routine. Created from metadata returned by a
+ * JDBC call.
  *
  * @author Sualeh Fatehi
  */

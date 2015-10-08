@@ -40,7 +40,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.DatabaseServerType;
 
 /**
- * Registry for mapping database connectors from DatabaseConnector-line switch.
+ * Registry for mapping database connectors from DatabaseConnector-line
+ * switch.
  *
  * @author Sualeh Fatehi
  */
@@ -105,8 +106,7 @@ public final class DatabaseConnectorRegistry
     logRegisteredJdbcDrivers();
   }
 
-  public boolean
-    hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
+  public boolean hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
   {
     if (databaseServerType == null
         || databaseServerType.isUnknownDatabaseSystem())
@@ -117,8 +117,7 @@ public final class DatabaseConnectorRegistry
       .containsKey(databaseServerType.getDatabaseSystemIdentifier());
   }
 
-  public boolean
-    hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
   {
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
   }
@@ -129,8 +128,7 @@ public final class DatabaseConnectorRegistry
     return lookupAvailableDatabaseConnectors().iterator();
   }
 
-  public DatabaseConnector
-    lookupDatabaseSystemIdentifier(final Connection connection)
+  public DatabaseConnector lookupDatabaseSystemIdentifier(final Connection connection)
   {
     for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
       .values())
@@ -157,8 +155,7 @@ public final class DatabaseConnectorRegistry
     return DatabaseConnector.UNKNOWN;
   }
 
-  public DatabaseConnector
-    lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  public DatabaseConnector lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
   {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
     {
@@ -182,7 +179,8 @@ public final class DatabaseConnectorRegistry
       final List<String> drivers = new ArrayList<>();
       for (final Driver driver: Collections.list(DriverManager.getDrivers()))
       {
-        drivers.add(String.format("%s %d.%d", driver.getClass().getName(),
+        drivers.add(String.format("%s %d.%d",
+                                  driver.getClass().getName(),
                                   driver.getMajorVersion(),
                                   driver.getMinorVersion()));
       }

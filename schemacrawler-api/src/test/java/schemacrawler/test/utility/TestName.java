@@ -42,8 +42,8 @@ public class TestName
         throws Throwable
       {
         currentMethodName = description.getMethodName();
-        currentMethodFullName = description.getTestClass().getSimpleName()
-                                + "." + currentMethodName;
+        currentMethodFullName = description.getTestClass().getSimpleName() + "."
+                                + currentMethodName;
 
         base.evaluate();
       }

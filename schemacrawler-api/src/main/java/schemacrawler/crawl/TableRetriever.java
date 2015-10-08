@@ -42,8 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * tables.
+ * A retriever uses database metadata to get the details about the
+ * database tables.
  *
  * @author Sualeh Fatehi
  */
@@ -74,11 +74,11 @@ final class TableRetriever
       return;
     }
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()), null));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                  unquotedName(table.getSchema().getName()),
+                  unquotedName(table.getName()),
+                  null));)
     {
       while (results.next())
       {
@@ -92,8 +92,10 @@ final class TableRetriever
         final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
         final String tableName = quotedName(results.getString("TABLE_NAME"));
         final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving column: %s.%s",
-                                              tableName, columnName));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving column: %s.%s",
+                                 tableName,
+                                 columnName));
 
         MutableColumn column;
 
@@ -185,11 +187,10 @@ final class TableRetriever
   void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getName()),
-                        unquotedName(table.getName())));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                      unquotedName(table.getSchema().getName()),
+                      unquotedName(table.getName())));)
     {
 
       MutablePrimaryKey primaryKey;
@@ -232,7 +233,8 @@ final class TableRetriever
 
   }
 
-  void retrieveTables(final String catalogName, final String schemaName,
+  void retrieveTables(final String catalogName,
+                      final String schemaName,
                       final String tableNamePattern,
                       final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
@@ -251,15 +253,16 @@ final class TableRetriever
       .getTableTypes();
     final String[] filteredTableTypes = supportedTableTypes
       .filterUnknown(tableTypes);
-    LOGGER.log(Level.FINER, String
-      .format("Retrieving table types: %s",
-              filteredTableTypes == null? "<<all>>"
-                                        : Arrays.asList(filteredTableTypes)));
+    LOGGER.log(Level.FINER,
+               String.format("Retrieving table types: %s",
+                             filteredTableTypes == null? "<<all>>": Arrays
+                               .asList(filteredTableTypes)));
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getTables(unquotedName(catalogName), unquotedName(schemaName),
-                   tableNamePattern, filteredTableTypes));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTables(unquotedName(catalogName),
+                 unquotedName(schemaName),
+                 tableNamePattern,
+                 filteredTableTypes));)
     {
       while (results.next())
       {
@@ -277,8 +280,10 @@ final class TableRetriever
           .lookupSchema(schemaReference.getFullName());
         if (!schemaOptional.isPresent())
         {
-          LOGGER.log(Level.FINER, String.format("Cannot locate schema: %s.%s",
-                                                catalogName, schemaName));
+          LOGGER.log(Level.FINER,
+                     String.format("Cannot locate schema: %s.%s",
+                                   catalogName,
+                                   schemaName));
           continue;
         }
 
@@ -317,8 +322,10 @@ final class TableRetriever
       {
         // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         String indexName = quotedName(results.getString("INDEX_NAME"));
-        LOGGER.log(Level.FINER, String.format("Retrieving index: %s.%s",
-                                              table.getFullName(), indexName));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving index: %s.%s",
+                                 table.getFullName(),
+                                 indexName));
 
         // Work-around PostgreSQL JDBC driver bugs by unquoting column
         // names first
@@ -348,8 +355,10 @@ final class TableRetriever
           final MutableColumn column = columnOptional.get();
           if (Utility.isBlank(indexName))
           {
-            indexName = String.format("SC_%s", Integer
-              .toHexString(column.getFullName().hashCode()).toUpperCase());
+            indexName = String
+              .format("SC_%s",
+                      Integer.toHexString(column.getFullName().hashCode())
+                        .toUpperCase());
           }
 
           final Optional<MutableIndex> indexOptional = table
@@ -407,8 +416,9 @@ final class TableRetriever
       column = new MutableColumn(table, columnName);
       if (add)
       {
-        LOGGER.log(Level.FINER, String.format("Adding column to table: %s",
-                                              column.getFullName()));
+        LOGGER.log(Level.FINER,
+                   String.format("Adding column to table: %s",
+                                 column.getFullName()));
         table.addColumn(column);
       }
     }
@@ -419,12 +429,12 @@ final class TableRetriever
     throws SQLException
   {
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                      unquotedName(table.getSchema().getName()),
-                      unquotedName(table.getName()), unique,
-                      true/* approximate */));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getName()),
+                    unquotedName(table.getName()),
+                    unique,
+                    true/* approximate */));)
     {
       createIndexes(table, results);
     }
@@ -440,10 +450,12 @@ final class TableRetriever
     throws SQLException
   {
 
-    try (
-      final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getIndexInfo(null, null, table.getName(), unique,
-                      true/* approximate */));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getIndexInfo(null,
+                    null,
+                    table.getName(),
+                    unique,
+                    true/* approximate */));)
     {
       createIndexes(table, results);
     }

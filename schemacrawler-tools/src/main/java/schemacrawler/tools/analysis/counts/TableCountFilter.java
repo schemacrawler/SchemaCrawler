@@ -20,9 +20,9 @@
 package schemacrawler.tools.analysis.counts;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.function.Predicate;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -37,7 +37,7 @@ class TableCountFilter
   {
     hideEmptyTables = requireNonNull(options,
                                      "No SchemaCrawlerOptions provided")
-      .isHideEmptyTables();
+                                       .isHideEmptyTables();
   }
 
   /**

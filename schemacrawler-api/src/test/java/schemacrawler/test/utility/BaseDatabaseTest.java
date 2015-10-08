@@ -79,15 +79,7 @@ public abstract class BaseDatabaseTest
     }
   }
 
-  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    return getCatalog(new DatabaseSpecificOverrideOptions(),
-                      schemaCrawlerOptions);
-  }
-
-  protected Catalog getCatalog(
-                               final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  protected Catalog getCatalog(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
                                  throws SchemaCrawlerException
   {
@@ -96,6 +88,13 @@ public abstract class BaseDatabaseTest
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     return catalog;
+  }
+
+  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException
+  {
+    return getCatalog(new DatabaseSpecificOverrideOptions(),
+                      schemaCrawlerOptions);
   }
 
   /**

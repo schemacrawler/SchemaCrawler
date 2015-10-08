@@ -57,21 +57,22 @@ public final class ThymeleafRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog, final Connection connection)
-    throws Exception
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
+                                throws Exception
   {
     final Context ctx = new Context();
     ctx.setVariable("catalog", catalog);
 
     final TemplateEngine templateEngine = new TemplateEngine();
     final Charset inputCharset = outputOptions.getInputCharset();
-    templateEngine.addTemplateResolver(configure(new FileTemplateResolver(),
-                                                 inputCharset));
+    templateEngine
+      .addTemplateResolver(configure(new FileTemplateResolver(), inputCharset));
     templateEngine
       .addTemplateResolver(configure(new ClassLoaderTemplateResolver(),
                                      inputCharset));
-    templateEngine.addTemplateResolver(configure(new UrlTemplateResolver(),
-                                                 inputCharset));
+    templateEngine
+      .addTemplateResolver(configure(new UrlTemplateResolver(), inputCharset));
 
     final String templateLocation = outputOptions.getOutputFormatValue();
 

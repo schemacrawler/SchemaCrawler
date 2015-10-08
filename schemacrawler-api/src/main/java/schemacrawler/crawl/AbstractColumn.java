@@ -28,8 +28,8 @@ import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
 /**
- * Represents a column in a database for tables and routines. Created from
- * metadata returned by a JDBC call.
+ * Represents a column in a database for tables and routines. Created
+ * from metadata returned by a JDBC call.
  *
  * @author Sualeh Fatehi
  */

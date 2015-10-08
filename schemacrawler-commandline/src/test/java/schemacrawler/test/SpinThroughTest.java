@@ -44,8 +44,7 @@ public class SpinThroughTest
                                                                            TextOutputFormat.html,
                                                                            TextOutputFormat.json,
                                                                            GraphOutputFormat.htmlx,
-                                                                           GraphOutputFormat.scdot
-  };
+                                                                           GraphOutputFormat.scdot };
 
   @BeforeClass
   public static void clean()
@@ -80,9 +79,11 @@ public class SpinThroughTest
           .values())
         {
           final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel, outputFormat);
+                                                     infoLevel,
+                                                     outputFormat);
           final Path testOutputFile = createTempFile(schemaTextDetailType,
-                                                     infoLevel, outputFormat);
+                                                     infoLevel,
+                                                     outputFormat);
 
           final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                                 testOutputFile);
@@ -108,7 +109,8 @@ public class SpinThroughTest
 
           failures
             .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile, outputFormat.getFormat()));
+                                  testOutputFile,
+                                  outputFormat.getFormat()));
         }
       }
     }
@@ -138,9 +140,11 @@ public class SpinThroughTest
           .values())
         {
           final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel, outputFormat);
+                                                     infoLevel,
+                                                     outputFormat);
           final Path testOutputFile = createTempFile(schemaTextDetailType,
-                                                     infoLevel, outputFormat);
+                                                     infoLevel,
+                                                     outputFormat);
 
           final Map<String, String> argsMap = new HashMap<>();
           argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -158,7 +162,8 @@ public class SpinThroughTest
 
           failures
             .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile, outputFormat.getFormat()));
+                                  testOutputFile,
+                                  outputFormat.getFormat()));
         }
       }
     }
@@ -183,8 +188,11 @@ public class SpinThroughTest
                                final OutputFormat outputFormat)
   {
     final String referenceFile = String
-      .format("%d%d.%s_%s.%s", schemaTextDetailType.ordinal(),
-              infoLevel.ordinal(), schemaTextDetailType, infoLevel,
+      .format("%d%d.%s_%s.%s",
+              schemaTextDetailType.ordinal(),
+              infoLevel.ordinal(),
+              schemaTextDetailType,
+              infoLevel,
               outputFormat.getFormat());
     return referenceFile;
   }

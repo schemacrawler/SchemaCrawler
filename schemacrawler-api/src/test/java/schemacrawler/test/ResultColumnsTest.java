@@ -65,10 +65,9 @@ public class ResultColumnsTest
                          + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                          + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-      try (
-        final Connection connection = getConnection();
-        final Statement statement = connection.createStatement();
-        final ResultSet resultSet = statement.executeQuery(sql);)
+      try (final Connection connection = getConnection();
+          final Statement statement = connection.createStatement();
+          final ResultSet resultSet = statement.executeQuery(sql);)
       {
 
         final ResultsColumns resultColumns = SchemaCrawler

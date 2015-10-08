@@ -27,12 +27,12 @@ import schemacrawler.schema.NamedObject;
 import sf.util.Utility;
 
 public enum NamedObjectSort
-  implements Comparator<NamedObject>
+    implements Comparator<NamedObject>
 {
 
-  /**
-   * Alphabetical sort.
-   */
+ /**
+  * Alphabetical sort.
+  */
   alphabetical
   {
     @Override
@@ -44,9 +44,9 @@ public enum NamedObjectSort
     }
   },
 
-  /**
-   * Natural sort.
-   */
+ /**
+  * Natural sort.
+  */
   natural
   {
     @Override
@@ -57,8 +57,7 @@ public enum NamedObjectSort
     }
   };
 
-  public static NamedObjectSort
-    getNamedObjectSort(final boolean alphabeticalSort)
+  public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
   {
     if (alphabeticalSort)
     {
@@ -73,7 +72,8 @@ public enum NamedObjectSort
   /**
    * {@inheritDoc}
    *
-   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+   * @see java.util.Comparator#compare(java.lang.Object,
+   *      java.lang.Object)
    */
   @Override
   public abstract int compare(final NamedObject namedObject1,

@@ -29,13 +29,13 @@ public interface TableConstraintColumn
    *
    * @return Table constraint
    */
-    TableConstraint getTableConstraint();
+  TableConstraint getTableConstraint();
 
   /**
    * Ordinal position of the column, in the table constraint.
    *
    * @return Ordinal position
    */
-    int getTableConstraintOrdinalPosition();
+  int getTableConstraintOrdinalPosition();
 
 }

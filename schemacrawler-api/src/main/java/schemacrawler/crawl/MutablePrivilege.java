@@ -53,7 +53,8 @@ final class MutablePrivilege<D extends DatabaseObject>
     private final String grantee;
     private final boolean isGrantable;
 
-    PrivilegeGrant(final String grantor, final String grantee,
+    PrivilegeGrant(final String grantor,
+                   final String grantee,
                    final boolean isGrantable)
     {
       this.grantor = grantor;
@@ -189,7 +190,8 @@ final class MutablePrivilege<D extends DatabaseObject>
     return values;
   }
 
-  void addGrant(final String grantor, final String grantee,
+  void addGrant(final String grantor,
+                final String grantee,
                 final boolean isGrantable)
   {
     if (!Utility.isBlank(grantor) && !Utility.isBlank(grantee))

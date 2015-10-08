@@ -70,11 +70,10 @@ public class LintOutputTest
 
     final String[] commands = new String[] {
                                              SchemaTextDetailType.brief + ","
-                                             + Operation.count + ","
-                                             + "lint", queryCommand1 + ","
-                                                       + SchemaTextDetailType.brief
-                                                       + "," + "lint",
-    };
+                                             + Operation.count + "," + "lint",
+                                             queryCommand1 + "," + SchemaTextDetailType.brief
+                                                                               + ","
+                                                                               + "lint", };
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet
@@ -93,7 +92,8 @@ public class LintOutputTest
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
         schemaCrawlerOptions
           .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-        schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+        schemaCrawlerOptions
+          .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -103,7 +103,8 @@ public class LintOutputTest
 
         failures
           .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                testOutputFile, outputFormat.getFormat()));
+                                testOutputFile,
+                                outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -119,8 +120,8 @@ public class LintOutputTest
     clean(JSON_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (
-      final TestWriter out = new TestWriter(TextOutputFormat.json.getFormat());)
+    try (final TestWriter out = new TestWriter(TextOutputFormat.json
+      .getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
                                                             out);
@@ -146,8 +147,8 @@ public class LintOutputTest
     clean(TEXT_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (
-      final TestWriter out = new TestWriter(TextOutputFormat.text.getFormat());)
+    try (final TestWriter out = new TestWriter(TextOutputFormat.text
+      .getFormat());)
     {
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
                                                             out);

@@ -129,7 +129,8 @@ abstract class BaseDatabaseConnectionOptions
       LOGGER.log(Level.INFO,
                  String.format(
                                "Making connection to %s, for user \'%s\', with properties %s",
-                               connectionUrl, user,
+                               connectionUrl,
+                               user,
                                safeProperties(jdbcConnectionProperties)));
       final Connection connection = DriverManager
         .getConnection(connectionUrl, jdbcConnectionProperties);
@@ -143,8 +144,9 @@ abstract class BaseDatabaseConnectionOptions
     {
       throw new SchemaCrawlerSQLException(String
         .format("Could not connect to %s, for user \'%s\', with properties %s",
-                connectionUrl, user, safeProperties(jdbcConnectionProperties)),
-                                          e);
+                connectionUrl,
+                user,
+                safeProperties(jdbcConnectionProperties)), e);
     }
   }
 
@@ -215,38 +217,6 @@ abstract class BaseDatabaseConnectionOptions
     return false;
   }
 
-  private Properties
-    parseConnectionProperties(final String connectionPropertiesString)
-  {
-    final Properties urlxProperties = new Properties();
-    if (!isBlank(connectionPropertiesString))
-    {
-      for (final String property: connectionPropertiesString.split(";"))
-      {
-        if (!isBlank(property))
-        {
-          final String[] propertyValues = property.split("=");
-          if (propertyValues.length >= 1)
-          {
-            final String key = propertyValues[0];
-            final String value;
-            if (propertyValues.length >= 2)
-            {
-              value = propertyValues[1];
-            }
-            else
-            {
-              value = null;
-            }
-            urlxProperties.put(key, value);
-          }
-        }
-      }
-    }
-
-    return urlxProperties;
-  }
-
   @Override
   public void setLoginTimeout(final int seconds)
     throws SQLException
@@ -311,7 +281,13 @@ abstract class BaseDatabaseConnectionOptions
                                                   throws SQLException
   {
     final List<String> skipProperties = Arrays
-      .asList("server", "host", "port", "database", "urlx", "user", "password",
+      .asList("server",
+              "host",
+              "port",
+              "database",
+              "urlx",
+              "user",
+              "password",
               "url");
     final Driver jdbcDriver = getJdbcDriver();
     final DriverPropertyInfo[] propertyInfo = jdbcDriver
@@ -370,6 +346,37 @@ abstract class BaseDatabaseConnectionOptions
                              dbMetaData.getDatabaseProductVersion(),
                              dbMetaData.getDriverName(),
                              dbMetaData.getDriverVersion()));
+  }
+
+  private Properties parseConnectionProperties(final String connectionPropertiesString)
+  {
+    final Properties urlxProperties = new Properties();
+    if (!isBlank(connectionPropertiesString))
+    {
+      for (final String property: connectionPropertiesString.split(";"))
+      {
+        if (!isBlank(property))
+        {
+          final String[] propertyValues = property.split("=");
+          if (propertyValues.length >= 1)
+          {
+            final String key = propertyValues[0];
+            final String value;
+            if (propertyValues.length >= 2)
+            {
+              value = propertyValues[1];
+            }
+            else
+            {
+              value = null;
+            }
+            urlxProperties.put(key, value);
+          }
+        }
+      }
+    }
+
+    return urlxProperties;
   }
 
   private Properties safeProperties(final Properties properties)

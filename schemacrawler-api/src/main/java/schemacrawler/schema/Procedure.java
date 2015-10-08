@@ -39,7 +39,7 @@ public interface Procedure
    * @return Columns of the procedure
    */
   @Override
-    List<ProcedureColumn> getColumns();
+  List<ProcedureColumn> getColumns();
 
   /**
    * Gets the procedure type.
@@ -47,7 +47,7 @@ public interface Procedure
    * @return Procedure type
    */
   @Override
-    ProcedureReturnType getReturnType();
+  ProcedureReturnType getReturnType();
 
   /**
    * Gets a column by unqualified name.
@@ -57,6 +57,6 @@ public interface Procedure
    * @return Column of the procedure
    */
   @Override
-    Optional<? extends ProcedureColumn> lookupColumn(String name);
+  Optional<? extends ProcedureColumn> lookupColumn(String name);
 
 }

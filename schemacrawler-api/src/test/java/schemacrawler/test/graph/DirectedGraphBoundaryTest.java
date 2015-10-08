@@ -10,7 +10,8 @@ import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 /**
- * Tests from https://github.com/danielrbradley/CycleDetection/blob/master/
+ * Tests from
+ * https://github.com/danielrbradley/CycleDetection/blob/master/
  * StronglyConnectedComponentsTests/StronglyConnectedComponentTests.cs
  */
 public class DirectedGraphBoundaryTest
@@ -33,12 +34,12 @@ public class DirectedGraphBoundaryTest
   }
 
   @Test
-  public void singleVertex()
+  public void selfLoop()
     throws Exception
   {
     final DirectedGraph<String> graph = new DirectedGraph<>(testName
       .currentMethodFullName());
-    graph.addVertex("A");
+    graph.addEdge("A", "A");
 
     assertFalse(containsCycleSimple(graph));
     assertFalse(containsCycleTarjan(graph));
@@ -46,12 +47,12 @@ public class DirectedGraphBoundaryTest
   }
 
   @Test
-  public void selfLoop()
+  public void singleVertex()
     throws Exception
   {
     final DirectedGraph<String> graph = new DirectedGraph<>(testName
       .currentMethodFullName());
-    graph.addEdge("A", "A");
+    graph.addVertex("A");
 
     assertFalse(containsCycleSimple(graph));
     assertFalse(containsCycleTarjan(graph));

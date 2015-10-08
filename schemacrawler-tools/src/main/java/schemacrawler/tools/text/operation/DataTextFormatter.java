@@ -61,7 +61,7 @@ final class DataTextFormatter
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
                     final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                      throws SchemaCrawlerException
   {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
@@ -163,7 +163,7 @@ final class DataTextFormatter
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
-    throws SchemaCrawlerException
+                                                  throws SchemaCrawlerException
   {
     long aggregate = 0;
     try
@@ -230,8 +230,8 @@ final class DataTextFormatter
     while (dataRows.next())
     {
       final List<Object> currentRow = dataRows.row();
-      final Object[] columnData = currentRow.toArray(new Object[currentRow
-        .size()]);
+      final Object[] columnData = currentRow
+        .toArray(new Object[currentRow.size()]);
       formattingHelper.writeRow(columnData);
     }
   }
@@ -251,10 +251,8 @@ final class DataTextFormatter
     if (operation == Operation.count)
     {
       formattingHelper.writeObjectStart();
-      formattingHelper.writeObjectNameRow("",
-                                          operation.getDescription(),
-                                          "",
-                                          Color.white);
+      formattingHelper
+        .writeObjectNameRow("", operation.getDescription(), "", Color.white);
     }
   }
 }

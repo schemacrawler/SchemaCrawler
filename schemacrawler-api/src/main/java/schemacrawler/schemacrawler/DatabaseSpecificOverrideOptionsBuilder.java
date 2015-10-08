@@ -24,8 +24,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
+   * Overrides the JDBC driver provided information about whether the
+   * database supports catalogs.
    */
   public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
   {
@@ -34,8 +34,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
+   * Overrides the JDBC driver provided information about whether the
+   * database supports schema.
    */
   public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
   {
@@ -44,30 +44,28 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder
-    fromConfig(final Map<String, String> map)
+  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Map<String, String> map)
   {
     informationSchemaViewsBuilder.fromConfig(map);
     return this;
   }
 
   /**
-   * Overrides the JDBC driver provided information about the identifier quote
-   * string.
+   * Overrides the JDBC driver provided information about the identifier
+   * quote string.
    *
    * @param getIdentifierQuoteString
    *        Value for the override
    */
-  public DatabaseSpecificOverrideOptionsBuilder
-    identifierQuoteString(final String identifierQuoteString)
+  public DatabaseSpecificOverrideOptionsBuilder identifierQuoteString(final String identifierQuoteString)
   {
     this.identifierQuoteString = identifierQuoteString;
     return this;
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports catalogs.
+   * Overrides the JDBC driver provided information about whether the
+   * database supports catalogs.
    */
   public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
   {
@@ -76,8 +74,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   /**
-   * Overrides the JDBC driver provided information about whether the database
-   * supports schema.
+   * Overrides the JDBC driver provided information about whether the
+   * database supports schema.
    */
   public DatabaseSpecificOverrideOptionsBuilder supportsSchemas()
   {

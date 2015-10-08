@@ -51,7 +51,8 @@ public class SerializationTest
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6,
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
                  catalog.getTables(schema).size());
 
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);
@@ -65,7 +66,8 @@ public class SerializationTest
     final Schema clonedSchema = clonedCatalog.lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
     assertNotNull("Could not obtain schema", clonedSchema);
-    assertEquals("Unexpected number of tables in the schema", 6,
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
                  clonedCatalog.getTables(clonedSchema).size());
   }
 

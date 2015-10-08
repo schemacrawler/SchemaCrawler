@@ -31,20 +31,20 @@ public interface Property
    *
    * @return Description
    */
-    String getDescription();
+  String getDescription();
 
   /**
    * Gets the name of the property.
    *
    * @return Name
    */
-    String getName();
+  String getName();
 
   /**
    * Gets the value of the property.
    *
    * @return Value
    */
-    Object getValue();
+  Object getValue();
 
 }

@@ -43,7 +43,8 @@ public class ExtendedCommandsTest
     final ScriptExecutable executable = new ScriptExecutable();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    executeExecutable(executable, "/plaintextschema.js",
+    executeExecutable(executable,
+                      "/plaintextschema.js",
                       "executableForJavaScript.txt");
   }
 

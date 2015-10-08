@@ -42,8 +42,8 @@ public class ExcludeTest
   extends BaseDatabaseTest
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ExcludeTest.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(ExcludeTest.class.getName());
 
   @Rule
   public TestName testName = new TestName();
@@ -77,12 +77,10 @@ public class ExcludeTest
           {
             LOGGER.log(Level.FINE, column.toString());
             out.println("    column: " + column.getFullName());
-            out.println("      database type: "
-                        + column.getColumnDataType()
-                          .getDatabaseSpecificTypeName());
-            out.println("      type: "
-                        + column.getColumnDataType().getJavaSqlType()
-                          .getJavaSqlTypeName());
+            out.println("      database type: " + column.getColumnDataType()
+              .getDatabaseSpecificTypeName());
+            out.println("      type: " + column.getColumnDataType()
+              .getJavaSqlType().getJavaSqlTypeName());
           }
         }
       }

@@ -81,7 +81,8 @@ public final class SchemaDotFormatter
                             final OutputOptions outputOptions)
                               throws SchemaCrawlerException
   {
-    super(options, schemaTextDetailType == SchemaTextDetailType.details,
+    super(options,
+          schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
@@ -126,6 +127,7 @@ public final class SchemaDotFormatter
   {
   }
 
+  @Override
   public void handle(final Table table)
   {
 
@@ -153,7 +155,10 @@ public final class SchemaDotFormatter
       .println();
 
     formattingHelper.append(new TableRow(TextOutputFormat.html)
-      .add(newTableCell(tableName, Alignment.left, true, tableNameBgColor,
+      .add(newTableCell(tableName,
+                        Alignment.left,
+                        true,
+                        tableNameBgColor,
                         colspan))
       .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1))
       .toString()).println();
@@ -261,9 +266,11 @@ public final class SchemaDotFormatter
     if (!isNewNode)
     {
       portIds[0] = String.format("\"%s\":\"%s.start\"",
-                                 nodeId(column.getParent()), nodeId(column));
+                                 nodeId(column.getParent()),
+                                 nodeId(column));
       portIds[1] = String.format("\"%s\":\"%s.end\"",
-                                 nodeId(column.getParent()), nodeId(column));
+                                 nodeId(column.getParent()),
+                                 nodeId(column));
     }
     else
     {
@@ -330,10 +337,14 @@ public final class SchemaDotFormatter
       associationName = fkName;
     }
 
-    return String.format(
-                         "  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
-                         fkPortIds[0], pkPortIds[1], associationName, style,
-                         pkSymbol, fkSymbol);
+    return String
+      .format("  %s:w -> %s:e [label=<%s> style=\"%s\" dir=\"both\" arrowhead=\"%s\" arrowtail=\"%s\"];%n",
+              fkPortIds[0],
+              pkPortIds[1],
+              associationName,
+              style,
+              pkSymbol,
+              fkSymbol);
 
   }
 
@@ -342,9 +353,8 @@ public final class SchemaDotFormatter
     printForeignKeys(table, table.getForeignKeys());
   }
 
-  private void
-    printForeignKeys(final Table table,
-                     final Collection<? extends BaseForeignKey<?>> foreignKeys)
+  private void printForeignKeys(final Table table,
+                                final Collection<? extends BaseForeignKey<?>> foreignKeys)
   {
     for (final BaseForeignKey<? extends ColumnReference> foreignKey: foreignKeys)
     {
@@ -364,8 +374,10 @@ public final class SchemaDotFormatter
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
           formattingHelper
-            .append(printColumnReference(foreignKey.getName(), columnRef,
-                                         fkCardinality, isFkColumnFiltered));
+            .append(printColumnReference(foreignKey.getName(),
+                                         columnRef,
+                                         fkCardinality,
+                                         isFkColumnFiltered));
         }
       }
     }
@@ -383,7 +395,8 @@ public final class SchemaDotFormatter
     {
       columnName = column.getFullName();
     }
-    final String columnNode = String.format("  %s [label=<%s>];%n", nodeId,
+    final String columnNode = String.format("  %s [label=<%s>];%n",
+                                            nodeId,
                                             columnName);
 
     formattingHelper.append(columnNode);
@@ -406,7 +419,10 @@ public final class SchemaDotFormatter
     autoIncrementedRow
       .add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell("auto-incremented", Alignment.left, false, Color.white,
+      .add(newTableCell("auto-incremented",
+                        Alignment.left,
+                        false,
+                        Color.white,
                         1));
     formattingHelper.append(autoIncrementedRow.toString()).println();
   }
@@ -424,15 +440,20 @@ public final class SchemaDotFormatter
     }
     remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(column.getRemarks(), Alignment.left, false, Color.white,
+      .add(newTableCell(column.getRemarks(),
+                        Alignment.left,
+                        false,
+                        Color.white,
                         1));
     formattingHelper.append(remarksRow.toString()).println();
   }
 
   private void printTableColumns(final List<Column> columns)
   {
-    Collections.sort(columns, NamedObjectSort
-      .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
+    Collections
+      .sort(columns,
+            NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
     for (final Column column: columns)
     {
       if (isBrief && !isColumnSignificant(column))
@@ -462,14 +483,23 @@ public final class SchemaDotFormatter
       {
         final String ordinalNumberString = String
           .valueOf(column.getOrdinalPosition());
-        row.add(newTableCell(ordinalNumberString, Alignment.right, false,
-                             Color.white, 1));
+        row.add(newTableCell(ordinalNumberString,
+                             Alignment.right,
+                             false,
+                             Color.white,
+                             1));
       }
       row
-        .add(newTableCell(column.getName(), Alignment.left, emphasize,
-                          Color.white, 1))
+        .add(newTableCell(column.getName(),
+                          Alignment.left,
+                          emphasize,
+                          Color.white,
+                          1))
         .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-        .add(newTableCell(columnDetails, Alignment.left, false, Color.white,
+        .add(newTableCell(columnDetails,
+                          Alignment.left,
+                          false,
+                          Color.white,
                           1));
 
       row.firstCell().addAttribute("port", nodeId(column) + ".start");
@@ -487,10 +517,15 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    formattingHelper.append(new TableRow(TextOutputFormat.html)
-      .add(newTableCell(table.getRemarks(), Alignment.left, false, Color.white,
-                        3))
-      .toString()).println();
+    formattingHelper
+      .append(new TableRow(TextOutputFormat.html)
+        .add(newTableCell(table.getRemarks(),
+                          Alignment.left,
+                          false,
+                          Color.white,
+                          3))
+        .toString())
+      .println();
   }
 
   private void printWeakAssociations(final Table table)

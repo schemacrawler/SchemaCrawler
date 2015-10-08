@@ -37,18 +37,18 @@ public interface NamedObject
    *
    * @return Fully qualified of the object
    */
-    String getFullName();
+  String getFullName();
 
   /**
    * A value guaranteed to be unique in the database for this object.
    */
-    String getLookupKey();
+  String getLookupKey();
 
   /**
    * Getter for name of object.
    *
    * @return Name of the object
    */
-    String getName();
+  String getName();
 
 }

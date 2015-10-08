@@ -70,7 +70,8 @@ public class DirectedGraphTest
     {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertEquals("Test run #" + (i + 1), "[A, E, B, D, C]",
+      assertEquals("Test run #" + (i + 1),
+                   "[A, E, B, D, C]",
                    topologicalSort(graph).toString());
     }
   }

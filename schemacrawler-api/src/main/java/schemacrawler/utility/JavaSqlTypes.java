@@ -62,7 +62,8 @@ public final class JavaSqlTypes
       catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not access java.sql.Types, field " + field, e);
+                   "Could not access java.sql.Types, field " + field,
+                   e);
         // continue
       }
     }
@@ -218,8 +219,8 @@ public final class JavaSqlTypes
   }
 
   /**
-   * Lookup java.sql.Types type, and return more detailed information, including
-   * the mapped Java class.
+   * Lookup java.sql.Types type, and return more detailed information,
+   * including the mapped Java class.
    *
    * @param typeName
    *        java.sql.Types type name

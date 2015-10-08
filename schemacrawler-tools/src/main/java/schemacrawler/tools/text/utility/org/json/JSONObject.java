@@ -336,8 +336,8 @@ public class JSONObject
           sb.append("\\r");
           break;
         default:
-          if (c < ' ' || c >= '\u0080' && c < '\u00a0' || c >= '\u2000'
-              && c < '\u2100')
+          if (c < ' ' || c >= '\u0080' && c < '\u00a0'
+              || c >= '\u2000' && c < '\u2100')
           {
             hhhh = "000" + Integer.toHexString(c);
             sb.append("\\u" + hhhh.substring(hhhh.length() - 4));
@@ -478,8 +478,8 @@ public class JSONObject
    *        The value to be serialized.
    * @return a printable, displayable, transmittable representation of
    *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code>
-   *         &nbsp;<small>(right brace)</small>.
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
    * @throws JSONException
    *         If the value is or contains an invalid number.
    */
@@ -587,15 +587,15 @@ public class JSONObject
    *        The indentation of the top level.
    * @return a printable, displayable, transmittable representation of
    *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code>
-   *         &nbsp;<small>(right brace)</small>.
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
    * @throws JSONException
    *         If the object contains an invalid number.
    */
   static String valueToString(final Object value,
                               final int indentFactor,
                               final int indent)
-    throws JSONException
+                                throws JSONException
   {
     if (value == null || value.equals(null))
     {
@@ -770,8 +770,9 @@ public class JSONObject
   {
     this();
     final ResourceBundle bundle = ResourceBundle
-      .getBundle(baseName, locale, Thread.currentThread()
-        .getContextClassLoader());
+      .getBundle(baseName,
+                 locale,
+                 Thread.currentThread().getContextClassLoader());
 
     // Iterate through the keys in the bundle.
 
@@ -919,13 +920,15 @@ public class JSONObject
     throws JSONException
   {
     final Object object = get(key);
-    if (object.equals(Boolean.FALSE) || object instanceof String
-        && ((String) object).equalsIgnoreCase("false"))
+    if (object.equals(Boolean.FALSE)
+        || object instanceof String
+           && ((String) object).equalsIgnoreCase("false"))
     {
       return false;
     }
-    else if (object.equals(Boolean.TRUE) || object instanceof String
-             && ((String) object).equalsIgnoreCase("true"))
+    else if (object.equals(Boolean.TRUE)
+             || object instanceof String
+                && ((String) object).equalsIgnoreCase("true"))
     {
       return true;
     }
@@ -948,12 +951,13 @@ public class JSONObject
     final Object object = get(key);
     try
     {
-      return object instanceof Number? ((Number) object).doubleValue(): Double
-        .parseDouble((String) object);
+      return object instanceof Number? ((Number) object).doubleValue()
+                                     : Double.parseDouble((String) object);
     }
     catch (final Exception e)
     {
-      throw new JSONException("JSONObject[" + quote(key) + "] is not a number.");
+      throw new JSONException("JSONObject[" + quote(key)
+                              + "] is not a number.");
     }
   }
 
@@ -973,8 +977,8 @@ public class JSONObject
     final Object object = get(key);
     try
     {
-      return object instanceof Number? ((Number) object).intValue(): Integer
-        .parseInt((String) object);
+      return object instanceof Number? ((Number) object).intValue()
+                                     : Integer.parseInt((String) object);
     }
     catch (final Exception e)
     {
@@ -1041,8 +1045,8 @@ public class JSONObject
     final Object object = get(key);
     try
     {
-      return object instanceof Number? ((Number) object).longValue(): Long
-        .parseLong((String) object);
+      return object instanceof Number? ((Number) object).longValue()
+                                     : Long.parseLong((String) object);
     }
     catch (final Exception e)
     {
@@ -1753,8 +1757,8 @@ public class JSONObject
    *        The indentation of the top level.
    * @return a printable, displayable, transmittable representation of
    *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code>
-   *         &nbsp;<small>(right brace)</small>.
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
    * @throws JSONException
    *         If the object contains an invalid number.
    */
@@ -1823,8 +1827,8 @@ public class JSONObject
    *        The indentation of the top level.
    * @return a printable, displayable, transmittable representation of
    *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code>
-   *         &nbsp;<small>(right brace)</small>.
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
    * @throws JSONException
    *         If the object contains an invalid number.
    */
@@ -1915,8 +1919,8 @@ public class JSONObject
 
     final boolean includeSuperClass = klass.getClassLoader() != null;
 
-    final Method[] methods = includeSuperClass? klass.getMethods(): klass
-      .getDeclaredMethods();
+    final Method[] methods = includeSuperClass? klass.getMethods()
+                                              : klass.getDeclaredMethods();
     for (final Method method: methods)
     {
       try

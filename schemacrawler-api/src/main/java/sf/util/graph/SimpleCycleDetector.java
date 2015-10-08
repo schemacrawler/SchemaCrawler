@@ -29,10 +29,10 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
   enum TraversalState
   {
 
-    notStarted("white"),
-    inProgress("lightgray"),
-    marked("red"),
-    complete("gray");
+   notStarted("white"),
+   inProgress("lightgray"),
+   marked("red"),
+   complete("gray");
 
     private final String color;
 

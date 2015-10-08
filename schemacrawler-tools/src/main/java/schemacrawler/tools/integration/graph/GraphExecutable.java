@@ -95,7 +95,8 @@ public final class GraphExecutable
     if (infoLevel == InfoLevel.maximum)
     {
       final Catalog catalogAssociations = new CatalogWithAssociations(db);
-      catalog = new CatalogWithCounts(catalogAssociations, connection,
+      catalog = new CatalogWithCounts(catalogAssociations,
+                                      connection,
                                       schemaCrawlerOptions);
     }
     else
@@ -218,7 +219,8 @@ public final class GraphExecutable
     if (exitCode != 0)
     {
       throw new IOException(String.format("Process returned exit code %d%n%s",
-                                          exitCode, processError));
+                                          exitCode,
+                                          processError));
     }
     if (!isBlank(processError))
     {
@@ -240,9 +242,8 @@ public final class GraphExecutable
     return schemaTextDetailType;
   }
 
-  private SchemaTraversalHandler
-    getSchemaTraversalHandler(final OutputOptions outputOptions)
-      throws SchemaCrawlerException
+  private SchemaTraversalHandler getSchemaTraversalHandler(final OutputOptions outputOptions)
+    throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
@@ -253,7 +254,8 @@ public final class GraphExecutable
       schemaTextDetailType = graphOptions.getSchemaTextDetailType();
     }
 
-    formatter = new SchemaDotFormatter(schemaTextDetailType, graphOptions,
+    formatter = new SchemaDotFormatter(schemaTextDetailType,
+                                       graphOptions,
                                        outputOptions);
 
     return formatter;

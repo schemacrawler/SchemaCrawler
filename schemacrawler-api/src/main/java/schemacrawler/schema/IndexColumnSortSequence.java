@@ -30,17 +30,17 @@ import java.util.logging.Logger;
 public enum IndexColumnSortSequence
 {
 
-  /**
-   * Unknown
-   */
+ /**
+  * Unknown
+  */
   unknown("unknown"),
-  /**
-   * Ascending.
-   */
+ /**
+  * Ascending.
+  */
   ascending("A"),
-  /**
-   * Descending.
-   */
+ /**
+  * Descending.
+  */
   descending("D");
 
   private static final Logger LOGGER = Logger
@@ -78,7 +78,7 @@ public enum IndexColumnSortSequence
    *
    * @return Index sort sequence code
    */
-    String getCode()
+  String getCode()
   {
     return code;
   }

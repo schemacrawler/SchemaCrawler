@@ -29,20 +29,20 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC function types.
  */
 public enum FunctionReturnType
-  implements RoutineReturnType
+    implements RoutineReturnType
 {
 
-  /**
-   * Result unknown.
-   */
+ /**
+  * Result unknown.
+  */
   unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
-  /**
-   * Does not return a table.
-   */
+ /**
+  * Does not return a table.
+  */
   noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
-  /**
-   * Returns a table.
-   */
+ /**
+  * Returns a table.
+  */
   returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private static final Logger LOGGER = Logger

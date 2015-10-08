@@ -23,8 +23,8 @@ package schemacrawler.schema;
 public enum RoutineType
 {
 
-  unknown,
-  procedure,
-  function;
+ unknown,
+ procedure,
+ function;
 
 }

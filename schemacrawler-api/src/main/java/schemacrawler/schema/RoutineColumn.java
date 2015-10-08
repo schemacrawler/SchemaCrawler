@@ -29,13 +29,13 @@ public interface RoutineColumn<R extends Routine>
    *
    * @return Routine column type.
    */
-    RoutineColumnType getColumnType();
+  RoutineColumnType getColumnType();
 
   /**
    * Gets the number of decimal digits precision for the column.
    *
    * @return The number of decimal digits precision for the column.
    */
-    int getPrecision();
+  int getPrecision();
 
 }
