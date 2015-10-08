@@ -21,7 +21,6 @@
 package schemacrawler.tools.offline;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -31,6 +30,8 @@ import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.RoutinesReducer;
 import schemacrawler.crawl.SchemasReducer;
@@ -72,14 +73,11 @@ public class OfflineSnapshotExecutable
     super(command);
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#execute(java.sql.Connection)
-   */
   @Override
-  public final void execute(final Connection connection)
-    throws Exception
+  public void
+    execute(final Connection connection,
+            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+              throws Exception
   {
     checkConnection(connection);
 
@@ -90,15 +88,6 @@ public class OfflineSnapshotExecutable
     final Catalog catalog = loadCatalog();
 
     executeOn(catalog, connection);
-  }
-
-  @Override
-  public void
-    execute(final Connection connection,
-            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-              throws Exception
-  {
-    execute(connection);
   }
 
   @Override
