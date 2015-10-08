@@ -92,8 +92,7 @@ public class SpringOptions
   /**
    * Set the bean name for the database-specific override options.
    */
-  public void
-    setDatabaseSpecificOverrideOptionsName(final String databaseSpecificOverrideOptionsName)
+  public void setDatabaseSpecificOverrideOptionsName(final String databaseSpecificOverrideOptionsName)
   {
     this.databaseSpecificOverrideOptionsName = databaseSpecificOverrideOptionsName;
   }

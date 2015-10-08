@@ -130,13 +130,15 @@ public class TableTypesTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          out.println(String.format("  %s [%s]", table.getName(),
+          out.println(String.format("  %s [%s]",
+                                    table.getName(),
                                     table.getTableType()));
           final Column[] columns = table.getColumns().toArray(new Column[0]);
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            out.println(String.format("    %s [%s]", column.getName(),
+            out.println(String.format("    %s [%s]",
+                                      column.getName(),
                                       column.getColumnDataType()));
           }
         }

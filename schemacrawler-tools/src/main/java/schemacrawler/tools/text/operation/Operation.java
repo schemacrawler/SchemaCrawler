@@ -31,15 +31,16 @@ import schemacrawler.utility.Query;
 public enum Operation
 {
 
-  /**
-   * Count operation
-   */
+ /**
+  * Count operation
+  */
   count("Row Count", "SELECT COUNT(*) FROM ${table}",
     "{0,choice,0#empty|0<{0,number,integer} rows}"),
-  /**
-   * Dump operation
-   */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}", ""), ;
+ /**
+  * Dump operation
+  */
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}",
+    ""),;
 
   private final String description;
   private final String queryString;

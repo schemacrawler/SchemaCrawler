@@ -60,8 +60,8 @@ public final class CommandRegistry
               new SchemaExecutableCommandProvider("schema"),
               new SchemaExecutableCommandProvider("details"),
 
-    new ExecutableCommandProvider("count",
-                                  "schemacrawler.tools.text.operation.OperationExecutable"),
+              new ExecutableCommandProvider("count",
+                                            "schemacrawler.tools.text.operation.OperationExecutable"),
               new ExecutableCommandProvider("dump",
                                             "schemacrawler.tools.text.operation.OperationExecutable"),
               new ExecutableCommandProvider("script",
@@ -76,7 +76,8 @@ public final class CommandRegistry
       for (final CommandProvider commandRegistryEntry: serviceLoader)
       {
         final String executableCommand = commandRegistryEntry.getCommand();
-        LOGGER.log(Level.FINER, "Loading executable, " + executableCommand + "="
+        LOGGER.log(Level.FINER,
+                   "Loading executable, " + executableCommand + "="
                                 + commandRegistryEntry.getClass().getName());
         commandProviders.add(commandRegistryEntry);
       }
@@ -101,6 +102,21 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
     commandRegistry = loadCommandRegistry();
+  }
+
+  public String getHelpAdditionalText(final String command)
+  {
+    final String helpAdditionalText;
+    if (commandRegistry.containsKey(command))
+    {
+      helpAdditionalText = commandRegistry.get(command).getHelpAdditionalText();
+    }
+    else
+    {
+      helpAdditionalText = null;
+    }
+
+    return helpAdditionalText;
   }
 
   public String getHelpResource(final String command)
@@ -155,21 +171,6 @@ public final class CommandRegistry
       .keySet());
     Collections.sort(availableCommands);
     return availableCommands;
-  }
-
-  public String getHelpAdditionalText(String command)
-  {
-    final String helpAdditionalText;
-    if (commandRegistry.containsKey(command))
-    {
-      helpAdditionalText = commandRegistry.get(command).getHelpAdditionalText();
-    }
-    else
-    {
-      helpAdditionalText = null;
-    }
-
-    return helpAdditionalText;
   }
 
 }

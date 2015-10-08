@@ -46,7 +46,8 @@ public class LintExecutableTest
   public void commandlineLintReport()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text, false,
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
+                                            false,
                                             "executableForLint");
   }
 
@@ -54,7 +55,8 @@ public class LintExecutableTest
   public void commandlineLintReportWithConfig()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text, true,
+    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
+                                            true,
                                             "executableForLintWithConfig");
   }
 
@@ -69,15 +71,15 @@ public class LintExecutableTest
   public void executableLintReportWithConfig()
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text, true,
+    executeLintExecutable(TextOutputFormat.text,
+                          true,
                           "executableForLintWithConfig");
   }
 
-  private void
-    executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
-                                            final boolean linterconfigs,
-                                            final String referenceFileName)
-                                              throws Exception
+  private void executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
+                                                       final boolean linterconfigs,
+                                                       final String referenceFileName)
+                                                         throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
@@ -119,7 +121,8 @@ public class LintExecutableTest
       lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
     }
 
-    executeExecutable(lintExecutable, outputFormat.getFormat(),
+    executeExecutable(lintExecutable,
+                      outputFormat.getFormat(),
                       referenceFileName + ".txt");
   }
 

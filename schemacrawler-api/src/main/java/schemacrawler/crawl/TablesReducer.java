@@ -20,12 +20,12 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -61,8 +61,7 @@ public class TablesReducer
     removeForeignKeys(allTables);
   }
 
-  private Collection<Table>
-    doReduce(final Collection<? extends Table> allTables)
+  private Collection<Table> doReduce(final Collection<? extends Table> allTables)
   {
     // Filter tables, keeping the ones we need
     final Set<Table> reducedTables = new HashSet<>();
@@ -101,9 +100,9 @@ public class TablesReducer
     return keepTables;
   }
 
-  private Collection<Table>
-    includeRelatedTables(final TableRelationshipType tableRelationshipType,
-                         final int depth, final Set<Table> greppedTables)
+  private Collection<Table> includeRelatedTables(final TableRelationshipType tableRelationshipType,
+                                                 final int depth,
+                                                 final Set<Table> greppedTables)
   {
     final Set<Table> includedTables = new HashSet<>();
     includedTables.addAll(greppedTables);

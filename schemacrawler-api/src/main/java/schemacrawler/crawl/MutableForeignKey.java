@@ -67,9 +67,9 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    * <p>
-   * Note: Since foreign keys are not always explicitly named in databases, the
-   * sorting routine orders the foreign keys by the names of the columns in the
-   * foreign keys.
+   * Note: Since foreign keys are not always explicitly named in
+   * databases, the sorting routine orders the foreign keys by the names
+   * of the columns in the foreign keys.
    * </p>
    */
   @Override
@@ -140,7 +140,8 @@ class MutableForeignKey
       .iterator();
   }
 
-  void addColumnReference(final int keySequence, final Column pkColumn,
+  void addColumnReference(final int keySequence,
+                          final Column pkColumn,
                           final Column fkColumn)
   {
     final MutableForeignKeyColumnReference fkColumnReference = new MutableForeignKeyColumnReference(keySequence,

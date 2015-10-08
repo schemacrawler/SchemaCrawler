@@ -39,7 +39,7 @@ public interface Function
    * @return Columns of the procedure
    */
   @Override
-    List<FunctionColumn> getColumns();
+  List<FunctionColumn> getColumns();
 
   /**
    * Gets the procedure type.
@@ -47,7 +47,7 @@ public interface Function
    * @return Procedure type
    */
   @Override
-    FunctionReturnType getReturnType();
+  FunctionReturnType getReturnType();
 
   /**
    * Gets the type of the routine body.
@@ -55,7 +55,7 @@ public interface Function
    * @return Routine body type
    */
   @Override
-    RoutineBodyType getRoutineBodyType();
+  RoutineBodyType getRoutineBodyType();
 
   /**
    * Gets a column by name.
@@ -65,6 +65,6 @@ public interface Function
    * @return Column of the procedure
    */
   @Override
-    Optional<? extends FunctionColumn> lookupColumn(String name);
+  Optional<? extends FunctionColumn> lookupColumn(String name);
 
 }

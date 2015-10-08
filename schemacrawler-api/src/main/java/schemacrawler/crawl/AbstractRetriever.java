@@ -37,8 +37,8 @@ import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
 /**
- * Base class for retriever that uses database metadata to get the details about
- * the schema.
+ * Base class for retriever that uses database metadata to get the
+ * details about the schema.
  *
  * @author Sualeh Fatehi
  */
@@ -63,8 +63,8 @@ abstract class AbstractRetriever
   }
 
   /**
-   * Checks whether the provided database object belongs to the specified
-   * schema.
+   * Checks whether the provided database object belongs to the
+   * specified schema.
    *
    * @param dbObject
    *        Database object to check
@@ -74,8 +74,9 @@ abstract class AbstractRetriever
    *        Database schema to check against
    * @return Whether the database object belongs to the specified schema
    */
-    boolean belongsToSchema(final DatabaseObject dbObject,
-                            final String catalogName, final String schemaName)
+  boolean belongsToSchema(final DatabaseObject dbObject,
+                          final String catalogName,
+                          final String schemaName)
   {
     if (dbObject == null)
     {
@@ -125,8 +126,8 @@ abstract class AbstractRetriever
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database specific
-   * type name, if it does not exist.
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
    *
    * @param schema
    *        Schema
@@ -136,17 +137,19 @@ abstract class AbstractRetriever
    *        Database specific type name
    * @return Column data type
    */
-    MutableColumnDataType
-      lookupOrCreateColumnDataType(final Schema schema, final int javaSqlType,
-                                   final String databaseSpecificTypeName)
+  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
+                                                     final int javaSqlType,
+                                                     final String databaseSpecificTypeName)
   {
-    return lookupOrCreateColumnDataType(schema, javaSqlType,
-                                        databaseSpecificTypeName, null);
+    return lookupOrCreateColumnDataType(schema,
+                                        javaSqlType,
+                                        databaseSpecificTypeName,
+                                        null);
   }
 
   /**
-   * Creates a data type from the JDBC data type id, and the database specific
-   * type name, if it does not exist.
+   * Creates a data type from the JDBC data type id, and the database
+   * specific type name, if it does not exist.
    *
    * @param schema
    *        Schema
@@ -156,11 +159,10 @@ abstract class AbstractRetriever
    *        Database specific type name
    * @return Column data type
    */
-    MutableColumnDataType
-      lookupOrCreateColumnDataType(final Schema schema,
-                                   final int javaSqlTypeInt,
-                                   final String databaseSpecificTypeName,
-                                   final String mappedClassName)
+  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
+                                                     final int javaSqlTypeInt,
+                                                     final String databaseSpecificTypeName,
+                                                     final String mappedClassName)
   {
     MutableColumnDataType columnDataType = catalog
       .lookupColumnDataType(schema, databaseSpecificTypeName).orElse(catalog
@@ -197,9 +199,10 @@ abstract class AbstractRetriever
     return columnDataType;
   }
 
-  Optional<MutableRoutine>
-    lookupRoutine(final String catalogName, final String schemaName,
-                  final String routineName, final String specificName)
+  Optional<MutableRoutine> lookupRoutine(final String catalogName,
+                                         final String schemaName,
+                                         final String routineName,
+                                         final String specificName)
   {
     final String routineLookupName;
     if (!Utility.isBlank(specificName))

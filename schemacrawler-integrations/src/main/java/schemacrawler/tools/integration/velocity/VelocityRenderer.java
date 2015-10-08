@@ -54,8 +54,8 @@ public final class VelocityRenderer
 
   static final String COMMAND = "velocity";
 
-  private static final Logger LOGGER = Logger.getLogger(VelocityRenderer.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(VelocityRenderer.class.getName());
 
   private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
@@ -63,7 +63,7 @@ public final class VelocityRenderer
                                                         final String resourceLoaderPropertyValue)
   {
     p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                      + "." + resourceLoaderPropertyName,
+                  + "." + resourceLoaderPropertyName,
                   resourceLoaderPropertyValue);
   }
 
@@ -76,8 +76,9 @@ public final class VelocityRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog, final Connection connection)
-    throws Exception
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
+                                throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
@@ -101,8 +102,8 @@ public final class VelocityRenderer
     final String fileResourceLoader = "file";
     final String classpathResourceLoader = "classpath";
     final Properties p = new Properties();
-    p.setProperty(RuntimeConstants.RESOURCE_LOADER, fileResourceLoader + ","
-                                                    + classpathResourceLoader);
+    p.setProperty(RuntimeConstants.RESOURCE_LOADER,
+                  fileResourceLoader + "," + classpathResourceLoader);
     setVelocityResourceLoaderProperty(p,
                                       classpathResourceLoader,
                                       "class",
@@ -127,10 +128,11 @@ public final class VelocityRenderer
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER.log(Level.CONFIG, String
-        .format("Reading Velocity template %s, with encoding \"%s\"",
-                templateLocation,
-                templateEncoding));
+      LOGGER.log(Level.CONFIG,
+                 String.format(
+                               "Reading Velocity template %s, with encoding \"%s\"",
+                               templateLocation,
+                               templateEncoding));
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);

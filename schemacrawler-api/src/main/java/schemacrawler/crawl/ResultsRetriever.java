@@ -21,11 +21,11 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
@@ -34,7 +34,8 @@ import schemacrawler.utility.JavaSqlTypes;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about a result set.
+ * A retriever uses database metadata to get the details about a result
+ * set.
  *
  * @author Sualeh Fatehi
  */
@@ -52,16 +53,17 @@ final class ResultsRetriever
   }
 
   /**
-   * Retrieves a list of columns from the results. There is no attempt to share
-   * table objects, since the tables cannot have children that are
-   * ResultColumns. Likewise, there is no attempt to share column data types.
+   * Retrieves a list of columns from the results. There is no attempt
+   * to share table objects, since the tables cannot have children that
+   * are ResultColumns. Likewise, there is no attempt to share column
+   * data types.
    *
    * @return List of columns from the results
    * @throws SchemaCrawlerException
    *         On an exception
    */
-    ResultsColumns retrieveResults()
-      throws SQLException
+  ResultsColumns retrieveResults()
+    throws SQLException
   {
     final JavaSqlTypes javaSqlTypes = new JavaSqlTypes();
     final MutableResultsColumns resultColumns = new MutableResultsColumns("");

@@ -182,14 +182,14 @@ public final class DOCTYPEChanger
                     internalSubset = false;
                   }
 
-                }// end while
+                } // end while
               }
               else
               {// end replace
                 myBuffer.append((char) d);
                 myBuffer.append((char) e);
 
-              }// end else
+              } // end else
               docStarted = true;
             }
             else
@@ -208,7 +208,7 @@ public final class DOCTYPEChanger
 
         }// end switch
 
-      }// end c==60, docStarted==false
+      } // end c==60, docStarted==false
     }
     else
     {
@@ -247,8 +247,8 @@ public final class DOCTYPEChanger
   /**
    * Use this method to set the internal subset identified by the
    * DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i>
-   * [<i>internalSubset</i>]>&gt;
+   * <i>rootElement</i> <i>PUBLIC or SYSTEM identifiers</i> [
+   * <i>internalSubset</i>]>&gt;
    */
 
   public void setInternalSubset(final String subsetContents)
@@ -259,8 +259,8 @@ public final class DOCTYPEChanger
   /**
    * Use setPublicIdentifier to set the public identifer identified by
    * the DOCTYPE declaration. If set, the result will be &lt;!DOCTYPE
-   * <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>'
-   * '<i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; .
+   * <i>rootElement</i> PUBLIC '<i>publicIdentifier</i>' '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt; .
    * You must also set a system identifier for this to work properly.
    */
 
@@ -293,8 +293,8 @@ public final class DOCTYPEChanger
   /**
    * Use setSystemIdentifier to set the public identifer identified by
    * the DOCTYPE declaration. If set without a public identifier, the
-   * result will be &lt;!DOCTYPE <i>rootElement</i> SYSTEM
-   * '<i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
+   * result will be &lt;!DOCTYPE <i>rootElement</i> SYSTEM '
+   * <i>systemIdentifer</i>' <i>[internalSubset, if present]></i>&gt;
    */
 
   public void setSystemIdentifier(final String identifier)

@@ -29,14 +29,14 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 public enum InfoLevel
 {
 
-  unknown,
-  minimum,
-  standard,
-  detailed,
-  maximum, ;
+ unknown,
+ minimum,
+ standard,
+ detailed,
+ maximum,;
 
-  private static final Logger LOGGER = Logger.getLogger(InfoLevel.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(InfoLevel.class.getName());
 
   public static InfoLevel valueOfFromString(final String infoLevelValue)
   {

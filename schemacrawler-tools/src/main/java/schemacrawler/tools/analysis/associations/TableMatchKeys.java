@@ -21,7 +21,6 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -34,6 +33,8 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Table;
 import sf.util.Multimap;
 import sf.util.ObjectToString;
@@ -42,8 +43,8 @@ import sf.util.Utility;
 final class TableMatchKeys
 {
 
-  private static final Logger LOGGER = Logger.getLogger(TableMatchKeys.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;
 
@@ -176,9 +177,8 @@ final class TableMatchKeys
     final List<String> prefixes = new ArrayList<>();
     for (int i = 0; i < prefixesList.size(); i++)
     {
-      final boolean add = i < 5
-                          || prefixesList.get(i).getValue() > prefixesMap
-                            .size() * 0.5;
+      final boolean add = i < 5 || prefixesList.get(i)
+        .getValue() > prefixesMap.size() * 0.5;
       if (add)
       {
         prefixes.add(prefixesList.get(i).getKey());

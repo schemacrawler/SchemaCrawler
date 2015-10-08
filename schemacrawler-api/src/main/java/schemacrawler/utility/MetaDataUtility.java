@@ -21,12 +21,12 @@
 package schemacrawler.utility;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
@@ -46,10 +46,10 @@ public final class MetaDataUtility
 
   public enum ForeignKeyCardinality
   {
-    unknown(""),
-    zero_one("(0..1)"),
-    zero_many("(0..many)"),
-    one_one("(1..1)");
+   unknown(""),
+   zero_one("(0..1)"),
+   zero_many("(0..many)"),
+   one_one("(1..1)");
 
     private final String description;
 
@@ -98,8 +98,7 @@ public final class MetaDataUtility
     return foreignKeyName;
   }
 
-  public static ForeignKeyCardinality
-    findForeignKeyCardinality(final BaseForeignKey foreignKey)
+  public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey foreignKey)
   {
     if (foreignKey == null)
     {
@@ -128,8 +127,7 @@ public final class MetaDataUtility
     return connectivity;
   }
 
-  public static final List<String>
-    foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
+  public static final List<String> foreignKeyColumnNames(final BaseForeignKey<? extends ColumnReference> foreignKey)
   {
     if (foreignKey == null)
     {
@@ -157,14 +155,13 @@ public final class MetaDataUtility
     return uniqueIndexCoumnNames.contains(foreignKeyColumnNames);
   }
 
-  public static Collection<List<String>>
-    uniqueIndexCoumnNames(final Table table)
+  public static Collection<List<String>> uniqueIndexCoumnNames(final Table table)
   {
     return indexCoumnNames(table, true);
   }
 
-  private static Collection<List<String>>
-    indexCoumnNames(final Table table, final boolean includeUniqueOnly)
+  private static Collection<List<String>> indexCoumnNames(final Table table,
+                                                          final boolean includeUniqueOnly)
   {
     final List<List<String>> allIndexCoumns = new ArrayList<>();
     if (table instanceof PartialDatabaseObject)

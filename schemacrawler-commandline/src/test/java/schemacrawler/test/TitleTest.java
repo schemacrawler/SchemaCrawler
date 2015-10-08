@@ -39,8 +39,7 @@ public class TitleTest
                                                               TextOutputFormat.text,
                                                               TextOutputFormat.html,
                                                               TextOutputFormat.json,
-                                                              GraphOutputFormat.scdot
-    };
+                                                              GraphOutputFormat.scdot };
 
     final Map<String, String> args = new HashMap<String, String>();
     args.put("title", "Database Design for Books and Publishers");
@@ -48,13 +47,14 @@ public class TitleTest
     // Testing no sequences, synonyms
 
     final List<String> failures = new ArrayList<>();
-    for (final String command: new String[] {
-                                              "schema", "list"
-    })
+    for (final String command: new String[] { "schema", "list" })
     {
       for (final OutputFormat outputFormat: outputFormats)
       {
-        run(args, null, command, outputFormat,
+        run(args,
+            null,
+            command,
+            outputFormat,
             "commandLineWithTitle_" + command + "." + outputFormat.getFormat(),
             failures);
       }
@@ -79,8 +79,10 @@ public class TitleTest
   }
 
   private void run(final Map<String, String> argsMap,
-                   final Map<String, String> config, final String command,
-                   final OutputFormat outputFormat, final String referenceFile,
+                   final Map<String, String> config,
+                   final String command,
+                   final OutputFormat outputFormat,
+                   final String referenceFile,
                    final List<String> allFailures)
                      throws Exception
   {

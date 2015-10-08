@@ -19,7 +19,7 @@ public interface Executable
    * @throws Exception
    *         On an exception
    */
-  default void execute(Connection connection)
+  default void execute(final Connection connection)
     throws Exception
   {
     execute(connection, new DatabaseSpecificOverrideOptions());

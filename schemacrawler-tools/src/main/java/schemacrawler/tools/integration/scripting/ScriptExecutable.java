@@ -53,8 +53,8 @@ public final class ScriptExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(ScriptExecutable.class
-    .getName());
+  private static final Logger LOGGER = Logger
+    .getLogger(ScriptExecutable.class.getName());
 
   static final String COMMAND = "script";
 
@@ -63,13 +63,9 @@ public final class ScriptExecutable
     final String ext;
     if (scriptFileName != null)
     {
-      ext = scriptFileName.lastIndexOf('.') == -1
-                                                 ? ""
-                                                 : scriptFileName
-                                                   .substring(scriptFileName
-                                                                .lastIndexOf('.') + 1,
-                                                              scriptFileName
-                                                                .length());
+      ext = scriptFileName.lastIndexOf('.') == -1? "": scriptFileName
+        .substring(scriptFileName.lastIndexOf('.') + 1,
+                   scriptFileName.length());
     }
     else
     {
@@ -87,8 +83,9 @@ public final class ScriptExecutable
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog, final Connection connection)
-    throws Exception
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
+                                throws Exception
   {
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
@@ -105,12 +102,12 @@ public final class ScriptExecutable
     ScriptEngineFactory javaScriptEngineFactory = null;
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
-      LOGGER.log(Level.FINER, String
-        .format("Evaluating script engine: %s %s (%s %s)",
-                engineFactory.getEngineName(),
-                engineFactory.getEngineVersion(),
-                engineFactory.getLanguageName(),
-                engineFactory.getLanguageVersion()));
+      LOGGER.log(Level.FINER,
+                 String.format("Evaluating script engine: %s %s (%s %s)",
+                               engineFactory.getEngineName(),
+                               engineFactory.getEngineVersion(),
+                               engineFactory.getLanguageName(),
+                               engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(getFileExtension(scriptFileName)))
       {
@@ -133,17 +130,17 @@ public final class ScriptExecutable
 
     if (LOGGER.isLoggable(Level.CONFIG))
     {
-      LOGGER
-        .log(Level.CONFIG,
-             String
-               .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                       scriptEngineFactory.getEngineName(),
-                       scriptEngineFactory.getEngineVersion(),
-                       scriptEngineFactory.getLanguageName(),
-                       scriptEngineFactory.getLanguageVersion(),
-                       ObjectToString.toString(scriptEngineFactory.getNames()),
-                       ObjectToString.toString(scriptEngineFactory
-                         .getExtensions())));
+      LOGGER.log(Level.CONFIG,
+                 String
+                   .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                           scriptEngineFactory.getEngineName(),
+                           scriptEngineFactory.getEngineVersion(),
+                           scriptEngineFactory.getLanguageName(),
+                           scriptEngineFactory.getLanguageVersion(),
+                           ObjectToString
+                             .toString(scriptEngineFactory.getNames()),
+                           ObjectToString
+                             .toString(scriptEngineFactory.getExtensions())));
     }
 
     final CommandChainExecutable chain = new CommandChainExecutable();

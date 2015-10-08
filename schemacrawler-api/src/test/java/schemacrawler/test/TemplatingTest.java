@@ -51,13 +51,15 @@ public class TemplatingTest
     assertEquals("Incorrect template expansion", "No variables", expanded);
 
     expanded = TemplatingUtility.expandTemplate("${one} variable", values);
-    assertEquals("Incorrect template expansion", "one.value variable",
+    assertEquals("Incorrect template expansion",
+                 "one.value variable",
                  expanded);
 
     expanded = TemplatingUtility
       .expandTemplate("Has ${one} variable, and ${another} variable", values);
     assertEquals("Incorrect template expansion",
-                 "Has one.value variable, and two.value variable", expanded);
+                 "Has one.value variable, and two.value variable",
+                 expanded);
 
     expanded = TemplatingUtility.expandTemplate("Has $${unusual} variable",
                                                 values);
@@ -68,31 +70,36 @@ public class TemplatingTest
     assertEquals("Incorrect template expansion", "Has 10} variable", expanded);
 
     expanded = TemplatingUtility.expandTemplate("Has ${bad variable", values);
-    assertEquals("Incorrect template expansion", "Has ${bad variable",
+    assertEquals("Incorrect template expansion",
+                 "Has ${bad variable",
                  expanded);
 
     expanded = TemplatingUtility
       .expandTemplate("Has ${good} and ${bad variable", values);
     assertEquals("Incorrect template expansion",
-                 "Has good.value and ${bad variable", expanded);
+                 "Has good.value and ${bad variable",
+                 expanded);
 
     expanded = TemplatingUtility
       .expandTemplate("Has ${bad and ${good} variable", values);
     assertEquals("Incorrect template expansion",
-                 "Has ${bad and ${good} variable", expanded);
+                 "Has ${bad and ${good} variable",
+                 expanded);
 
     expanded = TemplatingUtility.expandTemplate("Has bad} variable", values);
     assertEquals("Incorrect template expansion", "Has bad} variable", expanded);
 
     expanded = TemplatingUtility.expandTemplate("Has ${undefined} variable",
                                                 values);
-    assertEquals("Incorrect template expansion", "Has ${undefined} variable",
+    assertEquals("Incorrect template expansion",
+                 "Has ${undefined} variable",
                  expanded);
 
     expanded = TemplatingUtility.expandTemplate("Has ${split-name} variable",
                                                 values);
     assertEquals("Incorrect template expansion",
-                 "Has split-name value variable", expanded);
+                 "Has split-name value variable",
+                 expanded);
   }
 
   @Test
@@ -144,7 +151,8 @@ public class TemplatingTest
       .extractTemplateVariables("Has ${bad and ${good} variable");
     sortedVariables = getSortedVariables(variables);
     assertEquals("Incorrect number of variables found", 1, variables.size());
-    assertEquals("Variable not found", "bad and ${good",
+    assertEquals("Variable not found",
+                 "bad and ${good",
                  sortedVariables.get(0));
 
     variables = TemplatingUtility.extractTemplateVariables("Has bad} variable");

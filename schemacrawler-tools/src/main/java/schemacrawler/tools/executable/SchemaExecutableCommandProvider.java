@@ -21,7 +21,7 @@ class SchemaExecutableCommandProvider
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                                             throws SchemaCrawlerException
   {
     final boolean isGraph;
     final boolean isEmbeddedGraph;

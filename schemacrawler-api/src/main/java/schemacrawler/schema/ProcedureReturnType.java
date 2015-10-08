@@ -29,20 +29,20 @@ import java.util.logging.Logger;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-  implements RoutineReturnType
+    implements RoutineReturnType
 {
 
-  /**
-   * Result unknown.
-   */
+ /**
+  * Result unknown.
+  */
   unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
-  /**
-   * No result.
-   */
+ /**
+  * No result.
+  */
   noResult(DatabaseMetaData.procedureNoResult, "no result"),
-  /**
-   * Returns result.
-   */
+ /**
+  * Returns result.
+  */
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private static final Logger LOGGER = Logger

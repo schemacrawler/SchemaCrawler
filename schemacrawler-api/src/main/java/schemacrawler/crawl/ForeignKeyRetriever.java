@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.executeSql;
 
 import java.sql.Connection;
@@ -31,6 +30,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -44,8 +45,8 @@ import schemacrawler.utility.MetaDataUtility;
 import sf.util.Utility;
 
 /**
- * A retriever uses database metadata to get the details about the database
- * forign keys.
+ * A retriever uses database metadata to get the details about the
+ * database forign keys.
  *
  * @author Sualeh Fatehi
  */
@@ -81,10 +82,9 @@ final class ForeignKeyRetriever
     }
   }
 
-  private void
-    createForeignKeys(final MetadataResultSet results,
-                      final NamedObjectList<MutableForeignKey> foreignKeys)
-                        throws SQLException
+  private void createForeignKeys(final MetadataResultSet results,
+                                 final NamedObjectList<MutableForeignKey> foreignKeys)
+                                   throws SQLException
   {
     try
     {
@@ -121,10 +121,12 @@ final class ForeignKeyRetriever
 
         final Column pkColumn = lookupOrCreateColumn(pkTableCatalogName,
                                                      pkTableSchemaName,
-                                                     pkTableName, pkColumnName);
+                                                     pkTableName,
+                                                     pkColumnName);
         final Column fkColumn = lookupOrCreateColumn(fkTableCatalogName,
                                                      fkTableSchemaName,
-                                                     fkTableName, fkColumnName);
+                                                     fkTableName,
+                                                     fkColumnName);
 
         // Make a direct connection between the two columns
         if (pkColumn != null && fkColumn != null)
@@ -185,13 +187,14 @@ final class ForeignKeyRetriever
   }
 
   /**
-   * Looks up a column in the database. If the column and table are not found,
-   * they are created, and added to the schema. This is prevent foreign key
-   * relationships from having a null pointer.
+   * Looks up a column in the database. If the column and table are not
+   * found, they are created, and added to the schema. This is prevent
+   * foreign key relationships from having a null pointer.
    */
-  private Column
-    lookupOrCreateColumn(final String catalogName, final String schemaName,
-                         final String tableName, final String columnName)
+  private Column lookupOrCreateColumn(final String catalogName,
+                                      final String schemaName,
+                                      final String tableName,
+                                      final String columnName)
   {
     Column column = null;
 
@@ -224,9 +227,8 @@ final class ForeignKeyRetriever
     return column;
   }
 
-  private void
-    retrieveForeignKeysUsingDatabaseMetadata(final NamedObjectList<MutableTable> allTables)
-      throws SchemaCrawlerSQLException
+  private void retrieveForeignKeysUsingDatabaseMetadata(final NamedObjectList<MutableTable> allTables)
+    throws SchemaCrawlerSQLException
   {
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     for (final MutableTable table: allTables)
@@ -250,14 +252,15 @@ final class ForeignKeyRetriever
                                             + table, e);
       }
 
-      // We need to get exported keys as well, since if only a single table is
-      // selected, we have not retrieved it's keys that are imported by other
+      // We need to get exported keys as well, since if only a single
+      // table is
+      // selected, we have not retrieved it's keys that are imported by
+      // other
       // tables.
-      try (
-        final MetadataResultSet results = new MetadataResultSet(metaData
-          .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                           unquotedName(table.getSchema().getName()),
-                           unquotedName(table.getName())));)
+      try (final MetadataResultSet results = new MetadataResultSet(metaData
+        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
+                         unquotedName(table.getSchema().getName()),
+                         unquotedName(table.getName())));)
       {
         createForeignKeys(results, foreignKeys);
       }
@@ -269,20 +272,19 @@ final class ForeignKeyRetriever
     }
   }
 
-  private void
-    retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
-      throws SchemaCrawlerSQLException
+  private void retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
+    throws SchemaCrawlerSQLException
   {
     final String fkSql = informationSchemaViews.getForeignKeysSql();
-    LOGGER.log(Level.FINER, String
-      .format("Executing SQL to retrieve foreign keys: %n%s", fkSql));
+    LOGGER.log(Level.FINER,
+               String.format("Executing SQL to retrieve foreign keys: %n%s",
+                             fkSql));
 
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();
-    try (
-      final Statement statement = connection.createStatement();
-      final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                         fkSql));)
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           fkSql));)
     {
       createForeignKeys(results, foreignKeys);
     }

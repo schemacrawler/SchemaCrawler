@@ -20,11 +20,11 @@
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

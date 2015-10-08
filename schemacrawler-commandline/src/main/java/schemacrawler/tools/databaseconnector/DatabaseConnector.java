@@ -75,8 +75,9 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Checks if the database connection options are valid, the JDBC driver class
-   * can be loaded, and so on. Throws an exception if there is a problem.
+   * Checks if the database connection options are valid, the JDBC
+   * driver class can be loaded, and so on. Throws an exception if there
+   * is a problem.
    *
    * @throws SchemaCrawlerException
    *         If there is a problem with creating connection options.
@@ -90,8 +91,8 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Gets the complete bundled database configuration set. This is useful in
-   * building the SchemaCrawler options.
+   * Gets the complete bundled database configuration set. This is
+   * useful in building the SchemaCrawler options.
    */
   public final Config getConfig()
   {
@@ -110,11 +111,10 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Gets the complete bundled database specific configuration set, including
-   * the SQL for information schema views.
+   * Gets the complete bundled database specific configuration set,
+   * including the SQL for information schema views.
    */
-  public DatabaseSpecificOverrideOptionsBuilder
-    getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
@@ -124,15 +124,16 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Creates a datasource for connecting to a database. Additional connection
-   * options are provided, from the command-line, and configuration file.
+   * Creates a datasource for connecting to a database. Additional
+   * connection options are provided, from the command-line, and
+   * configuration file.
    *
    * @param additionalConfig
-   *        Configuration from the command-line, and from configuration files.
+   *        Configuration from the command-line, and from configuration
+   *        files.
    */
-  public ConnectionOptions
-    newDatabaseConnectionOptions(final Config additionalConfig)
-      throws SchemaCrawlerException
+  public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
+    throws SchemaCrawlerException
   {
     if (additionalConfig == null || additionalConfig.isEmpty())
     {

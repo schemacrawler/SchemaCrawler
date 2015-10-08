@@ -20,8 +20,6 @@
 package schemacrawler.tools.lint;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -30,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Catalog;
@@ -100,8 +100,8 @@ public abstract class BaseLinter
     addLint(catalog, message, null);
   }
 
-  protected final <V extends Serializable> void
-    addCatalogLint(final String message, final V value)
+  protected final <V extends Serializable> void addCatalogLint(final String message,
+                                                               final V value)
   {
     addLint(catalog, message, value);
   }
@@ -111,8 +111,9 @@ public abstract class BaseLinter
     addLint(table, message, null);
   }
 
-  protected final <V extends Serializable> void
-    addTableLint(final Table table, final String message, final V value)
+  protected final <V extends Serializable> void addTableLint(final Table table,
+                                                             final String message,
+                                                             final V value)
   {
     addLint(table, message, value);
   }

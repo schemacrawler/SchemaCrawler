@@ -49,7 +49,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
   protected BaseTabularFormatter(final O options,
                                  final boolean printVerboseDatabaseInfo,
                                  final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                                   throws SchemaCrawlerException
   {
     super(options, printVerboseDatabaseInfo, outputOptions);
   }
@@ -192,8 +192,10 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     formattingHelper.writeNameValueRow("url",
                                        driverInfo.getConnectionUrl(),
                                        Alignment.inherit);
-    formattingHelper.writeNameValueRow("is JDBC compliant", Boolean
-      .toString(driverInfo.isJdbcCompliant()), Alignment.inherit);
+    formattingHelper.writeNameValueRow("is JDBC compliant",
+                                       Boolean.toString(driverInfo
+                                         .isJdbcCompliant()),
+                                       Alignment.inherit);
     formattingHelper.writeObjectEnd();
 
     final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
@@ -224,10 +226,14 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                  "SchemaCrawler Information");
 
     formattingHelper.writeObjectStart();
-    formattingHelper.writeNameValueRow("product name", schemaCrawlerInfo
-      .getSchemaCrawlerProductName(), Alignment.inherit);
-    formattingHelper.writeNameValueRow("product version", schemaCrawlerInfo
-      .getSchemaCrawlerVersion(), Alignment.inherit);
+    formattingHelper.writeNameValueRow("product name",
+                                       schemaCrawlerInfo
+                                         .getSchemaCrawlerProductName(),
+                                       Alignment.inherit);
+    formattingHelper.writeNameValueRow("product version",
+                                       schemaCrawlerInfo
+                                         .getSchemaCrawlerVersion(),
+                                       Alignment.inherit);
     formattingHelper.writeObjectEnd();
   }
 
@@ -277,8 +283,8 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
     }
     final String value = driverProperty.getValue();
 
-    formattingHelper
-      .writeNameRow(driverProperty.getName(), "[driver property]");
+    formattingHelper.writeNameRow(driverProperty.getName(),
+                                  "[driver property]");
     formattingHelper.writeDescriptionRow(driverProperty.getDescription());
     formattingHelper.writeDescriptionRow(details);
     formattingHelper.writeDetailRow("", "value", value);

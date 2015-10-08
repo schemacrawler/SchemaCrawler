@@ -65,8 +65,9 @@ public final class SchemaCrawlerExecutable
     {
       if (commands.hasMultipleCommands())
       {
-        LOGGER.log(Level.INFO, String
-          .format("Executing commands [%s] in sequence", commands));
+        LOGGER
+          .log(Level.INFO,
+               String.format("Executing commands [%s] in sequence", commands));
         executable = new CommandDaisyChainExecutable(getCommand());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
@@ -77,10 +78,10 @@ public final class SchemaCrawlerExecutable
           .configureNewExecutable(getCommand(),
                                   schemaCrawlerOptions,
                                   outputOptions);
-        LOGGER.log(Level.INFO, String
-          .format("Executing command \"%s\" using executable %s",
-                  getCommand(),
-                  executable.getClass().getName()));
+        LOGGER.log(Level.INFO,
+                   String.format("Executing command \"%s\" using executable %s",
+                                 getCommand(),
+                                 executable.getClass().getName()));
       }
     }
 

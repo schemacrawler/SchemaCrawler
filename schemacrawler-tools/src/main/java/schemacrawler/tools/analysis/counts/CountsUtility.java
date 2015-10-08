@@ -36,8 +36,8 @@ public class CountsUtility
       return UNKNOWN_TABLE_COUNT;
     }
 
-    final long tableCount = table.getAttribute(TABLE_COUNTS_KEY, Long
-      .valueOf(UNKNOWN_TABLE_COUNT));
+    final long tableCount = table
+      .getAttribute(TABLE_COUNTS_KEY, Long.valueOf(UNKNOWN_TABLE_COUNT));
     return tableCount;
   }
 

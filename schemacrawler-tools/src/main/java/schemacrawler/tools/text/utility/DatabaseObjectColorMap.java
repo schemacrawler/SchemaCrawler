@@ -1,12 +1,13 @@
 package schemacrawler.tools.text.utility;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.DatabaseObject;
 
@@ -15,9 +16,8 @@ public class DatabaseObjectColorMap
 
   public static String getHtmlColor(final Color color)
   {
-    final String htmlColor = "#"
-                             + Integer.toHexString(color.getRGB()).substring(2)
-                               .toUpperCase();
+    final String htmlColor = "#" + Integer.toHexString(color.getRGB())
+      .substring(2).toUpperCase();
     return htmlColor;
   }
 

@@ -44,8 +44,8 @@ import java.util.Map;
 import sf.util.ObjectToString;
 
 /**
- * The database specific views to get additional database metadata in a standard
- * format.
+ * The database specific views to get additional database metadata in a
+ * standard format.
  *
  * @author Sualeh Fatehi
  */
@@ -113,7 +113,8 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Gets the table check constraints SQL from the additional configuration.
+   * Gets the table check constraints SQL from the additional
+   * configuration.
    *
    * @return Table check constraints SQL.
    */
@@ -194,7 +195,8 @@ public final class InformationSchemaViews
   }
 
   /**
-   * Gets the table constraints columns SQL from the additional configuration.
+   * Gets the table constraints columns SQL from the additional
+   * configuration.
    *
    * @return Table constraints columns SQL.
    */

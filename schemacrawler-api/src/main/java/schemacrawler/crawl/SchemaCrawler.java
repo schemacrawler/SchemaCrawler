@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -32,6 +31,8 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -49,7 +50,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 
 /**
- * SchemaCrawler uses database meta-data to get the details about the schema.
+ * SchemaCrawler uses database meta-data to get the details about the
+ * schema.
  *
  * @author Sualeh Fatehi
  */
@@ -211,7 +213,8 @@ public final class SchemaCrawler
         }
         if (routineTypes.contains(RoutineType.function))
         {
-          retriever.retrieveFunctions(schema.getCatalogName(), schema.getName(),
+          retriever.retrieveFunctions(schema.getCatalogName(),
+                                      schema.getName(),
                                       options.getRoutineInclusionRule());
         }
       }
@@ -225,8 +228,9 @@ public final class SchemaCrawler
               && routineTypes.contains(RoutineType.procedure))
           {
             retriever
-              .retrieveProcedureColumns((MutableProcedure) routine, options
-                .getRoutineColumnInclusionRule());
+              .retrieveProcedureColumns((MutableProcedure) routine,
+                                        options
+                                          .getRoutineColumnInclusionRule());
           }
 
           if (routine instanceof MutableFunction
@@ -390,7 +394,8 @@ public final class SchemaCrawler
 
       for (final Schema schema: retriever.getSchemas())
       {
-        retriever.retrieveTables(schema.getCatalogName(), schema.getName(),
+        retriever.retrieveTables(schema.getCatalogName(),
+                                 schema.getName(),
                                  options.getTableNamePattern(),
                                  options.getTableTypes(),
                                  options.getTableInclusionRule());

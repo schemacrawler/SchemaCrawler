@@ -108,7 +108,8 @@ public final class LinterRegistry
       catch (final Exception e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not instantiate linter, " + linterClass.getName(), e);
+                   "Could not instantiate linter, " + linterClass.getName(),
+                   e);
         return null;
       }
     }

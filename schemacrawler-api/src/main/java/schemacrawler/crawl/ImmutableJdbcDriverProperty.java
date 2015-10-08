@@ -32,8 +32,8 @@ import schemacrawler.schema.JdbcDriverProperty;
 import schemacrawler.schema.Property;
 
 /**
- * Represents a JDBC driver property, and it's value. Created from metadata
- * returned by a JDBC call, and other sources of information.
+ * Represents a JDBC driver property, and it's value. Created from
+ * metadata returned by a JDBC call, and other sources of information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */

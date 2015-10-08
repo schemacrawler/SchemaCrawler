@@ -56,9 +56,9 @@ public class SiteSnapshotVariations
   public static void setupDirectory()
     throws IOException, URISyntaxException
   {
-    final Path codePath = Paths
-      .get(SiteSnapshotVariations.class.getProtectionDomain().getCodeSource()
-        .getLocation().toURI()).normalize().toAbsolutePath();
+    final Path codePath = Paths.get(SiteSnapshotVariations.class
+      .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
+      .toAbsolutePath();
     directory = codePath
       .resolve("../../../schemacrawler-site/src/site/resources/snapshot-examples")
       .normalize().toAbsolutePath();
@@ -72,12 +72,11 @@ public class SiteSnapshotVariations
     throws Exception
   {
     for (final OutputFormat outputFormat: new OutputFormat[] {
-        TextOutputFormat.csv,
-        TextOutputFormat.html,
-        TextOutputFormat.json,
-        TextOutputFormat.text,
-        GraphOutputFormat.htmlx
-    })
+                                                               TextOutputFormat.csv,
+                                                               TextOutputFormat.html,
+                                                               TextOutputFormat.json,
+                                                               TextOutputFormat.text,
+                                                               GraphOutputFormat.htmlx })
     {
       final String format = outputFormat.getFormat();
       final Map<String, String> args = new HashMap<String, String>();
@@ -105,7 +104,7 @@ public class SiteSnapshotVariations
   private void run(final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-    throws Exception
+                     throws Exception
   {
     deleteIfExists(outputFile);
 

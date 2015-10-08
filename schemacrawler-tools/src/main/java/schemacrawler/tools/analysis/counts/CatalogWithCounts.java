@@ -52,7 +52,8 @@ public final class CatalogWithCounts
 
   private final Map<Table, Long> counts;
 
-  public CatalogWithCounts(final Catalog catalog, final Connection connection,
+  public CatalogWithCounts(final Catalog catalog,
+                           final Connection connection,
                            final SchemaCrawlerOptions options)
                              throws SchemaCrawlerException
   {

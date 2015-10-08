@@ -21,11 +21,11 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
@@ -34,8 +34,8 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
 /**
- * Represents a database procedure. Created from metadata returned by a JDBC
- * call.
+ * Represents a database procedure. Created from metadata returned by a
+ * JDBC call.
  *
  * @author Sualeh Fatehi
  */

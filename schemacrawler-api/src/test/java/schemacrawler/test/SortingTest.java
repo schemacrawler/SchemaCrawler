@@ -47,27 +47,25 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "ADDRESS1",
-        "ADDRESS2",
-        "CITY",
-        "COUNTRY",
-        "FIRSTNAME",
-        "ID",
-        "LASTNAME",
-        "POSTALCODE",
-        "STATE",
-    };
+                                                "ADDRESS1",
+                                                "ADDRESS2",
+                                                "CITY",
+                                                "COUNTRY",
+                                                "FIRSTNAME",
+                                                "ID",
+                                                "LASTNAME",
+                                                "POSTALCODE",
+                                                "STATE", };
     final String[] sortedNatural = new String[] {
-        "ID",
-        "FIRSTNAME",
-        "LASTNAME",
-        "ADDRESS1",
-        "ADDRESS2",
-        "CITY",
-        "STATE",
-        "POSTALCODE",
-        "COUNTRY",
-    };
+                                                  "ID",
+                                                  "FIRSTNAME",
+                                                  "LASTNAME",
+                                                  "ADDRESS1",
+                                                  "ADDRESS2",
+                                                  "CITY",
+                                                  "STATE",
+                                                  "POSTALCODE",
+                                                  "COUNTRY", };
     checkColumnSort("AUTHORS", sortedAlpha, true);
     checkColumnSort("AUTHORS", sortedNatural, false);
 
@@ -78,12 +76,8 @@ public class SortingTest
     throws Exception
   {
 
-    final String[] sortedAlpha = new String[] {
-        "FK_Y_BOOK", "FK_Z_AUTHOR",
-    };
-    final String[] sortedNatural = new String[] {
-        "FK_Z_AUTHOR", "FK_Y_BOOK",
-    };
+    final String[] sortedAlpha = new String[] { "FK_Y_BOOK", "FK_Z_AUTHOR", };
+    final String[] sortedNatural = new String[] { "FK_Z_AUTHOR", "FK_Y_BOOK", };
     checkFkSort("BOOKAUTHORS", sortedAlpha, true);
     checkFkSort("BOOKAUTHORS", sortedNatural, false);
 
@@ -95,11 +89,13 @@ public class SortingTest
   {
 
     final String[] sortedAlpha = new String[] {
-        "IDX_A_AUTHORS", "IDX_B_AUTHORS", "SYS_IDX_PK_AUTHORS_10097",
-    };
+                                                "IDX_A_AUTHORS",
+                                                "IDX_B_AUTHORS",
+                                                "SYS_IDX_PK_AUTHORS_10097", };
     final String[] sortedNatural = new String[] {
-        "SYS_IDX_PK_AUTHORS_10097", "IDX_B_AUTHORS", "IDX_A_AUTHORS",
-    };
+                                                  "SYS_IDX_PK_AUTHORS_10097",
+                                                  "IDX_B_AUTHORS",
+                                                  "IDX_A_AUTHORS", };
     checkIndexSort("AUTHORS", sortedAlpha, true);
     checkIndexSort("AUTHORS", sortedNatural, false);
 
@@ -109,7 +105,7 @@ public class SortingTest
   private void checkColumnSort(final String tableName,
                                final String[] expectedValues,
                                final boolean sortAlphabetically)
-    throws Exception
+                                 throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -141,7 +137,7 @@ public class SortingTest
   private void checkFkSort(final String tableName,
                            final String[] expectedValues,
                            final boolean sortAlphabetically)
-    throws Exception
+                             throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -176,7 +172,7 @@ public class SortingTest
   private void checkIndexSort(final String tableName,
                               final String[] expectedValues,
                               final boolean sortAlphabetically)
-    throws Exception
+                                throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -198,8 +194,8 @@ public class SortingTest
         {
           final Index index = indexes[i];
           assertEquals("Indexes not "
-                           + (sortAlphabetically? "alphabetically": "naturally")
-                           + " sorted  for table " + table,
+                       + (sortAlphabetically? "alphabetically": "naturally")
+                       + " sorted  for table " + table,
                        expectedValues[i],
                        index.getName());
         }

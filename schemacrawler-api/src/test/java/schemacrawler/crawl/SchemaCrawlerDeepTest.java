@@ -51,17 +51,19 @@ public class SchemaCrawlerDeepTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
 
     final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
-    assertTrue("Should not find any tables", catalog.getTables(systemSchema)
-      .size() == 0);
+    assertTrue("Should not find any tables",
+               catalog.getTables(systemSchema).size() == 0);
     assertEquals("Could not find all routines",
                  10,
                  catalog.getRoutines(systemSchema).size());
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Could not find any tables", 6, catalog.getTables(schema)
-      .size());
-    assertEquals("Wrong number of routines", 4, catalog.getRoutines(schema)
-      .size());
+    assertEquals("Could not find any tables",
+                 6,
+                 catalog.getTables(schema).size());
+    assertEquals("Wrong number of routines",
+                 4,
+                 catalog.getRoutines(schema).size());
 
     // Try negative test
     final Table table0 = (Table) catalog.getTables(schema).toArray()[0];

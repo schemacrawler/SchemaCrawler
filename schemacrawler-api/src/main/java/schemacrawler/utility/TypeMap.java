@@ -32,9 +32,9 @@ import java.util.logging.Logger;
 import sf.util.Utility;
 
 /**
- * The default mappings are from the JDBC Specification 4.1, Appendix B - Data
- * Type Conversion Tables, Table B-3 - Mapping from JDBC Types to Java Object
- * Types. A JDBC driver may override these default mappings.
+ * The default mappings are from the JDBC Specification 4.1, Appendix B
+ * - Data Type Conversion Tables, Table B-3 - Mapping from JDBC Types to
+ * Java Object Types. A JDBC driver may override these default mappings.
  */
 public final class TypeMap
   implements Map<String, Class<?>>
@@ -115,7 +115,8 @@ public final class TypeMap
         // would throw SQLException, but the Sybase Adaptive
         // Server driver throws UnimplementedOperationException
         LOGGER.log(Level.WARNING,
-                   "Could not obtain data type map from connection", e);
+                   "Could not obtain data type map from connection",
+                   e);
       }
     }
 
@@ -166,9 +167,9 @@ public final class TypeMap
   }
 
   /**
-   * Gets the Java type mapping for a data type. If no mapping exists, returns
-   * null. If a class name is passed in, it overrides the mapping in the type
-   * map.
+   * Gets the Java type mapping for a data type. If no mapping exists,
+   * returns null. If a class name is passed in, it overrides the
+   * mapping in the type map.
    *
    * @param typeName
    *        Type name to find a mapping for.

@@ -122,7 +122,8 @@ final class LintJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER.log(Level.FINER, "Error outputting Lint: " + e.getMessage(),
+          LOGGER.log(Level.FINER,
+                     "Error outputting Lint: " + e.getMessage(),
                      e);
         }
       }

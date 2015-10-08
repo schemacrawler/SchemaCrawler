@@ -40,8 +40,8 @@ public interface SchemaTraversalHandler
    * @param routine
    *        Routine metadata.
    */
-    void handle(final Routine routine)
-      throws SchemaCrawlerException;
+  void handle(final Routine routine)
+    throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
@@ -49,8 +49,8 @@ public interface SchemaTraversalHandler
    * @param sequence
    *        Sequence metadata.
    */
-    void handle(final Sequence sequence)
-      throws SchemaCrawlerException;
+  void handle(final Sequence sequence)
+    throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
@@ -58,8 +58,8 @@ public interface SchemaTraversalHandler
    * @param synonym
    *        Synonym metadata.
    */
-    void handle(final Synonym synonym)
-      throws SchemaCrawlerException;
+  void handle(final Synonym synonym)
+    throws SchemaCrawlerException;
 
   /**
    * Provides information on the database schema.
@@ -67,8 +67,8 @@ public interface SchemaTraversalHandler
    * @param table
    *        Table metadata.
    */
-    void handle(final Table table)
-      throws SchemaCrawlerException;
+  void handle(final Table table)
+    throws SchemaCrawlerException;
 
   void handleColumnDataTypesEnd()
     throws SchemaCrawlerException;

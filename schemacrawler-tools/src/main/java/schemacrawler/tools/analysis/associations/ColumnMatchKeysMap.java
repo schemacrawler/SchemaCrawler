@@ -21,9 +21,9 @@
 package schemacrawler.tools.analysis.associations;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;

@@ -29,7 +29,7 @@ class ExecutableCommandProvider
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
-    throws SchemaCrawlerException
+                                             throws SchemaCrawlerException
   {
 
     Class<? extends Executable> commandExecutableClass;
@@ -51,21 +51,19 @@ class ExecutableCommandProvider
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.FINE, "Could not instantiate " + executableClassName
+      LOGGER.log(Level.FINE,
+                 "Could not instantiate " + executableClassName
                              + " using the default constructor");
       try
       {
         final Constructor<? extends Executable> constructor = commandExecutableClass
-          .getConstructor(new Class[] {
-            String.class
-          });
+          .getConstructor(new Class[] { String.class });
         executable = constructor.newInstance(command);
       }
       catch (final Exception e1)
       {
         throw new SchemaCrawlerException("Could not instantiate executable for command '"
-                                             + command + "'",
-                                         e1);
+                                         + command + "'", e1);
       }
     }
 

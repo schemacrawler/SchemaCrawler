@@ -22,8 +22,8 @@ package schemacrawler.tools.lint;
 
 public enum LintSeverity
 {
-  low,
-  medium,
-  high,
-  critical,;
+ low,
+ medium,
+ high,
+ critical,;
 }

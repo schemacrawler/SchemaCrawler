@@ -38,63 +38,64 @@ public interface Column
    *
    * @return Default data value for the column
    */
-    String getDefaultValue();
+  String getDefaultValue();
 
   /**
    * Gets the list of privileges for the table.
    *
    * @return Privileges for the table
    */
-    Collection<Privilege<Column>> getPrivileges();
+  Collection<Privilege<Column>> getPrivileges();
 
   /**
-   * Referenced column if this column is part of a foreign key, null otherwise.
+   * Referenced column if this column is part of a foreign key, null
+   * otherwise.
    *
    * @return Referenced column
    */
-    Column getReferencedColumn();
+  Column getReferencedColumn();
 
   /**
    * True if this column is auto-incremented.
    *
    * @return If the column is auto-incremented
    */
-    boolean isAutoIncremented();
+  boolean isAutoIncremented();
 
   /**
    * True if this column is a generated column.
    *
    * @return If the column is a generated column
    */
-    boolean isGenerated();
+  boolean isGenerated();
 
   /**
    * True if this column is part of a foreign key.
    *
    * @return If the column is part of a foreign key
    */
-    boolean isPartOfForeignKey();
+  boolean isPartOfForeignKey();
 
   /**
    * True if this column is part of an index.
    *
    * @return If the column is part of an index
    */
-    boolean isPartOfIndex();
+  boolean isPartOfIndex();
 
   /**
    * True if this column is a part of primary key.
    *
    * @return If the column is a part of primary key
    */
-    boolean isPartOfPrimaryKey();
+  boolean isPartOfPrimaryKey();
 
   /**
    * True if this column is part of an unique index.
    *
    * @return If the column is part of an unique index
    */
-    boolean isPartOfUniqueIndex();
+  boolean isPartOfUniqueIndex();
 
   /**
    * Gets a privilege by unqualified name.
@@ -103,6 +104,6 @@ public interface Column
    *        Unqualified name
    * @return Privilege.
    */
-    Optional<? extends Privilege<Column>> lookupPrivilege(String name);
+  Optional<? extends Privilege<Column>> lookupPrivilege(String name);
 
 }

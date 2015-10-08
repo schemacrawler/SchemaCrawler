@@ -36,8 +36,27 @@ public class ScriptingTest
   public void executableGroovy()
     throws Exception
   {
-    executeExecutable(createScriptExecutable(), "/plaintextschema.groovy",
+    executeExecutable(createScriptExecutable(),
+                      "/plaintextschema.groovy",
                       "script_output.txt");
+  }
+
+  @Test
+  public void executablePython()
+    throws Exception
+  {
+    executeExecutable(createScriptExecutable(),
+                      "/plaintextschema.py",
+                      "script_output.txt");
+  }
+
+  @Test
+  public void executableRuby()
+    throws Exception
+  {
+    executeExecutable(createScriptExecutable(),
+                      "/plaintextschema.rb",
+                      "script_output_rb.txt");
   }
 
   private ScriptExecutable createScriptExecutable()
@@ -49,22 +68,6 @@ public class ScriptingTest
     final ScriptExecutable scriptExecutable = new ScriptExecutable();
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return scriptExecutable;
-  }
-
-  @Test
-  public void executablePython()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(), "/plaintextschema.py",
-                      "script_output.txt");
-  }
-
-  @Test
-  public void executableRuby()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(), "/plaintextschema.rb",
-                      "script_output_rb.txt");
   }
 
 }

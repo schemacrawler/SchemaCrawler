@@ -20,8 +20,6 @@
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +30,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -94,9 +94,8 @@ public class LinterTableWithIncrementingColumns
     }
   }
 
-  private void
-    addIncrementingColumnsLints(final Table table,
-                                final List<IncrementingColumn> incrementingColumnsList)
+  private void addIncrementingColumnsLints(final Table table,
+                                           final List<IncrementingColumn> incrementingColumnsList)
   {
 
     int minIncrement = Integer.MAX_VALUE;
@@ -122,7 +121,8 @@ public class LinterTableWithIncrementingColumns
     // Check for increments that are not consecutive
     if (maxIncrement - minIncrement + 1 != incrementingColumnsList.size())
     {
-      addTableLint(table, "incrementing columns are not consecutive",
+      addTableLint(table,
+                   "incrementing columns are not consecutive",
                    incrementingColumns);
     }
 
@@ -144,8 +144,7 @@ public class LinterTableWithIncrementingColumns
 
   }
 
-  private Multimap<String, IncrementingColumn>
-    findIncrementingColumns(final List<Column> columns)
+  private Multimap<String, IncrementingColumn> findIncrementingColumns(final List<Column> columns)
   {
     if (columns == null || columns.size() <= 1)
     {

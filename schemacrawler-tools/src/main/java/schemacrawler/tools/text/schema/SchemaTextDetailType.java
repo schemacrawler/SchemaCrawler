@@ -26,8 +26,8 @@ package schemacrawler.tools.text.schema;
  */
 public enum SchemaTextDetailType
 {
-  brief,
-  schema,
-  details,
-  list,
+ brief,
+ schema,
+ details,
+ list,
 }

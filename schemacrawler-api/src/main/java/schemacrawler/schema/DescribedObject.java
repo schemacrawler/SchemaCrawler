@@ -29,13 +29,13 @@ public interface DescribedObject
    *
    * @return Remarks
    */
-    String getRemarks();
+  String getRemarks();
 
   /**
    * Whether remarks are available.
    *
    * @return Remarks
    */
-    boolean hasRemarks();
+  boolean hasRemarks();
 
 }

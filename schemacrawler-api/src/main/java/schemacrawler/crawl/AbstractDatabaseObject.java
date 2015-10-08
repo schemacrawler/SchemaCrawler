@@ -21,8 +21,9 @@
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -78,7 +79,8 @@ abstract class AbstractDatabaseObject
         }
         catch (final Exception e)
         {
-          // Ignore, since getType() may not be implemented by partial database
+          // Ignore, since getType() may not be implemented by partial
+          // database
           // objects
         }
       }

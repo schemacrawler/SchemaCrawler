@@ -53,9 +53,9 @@ public class SiteGraphVariations
   public static void setupDirectory()
     throws IOException, URISyntaxException
   {
-    final Path codePath = Paths
-      .get(SiteGraphVariations.class.getProtectionDomain().getCodeSource()
-        .getLocation().toURI()).normalize().toAbsolutePath();
+    final Path codePath = Paths.get(SiteGraphVariations.class
+      .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
+      .toAbsolutePath();
     directory = codePath
       .resolve("../../../schemacrawler-site/src/site/resources/images")
       .normalize().toAbsolutePath();
@@ -195,7 +195,7 @@ public class SiteGraphVariations
   private void run(final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-    throws Exception
+                     throws Exception
   {
     deleteIfExists(outputFile);
 

@@ -21,7 +21,6 @@
 package schemacrawler.tools.options;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -33,6 +32,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
@@ -285,7 +286,7 @@ public class OutputOptions
     throws IOException
   {
     return obtainOutputResource().openNewOutputWriter(getOutputCharset(),
-                                                   appendOutput);
+                                                      appendOutput);
   }
 
   /**
