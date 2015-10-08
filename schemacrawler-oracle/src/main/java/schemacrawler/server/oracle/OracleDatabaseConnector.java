@@ -41,10 +41,10 @@ public final class OracleDatabaseConnector
     }
 
     @Override
-    public Executable newPreExecutable()
+    public Executable newExecutable(final String command)
       throws SchemaCrawlerException
     {
-      return new OraclePreExecutable();
+      return new OracleExecutable(command);
     }
   }
 

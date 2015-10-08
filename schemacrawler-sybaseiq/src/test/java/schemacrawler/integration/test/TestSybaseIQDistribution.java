@@ -41,27 +41,6 @@ public class TestSybaseIQDistribution
   }
 
   @Test
-  public void testPostExecutable()
-    throws Exception
-  {
-    final Executable newPostExecutable = databaseSystemConnector
-      .newPostExecutable();
-    assertNotNull(newPostExecutable);
-    assertEquals("NoOpExecutable",
-                 newPostExecutable.getClass().getSimpleName());
-  }
-
-  @Test
-  public void testPreExecutable()
-    throws Exception
-  {
-    final Executable newPreExecutable = databaseSystemConnector
-      .newPreExecutable();
-    assertNotNull(newPreExecutable);
-    assertEquals("NoOpExecutable", newPreExecutable.getClass().getSimpleName());
-  }
-
-  @Test
   public void testSupports()
     throws Exception
   {

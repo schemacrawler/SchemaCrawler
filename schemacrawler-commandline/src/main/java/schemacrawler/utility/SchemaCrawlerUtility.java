@@ -21,11 +21,12 @@
 package schemacrawler.utility;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
