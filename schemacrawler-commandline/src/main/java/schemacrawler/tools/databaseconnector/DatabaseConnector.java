@@ -24,6 +24,14 @@ import static sf.util.Utility.isBlank;
 
 import static java.util.Objects.requireNonNull;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public abstract class DatabaseConnector
@@ -36,24 +44,8 @@ public abstract class DatabaseConnector
 
   private final DatabaseServerType dbServerType;
   private final String connectionHelpResource;
-
-  private final DatabaseSystemConnector dbSystemConnector;
-
-  protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final String connectionHelpResource,
-                              final DatabaseSystemConnector dbSystemConnector)
-  {
-    this.dbServerType = requireNonNull(dbServerType,
-                                       "No database server type provided");
-
-    if (isBlank(connectionHelpResource))
-    {
-      throw new IllegalArgumentException("No connection help resource provided");
-    }
-    this.connectionHelpResource = connectionHelpResource;
-
-    this.dbSystemConnector = dbSystemConnector;
-  }
+  private final String configResource;
+  private final String informationSchemaViewsResourceFolder;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final String connectionHelpResource,
@@ -69,9 +61,8 @@ public abstract class DatabaseConnector
     }
     this.connectionHelpResource = connectionHelpResource;
 
-    dbSystemConnector = new DatabaseSystemConnector(dbServerType,
-                                                    configResource,
-                                                    informationSchemaViewsResourceFolder);
+    this.configResource = configResource;
+    this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
 
   }
 
@@ -79,7 +70,33 @@ public abstract class DatabaseConnector
   {
     dbServerType = DatabaseServerType.UNKNOWN;
     connectionHelpResource = null;
-    dbSystemConnector = DatabaseSystemConnector.UNKNOWN;
+    configResource = null;
+    informationSchemaViewsResourceFolder = null;
+  }
+
+  /**
+   * Checks if the database connection options are valid, the JDBC driver class
+   * can be loaded, and so on. Throws an exception if there is a problem.
+   *
+   * @throws SchemaCrawlerException
+   *         If there is a problem with creating connection options.
+   */
+  public void checkDatabaseConnectionOptions()
+    throws SchemaCrawlerException
+  {
+    final Config additionalConfig = new Config();
+    additionalConfig.put("user", "fake");
+    newDatabaseConnectionOptions(additionalConfig);
+  }
+
+  /**
+   * Gets the complete bundled database configuration set. This is useful in
+   * building the SchemaCrawler options.
+   */
+  public final Config getConfig()
+  {
+    final Config config = Config.loadResource(configResource);
+    return config;
   }
 
   public String getConnectionHelpResource()
@@ -92,9 +109,56 @@ public abstract class DatabaseConnector
     return dbServerType;
   }
 
-  public DatabaseSystemConnector getDatabaseSystemConnector()
+  /**
+   * Gets the complete bundled database specific configuration set, including
+   * the SQL for information schema views.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder
+    getDatabaseSpecificOverrideOptionsBuilder()
   {
-    return dbSystemConnector;
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
+      .fromResourceFolder(informationSchemaViewsResourceFolder);
+
+    return databaseSpecificOverrideOptionsBuilder;
+  }
+
+  /**
+   * Creates a datasource for connecting to a database. Additional connection
+   * options are provided, from the command-line, and configuration file.
+   *
+   * @param additionalConfig
+   *        Configuration from the command-line, and from configuration files.
+   */
+  public ConnectionOptions
+    newDatabaseConnectionOptions(final Config additionalConfig)
+      throws SchemaCrawlerException
+  {
+    if (additionalConfig == null || additionalConfig.isEmpty())
+    {
+      throw new IllegalArgumentException("No connection configuration provided");
+    }
+
+    final Config config = getConfig();
+    config.putAll(additionalConfig);
+
+    final ConnectionOptions connectionOptions;
+    if (dbServerType.isUnknownDatabaseSystem())
+    {
+      connectionOptions = new DatabaseConnectionOptions(config);
+    }
+    else
+    {
+      connectionOptions = new DatabaseConfigConnectionOptions(config);
+    }
+
+    return connectionOptions;
+  }
+
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new SchemaCrawlerExecutable(command);
   }
 
 }

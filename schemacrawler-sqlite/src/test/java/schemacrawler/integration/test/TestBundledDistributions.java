@@ -20,7 +20,7 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("sqlite");
     assertEquals(2,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                 databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
   }

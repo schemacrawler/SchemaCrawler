@@ -36,7 +36,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 
 /**
  * SchemaCrawler utility methods.
@@ -61,9 +60,7 @@ public final class SchemaCrawlerUtility
     requireNonNull(dbConnector,
                    "No database specific override options provided");
 
-    final DatabaseSystemConnector dbSystemConnector = dbConnector
-      .getDatabaseSystemConnector();
-    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbSystemConnector
+    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
     checkConnection(connection);
     requireNonNull(dbSpecificOverrideOptions,

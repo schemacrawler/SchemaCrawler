@@ -72,8 +72,7 @@ public final class DatabaseConnectorRegistry
                                    + "="
                                    + databaseConnector.getClass().getName());
           // Validate that the JDBC driver is available
-          databaseConnector.getDatabaseSystemConnector()
-            .checkDatabaseConnectionOptions();
+          databaseConnector.checkDatabaseConnectionOptions();
           // Put in map
           databaseConnectorRegistry.put(databaseSystemIdentifier,
                                         databaseConnector);

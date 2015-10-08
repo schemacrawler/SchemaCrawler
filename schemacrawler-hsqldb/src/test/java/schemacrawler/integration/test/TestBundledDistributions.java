@@ -22,7 +22,7 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("hsqldb");
     assertEquals(8,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                 databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
   }

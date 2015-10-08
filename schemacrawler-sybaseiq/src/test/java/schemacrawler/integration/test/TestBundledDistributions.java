@@ -17,12 +17,10 @@ public class TestBundledDistributions
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
+    final DatabaseConnector dbConnector = registry
       .lookupDatabaseSystemIdentifier("sybaseiq");
-    assertEquals(1,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
-                   .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-                   .getInformationSchemaViews().size());
+    assertEquals(1, dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().getInformationSchemaViews().size());
   }
 
   @Test
