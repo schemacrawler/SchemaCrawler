@@ -29,10 +29,11 @@ public final class DB2DatabaseConnector
 
   public DB2DatabaseConnector()
   {
-    super(new DatabaseServerType("db2", "IBM DB2", "jdbc:db2:"),
+    super(new DatabaseServerType("db2", "IBM DB2"),
           "/help/Connections.db2.txt",
           "/schemacrawler-db2.config.properties",
-          "/db2.information_schema");
+          "/db2.information_schema",
+          "jdbc:db2:.*");
   }
 
 }

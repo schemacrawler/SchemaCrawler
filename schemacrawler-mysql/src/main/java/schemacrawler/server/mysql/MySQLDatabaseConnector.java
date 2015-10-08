@@ -29,10 +29,11 @@ public final class MySQLDatabaseConnector
 
   public MySQLDatabaseConnector()
   {
-    super(new DatabaseServerType("mysql", "MySQL", "jdbc:mysql:"),
+    super(new DatabaseServerType("mysql", "MySQL"),
           "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
-          "/mysql.information_schema");
+          "/mysql.information_schema",
+          "jdbc:mysql:.*");
   }
 
 }

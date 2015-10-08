@@ -30,10 +30,11 @@ public final class SybaseIQDatabaseConnector
 
   public SybaseIQDatabaseConnector()
   {
-    super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ", "jdbc:sybase:"),
+    super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),
           "/help/Connections.sybaseiq.txt",
           "/schemacrawler-sybaseiq.config.properties",
-          "/sybaseiq.information_schema");
+          "/sybaseiq.information_schema",
+          "jdbc:sybase:.*");
   }
 
   @Override

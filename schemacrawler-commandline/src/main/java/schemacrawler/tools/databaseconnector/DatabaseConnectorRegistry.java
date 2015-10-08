@@ -133,15 +133,13 @@ public final class DatabaseConnectorRegistry
     for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
       .values())
     {
-      final DatabaseServerType databaseServerType = databaseConnector
-        .getDatabaseServerType();
-      if (databaseServerType.isUnknownDatabaseSystem())
+      if (databaseConnector.getDatabaseServerType().isUnknownDatabaseSystem())
       {
         continue;
       }
       try
       {
-        if (databaseServerType.isConnectionForConnector(connection))
+        if (databaseConnector.isConnectionForConnector(connection))
         {
           return databaseConnector;
         }
