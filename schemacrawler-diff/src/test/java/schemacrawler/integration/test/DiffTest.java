@@ -79,7 +79,7 @@ public class DiffTest
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
-      .getDatabaseSystemConnector().newDatabaseConnectionOptions(config);
+      .newDatabaseConnectionOptions(config);
 
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);

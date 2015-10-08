@@ -20,7 +20,7 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("sqlserver");
     assertEquals(8,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                 databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
   }

@@ -20,7 +20,7 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseSystemIdentifier("derby");
     assertEquals(1,
-                 databaseSystemIdentifier.getDatabaseSystemConnector()
+                 databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
   }

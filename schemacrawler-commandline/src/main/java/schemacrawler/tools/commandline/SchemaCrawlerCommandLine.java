@@ -31,7 +31,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
@@ -52,9 +52,9 @@ public final class SchemaCrawlerCommandLine
   private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
-  private final DatabaseSystemConnector dbSystemConnector;
+  private final DatabaseConnector dbConnector;
 
-  public SchemaCrawlerCommandLine(final DatabaseSystemConnector dbSystemConnector,
+  public SchemaCrawlerCommandLine(final DatabaseConnector dbConnector,
                                   final String... args)
                                     throws SchemaCrawlerException
   {
@@ -62,12 +62,12 @@ public final class SchemaCrawlerCommandLine
     {
       throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
     }
-    requireNonNull(dbSystemConnector, "No database connector provided");
+    requireNonNull(dbConnector, "No database connector provided");
 
-    this.dbSystemConnector = dbSystemConnector;
+    this.dbConnector = dbConnector;
 
     config = new Config();
-    loadConfig(dbSystemConnector, args);
+    loadConfig(dbConnector, args);
 
     final CommandParser commandParser = new CommandParser(config);
     command = commandParser.getOptions().toString();
@@ -81,14 +81,14 @@ public final class SchemaCrawlerCommandLine
     final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
     additionalConfigOptionsParser.loadConfig();
 
-    parseConnectionOptions(dbSystemConnector.getDatabaseServerType());
+    parseConnectionOptions(dbConnector.getDatabaseServerType());
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    connectionOptions = dbSystemConnector.newDatabaseConnectionOptions(config);
+    connectionOptions = dbConnector.newDatabaseConnectionOptions(config);
 
     // Get partially built database specific options, built from the classpath
     // resources, and then override from config loaded in from command-line
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbSystemConnector
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.fromConfig(config);
     databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
@@ -104,7 +104,7 @@ public final class SchemaCrawlerCommandLine
       throw new SchemaCrawlerException("No connection options provided");
     }
 
-    final Executable executable = dbSystemConnector.newExecutable(command);
+    final Executable executable = dbConnector.newExecutable(command);
     // Configure
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -144,14 +144,14 @@ public final class SchemaCrawlerCommandLine
   /**
    * Loads configuration from a number of sources, in order of priority.
    */
-  private void loadConfig(final DatabaseSystemConnector dbSystemConnector,
+  private void loadConfig(final DatabaseConnector dbConnector,
                           final String[] args)
                             throws SchemaCrawlerException
   {
     final Config optionsMap = CommandLineUtility.loadConfig(args);
 
     // 1. Get bundled database config
-    config.putAll(dbSystemConnector.getConfig());
+    config.putAll(dbConnector.getConfig());
 
     // 2. Load config from files, in place
     config.putAll(optionsMap);
