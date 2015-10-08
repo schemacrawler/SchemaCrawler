@@ -88,8 +88,8 @@ public final class Main
       }
       else
       {
-        commandLine = new SchemaCrawlerCommandLine(dbConnector
-          .getDatabaseSystemConnector(), flattenCommandlineArgs(config));
+        commandLine = new SchemaCrawlerCommandLine(dbConnector,
+                                                   flattenCommandlineArgs(config));
       }
       commandLine.execute();
     }

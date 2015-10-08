@@ -22,7 +22,6 @@ package schemacrawler.tools.offline;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.DatabaseServerType;
 
@@ -30,33 +29,18 @@ public final class OfflineDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final class OfflineDatabaseSystemConnector
-    extends DatabaseSystemConnector
-  {
-    private OfflineDatabaseSystemConnector(final String configResource,
-                                           final String informationSchemaViewsResourceFolder)
-    {
-      super(OFFLINE_SERVER_TYPE, configResource,
-            informationSchemaViewsResourceFolder);
-    }
-
-    @Override
-    public Executable newExecutable(final String command)
-      throws SchemaCrawlerException
-    {
-      return new OfflineSnapshotExecutable(command);
-    }
-  }
-
-  private static final DatabaseServerType OFFLINE_SERVER_TYPE = new DatabaseServerType("offline",
-                                                                                       "Offline",
-                                                                                       "jdbc:offline:");
-
   public OfflineDatabaseConnector()
   {
-    super(OFFLINE_SERVER_TYPE, "/help/Connections.offline.txt",
-          new OfflineDatabaseSystemConnector("/schemacrawler-offline.config.properties",
-                                             null));
+    super(new DatabaseServerType("offline", "Offline", "jdbc:offline:"),
+          "/help/Connections.offline.txt",
+          "/schemacrawler-offline.config.properties", null);
+  }
+
+  @Override
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new OfflineSnapshotExecutable(command);
   }
 
 }

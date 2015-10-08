@@ -2,7 +2,6 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -11,48 +10,38 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
-import schemacrawler.tools.executable.Executable;
 
 public class TestSybaseIQDistribution
 {
 
-  private DatabaseSystemConnector databaseSystemConnector;
+  private DatabaseConnector dbConnector;
 
   @Before
   public void setup()
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseSystemIdentifier("sybaseiq");
-    databaseSystemConnector = databaseSystemIdentifier
-      .getDatabaseSystemConnector();
+    dbConnector = registry.lookupDatabaseSystemIdentifier("sybaseiq");
   }
 
   @Test
   public void testIdentifierQuoteString()
     throws Exception
   {
-    assertEquals("",
-                 databaseSystemConnector
-                   .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-                   .getIdentifierQuoteString());
+    assertEquals("", dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().getIdentifierQuoteString());
   }
 
   @Test
   public void testSupports()
     throws Exception
   {
-    assertTrue(databaseSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-      .hasOverrideForSupportsCatalogs());
-    assertTrue(!databaseSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-      .isSupportsCatalogs());
-    assertTrue(!databaseSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-      .hasOverrideForSupportsSchemas());
+    assertTrue(dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().hasOverrideForSupportsCatalogs());
+    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().isSupportsCatalogs());
+    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+      .toOptions().hasOverrideForSupportsSchemas());
   }
 
 }

@@ -25,66 +25,49 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
 import schemacrawler.tools.options.DatabaseServerType;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final DatabaseServerType SQLITE_SERVER_TYPE = new DatabaseServerType("sqlite",
-                                                                                      "SQLite",
-                                                                                      "jdbc:sqlite:");
-
-  private static final class SQLiteDatabaseSystemConnector
-    extends DatabaseSystemConnector
-  {
-    private SQLiteDatabaseSystemConnector(final String configResource,
-                                          final String informationSchemaViewsResourceFolder)
-    {
-      super(SQLITE_SERVER_TYPE, configResource,
-            informationSchemaViewsResourceFolder);
-    }
-
-    @Override
-    public DatabaseSpecificOverrideOptionsBuilder
-      getDatabaseSpecificOverrideOptionsBuilder()
-    {
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
-      databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
-      return databaseSpecificOverrideOptionsBuilder;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see schemacrawler.tools.databaseconnector.DatabaseSystemConnector#newDatabaseConnectionOptions(schemacrawler.schemacrawler.Config)
-     */
-    @Override
-    public ConnectionOptions
-      newDatabaseConnectionOptions(Config additionalConfig)
-        throws SchemaCrawlerException
-    {
-      try
-      {
-        Class.forName("org.sqlite.JDBC");
-      }
-      catch (final ClassNotFoundException e)
-      {
-        throw new SchemaCrawlerException("Could not load SQLite JDBC driver",
-                                         e);
-      }
-
-      return super.newDatabaseConnectionOptions(additionalConfig);
-    }
-
-  }
-
   public SQLiteDatabaseConnector()
   {
-    super(SQLITE_SERVER_TYPE, "/help/Connections.sqlite.txt",
-          new SQLiteDatabaseSystemConnector("/schemacrawler-sqlite.config.properties",
-                                            "/sqlite.information_schema"));
+    super(new DatabaseServerType("sqlite", "SQLite", "jdbc:sqlite:"),
+          "/help/Connections.sqlite.txt",
+          "/schemacrawler-sqlite.config.properties",
+          "/sqlite.information_schema");
+  }
+
+  @Override
+  public DatabaseSpecificOverrideOptionsBuilder
+    getDatabaseSpecificOverrideOptionsBuilder()
+  {
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
+    return databaseSpecificOverrideOptionsBuilder;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.tools.databaseconnector.DatabaseSystemConnector#newDatabaseConnectionOptions(schemacrawler.schemacrawler.Config)
+   */
+  @Override
+  public ConnectionOptions
+    newDatabaseConnectionOptions(final Config additionalConfig)
+      throws SchemaCrawlerException
+  {
+    try
+    {
+      Class.forName("org.sqlite.JDBC");
+    }
+    catch (final ClassNotFoundException e)
+    {
+      throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
+    }
+
+    return super.newDatabaseConnectionOptions(additionalConfig);
   }
 
 }

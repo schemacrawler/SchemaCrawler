@@ -5,7 +5,6 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
@@ -23,6 +22,8 @@ import java.util.Properties;
 
 import org.junit.Test;
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -33,7 +34,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.databaseconnector.DatabaseSystemConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -85,8 +86,7 @@ public class TestHsqldbCommandline
     throws Exception
   {
 
-    final DatabaseSystemConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector()
-      .getDatabaseSystemConnector();
+    final DatabaseConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector();
 
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = hsqldbSystemConnector
       .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
