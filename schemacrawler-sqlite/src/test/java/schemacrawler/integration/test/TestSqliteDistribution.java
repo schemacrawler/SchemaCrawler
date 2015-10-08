@@ -38,8 +38,9 @@ public class TestSqliteDistribution
   public void testIdentifierQuoteString()
     throws Exception
   {
-    assertEquals("\"", dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().getIdentifierQuoteString());
+    assertEquals("\"",
+                 dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+                   .toOptions().getIdentifierQuoteString());
   }
 
   @Test

@@ -39,8 +39,8 @@ public class DerbyTest
     assertNotNull(dataSource);
     final Connection connection = getConnection();
     assertNotNull(connection);
-    assertEquals("org.apache.derby.impl.jdbc.EmbedConnection", connection
-      .getClass().getName());
+    assertEquals("org.apache.derby.impl.jdbc.EmbedConnection",
+                 connection.getClass().getName());
   }
 
   @Test

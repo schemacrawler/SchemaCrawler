@@ -17,7 +17,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 public class TestSqlServerCatalog
 {
 
-  public static void main(String[] args)
+  public static void main(final String[] args)
     throws Exception
   {
     final DataSource dataSource = new DatabaseConnectionOptions("jdbc:jtds:sqlserver://scsqlserver.cdf972bn8znp.us-east-1.rds.amazonaws.com:1433/SCHEMACRAWLER");
