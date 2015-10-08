@@ -39,8 +39,8 @@ public class HsqldbTest
     assertNotNull(dataSource);
     final Connection connection = getConnection();
     assertNotNull(connection);
-    assertEquals("org.hsqldb.jdbc.JDBCConnection", connection.getClass()
-      .getName());
+    assertEquals("org.hsqldb.jdbc.JDBCConnection",
+                 connection.getClass().getName());
   }
 
   @Test

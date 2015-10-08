@@ -1,8 +1,6 @@
 package schemacrawler.tools.offline;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.nio.file.Path;
 import java.sql.Array;
 import java.sql.Blob;
@@ -23,6 +21,8 @@ import java.sql.Struct;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
+
+import static java.util.Objects.requireNonNull;
 
 public class OfflineConnection
   implements Connection
@@ -263,10 +263,11 @@ public class OfflineConnection
   }
 
   @Override
-  public CallableStatement
-    prepareCall(final String sql, final int resultSetType,
-                final int resultSetConcurrency, final int resultSetHoldability)
-                  throws SQLException
+  public CallableStatement prepareCall(final String sql,
+                                       final int resultSetType,
+                                       final int resultSetConcurrency,
+                                       final int resultSetHoldability)
+                                         throws SQLException
   {
     throw new SQLFeatureNotSupportedException();
   }

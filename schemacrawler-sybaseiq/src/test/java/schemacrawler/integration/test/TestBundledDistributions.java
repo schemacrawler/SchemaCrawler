@@ -19,8 +19,9 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
       .lookupDatabaseSystemIdentifier("sybaseiq");
-    assertEquals(1, dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().getInformationSchemaViews().size());
+    assertEquals(1,
+                 dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+                   .toOptions().getInformationSchemaViews().size());
   }
 
   @Test

@@ -74,10 +74,9 @@ public class OfflineSnapshotExecutable
   }
 
   @Override
-  public void
-    execute(final Connection connection,
-            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-              throws Exception
+  public void execute(final Connection connection,
+                      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        throws Exception
   {
     checkConnection(connection);
 
