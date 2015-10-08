@@ -29,10 +29,11 @@ public final class DerbyDatabaseConnector
 
   public DerbyDatabaseConnector()
   {
-    super(new DatabaseServerType("derby", "Apache Derby", "jdbc:derby:"),
+    super(new DatabaseServerType("derby", "Apache Derby"),
           "/help/Connections.derby.txt",
           "/schemacrawler-derby.config.properties",
-          "/derby.information_schema");
+          "/derby.information_schema",
+          "jdbc:derby:.*");
   }
 
 }

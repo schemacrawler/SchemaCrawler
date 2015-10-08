@@ -29,12 +29,11 @@ public final class SqlServerDatabaseConnector
 
   public SqlServerDatabaseConnector()
   {
-    super(new DatabaseServerType("sqlserver",
-                                 "Microsoft SQL Server",
-                                 "jdbc:jtds:sqlserver:"),
+    super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
           "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
-          "/sqlserver.information_schema");
+          "/sqlserver.information_schema",
+          "jdbc:jtds:sqlserver:.*");
   }
 
 }

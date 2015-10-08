@@ -29,12 +29,11 @@ public final class PostgreSQLDatabaseConnector
 
   public PostgreSQLDatabaseConnector()
   {
-    super(new DatabaseServerType("postgresql",
-                                 "PostgreSQL",
-                                 "jdbc:postgresql:"),
+    super(new DatabaseServerType("postgresql", "PostgreSQL"),
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
-          "/postgresql.information_schema");
+          "/postgresql.information_schema",
+          "jdbc:postgresql:.*");
   }
 
 }

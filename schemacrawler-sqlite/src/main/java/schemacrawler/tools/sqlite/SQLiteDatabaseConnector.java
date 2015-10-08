@@ -33,10 +33,11 @@ public final class SQLiteDatabaseConnector
 
   public SQLiteDatabaseConnector()
   {
-    super(new DatabaseServerType("sqlite", "SQLite", "jdbc:sqlite:"),
+    super(new DatabaseServerType("sqlite", "SQLite"),
           "/help/Connections.sqlite.txt",
           "/schemacrawler-sqlite.config.properties",
-          "/sqlite.information_schema");
+          "/sqlite.information_schema",
+          "jdbc:sqlite:.*");
   }
 
   @Override
