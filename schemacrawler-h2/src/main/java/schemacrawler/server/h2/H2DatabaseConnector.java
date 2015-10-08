@@ -29,10 +29,11 @@ public final class H2DatabaseConnector
 
   public H2DatabaseConnector()
   {
-    super(new DatabaseServerType("h2", "H2 Database Engine", "jdbc:h2:"),
+    super(new DatabaseServerType("h2", "H2 Database Engine"),
           "/help/Connections.h2.txt",
           "/schemacrawler-h2.config.properties",
-          null);
+          null,
+          "jdbc:h2:.*");
   }
 
 }

@@ -29,10 +29,11 @@ public final class HyperSQLDatabaseConnector
 
   public HyperSQLDatabaseConnector()
   {
-    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase", "jdbc:hsqldb:"),
+    super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           "/help/Connections.hsqldb.txt",
           "/schemacrawler-hsqldb.config.properties",
-          "/hsqldb.information_schema");
+          "/hsqldb.information_schema",
+          "jdbc:hsqldb:.*");
   }
 
 }

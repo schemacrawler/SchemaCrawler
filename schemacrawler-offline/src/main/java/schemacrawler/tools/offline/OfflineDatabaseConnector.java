@@ -31,10 +31,11 @@ public final class OfflineDatabaseConnector
 
   public OfflineDatabaseConnector()
   {
-    super(new DatabaseServerType("offline", "Offline", "jdbc:offline:"),
+    super(new DatabaseServerType("offline", "Offline"),
           "/help/Connections.offline.txt",
           "/schemacrawler-offline.config.properties",
-          null);
+          null,
+          "jdbc:offline:.*");
   }
 
   @Override

@@ -31,10 +31,11 @@ public final class OracleDatabaseConnector
 
   public OracleDatabaseConnector()
   {
-    super(new DatabaseServerType("oracle", "Oracle", "jdbc:oracle:"),
+    super(new DatabaseServerType("oracle", "Oracle"),
           "/help/Connections.oracle.txt",
           "/schemacrawler-oracle.config.properties",
-          "/oracle.information_schema");
+          "/oracle.information_schema",
+          "jdbc:oracle:.*");
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
