@@ -37,8 +37,7 @@ public final class SybaseIQDatabaseConnector
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder
-    getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.doesNotSupportCatalogs();

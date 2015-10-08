@@ -40,8 +40,7 @@ public final class SQLiteDatabaseConnector
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder
-    getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
@@ -54,9 +53,8 @@ public final class SQLiteDatabaseConnector
    * @see schemacrawler.tools.databaseconnector.DatabaseSystemConnector#newDatabaseConnectionOptions(schemacrawler.schemacrawler.Config)
    */
   @Override
-  public ConnectionOptions
-    newDatabaseConnectionOptions(final Config additionalConfig)
-      throws SchemaCrawlerException
+  public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
+    throws SchemaCrawlerException
   {
     try
     {

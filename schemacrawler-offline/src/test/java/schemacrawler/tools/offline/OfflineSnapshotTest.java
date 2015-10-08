@@ -150,7 +150,8 @@ public class OfflineSnapshotTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setInputOptions(inputOptions);
 
-    executeExecutable(executable, "text",
+    executeExecutable(executable,
+                      "text",
                       OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
   }
 
@@ -168,7 +169,8 @@ public class OfflineSnapshotTest
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema", 6,
+    assertEquals("Unexpected number of tables in the schema",
+                 6,
                  catalog.getTables(schema).size());
 
     serializedDatabaseFile = createTempFile("schemacrawler", "ser");
@@ -180,7 +182,8 @@ public class OfflineSnapshotTest
                                                                                   false);
     xmlDatabase.save(writer);
     writer.close();
-    assertNotSame("Database was not serialized to XML", 0,
+    assertNotSame("Database was not serialized to XML",
+                  0,
                   size(serializedDatabaseFile));
 
   }
