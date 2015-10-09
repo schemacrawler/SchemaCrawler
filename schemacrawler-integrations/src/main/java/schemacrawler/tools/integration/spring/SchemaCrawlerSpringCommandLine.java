@@ -44,7 +44,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
-import us.fatehi.commandlineparser.CommandLineUtility;
 
 public class SchemaCrawlerSpringCommandLine
   implements CommandLine
@@ -55,14 +54,11 @@ public class SchemaCrawlerSpringCommandLine
 
   private final SpringOptions springOptions;
 
-  public SchemaCrawlerSpringCommandLine(final String[] args)
+  public SchemaCrawlerSpringCommandLine(final Config argsMap)
     throws SchemaCrawlerException
   {
-    requireNonNull(args);
-
-    final Config config = CommandLineUtility.loadConfig(args);
-
-    final SpringOptionsParser springOptionsParser = new SpringOptionsParser(config);
+    requireNonNull(argsMap, "No command-line arguments provided");
+    final SpringOptionsParser springOptionsParser = new SpringOptionsParser(argsMap);
     springOptions = springOptionsParser.getOptions();
   }
 
