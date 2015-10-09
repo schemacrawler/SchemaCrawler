@@ -22,7 +22,7 @@ package schemacrawler.test;
 
 
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
 import java.util.HashMap;

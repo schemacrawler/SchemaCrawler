@@ -18,7 +18,7 @@
  * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package sf.util.commandlineparser;
+package us.fatehi.commandlineparser;
 
 
 import static sf.util.Utility.join;

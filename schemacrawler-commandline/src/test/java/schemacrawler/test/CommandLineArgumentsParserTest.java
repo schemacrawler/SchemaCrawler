@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import sf.util.commandlineparser.CommandLineArgumentsParser;
+import us.fatehi.commandlineparser.CommandLineArgumentsParser;
 
 public class CommandLineArgumentsParserTest
 {

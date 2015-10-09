@@ -1,4 +1,4 @@
-package schemacrawler.tools.offline;
+package schemacrawler.tools.offline.jdbc;
 
 
 import java.nio.file.Path;

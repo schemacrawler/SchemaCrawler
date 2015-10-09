@@ -4,7 +4,7 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
 import java.util.HashMap;
