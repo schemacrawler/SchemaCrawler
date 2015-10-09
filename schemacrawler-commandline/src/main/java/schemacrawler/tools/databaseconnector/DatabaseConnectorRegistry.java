@@ -106,17 +106,6 @@ public final class DatabaseConnectorRegistry
     logRegisteredJdbcDrivers();
   }
 
-  public boolean hasDatabaseSystemIdentifier(final DatabaseServerType databaseServerType)
-  {
-    if (databaseServerType == null
-        || databaseServerType.isUnknownDatabaseSystem())
-    {
-      return false;
-    }
-    return databaseConnectorRegistry
-      .containsKey(databaseServerType.getDatabaseSystemIdentifier());
-  }
-
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)
   {
     return databaseConnectorRegistry.containsKey(databaseSystemIdentifier);
