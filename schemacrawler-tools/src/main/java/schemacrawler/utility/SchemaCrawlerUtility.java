@@ -51,20 +51,7 @@ public final class SchemaCrawlerUtility
   {
     checkConnection(connection);
 
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector dbConnector = registry
-      .lookupDatabaseSystemIdentifier(connection);
-
-    checkConnection(connection);
-    requireNonNull(dbConnector,
-                   "No database specific override options provided");
-
-    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
-    checkConnection(connection);
-    requireNonNull(dbSpecificOverrideOptions,
-                   "No database specific override options provided");
-
+    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = matchDatabaseSpecificOverrideOptions(connection);
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           dbSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
@@ -75,6 +62,22 @@ public final class SchemaCrawlerUtility
   public static ResultsColumns getResultColumns(final ResultSet resultSet)
   {
     return SchemaCrawler.getResultColumns(resultSet);
+  }
+
+  public static DatabaseSpecificOverrideOptions matchDatabaseSpecificOverrideOptions(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    checkConnection(connection);
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnector dbConnector = registry
+      .lookupDatabaseSystemIdentifier(connection);
+    requireNonNull(dbConnector,
+                   "No database specific override options provided");
+    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector
+      .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
+    requireNonNull(dbSpecificOverrideOptions,
+                   "No database specific override options provided");
+    return dbSpecificOverrideOptions;
   }
 
   private SchemaCrawlerUtility()
