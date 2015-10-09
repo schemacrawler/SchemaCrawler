@@ -28,8 +28,8 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.CommandRegistry;
-import schemacrawler.tools.options.DatabaseServerType;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**

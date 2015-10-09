@@ -21,7 +21,7 @@ package schemacrawler.server.mysql;
 
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class MySQLDatabaseConnector
   extends DatabaseConnector

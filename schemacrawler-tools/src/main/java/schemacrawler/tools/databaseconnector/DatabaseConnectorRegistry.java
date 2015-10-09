@@ -22,9 +22,12 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,9 +38,10 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.DatabaseServerType;
+import sf.util.DatabaseUtility;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -117,32 +121,42 @@ public final class DatabaseConnectorRegistry
     return lookupAvailableDatabaseConnectors().iterator();
   }
 
-  public DatabaseConnector lookupDatabaseSystemIdentifier(final Connection connection)
+  public DatabaseConnector lookupDatabaseConnector(final Connection connection)
   {
-    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
-      .values())
+    try
     {
-      if (databaseConnector.getDatabaseServerType().isUnknownDatabaseSystem())
+      DatabaseUtility.checkConnection(connection);
+      final String url = connection.getMetaData().getURL();
+      if (isBlank(url))
       {
-        continue;
+        return DatabaseConnector.UNKNOWN;
       }
-      try
+
+      for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+        .values())
       {
-        if (databaseConnector.isConnectionForConnector(connection))
+        final Pattern connectionUrlPattern = databaseConnector
+          .getConnectionUrlPattern();
+        if (connectionUrlPattern == null)
+        {
+          continue;
+        }
+
+        if (connectionUrlPattern.matcher(url).matches())
         {
           return databaseConnector;
         }
       }
-      catch (final SchemaCrawlerException e)
-      {
-        // Ignore and continue
-        continue;
-      }
     }
+    catch (final SQLException | SchemaCrawlerException e)
+    {
+      return DatabaseConnector.UNKNOWN;
+    }
+
     return DatabaseConnector.UNKNOWN;
   }
 
-  public DatabaseConnector lookupDatabaseSystemIdentifier(final String databaseSystemIdentifier)
+  public DatabaseConnector lookupDatabaseConnector(final String databaseSystemIdentifier)
   {
     if (hasDatabaseSystemIdentifier(databaseSystemIdentifier))
     {

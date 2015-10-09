@@ -17,15 +17,15 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.options;
+package schemacrawler.tools.databaseconnector;
 
 
 import static sf.util.Utility.isBlank;
 
-import schemacrawler.schemacrawler.Options;
+import java.io.Serializable;
 
 public final class DatabaseServerType
-  implements Options
+  implements Serializable
 {
 
   private static final long serialVersionUID = 2160456864554076419L;

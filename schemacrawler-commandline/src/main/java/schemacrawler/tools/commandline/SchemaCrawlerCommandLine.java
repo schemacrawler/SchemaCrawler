@@ -32,8 +32,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.DatabaseServerType;
 import schemacrawler.tools.options.OutputOptions;
 import us.fatehi.commandlineparser.CommandLineUtility;
 

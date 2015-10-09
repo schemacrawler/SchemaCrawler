@@ -21,7 +21,7 @@ package schemacrawler.server.sqlserver;
 
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
