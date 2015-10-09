@@ -21,7 +21,7 @@ package schemacrawler.server.db2;
 
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
