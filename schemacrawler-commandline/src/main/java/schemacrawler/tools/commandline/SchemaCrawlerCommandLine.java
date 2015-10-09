@@ -32,10 +32,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
-import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -54,21 +52,22 @@ public final class SchemaCrawlerCommandLine
   private final ConnectionOptions connectionOptions;
   private final DatabaseConnector dbConnector;
 
-  public SchemaCrawlerCommandLine(final DatabaseConnector dbConnector,
-                                  final String... args)
-                                    throws SchemaCrawlerException
+  public SchemaCrawlerCommandLine(final Config argsMap)
+    throws SchemaCrawlerException
   {
-    requireNonNull(args, "No command-line arguments provided");
-    if (args == null || args.length == 0)
+    requireNonNull(argsMap, "No command-line arguments provided");
+    if (argsMap.isEmpty())
     {
       throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
     }
-    requireNonNull(dbConnector, "No database connector provided");
 
-    this.dbConnector = dbConnector;
+    // Match the database connector in the best possible way, using the
+    // server argument, or the JDBC connection URL
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
+    dbConnector = dbServerTypeParser.getOptions();
 
     config = new Config();
-    loadConfig(dbConnector, args);
+    loadConfig(argsMap);
 
     final CommandParser commandParser = new CommandParser(config);
     command = commandParser.getOptions().toString();
@@ -82,15 +81,14 @@ public final class SchemaCrawlerCommandLine
     final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
     additionalConfigOptionsParser.loadConfig();
 
-    parseConnectionOptions(dbConnector.getDatabaseServerType());
+    parseConnectionOptions();
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     connectionOptions = dbConnector.newDatabaseConnectionOptions(config);
 
     // Get partially built database specific options, built from the
-    // classpath
-    // resources, and then override from config loaded in from
-    // command-line
+    // classpath resources, and then override from config loaded in from
+    // the command-line
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.fromConfig(config);
@@ -147,22 +145,19 @@ public final class SchemaCrawlerCommandLine
   /**
    * Loads configuration from a number of sources, in order of priority.
    */
-  private void loadConfig(final DatabaseConnector dbConnector,
-                          final String[] args)
-                            throws SchemaCrawlerException
+  private void loadConfig(final Config argsMap)
+    throws SchemaCrawlerException
   {
-    final Config optionsMap = CommandLineUtility.parseArgs(args);
-
     // 1. Get bundled database config
     config.putAll(dbConnector.getConfig());
 
     // 2. Load config from files, in place
-    config.putAll(optionsMap);
+    config.putAll(argsMap);
     final ConfigParser configParser = new ConfigParser(config);
     configParser.loadConfig();
 
     // 3. Override/ overwrite from the command-line options
-    config.putAll(optionsMap);
+    config.putAll(argsMap);
   }
 
   /**
@@ -171,11 +166,11 @@ public final class SchemaCrawlerCommandLine
    * @param dbServerType
    *        Database server type
    */
-  private void parseConnectionOptions(final DatabaseServerType dbServerType)
+  private void parseConnectionOptions()
     throws SchemaCrawlerException
   {
     final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
-    if (dbServerType.isUnknownDatabaseSystem())
+    if (dbConnector.isUnknownDatabaseSystem() || config.hasValue("url"))
     {
       dbConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
     }
