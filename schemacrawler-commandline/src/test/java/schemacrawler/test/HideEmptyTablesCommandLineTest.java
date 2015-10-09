@@ -20,7 +20,7 @@ import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import sf.util.commandlineparser.CommandLineUtility;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 public class HideEmptyTablesCommandLineTest
   extends BaseDatabaseTest

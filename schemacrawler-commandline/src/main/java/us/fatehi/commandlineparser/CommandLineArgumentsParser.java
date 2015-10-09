@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package sf.util.commandlineparser;
+package us.fatehi.commandlineparser;
 
 
 import java.util.ArrayDeque;

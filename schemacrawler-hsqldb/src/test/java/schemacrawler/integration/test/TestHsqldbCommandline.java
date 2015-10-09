@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;
