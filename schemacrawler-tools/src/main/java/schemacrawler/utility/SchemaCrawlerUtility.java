@@ -26,8 +26,6 @@ import static sf.util.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -67,16 +65,11 @@ public final class SchemaCrawlerUtility
   public static DatabaseSpecificOverrideOptions matchDatabaseSpecificOverrideOptions(final Connection connection)
     throws SchemaCrawlerException
   {
-    checkConnection(connection);
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
       .lookupDatabaseConnector(connection);
-    requireNonNull(dbConnector,
-                   "No database specific override options provided");
     final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
-    requireNonNull(dbSpecificOverrideOptions,
-                   "No database specific override options provided");
     return dbSpecificOverrideOptions;
   }
 
