@@ -19,11 +19,8 @@ public interface Executable
    * @throws Exception
    *         On an exception
    */
-  default void execute(final Connection connection)
-    throws Exception
-  {
-    execute(connection, new DatabaseSpecificOverrideOptions());
-  }
+  void execute(Connection connection)
+    throws Exception;
 
   /**
    * Executes main functionality for SchemaCrawler.

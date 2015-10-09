@@ -23,9 +23,13 @@ package schemacrawler.tools.executable;
 
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
+
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 
 /**
@@ -52,6 +56,23 @@ public abstract class BaseExecutable
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
+  }
+
+  /**
+   * Executes main functionality for SchemaCrawler.
+   *
+   * @param connection
+   *        Database connection
+   * @throws Exception
+   *         On an exception
+   */
+  @Override
+  public final void execute(final Connection connection)
+    throws Exception
+  {
+    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+      .matchDatabaseSpecificOverrideOptions(connection);
+    execute(connection, databaseSpecificOverrideOptions);
   }
 
   @Override
