@@ -22,6 +22,7 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -41,7 +42,6 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.DatabaseUtility;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -125,35 +125,14 @@ public final class DatabaseConnectorRegistry
   {
     try
     {
-      DatabaseUtility.checkConnection(connection);
+      checkConnection(connection);
       final String url = connection.getMetaData().getURL();
-      if (isBlank(url))
-      {
-        return DatabaseConnector.UNKNOWN;
-      }
-
-      for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
-        .values())
-      {
-        final Pattern connectionUrlPattern = databaseConnector
-          .getConnectionUrlPattern();
-        if (connectionUrlPattern == null)
-        {
-          continue;
-        }
-
-        if (connectionUrlPattern.matcher(url).matches())
-        {
-          return databaseConnector;
-        }
-      }
+      return lookupDatabaseConnectorFromUrl(url);
     }
     catch (final SQLException | SchemaCrawlerException e)
     {
       return DatabaseConnector.UNKNOWN;
     }
-
-    return DatabaseConnector.UNKNOWN;
   }
 
   public DatabaseConnector lookupDatabaseConnector(final String databaseSystemIdentifier)
@@ -166,6 +145,32 @@ public final class DatabaseConnectorRegistry
     {
       return DatabaseConnector.UNKNOWN;
     }
+  }
+
+  public DatabaseConnector lookupDatabaseConnectorFromUrl(final String url)
+  {
+    if (isBlank(url))
+    {
+      return DatabaseConnector.UNKNOWN;
+    }
+
+    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+      .values())
+    {
+      final Pattern connectionUrlPattern = databaseConnector
+        .getConnectionUrlPattern();
+      if (connectionUrlPattern == null)
+      {
+        continue;
+      }
+
+      if (connectionUrlPattern.matcher(url).matches())
+      {
+        return databaseConnector;
+      }
+    }
+
+    return DatabaseConnector.UNKNOWN;
   }
 
   private void logRegisteredJdbcDrivers()

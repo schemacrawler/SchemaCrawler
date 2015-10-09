@@ -29,8 +29,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Options for the command-line.
- *
- * @author sfatehi
  */
 final class CommandLineConnectionOptionsParser
   extends BaseDatabaseConnectionOptionsParser
