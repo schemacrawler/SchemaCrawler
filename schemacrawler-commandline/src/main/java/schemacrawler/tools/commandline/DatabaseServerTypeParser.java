@@ -24,8 +24,8 @@ package schemacrawler.tools.commandline;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
-import schemacrawler.tools.options.DatabaseServerType;
 
 /**
  * Parses the command-line.
@@ -33,7 +33,7 @@ import schemacrawler.tools.options.DatabaseServerType;
  * @author Sualeh Fatehi
  */
 public final class DatabaseServerTypeParser
-  extends BaseOptionsParser<DatabaseServerType>
+  extends BaseOptionsParser<DatabaseConnector>
 {
 
   public DatabaseServerTypeParser(final Config config)
@@ -42,7 +42,7 @@ public final class DatabaseServerTypeParser
   }
 
   @Override
-  public DatabaseServerType getOptions()
+  public DatabaseConnector getOptions()
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
@@ -55,8 +55,9 @@ public final class DatabaseServerTypeParser
                                                   + serverType);
     }
 
-    final DatabaseServerType dbServerType = registry
-      .lookupDatabaseSystemIdentifier(serverType).getDatabaseServerType();
-    return dbServerType;
+    final DatabaseConnector dbConnector = registry
+      .lookupDatabaseConnector(serverType);
+    return dbConnector;
   }
+
 }

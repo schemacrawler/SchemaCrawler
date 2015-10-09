@@ -21,7 +21,7 @@ package schemacrawler.server.derby;
 
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class DerbyDatabaseConnector
   extends DatabaseConnector

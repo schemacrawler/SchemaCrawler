@@ -21,7 +21,7 @@ public class TestSybaseIQDistribution
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    dbConnector = registry.lookupDatabaseSystemIdentifier("sybaseiq");
+    dbConnector = registry.lookupDatabaseConnector("sybaseiq");
   }
 
   @Test
