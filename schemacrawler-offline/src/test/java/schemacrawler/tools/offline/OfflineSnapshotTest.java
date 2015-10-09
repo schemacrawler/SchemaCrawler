@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -51,6 +51,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
 
 public class OfflineSnapshotTest

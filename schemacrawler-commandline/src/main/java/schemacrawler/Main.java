@@ -21,11 +21,11 @@
 package schemacrawler;
 
 
-import static sf.util.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
-import static sf.util.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
-import static sf.util.commandlineparser.CommandLineUtility.logFullStackTrace;
-import static sf.util.commandlineparser.CommandLineUtility.logSafeArguments;
-import static sf.util.commandlineparser.CommandLineUtility.logSystemProperties;
+import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
 
@@ -41,7 +41,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
 import schemacrawler.tools.options.DatabaseServerType;
-import sf.util.commandlineparser.CommandLineUtility;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.

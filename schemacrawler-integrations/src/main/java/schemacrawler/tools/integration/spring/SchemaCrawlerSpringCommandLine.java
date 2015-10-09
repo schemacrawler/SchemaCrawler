@@ -44,7 +44,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
-import sf.util.commandlineparser.CommandLineUtility;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 public class SchemaCrawlerSpringCommandLine
   implements CommandLine

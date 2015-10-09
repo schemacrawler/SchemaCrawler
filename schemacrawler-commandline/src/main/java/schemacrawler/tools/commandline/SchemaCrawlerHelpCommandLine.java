@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.options.DatabaseServerType;
-import sf.util.commandlineparser.CommandLineUtility;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
