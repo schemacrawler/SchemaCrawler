@@ -18,7 +18,7 @@ public class TestBundledDistributions
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseSystemIdentifier("h2");
+      .lookupDatabaseConnector("h2");
     assertEquals(0,
                  databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()

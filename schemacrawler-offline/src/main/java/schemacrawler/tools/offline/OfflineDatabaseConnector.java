@@ -22,8 +22,8 @@ package schemacrawler.tools.offline;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.options.DatabaseServerType;
 
 public final class OfflineDatabaseConnector
   extends DatabaseConnector

@@ -22,7 +22,7 @@ package schemacrawler.server.sybaseiq;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class SybaseIQDatabaseConnector
   extends DatabaseConnector

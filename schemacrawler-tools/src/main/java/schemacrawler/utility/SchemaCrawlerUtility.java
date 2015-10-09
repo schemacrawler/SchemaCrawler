@@ -70,7 +70,7 @@ public final class SchemaCrawlerUtility
     checkConnection(connection);
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
-      .lookupDatabaseSystemIdentifier(connection);
+      .lookupDatabaseConnector(connection);
     requireNonNull(dbConnector,
                    "No database specific override options provided");
     final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector

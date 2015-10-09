@@ -22,8 +22,6 @@ package schemacrawler.tools.databaseconnector;
 
 import static sf.util.Utility.isBlank;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import static java.util.Objects.requireNonNull;
@@ -33,14 +31,16 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.DatabaseServerType;
-import sf.util.DatabaseUtility;
 
 public abstract class DatabaseConnector
+  implements Options
 {
+
+  private static final long serialVersionUID = 6133330582637434099L;
 
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
@@ -139,31 +139,6 @@ public abstract class DatabaseConnector
       .fromResourceFolder(informationSchemaViewsResourceFolder);
 
     return databaseSpecificOverrideOptionsBuilder;
-  }
-
-  public final boolean isConnectionForConnector(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    DatabaseUtility.checkConnection(connection);
-    try
-    {
-      final String url = connection.getMetaData().getURL();
-      if (isBlank(url))
-      {
-        throw new SchemaCrawlerException("Cannot check database connection URL");
-      }
-      final Pattern connectionUrlPattern = getConnectionUrlPattern();
-      if (connectionUrlPattern == null)
-      {
-        throw new IllegalArgumentException("No connection URL pattern provided");
-      }
-      return connectionUrlPattern.matcher(url).matches();
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Cannot check database connection URL",
-                                       e);
-    }
   }
 
   /**

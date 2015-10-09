@@ -38,9 +38,7 @@ import schemacrawler.tools.commandline.DatabaseServerTypeParser;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.ApplicationOptions;
-import schemacrawler.tools.options.DatabaseServerType;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
@@ -67,11 +65,7 @@ public final class Main
     try
     {
       final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(config);
-      final DatabaseServerType dbServerType = dbServerTypeParser.getOptions();
-      final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-      final DatabaseConnector dbConnector = registry
-        .lookupDatabaseSystemIdentifier(dbServerType
-          .getDatabaseSystemIdentifier());
+      final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
 
       final boolean showHelp = args.length == 0
                                || args.length == 1 && Main.class

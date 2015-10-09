@@ -21,7 +21,7 @@ public class TestOracleDistribution
     throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    dbConnector = registry.lookupDatabaseSystemIdentifier("oracle");
+    dbConnector = registry.lookupDatabaseConnector("oracle");
   }
 
   @Test
