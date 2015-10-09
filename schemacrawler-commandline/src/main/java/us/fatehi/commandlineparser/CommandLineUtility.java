@@ -100,16 +100,13 @@ public class CommandLineUtility
   /**
    * Loads configuration from a number of command-line.
    */
-  public static Config loadConfig(final String[] args)
+  public static Config parseArgs(final String[] args)
     throws SchemaCrawlerException
   {
     final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
     argsParser.parse();
     final Map<String, String> optionsMap = argsParser.getOptionsMap();
-    // Override/ overwrite from the command-line options
-    final Config config = new Config();
-    config.putAll(optionsMap);
-    return config;
+    return new Config(optionsMap);
   }
 
   public static void logFullStackTrace(final Level level, final Throwable t)

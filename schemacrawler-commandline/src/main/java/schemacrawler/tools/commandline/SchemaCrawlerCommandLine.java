@@ -58,6 +58,7 @@ public final class SchemaCrawlerCommandLine
                                   final String... args)
                                     throws SchemaCrawlerException
   {
+    requireNonNull(args, "No command-line arguments provided");
     if (args == null || args.length == 0)
     {
       throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
@@ -150,7 +151,7 @@ public final class SchemaCrawlerCommandLine
                           final String[] args)
                             throws SchemaCrawlerException
   {
-    final Config optionsMap = CommandLineUtility.loadConfig(args);
+    final Config optionsMap = CommandLineUtility.parseArgs(args);
 
     // 1. Get bundled database config
     config.putAll(dbConnector.getConfig());
