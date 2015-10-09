@@ -27,10 +27,10 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.CommandRegistry;
-import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -60,35 +60,32 @@ public final class SchemaCrawlerHelpCommandLine
   /**
    * Loads objects from command-line options. Optionally loads the
    * config from the classpath.
-   *
+   * 
    * @param args
    *        Command line arguments.
-   * @param dbServerType
-   *        Database server type.
-   * @param connectionHelpResource
-   *        Help options.
    * @param configResource
    *        Config resource.
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public SchemaCrawlerHelpCommandLine(final String[] args,
-                                      final DatabaseServerType dbServerType,
-                                      final String connectionHelpResource,
+  public SchemaCrawlerHelpCommandLine(final Config argsMap,
                                       final boolean showVersionOnly)
                                         throws SchemaCrawlerException
   {
-    requireNonNull(args, "No command-line arguments provided");
+    requireNonNull(argsMap, "No command-line arguments provided");
 
-    final Config config = CommandLineUtility.loadConfig(args);
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
+    final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
 
-    this.connectionHelpResource = connectionHelpResource;
+    this.connectionHelpResource = dbConnector.getConnectionHelpResource();
+    this.dbServerType = dbConnector.getDatabaseServerType();
+
     this.showVersionOnly = showVersionOnly;
 
     String command = null;
-    if (args.length != 0)
+    if (!argsMap.isEmpty())
     {
-      final CommandParser parser = new CommandParser(config);
+      final CommandParser parser = new CommandParser(argsMap);
       if (parser.hasOptions())
       {
         command = parser.getOptions().toString();
@@ -99,8 +96,6 @@ public final class SchemaCrawlerHelpCommandLine
       }
     }
     this.command = command;
-
-    this.dbServerType = dbServerType;
   }
 
   /**

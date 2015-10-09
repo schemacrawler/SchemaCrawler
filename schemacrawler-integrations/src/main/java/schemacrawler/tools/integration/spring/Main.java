@@ -22,7 +22,6 @@ package schemacrawler.tools.integration.spring;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
@@ -55,9 +54,9 @@ public final class Main
   {
     requireNonNull(args);
 
-    final Config config = CommandLineUtility.loadConfig(args);
+    final Config argsMap = CommandLineUtility.parseArgs(args);
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(config);
+    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(argsMap);
     final ApplicationOptions applicationOptions = applicationOptionsParser
       .getOptions();
 
@@ -77,7 +76,7 @@ public final class Main
     logSystemProperties();
     logSafeArguments(Level.CONFIG, args);
 
-    final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(flattenCommandlineArgs(config));
+    final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(argsMap);
     commandLine.execute();
   }
 
