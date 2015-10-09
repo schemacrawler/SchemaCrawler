@@ -36,6 +36,9 @@ public final class DatabaseServerTypeParser
   extends BaseOptionsParser<DatabaseConnector>
 {
 
+  private static final String URL = "url";
+  private static final String SERVER = "server";
+
   public DatabaseServerTypeParser(final Config config)
   {
     super(config);
@@ -47,16 +50,24 @@ public final class DatabaseServerTypeParser
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
 
-    final String serverType = config.getStringValue("server", null);
-    if (config.hasValue("server")
+    final String serverType = config.getStringValue(SERVER, null);
+    if (config.hasValue(SERVER)
         && !registry.hasDatabaseSystemIdentifier(serverType))
     {
       throw new SchemaCrawlerCommandLineException("Unsupported server, "
                                                   + serverType);
     }
 
-    final DatabaseConnector dbConnector = registry
-      .lookupDatabaseConnector(serverType);
+    final DatabaseConnector dbConnector;
+    if (serverType != null)
+    {
+      dbConnector = registry.lookupDatabaseConnector(serverType);
+    }
+    else
+    {
+      final String connectionUrl = config.getStringValue(URL, null);
+      dbConnector = registry.lookupDatabaseConnectorFromUrl(connectionUrl);
+    }
     return dbConnector;
   }
 

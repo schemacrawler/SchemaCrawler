@@ -45,6 +45,8 @@ public abstract class DatabaseConnector
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
 
+    private static final long serialVersionUID = 3057770737518232349L;
+
   };
 
   private final DatabaseServerType dbServerType;
@@ -162,7 +164,7 @@ public abstract class DatabaseConnector
     config.putAll(additionalConfig);
 
     final ConnectionOptions connectionOptions;
-    if (dbServerType.isUnknownDatabaseSystem())
+    if (dbServerType.isUnknownDatabaseSystem() || config.hasValue("url"))
     {
       connectionOptions = new DatabaseConnectionOptions(config);
     }
@@ -178,6 +180,11 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
+  }
+
+  public boolean isUnknownDatabaseSystem()
+  {
+    return dbServerType.isUnknownDatabaseSystem();
   }
 
 }

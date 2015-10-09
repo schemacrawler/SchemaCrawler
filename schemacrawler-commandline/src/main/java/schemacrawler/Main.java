@@ -22,7 +22,6 @@ package schemacrawler;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
@@ -34,10 +33,8 @@ import static java.util.Objects.requireNonNull;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
-import schemacrawler.tools.commandline.DatabaseServerTypeParser;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.ApplicationOptions;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
@@ -64,9 +61,6 @@ public final class Main
 
     try
     {
-      final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
-      final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
-
       final boolean showHelp = args.length == 0
                                || args.length == 1 && Main.class
                                  .getCanonicalName().equals(args[0])
@@ -81,8 +75,7 @@ public final class Main
       }
       else
       {
-        commandLine = new SchemaCrawlerCommandLine(dbConnector,
-                                                   flattenCommandlineArgs(argsMap));
+        commandLine = new SchemaCrawlerCommandLine(argsMap);
       }
       commandLine.execute();
     }
