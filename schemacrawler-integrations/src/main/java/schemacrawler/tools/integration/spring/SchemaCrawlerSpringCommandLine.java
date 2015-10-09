@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 public class SchemaCrawlerSpringCommandLine
@@ -101,7 +102,10 @@ public class SchemaCrawlerSpringCommandLine
           .getBean(springOptions.getExecutableName());
         if (databaseSpecificOverrideOptions == null)
         {
-          executable.execute(connection);
+          executable
+            .execute(connection,
+                     SchemaCrawlerUtility
+                       .matchDatabaseSpecificOverrideOptions(connection));
         }
         else
         {
