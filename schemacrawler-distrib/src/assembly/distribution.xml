@@ -273,15 +273,15 @@
 
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
-    <create-dbserver-distribution database="derby" />
+    <create-dbserver-distribution database="h2" />
     <create-dbserver-distribution database="hsqldb" />
+    <create-dbserver-distribution database="mariadb" />
     <create-dbserver-distribution database="mysql" />
     <create-dbserver-distribution database="oracle" />
     <create-dbserver-distribution database="postgresql" />
-    <create-dbserver-distribution database="sqlserver" />
     <create-dbserver-distribution database="sqlite" />
+    <create-dbserver-distribution database="sqlserver" />
     <create-dbserver-distribution database="sybaseiq" />
-  <create-dbserver-distribution database="h2" />
 
   </target>
 

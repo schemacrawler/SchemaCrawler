@@ -339,7 +339,7 @@
           SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as
           <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server,</a>
           <a href="http://www.sqlite.org/">SQLite,</a>
-          <a href="http://db.apache.org/derby/">Apache Derby (and JavaDB),</a>
+          <a href="https://mariadb.org/">MariaDB,</a>
           <a href="http://www.mysql.com/">MySQL</a>
           and
           <a href="http://www.postgresql.org/">PostgreSQL.</a>
