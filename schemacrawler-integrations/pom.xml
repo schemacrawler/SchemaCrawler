@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>3.0.0.ALPHA02</version>
+      <version>3.0.0.ALPHA03</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -69,7 +69,7 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
-      <version>2.4.4</version>
+      <version>2.4.5</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
