@@ -87,7 +87,7 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-derby</artifactId>
+                  <artifactId>schemacrawler-mariadb</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
@@ -180,9 +180,9 @@
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>org.apache.derby</groupId>
-                  <artifactId>derbyclient</artifactId>
-                  <version>10.11.1.1</version>
+                  <groupId>org.mariadb.jdbc</groupId>
+                  <artifactId>mariadb-java-client</artifactId>
+                  <version>1.2.3</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
