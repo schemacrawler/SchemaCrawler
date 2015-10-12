@@ -5,10 +5,19 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.04.01" date="2015-10-03" description="Miscellaneous fixes.">
+     <release version="14.04.01" date="2015-10-11" description="Miscellaneous fixes.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixing broken -urlx switch.
       ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Reworked command-line processing, and database plugins.
+      ]]></action>    
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removed Apache Derby database plugin. Apache Derby is now supported using a database URL only.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Added MariaDB database plugin.
+      ]]></action>                  
      </release>   
      <release version="14.03.03" date="2015-09-20" description="Faster retrieval of foreign keys.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
