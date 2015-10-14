@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import sf.util.StopWatch;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the
@@ -372,6 +373,7 @@ public final class SchemaCrawler
                                   final SchemaCrawlerOptions options)
                                     throws SchemaCrawlerException
   {
+
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveTables = infoLevel.isRetrieveTables();
     if (!retrieveTables)
@@ -382,6 +384,7 @@ public final class SchemaCrawler
     }
 
     LOGGER.log(Level.INFO, "Retrieving tables");
+    final StopWatch stopWatch = new StopWatch("crawlTables");
 
     final TableRetriever retriever;
     final ForeignKeyRetriever fkRetriever;
@@ -392,53 +395,66 @@ public final class SchemaCrawler
       fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog);
       retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
 
-      for (final Schema schema: retriever.getSchemas())
-      {
-        retriever.retrieveTables(schema.getCatalogName(),
-                                 schema.getName(),
-                                 options.getTableNamePattern(),
-                                 options.getTableTypes(),
-                                 options.getTableInclusionRule());
-      }
+      stopWatch.time("retrieveTables", () -> {
+        for (final Schema schema: retriever.getSchemas())
+        {
+          retriever.retrieveTables(schema.getCatalogName(),
+                                   schema.getName(),
+                                   options.getTableNamePattern(),
+                                   options.getTableTypes(),
+                                   options.getTableInclusionRule());
+        }
+        return null;
+      });
 
       final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
-      for (final MutableTable table: allTables)
-      {
-        if (infoLevel.isRetrieveTableColumns())
-        {
-          retriever.retrieveColumns(table, options.getColumnInclusionRule());
-        }
-      }
 
-      for (final MutableTable table: allTables)
-      {
-        final boolean isView = table instanceof MutableView;
-        if (!isView && infoLevel.isRetrieveTableColumns())
+      stopWatch.time("retrieveColumns", () -> {
+        for (final MutableTable table: allTables)
         {
-          retriever.retrievePrimaryKey(table);
-          if (infoLevel.isRetrieveIndexes())
+          if (infoLevel.isRetrieveTableColumns())
           {
-            retriever.retrieveIndexes(table, true);
-            retriever.retrieveIndexes(table, false);
-            //
-            table.replacePrimaryKey();
+            retriever.retrieveColumns(table, options.getColumnInclusionRule());
           }
         }
-      }
+        return null;
+      });
 
-      if (infoLevel.isRetrieveForeignKeys())
-      {
-        if (infoLevel.isRetrieveTableColumns())
+      stopWatch.time("retrieveIndexes", () -> {
+        for (final MutableTable table: allTables)
         {
-          fkRetriever.retrieveForeignKeys(allTables);
+          final boolean isView = table instanceof MutableView;
+          if (!isView && infoLevel.isRetrieveTableColumns())
+          {
+            retriever.retrievePrimaryKey(table);
+            if (infoLevel.isRetrieveIndexes())
+            {
+              retriever.retrieveIndexes(table, true);
+              retriever.retrieveIndexes(table, false);
+              //
+              table.replacePrimaryKey();
+            }
+          }
         }
-      }
-      else
-      {
-        LOGGER
-          .log(Level.WARNING,
-               "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
-      }
+        return null;
+      });
+
+      stopWatch.time("retrieveForeignKeys", () -> {
+        if (infoLevel.isRetrieveForeignKeys())
+        {
+          if (infoLevel.isRetrieveTableColumns())
+          {
+            fkRetriever.retrieveForeignKeys(allTables);
+          }
+        }
+        else
+        {
+          LOGGER
+            .log(Level.WARNING,
+                 "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
+        }
+        return null;
+      });
 
       final TablesGraph tablesGraph = new TablesGraph(allTables);
       tablesGraph.setTablesSortIndexes();
@@ -449,45 +465,78 @@ public final class SchemaCrawler
       ((Reducible) catalog).reduce(Table.class,
                                    new TablesReducer(options, tableFilter));
 
-      if (infoLevel.isRetrieveTableConstraintInformation())
-      {
-        retrieverExtra.retrieveTableConstraintInformation();
-      }
-      if (infoLevel.isRetrieveTriggerInformation())
-      {
-        retrieverExtra.retrieveTriggerInformation();
-      }
-      if (infoLevel.isRetrieveViewInformation())
-      {
-        retrieverExtra.retrieveViewInformation();
-      }
-      if (infoLevel.isRetrieveTableDefinitionsInformation())
-      {
-        retrieverExtra.retrieveTableDefinitions();
-      }
-      if (infoLevel.isRetrieveIndexInformation())
-      {
-        retrieverExtra.retrieveIndexInformation();
-      }
-      if (infoLevel.isRetrieveAdditionalTableAttributes())
-      {
-        retrieverExtra.retrieveAdditionalTableAttributes();
-      }
-      if (infoLevel.isRetrieveTablePrivileges())
-      {
-        retrieverExtra.retrieveTablePrivileges();
-      }
-      if (infoLevel.isRetrieveAdditionalColumnAttributes())
-      {
-        retrieverExtra.retrieveAdditionalColumnAttributes();
-      }
-      if (infoLevel.isRetrieveTableColumnPrivileges())
-      {
-        retrieverExtra.retrieveTableColumnPrivileges();
-      }
+      stopWatch.time("retrieveTableConstraintInformation", () -> {
+        if (infoLevel.isRetrieveTableConstraintInformation())
+        {
+          retrieverExtra.retrieveTableConstraintInformation();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveTriggerInformation", () -> {
+        if (infoLevel.isRetrieveTriggerInformation())
+        {
+          retrieverExtra.retrieveTriggerInformation();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveViewInformation", () -> {
+        if (infoLevel.isRetrieveViewInformation())
+        {
+          retrieverExtra.retrieveViewInformation();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveTableDefinitions", () -> {
+        if (infoLevel.isRetrieveTableDefinitionsInformation())
+        {
+          retrieverExtra.retrieveTableDefinitions();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveIndexInformation", () -> {
+        if (infoLevel.isRetrieveIndexInformation())
+        {
+          retrieverExtra.retrieveIndexInformation();
+        }
+        return null;
+      });
 
+      stopWatch.time("retrieveAdditionalTableAttributes", () -> {
+        if (infoLevel.isRetrieveAdditionalTableAttributes())
+        {
+          retrieverExtra.retrieveAdditionalTableAttributes();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveTablePrivileges", () -> {
+        if (infoLevel.isRetrieveTablePrivileges())
+        {
+          retrieverExtra.retrieveTablePrivileges();
+        }
+        return null;
+      });
+
+      stopWatch.time("retrieveAdditionalColumnAttributes", () -> {
+        if (infoLevel.isRetrieveAdditionalColumnAttributes())
+        {
+          retrieverExtra.retrieveAdditionalColumnAttributes();
+        }
+        return null;
+      });
+      stopWatch.time("retrieveTableColumnPrivileges", () -> {
+        if (infoLevel.isRetrieveTableColumnPrivileges())
+        {
+          retrieverExtra.retrieveTableColumnPrivileges();
+        }
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (
+
+    final SQLException e)
+
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
@@ -498,7 +547,17 @@ public final class SchemaCrawler
         throw new SchemaCrawlerException("Exception retrieving tables", e);
       }
     }
-
+    catch (final Exception e)
+    {
+      if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving tables", e);
+      }
+    }
   }
 
   private final Connection connection;
