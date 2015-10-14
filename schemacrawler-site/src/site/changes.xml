@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.04.02" date="2015-10-11" description="Logging timing information">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Detailed timing information in logs.
+      ]]></action>  
+     </release>   
      <release version="14.04.01" date="2015-10-11" description="Miscellaneous fixes.">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixing broken -urlx switch.

@@ -63,7 +63,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipInputStream;
 
 import javax.imageio.ImageIO;
@@ -388,6 +387,15 @@ public final class TestUtility
     }
   }
 
+  private static Reader openNewCompressedInputReader(final InputStream inputStream,
+                                                     final Charset charset)
+                                                       throws IOException
+  {
+    final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+    zipInputStream.getNextEntry();
+    return new InputStreamReader(zipInputStream, charset);
+  }
+
   private static Reader readerForFile(final Path testOutputTempFile)
     throws IOException
   {
@@ -438,8 +446,7 @@ public final class TestUtility
       }
       if (isCompressed)
       {
-        reader = new InputStreamReader(new GZIPInputStream(inputStream),
-                                       charset);
+        reader = openNewCompressedInputReader(inputStream, charset);
       }
       else
       {
