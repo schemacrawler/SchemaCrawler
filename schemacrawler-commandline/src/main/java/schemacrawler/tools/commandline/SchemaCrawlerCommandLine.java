@@ -21,6 +21,8 @@ package schemacrawler.tools.commandline;
 
 
 import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,6 +46,9 @@ public final class SchemaCrawlerCommandLine
   implements CommandLine
 {
 
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerCommandLine.class.getName());
+
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
@@ -65,6 +70,9 @@ public final class SchemaCrawlerCommandLine
     // server argument, or the JDBC connection URL
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
     dbConnector = dbServerTypeParser.getOptions();
+    LOGGER
+      .log(Level.INFO,
+           "Using database plugin for " + dbConnector.getDatabaseServerType());
 
     config = new Config();
     loadConfig(argsMap);

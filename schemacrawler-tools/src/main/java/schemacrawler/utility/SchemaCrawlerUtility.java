@@ -25,6 +25,8 @@ import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -42,6 +44,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
  */
 public final class SchemaCrawlerUtility
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(SchemaCrawlerUtility.class.getName());
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -70,6 +75,10 @@ public final class SchemaCrawlerUtility
       .lookupDatabaseConnector(connection);
     final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = dbConnector
       .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
+
+    LOGGER
+      .log(Level.INFO,
+           "Using database plugin for " + dbConnector.getDatabaseServerType());
     return dbSpecificOverrideOptions;
   }
 
