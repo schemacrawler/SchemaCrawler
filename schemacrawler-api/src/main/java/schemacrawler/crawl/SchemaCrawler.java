@@ -92,40 +92,65 @@ public final class SchemaCrawler
   {
     try
     {
+      final StopWatch stopWatch = new StopWatch("crawlColumnDataTypes");
+
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         catalog);
-      if (infoLevel.isRetrieveColumnDataTypes())
-      {
-        LOGGER.log(Level.INFO, "Retrieving system column data types");
-        retriever.retrieveSystemColumnDataTypes();
-      }
-      else
-      {
-        LOGGER
-          .log(Level.INFO,
-               "Not retrieving system column data types, since this was not requested");
-      }
-      if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
-      {
-        LOGGER.log(Level.INFO, "Retrieving user column data types");
-        for (final Schema schema: retriever.getSchemas())
+
+      stopWatch.time("retrieveSystemColumnDataTypes", () -> {
+        if (infoLevel.isRetrieveColumnDataTypes())
         {
-          retriever.retrieveUserDefinedColumnDataTypes(schema.getCatalogName(),
-                                                       schema.getName());
+          LOGGER.log(Level.INFO, "Retrieving system column data types");
+          retriever.retrieveSystemColumnDataTypes();
         }
+        else
+        {
+          LOGGER
+            .log(Level.INFO,
+                 "Not retrieving system column data types, since this was not requested");
+        }
+        return null;
+      });
+
+      stopWatch.time("retrieveUserDefinedColumnDataTypes", () -> {
+        if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
+        {
+          LOGGER.log(Level.INFO, "Retrieving user column data types");
+          for (final Schema schema: retriever.getSchemas())
+          {
+            retriever.retrieveUserDefinedColumnDataTypes(
+                                                         schema
+                                                           .getCatalogName(),
+                                                         schema.getName());
+          }
+        }
+        else
+        {
+          LOGGER
+            .log(Level.INFO,
+                 "Not retrieving user column data types, since this was not requested");
+        }
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
+    }
+    catch (final Exception e)
+    {
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+      }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
       }
       else
       {
-        LOGGER
-          .log(Level.INFO,
-               "Not retrieving user column data types, since this was not requested");
+        throw new SchemaCrawlerException("Exception retrieving column data type information",
+                                         e);
       }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Exception retrieving column data type information",
-                                       e);
     }
   }
 
@@ -136,6 +161,7 @@ public final class SchemaCrawler
   {
     try
     {
+      final StopWatch stopWatch = new StopWatch("crawlDatabaseInfo");
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
@@ -144,40 +170,70 @@ public final class SchemaCrawler
       LOGGER.log(Level.INFO, "Retrieving SchemaCrawler information");
 
       LOGGER.log(Level.INFO, "Retrieving database information");
-      retriever.retrieveDatabaseInfo();
-      if (infoLevel.isRetrieveAdditionalDatabaseInfo())
-      {
-        retriever.retrieveAdditionalDatabaseInfo();
-      }
-      else
-      {
-        LOGGER
-          .log(Level.INFO,
-               "Not retrieving additional database information, since this was not requested");
-      }
+
+      stopWatch.time("retrieveDatabaseInfo", () -> {
+        retriever.retrieveDatabaseInfo();
+        return null;
+      });
+
+      stopWatch.time("retrieveAdditionalDatabaseInfo", () -> {
+        if (infoLevel.isRetrieveAdditionalDatabaseInfo())
+        {
+          retriever.retrieveAdditionalDatabaseInfo();
+        }
+        else
+        {
+          LOGGER
+            .log(Level.INFO,
+                 "Not retrieving additional database information, since this was not requested");
+        }
+        return null;
+      });
 
       LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
-      retriever.retrieveJdbcDriverInfo();
-      if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
-      {
-        retriever.retrieveAdditionalJdbcDriverInfo();
-      }
-      else
-      {
-        LOGGER
-          .log(Level.INFO,
-               "Not retrieving additional JDBC driver information, since this was not requested");
-      }
+      stopWatch.time("retrieveJdbcDriverInfo", () -> {
+        retriever.retrieveJdbcDriverInfo();
+        return null;
+      });
+
+      stopWatch.time("retrieveAdditionalJdbcDriverInfo", () -> {
+        if (infoLevel.isRetrieveAdditionalJdbcDriverInfo())
+        {
+          retriever.retrieveAdditionalJdbcDriverInfo();
+        }
+        else
+        {
+          LOGGER
+            .log(Level.INFO,
+                 "Not retrieving additional JDBC driver information, since this was not requested");
+        }
+        return null;
+      });
 
       LOGGER.log(Level.INFO,
                  "Retrieving SchemaCrawler crawl header information");
-      retriever.retrieveCrawlHeaderInfo(options.getTitle());
+      stopWatch.time("retrieveCrawlHeaderInfo", () -> {
+        retriever.retrieveCrawlHeaderInfo(options.getTitle());
+        return null;
+      });
 
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Exception retrieving database information",
-                                       e);
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+      }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving database information",
+                                         e);
+      }
     }
   }
 
@@ -186,6 +242,8 @@ public final class SchemaCrawler
                                     final SchemaCrawlerOptions options)
                                       throws SchemaCrawlerException
   {
+    final StopWatch stopWatch = new StopWatch("crawlRoutines");
+
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
     if (!retrieveRoutines)
@@ -204,65 +262,88 @@ public final class SchemaCrawler
       retriever = new RoutineRetriever(retrieverConnection, catalog);
       retrieverExtra = new RoutineExtRetriever(retrieverConnection, catalog);
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
-      for (final Schema schema: retriever.getSchemas())
-      {
-        if (routineTypes.contains(RoutineType.procedure))
+
+      stopWatch.time("retrieveRoutines", () -> {
+        for (final Schema schema: retriever.getSchemas())
         {
-          retriever.retrieveProcedures(schema.getCatalogName(),
-                                       schema.getName(),
-                                       options.getRoutineInclusionRule());
+          if (routineTypes.contains(RoutineType.procedure))
+          {
+            retriever.retrieveProcedures(schema.getCatalogName(),
+                                         schema.getName(),
+                                         options.getRoutineInclusionRule());
+          }
+          if (routineTypes.contains(RoutineType.function))
+          {
+            retriever.retrieveFunctions(schema.getCatalogName(),
+                                        schema.getName(),
+                                        options.getRoutineInclusionRule());
+          }
         }
-        if (routineTypes.contains(RoutineType.function))
-        {
-          retriever.retrieveFunctions(schema.getCatalogName(),
-                                      schema.getName(),
-                                      options.getRoutineInclusionRule());
-        }
-      }
+        return null;
+      });
+
       final NamedObjectList<MutableRoutine> allRoutines = catalog
         .getAllRoutines();
-      for (final MutableRoutine routine: allRoutines)
-      {
-        if (infoLevel.isRetrieveRoutineColumns())
-        {
-          if (routine instanceof MutableProcedure
-              && routineTypes.contains(RoutineType.procedure))
-          {
-            retriever
-              .retrieveProcedureColumns((MutableProcedure) routine,
-                                        options
-                                          .getRoutineColumnInclusionRule());
-          }
 
-          if (routine instanceof MutableFunction
-              && routineTypes.contains(RoutineType.function))
+      stopWatch.time("retrieveRoutineColumns", () -> {
+        for (final MutableRoutine routine: allRoutines)
+        {
+          if (infoLevel.isRetrieveRoutineColumns())
           {
-            retriever
-              .retrieveFunctionColumns((MutableFunction) routine,
-                                       options.getRoutineColumnInclusionRule());
+            if (routine instanceof MutableProcedure
+                && routineTypes.contains(RoutineType.procedure))
+            {
+              retriever
+                .retrieveProcedureColumns((MutableProcedure) routine,
+                                          options
+                                            .getRoutineColumnInclusionRule());
+            }
+
+            if (routine instanceof MutableFunction
+                && routineTypes.contains(RoutineType.function))
+            {
+              retriever
+                .retrieveFunctionColumns((MutableFunction) routine,
+                                         options
+                                           .getRoutineColumnInclusionRule());
+            }
           }
         }
-      }
+        return null;
+      });
 
-      // Filter the list of routines based on grep criteria
-      final Predicate<Routine> routineFilter = routineFilter(options);
-      ((Reducible) catalog).reduce(Routine.class,
-                                   new RoutinesReducer(routineFilter));
+      stopWatch.time("sortAndFilterRoutines", () -> {
+        // Filter the list of routines based on grep criteria
+        final Predicate<Routine> routineFilter = routineFilter(options);
+        ((Reducible) catalog).reduce(Routine.class,
+                                     new RoutinesReducer(routineFilter));
+        return null;
+      });
 
-      if (infoLevel.isRetrieveRoutineInformation())
-      {
-        retrieverExtra.retrieveRoutineInformation();
-      }
+      stopWatch.time("retrieveRoutineInformation", () -> {
+        if (infoLevel.isRetrieveRoutineInformation())
+        {
+          retrieverExtra.retrieveRoutineInformation();
+        }
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
         throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
       else
       {
-        throw new SchemaCrawlerException("Exception retrieving routines", e);
+        throw new SchemaCrawlerException("Exception retrieving routine information",
+                                         e);
       }
     }
   }
@@ -272,6 +353,7 @@ public final class SchemaCrawler
                                    final SchemaCrawlerOptions options)
                                      throws SchemaCrawlerException
   {
+    final StopWatch stopWatch = new StopWatch("crawlSchemas");
 
     LOGGER.log(Level.INFO, "Retrieving schemas");
 
@@ -280,14 +362,33 @@ public final class SchemaCrawler
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
                                                             catalog);
 
-      retriever.retrieveSchemas(options.getSchemaInclusionRule());
+      stopWatch.time("retrieveSchemas", () -> {
+        retriever.retrieveSchemas(options.getSchemaInclusionRule());
+        return null;
+      });
 
-      ((Reducible) catalog).reduce(Schema.class, new SchemasReducer(options));
+      stopWatch.time("sortAndFilterSchemas", () -> {
+        ((Reducible) catalog).reduce(Schema.class, new SchemasReducer(options));
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Exception retrieving database information",
-                                       e);
+      if (e instanceof SchemaCrawlerSQLException)
+      {
+        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+      }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
+      else
+      {
+        throw new SchemaCrawlerException("Exception retrieving schema information",
+                                         e);
+      }
     }
   }
 
@@ -296,6 +397,8 @@ public final class SchemaCrawler
                                      final SchemaCrawlerOptions options)
                                        throws SchemaCrawlerException
   {
+    final StopWatch stopWatch = new StopWatch("crawlSequences");
+
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
     if (!retrieveSequences)
@@ -311,21 +414,35 @@ public final class SchemaCrawler
     try
     {
       retrieverExtra = new SequenceRetriever(retrieverConnection, catalog);
-      retrieverExtra
-        .retrieveSequenceInformation(options.getSequenceInclusionRule());
 
-      ((Reducible) catalog).reduce(Sequence.class,
-                                   new SequencesReducer(options));
+      stopWatch.time("retrieveSequenceInformation", () -> {
+        retrieverExtra
+          .retrieveSequenceInformation(options.getSequenceInclusionRule());
+        return null;
+      });
+
+      stopWatch.time("sortAndFilterSequences", () -> {
+        ((Reducible) catalog).reduce(Sequence.class,
+                                     new SequencesReducer(options));
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
         throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
       else
       {
-        throw new SchemaCrawlerException("Exception retrieving schemas", e);
+        throw new SchemaCrawlerException("Exception retrieving sequence information",
+                                         e);
       }
     }
   }
@@ -335,6 +452,8 @@ public final class SchemaCrawler
                                     final SchemaCrawlerOptions options)
                                       throws SchemaCrawlerException
   {
+    final StopWatch stopWatch = new StopWatch("crawlSynonyms");
+
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
     if (!retrieveSynonyms)
@@ -350,20 +469,34 @@ public final class SchemaCrawler
     try
     {
       retrieverExtra = new SynonymRetriever(retrieverConnection, catalog);
-      retrieverExtra
-        .retrieveSynonymInformation(options.getSynonymInclusionRule());
+      stopWatch.time("retrieveSynonymInformation", () -> {
+        retrieverExtra
+          .retrieveSynonymInformation(options.getSynonymInclusionRule());
+        return null;
+      });
 
-      ((Reducible) catalog).reduce(Synonym.class, new SynonymsReducer(options));
+      stopWatch.time("sortAndFilterSynonms", () -> {
+        ((Reducible) catalog).reduce(Synonym.class,
+                                     new SynonymsReducer(options));
+        return null;
+      });
+
+      LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (final SQLException e)
+    catch (final Exception e)
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
         throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
+      else if (e instanceof SchemaCrawlerException)
+      {
+        throw (SchemaCrawlerException) e;
+      }
       else
       {
-        throw new SchemaCrawlerException("Exception retrieving schemas", e);
+        throw new SchemaCrawlerException("Exception retrieving synonym information",
+                                         e);
       }
     }
   }
@@ -383,8 +516,9 @@ public final class SchemaCrawler
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving tables");
     final StopWatch stopWatch = new StopWatch("crawlTables");
+
+    LOGGER.log(Level.INFO, "Retrieving tables");
 
     final TableRetriever retriever;
     final ForeignKeyRetriever fkRetriever;
@@ -420,6 +554,35 @@ public final class SchemaCrawler
         return null;
       });
 
+      stopWatch.time("retrieveForeignKeys", () -> {
+        if (infoLevel.isRetrieveForeignKeys())
+        {
+          if (infoLevel.isRetrieveTableColumns())
+          {
+            fkRetriever.retrieveForeignKeys(allTables);
+          }
+        }
+        else
+        {
+          LOGGER
+            .log(Level.WARNING,
+                 "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
+        }
+        return null;
+      });
+
+      stopWatch.time("sortAndFilterTables", () -> {
+        final TablesGraph tablesGraph = new TablesGraph(allTables);
+        tablesGraph.setTablesSortIndexes();
+
+        // Filter the list of tables based on grep criteria, and
+        // parent-child relationships
+        final Predicate<Table> tableFilter = tableFilter(options);
+        ((Reducible) catalog).reduce(Table.class,
+                                     new TablesReducer(options, tableFilter));
+        return null;
+      });
+
       stopWatch.time("retrieveIndexes", () -> {
         for (final MutableTable table: allTables)
         {
@@ -438,32 +601,6 @@ public final class SchemaCrawler
         }
         return null;
       });
-
-      stopWatch.time("retrieveForeignKeys", () -> {
-        if (infoLevel.isRetrieveForeignKeys())
-        {
-          if (infoLevel.isRetrieveTableColumns())
-          {
-            fkRetriever.retrieveForeignKeys(allTables);
-          }
-        }
-        else
-        {
-          LOGGER
-            .log(Level.WARNING,
-                 "Foreign-keys are not being retrieved, so tables cannot be sorted using the natural sort order");
-        }
-        return null;
-      });
-
-      final TablesGraph tablesGraph = new TablesGraph(allTables);
-      tablesGraph.setTablesSortIndexes();
-
-      // Filter the list of tables based on grep criteria, and
-      // parent-child relationships
-      final Predicate<Table> tableFilter = tableFilter(options);
-      ((Reducible) catalog).reduce(Table.class,
-                                   new TablesReducer(options, tableFilter));
 
       stopWatch.time("retrieveTableConstraintInformation", () -> {
         if (infoLevel.isRetrieveTableConstraintInformation())
@@ -533,29 +670,20 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.toString());
     }
-    catch (
-
-    final SQLException e)
-
+    catch (final Exception e)
     {
       if (e instanceof SchemaCrawlerSQLException)
       {
         throw new SchemaCrawlerException(e.getMessage(), e.getCause());
       }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving tables", e);
-      }
-    }
-    catch (final Exception e)
-    {
-      if (e instanceof SchemaCrawlerException)
+      else if (e instanceof SchemaCrawlerException)
       {
         throw (SchemaCrawlerException) e;
       }
       else
       {
-        throw new SchemaCrawlerException("Exception retrieving tables", e);
+        throw new SchemaCrawlerException("Exception retrieving table information",
+                                         e);
       }
     }
   }
