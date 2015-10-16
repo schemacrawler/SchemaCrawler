@@ -29,6 +29,8 @@ public final class OfflineDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 1727911478084169179L;
+
   public OfflineDatabaseConnector()
   {
     super(new DatabaseServerType("offline", "Offline"),

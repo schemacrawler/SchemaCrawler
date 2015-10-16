@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.executeSql;
 
 import java.sql.Connection;
@@ -30,8 +31,6 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKeyDeferrability;
@@ -74,10 +73,12 @@ final class ForeignKeyRetriever
 
     if (!informationSchemaViews.hasForeignKeysSql())
     {
+      LOGGER.log(Level.INFO, "Retrieving foreign keys using database metadata");
       retrieveForeignKeysUsingDatabaseMetadata(allTables);
     }
     else
     {
+      LOGGER.log(Level.INFO, "Retrieving foreign keys using SQL");
       retrieveForeignKeysUsingSql(informationSchemaViews);
     }
   }
@@ -127,55 +128,59 @@ final class ForeignKeyRetriever
                                                      fkTableSchemaName,
                                                      fkTableName,
                                                      fkColumnName);
+        final boolean isPkColumnPartial = pkColumn instanceof ColumnPartial;
+        final boolean isFkColumnPartial = fkColumn instanceof ColumnPartial;
 
-        // Make a direct connection between the two columns
-        if (pkColumn != null && fkColumn != null)
+        if (pkColumn == null || fkColumn == null
+            || (isFkColumnPartial && isPkColumnPartial))
         {
-          if (Utility.isBlank(foreignKeyName))
-          {
-            foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
-                                                                     fkColumn);
-          }
+          continue;
+        }
 
-          final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
-            .lookup(foreignKeyName);
-          final MutableForeignKey foreignKey;
-          if (foreignKeyOptional.isPresent())
-          {
-            foreignKey = foreignKeyOptional.get();
-          }
-          else
-          {
-            foreignKey = new MutableForeignKey(foreignKeyName);
-            foreignKeys.add(foreignKey);
-          }
+        if (Utility.isBlank(foreignKeyName))
+        {
+          foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
+                                                                   fkColumn);
+        }
 
-          foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
-          foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-          foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-          foreignKey
-            .setDeferrability(ForeignKeyDeferrability.valueOf(deferrability));
-          foreignKey.addAttributes(results.getAttributes());
+        final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
+          .lookup(foreignKeyName);
+        final MutableForeignKey foreignKey;
+        if (foreignKeyOptional.isPresent())
+        {
+          foreignKey = foreignKeyOptional.get();
+        }
+        else
+        {
+          foreignKey = new MutableForeignKey(foreignKeyName);
+          foreignKeys.add(foreignKey);
+        }
 
-          if (fkColumn instanceof MutableColumn)
-          {
-            ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
-            ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
-          }
-          else if (fkColumn instanceof ColumnPartial)
-          {
-            ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
-            ((TablePartial) fkColumn.getParent()).addForeignKey(foreignKey);
-          }
+        foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
+        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
+        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
+        foreignKey
+          .setDeferrability(ForeignKeyDeferrability.valueOf(deferrability));
+        foreignKey.addAttributes(results.getAttributes());
 
-          if (pkColumn instanceof MutableColumn)
-          {
-            ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
-          }
-          else if (pkColumn instanceof ColumnPartial)
-          {
-            ((TablePartial) pkColumn.getParent()).addForeignKey(foreignKey);
-          }
+        if (fkColumn instanceof MutableColumn)
+        {
+          ((MutableColumn) fkColumn).setReferencedColumn(pkColumn);
+          ((MutableTable) fkColumn.getParent()).addForeignKey(foreignKey);
+        }
+        else if (isFkColumnPartial)
+        {
+          ((ColumnPartial) fkColumn).setReferencedColumn(pkColumn);
+          ((TablePartial) fkColumn.getParent()).addForeignKey(foreignKey);
+        }
+
+        if (pkColumn instanceof MutableColumn)
+        {
+          ((MutableTable) pkColumn.getParent()).addForeignKey(foreignKey);
+        }
+        else if (isPkColumnPartial)
+        {
+          ((TablePartial) pkColumn.getParent()).addForeignKey(foreignKey);
         }
       }
     }
