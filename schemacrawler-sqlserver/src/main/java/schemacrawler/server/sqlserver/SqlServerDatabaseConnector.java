@@ -27,6 +27,8 @@ public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 6732719260206397502L;
+
   public SqlServerDatabaseConnector()
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),

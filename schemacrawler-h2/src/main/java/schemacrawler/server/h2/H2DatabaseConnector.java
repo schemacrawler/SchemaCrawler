@@ -27,6 +27,8 @@ public final class H2DatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 3456967529057304317L;
+
   public H2DatabaseConnector()
   {
     super(new DatabaseServerType("h2", "H2 Database Engine"),

@@ -27,6 +27,8 @@ public final class MariaDBDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = -8268283292941220540L;
+
   public MariaDBDatabaseConnector()
   {
     super(new DatabaseServerType("mariadb", "MariaDB"),
