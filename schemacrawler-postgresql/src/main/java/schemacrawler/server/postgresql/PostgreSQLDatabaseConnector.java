@@ -27,6 +27,8 @@ public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = -3501763931031195572L;
+
   public PostgreSQLDatabaseConnector()
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),

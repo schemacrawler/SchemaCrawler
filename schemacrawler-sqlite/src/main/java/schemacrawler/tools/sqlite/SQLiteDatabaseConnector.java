@@ -31,6 +31,8 @@ public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = -926915070636247650L;
+
   public SQLiteDatabaseConnector()
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
