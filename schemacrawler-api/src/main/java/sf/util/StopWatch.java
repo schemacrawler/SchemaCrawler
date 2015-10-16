@@ -1,10 +1,16 @@
 package sf.util;
 
 
+import static java.time.temporal.ChronoField.HOUR_OF_DAY;
+import static java.time.temporal.ChronoField.MINUTE_OF_HOUR;
+import static java.time.temporal.ChronoField.NANO_OF_SECOND;
+import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -38,7 +44,11 @@ public final class StopWatch
 
   }
 
-  private static final DateTimeFormatter df = DateTimeFormatter.ISO_LOCAL_TIME;
+  private static final DateTimeFormatter df = new DateTimeFormatterBuilder()
+    .appendValue(HOUR_OF_DAY, 2).appendLiteral(':')
+    .appendValue(MINUTE_OF_HOUR, 2).appendLiteral(':')
+    .appendValue(SECOND_OF_MINUTE, 2).appendFraction(NANO_OF_SECOND, 3, 3, true)
+    .toFormatter();
 
   private final String id;
   private final List<TaskInfo> tasks = new LinkedList<TaskInfo>();
@@ -134,11 +144,10 @@ public final class StopWatch
 
     for (final TaskInfo task: tasks)
     {
-      buffer
-        .append(String.format("- %02.1f%% - ",
-                              calculatePercentage(task.getDuration(),
-                                                  totalDuration)))
-        .append(task).append("\n");
+      buffer.append(String
+        .format("- %4.1f%% - %s%n",
+                calculatePercentage(task.getDuration(), totalDuration),
+                task));
     }
 
     return buffer.toString();

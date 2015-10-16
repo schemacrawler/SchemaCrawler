@@ -27,6 +27,8 @@ public final class HyperSQLDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 5148345984002037384L;
+
   public HyperSQLDatabaseConnector()
   {
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
