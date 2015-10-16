@@ -122,6 +122,8 @@ final class SchemaRetriever
    */
   private Set<String> retrieveAllCatalogs()
   {
+    LOGGER.log(Level.INFO, "Retrieving all catalogs");
+
     final Set<String> catalogNames = new HashSet<>();
 
     if (supportsCatalogs)
@@ -148,11 +150,12 @@ final class SchemaRetriever
   private Set<SchemaReference> retrieveAllSchemas()
     throws SQLException
   {
+    LOGGER.log(Level.INFO, "Retrieving all schemas");
+
     final Set<SchemaReference> schemaRefs = new HashSet<>();
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
-
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getSchemas());)
       {
