@@ -36,6 +36,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
@@ -80,8 +81,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
-import static java.util.Objects.requireNonNull;
-
 public final class TestUtility
 {
 
@@ -95,6 +94,8 @@ public final class TestUtility
                                                .compile("\\s+<schemaCrawlerVersion>.*"),
                                              Pattern
                                                .compile("\\s+<schemaCrawlerAbout>.*"),
+                                             Pattern
+                                               .compile("\\s+<schemaCrawlerInfo>.*"),
                                              Pattern
                                                .compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
                                              Pattern
