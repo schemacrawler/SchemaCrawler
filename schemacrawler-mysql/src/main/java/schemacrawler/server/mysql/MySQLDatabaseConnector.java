@@ -27,6 +27,8 @@ public final class MySQLDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 1456580846425210048L;
+
   public MySQLDatabaseConnector()
   {
     super(new DatabaseServerType("mysql", "MySQL"),
