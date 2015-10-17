@@ -27,6 +27,8 @@ public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 2668483709122768087L;
+
   public DB2DatabaseConnector()
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
