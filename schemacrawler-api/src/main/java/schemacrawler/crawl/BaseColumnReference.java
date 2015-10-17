@@ -48,7 +48,9 @@ public abstract class BaseColumnReference
 
     if (primaryKeyColumn.equals(foreignKeyColumn))
     {
-      throw new IllegalArgumentException("Primary key column cannot equal foreign key column");
+      throw new IllegalArgumentException(String.format(
+                                                       "Primary key column cannot equal foreign key column, %s",
+                                                       primaryKeyColumn));
     }
   }
 
