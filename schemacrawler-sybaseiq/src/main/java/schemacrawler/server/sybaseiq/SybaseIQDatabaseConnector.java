@@ -28,6 +28,8 @@ public final class SybaseIQDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 1786572065393663455L;
+
   public SybaseIQDatabaseConnector()
   {
     super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),

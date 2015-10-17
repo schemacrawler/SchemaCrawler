@@ -29,6 +29,8 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
+  private static final long serialVersionUID = 2877116088126348915L;
+
   public OracleDatabaseConnector()
   {
     super(new DatabaseServerType("oracle", "Oracle"),
