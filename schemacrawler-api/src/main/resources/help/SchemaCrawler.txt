@@ -1,4 +1,4 @@
-SchemaCrawler 14.04.03
+SchemaCrawler 14.04.04
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2015, Sualeh Fatehi <sualeh@hotmail.com>.
 
