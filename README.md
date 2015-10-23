@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/sualeh/SchemaCrawler/badge.svg?branch=master&service=github)](https://coveralls.io/github/sualeh/SchemaCrawler?branch=master)
 [![Maven Central](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 [![Join the chat at https://gitter.im/sualeh/SchemaCrawler](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sualeh/SchemaCrawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Project Website](https://img.shields.io/badge/project--website-schemacrawler-ff69b4.svg)](http://www.schemacrawler.com/)
+[![Project Website](https://img.shields.io/badge/project__website-SchemaCrawler-ff69b4.svg)](http://www.schemacrawler.com/)
 
 # ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/blob/master/schemacrawler-site/src/site/resources/images/schemacrawler_logo.png?raw=true) SchemaCrawler
 
