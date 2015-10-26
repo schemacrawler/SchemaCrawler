@@ -8,6 +8,13 @@ CREATE TABLE Regions
   CONSTRAINT PK_Customers PRIMARY KEY (PostalCode, Country)
 );
 
+CREATE TABLE SalesData
+(
+  SalesDataId INTEGER,
+  YearlyAmount FLOAT,  
+  CONSTRAINT UQ_Customers UNIQUE (SalesDataId)
+);
+
 CREATE TABLE Sales
 (
   PostalCode VARCHAR(10) NOT NULL,
@@ -15,5 +22,7 @@ CREATE TABLE Sales
   BookId INTEGER,
   PeriodEndDate DATE,
   TotalAmount FLOAT,  
-  CONSTRAINT FK_Sales_Regions FOREIGN KEY (PostalCode, Country) REFERENCES Regions (PostalCode, Country)
+  SalesDataId INTEGER,
+  CONSTRAINT FK_Sales_Regions FOREIGN KEY (PostalCode, Country) REFERENCES Regions (PostalCode, Country),
+  CONSTRAINT FK_Sales_SalesData FOREIGN KEY (SalesDataId) REFERENCES SalesData (SalesDataId)
 );

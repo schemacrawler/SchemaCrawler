@@ -235,7 +235,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-08-27 11:51:19</td>
+		<td class='property_value'>2015-10-21 22:10:46</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1703,10 +1703,27 @@ td.section {
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
+		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1758,6 +1775,18 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
 		<td class='subname'>POSTALCODE</td>
 		<td class='type'>ascending</td>
 	</tr>
@@ -1791,6 +1820,151 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='3' class='definition'>"PUBLISHER SALES".SALES.COUNTRY IS NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Privileges and Grants</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>DELETE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>INSERT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>REFERENCES</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SELECT</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>TRIGGER</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UPDATE</td>
+		<td class='description right'>[privilege]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>_SYSTEM → DBA (grantable)</td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2DDCE;'><span id='salesdata_b64284bf' class='caption_name'>PUBLIC."PUBLISHER SALES".SALESDATA</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>YEARLYAMOUNT</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>PUBLIC."PUBLISHER SALES".SALES.SALESDATAID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique constraint]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3693,6 +3867,10 @@ td.section {
 		<td class='property_name'>PUBLIC."PUBLISHER SALES".SALES</td>
 		<td class='property_value right'>20 rows</td>
 	</tr>
+	<tr>
+		<td class='property_name'>PUBLIC."PUBLISHER SALES".SALESDATA</td>
+		<td class='property_value right'>empty</td>
+	</tr>
 </table>
 <p>&#160;</p>
 
@@ -4609,6 +4787,7 @@ td.section {
 		<th>BOOKID</th>
 		<th>PERIODENDDATE</th>
 		<th>TOTALAMOUNT</th>
+		<th>SALESDATAID</th>
 	</tr>
 	<tr>
 		<td>13078</td>
@@ -4616,6 +4795,7 @@ td.section {
 		<td class='data_number'>1</td>
 		<td>2001-07-18</td>
 		<td class='data_number'>18257.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>13078</td>
@@ -4623,6 +4803,7 @@ td.section {
 		<td class='data_number'>1</td>
 		<td>2001-09-29</td>
 		<td class='data_number'>14895.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>13078</td>
@@ -4630,6 +4811,7 @@ td.section {
 		<td class='data_number'>6</td>
 		<td>2003-12-28</td>
 		<td class='data_number'>6083.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>13078</td>
@@ -4637,6 +4819,7 @@ td.section {
 		<td class='data_number'>6</td>
 		<td>2006-06-11</td>
 		<td class='data_number'>7840.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>17131</td>
@@ -4644,6 +4827,7 @@ td.section {
 		<td class='data_number'>2</td>
 		<td>2002-04-30</td>
 		<td class='data_number'>17887.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>17131</td>
@@ -4651,6 +4835,7 @@ td.section {
 		<td class='data_number'>2</td>
 		<td>2004-11-13</td>
 		<td class='data_number'>16317.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>17131</td>
@@ -4658,6 +4843,7 @@ td.section {
 		<td class='data_number'>7</td>
 		<td>2000-03-08</td>
 		<td class='data_number'>6951.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>17131</td>
@@ -4665,6 +4851,7 @@ td.section {
 		<td class='data_number'>7</td>
 		<td>2003-03-21</td>
 		<td class='data_number'>18431.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>20239</td>
@@ -4672,6 +4859,7 @@ td.section {
 		<td class='data_number'>3</td>
 		<td>2004-08-28</td>
 		<td class='data_number'>18747.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>20239</td>
@@ -4679,6 +4867,7 @@ td.section {
 		<td class='data_number'>3</td>
 		<td>2005-07-27</td>
 		<td class='data_number'>6712.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>20239</td>
@@ -4686,6 +4875,7 @@ td.section {
 		<td class='data_number'>8</td>
 		<td>2008-03-29</td>
 		<td class='data_number'>11013.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>20239</td>
@@ -4693,6 +4883,7 @@ td.section {
 		<td class='data_number'>8</td>
 		<td>2008-08-15</td>
 		<td class='data_number'>17514.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>24179</td>
@@ -4700,6 +4891,7 @@ td.section {
 		<td class='data_number'>4</td>
 		<td>2005-12-24</td>
 		<td class='data_number'>11103.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>24179</td>
@@ -4707,6 +4899,7 @@ td.section {
 		<td class='data_number'>4</td>
 		<td>2009-02-14</td>
 		<td class='data_number'>5885.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>24179</td>
@@ -4714,6 +4907,7 @@ td.section {
 		<td class='data_number'>9</td>
 		<td>2000-05-16</td>
 		<td class='data_number'>13595.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>24179</td>
@@ -4721,6 +4915,7 @@ td.section {
 		<td class='data_number'>9</td>
 		<td>2004-04-10</td>
 		<td class='data_number'>14069.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>26131</td>
@@ -4728,6 +4923,7 @@ td.section {
 		<td class='data_number'>5</td>
 		<td>2001-12-02</td>
 		<td class='data_number'>14798.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>26131</td>
@@ -4735,6 +4931,7 @@ td.section {
 		<td class='data_number'>5</td>
 		<td>2004-11-03</td>
 		<td class='data_number'>15348.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>26131</td>
@@ -4742,6 +4939,7 @@ td.section {
 		<td class='data_number'>10</td>
 		<td>2000-09-20</td>
 		<td class='data_number'>14476.0</td>
+		<td class='data_null'>NULL</td>
 	</tr>
 	<tr>
 		<td>26131</td>
@@ -4749,6 +4947,19 @@ td.section {
 		<td class='data_number'>10</td>
 		<td>2005-12-03</td>
 		<td class='data_number'>17069.0</td>
+		<td class='data_null'>NULL</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC."PUBLISHER SALES".SALESDATA</span></caption>
+
+	<tr>
+		<th>SALESDATAID</th>
+		<th>YEARLYAMOUNT</th>
 	</tr>
 </table>
 <p>&#160;</p>

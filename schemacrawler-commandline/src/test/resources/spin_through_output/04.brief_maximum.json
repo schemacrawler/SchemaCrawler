@@ -730,21 +730,32 @@
       }
     },
     {
-      "foreignKeys": [{
-        "name": "FK_SALES_REGIONS",
-        "deleteRule": "no action",
-        "columnReferences": [
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
-          },
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
-          }
-        ],
-        "updateRule": "no action"
-      }],
+      "foreignKeys": [
+        {
+          "name": "FK_SALES_SALESDATA",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_SALES_REGIONS",
+          "deleteRule": "no action",
+          "columnReferences": [
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+            },
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+            }
+          ],
+          "updateRule": "no action"
+        }
+      ],
       "columns": [
         {
           "size": 10,
@@ -767,6 +778,17 @@
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
         }
       ],
       "name": "SALES",
@@ -774,10 +796,37 @@
       "type": "table",
       "remarks": "",
       "primaryKey": {}
+    },
+    {
+      "foreignKeys": [{
+        "name": "FK_SALES_SALESDATA",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+        }],
+        "updateRule": "no action"
+      }],
+      "columns": [{
+        "size": 32,
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "SALESDATAID",
+        "width": "",
+        "decimalDigits": 0,
+        "remarks": "",
+        "autoIncremented": false
+      }],
+      "name": "SALESDATA",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-27 13:10:34",
+    "crawlTimestamp": "2015-10-25 22:23:03",
     "title": ""
   },
   "routines": [

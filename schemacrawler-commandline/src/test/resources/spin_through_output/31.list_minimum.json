@@ -168,10 +168,22 @@
       "tableConstraints": [],
       "remarks": "",
       "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
+      "name": "SALESDATA",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-27 13:10:15",
+    "crawlTimestamp": "2015-10-25 22:22:51",
     "title": ""
   },
   "routines": [

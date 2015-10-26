@@ -29,7 +29,7 @@ public class SiteVariationsGenerationRule
   implements TestRule
 {
 
-  private static final boolean GENERATE_SITE = false;
+  private static final boolean GENERATE_SITE = true;
 
   @Override
   public Statement apply(final Statement base, final Description description)

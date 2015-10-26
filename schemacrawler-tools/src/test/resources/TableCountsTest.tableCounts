@@ -18,4 +18,6 @@ schema: PUBLIC."PUBLISHER SALES"
     row count: 20
   table: PUBLIC."PUBLISHER SALES".SALES
     row count: 20
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    row count: 0
 schema: PUBLIC.SYSTEM_LOBS

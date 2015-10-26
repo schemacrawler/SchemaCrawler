@@ -59,11 +59,19 @@ schema: PUBLIC."PUBLISHER SALES"
     # exported: 0
     # privileges: 6
   table: PUBLIC."PUBLISHER SALES".SALES
-    # columns: 5
-    # constraints: 3
+    # columns: 6
+    # constraints: 4
+    # indexes: 2
+    # foreign keys: 2
+    # imported foreign keys: 0
+    # exported: 2
+    # privileges: 6
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    # columns: 2
+    # constraints: 1
     # indexes: 1
     # foreign keys: 1
-    # imported foreign keys: 0
-    # exported: 1
+    # imported foreign keys: 1
+    # exported: 0
     # privileges: 6
 schema: PUBLIC.SYSTEM_LOBS

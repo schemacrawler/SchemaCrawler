@@ -715,35 +715,56 @@
       }
     },
     {
-      "foreignKeys": [{
-        "name": "FK_SALES_REGIONS",
-        "deleteRule": "no action",
-        "columnReferences": [
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
-          },
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
-          }
-        ],
-        "updateRule": "no action"
-      }],
-      "indexes": [{
-        "columns": [
-          {
+      "foreignKeys": [
+        {
+          "name": "FK_SALES_SALESDATA",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_SALES_REGIONS",
+          "deleteRule": "no action",
+          "columnReferences": [
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+            },
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+            }
+          ],
+          "updateRule": "no action"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
             "sortSequence": "ascending",
-            "name": "POSTALCODE"
+            "name": "SALESDATAID"
           },
-          {
-            "sortSequence": "ascending",
-            "name": "COUNTRY"
-          }
-        ],
-        "unique": false,
-        "name": "SYS_IDX_10154"
-      }],
+          "unique": false,
+          "name": "SYS_IDX_10158"
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE"
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY"
+            }
+          ],
+          "unique": false,
+          "name": "SYS_IDX_10156"
+        }
+      ],
       "columns": [
         {
           "size": 10,
@@ -799,6 +820,17 @@
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
         }
       ],
       "name": "SALES",
@@ -811,20 +843,77 @@
           "type": "foreign_key"
         },
         {
-          "name": "SYS_CT_10149",
+          "name": "FK_SALES_SALESDATA",
+          "type": "foreign_key"
+        },
+        {
+          "name": "SYS_CT_10151",
           "type": "check"
         },
         {
-          "name": "SYS_CT_10150",
+          "name": "SYS_CT_10152",
           "type": "check"
         }
       ],
       "remarks": "",
       "primaryKey": {}
+    },
+    {
+      "foreignKeys": [{
+        "name": "FK_SALES_SALESDATA",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+        }],
+        "updateRule": "no action"
+      }],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "SALESDATAID"
+        },
+        "unique": true,
+        "name": "SYS_IDX_UQ_CUSTOMERS_10150"
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": true,
+          "databaseSpecificType": "DOUBLE",
+          "dataType": "DOUBLE",
+          "name": "YEARLYAMOUNT",
+          "width": "(64, 0)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "SALESDATA",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [{
+        "name": "UQ_CUSTOMERS",
+        "type": "unique"
+      }],
+      "remarks": "",
+      "primaryKey": {}
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-27 11:51:25",
+    "crawlTimestamp": "2015-10-21 22:10:50",
     "title": ""
   },
   "routines": [

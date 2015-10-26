@@ -70,7 +70,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(23, fkReferenceCount);
+    assertEquals(25, fkReferenceCount);
   }
 
   @Test

@@ -114,12 +114,27 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
+  SALESDATAID                       INTEGER                     
 
 Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 FK_SALES_REGIONS                           [foreign key, with no action]
   POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+
+
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+FK_SALES_SALESDATA                         [foreign key, with no action]
+  SALESDATAID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.SALESDATAID                              
 
 
 

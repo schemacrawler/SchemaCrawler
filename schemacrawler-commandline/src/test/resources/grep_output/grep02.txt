@@ -121,10 +121,10 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 Indexes
 
-SYS_IDX_PK_WRITERS_10161                                  [unique index]
+SYS_IDX_PK_WRITERS_10165                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10204                                         [non-unique index]
+SYS_IDX_10208                                         [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -150,18 +150,18 @@ Table Constraints
 CHECK_UPPERCASE_STATE                                 [check constraint]
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10156                                          [check constraint]
+SYS_CT_10160                                          [check constraint]
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10157                                          [check constraint]
+SYS_CT_10161                                          [check constraint]
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10158                                          [check constraint]
+SYS_CT_10162                                          [check constraint]
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10159                                          [check constraint]
+SYS_CT_10163                                          [check constraint]
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10160                                          [check constraint]
+SYS_CT_10164                                          [check constraint]
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
