@@ -18,4 +18,5 @@ schema: PUBLIC."PUBLISHER SALES"
   table: PUBLIC."PUBLISHER SALES".SALES
     weak association (1 to (0..many)):
       column reference: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
 schema: PUBLIC.SYSTEM_LOBS

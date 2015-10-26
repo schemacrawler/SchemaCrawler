@@ -238,7 +238,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-10-03 22:34:15</td>
+		<td class='property_value'>2015-10-25 22:22:29</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1936,10 +1936,27 @@ td.section {
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>SALESDATA.SALESDATAID</a></td>
+		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1963,6 +1980,18 @@ td.section {
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -2000,6 +2029,73 @@ td.section {
 	<tr>
 		<td colspan='2' class='name'></td>
 		<td class='description right'>[check constraint]</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2DDCE;'><span id='salesdata_b64284bf' class='caption_name'>SALESDATA</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>YEARLYAMOUNT</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>SALES.SALESDATAID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique constraint]</td>
 	</tr>
 </table>
 <p>&#160;</p>

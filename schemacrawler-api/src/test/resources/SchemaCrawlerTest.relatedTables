@@ -27,6 +27,10 @@
     # child tables: [PUBLIC."PUBLISHER SALES".SALES]
     # parent tables: []
   table: PUBLIC."PUBLISHER SALES".SALES
-    # columns: 5
+    # columns: 6
     # child tables: []
-    # parent tables: [PUBLIC."PUBLISHER SALES".REGIONS]
+    # parent tables: [PUBLIC."PUBLISHER SALES".REGIONS, PUBLIC."PUBLISHER SALES".SALESDATA]
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    # columns: 2
+    # child tables: [PUBLIC."PUBLISHER SALES".SALES]
+    # parent tables: []

@@ -114,12 +114,27 @@ SALES                                                            [table]
 ------------------------------------------------------------------------
   POSTALCODE                        VARCHAR(10) NOT NULL        
   COUNTRY                           VARCHAR(50) NOT NULL        
+  SALESDATAID                       INTEGER                     
 
 Foreign Keys
 
                                            [foreign key, with no action]
+  SALESDATAID (0..many)--> SALESDATA.SALESDATAID                              
+
+                                           [foreign key, with no action]
   POSTALCODE (0..many)--> REGIONS.POSTALCODE                              
   COUNTRY (0..many)--> REGIONS.COUNTRY                              
+
+
+
+SALESDATA                                                        [table]
+------------------------------------------------------------------------
+  SALESDATAID                       INTEGER                     
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  SALESDATAID <--(0..many) SALES.SALESDATAID                              
 
 
 
