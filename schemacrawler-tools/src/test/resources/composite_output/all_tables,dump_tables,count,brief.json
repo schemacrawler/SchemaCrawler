@@ -1594,6 +1594,21 @@
       ],
       [
         "PUBLIC",
+        "PUBLISHER SALES",
+        "SALESDATA",
+        "TABLE",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "MEMORY",
+        false,
+        null
+      ],
+      [
+        "PUBLIC",
         "SYSTEM_LOBS",
         "BLOCKS",
         "SYSTEM TABLE",
@@ -2515,7 +2530,8 @@
         "COUNTRY",
         "BOOKID",
         "PERIODENDDATE",
-        "TOTALAMOUNT"
+        "TOTALAMOUNT",
+        "SALESDATAID"
       ],
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "rows": [
@@ -2524,142 +2540,170 @@
           "USA",
           1,
           "2001-07-18",
-          18257
+          18257,
+          null
         ],
         [
           "13078",
           "USA",
           1,
           "2001-09-29",
-          14895
+          14895,
+          null
         ],
         [
           "13078",
           "USA",
           6,
           "2003-12-28",
-          6083
+          6083,
+          null
         ],
         [
           "13078",
           "USA",
           6,
           "2006-06-11",
-          7840
+          7840,
+          null
         ],
         [
           "17131",
           "USA",
           2,
           "2002-04-30",
-          17887
+          17887,
+          null
         ],
         [
           "17131",
           "USA",
           2,
           "2004-11-13",
-          16317
+          16317,
+          null
         ],
         [
           "17131",
           "USA",
           7,
           "2000-03-08",
-          6951
+          6951,
+          null
         ],
         [
           "17131",
           "USA",
           7,
           "2003-03-21",
-          18431
+          18431,
+          null
         ],
         [
           "20239",
           "USA",
           3,
           "2004-08-28",
-          18747
+          18747,
+          null
         ],
         [
           "20239",
           "USA",
           3,
           "2005-07-27",
-          6712
+          6712,
+          null
         ],
         [
           "20239",
           "USA",
           8,
           "2008-03-29",
-          11013
+          11013,
+          null
         ],
         [
           "20239",
           "USA",
           8,
           "2008-08-15",
-          17514
+          17514,
+          null
         ],
         [
           "24179",
           "USA",
           4,
           "2005-12-24",
-          11103
+          11103,
+          null
         ],
         [
           "24179",
           "USA",
           4,
           "2009-02-14",
-          5885
+          5885,
+          null
         ],
         [
           "24179",
           "USA",
           9,
           "2000-05-16",
-          13595
+          13595,
+          null
         ],
         [
           "24179",
           "USA",
           9,
           "2004-04-10",
-          14069
+          14069,
+          null
         ],
         [
           "26131",
           "USA",
           5,
           "2001-12-02",
-          14798
+          14798,
+          null
         ],
         [
           "26131",
           "USA",
           5,
           "2004-11-03",
-          15348
+          15348,
+          null
         ],
         [
           "26131",
           "USA",
           10,
           "2000-09-20",
-          14476
+          14476,
+          null
         ],
         [
           "26131",
           "USA",
           10,
           "2005-12-03",
-          17069
+          17069,
+          null
         ]
       ]
+    },
+    {
+      "columnNames": [
+        "SALESDATAID",
+        "YEARLYAMOUNT"
+      ],
+      "title": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "rows": []
     }
   ]},
 {
@@ -2695,6 +2739,10 @@
     {
       "title": "PUBLIC.\"PUBLISHER SALES\".SALES",
       "value": 20
+    },
+    {
+      "title": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "value": 0
     }
   ],
   "description": "Row Count"
@@ -3016,21 +3064,32 @@
       }
     },
     {
-      "foreignKeys": [{
-        "name": "FK_SALES_REGIONS",
-        "deleteRule": "no action",
-        "columnReferences": [
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
-          },
-          {
-            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
-            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
-          }
-        ],
-        "updateRule": "no action"
-      }],
+      "foreignKeys": [
+        {
+          "name": "FK_SALES_SALESDATA",
+          "deleteRule": "no action",
+          "columnReferences": [{
+            "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+            "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+          }],
+          "updateRule": "no action"
+        },
+        {
+          "name": "FK_SALES_REGIONS",
+          "deleteRule": "no action",
+          "columnReferences": [
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.POSTALCODE",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.POSTALCODE"
+            },
+            {
+              "pkColumn": "PUBLIC.\"PUBLISHER SALES\".REGIONS.COUNTRY",
+              "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.COUNTRY"
+            }
+          ],
+          "updateRule": "no action"
+        }
+      ],
       "columns": [
         {
           "size": 10,
@@ -3053,10 +3112,48 @@
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
         }
       ],
       "name": "SALES",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [{
+        "name": "FK_SALES_SALESDATA",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.SALESDATAID"
+        }],
+        "updateRule": "no action"
+      }],
+      "columns": [{
+        "size": 32,
+        "nullable": true,
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "SALESDATAID",
+        "width": "",
+        "decimalDigits": 0,
+        "remarks": "",
+        "autoIncremented": false
+      }],
+      "name": "SALESDATA",
+      "fullName": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
       "type": "table",
       "remarks": "",
       "primaryKey": {}

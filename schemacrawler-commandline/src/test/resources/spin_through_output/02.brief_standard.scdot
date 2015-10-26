@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-08-20 21:48:34</td>
+		<td align='left'>2015-10-25 22:22:57</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -447,10 +447,35 @@ digraph "SchemaCrawler_Diagram" {
 		<td align='left'> </td>
 		<td port='country_890cfe1d.end' align='left'>VARCHAR(50) NOT NULL</td>
 	</tr>
+	<tr>
+		<td port='salesdataid_e6f60d58.start' align='left'>SALESDATAID</td>
+		<td align='left'> </td>
+		<td port='salesdataid_e6f60d58.end' align='left'>INTEGER</td>
+	</tr>
       </table>
     >
   ];
 
+
+
+  /* PUBLIC."PUBLISHER SALES".SALESDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "salesdata_b64284bf" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#F2DDCE' align='left'><b><i>PUBLIC."PUBLISHER SALES".SALESDATA</i></b></td>
+		<td bgcolor='#F2DDCE' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='salesdataid_3781b382.start' align='left'>SALESDATAID</td>
+		<td align='left'> </td>
+		<td port='salesdataid_3781b382.end' align='left'>INTEGER</td>
+	</tr>
+      </table>
+    >
+  ];
+
+  "sales_20be6f95":"salesdataid_e6f60d58.start":w -> "salesdata_b64284bf":"salesdataid_3781b382.end":e [label=<FK_SALES_SALESDATA> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
 }

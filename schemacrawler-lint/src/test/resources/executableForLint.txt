@@ -193,5 +193,20 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 	no primary key	
                                                              [lint, low]
 	should have remarks	
-	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
+
+
+
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
+------------------------------------------------------------------------
+
+                                                            [lint, high]
+	no primary key	
+                                                          [lint, medium]
+	unique index with nullable columns	SYS_IDX_UQ_CUSTOMERS_10150
+	all data columns are nullable	
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	SALESDATAID, YEARLYAMOUNT
 

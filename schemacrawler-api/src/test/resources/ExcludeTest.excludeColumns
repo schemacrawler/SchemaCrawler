@@ -100,4 +100,14 @@ schema: PUBLIC."PUBLISHER SALES"
     column: PUBLIC."PUBLISHER SALES".SALES.TOTALAMOUNT
       database type: DOUBLE
       type: DOUBLE
+    column: PUBLIC."PUBLISHER SALES".SALES.SALESDATAID
+      database type: INTEGER
+      type: INTEGER
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    column: PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID
+      database type: INTEGER
+      type: INTEGER
+    column: PUBLIC."PUBLISHER SALES".SALESDATA.YEARLYAMOUNT
+      database type: DOUBLE
+      type: DOUBLE
 schema: PUBLIC.SYSTEM_LOBS

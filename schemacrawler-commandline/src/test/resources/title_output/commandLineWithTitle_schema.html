@@ -238,7 +238,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2015-08-16 11:51:59</td>
+		<td class='property_value'>2015-10-21 22:11:55</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1060,10 +1060,27 @@ td.section {
 		<td class='type'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
 		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
+		<td class='type'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1092,7 +1109,19 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_10154</td>
+		<td colspan='2' class='name'>SYS_IDX_10158</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_10156</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1115,15 +1144,82 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10149</td>
+		<td colspan='2' class='name'>SYS_CT_10151</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10150</td>
+		<td colspan='2' class='name'>SYS_CT_10152</td>
 		<td class='description right'>[check constraint]</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2DDCE;'><span id='salesdata_b64284bf' class='caption_name'>PUBLIC."PUBLISHER SALES".SALESDATA</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>INTEGER</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>YEARLYAMOUNT</td>
+		<td class='type'>DOUBLE(64, 0)</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SALES_SALESDATA</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>PUBLIC."PUBLISHER SALES".SALES.SALESDATAID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_UQ_CUSTOMERS_10150</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>SALESDATAID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>UQ_CUSTOMERS</td>
+		<td class='description right'>[unique constraint]</td>
 	</tr>
 </table>
 <p>&#160;</p>
