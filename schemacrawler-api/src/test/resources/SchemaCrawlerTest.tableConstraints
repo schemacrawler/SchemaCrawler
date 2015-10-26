@@ -25,34 +25,34 @@ schema: PUBLIC.FOR_LINT
     constraint: PK_EXTRA_PK
     constraint: FK_PUBLICATION_JOIN
     constraint: FK_WRITER_JOIN
-    constraint: SYS_CT_10187
-    constraint: SYS_CT_10188
-    constraint: SYS_CT_10189
+    constraint: SYS_CT_10191
+    constraint: SYS_CT_10192
+    constraint: SYS_CT_10193
   table: PUBLIC.FOR_LINT."Global Counts"
   table: PUBLIC.FOR_LINT.PUBLICATIONS
     constraint: PK_PUBLICATIONS
     constraint: FK_PUBLICATIONS_WRITER
-    constraint: SYS_CT_10168
-    constraint: SYS_CT_10169
-    constraint: SYS_CT_10170
+    constraint: SYS_CT_10172
+    constraint: SYS_CT_10173
+    constraint: SYS_CT_10174
   table: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
     constraint: FK_PUBLICATION
     constraint: FK_WRITER
-    constraint: SYS_CT_10177
-    constraint: SYS_CT_10178
+    constraint: SYS_CT_10181
+    constraint: SYS_CT_10182
   table: PUBLIC.FOR_LINT.WRITERS
     constraint: PK_WRITERS
     constraint: FK_WRITERS_PUBLICATION
     constraint: CHECK_UPPERCASE_STATE
-    constraint: SYS_CT_10156
-    constraint: SYS_CT_10157
-    constraint: SYS_CT_10158
-    constraint: SYS_CT_10159
     constraint: SYS_CT_10160
+    constraint: SYS_CT_10161
+    constraint: SYS_CT_10162
+    constraint: SYS_CT_10163
+    constraint: SYS_CT_10164
   table: PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
     constraint: PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
     constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
-    constraint: SYS_CT_10198
+    constraint: SYS_CT_10202
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"
@@ -64,6 +64,9 @@ schema: PUBLIC."PUBLISHER SALES"
     constraint: SYS_CT_10143
   table: PUBLIC."PUBLISHER SALES".SALES
     constraint: FK_SALES_REGIONS
-    constraint: SYS_CT_10149
-    constraint: SYS_CT_10150
+    constraint: FK_SALES_SALESDATA
+    constraint: SYS_CT_10151
+    constraint: SYS_CT_10152
+  table: PUBLIC."PUBLISHER SALES".SALESDATA
+    constraint: UQ_CUSTOMERS
 schema: PUBLIC.SYSTEM_LOBS

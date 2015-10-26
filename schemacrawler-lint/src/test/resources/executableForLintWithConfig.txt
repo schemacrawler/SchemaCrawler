@@ -122,5 +122,15 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
                                                           [lint, medium]
 	should have remarks	
-	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT
+	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
+
+
+
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	empty table	
+	should have remarks	
+	should have remarks	SALESDATAID, YEARLYAMOUNT
 
