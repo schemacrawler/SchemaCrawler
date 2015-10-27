@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.04.04" date="2015-10-26" description="Tests and coverage">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added tests for unique constraints.
+      ]]></action>  
+     </release>    
      <release version="14.04.03" date="2015-10-19" description="More efficient IBM DB2 crawling">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Overrides to foreign key retrieval, for more efficient IBM DB2 crawling.
