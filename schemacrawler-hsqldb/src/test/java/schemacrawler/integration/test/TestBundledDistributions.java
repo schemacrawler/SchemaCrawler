@@ -21,7 +21,7 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("hsqldb");
-    assertEquals(8,
+    assertEquals(9,
                  databaseSystemIdentifier
                    .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
                    .getInformationSchemaViews().size());
