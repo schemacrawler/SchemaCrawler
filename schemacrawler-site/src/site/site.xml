@@ -64,6 +64,7 @@
       <item name="Offline Snapshots" href="offline.html" />
       <item name="Plugins" href="plugins.html" />
       <item name="Using INFORMATION_SCHEMA Views" href="INFORMATION_SCHEMA.html" />
+      <item name="SchemaCrawler Report Maven Plugin" href="report-maven-plugin.html" />
     </menu>
     <menu name="Resources">
       <item name="Getting Started" href="readme.html" />    
