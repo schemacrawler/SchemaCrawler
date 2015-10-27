@@ -16,6 +16,10 @@ as an API, how to script your database using JavaScript, [Groovy],
 Once you start getting comfortable with SchemaCrawler, and need to know more about how to do things, 
 read the [how-tos] section.
 
+## Command-line Help
+SchemaCrawler provides detailed command-line help. Simply run `schemacrawler.cmd` (or
+`schemacrawler.sh` on Unix) with no command-line arguments for help.
+
 # Installation
 
 ## Pre-requisites for Installation
@@ -57,7 +61,7 @@ You can run SchemaCrawler using the `schemacrawler` command, which will be on th
 
 ## Jars from the Central Repository
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/us.fatehi/schemacrawler/badge.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*)
+[![Maven Central](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 
 [All of the SchemaCrawler jars](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*) 
 are available on the Maven Central Repository. 
