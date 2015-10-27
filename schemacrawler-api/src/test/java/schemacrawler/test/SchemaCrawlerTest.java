@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.SortedMap;
@@ -43,6 +44,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
@@ -355,7 +357,8 @@ public class SchemaCrawlerTest
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
       databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
         .withTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS")
-        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS")
+        .withTableConstraintsColumnsSql("SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE");
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -376,6 +379,14 @@ public class SchemaCrawlerTest
           for (final TableConstraint tableConstraint: tableConstraints)
           {
             out.println("    constraint: " + tableConstraint.getName());
+            out.println("      type: " + tableConstraint.getType());
+            final List<TableConstraintColumn> columns = tableConstraint
+              .getColumns();
+            for (final TableConstraintColumn tableConstraintColumn: columns)
+            {
+              out
+                .println("      on column: " + tableConstraintColumn.getName());
+            }
           }
         }
       }
