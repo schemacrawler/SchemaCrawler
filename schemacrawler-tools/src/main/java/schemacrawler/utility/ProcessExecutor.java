@@ -18,10 +18,12 @@
  * Place, Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package schemacrawler.tools.integration.graph;
+package schemacrawler.utility;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.containsWhitespace;
+import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readFully;
 
 import java.io.BufferedReader;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -38,7 +41,8 @@ import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class ProcessExecutor
+public class ProcessExecutor
+  implements Callable<Integer>
 {
 
   final class StreamReader
@@ -69,52 +73,22 @@ public final class ProcessExecutor
   private static final Logger LOGGER = Logger
     .getLogger(ProcessExecutor.class.getName());
 
-  static private String createCommandLine(final List<String> command)
-  {
-    final StringBuilder sb = new StringBuilder();
-    boolean first = true;
-    for (final String arg: command)
-    {
-      if (first)
-      {
-        first = false;
-      }
-      else
-      {
-        sb.append(" ");
-      }
-      if (containsWhitespace(arg))
-      {
-        sb.append("\"").append(arg).append("\"");
-      }
-      else
-      {
-        sb.append(arg);
-      }
-    }
-    return sb.toString();
-  }
-
-  private final List<String> command;
+  private List<String> command;
   private String processOutput;
-
   private String processError;
+  private int exitCode;
 
-  public ProcessExecutor(final List<String> command)
+  @Override
+  public Integer call()
     throws IOException
   {
-    if (command == null || command.isEmpty())
+    requireNonNull(command, "No command provided");
+    if (command.isEmpty())
     {
-      throw new RuntimeException("No command provided");
+      throw new IOException("No command provided");
     }
-    this.command = command;
-    LOGGER.log(Level.CONFIG, command.toString());
-  }
 
-  public int execute()
-    throws IOException
-  {
-    LOGGER.log(Level.CONFIG, "Executing:\n" + createCommandLine(command));
+    LOGGER.log(Level.CONFIG, "Executing:\n" + command);
 
     final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
@@ -130,7 +104,7 @@ public final class ProcessExecutor
         .getErrorStream()));
       threadPool.execute(errReaderTask);
 
-      final int exitCode = process.waitFor();
+      exitCode = process.waitFor();
 
       processOutput = inReaderTask.get();
       processError = errReaderTask.get();
@@ -142,10 +116,20 @@ public final class ProcessExecutor
     {
       throw new IOException(e.getMessage(), e);
     }
+    catch (final Throwable t)
+    {
+      LOGGER.log(Level.SEVERE, t.getMessage(), t);
+      throw new IOException(t.getMessage(), t);
+    }
     finally
     {
       threadPool.shutdown();
     }
+  }
+
+  public int getExitCode()
+  {
+    return exitCode;
   }
 
   public String getProcessError()
@@ -156,6 +140,37 @@ public final class ProcessExecutor
   public String getProcessOutput()
   {
     return processOutput;
+  }
+
+  public List<String> getCommand()
+  {
+    return command;
+  }
+
+  public void setCommandLine(final List<String> args)
+  {
+    requireNonNull(args, "No command provided");
+    if (args.isEmpty())
+    {
+      throw new IllegalArgumentException("No command provided");
+    }
+
+    command = new ArrayList<String>();
+    for (final String arg: args)
+    {
+      if (isBlank(arg))
+      {
+        continue;
+      }
+      else if (containsWhitespace(arg))
+      {
+        command.add(String.format("\"%s\"", arg));
+      }
+      else
+      {
+        command.add(arg);
+      }
+    }
   }
 
 }
