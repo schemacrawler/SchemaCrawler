@@ -111,6 +111,7 @@
             <configuration>
               <format>xml</format>
               <maxmem>256m</maxmem>
+              <ignoreTrivial>true</ignoreTrivial>
               <!-- aggregated reports for multi-module projects -->
               <aggregate>true</aggregate>
               <instrumentation>
