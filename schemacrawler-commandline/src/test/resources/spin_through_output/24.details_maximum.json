@@ -2873,10 +2873,28 @@
     {
       "createParameters": "",
       "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.AGE_TYPE",
+      "userDefined": true,
+      "autoIncrementable": false,
+      "basedOn": "SMALLINT",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
       "databaseSpecificTypeName": "PUBLIC.BOOKS.CHARACTER VARYING",
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.NAME_TYPE",
+      "userDefined": true,
+      "autoIncrementable": false,
+      "basedOn": "NVARCHAR",
       "searchable": "unknown"
     },
     {
@@ -3866,7 +3884,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:23:04",
+    "crawlTimestamp": "2015-10-28 22:12:33",
     "title": ""
   },
   "routines": [

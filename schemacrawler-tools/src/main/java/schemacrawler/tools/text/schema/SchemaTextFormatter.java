@@ -447,17 +447,34 @@ final class SchemaTextFormatter
 
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
-    final String databaseSpecificTypeName;
+    final String typeName;
     if (options.isShowUnqualifiedNames())
     {
-      databaseSpecificTypeName = columnDataType.getName();
+      typeName = columnDataType.getName();
     }
     else
     {
-      databaseSpecificTypeName = columnDataType.getFullName();
+      typeName = columnDataType.getFullName();
     }
-    final String typeName = columnDataType.getJavaSqlType()
-      .getJavaSqlTypeName();
+
+    final String baseTypeName;
+    final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
+    if (baseColumnDataType == null)
+    {
+      baseTypeName = "";
+    }
+    else
+    {
+      if (options.isShowUnqualifiedNames())
+      {
+        baseTypeName = baseColumnDataType.getName();
+      }
+      else
+      {
+        baseTypeName = baseColumnDataType.getFullName();
+      }
+    }
+
     final String userDefined = negate(columnDataType.isUserDefined(),
                                       "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
@@ -472,8 +489,8 @@ final class SchemaTextFormatter
     {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
-    formattingHelper.writeNameRow(databaseSpecificTypeName, "[data type]");
-    formattingHelper.writeDetailRow("", "based on", typeName);
+    formattingHelper.writeNameRow(typeName, "[data type]");
+    formattingHelper.writeDetailRow("", "based on", baseTypeName);
     formattingHelper.writeDescriptionRow(userDefined);
     formattingHelper.writeDescriptionRow(definedWith);
     formattingHelper.writeDescriptionRow(nullable);
