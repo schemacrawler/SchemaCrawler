@@ -5,10 +5,13 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.04.04" date="2015-10-26" description="Tests and coverage">
+     <release version="14.04.04" date="2015-10-31" description="Tests and coverage">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added tests for unique constraints.
+        Added tests for unique constraints, and user-defined data types.
       ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed output for base data-types.
+      ]]></action>      
      </release>    
      <release version="14.04.03" date="2015-10-19" description="More efficient IBM DB2 crawling">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[

@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -36,6 +37,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -573,6 +575,43 @@ public class SchemaCrawlerTest
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found",
                 view.getDefinition().trim().equals(""));
+  }
+
+  @Test
+  public void columnDataTypes()
+    throws Exception
+  {
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
+      Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
+      assertEquals("ColumnDataType count does not match",
+                   26,
+                   columnDataTypes.size());
+      for (final ColumnDataType columnDataType: columnDataTypes)
+      {
+        assertNotNull(columnDataType);
+        out.println("column data-type: " + columnDataType.getFullName());
+        out.println("  is user-defined: " + columnDataType.isUserDefined());
+        final ColumnDataType baseType = columnDataType.getBaseType();
+        if (baseType != null)
+        {
+          out.println("  based on: " + baseType.getDatabaseSpecificTypeName());
+        }
+      }
+
+      out.assertEquals(testName.currentMethodFullName());
+    }
   }
 
 }
