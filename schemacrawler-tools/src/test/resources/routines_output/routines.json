@@ -194,10 +194,28 @@
     {
       "createParameters": "",
       "nullable": false,
+      "databaseSpecificTypeName": "AGE_TYPE",
+      "userDefined": true,
+      "autoIncrementable": false,
+      "basedOn": "SMALLINT",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
       "databaseSpecificTypeName": "CHARACTER VARYING",
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "NAME_TYPE",
+      "userDefined": true,
+      "autoIncrementable": false,
+      "basedOn": "NVARCHAR",
       "searchable": "unknown"
     }
   ],
@@ -1178,7 +1196,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-08-27 11:51:28",
+    "crawlTimestamp": "2015-10-28 21:30:26",
     "title": ""
   },
   "routines": [
