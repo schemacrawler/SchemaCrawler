@@ -9,7 +9,7 @@
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.integration.test.Main"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.60.129&#13;&#10;-database=books &#13;&#10;-user=root&#13;&#10;-password=sualeh&#13;&#10;-infolevel=maximum&#13;&#10;-command=details&#13;&#10;-loglevel=CONFIG&#13;&#10;-o sc_mysql.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for MySQL"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
