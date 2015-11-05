@@ -21,7 +21,6 @@
 package schemacrawler.crawl;
 
 
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.Schema;
@@ -59,96 +57,6 @@ final class TableRetriever
                    throws SQLException
   {
     super(retrieverConnection, catalog);
-  }
-
-  void retrieveColumns(final MutableTable table,
-                       final InclusionRule columnInclusionRule)
-                         throws SQLException
-  {
-    final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                               true);
-    if (columnFilter.isExcludeAll())
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving columns, since this was not requested");
-      return;
-    }
-
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                  unquotedName(table.getSchema().getName()),
-                  unquotedName(table.getName()),
-                  null));)
-    {
-      while (results.next())
-      {
-        // Get the "COLUMN_DEF" value first as it the Oracle drivers
-        // don't handle it properly otherwise.
-        // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
-        final String defaultValue = results.getString("COLUMN_DEF");
-        //
-        final String columnCatalogName = quotedName(results
-          .getString("TABLE_CAT"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        LOGGER.log(Level.FINER,
-                   String.format("Retrieving column: %s.%s",
-                                 tableName,
-                                 columnName));
-
-        MutableColumn column;
-
-        column = lookupOrCreateColumn(table, columnName, false/* add */);
-        // Note: If the table name contains an underscore character,
-        // this is a wildcard character. We need to do another check to
-        // see if the table name matches.
-        if (columnFilter.test(column) && table.getName().equals(tableName)
-            && belongsToSchema(table, columnCatalogName, schemaName))
-        {
-          column = lookupOrCreateColumn(table, columnName, true/* add */);
-
-          final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-          final int dataType = results.getInt("DATA_TYPE", 0);
-          final String typeName = results.getString("TYPE_NAME");
-          final int size = results.getInt("COLUMN_SIZE", 0);
-          final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
-          final boolean isNullable = results
-            .getInt("NULLABLE",
-                    DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
-          final boolean isAutoIncremented = results
-            .getBoolean("IS_AUTOINCREMENT");
-          final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
-          final String remarks = results.getString("REMARKS");
-
-          column.setOrdinalPosition(ordinalPosition);
-          column
-            .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                            dataType,
-                                                            typeName));
-          column.setSize(size);
-          column.setDecimalDigits(decimalDigits);
-          column.setNullable(isNullable);
-          column.setAutoIncremented(isAutoIncremented);
-          column.setGenerated(isGenerated);
-          column.setRemarks(remarks);
-          if (defaultValue != null)
-          {
-            column.setDefaultValue(defaultValue);
-          }
-
-          column.addAttributes(results.getAttributes());
-
-          table.addColumn(column);
-        }
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                          + table, e);
-    }
-
   }
 
   void retrieveIndexes(final MutableTable table, final boolean unique)
@@ -398,31 +306,6 @@ final class TableRetriever
     {
       results.close();
     }
-  }
-
-  private MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                             final String columnName,
-                                             final boolean add)
-  {
-    final Optional<MutableColumn> columnOptional = table
-      .lookupColumn(columnName);
-    final MutableColumn column;
-    if (columnOptional.isPresent())
-    {
-      column = columnOptional.get();
-    }
-    else
-    {
-      column = new MutableColumn(table, columnName);
-      if (add)
-      {
-        LOGGER.log(Level.FINER,
-                   String.format("Adding column to table: %s",
-                                 column.getFullName()));
-        table.addColumn(column);
-      }
-    }
-    return column;
   }
 
   private void retrieveIndexes1(final MutableTable table, final boolean unique)

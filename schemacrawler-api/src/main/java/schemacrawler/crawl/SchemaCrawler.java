@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -31,8 +32,6 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -521,11 +520,13 @@ public final class SchemaCrawler
     LOGGER.log(Level.INFO, "Retrieving tables");
 
     final TableRetriever retriever;
+    final TableColumnRetriever columnRetriever;
     final ForeignKeyRetriever fkRetriever;
     final TableExtRetriever retrieverExtra;
     try
     {
       retriever = new TableRetriever(retrieverConnection, catalog);
+      columnRetriever = new TableColumnRetriever(retrieverConnection, catalog);
       fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog);
       retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
 
@@ -544,12 +545,10 @@ public final class SchemaCrawler
       final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
 
       stopWatch.time("retrieveColumns", () -> {
-        for (final MutableTable table: allTables)
+        if (infoLevel.isRetrieveTableColumns())
         {
-          if (infoLevel.isRetrieveTableColumns())
-          {
-            retriever.retrieveColumns(table, options.getColumnInclusionRule());
-          }
+          columnRetriever.retrieveColumns(allTables,
+                                          options.getColumnInclusionRule());
         }
         return null;
       });
