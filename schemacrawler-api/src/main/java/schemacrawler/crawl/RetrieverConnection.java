@@ -264,7 +264,7 @@ final class RetrieverConnection
 
   boolean isSupportsFastColumnRetrieval()
   {
-    return false;
+    return supportsFastColumnRetrieval;
   }
 
   boolean isSupportsFastForeignKeyRetrieval()
