@@ -11,24 +11,39 @@ public final class DatabaseSpecificOverrideOptions
 
   private final Boolean supportsSchemas;
   private final Boolean supportsCatalogs;
+  private final boolean supportsFastColumnRetrieval;
+  private final boolean supportsFastForeignKeyRetrieval;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
   public DatabaseSpecificOverrideOptions()
   {
-    this(null, null, null, null);
+    this(null);
   }
 
-  protected DatabaseSpecificOverrideOptions(final Boolean supportsSchemas,
-                                            final Boolean supportsCatalogs,
-                                            final String identifierQuoteString,
-                                            final InformationSchemaViews informationSchemaViews)
+  protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
   {
-    this.supportsSchemas = supportsSchemas;
-    this.supportsCatalogs = supportsCatalogs;
-    this.identifierQuoteString = identifierQuoteString;
-    this.informationSchemaViews = informationSchemaViews == null? new InformationSchemaViews()
-                                                                : informationSchemaViews;
+    if (builder == null)
+    {
+      supportsSchemas = null;
+      supportsCatalogs = null;
+      supportsFastColumnRetrieval = false;
+      supportsFastForeignKeyRetrieval = false;
+      identifierQuoteString = "";
+      informationSchemaViews = new InformationSchemaViews();
+    }
+    else
+    {
+      supportsSchemas = builder.getSupportsSchemas();
+      supportsCatalogs = builder.getSupportsCatalogs();
+      supportsFastColumnRetrieval = builder.isSupportsFastColumnRetrieval();
+      supportsFastForeignKeyRetrieval = builder
+        .isSupportsFastForeignKeyRetrieval();
+      identifierQuoteString = builder.getIdentifierQuoteString();
+      informationSchemaViews = builder.getInformationSchemaViewsBuilder()
+        .toOptions();
+    }
+
   }
 
   public String getIdentifierQuoteString()
@@ -67,6 +82,16 @@ public final class DatabaseSpecificOverrideOptions
       return true;
     }
     return supportsCatalogs;
+  }
+
+  public boolean isSupportsFastColumnRetrieval()
+  {
+    return supportsFastColumnRetrieval;
+  }
+
+  public boolean isSupportsFastForeignKeyRetrieval()
+  {
+    return supportsFastForeignKeyRetrieval;
   }
 
   public boolean isSupportsSchemas()
