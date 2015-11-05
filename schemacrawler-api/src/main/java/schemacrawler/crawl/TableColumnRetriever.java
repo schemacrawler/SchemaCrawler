@@ -71,6 +71,7 @@ final class TableColumnRetriever
 
     if (fastColumnRetrieval)
     {
+      LOGGER.log(Level.INFO, "Using fast column retrieval");
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getColumns(null, null, "%", "%"));)
       {
@@ -81,6 +82,7 @@ final class TableColumnRetriever
     {
       for (final MutableTable table: allTables)
       {
+        LOGGER.log(Level.FINE, "Retrieving columns for " + table);
         try (
             final MetadataResultSet results = new MetadataResultSet(getMetaData()
               .getColumns(unquotedName(table.getSchema().getCatalogName()),
@@ -117,9 +119,12 @@ final class TableColumnRetriever
       final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
       final String tableName = quotedName(results.getString("TABLE_NAME"));
       final String columnName = quotedName(results.getString("COLUMN_NAME"));
-      LOGGER
-        .log(Level.FINER,
-             String.format("Retrieving column: %s.%s", tableName, columnName));
+      LOGGER.log(Level.FINER,
+                 String.format("Retrieving column: %s.%s%s.%s",
+                               columnCatalogName,
+                               schemaName,
+                               tableName,
+                               columnName));
 
       final Optional<MutableTable> optionalTable = allTables
         .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
