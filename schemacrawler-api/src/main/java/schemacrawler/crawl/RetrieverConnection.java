@@ -138,6 +138,8 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
+  private final boolean supportsFastColumnRetrieval;
+  private final boolean supportsFastForeignKeyRetrieval;
   private final String identifierQuoteString;
   private final List<String> reservedWords;
   private final InformationSchemaViews informationSchemaViews;
@@ -188,6 +190,11 @@ final class RetrieverConnection
     LOGGER.log(Level.CONFIG,
                String.format("Database %s schemas",
                              supportsSchemas? "supports": "does not support"));
+
+    supportsFastColumnRetrieval = databaseSpecificOverrideOptions
+      .isSupportsFastColumnRetrieval();
+    supportsFastForeignKeyRetrieval = databaseSpecificOverrideOptions
+      .isSupportsFastForeignKeyRetrieval();
 
     identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                         metaData);
@@ -253,6 +260,16 @@ final class RetrieverConnection
   boolean isSupportsCatalogs()
   {
     return supportsCatalogs;
+  }
+
+  boolean isSupportsFastColumnRetrieval()
+  {
+    return false;
+  }
+
+  boolean isSupportsFastForeignKeyRetrieval()
+  {
+    return supportsFastForeignKeyRetrieval;
   }
 
   boolean isSupportsSchemas()
