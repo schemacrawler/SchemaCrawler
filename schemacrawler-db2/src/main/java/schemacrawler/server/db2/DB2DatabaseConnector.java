@@ -20,6 +20,7 @@
 package schemacrawler.server.db2;
 
 
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -36,6 +37,14 @@ public final class DB2DatabaseConnector
           "/schemacrawler-db2.config.properties",
           "/db2.information_schema",
           "jdbc:db2:.*");
+  }
+
+  @Override
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  {
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.supportsFastColumnRetrieval();
+    return databaseSpecificOverrideOptionsBuilder;
   }
 
 }
