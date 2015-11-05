@@ -173,12 +173,25 @@ public final class SchemaReference
   @Override
   public String getFullName()
   {
-    final boolean hasCatalogName = !Utility.isBlank(catalogName);
-    final boolean hasSchemaName = !Utility.isBlank(getName());
-    final String fullName = (hasCatalogName? catalogName: "")
-                            + (hasCatalogName && hasSchemaName? ".": "")
-                            + (hasSchemaName? getName(): "");
-    return fullName;
+    final StringBuilder buffer = new StringBuilder(64);
+
+    final boolean hasCatalogName = !isBlank(catalogName);
+    final boolean hasSchemaName = !isBlank(getName());
+
+    if (hasCatalogName)
+    {
+      buffer.append(catalogName);
+    }
+    if (hasCatalogName && hasSchemaName)
+    {
+      buffer.append(".");
+    }
+    if (hasSchemaName)
+    {
+      buffer.append(getName());
+    }
+
+    return buffer.toString();
   }
 
   @Override

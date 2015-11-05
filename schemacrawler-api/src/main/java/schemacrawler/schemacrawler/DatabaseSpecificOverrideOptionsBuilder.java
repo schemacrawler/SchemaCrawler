@@ -9,6 +9,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private Boolean supportsSchemas;
   private Boolean supportsCatalogs;
+  private boolean supportsFastColumnRetrieval;
+  private boolean supportsFastForeignKeyRetrieval;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -63,6 +65,36 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
+  public Boolean getSupportsSchemas()
+  {
+    return supportsSchemas;
+  }
+
+  public Boolean getSupportsCatalogs()
+  {
+    return supportsCatalogs;
+  }
+
+  public boolean isSupportsFastColumnRetrieval()
+  {
+    return supportsFastColumnRetrieval;
+  }
+
+  public boolean isSupportsFastForeignKeyRetrieval()
+  {
+    return supportsFastForeignKeyRetrieval;
+  }
+
+  public String getIdentifierQuoteString()
+  {
+    return identifierQuoteString;
+  }
+
+  public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
+  {
+    return informationSchemaViewsBuilder;
+  }
+
   /**
    * Overrides the JDBC driver provided information about whether the
    * database supports catalogs.
@@ -83,6 +115,18 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
+  public DatabaseSpecificOverrideOptionsBuilder supportsFastForeignKeyRetrieval()
+  {
+    supportsFastForeignKeyRetrieval = true;
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder supportsFastColumnRetrieval()
+  {
+    supportsFastColumnRetrieval = true;
+    return this;
+  }
+
   @Override
   public Config toConfig()
   {
@@ -92,11 +136,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   @Override
   public DatabaseSpecificOverrideOptions toOptions()
   {
-    return new DatabaseSpecificOverrideOptions(supportsSchemas,
-                                               supportsCatalogs,
-                                               identifierQuoteString,
-                                               informationSchemaViewsBuilder
-                                                 .toOptions());
+    return new DatabaseSpecificOverrideOptions(this);
   }
 
   public InformationSchemaViewsBuilder withInformationSchemaViews()
