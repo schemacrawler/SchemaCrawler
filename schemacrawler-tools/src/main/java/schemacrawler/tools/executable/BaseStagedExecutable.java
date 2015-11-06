@@ -21,11 +21,11 @@
 package schemacrawler.tools.executable;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -65,7 +65,8 @@ public abstract class BaseStagedExecutable
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific overrides provided");
 
-    LOGGER.log(Level.INFO, "Executing SchemaCrawler command, " + getCommand());
+    LOGGER.log(Level.INFO,
+               "Executing SchemaCrawler command, \"" + getCommand() + "\"");
     LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
     LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
     LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));

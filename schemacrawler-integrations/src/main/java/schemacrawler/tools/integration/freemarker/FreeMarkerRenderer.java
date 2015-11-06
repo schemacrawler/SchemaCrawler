@@ -36,7 +36,6 @@ import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
@@ -76,8 +75,15 @@ public final class FreeMarkerRenderer
       templateLocation = templateFilePath.getName();
     }
 
+    System.setProperty(
+                       freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
+                       String.valueOf(freemarker.log.Logger.LIBRARY_JAVA));
     freemarker.log.Logger
       .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
+
+    LOGGER.log(Level.INFO,
+               "Rednering using FreeMarker, version "
+                           + Configuration.getVersion().toString());
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
@@ -91,13 +97,9 @@ public final class FreeMarkerRenderer
     cfg.setTemplateLoader(mtl);
     cfg.setEncoding(Locale.getDefault(),
                     outputOptions.getInputCharset().name());
-    cfg.setStrictSyntaxMode(true);
     cfg.setWhitespaceStripping(true);
 
-    cfg.setObjectWrapper(new DefaultObjectWrapper());
-
-    LOGGER.log(Level.INFO, Configuration.getVersionNumber());
-    LOGGER.log(Level.INFO, "FreeMarker configuration properties - " + cfg);
+    LOGGER.log(Level.CONFIG, "FreeMarker configuration properties - " + cfg);
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<>();

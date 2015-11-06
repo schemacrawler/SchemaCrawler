@@ -73,6 +73,9 @@ final class RoutineExtRetriever
                  "Routine definition SQL statement was not provided");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving procedure definitions");
+
     final String routineDefinitionsSql = informationSchemaViews
       .getRoutinesSql();
 
