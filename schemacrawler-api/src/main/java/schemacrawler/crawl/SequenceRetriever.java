@@ -78,6 +78,8 @@ final class SequenceRetriever
       return;
     }
 
+    LOGGER.log(Level.INFO, "Retrieving sequences");
+
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasSequencesSql())

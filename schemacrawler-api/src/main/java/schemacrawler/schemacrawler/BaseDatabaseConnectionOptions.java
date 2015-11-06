@@ -128,7 +128,7 @@ abstract class BaseDatabaseConnectionOptions
     {
       LOGGER.log(Level.INFO,
                  String.format(
-                               "Making connection to %s, for user \'%s\', with properties %s",
+                               "Making connection to %s%nfor user \'%s\', with properties %s",
                                connectionUrl,
                                user,
                                safeProperties(jdbcConnectionProperties)));

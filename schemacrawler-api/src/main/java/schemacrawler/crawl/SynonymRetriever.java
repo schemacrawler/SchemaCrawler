@@ -80,6 +80,8 @@ final class SynonymRetriever
       return;
     }
 
+    LOGGER.log(Level.INFO, "Retrieving synonyms");
+
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
     if (!informationSchemaViews.hasSynonymsSql())

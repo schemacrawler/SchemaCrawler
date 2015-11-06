@@ -117,7 +117,7 @@ public final class VelocityRenderer
                                       "path",
                                       templatePath);
 
-    LOGGER.log(Level.INFO,
+    LOGGER.log(Level.CONFIG,
                "Velocity configuration properties - " + p.toString());
 
     ve.init(p);
@@ -128,7 +128,7 @@ public final class VelocityRenderer
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER.log(Level.CONFIG,
+      LOGGER.log(Level.INFO,
                  String.format(
                                "Reading Velocity template %s, with encoding \"%s\"",
                                templateLocation,
