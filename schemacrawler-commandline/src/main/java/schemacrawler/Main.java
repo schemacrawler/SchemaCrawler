@@ -21,14 +21,13 @@
 package schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -56,8 +55,9 @@ public final class Main
       .getOptions();
 
     applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
+
+    logSafeArguments(args);
     logSystemProperties();
-    logSafeArguments(Level.CONFIG, args);
 
     try
     {
@@ -86,7 +86,7 @@ public final class Main
       System.err.println("Re-run SchemaCrawler with the\n-?\noption for help");
       System.err
         .println("Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
-      logSafeArguments(Level.SEVERE, args);
+      logSafeArguments(args);
       logFullStackTrace(Level.SEVERE, e);
     }
 

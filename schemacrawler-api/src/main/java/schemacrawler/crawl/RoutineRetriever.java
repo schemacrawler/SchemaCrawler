@@ -172,6 +172,8 @@ final class RoutineRetriever
       return;
     }
 
+    LOGGER.log(Level.INFO, "Retrieving functions");
+
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
     {
@@ -319,6 +321,8 @@ final class RoutineRetriever
                  "Not retrieving procedures, since this was not requested");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving procedures");
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(unquotedName(catalogName),

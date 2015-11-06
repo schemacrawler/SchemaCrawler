@@ -38,6 +38,7 @@ import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
+import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -123,13 +124,19 @@ public class CommandLineUtility
     LOGGER.log(level, t.getMessage(), t);
   }
 
-  public static void logSafeArguments(final Level level, final String[] args)
+  public static void logSafeArguments(final String[] args)
   {
-    if (args == null)
+    if (!LOGGER.isLoggable(Level.INFO))
     {
       return;
     }
-    if (level == null || !LOGGER.isLoggable(level))
+
+    LOGGER.log(Level.INFO,
+               String.format("%s, v%s",
+                             Version.getProductName(),
+                             Version.getVersion()));
+
+    if (args == null)
     {
       return;
     }
@@ -163,7 +170,7 @@ public class CommandLineUtility
       }
     }
 
-    LOGGER.log(level,
+    LOGGER.log(Level.INFO,
                "Command line: \n" + join(argsList, System.lineSeparator()));
   }
 

@@ -166,6 +166,8 @@ final class TableRetriever
                              filteredTableTypes == null? "<<all>>": Arrays
                                .asList(filteredTableTypes)));
 
+    LOGGER.log(Level.INFO, "Retrieving tables");
+
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTables(unquotedName(catalogName),
                  unquotedName(schemaName),

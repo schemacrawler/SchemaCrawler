@@ -91,6 +91,8 @@ public final class SchemaCrawler
   {
     try
     {
+      LOGGER.log(Level.INFO, "Crawling column data types");
+
       final StopWatch stopWatch = new StopWatch("crawlColumnDataTypes");
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -166,7 +168,7 @@ public final class SchemaCrawler
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         catalog);
 
-      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler information");
+      LOGGER.log(Level.INFO, "Crawling SchemaCrawler information");
 
       LOGGER.log(Level.INFO, "Retrieving database information");
 
@@ -209,8 +211,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO,
-                 "Retrieving SchemaCrawler crawl header information");
+      LOGGER.log(Level.INFO, "Retrieving SchemaCrawler crawl information");
       stopWatch.time("retrieveCrawlHeaderInfo", () -> {
         retriever.retrieveCrawlHeaderInfo(options.getTitle());
         return null;
@@ -252,7 +253,7 @@ public final class SchemaCrawler
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving routines");
+    LOGGER.log(Level.INFO, "Crawling routines");
 
     final RoutineRetriever retriever;
     final RoutineExtRetriever retrieverExtra;
@@ -354,7 +355,7 @@ public final class SchemaCrawler
   {
     final StopWatch stopWatch = new StopWatch("crawlSchemas");
 
-    LOGGER.log(Level.INFO, "Retrieving schemas");
+    LOGGER.log(Level.INFO, "Crawling schemas");
 
     try
     {
@@ -407,7 +408,7 @@ public final class SchemaCrawler
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving sequences");
+    LOGGER.log(Level.INFO, "Crawling sequences");
 
     final SequenceRetriever retrieverExtra;
     try
@@ -462,7 +463,7 @@ public final class SchemaCrawler
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving synonyms");
+    LOGGER.log(Level.INFO, "Crawling synonyms");
 
     final SynonymRetriever retrieverExtra;
     try
@@ -517,7 +518,7 @@ public final class SchemaCrawler
 
     final StopWatch stopWatch = new StopWatch("crawlTables");
 
-    LOGGER.log(Level.INFO, "Retrieving tables");
+    LOGGER.log(Level.INFO, "Crawling tables");
 
     final TableRetriever retriever;
     final TableColumnRetriever columnRetriever;

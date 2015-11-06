@@ -71,7 +71,7 @@ final class TableColumnRetriever
 
     if (fastColumnRetrieval)
     {
-      LOGGER.log(Level.INFO, "Using fast column retrieval");
+      LOGGER.log(Level.INFO, "Retrieving table columns, using fast retrieval");
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getColumns(null, null, "%", "%"));)
       {
@@ -80,6 +80,7 @@ final class TableColumnRetriever
     }
     else
     {
+      LOGGER.log(Level.INFO, "Retrieving table columns");
       for (final MutableTable table: allTables)
       {
         LOGGER.log(Level.FINE, "Retrieving columns for " + table);

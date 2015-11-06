@@ -229,6 +229,9 @@ final class TableExtRetriever
                  "Indexes information SQL statement was not provided");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving additional index information");
+
     final String extIndexesInformationSql = informationSchemaViews
       .getExtIndexesSql();
 
@@ -361,6 +364,9 @@ final class TableExtRetriever
                  "Table definitions SQL statement was not provided");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving table definitions");
+
     final String tableDefinitionsInformationSql = informationSchemaViews
       .getExtTablesSql();
 
@@ -442,6 +448,9 @@ final class TableExtRetriever
                  "Trigger definition SQL statement was not provided");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving trigger definitions");
+
     final String triggerInformationSql = informationSchemaViews
       .getTriggersSql();
 
@@ -537,6 +546,9 @@ final class TableExtRetriever
       LOGGER.log(Level.FINE, "Views SQL statement was not provided");
       return;
     }
+
+    LOGGER.log(Level.INFO, "Retrieving additional view information");
+
     final String viewInformationSql = informationSchemaViews.getViewsSql();
 
     final Connection connection = getDatabaseConnection();
