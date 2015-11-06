@@ -134,7 +134,7 @@ public final class Config
     if (propertiesFile == null || !exists(propertiesFile)
         || !isReadable(propertiesFile) || isDirectory(propertiesFile))
     {
-      LOGGER.log(Level.WARNING,
+      LOGGER.log(Level.CONFIG,
                  "Cannot load properties from file, " + propertiesFile);
       return properties;
     }

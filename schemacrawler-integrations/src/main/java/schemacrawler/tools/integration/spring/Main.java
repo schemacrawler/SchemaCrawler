@@ -21,13 +21,10 @@
 package schemacrawler.tools.integration.spring;
 
 
+import static java.util.Objects.requireNonNull;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
-
-import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -73,8 +70,8 @@ public final class Main
       .setProperty("org.apache.commons.logging.Log",
                    org.apache.commons.logging.impl.Jdk14Logger.class.getName());
     applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
+    logSafeArguments(args);
     logSystemProperties();
-    logSafeArguments(Level.CONFIG, args);
 
     final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(argsMap);
     commandLine.execute();
