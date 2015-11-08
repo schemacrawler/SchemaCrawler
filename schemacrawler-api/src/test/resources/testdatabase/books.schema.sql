@@ -17,7 +17,7 @@ CREATE TABLE Authors
   City VARCHAR(50),
   State VARCHAR(2),
   PostalCode VARCHAR(10),
-  Country VARCHAR(50),
+  Country VARCHAR(50) DEFAULT 'USA',
   CONSTRAINT PK_Authors PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
