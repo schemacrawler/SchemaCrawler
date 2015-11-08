@@ -69,8 +69,6 @@ public class SchemaCrawlerTest
   extends BaseDatabaseTest
 {
 
-  private static final String METADATA_OUTPUT = "metadata/";
-
   @Rule
   public TestName testName = new TestName();
 
@@ -436,27 +434,10 @@ public class SchemaCrawlerTest
                                       tableAttribute.getKey(),
                                       tableAttribute.getValue()));
           }
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
-          Arrays.sort(columns);
-          for (final Column column: columns)
-          {
-            out.println(String.format("   o--> %s [%s]",
-                                      column.getFullName(),
-                                      column.getColumnDataType()));
-            final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
-              .getAttributes());
-            for (final Entry<String, Object> columnAttribute: columnAttributes
-              .entrySet())
-            {
-              out.println(String.format("          ~ %s=%s",
-                                        columnAttribute.getKey(),
-                                        columnAttribute.getValue()));
-            }
-          }
         }
       }
 
-      out.assertEquals(METADATA_OUTPUT + "tables.txt");
+      out.assertEquals(testName.currentMethodFullName());
     }
   }
 
@@ -607,6 +588,60 @@ public class SchemaCrawlerTest
         if (baseType != null)
         {
           out.println("  based on: " + baseType.getDatabaseSpecificTypeName());
+        }
+      }
+
+      out.assertEquals(testName.currentMethodFullName());
+    }
+  }
+
+  @Test
+  public void columns()
+    throws Exception
+  {
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
+      {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
+        {
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          Arrays.sort(columns);
+          for (final Column column: columns)
+          {
+            out.println(String.format("%s [%s] default=\"%s\"",
+                                      column.getFullName(),
+                                      column.getColumnDataType(),
+                                      column.getDefaultValue()));
+            final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
+              .getAttributes());
+            for (final Entry<String, Object> columnAttribute: columnAttributes
+              .entrySet())
+            {
+              out.println(String.format("  ~ %s=%s",
+                                        columnAttribute.getKey(),
+                                        columnAttribute.getValue()));
+            }
+          }
+
+          out.println();
         }
       }
 
