@@ -63,8 +63,6 @@ final class TableRetriever
     throws SQLException
   {
 
-    LOGGER.log(Level.INFO, "Retrieving indexes");
-
     SQLException sqlEx = null;
     try
     {
@@ -103,7 +101,6 @@ final class TableRetriever
   void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
-    LOGGER.log(Level.INFO, "Retrieving primary keys");
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
