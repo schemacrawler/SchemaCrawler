@@ -73,12 +73,13 @@ final class ForeignKeyRetriever
 
     if (!informationSchemaViews.hasForeignKeysSql())
     {
-      LOGGER.log(Level.INFO, "Retrieving foreign keys using database metadata");
+      LOGGER.log(Level.INFO,
+                 "Retrieving foreign keys, using database metadata");
       retrieveForeignKeysUsingDatabaseMetadata(allTables);
     }
     else
     {
-      LOGGER.log(Level.INFO, "Retrieving foreign keys using SQL");
+      LOGGER.log(Level.INFO, "Retrieving foreign keys, using SQL");
       retrieveForeignKeysUsingSql(informationSchemaViews);
     }
   }
