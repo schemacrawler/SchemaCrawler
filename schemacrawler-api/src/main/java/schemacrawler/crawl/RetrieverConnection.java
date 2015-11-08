@@ -139,7 +139,6 @@ final class RetrieverConnection
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
   private final boolean supportsFastColumnRetrieval;
-  private final boolean supportsFastForeignKeyRetrieval;
   private final String identifierQuoteString;
   private final List<String> reservedWords;
   private final InformationSchemaViews informationSchemaViews;
@@ -193,8 +192,6 @@ final class RetrieverConnection
 
     supportsFastColumnRetrieval = databaseSpecificOverrideOptions
       .isSupportsFastColumnRetrieval();
-    supportsFastForeignKeyRetrieval = databaseSpecificOverrideOptions
-      .isSupportsFastForeignKeyRetrieval();
 
     identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                         metaData);
@@ -265,11 +262,6 @@ final class RetrieverConnection
   boolean isSupportsFastColumnRetrieval()
   {
     return supportsFastColumnRetrieval;
-  }
-
-  boolean isSupportsFastForeignKeyRetrieval()
-  {
-    return supportsFastForeignKeyRetrieval;
   }
 
   boolean isSupportsSchemas()
