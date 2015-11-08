@@ -50,12 +50,16 @@ public final class ApplicationOptionsParser
   {
     final ApplicationOptions options = new ApplicationOptions();
 
-    final String logLevelString = config.getStringValue("loglevel", "OFF");
-    if (!isBlank(logLevelString))
+    if (config.hasValue("loglevel"))
     {
-      final Level applicationLogLevel = Level
-        .parse(logLevelString.toUpperCase());
-      options.setApplicationLogLevel(applicationLogLevel);
+      final String logLevelString = config.getStringValue("loglevel", "OFF");
+      if (!isBlank(logLevelString))
+      {
+        final Level applicationLogLevel = Level
+          .parse(logLevelString.toUpperCase());
+        options.setApplicationLogLevel(applicationLogLevel);
+      }
+      consumeOption("loglevel");
     }
 
     if (config.hasValue("help"))
