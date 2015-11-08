@@ -286,6 +286,7 @@ public final class SchemaCrawler
         .getAllRoutines();
 
       stopWatch.time("retrieveRoutineColumns", () -> {
+        LOGGER.log(Level.INFO, "Retrieving routine columns");
         for (final MutableRoutine routine: allRoutines)
         {
           if (infoLevel.isRetrieveRoutineColumns())
@@ -584,6 +585,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveIndexes", () -> {
+        LOGGER.log(Level.INFO, "Retrieving primary keys and indexes");
         for (final MutableTable table: allTables)
         {
           final boolean isView = table instanceof MutableView;
