@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -172,7 +174,9 @@ final class RoutineRetriever
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving functions");
+    LOGGER.log(Level.INFO,
+               "Retrieving functions, "
+                           + new SchemaReference(catalogName, schemaName));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
@@ -183,6 +187,10 @@ final class RoutineRetriever
         final String functionName = quotedName(results
           .getString("FUNCTION_NAME"));
         LOGGER.log(Level.FINER, "Retrieving function: " + functionName);
+        if (isBlank(functionName))
+        {
+          continue;
+        }
         final short functionType = results
           .getShort("FUNCTION_TYPE",
                     (short) FunctionReturnType.unknown.getId());
@@ -322,7 +330,9 @@ final class RoutineRetriever
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving procedures");
+    LOGGER.log(Level.INFO,
+               "Retrieving procedures for, "
+                           + new SchemaReference(catalogName, schemaName));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(unquotedName(catalogName),
@@ -335,6 +345,10 @@ final class RoutineRetriever
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER, "Retrieving procedure: " + procedureName);
+        if (isBlank(procedureName))
+        {
+          continue;
+        }
         final short procedureType = results
           .getShort("PROCEDURE_TYPE",
                     (short) ProcedureReturnType.unknown.getId());
