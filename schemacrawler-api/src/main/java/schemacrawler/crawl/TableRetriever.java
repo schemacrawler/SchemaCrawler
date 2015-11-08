@@ -63,6 +63,8 @@ final class TableRetriever
     throws SQLException
   {
 
+    LOGGER.log(Level.INFO, "Retrieving indexes");
+
     SQLException sqlEx = null;
     try
     {
@@ -70,6 +72,12 @@ final class TableRetriever
     }
     catch (final SQLException e)
     {
+      LOGGER.log(Level.WARNING,
+                 String.format(
+                               "Could not retrieve %sindexes for table %s, trying again",
+                               unique? "unique ": "",
+                               table),
+                 e.getCause());
       sqlEx = e;
     }
 
@@ -95,6 +103,8 @@ final class TableRetriever
   void retrievePrimaryKey(final MutableTable table)
     throws SQLException
   {
+    LOGGER.log(Level.INFO, "Retrieving primary keys");
+
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
                       unquotedName(table.getSchema().getName()),
