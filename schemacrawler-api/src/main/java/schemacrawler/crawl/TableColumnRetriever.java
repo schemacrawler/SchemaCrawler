@@ -110,11 +110,6 @@ final class TableColumnRetriever
   {
     while (results.next())
     {
-      // Get the "COLUMN_DEF" value first as it the Oracle drivers
-      // don't handle it properly otherwise.
-      // http://issues.apache.org/jira/browse/DDLUTILS-29?page=all
-      final String defaultValue = results.getString("COLUMN_DEF");
-      //
       final String columnCatalogName = quotedName(results
         .getString("TABLE_CAT"));
       final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
@@ -155,6 +150,7 @@ final class TableColumnRetriever
           .getBoolean("IS_AUTOINCREMENT");
         final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
         final String remarks = results.getString("REMARKS");
+        final String defaultValue = results.getString("COLUMN_DEF");
 
         column.setOrdinalPosition(ordinalPosition);
         column
