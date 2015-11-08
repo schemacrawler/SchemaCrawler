@@ -12,7 +12,6 @@ public final class DatabaseSpecificOverrideOptions
   private final Boolean supportsSchemas;
   private final Boolean supportsCatalogs;
   private final boolean supportsFastColumnRetrieval;
-  private final boolean supportsFastForeignKeyRetrieval;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -28,7 +27,6 @@ public final class DatabaseSpecificOverrideOptions
       supportsSchemas = null;
       supportsCatalogs = null;
       supportsFastColumnRetrieval = false;
-      supportsFastForeignKeyRetrieval = false;
       identifierQuoteString = "";
       informationSchemaViews = new InformationSchemaViews();
     }
@@ -37,8 +35,6 @@ public final class DatabaseSpecificOverrideOptions
       supportsSchemas = builder.getSupportsSchemas();
       supportsCatalogs = builder.getSupportsCatalogs();
       supportsFastColumnRetrieval = builder.isSupportsFastColumnRetrieval();
-      supportsFastForeignKeyRetrieval = builder
-        .isSupportsFastForeignKeyRetrieval();
       identifierQuoteString = builder.getIdentifierQuoteString();
       informationSchemaViews = builder.getInformationSchemaViewsBuilder()
         .toOptions();
@@ -87,11 +83,6 @@ public final class DatabaseSpecificOverrideOptions
   public boolean isSupportsFastColumnRetrieval()
   {
     return supportsFastColumnRetrieval;
-  }
-
-  public boolean isSupportsFastForeignKeyRetrieval()
-  {
-    return supportsFastForeignKeyRetrieval;
   }
 
   public boolean isSupportsSchemas()

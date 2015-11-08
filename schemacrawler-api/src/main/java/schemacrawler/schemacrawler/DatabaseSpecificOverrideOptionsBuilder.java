@@ -10,7 +10,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
   private Boolean supportsSchemas;
   private Boolean supportsCatalogs;
   private boolean supportsFastColumnRetrieval;
-  private boolean supportsFastForeignKeyRetrieval;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -80,11 +79,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return supportsFastColumnRetrieval;
   }
 
-  public boolean isSupportsFastForeignKeyRetrieval()
-  {
-    return supportsFastForeignKeyRetrieval;
-  }
-
   public String getIdentifierQuoteString()
   {
     return identifierQuoteString;
@@ -112,12 +106,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder supportsSchemas()
   {
     supportsSchemas = Boolean.TRUE;
-    return this;
-  }
-
-  public DatabaseSpecificOverrideOptionsBuilder supportsFastForeignKeyRetrieval()
-  {
-    supportsFastForeignKeyRetrieval = true;
     return this;
   }
 
