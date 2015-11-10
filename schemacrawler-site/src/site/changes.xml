@@ -5,7 +5,13 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.04.04" date="2015-10-31" description="Tests and coverage">
+     <release version="14.04.04" date="2015-10-31" description="Logging, tests and coverage">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix for retrieving PostgreSQL triggers.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        More efficient table column retrieval in IBM DB2.
+      ]]></action>       
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added tests for unique constraints, and user-defined data types.
       ]]></action>  
