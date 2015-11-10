@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>3.0.0.ALPHA03</version>
+      <version>3.0.0.BETA01</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -81,13 +81,13 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby-complete</artifactId>
-      <version>9.0.2.0</version>
+      <version>9.0.3.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
-      <version>1.7.12</version>
+      <version>1.7.13</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
