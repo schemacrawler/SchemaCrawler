@@ -9,7 +9,7 @@
 <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-host=192.168.60.129&#13;&#10;-database=scmariadb&#13;&#10;-user=scmariadb&#13;&#10;-password=scmariadb&#13;&#10;-infolevel=maximum&#13;&#10;-command=details&#13;&#10;-loglevel=CONFIG&#13;&#10;!o sc_mysql.txt"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-server=mariadb&#13;&#10;-host=10.0.0.12&#13;&#10;-database=schemacrawler&#13;&#10;-schemas=schemacrawler&#13;&#10;-user=schemacrawler&#13;&#10;-password=&#13;&#10;-infolevel=maximum&#13;&#10;-command=details&#13;&#10;-tabletypes=&quot;BASE TABLE&quot;&#13;&#10;~loglevel=ALL&#13;&#10;~o sc_mysql.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for MariaDB"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - Documents}"/>
