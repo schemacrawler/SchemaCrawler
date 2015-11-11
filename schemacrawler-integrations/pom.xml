@@ -39,7 +39,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>3.0.0.BETA01</version>
+      <version>2.1.4.RELEASE</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
