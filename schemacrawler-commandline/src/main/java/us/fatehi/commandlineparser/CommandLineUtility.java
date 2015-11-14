@@ -53,9 +53,14 @@ public class CommandLineUtility
    */
   public static void applyApplicationLogLevel(final Level applicationLogLevel)
   {
+    final Level logLevel;
     if (applicationLogLevel == null)
     {
-      return;
+      logLevel = Level.OFF;
+    }
+    else
+    {
+      logLevel = applicationLogLevel;
     }
 
     final LogManager logManager = LogManager.getLogManager();
@@ -69,13 +74,13 @@ public class CommandLineUtility
         logger.setLevel(null);
         for (final Handler handler: logger.getHandlers())
         {
-          handler.setLevel(applicationLogLevel);
+          handler.setLevel(logLevel);
         }
       }
     }
 
     final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(applicationLogLevel);
+    rootLogger.setLevel(logLevel);
   }
 
   public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
