@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.options.DatabaseServerType;
+import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
 public final class NewDBDatabaseConnector
   extends DatabaseConnector
@@ -25,7 +25,7 @@ public final class NewDBDatabaseConnector
           "/newdb.information_schema",
           "jdbc:newdb:.*");
     // SchemaCrawler will control output of log messages if you use JDK logging
-    LOGGER.log(Level.INFO, "Loaded pluging for newdb");
+    LOGGER.log(Level.INFO, "Loaded plugin for NewDB");
   }
 
   @Override
