@@ -29,7 +29,8 @@ public class SiteVariationsGenerationRule
   implements TestRule
 {
 
-  private static final boolean GENERATE_SITE = true;
+  private static final boolean GENERATE_SITE = System
+    .getProperty("complete") != null;
 
   @Override
   public Statement apply(final Statement base, final Description description)
