@@ -27,11 +27,5 @@ public final class NewDBDatabaseConnector
     // SchemaCrawler will control output of log messages if you use JDK logging
     LOGGER.log(Level.INFO, "Loaded plugin for NewDB");
   }
-
-  @Override
-  protected Pattern getConnectionUrlPattern()
-  {
-    return Pattern.compile("jdbc:newdb:.*");
-  }
   
 }
