@@ -67,6 +67,8 @@
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
         <attribute name="Copyright" value="Copyright (c) 2000-2015, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
+      	<attribute name="Name" value="schemacrawler/crawl/" />
+      	<attribute name="Sealed" value="true" />
       </manifest>
     </jar>
 
