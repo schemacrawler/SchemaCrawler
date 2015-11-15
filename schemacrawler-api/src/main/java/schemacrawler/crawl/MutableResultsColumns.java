@@ -71,7 +71,7 @@ class MutableResultsColumns
     final List<ResultsColumn> columns = getColumns();
     if (columns != null && columns.size() > 0)
     {
-      final StringBuilder buffer = new StringBuilder();
+      final StringBuilder buffer = new StringBuilder(1024);
       for (int i = 0; i < columns.size(); i++)
       {
         if (i > 0)

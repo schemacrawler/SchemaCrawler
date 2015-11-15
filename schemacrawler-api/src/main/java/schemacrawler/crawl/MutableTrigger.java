@@ -53,8 +53,8 @@ class MutableTrigger
     eventManipulationType = EventManipulationType.unknown;
     actionOrientation = ActionOrientationType.unknown;
     conditionTiming = ConditionTimingType.unknown;
-    actionCondition = new StringBuilder();
-    actionStatement = new StringBuilder();
+    actionCondition = new StringBuilder(1024);
+    actionStatement = new StringBuilder(1024);
   }
 
   /**

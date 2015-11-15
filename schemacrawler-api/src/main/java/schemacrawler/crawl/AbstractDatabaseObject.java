@@ -21,9 +21,8 @@
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
-
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -132,7 +131,7 @@ abstract class AbstractDatabaseObject
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(64);
     if (schema != null)
     {
       final String schemaFullName = schema.getFullName();

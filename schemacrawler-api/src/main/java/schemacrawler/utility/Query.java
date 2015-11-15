@@ -55,7 +55,7 @@ public final class Query
   private static String getColumnsListAsString(final List<Column> columns,
                                                final boolean omitLargeObjectColumns)
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     for (int i = 0; i < columns.size(); i++)
     {
       final Column column = columns.get(i);

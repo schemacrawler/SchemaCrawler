@@ -134,7 +134,7 @@ public final class StopWatch
   @Override
   public String toString()
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
 
     final LocalTime totalDurationLocal = LocalTime
       .ofNanoOfDay(totalDuration.toNanos());

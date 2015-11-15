@@ -94,7 +94,7 @@ final class MutableDatabaseInfo
   @Override
   public String toString()
   {
-    final StringBuilder info = new StringBuilder();
+    final StringBuilder info = new StringBuilder(1024);
     info.append("-- database: ").append(getProductName()).append(' ')
       .append(getProductVersion()).append(System.lineSeparator());
     return info.toString();
