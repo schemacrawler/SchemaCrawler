@@ -1,17 +1,18 @@
 # SchemaCrawler Whitepapers and Documentation
+
 To read more about SchemaCrawler, you can read:
 
-- IT journalist Lee Schlesinger's blog on
- [SchemaCrawler](http://www.schlesinger.us/?p=650)
-- [Java API Makes Database Metadata as Easily Accessible as
- POJOs](http://www.devx.com/Java/Article/32443) for an introduction
- to the SchemaCrawler API. (This article may refer to an older
- release of the SchemaCrawler API, but the concepts are the same.)
+- Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](http://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
+- Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - The SchemaCrawler API [javadocs](apidocs/index.html) .
 - Download the [SchemaCrawler
  examples](http://github.com/sualeh/SchemaCrawler/releases/)
  for an overview of all SchemaCrawler features and capabilities.
-
+- [Java API Makes Database Metadata as Easily Accessible as
+ POJOs](http://www.devx.com/Java/Article/32443) for an introduction
+ to the SchemaCrawler API. (This article may refer to an older
+ release of the SchemaCrawler API, but the concepts are the same.)
+ 
 # SchemaCrawler Slides
 
 <iframe src="http://www.slideshare.net/slideshow/embed_code/8267188" 
