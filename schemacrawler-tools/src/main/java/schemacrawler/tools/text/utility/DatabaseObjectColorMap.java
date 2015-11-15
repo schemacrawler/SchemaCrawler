@@ -1,13 +1,12 @@
 package schemacrawler.tools.text.utility;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.DatabaseObject;
 
@@ -54,8 +53,7 @@ public class DatabaseObjectColorMap
     }
     else
     {
-      final int hash = new StringBuffer().append(text).reverse().toString()
-        .hashCode();
+      final int hash = new StringBuilder(text).reverse().toString().hashCode();
       hue = hash / 32771f % 1;
     }
 

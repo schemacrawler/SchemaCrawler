@@ -3,14 +3,16 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.Optional;
+
 public final class DatabaseSpecificOverrideOptions
   implements Options
 {
 
   private static final long serialVersionUID = -5593417085363698921L;
 
-  private final Boolean supportsSchemas;
-  private final Boolean supportsCatalogs;
+  private final Optional<Boolean> supportsSchemas;
+  private final Optional<Boolean> supportsCatalogs;
   private final boolean supportsFastColumnRetrieval;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
@@ -24,8 +26,8 @@ public final class DatabaseSpecificOverrideOptions
   {
     if (builder == null)
     {
-      supportsSchemas = null;
-      supportsCatalogs = null;
+      supportsSchemas = Optional.empty();
+      supportsCatalogs = Optional.empty();
       supportsFastColumnRetrieval = false;
       identifierQuoteString = "";
       informationSchemaViews = new InformationSchemaViews();
@@ -63,21 +65,17 @@ public final class DatabaseSpecificOverrideOptions
 
   public boolean hasOverrideForSupportsCatalogs()
   {
-    return supportsCatalogs != null;
+    return supportsCatalogs.isPresent();
   }
 
   public boolean hasOverrideForSupportsSchemas()
   {
-    return supportsSchemas != null;
+    return supportsSchemas.isPresent();
   }
 
   public boolean isSupportsCatalogs()
   {
-    if (supportsCatalogs == null)
-    {
-      return true;
-    }
-    return supportsCatalogs;
+    return supportsCatalogs.orElse(true);
   }
 
   public boolean isSupportsFastColumnRetrieval()
@@ -87,11 +85,7 @@ public final class DatabaseSpecificOverrideOptions
 
   public boolean isSupportsSchemas()
   {
-    if (supportsSchemas == null)
-    {
-      return true;
-    }
-    return supportsSchemas;
+    return supportsSchemas.orElse(true);
   }
 
 }

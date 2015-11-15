@@ -73,7 +73,7 @@ public final class TemplatingUtility
       return template;
     }
 
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(template.length());
     int currentPosition = 0;
     int delimiterStartPosition;
     int delimiterEndPosition;

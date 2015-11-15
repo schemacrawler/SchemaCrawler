@@ -146,7 +146,7 @@ abstract class BaseTag
    */
   private String toHtmlString()
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     buffer.append("<").append(getTag());
     for (final Entry<String, String> attribute: attributes.entrySet())
     {
