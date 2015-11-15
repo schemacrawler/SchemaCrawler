@@ -53,4 +53,4 @@ SchemaCrawler in the press, and in online articles and blogs.
 -  Kelvin Meeks' post on [Data Governance Tools.](http://intltechventures.blogspot.com/2012/08/2012-08-22-wednesday-data-governance.html)
 -  Gilesey's post on [A lightweight schema diff or dump from Oracle](https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/)
 -  Pierluigi Vernetto's post [SchemaCrawler for Oracle DB Diff](http://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
-
+- Mike Zhukovskiy's exploration of ERD tools, [Twitter ERD](http://rubyrailsmz.blogspot.com/2014/08/blog-post.html)
