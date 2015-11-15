@@ -21,6 +21,7 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Table;
 import sf.util.Multimap;
@@ -112,7 +111,7 @@ final class TableMatchKeys
           {
             for (int k = 0; k < splitPrefix.length; k++)
             {
-              final StringBuilder buffer = new StringBuilder();
+              final StringBuilder buffer = new StringBuilder(1024);
               for (int l = 0; l < k; l++)
               {
                 buffer.append(splitPrefix[l]).append("_");

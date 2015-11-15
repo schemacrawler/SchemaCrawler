@@ -98,7 +98,7 @@ public final class Utility
     if (!isBlank(text))
     {
       final char[] charArray = text.toCharArray();
-      final StringBuilder builder = new StringBuilder();
+      final StringBuilder builder = new StringBuilder(text.length());
       for (final char ch: charArray)
       {
         if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.')
@@ -195,7 +195,7 @@ public final class Utility
       return null;
     }
 
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     for (final Iterator<String> iterator = collection.iterator(); iterator
       .hasNext();)
     {
@@ -217,7 +217,7 @@ public final class Utility
       return null;
     }
 
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     final Set<Entry<String, String>> entrySet = map.entrySet();
     for (final Iterator<Entry<String, String>> iterator = entrySet
       .iterator(); iterator.hasNext();)

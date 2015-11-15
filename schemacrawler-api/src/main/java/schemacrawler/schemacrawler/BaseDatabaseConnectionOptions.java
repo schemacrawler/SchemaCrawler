@@ -260,7 +260,7 @@ abstract class BaseDatabaseConnectionOptions
       jdbcDriverClass = "<unknown>";
     }
 
-    final StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder(1024);
     builder.append("driver=").append(jdbcDriverClass)
       .append(System.lineSeparator());
     builder.append("url=").append(getConnectionUrl())

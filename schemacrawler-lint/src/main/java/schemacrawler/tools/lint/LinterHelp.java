@@ -7,7 +7,7 @@ public class LinterHelp
   public static String getLinterHelpText()
     throws Exception
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
 
     buffer.append("--- Available Linters ---").append(System.lineSeparator())
       .append(System.lineSeparator());

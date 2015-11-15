@@ -46,7 +46,7 @@ public final class HtmlFormattingHelper
 
   private static String htmlHeader()
   {
-    final StringBuffer styleSheet = new StringBuffer();
+    final StringBuilder styleSheet = new StringBuilder(4096);
     styleSheet.append(System.lineSeparator())
       .append(readResourceFully("/sc.css")).append(System.lineSeparator())
       .append(readResourceFully("/sc_output.css"))
@@ -142,7 +142,7 @@ public final class HtmlFormattingHelper
                                  final String description,
                                  final Color backgroundColor)
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     buffer.append("  <caption style='background-color: ")
       .append(getHtmlColor(backgroundColor)).append(";'>");
     if (!isBlank(name))
