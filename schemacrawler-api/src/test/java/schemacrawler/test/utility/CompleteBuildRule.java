@@ -25,12 +25,11 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-public class SiteVariationsGenerationRule
+public class CompleteBuildRule
   implements TestRule
 {
 
-  private static final boolean GENERATE_SITE = System
-    .getProperty("complete") != null;
+  private static final boolean COMPLETE_BUILD = Boolean.getBoolean("complete");
 
   @Override
   public Statement apply(final Statement base, final Description description)
@@ -41,7 +40,7 @@ public class SiteVariationsGenerationRule
       public void evaluate()
         throws Throwable
       {
-        if (GENERATE_SITE)
+        if (COMPLETE_BUILD)
         {
           base.evaluate();
         }
