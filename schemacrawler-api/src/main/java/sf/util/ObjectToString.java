@@ -49,7 +49,7 @@ public final class ObjectToString
     }
     final int indent = 0;
 
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(1024);
     appendObject(object, indent, buffer);
     return buffer.toString();
   }

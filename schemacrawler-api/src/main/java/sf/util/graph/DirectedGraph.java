@@ -126,7 +126,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
   @Override
   public String toString()
   {
-    final StringBuilder writer = new StringBuilder();
+    final StringBuilder writer = new StringBuilder(4096);
     writer.append("digraph {\n");
     if (name != null && !name.isEmpty())
     {

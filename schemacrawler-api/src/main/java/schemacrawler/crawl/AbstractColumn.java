@@ -146,7 +146,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
     final boolean needWidth = sqlDataTypeGroup == JavaSqlTypeGroup.character
                               || sqlDataTypeGroup == JavaSqlTypeGroup.real;
 
-    final StringBuilder columnWidthBuffer = new StringBuilder();
+    final StringBuilder columnWidthBuffer = new StringBuilder(64);
     if (needWidth)
     {
       columnWidthBuffer.append('(');

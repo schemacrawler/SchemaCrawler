@@ -21,9 +21,8 @@
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
-
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
@@ -94,7 +93,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(64);
     if (parent != null)
     {
       final String parentFullName = parent.get().getFullName();
@@ -125,7 +124,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public final String getShortName()
   {
-    final StringBuilder buffer = new StringBuilder();
+    final StringBuilder buffer = new StringBuilder(64);
     if (parent != null)
     {
       final String parentName = parent.get().getName();

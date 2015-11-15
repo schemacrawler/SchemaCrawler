@@ -800,7 +800,7 @@ final class SchemaTextFormatter
         columnTypeName = column.getColumnDataType()
           .getDatabaseSpecificTypeName();
       }
-      final StringBuilder columnType = new StringBuilder();
+      final StringBuilder columnType = new StringBuilder(64);
       columnType.append(columnTypeName).append(column.getWidth());
       if (column.getColumnType() != null)
       {

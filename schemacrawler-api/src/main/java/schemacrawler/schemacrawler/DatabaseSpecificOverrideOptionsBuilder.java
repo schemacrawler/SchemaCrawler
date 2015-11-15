@@ -2,13 +2,14 @@ package schemacrawler.schemacrawler;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 public class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
-  private Boolean supportsSchemas;
-  private Boolean supportsCatalogs;
+  private Optional<Boolean> supportsSchemas;
+  private Optional<Boolean> supportsCatalogs;
   private boolean supportsFastColumnRetrieval;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
@@ -16,6 +17,9 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder()
   {
     informationSchemaViewsBuilder = new InformationSchemaViewsBuilder();
+    supportsSchemas = Optional.empty();
+    supportsCatalogs = Optional.empty();
+    identifierQuoteString = "";
   }
 
   public DatabaseSpecificOverrideOptionsBuilder(final Map<String, String> map)
@@ -30,7 +34,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
    */
   public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
   {
-    supportsCatalogs = Boolean.FALSE;
+    supportsCatalogs = Optional.of(false);
     return this;
   }
 
@@ -40,7 +44,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
    */
   public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
   {
-    supportsSchemas = Boolean.FALSE;
+    supportsSchemas = Optional.of(false);
     return this;
   }
 
@@ -49,6 +53,26 @@ public class DatabaseSpecificOverrideOptionsBuilder
   {
     informationSchemaViewsBuilder.fromConfig(map);
     return this;
+  }
+
+  public String getIdentifierQuoteString()
+  {
+    return identifierQuoteString;
+  }
+
+  public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
+  {
+    return informationSchemaViewsBuilder;
+  }
+
+  public Optional<Boolean> getSupportsCatalogs()
+  {
+    return supportsCatalogs;
+  }
+
+  public Optional<Boolean> getSupportsSchemas()
+  {
+    return supportsSchemas;
   }
 
   /**
@@ -64,29 +88,9 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public Boolean getSupportsSchemas()
-  {
-    return supportsSchemas;
-  }
-
-  public Boolean getSupportsCatalogs()
-  {
-    return supportsCatalogs;
-  }
-
   public boolean isSupportsFastColumnRetrieval()
   {
     return supportsFastColumnRetrieval;
-  }
-
-  public String getIdentifierQuoteString()
-  {
-    return identifierQuoteString;
-  }
-
-  public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
-  {
-    return informationSchemaViewsBuilder;
   }
 
   /**
@@ -95,7 +99,13 @@ public class DatabaseSpecificOverrideOptionsBuilder
    */
   public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
   {
-    supportsCatalogs = Boolean.TRUE;
+    supportsCatalogs = Optional.of(true);
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder supportsFastColumnRetrieval()
+  {
+    supportsFastColumnRetrieval = true;
     return this;
   }
 
@@ -105,13 +115,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
    */
   public DatabaseSpecificOverrideOptionsBuilder supportsSchemas()
   {
-    supportsSchemas = Boolean.TRUE;
-    return this;
-  }
-
-  public DatabaseSpecificOverrideOptionsBuilder supportsFastColumnRetrieval()
-  {
-    supportsFastColumnRetrieval = true;
+    supportsSchemas = Optional.of(true);
     return this;
   }
 
@@ -140,13 +144,13 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsCatalogs()
   {
-    supportsCatalogs = null;
+    supportsCatalogs = Optional.empty();
     return this;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
   {
-    supportsSchemas = null;
+    supportsSchemas = Optional.empty();
     return this;
   }
 
