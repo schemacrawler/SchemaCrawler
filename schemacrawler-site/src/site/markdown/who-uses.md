@@ -54,3 +54,5 @@ SchemaCrawler in the press, and in online articles and blogs.
 -  Gilesey's post on [A lightweight schema diff or dump from Oracle](https://gilesey.wordpress.com/2012/11/15/a-lightweight-schema-diff-or-dump-from-oracle/)
 -  Pierluigi Vernetto's post [SchemaCrawler for Oracle DB Diff](http://www.javamonamour.org/2013/06/schemacrawler-for-oracle-db-diff.html)
 - Mike Zhukovskiy's exploration of ERD tools, [Twitter ERD](http://rubyrailsmz.blogspot.com/2014/08/blog-post.html)
+- Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](http://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
+- Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
