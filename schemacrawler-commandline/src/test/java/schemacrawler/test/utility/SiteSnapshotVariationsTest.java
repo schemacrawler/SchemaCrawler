@@ -46,7 +46,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public class SiteSnapshotVariations
+public class SiteSnapshotVariationsTest
   extends BaseDatabaseTest
 {
 
@@ -56,7 +56,7 @@ public class SiteSnapshotVariations
   public static void setupDirectory()
     throws IOException, URISyntaxException
   {
-    final Path codePath = Paths.get(SiteSnapshotVariations.class
+    final Path codePath = Paths.get(SiteSnapshotVariationsTest.class
       .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
       .toAbsolutePath();
     directory = codePath
@@ -65,7 +65,7 @@ public class SiteSnapshotVariations
   }
 
   @Rule
-  public TestRule rule = new SiteVariationsGenerationRule();
+  public TestRule rule = new CompleteBuildRule();
 
   @Test
   public void snapshots()
@@ -92,7 +92,7 @@ public class SiteSnapshotVariations
   private Path createConfig(final Map<String, String> config)
     throws IOException
   {
-    final String prefix = SiteSnapshotVariations.class.getName();
+    final String prefix = SiteSnapshotVariationsTest.class.getName();
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
