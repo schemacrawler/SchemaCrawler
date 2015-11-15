@@ -5,7 +5,21 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.05.01" date="2015-10-31" description="Logging, tests and coverage">
+     <release version="14.05.01" date="2015-11-14" description="Logging">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix default log level.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix who uses SchemaCrawler list.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fix database plugin archetype.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Sealing internal packages.
+      ]]></action>                      
+     </release>    
+     <release version="14.04.04" date="2015-10-31" description="Logging, tests and coverage">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fix for retrieving PostgreSQL triggers.
       ]]></action>     
