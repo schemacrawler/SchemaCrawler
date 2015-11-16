@@ -151,10 +151,14 @@ final class RetrieverConnection
                       final SchemaCrawlerOptions options)
                         throws SQLException
   {
-    SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (schemaCrawlerOptions == null)
+    final SchemaCrawlerOptions schemaCrawlerOptions;
+    if (options == null)
     {
       schemaCrawlerOptions = new SchemaCrawlerOptions();
+    }
+    else
+    {
+      schemaCrawlerOptions = options;
     }
 
     try

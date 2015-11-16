@@ -21,9 +21,8 @@
 package schemacrawler.schemacrawler;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isDirectory;
 import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
 import static sf.util.Utility.isBlank;
 
@@ -131,8 +130,8 @@ public final class Config
                                            final Path propertiesFile)
                                              throws IOException
   {
-    if (propertiesFile == null || !exists(propertiesFile)
-        || !isReadable(propertiesFile) || isDirectory(propertiesFile))
+    if (propertiesFile == null || !isRegularFile(propertiesFile)
+        || !isReadable(propertiesFile))
     {
       LOGGER.log(Level.CONFIG,
                  "Cannot load properties from file, " + propertiesFile);
