@@ -725,18 +725,20 @@ public final class SchemaCrawler
     throws SchemaCrawlerException
   {
     final MutableCatalog catalog = new MutableCatalog("catalog");
-
-    RetrieverConnection retrieverConnection = null;
     try
     {
-      SchemaCrawlerOptions schemaCrawlerOptions = options;
-      if (schemaCrawlerOptions == null)
+      final SchemaCrawlerOptions schemaCrawlerOptions;
+      if (options == null)
       {
         schemaCrawlerOptions = new SchemaCrawlerOptions();
       }
-      retrieverConnection = new RetrieverConnection(connection,
-                                                    databaseSpecificOverrideOptions,
-                                                    schemaCrawlerOptions);
+      else
+      {
+        schemaCrawlerOptions = options;
+      }
+      final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
+                                                                              databaseSpecificOverrideOptions,
+                                                                              schemaCrawlerOptions);
 
       crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
