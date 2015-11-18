@@ -313,7 +313,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("sortAndFilterRoutines", () -> {
+      stopWatch.time("filterRoutines", () -> {
         // Filter the list of routines based on grep criteria
         final Predicate<Routine> routineFilter = routineFilter(options);
         ((Reducible) catalog).reduce(Routine.class,
