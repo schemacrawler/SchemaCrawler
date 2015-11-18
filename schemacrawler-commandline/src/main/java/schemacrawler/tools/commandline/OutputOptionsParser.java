@@ -58,14 +58,9 @@ public final class OutputOptionsParser
     outputOptions.setOutputFormatValue(outputFormatValue);
 
     final String outputFileName = config.getStringValue("outputfile", null);
-    final Path outputFile;
-    if (isBlank(outputFileName))
+    if (!isBlank(outputFileName))
     {
-      outputFile = null;
-    }
-    else
-    {
-      outputFile = Paths.get(outputFileName);
+      final Path outputFile = Paths.get(outputFileName).toAbsolutePath();
       outputOptions.setOutputFile(outputFile);
     }
 
