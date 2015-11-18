@@ -572,15 +572,17 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("sortAndFilterTables", () -> {
-        final TablesGraph tablesGraph = new TablesGraph(allTables);
-        tablesGraph.setTablesSortIndexes();
-
+      stopWatch.time("filterAndSortTables", () -> {
         // Filter the list of tables based on grep criteria, and
         // parent-child relationships
         final Predicate<Table> tableFilter = tableFilter(options);
         ((Reducible) catalog).reduce(Table.class,
                                      new TablesReducer(options, tableFilter));
+
+        // Sort the remaining tables
+        final TablesGraph tablesGraph = new TablesGraph(allTables);
+        tablesGraph.setTablesSortIndexes();
+
         return null;
       });
 
