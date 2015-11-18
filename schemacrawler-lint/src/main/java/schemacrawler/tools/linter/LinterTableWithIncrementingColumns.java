@@ -20,6 +20,8 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +32,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -46,19 +46,22 @@ public class LinterTableWithIncrementingColumns
 
   private class IncrementingColumn
   {
-    private final Integer columnIncrement;
+    private final int columnIncrement;
     private final Column column;
 
     IncrementingColumn(final String columnIncrement, final Column column)
     {
-      if (columnIncrement == null)
+      int columnInc = -1;
+      try
       {
-        this.columnIncrement = null;
+        columnInc = Integer.parseInt(columnIncrement);
       }
-      else
+      catch (final NumberFormatException e)
       {
-        this.columnIncrement = new Integer(columnIncrement);
+        columnInc = -1;
       }
+      this.columnIncrement = columnInc;
+
       this.column = column;
     }
 
@@ -67,7 +70,7 @@ public class LinterTableWithIncrementingColumns
       return column;
     }
 
-    public Integer getColumnIncrement()
+    public int getColumnIncrement()
     {
       return columnIncrement;
     }
@@ -99,7 +102,7 @@ public class LinterTableWithIncrementingColumns
   {
 
     int minIncrement = Integer.MAX_VALUE;
-    int maxIncrement = 0;
+    int maxIncrement = Integer.MIN_VALUE;
     final ArrayList<Column> incrementingColumns = new ArrayList<>(incrementingColumnsList
       .size());
     for (int i = 0; i < incrementingColumnsList.size(); i++)
@@ -107,13 +110,11 @@ public class LinterTableWithIncrementingColumns
       final IncrementingColumn incrementingColumn = incrementingColumnsList
         .get(i);
       incrementingColumns.add(i, incrementingColumn.getColumn());
-      if (incrementingColumn.getColumnIncrement() != null)
-      {
-        minIncrement = Math.min(minIncrement,
-                                incrementingColumn.getColumnIncrement());
-        maxIncrement = Math.max(maxIncrement,
-                                incrementingColumn.getColumnIncrement());
-      }
+
+      minIncrement = Math.min(minIncrement,
+                              incrementingColumn.getColumnIncrement());
+      maxIncrement = Math.max(maxIncrement,
+                              incrementingColumn.getColumnIncrement());
     }
     Collections.sort(incrementingColumns);
     addTableLint(table, getSummary(), incrementingColumns);
