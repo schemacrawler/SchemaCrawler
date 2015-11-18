@@ -146,9 +146,8 @@ final class DatabaseInfoRetriever
   {
     final String name = method.getName() + "For" + resultSetTypeName
                         + "ResultSets";
-    Boolean propertyValue = null;
-    propertyValue = (Boolean) method.invoke(dbMetaData,
-                                            Integer.valueOf(resultSetType));
+    final Boolean propertyValue = (Boolean) method
+      .invoke(dbMetaData, Integer.valueOf(resultSetType));
     return new ImmutableDatabaseProperty(name, propertyValue);
   }
 
