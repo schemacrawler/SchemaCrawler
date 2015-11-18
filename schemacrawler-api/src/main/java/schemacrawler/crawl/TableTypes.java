@@ -54,7 +54,7 @@ class TableTypes
           .readResultsVector(tableTypesResults);
         tableTypes.addAll(tableTypesList.stream()
           .map(tableType -> new TableType(tableType))
-          .collect(Collectors.toSet()));
+          .collect(Collectors.toList()));
       }
       catch (final Exception e)
       {
@@ -72,12 +72,15 @@ class TableTypes
   }
 
   /**
-   * Converts an array of table types to an array of their corresponding
-   * string values.
-   *
+   * Filters table types not known to the database system. Returns
+   * values in the same case as known to the database system, even
+   * though the search is case-insensitive.
+   * 
    * @param tableTypeStrings
-   *        Array of table types
-   * @return Array of string table types
+   *        Can be null, which indicates return all table types, or an
+   *        empty array, which indicates return no table types.
+   * @return Returns values in the same case as known to the database
+   *         system.
    */
   String[] filterUnknown(final Collection<String> tableTypeStrings)
   {
