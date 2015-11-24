@@ -21,6 +21,7 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -43,22 +44,18 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 abstract class AbstractRetriever
+  implements Retriever
 {
 
   private final RetrieverConnection retrieverConnection;
   final MutableCatalog catalog;
 
-  AbstractRetriever()
-    throws SQLException
-  {
-    this(null, null);
-  }
-
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog)
                       throws SQLException
   {
-    this.retrieverConnection = retrieverConnection;
+    this.retrieverConnection = requireNonNull(retrieverConnection,
+                                              "No retriever connection provided");
     this.catalog = catalog;
   }
 
@@ -227,20 +224,17 @@ abstract class AbstractRetriever
 
   String quotedName(final String name)
   {
-    final String quotedName;
-    final RetrieverConnection retrieverConnection = getRetrieverConnection();
-    if (retrieverConnection != null && !Utility.isBlank(name))
+    if (isBlank(name))
     {
-      final String identifierQuoteString = retrieverConnection
-        .getIdentifierQuoteString();
-      if (retrieverConnection.needsToBeQuoted(name))
-      {
-        quotedName = identifierQuoteString + name + identifierQuoteString;
-      }
-      else
-      {
-        quotedName = name;
-      }
+      return name;
+    }
+
+    final String quotedName;
+    final String identifierQuoteString = retrieverConnection
+      .getIdentifierQuoteString();
+    if (retrieverConnection.needsToBeQuoted(name))
+    {
+      quotedName = identifierQuoteString + name + identifierQuoteString;
     }
     else
     {
@@ -251,22 +245,19 @@ abstract class AbstractRetriever
 
   String unquotedName(final String name)
   {
-    final String unquotedName;
-    final RetrieverConnection retrieverConnection = getRetrieverConnection();
-    if (retrieverConnection != null && !Utility.isBlank(name))
+    if (isBlank(name))
     {
-      final String identifierQuoteString = retrieverConnection
-        .getIdentifierQuoteString();
-      if (name.startsWith(identifierQuoteString)
-          && name.endsWith(identifierQuoteString))
-      {
-        final int quoteLength = identifierQuoteString.length();
-        unquotedName = name.substring(quoteLength, name.length() - quoteLength);
-      }
-      else
-      {
-        unquotedName = name;
-      }
+      return name;
+    }
+
+    final String unquotedName;
+    final String identifierQuoteString = retrieverConnection
+      .getIdentifierQuoteString();
+    if (name.startsWith(identifierQuoteString)
+        && name.endsWith(identifierQuoteString))
+    {
+      final int quoteLength = identifierQuoteString.length();
+      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
     }
     else
     {
