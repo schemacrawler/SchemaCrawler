@@ -16,11 +16,22 @@ public class ReservedWordsTest
   @Test
   public void blank()
   {
-    final String[] words = new String[] { "  ", "\t", null };
+    final String[] words = new String[] { "  ", "\t", };
     for (final String word: words)
     {
       assertFalse(word, reservedWords.isReserved(word));
       assertTrue(word, reservedWords.needsToBeQuoted(word));
+    }
+  }
+
+  @Test
+  public void empty()
+  {
+    final String[] words = new String[] { "", null, };
+    for (final String word: words)
+    {
+      assertFalse(word, reservedWords.isReserved(word));
+      assertFalse(word, reservedWords.needsToBeQuoted(word));
     }
   }
 
