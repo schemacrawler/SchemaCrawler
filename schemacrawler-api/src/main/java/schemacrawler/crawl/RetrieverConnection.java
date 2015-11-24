@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static sf.util.DatabaseUtility.checkConnection;
+import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -256,7 +257,47 @@ final class RetrieverConnection
     return supportsSchemas;
   }
 
-  boolean needsToBeQuoted(final String name)
+  String quotedName(final String name)
+  {
+    if (isBlank(name))
+    {
+      return name;
+    }
+
+    final String quotedName;
+    if (needsToBeQuoted(name))
+    {
+      quotedName = identifierQuoteString + name + identifierQuoteString;
+    }
+    else
+    {
+      quotedName = name;
+    }
+    return quotedName;
+  }
+
+  String unquotedName(final String name)
+  {
+    if (isBlank(name))
+    {
+      return name;
+    }
+
+    final String unquotedName;
+    if (name.startsWith(identifierQuoteString)
+        && name.endsWith(identifierQuoteString))
+    {
+      final int quoteLength = identifierQuoteString.length();
+      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
+    }
+    else
+    {
+      unquotedName = name;
+    }
+    return unquotedName;
+  }
+
+  private boolean needsToBeQuoted(final String name)
   {
     final boolean needsToBeQuoted;
     if (name != null && identifierQuoteString != null
