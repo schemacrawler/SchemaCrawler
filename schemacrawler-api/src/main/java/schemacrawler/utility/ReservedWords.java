@@ -45,7 +45,7 @@ public final class ReservedWords
   private static final Logger LOGGER = Logger
     .getLogger(ReservedWords.class.getName());
 
-  private static final Predicate<? super String> filter = word -> !isBlank(word);
+  private static final Predicate<String> filter = word -> !isBlank(word);
   private static final Function<String, String> map = word -> word.trim()
     .toUpperCase();
 
