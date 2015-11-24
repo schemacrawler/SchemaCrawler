@@ -23,7 +23,6 @@ package schemacrawler.utility;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.isNumeric;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -36,6 +35,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -48,6 +48,36 @@ public final class ReservedWords
   private static final Predicate<String> filter = word -> !isBlank(word);
   private static final Function<String, String> map = word -> word.trim()
     .toUpperCase();
+
+  private static final Pattern isIdentifierPattern = Pattern
+    .compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
+  private static final Pattern isNumericPattern = Pattern.compile("^\\p{Nd}*$");
+
+  /**
+   * Checks if the text is composed of all numbers.
+   *
+   * @param text
+   *        Text to check.
+   * @return Whether the string consists of all numbers.
+   */
+  private static boolean isIdentifier(final String text)
+  {
+    return text == null || text.isEmpty()
+           || isIdentifierPattern.matcher(text).matches();
+  }
+
+  /**
+   * Checks if the text is composed of all numbers.
+   *
+   * @param text
+   *        Text to check.
+   * @return Whether the string consists of all numbers.
+   */
+  private static boolean isNumeric(final String text)
+  {
+    return text == null || text.isEmpty()
+           || isNumericPattern.matcher(text).matches();
+  }
 
   private static Collection<String> loadSql2003ReservedWords()
   {
@@ -102,19 +132,7 @@ public final class ReservedWords
 
   private boolean containsSpecialCharacters(final String name)
   {
-    if (name == null || name.isEmpty())
-    {
-      return false;
-    }
-
-    for (final char c: name.toCharArray())
-    {
-      if (!Character.isLetterOrDigit(c) && c != '_')
-      {
-        return true;
-      }
-    }
-    return false;
+    return !isIdentifier(name);
   }
 
 }
