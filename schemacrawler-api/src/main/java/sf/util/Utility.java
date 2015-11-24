@@ -56,9 +56,9 @@ public final class Utility
 
   private static final Pattern containsWhitespacePattern = Pattern
     .compile(".*\\s.*");
-
   private static final Pattern isAllWhitespacePattern = Pattern
     .compile("^\\s*$");
+  private static final Pattern isNumericPattern = Pattern.compile("^[0-9]*$");
 
   public static String commonPrefix(final String string1, final String string2)
   {
@@ -185,6 +185,19 @@ public final class Utility
   public static boolean isLowerCase(final String text)
   {
     return text != null && text.equals(text.toLowerCase());
+  }
+
+  /**
+   * Checks if the text is composed of all numbers.
+   *
+   * @param text
+   *        Text to check.
+   * @return Whether the string consists of all numbers.
+   */
+  public static boolean isNumeric(final String text)
+  {
+    return text == null || text.isEmpty()
+           || isNumericPattern.matcher(text).matches();
   }
 
   public static String join(final Collection<String> collection,

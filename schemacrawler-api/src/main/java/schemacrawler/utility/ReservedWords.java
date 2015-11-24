@@ -21,7 +21,9 @@ package schemacrawler.utility;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
+import static sf.util.Utility.isNumeric;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -87,9 +89,32 @@ public final class ReservedWords
     reservedWords.addAll(lookupReservedWords(connection.getMetaData()));
   }
 
-  public boolean contains(final String word)
+  public boolean isReserved(final String word)
   {
     return filter.test(word) && reservedWords.contains(map.apply(word));
+  }
+
+  public boolean needsToBeQuoted(final String name)
+  {
+    return containsWhitespace(name) || isNumeric(name)
+           || containsSpecialCharacters(name) || isReserved(name);
+  }
+
+  private boolean containsSpecialCharacters(final String name)
+  {
+    if (name == null || name.isEmpty())
+    {
+      return false;
+    }
+
+    for (final char c: name.toCharArray())
+    {
+      if (!Character.isLetterOrDigit(c) && c != '_')
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
