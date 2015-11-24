@@ -224,46 +224,12 @@ abstract class AbstractRetriever
 
   String quotedName(final String name)
   {
-    if (isBlank(name))
-    {
-      return name;
-    }
-
-    final String quotedName;
-    final String identifierQuoteString = retrieverConnection
-      .getIdentifierQuoteString();
-    if (retrieverConnection.needsToBeQuoted(name))
-    {
-      quotedName = identifierQuoteString + name + identifierQuoteString;
-    }
-    else
-    {
-      quotedName = name;
-    }
-    return quotedName;
+    return retrieverConnection.quotedName(name);
   }
 
   String unquotedName(final String name)
   {
-    if (isBlank(name))
-    {
-      return name;
-    }
-
-    final String unquotedName;
-    final String identifierQuoteString = retrieverConnection
-      .getIdentifierQuoteString();
-    if (name.startsWith(identifierQuoteString)
-        && name.endsWith(identifierQuoteString))
-    {
-      final int quoteLength = identifierQuoteString.length();
-      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
-    }
-    else
-    {
-      unquotedName = name;
-    }
-    return unquotedName;
+    return retrieverConnection.unquotedName(name);
   }
 
 }
