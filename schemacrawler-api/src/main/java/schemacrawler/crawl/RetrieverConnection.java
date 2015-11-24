@@ -38,7 +38,6 @@ import java.util.stream.Stream;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
@@ -147,20 +146,9 @@ final class RetrieverConnection
   private final TypeMap typeMap;
 
   RetrieverConnection(final Connection connection,
-                      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                      final SchemaCrawlerOptions options)
+                      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
                         throws SQLException
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions;
-    if (options == null)
-    {
-      schemaCrawlerOptions = new SchemaCrawlerOptions();
-    }
-    else
-    {
-      schemaCrawlerOptions = options;
-    }
-
     try
     {
       checkConnection(connection);
@@ -241,11 +229,6 @@ final class RetrieverConnection
   DatabaseMetaData getMetaData()
   {
     return metaData;
-  }
-
-  List<String> getReservedWords()
-  {
-    return reservedWords;
   }
 
   TableTypes getTableTypes()
