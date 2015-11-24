@@ -126,8 +126,15 @@ public final class ReservedWords
 
   public boolean needsToBeQuoted(final String name)
   {
-    return containsWhitespace(name) || isNumeric(name)
-           || containsSpecialCharacters(name) || isReserved(name);
+    if (name == null || name.isEmpty())
+    {
+      return false;
+    }
+    else
+    {
+      return containsWhitespace(name) || isNumeric(name)
+             || containsSpecialCharacters(name) || isReserved(name);
+    }
   }
 
   private boolean containsSpecialCharacters(final String name)

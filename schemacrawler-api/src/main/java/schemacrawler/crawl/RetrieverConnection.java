@@ -233,11 +233,6 @@ final class RetrieverConnection
 
   String quotedName(final String name)
   {
-    if (isBlank(name))
-    {
-      return name;
-    }
-
     final String quotedName;
     if (reservedWords.needsToBeQuoted(name))
     {
@@ -257,11 +252,12 @@ final class RetrieverConnection
       return name;
     }
 
+    final int quoteLength = identifierQuoteString.length();
     final String unquotedName;
     if (name.startsWith(identifierQuoteString)
-        && name.endsWith(identifierQuoteString))
+        && name.endsWith(identifierQuoteString)
+        && name.length() >= quoteLength * 2)
     {
-      final int quoteLength = identifierQuoteString.length();
       unquotedName = name.substring(quoteLength, name.length() - quoteLength);
     }
     else
