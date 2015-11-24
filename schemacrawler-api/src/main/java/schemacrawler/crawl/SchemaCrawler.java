@@ -739,8 +739,7 @@ public final class SchemaCrawler
         schemaCrawlerOptions = options;
       }
       final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
-                                                                              databaseSpecificOverrideOptions,
-                                                                              schemaCrawlerOptions);
+                                                                              databaseSpecificOverrideOptions);
 
       crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
