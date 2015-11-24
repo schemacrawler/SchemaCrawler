@@ -24,22 +24,17 @@ package schemacrawler.crawl;
 import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.Utility.isBlank;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
+import schemacrawler.utility.ReservedWords;
 import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
@@ -76,27 +71,6 @@ final class RetrieverConnection
     }
 
     return identifierQuoteString;
-  }
-
-  private static List<String> lookupReservedWords(final DatabaseMetaData metaData)
-  {
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(RetrieverConnection.class
-      .getResourceAsStream("/sql2003_reserved_words.txt")));
-
-    String sqlKeywords = "";
-    try
-    {
-      sqlKeywords = metaData.getSQLKeywords();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
-    }
-
-    return Collections.unmodifiableList(Stream
-      .concat(Stream.of(sqlKeywords.split(",")), reader.lines())
-      .map(reservedWord -> reservedWord.trim().toUpperCase()).distinct()
-      .sorted().collect(Collectors.toList()));
   }
 
   private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
@@ -140,7 +114,7 @@ final class RetrieverConnection
   private final boolean supportsSchemas;
   private final boolean supportsFastColumnRetrieval;
   private final String identifierQuoteString;
-  private final List<String> reservedWords;
+  private final ReservedWords reservedWords;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
@@ -196,7 +170,7 @@ final class RetrieverConnection
     LOGGER.log(Level.CONFIG,
                String.format("Supported table types are %s", tableTypes));
 
-    reservedWords = lookupReservedWords(metaData);
+    reservedWords = new ReservedWords(connection);
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();
