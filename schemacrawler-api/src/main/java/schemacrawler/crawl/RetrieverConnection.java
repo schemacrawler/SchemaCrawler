@@ -239,7 +239,7 @@ final class RetrieverConnection
     }
 
     final String quotedName;
-    if (needsToBeQuoted(name))
+    if (reservedWords.needsToBeQuoted(name))
     {
       quotedName = identifierQuoteString + name + identifierQuoteString;
     }
@@ -269,22 +269,6 @@ final class RetrieverConnection
       unquotedName = name;
     }
     return unquotedName;
-  }
-
-  private boolean needsToBeQuoted(final String name)
-  {
-    final boolean needsToBeQuoted;
-    if (name != null && identifierQuoteString != null
-        && (Utility.containsWhitespace(name)
-            || reservedWords.contains(name.toUpperCase())))
-    {
-      needsToBeQuoted = true;
-    }
-    else
-    {
-      needsToBeQuoted = false;
-    }
-    return needsToBeQuoted;
   }
 
 }
