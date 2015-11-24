@@ -21,11 +21,11 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
@@ -40,7 +40,7 @@ import sf.util.Utility;
  * @author Sualeh Fatehi
  */
 final class ResultsRetriever
-  extends AbstractRetriever
+  implements Retriever
 {
 
   private final ResultSetMetaData resultsMetaData;
