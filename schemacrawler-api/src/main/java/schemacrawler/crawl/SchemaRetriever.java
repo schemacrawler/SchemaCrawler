@@ -38,6 +38,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import sf.util.DatabaseUtility;
 
 final class SchemaRetriever
   extends AbstractRetriever
@@ -130,7 +131,7 @@ final class SchemaRetriever
     {
       try
       {
-        final List<String> metaDataCatalogNames = RetrieverUtility
+        final List<String> metaDataCatalogNames = DatabaseUtility
           .readResultsVector(getMetaData().getCatalogs());
         for (final String catalogName: metaDataCatalogNames)
         {

@@ -29,6 +29,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -203,6 +205,42 @@ public final class DatabaseUtility
 
   private DatabaseUtility()
   { // Prevent instantiation
+  }
+
+  /**
+   * Reads a single column result set as a list.
+   *
+   * @param results
+   *        Result set
+   * @return List
+   * @throws SQLException
+   *         On an exception
+   */
+  public static List<String> readResultsVector(final ResultSet results)
+    throws SQLException
+  {
+    final List<String> values = new ArrayList<>();
+    if (results == null)
+    {
+      return values;
+    }
+  
+    try
+    {
+      while (results.next())
+      {
+        final String value = results.getString(1);
+        if (!results.wasNull() && !isBlank(value))
+        {
+          values.add(value.trim());
+        }
+      }
+    }
+    finally
+    {
+      results.close();
+    }
+    return values;
   }
 
 }

@@ -17,8 +17,10 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.crawl;
+package schemacrawler.utility;
 
+
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,11 +31,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import schemacrawler.schema.TableType;
+import sf.util.DatabaseUtility;
 
-class TableTypes
+public final class TableTypes
 {
 
   private static final Logger LOGGER = Logger
@@ -41,7 +43,7 @@ class TableTypes
 
   private final Collection<TableType> tableTypes;
 
-  TableTypes(final Connection connection)
+  public TableTypes(final Connection connection)
   {
     tableTypes = new HashSet<>();
 
@@ -50,11 +52,9 @@ class TableTypes
       try (final ResultSet tableTypesResults = connection.getMetaData()
         .getTableTypes();)
       {
-        final List<String> tableTypesList = RetrieverUtility
-          .readResultsVector(tableTypesResults);
-        tableTypes.addAll(tableTypesList.stream()
-          .map(tableType -> new TableType(tableType))
-          .collect(Collectors.toList()));
+        DatabaseUtility.readResultsVector(tableTypesResults).stream()
+          .filter(tableType -> !isBlank(tableType))
+          .forEach(tableType -> tableTypes.add(new TableType(tableType)));
       }
       catch (final Exception e)
       {
@@ -82,7 +82,7 @@ class TableTypes
    * @return Returns values in the same case as known to the database
    *         system.
    */
-  String[] filterUnknown(final Collection<String> tableTypeStrings)
+  public String[] filterUnknown(final Collection<String> tableTypeStrings)
   {
     if (tableTypeStrings == null)
     {
@@ -112,7 +112,7 @@ class TableTypes
    *
    * @return Matched table type, or unknown
    */
-  TableType lookupTableType(final String tableTypeString)
+  public TableType lookupTableType(final String tableTypeString)
   {
     return tableTypes.stream()
       .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny()
