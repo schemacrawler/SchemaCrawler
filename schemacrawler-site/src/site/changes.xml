@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.05.02" date="2015-11-26" description="Quoting Identifiers">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Externalized logic to quote and unquote database object identifiers.
+      ]]></action>                      
+     </release>    
      <release version="14.05.01" date="2015-11-14" description="Logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fix default log level.
