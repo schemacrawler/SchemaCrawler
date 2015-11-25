@@ -49,6 +49,7 @@ import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import sf.util.DatabaseUtility;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -212,7 +213,7 @@ final class DatabaseInfoRetriever
                        "Retrieving database property using method: " + method);
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
-          final List<String> resultsList = RetrieverUtility
+          final List<String> resultsList = DatabaseUtility
             .readResultsVector(results);
           dbProperties.add(new ImmutableDatabaseProperty(method
             .getName(), resultsList.toArray(new String[resultsList.size()])));

@@ -35,24 +35,20 @@ public final class TableType
   private final String tableType;
 
   /**
-   * Constructor for table type. This is case-sensitive. A blank string
-   * results in an unknown table type.
+   * Constructor for table type. This is case-sensitive.
    */
   public TableType(final String tableType)
   {
     if (isBlank(tableType))
     {
-      this.tableType = "UNKNOWN";
+      throw new IllegalArgumentException("No table type provided");
     }
-    else
-    {
-      this.tableType = tableType.trim();
-    }
+    this.tableType = tableType.trim();
   }
 
   private TableType()
   {
-    this(null);
+    tableType = null;
   }
 
   /**
