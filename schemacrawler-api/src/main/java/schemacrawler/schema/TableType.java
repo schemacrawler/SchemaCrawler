@@ -24,6 +24,12 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 
+/**
+ * Represents a type of table in the database. Examples could be a base
+ * table, a view, a global temporary table, and so on. The table type
+ * name is case-sensitive, as it is known to the database system.
+ * However, string comparisons are case-insensitive.
+ */
 public final class TableType
   implements Serializable, Comparable<TableType>
 {
@@ -35,15 +41,15 @@ public final class TableType
   private final String tableType;
 
   /**
-   * Constructor for table type. This is case-sensitive.
+   * Constructor for table type. Table type is case-sensitive.
    */
-  public TableType(final String tableType)
+  public TableType(final String tableTypeString)
   {
-    if (isBlank(tableType))
+    if (isBlank(tableTypeString))
     {
       throw new IllegalArgumentException("No table type provided");
     }
-    this.tableType = tableType.trim();
+    this.tableType = tableTypeString.trim();
   }
 
   private TableType()
@@ -149,9 +155,12 @@ public final class TableType
     return tableType.equalsIgnoreCase(testTableType.trim());
   }
 
+  /**
+   * Checks if the table type is a view of any kind.
+   */
   public boolean isView()
   {
-    return tableType.toUpperCase().contains("VIEW");
+    return tableType != null && tableType.toUpperCase().contains("VIEW");
   }
 
   /**
@@ -162,7 +171,7 @@ public final class TableType
   @Override
   public String toString()
   {
-    return tableType.toLowerCase();
+    return tableType == null? "": tableType.toLowerCase();
   }
 
 }

@@ -208,7 +208,7 @@ final class TableRetriever
         final Schema schema = schemaOptional.get();
 
         final TableType tableType = supportedTableTypes
-          .lookupTableType(tableTypeString);
+          .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
 
         final MutableTable table;
         if (tableType.isView())

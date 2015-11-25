@@ -20,7 +20,9 @@
 package schemacrawler.utility;
 
 
-import static sf.util.Utility.isBlank;
+import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.readResultsVector;
+import static sf.util.Utility.filterOutBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,12 +31,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.TableType;
-import sf.util.DatabaseUtility;
 
+/**
+ * Represents a collection of tables types for a database system, as
+ * returned by the database server itself. A live database connection is
+ * required to obtain this information. The case of the table type name
+ * is preserved, though look-ups are case-insensitive.
+ */
 public final class TableTypes
 {
 
@@ -43,28 +51,35 @@ public final class TableTypes
 
   private final Collection<TableType> tableTypes;
 
+  /**
+   * Obtain a collection of tables types for a database system, as
+   * returned by the database server itself.
+   */
   public TableTypes(final Connection connection)
   {
-    tableTypes = new HashSet<>();
+    requireNonNull(connection, "No connection provided");
 
-    if (connection != null)
+    tableTypes = new HashSet<>();
+    try (final ResultSet tableTypesResults = connection.getMetaData()
+      .getTableTypes();)
     {
-      try (final ResultSet tableTypesResults = connection.getMetaData()
-        .getTableTypes();)
-      {
-        DatabaseUtility.readResultsVector(tableTypesResults).stream()
-          .filter(tableType -> !isBlank(tableType))
-          .forEach(tableType -> tableTypes.add(new TableType(tableType)));
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain table types from connection",
-                   e);
-      }
+      readResultsVector(tableTypesResults).stream().filter(filterOutBlank)
+        .forEach(tableTypeString -> tableTypes
+          .add(new TableType(tableTypeString)));
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Could not obtain table types from connection",
+                 e);
     }
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString()
   {
@@ -74,7 +89,8 @@ public final class TableTypes
   /**
    * Filters table types not known to the database system. Returns
    * values in the same case as known to the database system, even
-   * though the search is case-insensitive.
+   * though the search (that is, values in the input collection) is
+   * case-insensitive.
    * 
    * @param tableTypeStrings
    *        Can be null, which indicates return all table types, or an
@@ -96,10 +112,11 @@ public final class TableTypes
     final List<String> filteredTableTypes = new ArrayList<>();
     for (final String tableTypeString: tableTypeStrings)
     {
-      final TableType tableType = lookupTableType(tableTypeString);
-      if (!tableType.equals(TableType.UNKNOWN))
+      final Optional<TableType> tableType = lookupTableType(tableTypeString);
+      if (tableType.isPresent())
       {
-        filteredTableTypes.add(tableType.getTableType());
+        // Add value in the same case as known to the database system
+        filteredTableTypes.add(tableType.get().getTableType());
       }
     }
     Collections.sort(filteredTableTypes);
@@ -107,16 +124,15 @@ public final class TableTypes
   }
 
   /**
-   * Looks up a table type, from the provided string. Returns unknown if
-   * no match is found.
+   * Looks up a table type, from the provided string. The search (that
+   * is, value of the provided string) is case-insensitive.
    *
-   * @return Matched table type, or unknown
+   * @return Matched table type
    */
-  public TableType lookupTableType(final String tableTypeString)
+  public Optional<TableType> lookupTableType(final String tableTypeString)
   {
     return tableTypes.stream()
-      .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny()
-      .orElse(TableType.UNKNOWN);
+      .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny();
   }
 
 }
