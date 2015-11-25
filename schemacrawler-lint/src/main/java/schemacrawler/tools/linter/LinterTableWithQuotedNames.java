@@ -20,15 +20,18 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.utility.Identifiers;
 
 public class LinterTableWithQuotedNames
   extends BaseLinter
@@ -42,44 +45,47 @@ public class LinterTableWithQuotedNames
 
   @Override
   protected void lint(final Table table, final Connection connection)
+    throws SchemaCrawlerException
   {
     requireNonNull(table, "No table provided");
 
+    Identifiers identifiers;
+    try
+    {
+      identifiers = new Identifiers(connection);
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
+
     final String tableName = table.getName();
-    if (isQuotedName(tableName))
+    if (identifiers.isQuotedName(tableName))
     {
       addTableLint(table, getSummary());
     }
 
     final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
-      .getColumns());
+      .getColumns(), identifiers);
     for (final String spacesInName: spacesInNamesList)
     {
       addTableLint(table, getSummary(), spacesInName);
     }
   }
 
-  private List<String> findColumnsWithQuotedNames(final List<Column> columns)
+  private List<String> findColumnsWithQuotedNames(final List<Column> columns,
+                                                  final Identifiers identifiers)
   {
     final List<String> columnsWithQuotedNames = new ArrayList<>();
     for (final Column column: columns)
     {
       final String columnName = column.getName();
-      if (isQuotedName(columnName))
+      if (identifiers.isQuotedName(columnName))
       {
         columnsWithQuotedNames.add(columnName);
       }
     }
     return columnsWithQuotedNames;
-  }
-
-  private boolean isQuotedName(final String name)
-  {
-    final int nameLength = name.length();
-    final char[] namechars = new char[nameLength];
-    name.getChars(0, nameLength, namechars, 0);
-    return !Character.isJavaIdentifierStart(namechars[0])
-           && namechars[0] == namechars[nameLength - 1];
   }
 
 }
