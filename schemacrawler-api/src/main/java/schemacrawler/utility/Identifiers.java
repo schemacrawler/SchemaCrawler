@@ -161,6 +161,19 @@ public final class Identifiers
     return new HashSet<>(reservedWords);
   }
 
+  public boolean isQuotedName(final String name)
+  {
+    if (isBlank(name))
+    {
+      return false;
+    }
+
+    final int quoteLength = identifierQuoteString.length();
+    return name.startsWith(identifierQuoteString)
+           && name.endsWith(identifierQuoteString)
+           && name.length() >= quoteLength * 2;
+  }
+
   public boolean isReservedWord(final String word)
   {
     return filter.test(word) && reservedWords.contains(map.apply(word));
@@ -200,11 +213,9 @@ public final class Identifiers
       return name;
     }
 
-    final int quoteLength = identifierQuoteString.length();
     final String unquotedName;
-    if (name.startsWith(identifierQuoteString)
-        && name.endsWith(identifierQuoteString)
-        && name.length() >= quoteLength * 2)
+    final int quoteLength = identifierQuoteString.length();
+    if (isQuotedName(name))
     {
       unquotedName = name.substring(quoteLength, name.length() - quoteLength);
     }
