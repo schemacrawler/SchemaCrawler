@@ -49,7 +49,7 @@ public final class TableType
     {
       throw new IllegalArgumentException("No table type provided");
     }
-    this.tableType = tableTypeString.trim();
+    tableType = tableTypeString.trim();
   }
 
   private TableType()
