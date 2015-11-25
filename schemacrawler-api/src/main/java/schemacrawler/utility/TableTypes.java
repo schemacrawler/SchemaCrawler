@@ -76,22 +76,11 @@ public final class TableTypes
   }
 
   /**
-   * {@inheritDoc}
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return tableTypes.toString();
-  }
-
-  /**
    * Filters table types not known to the database system. Returns
    * values in the same case as known to the database system, even
    * though the search (that is, values in the input collection) is
    * case-insensitive.
-   * 
+   *
    * @param tableTypeStrings
    *        Can be null, which indicates return all table types, or an
    *        empty array, which indicates return no table types.
@@ -133,6 +122,17 @@ public final class TableTypes
   {
     return tableTypes.stream()
       .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return tableTypes.toString();
   }
 
 }
