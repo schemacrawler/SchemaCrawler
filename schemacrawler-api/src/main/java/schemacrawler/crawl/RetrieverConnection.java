@@ -22,7 +22,6 @@ package schemacrawler.crawl;
 
 
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -33,8 +32,8 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
-import schemacrawler.utility.ReservedWords;
 import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
@@ -113,8 +112,7 @@ final class RetrieverConnection
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
   private final boolean supportsFastColumnRetrieval;
-  private final String identifierQuoteString;
-  private final ReservedWords reservedWords;
+  private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
@@ -160,17 +158,16 @@ final class RetrieverConnection
     supportsFastColumnRetrieval = databaseSpecificOverrideOptions
       .isSupportsFastColumnRetrieval();
 
-    identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
-                                                        metaData);
+    final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
+                                                                     metaData);
     LOGGER.log(Level.CONFIG,
                String.format("Database identifier quote string is \"%s\"",
                              identifierQuoteString));
+    identifiers = new Identifiers(connection, identifierQuoteString);
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
                String.format("Supported table types are %s", tableTypes));
-
-    reservedWords = new ReservedWords(connection);
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();
@@ -181,9 +178,9 @@ final class RetrieverConnection
     return connection;
   }
 
-  String getIdentifierQuoteString()
+  Identifiers getIdentifiers()
   {
-    return identifierQuoteString;
+    return identifiers;
   }
 
   /**
@@ -229,42 +226,6 @@ final class RetrieverConnection
   boolean isSupportsSchemas()
   {
     return supportsSchemas;
-  }
-
-  String quotedName(final String name)
-  {
-    final String quotedName;
-    if (reservedWords.needsToBeQuoted(name))
-    {
-      quotedName = identifierQuoteString + name + identifierQuoteString;
-    }
-    else
-    {
-      quotedName = name;
-    }
-    return quotedName;
-  }
-
-  String unquotedName(final String name)
-  {
-    if (isBlank(name))
-    {
-      return name;
-    }
-
-    final int quoteLength = identifierQuoteString.length();
-    final String unquotedName;
-    if (name.startsWith(identifierQuoteString)
-        && name.endsWith(identifierQuoteString)
-        && name.length() >= quoteLength * 2)
-    {
-      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
-    }
-    else
-    {
-      unquotedName = name;
-    }
-    return unquotedName;
   }
 
 }

@@ -6,12 +6,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import schemacrawler.utility.ReservedWords;
+import schemacrawler.utility.Identifiers;
 
-public class ReservedWordsTest
+public class IdentifiersTest
 {
 
-  private final ReservedWords reservedWords = new ReservedWords();
+  private final Identifiers reservedWords = new Identifiers();
 
   @Test
   public void blank()
@@ -19,8 +19,8 @@ public class ReservedWordsTest
     final String[] words = new String[] { "  ", "\t", };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReserved(word));
-      assertTrue(word, reservedWords.needsToBeQuoted(word));
+      assertFalse(word, reservedWords.isReservedWord(word));
+      assertTrue(word, reservedWords.isToBeQuoted(word));
     }
   }
 
@@ -30,8 +30,8 @@ public class ReservedWordsTest
     final String[] words = new String[] { "", null, };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReserved(word));
-      assertFalse(word, reservedWords.needsToBeQuoted(word));
+      assertFalse(word, reservedWords.isReservedWord(word));
+      assertFalse(word, reservedWords.isToBeQuoted(word));
     }
   }
 
@@ -48,8 +48,8 @@ public class ReservedWordsTest
                                           " leaD" };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReserved(word));
-      assertTrue(word, reservedWords.needsToBeQuoted(word));
+      assertFalse(word, reservedWords.isReservedWord(word));
+      assertTrue(word, reservedWords.isToBeQuoted(word));
     }
   }
 
@@ -59,8 +59,8 @@ public class ReservedWordsTest
     final String[] words = new String[] { "update", "UPDATE", };
     for (final String word: words)
     {
-      assertTrue(word, reservedWords.isReserved(word));
-      assertTrue(word, reservedWords.needsToBeQuoted(word));
+      assertTrue(word, reservedWords.isReservedWord(word));
+      assertTrue(word, reservedWords.isToBeQuoted(word));
     }
   }
 
@@ -88,8 +88,8 @@ public class ReservedWordsTest
                                           "दी८दी" };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReserved(word));
-      assertFalse(word, reservedWords.needsToBeQuoted(word));
+      assertFalse(word, reservedWords.isReservedWord(word));
+      assertFalse(word, reservedWords.isToBeQuoted(word));
     }
   }
 

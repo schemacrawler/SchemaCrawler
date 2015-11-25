@@ -31,6 +31,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -39,11 +40,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class ReservedWords
+public final class Identifiers
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(ReservedWords.class.getName());
+    .getLogger(Identifiers.class.getName());
 
   private static final Predicate<String> filter = word -> !isBlank(word);
   private static final Function<String, String> map = word -> word.trim()
@@ -81,10 +82,13 @@ public final class ReservedWords
 
   private static Collection<String> loadSql2003ReservedWords()
   {
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(ReservedWords.class
+    final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
       .getResourceAsStream("/sql2003_reserved_words.txt")));
 
-    return reader.lines().filter(filter).map(map).collect(Collectors.toSet());
+    final Set<String> reservedWords = new HashSet<>();
+    reader.lines().filter(filter).map(map)
+      .forEach(reservedWord -> reservedWords.add(reservedWord));
+    return reservedWords;
   }
 
   private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData)
@@ -103,28 +107,66 @@ public final class ReservedWords
       .collect(Collectors.toSet());
   }
 
+  private final String identifierQuoteString;
   private final Collection<String> reservedWords;
 
-  public ReservedWords()
+  public Identifiers()
   {
-    reservedWords = new HashSet<>();
-    reservedWords.addAll(loadSql2003ReservedWords());
+    reservedWords = loadSql2003ReservedWords();
+
+    identifierQuoteString = "";
   }
 
-  public ReservedWords(final Connection connection)
+  public Identifiers(final Connection connection)
     throws SQLException
   {
-    this();
-    requireNonNull(connection, "No connection provided");
-    reservedWords.addAll(lookupReservedWords(connection.getMetaData()));
+    this(connection, null);
   }
 
-  public boolean isReserved(final String word)
+  public Identifiers(final Connection connection,
+                     final String identifierQuoteString)
+                       throws SQLException
+  {
+    requireNonNull(connection, "No connection provided");
+
+    reservedWords = loadSql2003ReservedWords();
+    reservedWords.addAll(lookupReservedWords(connection.getMetaData()));
+
+    if (identifierQuoteString == null)
+    {
+      final String metaDataIdentifierQuoteString = connection.getMetaData()
+        .getIdentifierQuoteString();
+      if (metaDataIdentifierQuoteString == null)
+      {
+        this.identifierQuoteString = "";
+      }
+      else
+      {
+        this.identifierQuoteString = metaDataIdentifierQuoteString;
+      }
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
+  }
+
+  public String getIdentifierQuoteString()
+  {
+    return identifierQuoteString;
+  }
+
+  public Collection<String> getReservedWords()
+  {
+    return new HashSet<>(reservedWords);
+  }
+
+  public boolean isReservedWord(final String word)
   {
     return filter.test(word) && reservedWords.contains(map.apply(word));
   }
 
-  public boolean needsToBeQuoted(final String name)
+  public boolean isToBeQuoted(final String name)
   {
     if (name == null || name.isEmpty())
     {
@@ -133,8 +175,44 @@ public final class ReservedWords
     else
     {
       return containsWhitespace(name) || isNumeric(name)
-             || containsSpecialCharacters(name) || isReserved(name);
+             || containsSpecialCharacters(name) || isReservedWord(name);
     }
+  }
+
+  public String quotedName(final String name)
+  {
+    final String quotedName;
+    if (isToBeQuoted(name))
+    {
+      quotedName = identifierQuoteString + name + identifierQuoteString;
+    }
+    else
+    {
+      quotedName = name;
+    }
+    return quotedName;
+  }
+
+  public String unquotedName(final String name)
+  {
+    if (isBlank(name))
+    {
+      return name;
+    }
+
+    final int quoteLength = identifierQuoteString.length();
+    final String unquotedName;
+    if (name.startsWith(identifierQuoteString)
+        && name.endsWith(identifierQuoteString)
+        && name.length() >= quoteLength * 2)
+    {
+      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
+    }
+    else
+    {
+      unquotedName = name;
+    }
+    return unquotedName;
   }
 
   private boolean containsSpecialCharacters(final String name)
