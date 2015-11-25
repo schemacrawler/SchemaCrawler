@@ -224,12 +224,12 @@ abstract class AbstractRetriever
 
   String quotedName(final String name)
   {
-    return retrieverConnection.quotedName(name);
+    return retrieverConnection.getIdentifiers().quotedName(name);
   }
 
   String unquotedName(final String name)
   {
-    return retrieverConnection.unquotedName(name);
+    return retrieverConnection.getIdentifiers().unquotedName(name);
   }
 
 }
