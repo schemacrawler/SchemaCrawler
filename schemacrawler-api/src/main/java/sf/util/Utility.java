@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -331,6 +332,8 @@ public final class Utility
     }
     return -1;
   }
+
+  public static final Predicate<String> filterOutBlank = word -> !isBlank(word);
 
   private Utility()
   { // Prevent instantiation
