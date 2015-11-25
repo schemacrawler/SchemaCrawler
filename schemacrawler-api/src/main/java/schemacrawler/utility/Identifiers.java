@@ -118,6 +118,10 @@ public final class Identifiers
     return reservedWords;
   }
 
+  /**
+   * Lookup a list of reserved words for a database system, using
+   * database metadata.
+   */
   private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData)
   {
     String sqlKeywords = "";
@@ -152,7 +156,7 @@ public final class Identifiers
    * Constructs a list of database object identifiers from SQL 2003
    * keywords, and from the database server. Also obtains the identifier
    * quote string from the database server.
-   * 
+   *
    * @param connection
    *        Live database connection
    */
@@ -167,7 +171,7 @@ public final class Identifiers
    * keywords, and from the database server. Also uses the string used
    * to quote database object identifiers as provided. If this is null,
    * it obtains the identifier quote string from the database server.
-   * 
+   *
    * @param connection
    *        Live database connection
    * @param identifierQuoteString
@@ -206,7 +210,7 @@ public final class Identifiers
   /**
    * Gets the string used to quote database object identifiers, as
    * provided by the database server, or as overridden by the caller.
-   * 
+   *
    * @return Identifier quote string
    */
   public String getIdentifierQuoteString()
@@ -214,14 +218,25 @@ public final class Identifiers
     return identifierQuoteString;
   }
 
+  /**
+   * Get a list of reserved words, normalized to uppercase.
+   */
   public Collection<String> getReservedWords()
   {
     return new HashSet<>(reservedWords);
   }
 
+  /**
+   * Checks if an identifier name is quoted using the identifier quote
+   * character.
+   * 
+   * @param name
+   *        Identifier name to check
+   * @return Whether the identifier name is quoted
+   */
   public boolean isQuotedName(final String name)
   {
-    if (isBlank(name))
+    if (isBlank(name) || identifierQuoteString.isEmpty())
     {
       return false;
     }
@@ -232,15 +247,32 @@ public final class Identifiers
            && name.length() >= quoteLength * 2;
   }
 
+  /**
+   * Checks if a given word is a reserved word. Searches are
+   * case-insensitive.
+   * 
+   * @param word
+   *        Word to check
+   * @return Whether the given word is reserved
+   */
   public boolean isReservedWord(final String word)
   {
     return filterOutBlank.test(word)
            && reservedWords.contains(toUpperCase.apply(word));
   }
 
+  /**
+   * Checks if a given identifier name needs to be quoted. It uses
+   * generalized rules which are common across the majority of
+   * databases.
+   * 
+   * @param name
+   *        Identifier name to check
+   * @return Whether the given name needs to be quoted
+   */
   public boolean isToBeQuoted(final String name)
   {
-    if (name == null || name.isEmpty())
+    if (name == null || name.isEmpty() || isQuotedName(name))
     {
       return false;
     }
@@ -251,6 +283,16 @@ public final class Identifiers
     }
   }
 
+  /**
+   * Quotes an identifier name using the identifier quote string. Does
+   * not quote the identifier name if quoting is not required, per
+   * generalized database rules.
+   * 
+   * @param name
+   *        Identifier name to quote
+   * @return Identifier name after quoting it, or the original name if
+   *         quoting is not required
+   */
   public String quotedName(final String name)
   {
     final String quotedName;
@@ -265,6 +307,15 @@ public final class Identifiers
     return quotedName;
   }
 
+  /**
+   * Remove quotes from an identifier name using the identifier quote
+   * string. Returns the original name if it was not quoted.
+   * 
+   * @param name
+   *        Identifier name to remove quotes from
+   * @return Identifier name after quoting it, or the original name if
+   *         quoting is not required
+   */
   public String unquotedName(final String name)
   {
     if (isBlank(name))
@@ -285,6 +336,10 @@ public final class Identifiers
     return unquotedName;
   }
 
+  /**
+   * Checks if an identifier name contains characters other than the
+   * ones allowed by most databases for identifier names.
+   */
   private boolean containsSpecialCharacters(final String name)
   {
     return !isIdentifier(name);
