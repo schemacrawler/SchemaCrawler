@@ -34,6 +34,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
+import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
 import sf.util.Utility;
 
