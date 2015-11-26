@@ -20,14 +20,13 @@
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.RoutineType;
 import sf.util.ObjectToString;
@@ -76,6 +75,10 @@ public final class SchemaCrawlerOptions
    */
   public SchemaCrawlerOptions()
   {
+    schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+
+    title = "";
+
     schemaInclusionRule = new IncludeAll();
     synonymInclusionRule = new ExcludeAll();
     sequenceInclusionRule = new ExcludeAll();
@@ -88,6 +91,7 @@ public final class SchemaCrawlerOptions
                                                RoutineType.function));
     routineInclusionRule = new IncludeAll();
     routineColumnInclusionRule = new IncludeAll();
+
   }
 
   public int getChildTableFilterDepth()
@@ -183,14 +187,7 @@ public final class SchemaCrawlerOptions
    */
   public SchemaInfoLevel getSchemaInfoLevel()
   {
-    if (schemaInfoLevel == null)
-    {
-      return SchemaInfoLevelBuilder.standard();
-    }
-    else
-    {
-      return schemaInfoLevel;
-    }
+    return schemaInfoLevel;
   }
 
   /**
@@ -224,7 +221,8 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Gets the table name pattern.
+   * Gets the table name pattern. A null value indicates do not take
+   * table pattern into account.
    *
    * @return Table name pattern
    */
@@ -253,7 +251,7 @@ public final class SchemaCrawlerOptions
 
   public String getTitle()
   {
-    return isBlank(title)? "": title;
+    return title;
   }
 
   public boolean isGrepColumns()
@@ -418,7 +416,7 @@ public final class SchemaCrawlerOptions
 
   public void setRoutineTypes(final Collection<RoutineType> routineTypes)
   {
-    if (routineTypes == null)
+    if (routineTypes == null || routineTypes.isEmpty())
     {
       this.routineTypes = Collections.emptySet();
     }
@@ -449,7 +447,8 @@ public final class SchemaCrawlerOptions
    */
   public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
-    this.schemaInfoLevel = schemaInfoLevel;
+    this.schemaInfoLevel = requireNonNull(schemaInfoLevel,
+                                          "No schema information level provided");
   }
 
   /**
@@ -494,10 +493,11 @@ public final class SchemaCrawlerOptions
    * the table name - not the fully qualified table name. The table name
    * pattern restricts the tables retrieved at an early stage in the
    * retrieval process, so it must be used only when performance needs
-   * to be tuned.
+   * to be tuned. A null value indicates do not take table pattern into
+   * account.
    *
    * @param tableNamePattern
-   *        Table name pattern
+   *        Table name pattern, null is allowed
    */
   public void setTableNamePattern(final String tableNamePattern)
   {
@@ -527,7 +527,7 @@ public final class SchemaCrawlerOptions
 
   public void setTitle(final String title)
   {
-    this.title = title;
+    this.title = isBlank(title)? "": title;
   }
 
   /**
