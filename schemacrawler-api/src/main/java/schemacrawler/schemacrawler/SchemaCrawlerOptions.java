@@ -42,29 +42,39 @@ public final class SchemaCrawlerOptions
 
   private static final long serialVersionUID = -3557794862382066029L;
 
+  private static Collection<RoutineType> allRoutineTypes()
+  {
+    return Arrays.asList(RoutineType.procedure, RoutineType.function);
+  }
+
+  private static Collection<String> defaultTableTypes()
+  {
+    return Arrays.asList("TABLE", "VIEW");
+  }
+
   private SchemaInfoLevel schemaInfoLevel;
 
   private String title;
 
   private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
-
   private InclusionRule sequenceInclusionRule;
+
   private Collection<String> tableTypes;
   private String tableNamePattern;
-
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
+
   private Collection<RoutineType> routineTypes;
   private InclusionRule routineInclusionRule;
-
   private InclusionRule routineColumnInclusionRule;
+
   private InclusionRule grepColumnInclusionRule;
   private InclusionRule grepRoutineColumnInclusionRule;
-
   private InclusionRule grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
   private boolean grepOnlyMatching;
+
   private boolean hideEmptyTables;
 
   private int childTableFilterDepth;
@@ -83,12 +93,11 @@ public final class SchemaCrawlerOptions
     synonymInclusionRule = new ExcludeAll();
     sequenceInclusionRule = new ExcludeAll();
 
-    tableTypes = new HashSet<>(Arrays.asList("TABLE", "VIEW"));
+    tableTypes = defaultTableTypes();
     tableInclusionRule = new IncludeAll();
     columnInclusionRule = new IncludeAll();
 
-    routineTypes = new HashSet<>(Arrays.asList(RoutineType.procedure,
-                                               RoutineType.function));
+    routineTypes = allRoutineTypes();
     routineInclusionRule = new IncludeAll();
     routineColumnInclusionRule = new IncludeAll();
 
@@ -416,7 +425,12 @@ public final class SchemaCrawlerOptions
 
   public void setRoutineTypes(final Collection<RoutineType> routineTypes)
   {
-    if (routineTypes == null || routineTypes.isEmpty())
+    if (routineTypes == null)
+    {
+      // null signifies include all routine types
+      this.routineTypes = allRoutineTypes();
+    }
+    if (routineTypes.isEmpty())
     {
       this.routineTypes = Collections.emptySet();
     }
@@ -518,6 +532,10 @@ public final class SchemaCrawlerOptions
     if (tableTypes == null)
     {
       this.tableTypes = null;
+    }
+    else if (tableTypes.isEmpty())
+    {
+      this.tableTypes = Collections.emptySet();
     }
     else
     {
