@@ -49,7 +49,7 @@ public final class SchemaCrawlerOptions
 
   private static Collection<String> defaultTableTypes()
   {
-    return Arrays.asList("TABLE", "VIEW");
+    return Arrays.asList("BASE TABLE", "TABLE", "VIEW");
   }
 
   private SchemaInfoLevel schemaInfoLevel;
