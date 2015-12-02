@@ -37,6 +37,8 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 /**
  * Command registry for mapping commands to executable.
@@ -54,20 +56,25 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
 
-    final List<CommandProvider> commandProviders = new ArrayList<CommandProvider>(Arrays
-      .asList(new SchemaExecutableCommandProvider("list"),
-              new SchemaExecutableCommandProvider("brief"),
-              new SchemaExecutableCommandProvider("schema"),
-              new SchemaExecutableCommandProvider("details"),
+    final List<CommandProvider> commandProviders = new ArrayList<>();
 
-              new ExecutableCommandProvider("count",
-                                            "schemacrawler.tools.text.operation.OperationExecutable"),
-              new ExecutableCommandProvider("dump",
-                                            "schemacrawler.tools.text.operation.OperationExecutable"),
-              new ExecutableCommandProvider("script",
+    for (SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+      .values())
+    {
+      commandProviders
+        .add(new SchemaExecutableCommandProvider(schemaTextDetailType));
+    }
+
+    for (Operation operation: Operation.values())
+    {
+      commandProviders.add(new OperationExecutableCommandProvider(operation));
+    }
+
+    commandProviders.addAll((Arrays
+      .asList(new ExecutableCommandProvider("script",
                                             "schemacrawler.tools.integration.scripting.ScriptExecutable"),
               new ExecutableCommandProvider("graph",
-                                            "schemacrawler.tools.integration.graph.GraphExecutable")));
+                                            "schemacrawler.tools.integration.graph.GraphExecutable"))));
 
     try
     {
