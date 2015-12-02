@@ -46,7 +46,7 @@ public enum Operation
   * (minimum infolevel), but the order of rows may not be preserved from
   * run to run.
   */
-  quickdump("Quick dump", "SELECT * FROM ${table}", ""),;
+  quickdump("Dump", "SELECT * FROM ${table}", ""),;
 
   private final String description;
   private final String queryString;
