@@ -55,14 +55,14 @@ public class SchemaCrawlerTextCommandsOutputTest
   public void countOutput()
     throws Exception
   {
-    textOutputTest(Operation.count.name(), new Config());
+    testOperationOutput(Operation.count);
   }
 
   @Test
   public void dumpOutput()
     throws Exception
   {
-    textOutputTest(Operation.dump.name(), new Config());
+    testOperationOutput(Operation.dump);
   }
 
   @Test
@@ -92,6 +92,13 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
+  public void quickdumpOutput()
+    throws Exception
+  {
+    testOperationOutput(Operation.quickdump);
+  }
+
+  @Test
   public void schemaOutput()
     throws Exception
   {
@@ -117,6 +124,12 @@ public class SchemaCrawlerTextCommandsOutputTest
     throws Exception
   {
     textOutputTest(SchemaTextDetailType.brief.name(), new Config());
+  }
+
+  private void testOperationOutput(final Operation operation)
+    throws Exception
+  {
+    textOutputTest(operation.name(), new Config());
   }
 
   private void textOutputTest(final String command, final Config config)
