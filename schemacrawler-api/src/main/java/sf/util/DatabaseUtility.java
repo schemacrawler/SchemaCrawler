@@ -82,6 +82,11 @@ public final class DatabaseUtility
       {
         for (final String sql: sqlScript.split(";"))
         {
+          if (isBlank(sql))
+          {
+            continue;
+          }
+
           final ResultSet resultSet = executeSql(statement, sql);
           if (resultSet != null)
           {
@@ -224,7 +229,7 @@ public final class DatabaseUtility
     {
       return values;
     }
-  
+
     try
     {
       while (results.next())
