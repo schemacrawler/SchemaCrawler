@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.05.03" date="2015-12-02" description="Quick dump">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new quickdump command, which works with -infolevel=minimum, though row order is not guaranteed.
+      ]]></action>                      
+     </release>    
      <release version="14.05.02" date="2015-11-26" description="Quoting Identifiers">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Externalized logic to quote and unquote database object identifiers.
