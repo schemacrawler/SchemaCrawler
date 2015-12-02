@@ -16,6 +16,9 @@
       Shows counts of rows in the tables
     dump
       Shows data from all rows in the tables
+    quickdump
+      Shows data from all rows in the tables, but row order is not guaranteed -
+      this can be used with a -infolevel=minimum for speed
     <query_name>
       Shows results of query <query_name>, as specified in the configuration 
       properties file

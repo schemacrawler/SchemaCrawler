@@ -40,7 +40,13 @@ public enum Operation
   * Dump operation
   */
   dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}",
-    ""),;
+    ""),
+ /**
+  * Quick dump operation, where columns do not need to be retrieved
+  * (minimum infolevel), but the order of rows may not be preserved from
+  * run to run.
+  */
+  quickdump("Quick dump", "SELECT * FROM ${table}", ""),;
 
   private final String description;
   private final String queryString;

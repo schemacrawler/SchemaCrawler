@@ -1,21 +1,26 @@
 package schemacrawler.tools.executable;
 
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextExecutable;
 
 class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  public SchemaExecutableCommandProvider(final String command)
+  public SchemaExecutableCommandProvider(final SchemaTextDetailType schemaTextDetailType)
   {
-    super(command, "");
+    super(requireNonNull(schemaTextDetailType,
+                         "No schema text detail provided").name(),
+          "");
   }
 
   @Override
