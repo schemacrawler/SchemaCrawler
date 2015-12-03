@@ -21,6 +21,8 @@
 package schemacrawler.utility;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.lang.reflect.Field;
 import java.sql.Types;
 import java.util.Collection;
@@ -34,7 +36,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
-import sf.util.Utility;
 
 /**
  * Utility to work with java.sql.Types.
@@ -229,7 +230,7 @@ public final class JavaSqlTypes
   public JavaSqlType getFromJavaSqlTypeName(final String typeName)
   {
     JavaSqlType sqlDataType = JavaSqlType.UNKNOWN;
-    if (Utility.isBlank(typeName))
+    if (isBlank(typeName))
     {
       return sqlDataType;
     }

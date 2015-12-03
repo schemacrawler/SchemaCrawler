@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -31,7 +33,6 @@ import java.util.Set;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Grant;
 import schemacrawler.schema.Privilege;
-import sf.util.Utility;
 
 /**
  * Represents a privilege of a table or column.
@@ -194,7 +195,7 @@ final class MutablePrivilege<D extends DatabaseObject>
                 final String grantee,
                 final boolean isGrantable)
   {
-    if (!Utility.isBlank(grantor) && !Utility.isBlank(grantee))
+    if (!isBlank(grantor) && !isBlank(grantee))
     {
       grants.add(new PrivilegeGrant(grantor, grantee, isGrantable));
     }

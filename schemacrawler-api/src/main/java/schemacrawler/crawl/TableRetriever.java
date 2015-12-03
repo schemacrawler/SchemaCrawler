@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,7 +40,6 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.TableTypes;
-import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -255,7 +256,7 @@ final class TableRetriever
         // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
         final String columnName = quotedName(unquotedName(results
           .getString("COLUMN_NAME")));
-        if (Utility.isBlank(columnName))
+        if (isBlank(columnName))
         {
           continue;
         }
@@ -273,7 +274,7 @@ final class TableRetriever
         if (columnOptional.isPresent())
         {
           final MutableColumn column = columnOptional.get();
-          if (Utility.isBlank(indexName))
+          if (isBlank(indexName))
           {
             indexName = String
               .format("SC_%s",

@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.executeSql;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -41,7 +42,6 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.MetaDataUtility;
-import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -138,7 +138,7 @@ final class ForeignKeyRetriever
           continue;
         }
 
-        if (Utility.isBlank(foreignKeyName))
+        if (isBlank(foreignKeyName))
         {
           foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
                                                                    fkColumn);

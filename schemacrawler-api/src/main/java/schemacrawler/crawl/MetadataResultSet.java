@@ -39,8 +39,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.Utility;
-
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata
  * call. This allows type-safe methods to obtain boolean, integer and
@@ -93,7 +91,7 @@ final class MetadataResultSet
       {
         String columnName;
         columnName = rsMetaData.getColumnLabel(i + 1);
-        if (Utility.isBlank(columnName))
+        if (isBlank(columnName))
         {
           columnName = rsMetaData.getColumnName(i + 1);
         }
@@ -172,7 +170,7 @@ final class MetadataResultSet
   BigInteger getBigInteger(final String columnName)
   {
     String stringBigInteger = getString(columnName);
-    if (Utility.isBlank(stringBigInteger))
+    if (isBlank(stringBigInteger))
     {
       return null;
     }
@@ -219,7 +217,7 @@ final class MetadataResultSet
         {
           stringBooleanValue = String.valueOf(booleanValue).trim();
         }
-        if (!Utility.isBlank(stringBooleanValue))
+        if (!isBlank(stringBooleanValue))
         {
           try
           {

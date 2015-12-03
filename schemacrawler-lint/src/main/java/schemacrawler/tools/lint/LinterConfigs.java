@@ -45,7 +45,6 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>
@@ -178,7 +177,7 @@ public class LinterConfigs
         final Element propertyElement = (Element) propertiesList.item(i);
         final String name = propertyElement.getAttribute("name");
         final String value = propertyElement.getFirstChild().getNodeValue();
-        if (!Utility.isBlank(name))
+        if (!isBlank(name))
         {
           config.put(name, value);
         }
