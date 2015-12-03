@@ -21,12 +21,13 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
-import sf.util.Utility;
 
 /**
  * Represents a database routine. Created from metadata returned by a
@@ -67,7 +68,7 @@ abstract class MutableRoutine
   public String getLookupKey()
   {
     final String lookupKey = super.getLookupKey();
-    if (Utility.isBlank(specificName))
+    if (isBlank(specificName))
     {
       return lookupKey;
     }

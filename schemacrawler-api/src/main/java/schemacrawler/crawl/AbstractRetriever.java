@@ -35,7 +35,6 @@ import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.utility.TypeMap;
-import sf.util.Utility;
 
 /**
  * Base class for retriever that uses database metadata to get the
@@ -202,7 +201,7 @@ abstract class AbstractRetriever
                                          final String specificName)
   {
     final String routineLookupName;
-    if (!Utility.isBlank(specificName))
+    if (!isBlank(specificName))
     {
       routineLookupName = specificName;
     }

@@ -142,7 +142,7 @@ public final class TemplatingUtility
   public static Set<String> extractTemplateVariables(final String template)
   {
 
-    if (Utility.isBlank(template))
+    if (isBlank(template))
     {
       return new HashSet<>();
     }

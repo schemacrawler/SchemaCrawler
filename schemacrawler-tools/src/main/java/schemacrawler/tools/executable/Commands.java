@@ -1,13 +1,13 @@
 package schemacrawler.tools.executable;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import sf.util.Utility;
 
 final class Commands
   implements Serializable, Iterable<String>
@@ -20,7 +20,7 @@ final class Commands
   Commands(final String commandsList)
   {
     commands = new ArrayList<>();
-    if (!Utility.isBlank(commandsList))
+    if (!isBlank(commandsList))
     {
       final String[] commandStrings = commandsList.split(",");
       commands.addAll(Arrays.asList(commandStrings));

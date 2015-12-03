@@ -21,11 +21,11 @@
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import sf.util.Utility;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
@@ -157,7 +157,7 @@ public final class RegularExpressionRule
 
     final String actionMessage;
     boolean include = false;
-    if (!Utility.isBlank(text))
+    if (!isBlank(text))
     {
       if (!patternInclude.matcher(text).matches())
       {
