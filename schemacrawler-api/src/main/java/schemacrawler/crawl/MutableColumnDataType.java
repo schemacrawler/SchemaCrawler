@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,7 +30,6 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import sf.util.Utility;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the
@@ -377,7 +378,7 @@ final class MutableColumnDataType
 
   void setTypeMappedClass(final String mappedClassName)
   {
-    if (!Utility.isBlank(mappedClassName))
+    if (!isBlank(mappedClassName))
     {
       try
       {

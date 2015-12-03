@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static sf.util.DatabaseUtility.checkConnection;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -36,7 +37,6 @@ import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
-import sf.util.Utility;
 
 /**
  * A connection for the retriever. Wraps a live database connection.
@@ -65,7 +65,7 @@ final class RetrieverConnection
     {
       identifierQuoteString = metaData.getIdentifierQuoteString();
     }
-    if (Utility.isBlank(identifierQuoteString))
+    if (isBlank(identifierQuoteString))
     {
       identifierQuoteString = "";
     }

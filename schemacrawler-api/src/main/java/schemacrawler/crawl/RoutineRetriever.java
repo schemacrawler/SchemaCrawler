@@ -42,7 +42,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -102,7 +101,7 @@ final class RoutineRetriever
         if (columnFilter.test(column) && function.getName().equals(functionName)
             && belongsToSchema(function, columnCatalogName, schemaName))
         {
-          if (!Utility.isBlank(specificName)
+          if (!isBlank(specificName)
               && !specificName.equals(function.getSpecificName()))
           {
             continue;
@@ -273,7 +272,7 @@ final class RoutineRetriever
             && procedure.getName().equals(procedureName)
             && belongsToSchema(procedure, columnCatalogName, schemaName))
         {
-          if (!Utility.isBlank(specificName)
+          if (!isBlank(specificName)
               && !specificName.equals(procedure.getSpecificName()))
           {
             continue;

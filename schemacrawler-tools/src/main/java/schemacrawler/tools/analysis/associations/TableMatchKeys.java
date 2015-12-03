@@ -103,7 +103,7 @@ final class TableMatchKeys
         final String table1 = tables.get(i).getName();
         final String table2 = tables.get(j).getName();
         final String commonPrefix = Utility.commonPrefix(table1, table2);
-        if (!Utility.isBlank(commonPrefix) && commonPrefix.endsWith("_"))
+        if (!isBlank(commonPrefix) && commonPrefix.endsWith("_"))
         {
           final List<String> splitCommonPrefixes = new ArrayList<>();
           final String[] splitPrefix = commonPrefix.split("_");

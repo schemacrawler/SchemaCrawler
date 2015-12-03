@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -31,7 +32,6 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
-import sf.util.Utility;
 
 /**
  * A retriever uses database metadata to get the details about a result
@@ -74,7 +74,7 @@ final class ResultsRetriever
       final String catalogName = resultsMetaData.getCatalogName(i);
       final String schemaName = resultsMetaData.getSchemaName(i);
       String tableName = resultsMetaData.getTableName(i);
-      if (Utility.isBlank(tableName))
+      if (isBlank(tableName))
       {
         tableName = "";
       }
