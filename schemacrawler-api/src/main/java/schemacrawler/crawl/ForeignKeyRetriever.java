@@ -289,7 +289,8 @@ final class ForeignKeyRetriever
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet("retrieveForeignKeysUsingSql",
+                                                                executeSql(statement,
                                                                            fkSql));)
     {
       createForeignKeys(results, foreignKeys);

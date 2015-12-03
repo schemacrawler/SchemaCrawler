@@ -157,8 +157,10 @@ final class SchemaRetriever
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getSchemas());)
+      try (
+          final MetadataResultSet results = new MetadataResultSet("retrieveAllSchemas",
+                                                                  getMetaData()
+                                                                    .getSchemas());)
       {
         while (results.next())
         {
@@ -230,7 +232,8 @@ final class SchemaRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet("retrieveAllSchemasFromInformationSchemaViews",
+                                                                executeSql(statement,
                                                                            schemataSql));)
     {
       while (results.next())

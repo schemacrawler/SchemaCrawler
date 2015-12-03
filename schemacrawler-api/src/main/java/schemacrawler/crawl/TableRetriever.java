@@ -176,11 +176,13 @@ final class TableRetriever
 
     LOGGER.log(Level.INFO, "Retrieving tables");
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTables(unquotedName(catalogName),
-                 unquotedName(schemaName),
-                 tableNamePattern,
-                 filteredTableTypes));)
+    try (
+        final MetadataResultSet results = new MetadataResultSet("retrieveTables",
+                                                                getMetaData()
+                                                                  .getTables(unquotedName(catalogName),
+                                                                             unquotedName(schemaName),
+                                                                             tableNamePattern,
+                                                                             filteredTableTypes));)
     {
       while (results.next())
       {
