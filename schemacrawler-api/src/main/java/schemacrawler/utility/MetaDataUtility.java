@@ -21,12 +21,12 @@
 package schemacrawler.utility;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;

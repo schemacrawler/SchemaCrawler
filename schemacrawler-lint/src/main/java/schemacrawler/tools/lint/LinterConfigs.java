@@ -20,6 +20,7 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -40,8 +41,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

@@ -21,10 +21,10 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;

@@ -20,11 +20,10 @@
 package schemacrawler.tools.databaseconnector;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.util.regex.Pattern;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
@@ -143,6 +142,11 @@ public abstract class DatabaseConnector
     return databaseSpecificOverrideOptionsBuilder;
   }
 
+  public boolean isUnknownDatabaseSystem()
+  {
+    return dbServerType.isUnknownDatabaseSystem();
+  }
+
   /**
    * Creates a datasource for connecting to a database. Additional
    * connection options are provided, from the command-line, and
@@ -180,11 +184,6 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
-  }
-
-  public boolean isUnknownDatabaseSystem()
-  {
-    return dbServerType.isUnknownDatabaseSystem();
   }
 
 }

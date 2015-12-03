@@ -21,11 +21,11 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Index;

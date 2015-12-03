@@ -73,6 +73,44 @@ public class SchemaCrawlerTest
   public TestName testName = new TestName();
 
   @Test
+  public void columnDataTypes()
+    throws Exception
+  {
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
+      final Collection<ColumnDataType> columnDataTypes = catalog
+        .getColumnDataTypes();
+      assertEquals("ColumnDataType count does not match",
+                   26,
+                   columnDataTypes.size());
+      for (final ColumnDataType columnDataType: columnDataTypes)
+      {
+        assertNotNull(columnDataType);
+        out.println("column data-type: " + columnDataType.getFullName());
+        out.println("  is user-defined: " + columnDataType.isUserDefined());
+        final ColumnDataType baseType = columnDataType.getBaseType();
+        if (baseType != null)
+        {
+          out.println("  based on: " + baseType.getDatabaseSpecificTypeName());
+        }
+      }
+
+      out.assertEquals(testName.currentMethodFullName());
+    }
+  }
+
+  @Test
   public void columnLookup()
     throws Exception
   {
@@ -88,6 +126,60 @@ public class SchemaCrawlerTest
     assertNull(table.lookupColumn("").orElse(null));
     assertNull(table.lookupColumn("NO_COLUMN").orElse(null));
     assertNotNull(table.lookupColumn("ID").orElse(null));
+  }
+
+  @Test
+  public void columns()
+    throws Exception
+  {
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+
+      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+        .toOptions(), schemaCrawlerOptions);
+      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
+      assertEquals("Schema count does not match", 5, schemas.length);
+      for (final Schema schema: schemas)
+      {
+        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
+        Arrays.sort(tables, NamedObjectSort.alphabetical);
+        for (final Table table: tables)
+        {
+          final Column[] columns = table.getColumns().toArray(new Column[0]);
+          Arrays.sort(columns);
+          for (final Column column: columns)
+          {
+            out.println(String.format("%s [%s] default=\"%s\"",
+                                      column.getFullName(),
+                                      column.getColumnDataType(),
+                                      column.getDefaultValue()));
+            final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
+              .getAttributes());
+            for (final Entry<String, Object> columnAttribute: columnAttributes
+              .entrySet())
+            {
+              out.println(String.format("  ~ %s=%s",
+                                        columnAttribute.getKey(),
+                                        columnAttribute.getValue()));
+            }
+          }
+
+          out.println();
+        }
+      }
+
+      out.assertEquals(testName.currentMethodFullName());
+    }
   }
 
   @Test
@@ -556,97 +648,6 @@ public class SchemaCrawlerTest
     assertNotNull("View definition not found", view.getDefinition());
     assertFalse("View definition not found",
                 view.getDefinition().trim().equals(""));
-  }
-
-  @Test
-  public void columnDataTypes()
-    throws Exception
-  {
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
-        .fromConfig(config);
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
-      Collection<ColumnDataType> columnDataTypes = catalog.getColumnDataTypes();
-      assertEquals("ColumnDataType count does not match",
-                   26,
-                   columnDataTypes.size());
-      for (final ColumnDataType columnDataType: columnDataTypes)
-      {
-        assertNotNull(columnDataType);
-        out.println("column data-type: " + columnDataType.getFullName());
-        out.println("  is user-defined: " + columnDataType.isUserDefined());
-        final ColumnDataType baseType = columnDataType.getBaseType();
-        if (baseType != null)
-        {
-          out.println("  based on: " + baseType.getDatabaseSpecificTypeName());
-        }
-      }
-
-      out.assertEquals(testName.currentMethodFullName());
-    }
-  }
-
-  @Test
-  public void columns()
-    throws Exception
-  {
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
-        .fromConfig(config);
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
-      final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 5, schemas.length);
-      for (final Schema schema: schemas)
-      {
-        final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-        Arrays.sort(tables, NamedObjectSort.alphabetical);
-        for (final Table table: tables)
-        {
-          final Column[] columns = table.getColumns().toArray(new Column[0]);
-          Arrays.sort(columns);
-          for (final Column column: columns)
-          {
-            out.println(String.format("%s [%s] default=\"%s\"",
-                                      column.getFullName(),
-                                      column.getColumnDataType(),
-                                      column.getDefaultValue()));
-            final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
-              .getAttributes());
-            for (final Entry<String, Object> columnAttribute: columnAttributes
-              .entrySet())
-            {
-              out.println(String.format("  ~ %s=%s",
-                                        columnAttribute.getKey(),
-                                        columnAttribute.getValue()));
-            }
-          }
-
-          out.println();
-        }
-      }
-
-      out.assertEquals(testName.currentMethodFullName());
-    }
   }
 
 }

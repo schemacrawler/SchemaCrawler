@@ -60,6 +60,8 @@ public final class Utility
   private static final Pattern isAllWhitespacePattern = Pattern
     .compile("^\\s*$");
 
+  public static final Predicate<String> filterOutBlank = word -> !isBlank(word);
+
   public static String commonPrefix(final String string1, final String string2)
   {
     final int index = indexOfDifference(string1, string2);
@@ -332,8 +334,6 @@ public final class Utility
     }
     return -1;
   }
-
-  public static final Predicate<String> filterOutBlank = word -> !isBlank(word);
 
   private Utility()
   { // Prevent instantiation
