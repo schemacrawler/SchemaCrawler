@@ -21,6 +21,9 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -35,8 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import sf.util.Utility;
 
@@ -57,13 +58,23 @@ final class MetadataResultSet
 
   private static final int FETCHSIZE = 20;
 
+  private final String description;
   private final ResultSet results;
   private final List<String> resultSetColumns;
   private Set<String> readColumns;
+  private int rowCount;
 
   MetadataResultSet(final ResultSet resultSet)
     throws SQLException
   {
+    this(null, resultSet);
+  }
+
+  MetadataResultSet(final String description, final ResultSet resultSet)
+    throws SQLException
+  {
+    this.description = description;
+
     results = requireNonNull(resultSet, "Cannot use null results");
     try
     {
@@ -111,6 +122,14 @@ final class MetadataResultSet
     throws SQLException
   {
     results.close();
+
+    if (!isBlank(description) && LOGGER.isLoggable(Level.INFO))
+    {
+      LOGGER.log(Level.INFO,
+                 String.format("\"%s\" results had %d rows",
+                               description,
+                               rowCount));
+    }
   }
 
   /**
@@ -425,6 +444,7 @@ final class MetadataResultSet
   boolean next()
     throws SQLException
   {
+    rowCount = rowCount + 1;
     readColumns = new HashSet<>();
     return results.next();
   }
