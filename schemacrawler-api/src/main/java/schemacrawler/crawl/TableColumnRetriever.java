@@ -72,8 +72,13 @@ final class TableColumnRetriever
     if (fastColumnRetrieval)
     {
       LOGGER.log(Level.INFO, "Retrieving table columns, using fast retrieval");
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(null, null, "%", "%"));)
+      try (
+          final MetadataResultSet results = new MetadataResultSet("retrieveColumns",
+                                                                  getMetaData()
+                                                                    .getColumns(null,
+                                                                                null,
+                                                                                "%",
+                                                                                "%"));)
       {
         createTableColumns(results, allTables, columnFilter);
       }

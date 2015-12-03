@@ -334,10 +334,12 @@ final class RoutineRetriever
                "Retrieving procedures for, "
                            + new SchemaReference(catalogName, schemaName));
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedures(unquotedName(catalogName),
-                     unquotedName(schemaName),
-                     "%"));)
+    try (
+        final MetadataResultSet results = new MetadataResultSet("retrieveProcedures",
+                                                                getMetaData()
+                                                                  .getProcedures(unquotedName(catalogName),
+                                                                                 unquotedName(schemaName),
+                                                                                 "%"));)
     {
       while (results.next())
       {
