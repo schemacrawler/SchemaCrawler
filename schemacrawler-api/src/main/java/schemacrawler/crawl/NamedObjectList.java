@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ import java.util.Optional;
 
 import schemacrawler.schema.NamedObject;
 import sf.util.ObjectToString;
-import sf.util.Utility;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
@@ -87,7 +87,7 @@ class NamedObjectList<N extends NamedObject>
   private static String makeLookupKey(final String fullName)
   {
     final String key;
-    if (Utility.isBlank(fullName))
+    if (isBlank(fullName))
     {
       key = null;
     }

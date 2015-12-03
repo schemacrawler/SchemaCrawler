@@ -26,8 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import sf.util.Utility;
-
 public final class SchemaReference
   implements Schema
 {
@@ -255,7 +253,7 @@ public final class SchemaReference
   @Override
   public final void setAttribute(final String name, final Object value)
   {
-    if (!Utility.isBlank(name))
+    if (!isBlank(name))
     {
       if (value == null)
       {

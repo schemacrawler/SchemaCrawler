@@ -20,6 +20,8 @@
 package schemacrawler.utility;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,8 +30,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import sf.util.Utility;
 
 /**
  * The default mappings are from the JDBC Specification 4.1, Appendix B
@@ -179,7 +179,7 @@ public final class TypeMap
    */
   public Class<?> get(final String typeName, final String className)
   {
-    if (Utility.isBlank(className))
+    if (isBlank(className))
     {
       return sqlTypeMap.get(typeName);
     }

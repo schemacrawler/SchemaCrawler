@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static sf.util.DatabaseUtility.executeSql;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,7 +39,6 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import sf.util.Utility;
 
 /**
  * A retriever that uses database metadata to get the extended details
@@ -116,7 +116,7 @@ final class SynonymRetriever
         final String referencedObjectName = quotedName(results
           .getString("REFERENCED_OBJECT_NAME"));
 
-        if (Utility.isBlank(referencedObjectName))
+        if (isBlank(referencedObjectName))
         {
           LOGGER.log(Level.FINE,
                      String.format("No reference for synonym, %s.%s.%s",

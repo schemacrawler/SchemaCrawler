@@ -23,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -63,7 +64,6 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.Utility;
 
 public class SchemaCrawlerTest
   extends BaseDatabaseTest
@@ -308,7 +308,7 @@ public class SchemaCrawlerTest
     for (final Routine routine: routines)
     {
       assertFalse("Routine definition not found, for " + routine,
-                  Utility.isBlank(routine.getDefinition()));
+                  isBlank(routine.getDefinition()));
     }
   }
 

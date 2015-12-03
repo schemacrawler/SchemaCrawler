@@ -21,6 +21,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
-import sf.util.Utility;
 
 public class LinterNullIntendedColumns
   extends BaseLinter
@@ -66,7 +66,7 @@ public class LinterNullIntendedColumns
     for (final Column column: columns)
     {
       final String columnDefaultValue = column.getDefaultValue();
-      if (!Utility.isBlank(columnDefaultValue)
+      if (!isBlank(columnDefaultValue)
           && columnDefaultValue.trim().equalsIgnoreCase("NULL"))
       {
         nullDefaultValueMayBeIntendedColumns.add(column);
