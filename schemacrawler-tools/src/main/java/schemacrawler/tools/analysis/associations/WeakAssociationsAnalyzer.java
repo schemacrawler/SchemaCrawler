@@ -21,6 +21,7 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.analysis.associations.WeakAssociationsUtility.addWeakAssociationToTable;
 
 import java.util.Collection;
@@ -31,8 +32,6 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;

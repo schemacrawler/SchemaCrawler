@@ -20,11 +20,11 @@
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;

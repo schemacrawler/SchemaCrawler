@@ -20,6 +20,8 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -28,8 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Catalog;

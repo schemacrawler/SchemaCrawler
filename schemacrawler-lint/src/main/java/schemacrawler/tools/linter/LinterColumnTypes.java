@@ -20,13 +20,13 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;

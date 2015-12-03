@@ -127,6 +127,11 @@ public class ProcessExecutor
     }
   }
 
+  public List<String> getCommand()
+  {
+    return command;
+  }
+
   public int getExitCode()
   {
     return exitCode;
@@ -140,11 +145,6 @@ public class ProcessExecutor
   public String getProcessOutput()
   {
     return processOutput;
-  }
-
-  public List<String> getCommand()
-  {
-    return command;
   }
 
   public void setCommandLine(final List<String> args)

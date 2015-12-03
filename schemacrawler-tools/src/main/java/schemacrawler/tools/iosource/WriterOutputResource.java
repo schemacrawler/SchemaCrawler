@@ -20,14 +20,14 @@
 package schemacrawler.tools.iosource;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 public class WriterOutputResource
   implements OutputResource

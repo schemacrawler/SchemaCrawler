@@ -20,13 +20,13 @@
 package schemacrawler.tools.iosource;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 public class InputReader
   extends Reader
