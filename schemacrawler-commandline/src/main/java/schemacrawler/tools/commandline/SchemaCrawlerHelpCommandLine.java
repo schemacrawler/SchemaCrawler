@@ -20,10 +20,9 @@
 package schemacrawler.tools.commandline;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -60,7 +59,7 @@ public final class SchemaCrawlerHelpCommandLine
   /**
    * Loads objects from command-line options. Optionally loads the
    * config from the classpath.
-   * 
+   *
    * @param args
    *        Command line arguments.
    * @param configResource
@@ -77,8 +76,8 @@ public final class SchemaCrawlerHelpCommandLine
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
     final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
 
-    this.connectionHelpResource = dbConnector.getConnectionHelpResource();
-    this.dbServerType = dbConnector.getDatabaseServerType();
+    connectionHelpResource = dbConnector.getConnectionHelpResource();
+    dbServerType = dbConnector.getDatabaseServerType();
 
     this.showVersionOnly = showVersionOnly;
 

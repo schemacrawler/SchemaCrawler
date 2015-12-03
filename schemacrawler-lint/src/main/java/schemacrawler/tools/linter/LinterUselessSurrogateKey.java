@@ -20,9 +20,9 @@
 package schemacrawler.tools.linter;
 
 
-import java.sql.Connection;
-
 import static java.util.Objects.requireNonNull;
+
+import java.sql.Connection;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Column;

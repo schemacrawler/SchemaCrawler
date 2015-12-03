@@ -20,9 +20,9 @@
 package schemacrawler.tools.analysis.counts;
 
 
-import java.util.function.Predicate;
-
 import static java.util.Objects.requireNonNull;
+
+import java.util.function.Predicate;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;

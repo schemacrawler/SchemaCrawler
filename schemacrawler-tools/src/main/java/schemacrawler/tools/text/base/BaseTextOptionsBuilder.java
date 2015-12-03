@@ -21,9 +21,9 @@
 package schemacrawler.tools.text.base;
 
 
-import java.util.Map;
-
 import static java.util.Objects.requireNonNull;
+
+import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;

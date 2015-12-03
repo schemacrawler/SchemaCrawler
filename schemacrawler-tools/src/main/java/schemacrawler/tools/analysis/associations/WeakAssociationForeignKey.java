@@ -21,13 +21,13 @@
 package schemacrawler.tools.analysis.associations;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.ColumnReference;

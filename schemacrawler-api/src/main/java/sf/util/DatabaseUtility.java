@@ -208,10 +208,6 @@ public final class DatabaseUtility
     }
   }
 
-  private DatabaseUtility()
-  { // Prevent instantiation
-  }
-
   /**
    * Reads a single column result set as a list.
    *
@@ -246,6 +242,10 @@ public final class DatabaseUtility
       results.close();
     }
     return values;
+  }
+
+  private DatabaseUtility()
+  { // Prevent instantiation
   }
 
 }

@@ -23,6 +23,7 @@ package schemacrawler.tools.iosource;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.newInputStream;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,8 +35,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import static java.util.Objects.requireNonNull;
 
 public class CompressedFileInputResource
   implements InputResource

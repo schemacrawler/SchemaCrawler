@@ -21,6 +21,7 @@
 package schemacrawler.tools.text.operation;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.readFully;
 
 import java.io.BufferedInputStream;
@@ -38,8 +39,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;

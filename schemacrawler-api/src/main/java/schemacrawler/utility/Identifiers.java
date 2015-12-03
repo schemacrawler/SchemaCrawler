@@ -229,7 +229,7 @@ public final class Identifiers
   /**
    * Checks if an identifier name is quoted using the identifier quote
    * character.
-   * 
+   *
    * @param name
    *        Identifier name to check
    * @return Whether the identifier name is quoted
@@ -250,7 +250,7 @@ public final class Identifiers
   /**
    * Checks if a given word is a reserved word. Searches are
    * case-insensitive.
-   * 
+   *
    * @param word
    *        Word to check
    * @return Whether the given word is reserved
@@ -265,7 +265,7 @@ public final class Identifiers
    * Checks if a given identifier name needs to be quoted. It uses
    * generalized rules which are common across the majority of
    * databases.
-   * 
+   *
    * @param name
    *        Identifier name to check
    * @return Whether the given name needs to be quoted
@@ -287,7 +287,7 @@ public final class Identifiers
    * Quotes an identifier name using the identifier quote string. Does
    * not quote the identifier name if quoting is not required, per
    * generalized database rules.
-   * 
+   *
    * @param name
    *        Identifier name to quote
    * @return Identifier name after quoting it, or the original name if
@@ -310,7 +310,7 @@ public final class Identifiers
   /**
    * Remove quotes from an identifier name using the identifier quote
    * string. Returns the original name if it was not quoted.
-   * 
+   *
    * @param name
    *        Identifier name to remove quotes from
    * @return Identifier name after quoting it, or the original name if

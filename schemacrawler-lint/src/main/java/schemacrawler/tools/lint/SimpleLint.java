@@ -20,14 +20,13 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;

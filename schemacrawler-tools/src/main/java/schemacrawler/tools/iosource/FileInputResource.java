@@ -23,6 +23,7 @@ package schemacrawler.tools.iosource;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.newBufferedReader;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -30,8 +31,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 public class FileInputResource
   implements InputResource
