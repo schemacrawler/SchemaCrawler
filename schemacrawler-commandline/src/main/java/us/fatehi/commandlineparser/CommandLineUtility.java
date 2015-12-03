@@ -103,18 +103,6 @@ public class CommandLineUtility
     return args;
   }
 
-  /**
-   * Loads configuration from a number of command-line.
-   */
-  public static Config parseArgs(final String[] args)
-    throws SchemaCrawlerException
-  {
-    final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
-    argsParser.parse();
-    final Map<String, String> optionsMap = argsParser.getOptionsMap();
-    return new Config(optionsMap);
-  }
-
   public static void logFullStackTrace(final Level level, final Throwable t)
   {
     if (level == null || !LOGGER.isLoggable(level))
@@ -205,6 +193,18 @@ public class CommandLineUtility
                                       System.getProperty("java.class.path")
                                         .split(File.pathSeparator),
                                       System.lineSeparator()));
+  }
+
+  /**
+   * Loads configuration from a number of command-line.
+   */
+  public static Config parseArgs(final String[] args)
+    throws SchemaCrawlerException
+  {
+    final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
+    argsParser.parse();
+    final Map<String, String> optionsMap = argsParser.getOptionsMap();
+    return new Config(optionsMap);
   }
 
   private CommandLineUtility()

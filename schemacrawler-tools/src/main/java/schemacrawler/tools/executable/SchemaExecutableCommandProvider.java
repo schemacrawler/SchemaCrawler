@@ -18,9 +18,8 @@ class SchemaExecutableCommandProvider
 
   public SchemaExecutableCommandProvider(final SchemaTextDetailType schemaTextDetailType)
   {
-    super(requireNonNull(schemaTextDetailType,
-                         "No schema text detail provided").name(),
-          "");
+    super(requireNonNull(schemaTextDetailType, "No schema text detail provided")
+      .name(), "");
   }
 
   @Override

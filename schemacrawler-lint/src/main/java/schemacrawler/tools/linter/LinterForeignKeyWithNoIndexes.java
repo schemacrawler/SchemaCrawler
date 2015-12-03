@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 import static schemacrawler.utility.MetaDataUtility.allIndexCoumnNames;
 import static schemacrawler.utility.MetaDataUtility.foreignKeyColumnNames;
@@ -28,8 +29,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.Table;

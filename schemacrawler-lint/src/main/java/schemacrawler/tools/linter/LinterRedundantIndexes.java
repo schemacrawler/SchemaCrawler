@@ -20,6 +20,7 @@
 package schemacrawler.tools.linter;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.listStartsWith;
 
 import java.sql.Connection;
@@ -30,8 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Index;

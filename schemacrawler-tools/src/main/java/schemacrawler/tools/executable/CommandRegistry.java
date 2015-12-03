@@ -58,23 +58,23 @@ public final class CommandRegistry
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    for (SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
       .values())
     {
       commandProviders
         .add(new SchemaExecutableCommandProvider(schemaTextDetailType));
     }
 
-    for (Operation operation: Operation.values())
+    for (final Operation operation: Operation.values())
     {
       commandProviders.add(new OperationExecutableCommandProvider(operation));
     }
 
-    commandProviders.addAll((Arrays
+    commandProviders.addAll(Arrays
       .asList(new ExecutableCommandProvider("script",
                                             "schemacrawler.tools.integration.scripting.ScriptExecutable"),
               new ExecutableCommandProvider("graph",
-                                            "schemacrawler.tools.integration.graph.GraphExecutable"))));
+                                            "schemacrawler.tools.integration.graph.GraphExecutable")));
 
     try
     {
