@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.05.04" date="2015-12-03" description="Fixed weak references">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed weak references, and logging for offline databases.
+      ]]></action>                      
+     </release>   
      <release version="14.05.03" date="2015-12-02" description="Quick dump">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added new quickdump command, which works with -infolevel=minimum, though row order is not guaranteed.
