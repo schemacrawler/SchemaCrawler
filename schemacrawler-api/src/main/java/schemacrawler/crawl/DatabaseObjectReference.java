@@ -3,9 +3,13 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
+import java.lang.ref.WeakReference;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.PartialDatabaseObject;
@@ -16,8 +20,8 @@ class DatabaseObjectReference<D extends DatabaseObject>
 
   private static final long serialVersionUID = 1748828818899660921L;
 
-  private final transient Reference<D> databaseObjectRef;
-  private final D partial;
+  private Reference<D> databaseObjectRef;
+  private D partial;
 
   DatabaseObjectReference(final D databaseObject, final D partial)
   {
@@ -86,6 +90,41 @@ class DatabaseObjectReference<D extends DatabaseObject>
   public String toString()
   {
     return partial.toString();
+  }
+
+  /**
+   * Read saved content of the reference, construct new reference, and
+   * the partial.
+   *
+   * @param in
+   * @throws IOException
+   * @throws ClassNotFoundException
+   */
+  private void readObject(final ObjectInputStream in)
+    throws IOException, ClassNotFoundException
+  {
+    if (in != null)
+    {
+      partial = (D) in.readObject();
+      databaseObjectRef = new WeakReference(in.readObject());
+    }
+  }
+
+  /**
+   * Write only content of the reference. A Reference itself is not
+   * serializable.
+   *
+   * @param out
+   * @throws java.io.IOException
+   */
+  private void writeObject(final ObjectOutputStream out)
+    throws IOException
+  {
+    if (out != null)
+    {
+      out.writeObject(partial);
+      out.writeObject(databaseObjectRef.get());
+    }
   }
 
 }
