@@ -333,19 +333,26 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   private void logConnection(final Connection connection)
-    throws SQLException
   {
     if (connection == null || !LOGGER.isLoggable(Level.INFO))
     {
       return;
     }
-    final DatabaseMetaData dbMetaData = connection.getMetaData();
-    LOGGER.log(Level.INFO,
-               String.format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
-                             dbMetaData.getDatabaseProductName(),
-                             dbMetaData.getDatabaseProductVersion(),
-                             dbMetaData.getDriverName(),
-                             dbMetaData.getDriverVersion()));
+    try
+    {
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
+      LOGGER
+        .log(Level.INFO,
+             String.format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
+                           dbMetaData.getDatabaseProductName(),
+                           dbMetaData.getDatabaseProductVersion(),
+                           dbMetaData.getDriverName(),
+                           dbMetaData.getDriverVersion()));
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not log connection information", e);
+    }
   }
 
   private Properties parseConnectionProperties(final String connectionPropertiesString)
