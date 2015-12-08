@@ -430,7 +430,7 @@ public final class SchemaCrawlerOptions
       // null signifies include all routine types
       this.routineTypes = allRoutineTypes();
     }
-    if (routineTypes.isEmpty())
+    else if (routineTypes.isEmpty())
     {
       this.routineTypes = Collections.emptySet();
     }
