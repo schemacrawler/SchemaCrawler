@@ -20,6 +20,7 @@
 package schemacrawler.tools.lint;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -63,6 +64,8 @@ public final class LintedCatalog
       // so we cannot fail with an exception. Log and continue.
       LOGGER.log(Level.WARNING, "No connection provided", e);
     }
+    
+    requireNonNull(linterConfigs, "No linter configs provided");
 
     final List<Linter> linters = new ArrayList<>();
 
@@ -73,6 +76,11 @@ public final class LintedCatalog
     // configured
     for (final LinterConfig linterConfig: linterConfigs)
     {
+      if (linterConfig == null)
+      {
+        continue;
+      }
+      
       // First remove the linter id, because it is "seen",
       // whether it needs to be run or not
       final String linterId = linterConfig.getId();
@@ -90,10 +98,7 @@ public final class LintedCatalog
       if (linter != null)
       {
         // Configure linter
-        if (linterConfigs != null)
-        {
           linter.configure(linterConfig);
-        }
 
         linters.add(linter);
       }
