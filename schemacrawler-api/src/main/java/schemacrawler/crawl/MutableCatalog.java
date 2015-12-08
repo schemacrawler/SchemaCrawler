@@ -439,16 +439,6 @@ final class MutableCatalog
     return routines;
   }
 
-  NamedObjectList<MutableSequence> getAllSequences()
-  {
-    return sequences;
-  }
-
-  NamedObjectList<MutableSynonym> getAllSynonyms()
-  {
-    return synonyms;
-  }
-
   NamedObjectList<MutableTable> getAllTables()
   {
     return tables;
