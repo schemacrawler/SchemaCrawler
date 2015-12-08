@@ -383,16 +383,6 @@ class MutableTable
     }
   }
 
-  int getSortIndex()
-  {
-    return sortIndex;
-  }
-
-  void removeForeignKey(final String fullName)
-  {
-    foreignKeys.remove(fullName);
-  }
-
   void replacePrimaryKey()
   {
     if (primaryKey == null)
