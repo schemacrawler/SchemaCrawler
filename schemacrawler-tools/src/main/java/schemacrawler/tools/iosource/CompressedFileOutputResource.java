@@ -57,7 +57,8 @@ public class CompressedFileOutputResource
   {
     outputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
-    final Path parentPath = filePath.getParent();
+    final Path parentPath = requireNonNull(filePath.getParent(),
+                                           "Invalid output directory");
     if (!exists(parentPath) || !isWritable(parentPath)
         || !isDirectory(parentPath))
     {
