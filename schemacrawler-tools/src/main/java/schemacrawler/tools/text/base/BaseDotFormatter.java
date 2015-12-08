@@ -26,7 +26,6 @@ import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
 import java.awt.Color;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
@@ -47,9 +46,6 @@ import schemacrawler.tools.text.utility.html.TableRow;
 public abstract class BaseDotFormatter<O extends BaseTextOptions>
   extends BaseFormatter<O>
 {
-
-  protected static final Logger LOGGER = Logger
-    .getLogger(BaseDotFormatter.class.getName());
 
   protected BaseDotFormatter(final O options,
                              final boolean printVerboseDatabaseInfo,

@@ -44,8 +44,10 @@ public class GraphProcessExecutor
     }
     this.dotFile = dotFile;
 
-    if (isDirectory(outputFile) || !exists(outputFile.getParent())
-        || !isDirectory(outputFile.getParent()))
+    final Path outputDir = requireNonNull(outputFile.getParent(),
+                                          "Invalid output directory");
+    if (isDirectory(outputFile) || !exists(outputDir)
+        || !isDirectory(outputDir))
     {
       throw new IOException("Cannot write graph file, " + dotFile);
     }
