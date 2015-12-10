@@ -122,7 +122,7 @@ public abstract class BaseLinter
   {
   }
 
-  protected List<Column> getColumns(final Table table)
+  protected final List<Column> getColumns(final Table table)
   {
     if (table == null)
     {
@@ -142,22 +142,22 @@ public abstract class BaseLinter
     return columns;
   }
 
-  protected CrawlInfo getCrawlInfo()
+  protected final CrawlInfo getCrawlInfo()
   {
     return catalog.getCrawlInfo();
   }
 
-  protected TableTypesFilter getTableTypesFilter()
+  protected final TableTypesFilter getTableTypesFilter()
   {
     return tableTypesFilter;
   }
 
-  protected boolean includeColumn(final Column column)
+  protected final boolean includeColumn(final Column column)
   {
     return column != null && columnInclusionRule.test(column.getFullName());
   }
 
-  protected boolean includeTable(final Table table)
+  protected final boolean includeTable(final Table table)
   {
     return table != null && tableInclusionRule.test(table.getFullName());
   }
@@ -167,7 +167,7 @@ public abstract class BaseLinter
   {
   }
 
-  protected void setColumnInclusionRule(final InclusionRule columnInclusionRule)
+  protected final void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
     if (columnInclusionRule == null)
     {
@@ -179,7 +179,7 @@ public abstract class BaseLinter
     }
   }
 
-  protected void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  protected final void setTableInclusionRule(final InclusionRule tableInclusionRule)
   {
     if (tableInclusionRule == null)
     {
@@ -191,7 +191,7 @@ public abstract class BaseLinter
     }
   }
 
-  protected void setTableTypesFilter(final TableTypesFilter tableTypesFilter)
+  protected final void setTableTypesFilter(final TableTypesFilter tableTypesFilter)
   {
     if (tableTypesFilter == null)
     {

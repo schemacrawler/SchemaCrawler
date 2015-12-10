@@ -98,7 +98,7 @@ public final class MetaDataUtility
     return foreignKeyName;
   }
 
-  public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey foreignKey)
+  public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey<?> foreignKey)
   {
     if (foreignKey == null)
     {
@@ -141,7 +141,7 @@ public final class MetaDataUtility
     return columnNames;
   }
 
-  public static boolean isForeignKeyUnique(final BaseForeignKey foreignKey)
+  public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
   {
     if (foreignKey == null)
     {
