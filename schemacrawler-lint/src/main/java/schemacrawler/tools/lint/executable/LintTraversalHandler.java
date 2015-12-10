@@ -6,7 +6,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.traversal.TraversalHandler;
 
-public interface LintTraversalHandler
+interface LintTraversalHandler
   extends TraversalHandler
 {
 
