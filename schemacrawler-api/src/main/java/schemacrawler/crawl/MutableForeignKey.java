@@ -80,7 +80,7 @@ class MutableForeignKey
       return -1;
     }
 
-    final BaseForeignKey other = (BaseForeignKey) obj;
+    final BaseForeignKey<?> other = (BaseForeignKey<?>) obj;
     final List<? extends ColumnReference> thisColumnReferences = getColumnReferences();
     final List<? extends ColumnReference> otherColumnReferences = other
       .getColumnReferences();

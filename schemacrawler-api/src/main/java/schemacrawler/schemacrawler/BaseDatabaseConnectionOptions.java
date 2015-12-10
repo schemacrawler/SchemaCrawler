@@ -365,19 +365,16 @@ abstract class BaseDatabaseConnectionOptions
         if (!isBlank(property))
         {
           final String[] propertyValues = property.split("=");
-          if (propertyValues.length >= 1)
+          if (propertyValues.length >= 2)
           {
             final String key = propertyValues[0];
-            final String value;
-            if (propertyValues.length >= 2)
+            final String value = propertyValues[1];
+            if (key != null && value != null)
             {
-              value = propertyValues[1];
+              // Properties is based on Hashtable, which cannot take
+              // null keys or values
+              urlxProperties.put(key, value);
             }
-            else
-            {
-              value = null;
-            }
-            urlxProperties.put(key, value);
           }
         }
       }
