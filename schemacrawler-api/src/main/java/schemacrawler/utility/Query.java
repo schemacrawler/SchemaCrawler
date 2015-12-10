@@ -105,12 +105,6 @@ public final class Query
     }
   }
 
-  public long executeForLong(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    return executeSqlForLong(connection, getQuery());
-  }
-
   public long executeForLong(final Connection connection, final Table table)
     throws SchemaCrawlerException
   {
