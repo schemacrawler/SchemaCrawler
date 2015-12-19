@@ -52,7 +52,8 @@ public class LinterTableWithQuotedNames
     Identifiers identifiers;
     try
     {
-      identifiers = new Identifiers(connection);
+      identifiers = Identifiers.identifiers().withConnection(connection)
+        .build();
     }
     catch (final SQLException e)
     {
