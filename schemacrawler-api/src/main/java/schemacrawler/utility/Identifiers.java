@@ -50,6 +50,121 @@ import java.util.stream.Stream;
 public final class Identifiers
 {
 
+  public static class Builder
+  {
+
+    /**
+     * Load a list of SQL 2003 reserved words, and normalize them by
+     * converting to uppercase.
+     */
+    private static Collection<String> loadSql2003ReservedWords()
+    {
+      final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
+        .getResourceAsStream("/sql2003_reserved_words.txt")));
+
+      final Set<String> reservedWords = new HashSet<>();
+      reader.lines().filter(filterOutBlank).map(toUpperCase)
+        .forEach(reservedWord -> reservedWords.add(reservedWord));
+      if (reservedWords.isEmpty())
+      {
+        throw new RuntimeException("No SQL 2003 reserved words found");
+      }
+      return reservedWords;
+    }
+
+    /**
+     * Lookup a list of reserved words for a database system, using
+     * database metadata.
+     */
+    private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData)
+    {
+      String sqlKeywords = "";
+      try
+      {
+        sqlKeywords = metaData.getSQLKeywords();
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.WARNING,
+                   "Could not retrieve SQL keywords metadata",
+                   e);
+      }
+
+      return Stream.of(sqlKeywords.split(",")).filter(filterOutBlank)
+        .map(toUpperCase).collect(Collectors.toSet());
+    }
+
+    private String identifierQuoteString;
+    private final Collection<String> reservedWords;
+
+    /**
+     * Constructs a list of database object identifiers from SQL 2003
+     * keywords.
+     */
+    private Builder()
+    {
+      identifierQuoteString = "";
+      reservedWords = loadSql2003ReservedWords();
+    }
+
+    public Identifiers build()
+    {
+      return new Identifiers(this);
+    }
+
+    /**
+     * Constructs a list of database object identifiers from SQL 2003
+     * keywords, and from the database server. Also obtains the
+     * identifier quote string from the database server.
+     *
+     * @param connection
+     *        Live database connection
+     * @throws SQLException
+     */
+    public Builder withConnection(final Connection connection)
+      throws SQLException
+    {
+      requireNonNull(connection, "No connection provided");
+      final DatabaseMetaData metaData = requireNonNull(connection
+        .getMetaData(), "No database metadata obtained");
+
+      reservedWords.addAll(lookupReservedWords(metaData));
+
+      if (!isIdentifierQuoteStringSet())
+      {
+        final String metaDataIdentifierQuoteString = metaData
+          .getIdentifierQuoteString();
+        if (metaDataIdentifierQuoteString != null)
+        {
+          identifierQuoteString = metaDataIdentifierQuoteString;
+        }
+      }
+
+      return this;
+    }
+
+    /**
+     * Uses the string used to quote database object identifiers as
+     * provided.
+     *
+     * @param identifierQuoteString
+     *        Identifier quote string override, or null if not
+     *        overridden
+     */
+    public Builder withIdentifierQuoteString(final String identifierQuoteString)
+    {
+      requireNonNull(identifierQuoteString,
+                     "No identifier quote string provided");
+      this.identifierQuoteString = identifierQuoteString;
+      return this;
+    }
+
+    private boolean isIdentifierQuoteStringSet()
+    {
+      return identifierQuoteString == null || !identifierQuoteString.isEmpty();
+    }
+  }
+
   private static final Logger LOGGER = Logger
     .getLogger(Identifiers.class.getName());
 
@@ -59,6 +174,11 @@ public final class Identifiers
   private static final Pattern isIdentifierPattern = Pattern
     .compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
   private static final Pattern isNumericPattern = Pattern.compile("^\\p{Nd}*$");
+
+  public static Builder identifiers()
+  {
+    return new Builder();
+  }
 
   /**
    * Checks if the name is valid database object identifier, according
@@ -99,112 +219,13 @@ public final class Identifiers
     }
   }
 
-  /**
-   * Load a list of SQL 2003 reserved words, and normalize them by
-   * converting to uppercase.
-   */
-  private static Collection<String> loadSql2003ReservedWords()
-  {
-    final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
-      .getResourceAsStream("/sql2003_reserved_words.txt")));
-
-    final Set<String> reservedWords = new HashSet<>();
-    reader.lines().filter(filterOutBlank).map(toUpperCase)
-      .forEach(reservedWord -> reservedWords.add(reservedWord));
-    if (reservedWords.isEmpty())
-    {
-      throw new RuntimeException("No SQL 2003 reserved words found");
-    }
-    return reservedWords;
-  }
-
-  /**
-   * Lookup a list of reserved words for a database system, using
-   * database metadata.
-   */
-  private static Collection<String> lookupReservedWords(final DatabaseMetaData metaData)
-  {
-    String sqlKeywords = "";
-    try
-    {
-      sqlKeywords = metaData.getSQLKeywords();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
-    }
-
-    return Stream.of(sqlKeywords.split(",")).filter(filterOutBlank)
-      .map(toUpperCase).collect(Collectors.toSet());
-  }
-
   private final String identifierQuoteString;
   private final Collection<String> reservedWords;
 
-  /**
-   * Constructs a list of database object identifiers from SQL 2003
-   * keywords.
-   */
-  public Identifiers()
+  private Identifiers(final Builder builder)
   {
-    reservedWords = loadSql2003ReservedWords();
-
-    identifierQuoteString = "";
-  }
-
-  /**
-   * Constructs a list of database object identifiers from SQL 2003
-   * keywords, and from the database server. Also obtains the identifier
-   * quote string from the database server.
-   *
-   * @param connection
-   *        Live database connection
-   */
-  public Identifiers(final Connection connection)
-    throws SQLException
-  {
-    this(connection, null);
-  }
-
-  /**
-   * Constructs a list of database object identifiers from SQL 2003
-   * keywords, and from the database server. Also uses the string used
-   * to quote database object identifiers as provided. If this is null,
-   * it obtains the identifier quote string from the database server.
-   *
-   * @param connection
-   *        Live database connection
-   * @param identifierQuoteString
-   *        Identifier quote string override, or null if not overridden
-   */
-  public Identifiers(final Connection connection,
-                     final String identifierQuoteString)
-                       throws SQLException
-  {
-    requireNonNull(connection, "No connection provided");
-    final DatabaseMetaData metaData = requireNonNull(connection
-      .getMetaData(), "No database metadata obtained");
-
-    reservedWords = loadSql2003ReservedWords();
-    reservedWords.addAll(lookupReservedWords(metaData));
-
-    if (identifierQuoteString == null)
-    {
-      final String metaDataIdentifierQuoteString = metaData
-        .getIdentifierQuoteString();
-      if (metaDataIdentifierQuoteString == null)
-      {
-        this.identifierQuoteString = "";
-      }
-      else
-      {
-        this.identifierQuoteString = metaDataIdentifierQuoteString;
-      }
-    }
-    else
-    {
-      this.identifierQuoteString = identifierQuoteString;
-    }
+    identifierQuoteString = builder.identifierQuoteString;
+    reservedWords = builder.reservedWords;
   }
 
   /**

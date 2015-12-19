@@ -11,7 +11,7 @@ import schemacrawler.utility.Identifiers;
 public class IdentifiersTest
 {
 
-  private final Identifiers reservedWords = new Identifiers();
+  private final Identifiers reservedWords = Identifiers.identifiers().build();
 
   @Test
   public void blank()

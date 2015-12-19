@@ -164,7 +164,8 @@ final class RetrieverConnection
     LOGGER.log(Level.CONFIG,
                String.format("Database identifier quote string is \"%s\"",
                              identifierQuoteString));
-    identifiers = new Identifiers(connection, identifierQuoteString);
+    identifiers = Identifiers.identifiers().withConnection(connection)
+      .withIdentifierQuoteString(identifierQuoteString).build();
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
