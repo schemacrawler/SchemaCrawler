@@ -1179,7 +1179,7 @@
     <schemaCrawlerProductName>SchemaCrawler</schemaCrawlerProductName>
     <schemaCrawlerVersion>14.05.04</schemaCrawlerVersion>
     <schemaCrawlerAbout>SchemaCrawler 14.05.04&#xd;
-Copyright (c) 2000-2015, Sualeh Fatehi.&#xd;
+Copyright (c) 2000-2016, Sualeh Fatehi.&#xd;
 &#xd;
 SchemaCrawler is a database schema discovery and comprehension tool. &#xd;
 You can search for database schema objects using regular expressions, &#xd;

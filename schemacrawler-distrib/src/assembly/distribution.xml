@@ -65,7 +65,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="Copyright (c) 2000-2015, Sualeh Fatehi" />
+        <attribute name="Copyright" value="Copyright (c) 2000-2016, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       	<section name="schemacrawler/crawl/">
       	  <attribute name="Sealed" value="true"/>
@@ -95,7 +95,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="Copyright (c) 2000-2015, Sualeh Fatehi" />
+        <attribute name="Copyright" value="Copyright (c) 2000-2016, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
       <zipfileset src="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-sources.jar" />
@@ -116,7 +116,7 @@
         <attribute name="Product" value="SchemaCrawler" />
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
-        <attribute name="Copyright" value="Copyright (c) 2000-2015, Sualeh Fatehi" />
+        <attribute name="Copyright" value="Copyright (c) 2000-2016, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
       </manifest>
     </jar>
