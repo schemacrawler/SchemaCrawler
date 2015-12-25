@@ -35,7 +35,7 @@ public final class SqlServerDatabaseConnector
           "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema",
-          "jdbc:jtds:sqlserver:.*");
+          "jdbc:(jtds:)?sqlserver:.*");
   }
 
 }
