@@ -20,12 +20,15 @@
 package schemacrawler.utility;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
@@ -57,19 +60,6 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
       return this;
     }
 
-    public Builder<D> withInclusionRule(final InclusionRule databaseObjectInclusionRule)
-    {
-      if (databaseObjectInclusionRule != null)
-      {
-        this.databaseObjectInclusionRule = databaseObjectInclusionRule;
-      }
-      else
-      {
-        this.databaseObjectInclusionRule = new IncludeAll();
-      }
-      return this;
-    }
-
     /**
      * Uses the string used to quote database object identifiers as
      * provided.
@@ -81,6 +71,19 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
     public Builder<D> withIdentifierQuoteString(final String identifierQuoteString)
     {
       identifiersBuilder.withIdentifierQuoteString(identifierQuoteString);
+      return this;
+    }
+
+    public Builder<D> withInclusionRule(final InclusionRule databaseObjectInclusionRule)
+    {
+      if (databaseObjectInclusionRule != null)
+      {
+        this.databaseObjectInclusionRule = databaseObjectInclusionRule;
+      }
+      else
+      {
+        this.databaseObjectInclusionRule = new IncludeAll();
+      }
       return this;
     }
 
@@ -110,6 +113,14 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
       return false;
     }
 
+    final boolean include = databaseObjectInclusionRule
+      .test(getUnqotedFullName(databaseObject));
+
+    return include;
+  }
+
+  private String getUnqotedFullName(final D databaseObject)
+  {
     final Schema schema = databaseObject.getSchema();
     final String unquotedName = identifiers
       .unquotedName(databaseObject.getName());
@@ -118,12 +129,20 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
     final String unquotedCatalogName = identifiers
       .unquotedName(schema.getCatalogName());
 
-    final String unquotedFullName=
-    
-    final boolean include = databaseObjectInclusionRule
-      .test(databaseObject.getFullName());
+    final StringBuilder buffer = new StringBuilder(64);
 
-    return include;
+    final String schemaFullName = new SchemaReference(unquotedCatalogName,
+                                                      unquotedSchemaName)
+                                                        .getFullName();
+    if (!isBlank(schemaFullName))
+    {
+      buffer.append(schemaFullName).append('.');
+    }
+    if (!isBlank(unquotedName))
+    {
+      buffer.append(unquotedName);
+    }
+    return buffer.toString();
   }
 
 }
