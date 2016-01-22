@@ -97,10 +97,6 @@ public final class Identifiers
     private String identifierQuoteString;
     private final Collection<String> reservedWords;
 
-    /**
-     * Constructs a list of database object identifiers from SQL 2003
-     * keywords.
-     */
     private Builder()
     {
       identifierQuoteString = "";
@@ -163,6 +159,7 @@ public final class Identifiers
     {
       return identifierQuoteString == null || !identifierQuoteString.isEmpty();
     }
+
   }
 
   private static final Logger LOGGER = Logger
