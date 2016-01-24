@@ -32,7 +32,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 
-public class DatabaseObjectFilter<D extends DatabaseObject>
+public class DatabaseObjectFullNameFilter<D extends DatabaseObject>
   implements Predicate<D>
 {
 
@@ -48,9 +48,9 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
       this.databaseObjectInclusionRule = new IncludeAll();
     }
 
-    public DatabaseObjectFilter<D> build()
+    public DatabaseObjectFullNameFilter<D> build()
     {
-      return new DatabaseObjectFilter<D>(this);
+      return new DatabaseObjectFullNameFilter<D>(this);
     }
 
     public Builder<D> withConnection(final Connection connection)
@@ -89,10 +89,15 @@ public class DatabaseObjectFilter<D extends DatabaseObject>
 
   }
 
+  public static <D extends DatabaseObject> Builder<D> databaseObjectFullNameFilter()
+  {
+    return new Builder<>();
+  }
+
   private final Identifiers identifiers;
   private final InclusionRule databaseObjectInclusionRule;
 
-  private DatabaseObjectFilter(final Builder<D> builder)
+  private DatabaseObjectFullNameFilter(final Builder<D> builder)
   {
     identifiers = builder.identifiersBuilder.build();
     this.databaseObjectInclusionRule = builder.databaseObjectInclusionRule;
