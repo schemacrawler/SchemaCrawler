@@ -29,6 +29,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -45,6 +47,9 @@ import schemacrawler.utility.TypeMap;
 abstract class AbstractRetriever
   implements Retriever
 {
+
+  private static final Logger LOGGER = Logger
+    .getLogger(AbstractRetriever.class.getName());
 
   private final RetrieverConnection retrieverConnection;
   final MutableCatalog catalog;
@@ -119,6 +124,12 @@ abstract class AbstractRetriever
   Collection<Schema> getSchemas()
   {
     return catalog.getSchemas();
+  }
+
+  void logSQLFeatureNotSupported(final String message, final Throwable e)
+  {
+    LOGGER.log(Level.WARNING, message);
+    LOGGER.log(Level.FINE, message, e);
   }
 
   /**
