@@ -1,6 +1,8 @@
 package schemacrawler.tools.offline.jdbc;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.nio.file.Path;
 import java.sql.Array;
 import java.sql.Blob;
@@ -22,8 +24,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
-import static java.util.Objects.requireNonNull;
-
 public class OfflineConnection
   implements Connection
 {
@@ -40,14 +40,14 @@ public class OfflineConnection
   public void abort(final Executor executor)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void clearWarnings()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -60,49 +60,49 @@ public class OfflineConnection
   public void commit()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Array createArrayOf(final String typeName, final Object[] elements)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Blob createBlob()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Clob createClob()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public NClob createNClob()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public SQLXML createSQLXML()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Statement createStatement()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -110,7 +110,7 @@ public class OfflineConnection
                                    final int resultSetConcurrency)
                                      throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -119,63 +119,63 @@ public class OfflineConnection
                                    final int resultSetHoldability)
                                      throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Struct createStruct(final String typeName, final Object[] attributes)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public boolean getAutoCommit()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public String getCatalog()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Properties getClientInfo()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public String getClientInfo(final String name)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public int getHoldability()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public DatabaseMetaData getMetaData()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public int getNetworkTimeout()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   public Path getOfflineDatabasePath()
@@ -187,28 +187,28 @@ public class OfflineConnection
   public String getSchema()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public int getTransactionIsolation()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Map<String, Class<?>> getTypeMap()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public SQLWarning getWarnings()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -229,28 +229,28 @@ public class OfflineConnection
   public boolean isValid(final int timeout)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public boolean isWrapperFor(final Class<?> iface)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public String nativeSQL(final String sql)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public CallableStatement prepareCall(final String sql)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -259,7 +259,7 @@ public class OfflineConnection
                                        final int resultSetConcurrency)
                                          throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -269,14 +269,14 @@ public class OfflineConnection
                                        final int resultSetHoldability)
                                          throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public PreparedStatement prepareStatement(final String sql)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -284,7 +284,7 @@ public class OfflineConnection
                                             final int autoGeneratedKeys)
                                               throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -293,7 +293,7 @@ public class OfflineConnection
                                             final int resultSetConcurrency)
                                               throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -303,7 +303,7 @@ public class OfflineConnection
                                             final int resultSetHoldability)
                                               throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -311,7 +311,7 @@ public class OfflineConnection
                                             final int[] columnIndexes)
                                               throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
@@ -319,119 +319,119 @@ public class OfflineConnection
                                             final String[] columnNames)
                                               throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void releaseSavepoint(final Savepoint savepoint)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void rollback()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void rollback(final Savepoint savepoint)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setAutoCommit(final boolean autoCommit)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setCatalog(final String catalog)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setClientInfo(final Properties properties)
     throws SQLClientInfoException
   {
-    throw new SQLClientInfoException();
+    throw new SQLClientInfoException("Not supported", "HYC00", null);
   }
 
   @Override
   public void setClientInfo(final String name, final String value)
     throws SQLClientInfoException
   {
-    throw new SQLClientInfoException();
+    throw new SQLClientInfoException("Not supported", "HYC00", null);
   }
 
   @Override
   public void setHoldability(final int holdability)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setNetworkTimeout(final Executor executor, final int milliseconds)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setReadOnly(final boolean readOnly)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Savepoint setSavepoint()
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public Savepoint setSavepoint(final String name)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setSchema(final String schema)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setTransactionIsolation(final int level)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public void setTypeMap(final Map<String, Class<?>> map)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
   public <T> T unwrap(final Class<T> iface)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
 }
