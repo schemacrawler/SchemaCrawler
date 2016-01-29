@@ -249,14 +249,15 @@ final class DatabaseInfoRetriever
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
-        LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
+        logSQLFeatureNotSupported("JDBC driver does not support " + method, e);
       }
       catch (final SQLException e)
       {
         // HYC00 = Optional feature not implemented
         if ("HYC00".equalsIgnoreCase(e.getSQLState()))
         {
-          LOGGER.log(Level.FINE, "JDBC driver does not support " + method, e);
+          logSQLFeatureNotSupported("JDBC driver does not support " + method,
+                                    e);
         }
         else
         {

@@ -92,7 +92,7 @@ public class OfflineDriver
   public Logger getParentLogger()
     throws SQLFeatureNotSupportedException
   {
-    throw new SQLFeatureNotSupportedException();
+    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   @Override
