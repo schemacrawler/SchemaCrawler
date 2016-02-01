@@ -20,7 +20,7 @@
   </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <schemacrawler.version>14.05.04</schemacrawler.version>
+    <schemacrawler.version>14.05.05</schemacrawler.version>
   </properties>
   <build>
     <plugins>
