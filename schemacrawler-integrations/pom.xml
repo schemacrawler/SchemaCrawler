@@ -81,13 +81,13 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby-complete</artifactId>
-      <version>9.0.4.0</version>
+      <version>9.0.5.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
-      <version>1.7.13</version>
+      <version>1.7.14</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
