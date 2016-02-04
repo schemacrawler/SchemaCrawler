@@ -11,7 +11,10 @@
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added utility to filter tables based on "raw" name.
-      ]]></action>                            
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Updating JDBC drivers and dependencies.
+      ]]></action>                                  
      </release>    
      <release version="14.05.04" date="2015-12-03" description="Fixed weak references">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
