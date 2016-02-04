@@ -97,11 +97,11 @@ public final class TestUtility
                                              Pattern
                                                .compile("\\s+<schemaCrawlerInfo>.*"),
                                              Pattern
-                                               .compile(".*[A-Za-z]+ \\d+\\, 201[45] \\d+:\\d+ [AP]M.*"),
+                                               .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
                                              Pattern
-                                               .compile(".*201[45]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+                                               .compile(".*201[456]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
                                              Pattern
-                                               .compile(".*201[45]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                               .compile(".*201[456]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
                                              // SVG {
                                              Pattern.compile("<svg.*"),
                                              Pattern
