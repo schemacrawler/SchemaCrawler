@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.05.05" date="2016-02-03" description="Fixed logging">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed logging for features that the JDBC driver does not support.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added utility to filter tables based on "raw" name.
+      ]]></action>                            
+     </release>    
      <release version="14.05.04" date="2015-12-03" description="Fixed weak references">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed weak references, and logging for offline databases.
