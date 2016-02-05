@@ -22,6 +22,9 @@
 package schemacrawler.tools.text.schema;
 
 
+import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
+import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -297,6 +300,7 @@ final class SchemaJsonFormatter
       }
       jsonTable.put("type", table.getTableType());
       printRemarks(table, jsonTable);
+      printTableRowCount(table, jsonTable);
 
       final JSONArray jsonColumns = new JSONArray();
       jsonTable.put("columns", jsonColumns);
@@ -792,6 +796,17 @@ final class SchemaJsonFormatter
     }
     // Print empty string, if value is not available
     jsonObject.put("remarks", object.getRemarks());
+  }
+
+  private void printTableRowCount(final Table table,
+                                  final JSONObject jsonObject)
+                                    throws JSONException
+  {
+    if (!options.isShowRowCounts() || table == null || !hasRowCount(table))
+    {
+      return;
+    }
+    jsonObject.put("rowCount", getRowCountMessage(table));
   }
 
 }

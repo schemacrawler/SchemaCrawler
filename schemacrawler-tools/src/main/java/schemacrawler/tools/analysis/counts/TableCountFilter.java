@@ -53,7 +53,7 @@ class TableCountFilter
     final boolean hideTable;
     if (hideEmptyTables)
     {
-      final long count = CountsUtility.getCount(table);
+      final long count = CountsUtility.getRowCount(table);
       hideTable = count == 0;
     }
     else
