@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.operation;
 
 
+import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
+
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -149,7 +151,7 @@ final class DataTextFormatter
     {
       number = Double.valueOf(aggregate);
     }
-    final String message = operation.getCountMessage(number);
+    final String message = getRowCountMessage(number);
     return message;
   }
 

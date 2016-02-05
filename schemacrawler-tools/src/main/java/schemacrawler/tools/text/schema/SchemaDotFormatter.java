@@ -22,6 +22,8 @@
 package schemacrawler.tools.text.schema;
 
 
+import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
+import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.awt.Color;
@@ -164,6 +166,7 @@ public final class SchemaDotFormatter
       .toString()).println();
 
     printTableRemarks(table);
+    printTableRowCount(table);
 
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
@@ -523,6 +526,23 @@ public final class SchemaDotFormatter
                           Alignment.left,
                           false,
                           Color.white,
+                          3))
+        .toString())
+      .println();
+  }
+
+  private void printTableRowCount(final Table table)
+  {
+    if (!options.isShowRowCounts() || table == null || !hasRowCount(table))
+    {
+      return;
+    }
+    formattingHelper
+      .append(new TableRow(TextOutputFormat.html)
+        .add(newTableCell(getRowCountMessage(table),
+                          Alignment.right,
+                          false,
+                          Color.gray,
                           3))
         .toString())
       .println();

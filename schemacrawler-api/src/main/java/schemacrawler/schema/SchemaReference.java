@@ -116,24 +116,13 @@ public final class SchemaReference
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttribute(java.lang.String)
-   */
-  @Override
-  public final Object getAttribute(final String name)
-  {
-    return attributeMap.get(name);
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttribute(java.lang.String,
+   * @see schemacrawler.schema.AttributedObject#getAttribute(java.lang.String,
    *      java.lang.Object)
    */
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
   {
-    final Object attributeValue = getAttribute(name);
+    final Object attributeValue = attributeMap.get(name);
     if (attributeValue == null)
     {
       return defaultValue;
@@ -208,6 +197,17 @@ public final class SchemaReference
   public String getRemarks()
   {
     return "";
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.AttributedObject#hasAttribute(java.lang.String)
+   */
+  @Override
+  public boolean hasAttribute(final String name)
+  {
+    return attributeMap.containsKey(name);
   }
 
   @Override

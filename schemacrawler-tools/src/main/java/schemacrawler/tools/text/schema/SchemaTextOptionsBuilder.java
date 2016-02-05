@@ -35,6 +35,8 @@ public class SchemaTextOptionsBuilder
                                                      + "show_ordinal_numbers";
   private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                                 + "show_standard_column_type_names";
+  private static final String SHOW_ROW_COUNTS = SCHEMACRAWLER_FORMAT_PREFIX
+                                                + "show_row_counts";
 
   private static final String HIDE_PRIMARY_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
                                                        + "hide_primarykey_names";
@@ -80,6 +82,7 @@ public class SchemaTextOptionsBuilder
     options.setShowStandardColumnTypeNames(config
       .getBooleanValue(SHOW_STANDARD_COLUMN_TYPE_NAMES));
     options.setShowOrdinalNumbers(config.getBooleanValue(SHOW_ORDINAL_NUMBERS));
+    options.setShowRowCounts(config.getBooleanValue(SHOW_ROW_COUNTS));
 
     options
       .setHideForeignKeyNames(config.getBooleanValue(HIDE_FOREIGN_KEY_NAMES));
@@ -140,6 +143,7 @@ public class SchemaTextOptionsBuilder
                            options.isShowStandardColumnTypeNames());
     config.setBooleanValue(SHOW_ORDINAL_NUMBERS,
                            options.isShowOrdinalNumbers());
+    config.setBooleanValue(SHOW_ROW_COUNTS, options.isShowRowCounts());
 
     config.setBooleanValue(HIDE_FOREIGN_KEY_NAMES,
                            options.isHideForeignKeyNames());

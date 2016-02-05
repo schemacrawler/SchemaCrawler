@@ -22,6 +22,7 @@ package schemacrawler.schema;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 public interface AttributedObject
 {
@@ -33,7 +34,10 @@ public interface AttributedObject
    *        Attribute name.
    * @return Attribute value.
    */
-  Object getAttribute(String name);
+  default <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
+  }
 
   /**
    * Gets an attribute.
@@ -52,6 +56,27 @@ public interface AttributedObject
   Map<String, Object> getAttributes();
 
   /**
+   * Checks is an attribute is available.
+   *
+   * @param name
+   *        Attribute name.
+   * @return If attribute is available.
+   */
+  boolean hasAttribute(String name);
+
+  /**
+   * Gets an attribute.
+   *
+   * @param name
+   *        Attribute name.
+   * @return Attribute value.
+   */
+  default <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
+  }
+
+  /**
    * Removes an attribute.
    *
    * @param name
@@ -67,6 +92,6 @@ public interface AttributedObject
    * @param value
    *        Attribute value
    */
-  void setAttribute(String name, Object value);
+  <T> void setAttribute(String name, T value);
 
 }
