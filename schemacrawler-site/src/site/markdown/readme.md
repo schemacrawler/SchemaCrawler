@@ -42,17 +42,8 @@ using `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
 The [Debian schemacrawler package] is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-<a href="https://bintray.com/adriens/deb/schemacrawler/_latestVersion">
-<img src="https://api.bintray.com/packages/adriens/deb/schemacrawler/images/download.svg" /></a>
-
-Using the command line, add the following to your `/etc/apt/sources.list` system config file: 
-<div class="source"><pre>
-echo "deb http://dl.bintray.com/adriens/deb {distribution} {components}" | sudo tee -a /etc/apt/sources.list 
-</pre></div>
-and for source:
-<div class="source"><pre>
-echo "deb-src http://dl.bintray.com/adriens/deb {distribution} {components}" | sudo tee -a /etc/apt/sources.list
-</pre></div>
+<a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
+<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
 
 SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
