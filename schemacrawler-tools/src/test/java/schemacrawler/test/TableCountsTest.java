@@ -71,7 +71,7 @@ public class TableCountsTest
         for (final Table table: tables)
         {
           out.println("  table: " + table.getFullName());
-          final long count = CountsUtility.getCount(table);
+          final long count = CountsUtility.getRowCount(table);
           out.println(String.format("    row count: %d", count));
         }
       }

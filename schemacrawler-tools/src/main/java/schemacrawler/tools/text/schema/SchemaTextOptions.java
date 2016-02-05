@@ -41,6 +41,7 @@ public class SchemaTextOptions
   private boolean isHideTriggerNames;
   private boolean isShowOrdinalNumbers;
   private boolean isShowStandardColumnTypeNames;
+  private boolean isShowRowCounts;
 
   public boolean isAlphabeticalSortForForeignKeys()
   {
@@ -90,6 +91,11 @@ public class SchemaTextOptions
   public boolean isShowOrdinalNumbers()
   {
     return isShowOrdinalNumbers;
+  }
+
+  public boolean isShowRowCounts()
+  {
+    return isShowRowCounts;
   }
 
   public boolean isShowStandardColumnTypeNames()
@@ -145,6 +151,11 @@ public class SchemaTextOptions
   public void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)
   {
     this.isShowOrdinalNumbers = isShowOrdinalNumbers;
+  }
+
+  public void setShowRowCounts(final boolean isShowRowCounts)
+  {
+    this.isShowRowCounts = isShowRowCounts;
   }
 
   public void setShowStandardColumnTypeNames(final boolean isShowStandardColumnTypeNames)

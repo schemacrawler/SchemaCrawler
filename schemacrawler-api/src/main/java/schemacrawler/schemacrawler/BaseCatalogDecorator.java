@@ -61,12 +61,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Object getAttribute(final String name)
-  {
-    return catalog.getAttribute(name);
-  }
-
-  @Override
   public <T> T getAttribute(final String name, final T defaultValue)
   {
     return catalog.getAttribute(name, defaultValue);
@@ -205,6 +199,12 @@ public abstract class BaseCatalogDecorator
   public Collection<Table> getTables(final Schema schema)
   {
     return catalog.getTables(schema);
+  }
+
+  @Override
+  public boolean hasAttribute(final String name)
+  {
+    return false;
   }
 
   @Override

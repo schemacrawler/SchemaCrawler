@@ -21,8 +21,6 @@
 package schemacrawler.tools.text.operation;
 
 
-import java.text.MessageFormat;
-
 import schemacrawler.utility.Query;
 
 /**
@@ -34,31 +32,26 @@ public enum Operation
  /**
   * Count operation
   */
-  count("Row Count", "SELECT COUNT(*) FROM ${table}",
-    "{0,choice,0#empty|0<{0,number,integer} rows}"),
+  count("Row Count", "SELECT COUNT(*) FROM ${table}"),
  /**
   * Dump operation
   */
-  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}",
-    ""),
+  dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
  /**
   * Quick dump operation, where columns do not need to be retrieved
   * (minimum infolevel), but the order of rows may not be preserved from
   * run to run.
   */
-  quickdump("Dump", "SELECT * FROM ${table}", ""),;
+  quickdump("Dump", "SELECT * FROM ${table}"),;
 
   private final String description;
   private final String queryString;
-  private final String countMessageFormat;
 
   private Operation(final String description,
-                    final String queryString,
-                    final String countMessageFormat)
+                    final String queryString)
   {
     this.description = description;
     this.queryString = queryString;
-    this.countMessageFormat = countMessageFormat;
   }
 
   /**
@@ -79,18 +72,6 @@ public enum Operation
   public Query getQuery()
   {
     return new Query(name(), queryString);
-  }
-
-  /**
-   * Message format for the counts.
-   *
-   * @param number
-   *        Number value in the message
-   * @return Message format for the counts
-   */
-  String getCountMessage(final Number number)
-  {
-    return MessageFormat.format(countMessageFormat, number);
   }
 
 }
