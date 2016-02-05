@@ -28,5 +28,5 @@ Michèle Barré <Michele.Barre at gmail.com>.
 The [Debian schemacrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-<a href="https://bintray.com/adriens/deb/schemacrawler/_latestVersion">
-<img src="https://api.bintray.com/packages/adriens/deb/schemacrawler/images/download.svg" /></a>
+<a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
+<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
