@@ -22,6 +22,8 @@
 package schemacrawler.tools.text.schema;
 
 
+import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
+import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
@@ -304,6 +306,7 @@ final class SchemaTextFormatter
                                         tableType,
                                         colorMap.getColor(table));
     printRemarks(table);
+    printTableRowCount(table);
 
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
@@ -961,6 +964,15 @@ final class SchemaTextFormatter
 
       }
     }
+  }
+
+  private void printTableRowCount(final Table table)
+  {
+    if (!options.isShowRowCounts() || table == null || !hasRowCount(table))
+    {
+      return;
+    }
+    formattingHelper.writeWideNoteRow(getRowCountMessage(table), "");
   }
 
   private void printTriggers(final Collection<Trigger> triggers)

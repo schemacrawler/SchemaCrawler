@@ -21,43 +21,77 @@
 package schemacrawler.tools.analysis.counts;
 
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Table;
 
 public class CountsUtility
 {
 
-  static final int UNKNOWN_TABLE_COUNT = -1;
-  private static final String TABLE_COUNTS_KEY = "schemacrawler.table.count";
+  private static final int UNKNOWN_TABLE_ROW_COUNT = -1;
+  private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.count";
 
-  public static final long getCount(final Table table)
+  /**
+   * Message format for the counts.
+   *
+   * @param number
+   *        Number value in the message
+   * @return Message format for the counts
+   */
+  public static String getRowCountMessage(final Number number)
+  {
+    requireNonNull(number, "No number provided");
+    final long longValue = number.longValue();
+    if (longValue <= 0)
+    {
+      return "empty";
+    }
+    else
+    {
+      return String.format("%,d rows", longValue);
+    }
+  }
+
+  public static final long getRowCount(final Table table)
   {
     if (table == null)
     {
-      return UNKNOWN_TABLE_COUNT;
+      return UNKNOWN_TABLE_ROW_COUNT;
     }
 
     final long tableCount = table
-      .getAttribute(TABLE_COUNTS_KEY, Long.valueOf(UNKNOWN_TABLE_COUNT));
+      .getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
     return tableCount;
   }
 
-  static void addCountToTable(final Table table, final long tableCount)
+  public static final String getRowCountMessage(final Table table)
+  {
+    return getRowCountMessage(getRowCount(table));
+  }
+
+  public static final boolean hasRowCount(final Table table)
+  {
+    return table != null && table.hasAttribute(TABLE_ROW_COUNT_KEY);
+  }
+
+  static void addRowCountToTable(final Table table, final long rowCount)
   {
     if (table != null)
     {
-      if (tableCount >= 0)
+      if (rowCount >= 0)
       {
-        table.setAttribute(TABLE_COUNTS_KEY, tableCount);
+        table.setAttribute(TABLE_ROW_COUNT_KEY, rowCount);
       }
       else
       {
-        table.removeAttribute(TABLE_COUNTS_KEY);
+        table.removeAttribute(TABLE_ROW_COUNT_KEY);
       }
     }
   }
 
   private CountsUtility()
   {
+    // Prevent instantiation
   }
 
 }
