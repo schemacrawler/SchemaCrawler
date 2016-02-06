@@ -180,6 +180,20 @@ public class SiteGraphVariationsTest
     run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }
 
+  @Test
+  public void diagram_9_row_counts()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<String, String>();
+    args.put("infolevel", "maximum");
+    args.put("portablenames", "true");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.show_row_counts", "true");
+
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+  }
+
   private Path createConfig(final Map<String, String> config)
     throws IOException
   {
