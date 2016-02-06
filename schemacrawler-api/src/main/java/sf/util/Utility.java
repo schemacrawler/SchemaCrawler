@@ -95,24 +95,22 @@ public final class Utility
 
   public static String convertForComparison(final String text)
   {
-    final String textWithoutQuotes;
-    if (!isBlank(text))
+    if (text == null || text.length() == 0)
     {
-      final char[] charArray = text.toCharArray();
-      final StringBuilder builder = new StringBuilder(text.length());
-      for (final char ch: charArray)
+      return text;
+    }
+
+    final StringBuilder builder = new StringBuilder(text.length());
+    for (int i = 0; i < text.length(); i++)
+    {
+      final char ch = text.charAt(i);
+      if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.')
       {
-        if (Character.isLetterOrDigit(ch) || ch == '_' || ch == '.')
-        {
-          builder.append(Character.toLowerCase(ch));
-        }
+        builder.append(Character.toLowerCase(ch));
       }
-      textWithoutQuotes = builder.toString();
     }
-    else
-    {
-      textWithoutQuotes = text;
-    }
+
+    final String textWithoutQuotes = builder.toString();
     return textWithoutQuotes;
   }
 
