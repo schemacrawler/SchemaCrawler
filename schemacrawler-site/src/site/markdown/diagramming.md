@@ -31,6 +31,14 @@ schemacrawler.format.hide_foreignkey_names=true
 schemacrawler.format.show_unqualified_names=true
 ```
 
+You can how table row counts on the database diagram,
+by setting the following properties in the SchemaCrawler configuration file,
+`schemacrawler.config.properties`, and using `-infolevel=maximum`
+
+```
+schemacrawler.format.show_row_counts=true
+```
+
 For more details, see the diagram example in the
 [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
 download.
@@ -77,6 +85,11 @@ SchemaCrawler offers several options to change what you see on the database diag
 <br />
 <a href="images/diagram_8_no_cardinality.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_8_no_cardinality.png" width="200" />
+</a>
+- Show table row counts on the diagrams,set configuration option `schemacrawler.format.show_row_counts=true` and `-infolevel=maximum` on the command-line.
+<br />
+<a href="images/diagram_9_row_counts.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
+<img src="images/diagram_9_row_counts.png" width="200" />
 </a>
 
 ## SchemaCrawler Diagrams in Use
