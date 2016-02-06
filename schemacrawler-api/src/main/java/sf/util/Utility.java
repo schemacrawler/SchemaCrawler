@@ -42,7 +42,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 /**
  * Utility methods.
@@ -54,11 +53,6 @@ public final class Utility
 
   private static final Logger LOGGER = Logger
     .getLogger(Utility.class.getName());
-
-  private static final Pattern containsWhitespacePattern = Pattern
-    .compile(".*\\s.*");
-  private static final Pattern isAllWhitespacePattern = Pattern
-    .compile("^\\s*$");
 
   public static final Predicate<String> filterOutBlank = word -> !isBlank(word);
 
@@ -82,16 +76,21 @@ public final class Utility
    *        Text to check.
    * @return Whether the string contains whitespace.
    */
-  public static boolean containsWhitespace(final String text)
+  public static boolean containsWhitespace(final CharSequence text)
   {
-    if (text == null)
+    if (text == null || text.length() == 0)
     {
       return false;
     }
-    else
+
+    for (int i = 0; i < text.length(); i++)
     {
-      return containsWhitespacePattern.matcher(text).matches();
+      if (Character.isWhitespace(text.charAt(i)))
+      {
+        return true;
+      }
     }
+    return false;
   }
 
   public static String convertForComparison(final String text)
@@ -171,10 +170,21 @@ public final class Utility
    *        Text to check.
    * @return Whether the string is blank.
    */
-  public static boolean isBlank(final String text)
+  public static boolean isBlank(final CharSequence text)
   {
-    return text == null || text.isEmpty()
-           || isAllWhitespacePattern.matcher(text).matches();
+    if (text == null || text.length() == 0)
+    {
+      return true;
+    }
+
+    for (int i = 0; i < text.length(); i++)
+    {
+      if (!Character.isWhitespace(text.charAt(i)))
+      {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
