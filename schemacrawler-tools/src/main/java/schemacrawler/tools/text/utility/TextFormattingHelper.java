@@ -281,6 +281,4 @@ public interface TextFormattingHelper
    */
   void writeWideRow(String definition, String style);
 
-  void writeWideNoteRow(String definition, String style);
-
 }
