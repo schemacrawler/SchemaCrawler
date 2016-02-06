@@ -166,10 +166,11 @@ public final class SchemaDotFormatter
       .toString()).println();
 
     printTableRemarks(table);
-    printTableRowCount(table);
 
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
+
+    printTableRowCount(table);
 
     formattingHelper.append("      </table>").println();
     formattingHelper.append("    >").println();
@@ -542,7 +543,7 @@ public final class SchemaDotFormatter
         .add(newTableCell(getRowCountMessage(table),
                           Alignment.right,
                           false,
-                          Color.gray,
+                          Color.white,
                           3))
         .toString())
       .println();
