@@ -270,7 +270,23 @@
           and index and primary key names, and not showing the fully-qualified table name.
         </p>
       </answer>
-    </faq>    
+    </faq>
+    <faq id="table-row-counts">
+      <question>
+        How to show table row counts in output and diagrams
+      </question>
+      <answer>
+        <p>
+          Show table row counts in output, and diagrams.
+          Change the configuration for
+          the SchemaCrawler
+          <code>schemacrawler.format.show_row_counts=true </code>
+          in the
+          <code>schemacrawler.config.properties </code>
+          file. 
+        </p>
+      </answer>
+    </faq>        
     <faq id="index-names">
       <question>
         How to hide foreign key names, constraint names, trigger names, specific names for procedures, 
