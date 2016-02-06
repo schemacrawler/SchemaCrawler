@@ -241,6 +241,23 @@ public class GraphExecutableOptionsTest
                     testName.currentMethodName());
   }
 
+  @Test
+  public void executableForGraph_12()
+    throws Exception
+  {
+    final GraphOptions graphOptions = new GraphOptions();
+    graphOptions.setShowRowCounts(true);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions
+      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
+  }
+
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
                                final GraphOptions graphOptions,
                                final String testMethodName)
@@ -256,17 +273,18 @@ public class GraphExecutableOptionsTest
     graphOptionsBuilder.sortTables();
     executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
 
+    // Generate diagram, so that we have something to look at, even if
+    // the DOT file comparison fails
+    final Path testDiagramFile = executeGraphExecutable(executable);
+    copy(testDiagramFile,
+         directory.resolve(testMethodName + ".png"),
+         REPLACE_EXISTING);
+
     // Check DOT file
     final String referenceFileName = testMethodName;
     executeExecutable(executable,
                       GraphOutputFormat.scdot.getFormat(),
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
-
-    // Check diagram
-    final Path testDiagramFile = executeGraphExecutable(executable);
-    copy(testDiagramFile,
-         directory.resolve(testMethodName + ".png"),
-         REPLACE_EXISTING);
   }
 
   private Path executeGraphExecutable(final GraphExecutable executable)

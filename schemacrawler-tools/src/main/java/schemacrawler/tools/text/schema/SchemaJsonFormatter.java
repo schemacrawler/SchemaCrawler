@@ -300,7 +300,6 @@ final class SchemaJsonFormatter
       }
       jsonTable.put("type", table.getTableType());
       printRemarks(table, jsonTable);
-      printTableRowCount(table, jsonTable);
 
       final JSONArray jsonColumns = new JSONArray();
       jsonTable.put("columns", jsonColumns);
@@ -382,6 +381,13 @@ final class SchemaJsonFormatter
               }
             }
           }
+        }
+
+        final JSONObject jsonAdditionalInformation = new JSONObject();
+        printTableRowCount(table, jsonAdditionalInformation);
+        if (jsonAdditionalInformation.length() > 0)
+        {
+          jsonTable.put("additionalInformation", jsonAdditionalInformation);
         }
       }
     }

@@ -306,7 +306,6 @@ final class SchemaTextFormatter
                                         tableType,
                                         colorMap.getColor(table));
     printRemarks(table);
-    printTableRowCount(table);
 
     final List<Column> columns = table.getColumns();
     printTableColumns(columns);
@@ -327,6 +326,8 @@ final class SchemaTextFormatter
         printPrivileges(table.getPrivileges());
         printDefinition(table);
       }
+
+      printTableRowCount(table);
     }
 
     formattingHelper.writeObjectEnd();
@@ -972,7 +973,12 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.writeWideNoteRow(getRowCountMessage(table), "");
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeWideRow("Additional Information", "section");
+
+    formattingHelper.writeEmptyRow();
+    formattingHelper.writeNameRow(getRowCountMessage(table), "[row count]");
   }
 
   private void printTriggers(final Collection<Trigger> triggers)
