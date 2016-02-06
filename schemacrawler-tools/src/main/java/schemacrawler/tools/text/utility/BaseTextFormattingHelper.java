@@ -386,22 +386,6 @@ abstract class BaseTextFormattingHelper
     out.println(row.toString());
   }
 
-  @Override
-  public void writeWideNoteRow(final String definition, final String style)
-  {
-    final TableRow row = new TableRow(outputFormat);
-    row.add(new TableCell(definition,
-                          true,
-                          0,
-                          Alignment.right,
-                          false,
-                          style,
-                          Color.gray,
-                          3,
-                          outputFormat));
-    out.println(row.toString());
-  }
-
   private TableCell newTableCell(final String text,
                                  final String styleClass,
                                  final TextOutputFormat outputFormat)
