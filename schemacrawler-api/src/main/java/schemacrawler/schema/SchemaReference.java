@@ -20,6 +20,7 @@
 package schemacrawler.schema;
 
 
+import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
 import java.util.Collections;
@@ -56,8 +57,8 @@ public final class SchemaReference
     }
     else
     {
-      return getFullName().replaceAll("\"", "")
-        .compareTo(otherSchemaRef.getFullName().replaceAll("\"", ""));
+      return convertForComparison(getFullName())
+        .compareTo(convertForComparison(otherSchemaRef.getFullName()));
     }
   }
 
