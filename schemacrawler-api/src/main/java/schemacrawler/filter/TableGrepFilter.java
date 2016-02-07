@@ -29,7 +29,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 class TableGrepFilter
   implements Predicate<Table>
@@ -124,8 +124,8 @@ class TableGrepFilter
     if (!include)
     {
       LOGGER.log(Level.FINE,
-                 new FormattedStringSupplier("Removing table since it does not match the grep pattern, %s",
-                                             table));
+                 new StringFormat("Removing table since it does not match the grep pattern, %s",
+                                  table));
     }
 
     return include;

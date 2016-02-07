@@ -42,7 +42,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.MetaDataUtility;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -94,9 +94,9 @@ final class ForeignKeyRetriever
       while (results.next())
       {
         String foreignKeyName = quotedName(results.getString("FK_NAME"));
-        LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Retrieving foreign key, %s",
-                                               foreignKeyName));
+        LOGGER
+          .log(Level.FINER,
+               new StringFormat("Retrieving foreign key, %s", foreignKeyName));
 
         final String pkTableCatalogName = quotedName(results
           .getString("PKTABLE_CAT"));
@@ -229,8 +229,8 @@ final class ForeignKeyRetriever
       ((TablePartial) table).addColumn(column);
 
       LOGGER.log(Level.FINER,
-                 new FormattedStringSupplier("Creating column reference for a column that is referenced by a foreign key, %s",
-                                             column.getFullName()));
+                 new StringFormat("Creating column reference for a column that is referenced by a foreign key, %s",
+                                  column.getFullName()));
     }
     return column;
   }
@@ -285,8 +285,8 @@ final class ForeignKeyRetriever
   {
     final String fkSql = informationSchemaViews.getForeignKeysSql();
     LOGGER.log(Level.FINER,
-               new FormattedStringSupplier("Executing SQL to retrieve foreign keys: %n%s",
-                                           fkSql));
+               new StringFormat("Executing SQL to retrieve foreign keys: %n%s",
+                                fkSql));
 
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();

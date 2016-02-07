@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.tools.options.OutputFormat;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public enum GraphOutputFormat
     implements OutputFormat
@@ -81,8 +81,7 @@ public enum GraphOutputFormat
     final GraphOutputFormat graphFormat = fromFormatOrNull(format);
     if (graphFormat == null)
     {
-      LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Unknown format, %s", format));
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format, %s", format));
       return png;
     }
     else

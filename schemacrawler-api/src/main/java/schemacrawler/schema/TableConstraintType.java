@@ -24,7 +24,7 @@ package schemacrawler.schema;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Table constraint type.
@@ -57,8 +57,7 @@ public enum TableConstraintType
         return type;
       }
     }
-    LOGGER.log(Level.FINE,
-               new FormattedStringSupplier("Unknown value, %s", value));
+    LOGGER.log(Level.FINE, new StringFormat("Unknown value, %s", value));
     return unknown;
   }
 

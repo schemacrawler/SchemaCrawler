@@ -30,7 +30,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Represents a column type. Provides the java.sql.Types type, the
@@ -389,8 +389,8 @@ final class MutableColumnDataType
       {
         LOGGER.log(Level.FINE,
                    e,
-                   new FormattedStringSupplier("Could not load mapped class, %s",
-                                               mappedClassName));
+                   new StringFormat("Could not load mapped class, %s",
+                                    mappedClassName));
         javaSqlTypeMappedClass = Object.class;
       }
     }

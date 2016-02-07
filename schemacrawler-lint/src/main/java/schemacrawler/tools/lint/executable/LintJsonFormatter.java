@@ -34,7 +34,7 @@ import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 final class LintJsonFormatter
   extends BaseJsonFormatter<LintOptions>
@@ -65,10 +65,10 @@ final class LintJsonFormatter
       }
       catch (final JSONException e)
       {
-        LOGGER.log(Level.FINER,
-                   e,
-                   new FormattedStringSupplier("Error outputting table: %s",
-                                               e.getMessage()));
+        LOGGER
+          .log(Level.FINER,
+               e,
+               new StringFormat("Error outputting table: %s", e.getMessage()));
       }
     }
   }
@@ -93,10 +93,10 @@ final class LintJsonFormatter
       }
       catch (final JSONException e)
       {
-        LOGGER.log(Level.FINER,
-                   e,
-                   new FormattedStringSupplier("Error outputting table: %s",
-                                               e.getMessage()));
+        LOGGER
+          .log(Level.FINER,
+               e,
+               new StringFormat("Error outputting table: %s", e.getMessage()));
       }
     }
   }
@@ -129,10 +129,10 @@ final class LintJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER.log(Level.FINER,
-                     e,
-                     new FormattedStringSupplier("Error outputting lint: %s",
-                                                 e.getMessage()));
+          LOGGER
+            .log(Level.FINER,
+                 e,
+                 new StringFormat("Error outputting lint: %s", e.getMessage()));
         }
       }
     }
