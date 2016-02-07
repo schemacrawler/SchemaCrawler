@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 import org.hsqldb.server.Server;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Sets up a database schema for tests and examples.
@@ -168,7 +169,9 @@ public class TestDatabase
   public void start()
     throws Exception
   {
-    LOGGER.log(Level.FINE, toString() + " - Setting up database");
+    LOGGER
+      .log(Level.FINE,
+           new FormattedStringSupplier("%s - Setting up database", toString()));
     // Attempt to delete the database files
     deleteServerFiles();
 

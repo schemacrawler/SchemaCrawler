@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.operation.OperationExecutable;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Wrapper executable for any SchemaCrawler command. Looks up the
@@ -55,7 +56,8 @@ public final class SchemaCrawlerExecutable
       if (!isCommand && !isConfiguredQuery)
       {
         LOGGER.log(Level.INFO,
-                   String.format("Executing as a query, %s", getCommand()));
+                   new FormattedStringSupplier("Executing as a query, %s",
+                                               getCommand()));
         executable = new OperationExecutable(getCommand());
         break;
       }
@@ -78,10 +80,11 @@ public final class SchemaCrawlerExecutable
           .configureNewExecutable(getCommand(),
                                   schemaCrawlerOptions,
                                   outputOptions);
-        LOGGER.log(Level.INFO,
-                   String.format("Executing command \"%s\" using executable %s",
-                                 getCommand(),
-                                 executable.getClass().getName()));
+        LOGGER
+          .log(Level.INFO,
+               new FormattedStringSupplier("Executing command \"%s\" using executable %s",
+                                           getCommand(),
+                                           executable.getClass().getName()));
       }
     }
 

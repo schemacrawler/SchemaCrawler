@@ -50,6 +50,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.DatabaseUtility;
+import sf.util.FormattedStringSupplier;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
@@ -187,7 +188,8 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
+                       new FormattedStringSupplier("Retrieving database property using method, %s",
+                                                   method));
           }
           final String value = (String) method.invoke(dbMetaData);
           final String[] list = value == null? new String[0]: value.split(",");
@@ -199,7 +201,8 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
+                       new FormattedStringSupplier("Retrieving database property using method, %s",
+                                                   method));
           }
           final Object value = method.invoke(dbMetaData);
           dbProperties
@@ -210,7 +213,8 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
+                       new FormattedStringSupplier("Retrieving database property using method, %s",
+                                                   method));
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = DatabaseUtility
@@ -223,7 +227,8 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       "Retrieving database property using method: " + method);
+                       new FormattedStringSupplier("Retrieving database property using method, %s",
+                                                   method));
           }
           dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
                                                          method,
@@ -244,8 +249,9 @@ final class DatabaseInfoRetriever
       catch (final IllegalAccessException | InvocationTargetException e)
       {
         LOGGER.log(Level.FINE,
-                   "Could not execute method, " + method,
-                   e.getCause());
+                   e.getCause(),
+                   new FormattedStringSupplier("Could not execute method, %s",
+                                               method));
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
@@ -394,9 +400,9 @@ final class DatabaseInfoRetriever
         final String typeName = results.getString("TYPE_NAME");
         final int dataType = results.getInt("DATA_TYPE", 0);
         LOGGER.log(Level.FINER,
-                   String.format("Retrieving data type: %s (with type id %d)",
-                                 typeName,
-                                 dataType));
+                   new FormattedStringSupplier("Retrieving data type: %s (with type id %d)",
+                                               typeName,
+                                               dataType));
         final long precision = results.getLong("PRECISION", 0L);
         final String literalPrefix = results.getString("LITERAL_PREFIX");
         final String literalSuffix = results.getString("LITERAL_SUFFIX");
@@ -466,7 +472,9 @@ final class DatabaseInfoRetriever
       {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINER, "Retrieving data type: " + typeName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving data type, %s",
+                                               typeName));
         final int dataType = results.getInt("DATA_TYPE", 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");

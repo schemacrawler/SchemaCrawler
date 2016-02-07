@@ -24,6 +24,8 @@ package schemacrawler.schema;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
+
 /**
  * Condition timing type.
  */
@@ -66,7 +68,8 @@ public enum ConditionTimingType
         return type;
       }
     }
-    LOGGER.log(Level.FINE, "Unknown value  " + value);
+    LOGGER.log(Level.FINE,
+               new FormattedStringSupplier("Unknown value, %s", value));
     return unknown;
   }
 

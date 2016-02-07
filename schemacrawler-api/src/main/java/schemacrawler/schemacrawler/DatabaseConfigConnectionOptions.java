@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
+
 public final class DatabaseConfigConnectionOptions
   extends BaseDatabaseConnectionOptions
 {
@@ -100,7 +102,9 @@ public final class DatabaseConfigConnectionOptions
     }
     else
     {
-      LOGGER.log(Level.WARNING, "Cannot connect to port, " + port);
+      LOGGER
+        .log(Level.WARNING,
+             new FormattedStringSupplier("Cannot connect to port, %d", port));
     }
   }
 

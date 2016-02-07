@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 
 public final class LintedCatalog
   extends BaseCatalogDecorator
@@ -64,7 +65,7 @@ public final class LintedCatalog
       // so we cannot fail with an exception. Log and continue.
       LOGGER.log(Level.WARNING, "No connection provided", e);
     }
-    
+
     requireNonNull(linterConfigs, "No linter configs provided");
 
     final List<Linter> linters = new ArrayList<>();
@@ -80,7 +81,7 @@ public final class LintedCatalog
       {
         continue;
       }
-      
+
       // First remove the linter id, because it is "seen",
       // whether it needs to be run or not
       final String linterId = linterConfig.getId();
@@ -89,8 +90,8 @@ public final class LintedCatalog
       if (!linterConfig.isRunLinter())
       {
         LOGGER.log(Level.FINE,
-                   String.format("Not running configured linter, %s",
-                                 linterConfig));
+                   new FormattedStringSupplier("Not running configured linter, %s",
+                                               linterConfig));
         continue;
       }
 
@@ -98,7 +99,7 @@ public final class LintedCatalog
       if (linter != null)
       {
         // Configure linter
-          linter.configure(linterConfig);
+        linter.configure(linterConfig);
 
         linters.add(linter);
       }
@@ -115,7 +116,8 @@ public final class LintedCatalog
     for (final Linter linter: linters)
     {
       LOGGER.log(Level.FINE,
-                 String.format("Linting with %s", linter.getClass().getName()));
+                 new FormattedStringSupplier("Linting with, %s",
+                                             linter.getClass().getName()));
       linter.lint(catalog, connection);
     }
   }
@@ -134,7 +136,9 @@ public final class LintedCatalog
     }
     else
     {
-      LOGGER.log(Level.FINE, String.format("Cannot find linter, %s", linterId));
+      LOGGER
+        .log(Level.FINE,
+             new FormattedStringSupplier("Cannot find linter, %s", linterId));
     }
     return linter;
   }
