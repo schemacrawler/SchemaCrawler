@@ -42,6 +42,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Basic SchemaCrawler executor.
@@ -91,9 +92,9 @@ public final class OperationExecutable
                       operationOptions.isAlphabeticalSortForTableColumns());
 
           LOGGER.log(Level.FINE,
-                     String.format("Executing query for table %s: %s",
-                                   table.getFullName(),
-                                   sql));
+                     new FormattedStringSupplier("Executing query for table %s: %s",
+                                                 table.getFullName(),
+                                                 sql));
           try (final ResultSet results = executeSql(statement, sql);)
           {
             handler.handleData(table, results);

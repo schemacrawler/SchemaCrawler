@@ -90,7 +90,9 @@ public final class DatabaseUtility
           final ResultSet resultSet = executeSql(statement, sql);
           if (resultSet != null)
           {
-            LOGGER.log(Level.WARNING, "Ignoring results from query: " + sql);
+            LOGGER.log(Level.WARNING,
+                       new FormattedStringSupplier("Ignoring results from query, %s",
+                                                   sql));
             resultSet.close();
           }
         }
@@ -113,7 +115,9 @@ public final class DatabaseUtility
     }
     if (isBlank(sql))
     {
-      LOGGER.log(Level.FINE, "No SQL provided", new RuntimeException());
+      LOGGER.log(Level.FINE,
+                 "No SQL provided",
+                 new RuntimeException("No SQL provided"));
       return results;
     }
 
@@ -130,9 +134,9 @@ public final class DatabaseUtility
       {
         final int updateCount = statement.getUpdateCount();
         LOGGER.log(Level.FINE,
-                   String.format("No results. Update count of %d for query: %s",
-                                 updateCount,
-                                 sql));
+                   new FormattedStringSupplier("No results. Update count of %d for query: %s",
+                                               updateCount,
+                                               sql));
       }
 
       SQLWarning sqlWarning = statement.getWarnings();
@@ -146,7 +150,9 @@ public final class DatabaseUtility
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Error executing: " + sql, e);
+      LOGGER.log(Level.WARNING,
+                 e,
+                 new FormattedStringSupplier("Error executing SQL, %s", sql));
       return null;
     }
   }
@@ -190,7 +196,9 @@ public final class DatabaseUtility
       }
       else
       {
-        LOGGER.log(Level.WARNING, "No rows of data returned: " + sql);
+        LOGGER.log(Level.WARNING,
+                   new FormattedStringSupplier("No rows of data returned for query, %s",
+                                               sql));
         scalar = null;
       }
 

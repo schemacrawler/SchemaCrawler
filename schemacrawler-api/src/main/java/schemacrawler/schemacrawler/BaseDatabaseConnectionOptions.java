@@ -40,6 +40,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
 import sf.util.TemplatingUtility;
 
 abstract class BaseDatabaseConnectionOptions
@@ -126,16 +127,18 @@ abstract class BaseDatabaseConnectionOptions
                                                                            password);
     try
     {
-      LOGGER.log(Level.INFO,
-                 String.format(
-                               "Making connection to %s%nfor user \'%s\', with properties %s",
-                               connectionUrl,
-                               user,
-                               safeProperties(jdbcConnectionProperties)));
+      LOGGER
+        .log(Level.INFO,
+             new FormattedStringSupplier("Making connection to %s%nfor user \'%s\', with properties %s",
+                                         connectionUrl,
+                                         user,
+                                         safeProperties(jdbcConnectionProperties)));
       final Connection connection = DriverManager
         .getConnection(connectionUrl, jdbcConnectionProperties);
 
-      LOGGER.log(Level.INFO, "Opened database connection, " + connection);
+      LOGGER.log(Level.INFO,
+                 new FormattedStringSupplier("Opened database connection, %s",
+                                             connection));
       logConnection(connection);
 
       return connection;
@@ -343,11 +346,11 @@ abstract class BaseDatabaseConnectionOptions
       final DatabaseMetaData dbMetaData = connection.getMetaData();
       LOGGER
         .log(Level.INFO,
-             String.format("Connected to %n%s %s %nusing JDBC driver %n%s %s",
-                           dbMetaData.getDatabaseProductName(),
-                           dbMetaData.getDatabaseProductVersion(),
-                           dbMetaData.getDriverName(),
-                           dbMetaData.getDriverVersion()));
+             new FormattedStringSupplier("Connected to %n%s %s %nusing JDBC driver %n%s %s",
+                                         dbMetaData.getDatabaseProductName(),
+                                         dbMetaData.getDatabaseProductVersion(),
+                                         dbMetaData.getDriverName(),
+                                         dbMetaData.getDriverVersion()));
     }
     catch (final SQLException e)
     {

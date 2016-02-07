@@ -35,6 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
+import sf.util.FormattedStringSupplier;
 import sf.util.Multimap;
 import sf.util.ObjectToString;
 import sf.util.Utility;
@@ -79,9 +80,12 @@ final class TableMatchKeys
     mapTableNameMatches(tables, prefixes);
     if (LOGGER.isLoggable(Level.FINE))
     {
-      LOGGER.log(Level.FINE, "Table prefixes=" + prefixes);
       LOGGER.log(Level.FINE,
-                 "Table matches map:" + ObjectToString.toString(tableKeys));
+                 new FormattedStringSupplier("Table prefixes=%s", prefixes));
+      LOGGER
+        .log(Level.FINE,
+             new FormattedStringSupplier("Table matches map: %s",
+                                         ObjectToString.toString(tableKeys)));
     }
 
   }

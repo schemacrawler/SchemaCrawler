@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.FormattedStringSupplier;
 
 class ExecutableCommandProvider
   implements CommandProvider
@@ -52,8 +53,8 @@ class ExecutableCommandProvider
     catch (final Exception e)
     {
       LOGGER.log(Level.FINE,
-                 "Could not instantiate " + executableClassName
-                             + " using the default constructor");
+                 new FormattedStringSupplier("Could not instantiate using the default constructor, %s",
+                                             executableClassName));
       try
       {
         final Constructor<? extends Executable> constructor = commandExecutableClass

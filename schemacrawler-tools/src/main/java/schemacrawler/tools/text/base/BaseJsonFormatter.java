@@ -38,6 +38,7 @@ import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Text formatting of schema.
@@ -111,8 +112,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting SchemaCrawlerHeaderInfo: " + e.getMessage(),
-                 e);
+                 e,
+                 new FormattedStringSupplier("Error outputting SchemaCrawlerHeaderInfo: %s",
+                                             e.getMessage()));
     }
   }
 
@@ -151,8 +153,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting DatabaseInfo: " + e.getMessage(),
-                 e);
+                 e,
+                 new FormattedStringSupplier("Error outputting DatabaseInfo: %s",
+                                             e.getMessage()));
     }
 
   }
@@ -192,8 +195,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting JdbcDriverInfo: " + e.getMessage(),
-                 e);
+                 e,
+                 new FormattedStringSupplier("Error outputting JdbcDriverInfo: %s",
+                                             e.getMessage()));
     }
 
   }
@@ -220,8 +224,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting SchemaCrawlerInfo: " + e.getMessage(),
-                 e);
+                 e,
+                 new FormattedStringSupplier("Error outputting SchemaCrawlerInfo: %s",
+                                             e.getMessage()));
     }
   }
 
@@ -270,8 +275,9 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     catch (final JSONException e)
     {
       LOGGER.log(Level.FINER,
-                 "Error outputting JdbcDriverProperty: " + e.getMessage(),
-                 e);
+                 e,
+                 new FormattedStringSupplier("Error outputting JdbcDriverProperty: %s",
+                                             e.getMessage()));
     }
 
     return jsonDriverProperty;

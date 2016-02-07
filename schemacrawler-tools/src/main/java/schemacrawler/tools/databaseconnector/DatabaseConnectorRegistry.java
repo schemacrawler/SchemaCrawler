@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -73,9 +74,10 @@ public final class DatabaseConnectorRegistry
         try
         {
           LOGGER.log(Level.CONFIG,
-                     "Loading database connector, " + databaseSystemIdentifier
-                                   + "="
-                                   + databaseConnector.getClass().getName());
+                     new FormattedStringSupplier("Loading database connector, %s=%s",
+                                                 databaseSystemIdentifier,
+                                                 databaseConnector.getClass()
+                                                   .getName()));
           // Validate that the JDBC driver is available
           databaseConnector.checkDatabaseConnectionOptions();
           // Put in map
@@ -85,10 +87,11 @@ public final class DatabaseConnectorRegistry
         catch (final Exception e)
         {
           LOGGER.log(Level.CONFIG,
-                     "Could not load database connector, "
-                                   + databaseSystemIdentifier + "="
-                                   + databaseConnector.getClass().getName(),
-                     e);
+                     e,
+                     new FormattedStringSupplier("Could not load database connector, %s=%s",
+                                                 databaseSystemIdentifier,
+                                                 databaseConnector.getClass()
+                                                   .getName()));
         }
       }
     }
@@ -191,7 +194,9 @@ public final class DatabaseConnectorRegistry
                                   driver.getMinorVersion()));
       }
       Collections.sort(drivers);
-      LOGGER.log(Level.CONFIG, "Registered JDBC drivers: " + drivers);
+      LOGGER.log(Level.CONFIG,
+                 new FormattedStringSupplier("Registered JDBC drivers, %s",
+                                             drivers));
     }
     catch (final Exception e)
     {

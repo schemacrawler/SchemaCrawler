@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Linter registry for mapping linters by id.
@@ -59,7 +60,9 @@ public final class LinterRegistry
         final String linterId = linter.getId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
         LOGGER.log(Level.FINER,
-                   "Loading linter, " + linterId + "=" + linterClass.getName());
+                   new FormattedStringSupplier("Loading linter, %s=%s",
+                                               linterId,
+                                               linterClass.getName()));
         linterRegistry.put(linterId, linterClass);
       }
     }
@@ -108,8 +111,9 @@ public final class LinterRegistry
       catch (final Exception e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not instantiate linter, " + linterClass.getName(),
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not instantiate linter, %s",
+                                               linterClass.getName()));
         return null;
       }
     }

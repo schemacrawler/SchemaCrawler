@@ -25,6 +25,8 @@ import java.sql.DatabaseMetaData;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
+
 /**
  * An enumeration wrapper around procedure column types.
  */
@@ -76,7 +78,7 @@ public enum FunctionColumnType
         return type;
       }
     }
-    LOGGER.log(Level.FINE, "Unknown id " + id);
+    LOGGER.log(Level.FINE, new FormattedStringSupplier("Unknown id, %d", id));
     return unknown;
   }
 
