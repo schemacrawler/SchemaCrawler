@@ -5,6 +5,8 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Optional;
 
+import schemacrawler.crawl.TableColumnRetrievalStrategy;
+
 public final class DatabaseSpecificOverrideOptions
   implements Options
 {
@@ -13,7 +15,7 @@ public final class DatabaseSpecificOverrideOptions
 
   private final Optional<Boolean> supportsSchemas;
   private final Optional<Boolean> supportsCatalogs;
-  private final boolean supportsFastColumnRetrieval;
+  private final TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -28,7 +30,7 @@ public final class DatabaseSpecificOverrideOptions
     {
       supportsSchemas = Optional.empty();
       supportsCatalogs = Optional.empty();
-      supportsFastColumnRetrieval = false;
+      tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
       identifierQuoteString = "";
       informationSchemaViews = new InformationSchemaViews();
     }
@@ -36,7 +38,7 @@ public final class DatabaseSpecificOverrideOptions
     {
       supportsSchemas = builder.getSupportsSchemas();
       supportsCatalogs = builder.getSupportsCatalogs();
-      supportsFastColumnRetrieval = builder.isSupportsFastColumnRetrieval();
+      tableColumnRetrievalStrategy = builder.getTableColumnRetrievalStrategy();
       identifierQuoteString = builder.getIdentifierQuoteString();
       informationSchemaViews = builder.getInformationSchemaViewsBuilder()
         .toOptions();
@@ -58,6 +60,11 @@ public final class DatabaseSpecificOverrideOptions
     return informationSchemaViews;
   }
 
+  public TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  {
+    return tableColumnRetrievalStrategy;
+  }
+
   public boolean hasOverrideForIdentifierQuoteString()
   {
     return !isBlank(identifierQuoteString);
@@ -76,11 +83,6 @@ public final class DatabaseSpecificOverrideOptions
   public boolean isSupportsCatalogs()
   {
     return supportsCatalogs.orElse(true);
-  }
-
-  public boolean isSupportsFastColumnRetrieval()
-  {
-    return supportsFastColumnRetrieval;
   }
 
   public boolean isSupportsSchemas()

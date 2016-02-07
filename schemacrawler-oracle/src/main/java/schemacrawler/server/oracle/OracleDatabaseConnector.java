@@ -20,6 +20,8 @@
 package schemacrawler.server.oracle;
 
 
+import schemacrawler.crawl.TableColumnRetrievalStrategy;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
@@ -47,6 +49,15 @@ public final class OracleDatabaseConnector
     throws SchemaCrawlerException
   {
     return new OracleExecutable(command);
+  }
+
+  @Override
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  {
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder
+      .withTableColumnRetrievalStrategy(TableColumnRetrievalStrategy.data_dictionary_all_tables);
+    return databaseSpecificOverrideOptionsBuilder;
   }
 
 }
