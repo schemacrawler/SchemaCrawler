@@ -29,6 +29,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
+import sf.util.FormattedStringSupplier;
 
 public abstract class BaseLinterCatalog
   implements Linter
@@ -96,10 +97,10 @@ public abstract class BaseLinterCatalog
                                                                                                   final V value)
   {
     LOGGER.log(Level.FINE,
-               String.format("Found lint for %s: %s --> %s",
-                             namedObject,
-                             message,
-                             value));
+               new FormattedStringSupplier("Found lint for %s: %s --> %s",
+                                           namedObject,
+                                           message,
+                                           value));
     if (collector != null)
     {
       final Lint<V> lint = new SimpleLint<>(getId(),

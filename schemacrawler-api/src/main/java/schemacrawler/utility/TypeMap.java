@@ -31,6 +31,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
+
 /**
  * The default mappings are from the JDBC Specification 4.1, Appendix B
  * - Data Type Conversion Tables, Table B-3 - Mapping from JDBC Types to
@@ -192,8 +194,9 @@ public final class TypeMap
       catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not obtain class mapping for data type " + typeName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not obtain class mapping for data type, %s",
+                                               typeName));
         return null;
       }
     }

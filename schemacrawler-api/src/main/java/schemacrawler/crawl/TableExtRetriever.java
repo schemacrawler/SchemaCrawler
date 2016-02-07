@@ -41,6 +41,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import sf.util.FormattedStringSupplier;
 
 /**
  * A retriever uses database metadata to get the extended details about
@@ -107,10 +108,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
@@ -120,11 +121,11 @@ final class TableExtRetriever
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find column, %s.%s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName,
-                                   columnName));
+                     new FormattedStringSupplier("Cannot find column, %s.%s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName,
+                                                 columnName));
           continue;
         }
         else
@@ -187,10 +188,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
@@ -255,25 +256,28 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   indexName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 indexName));
           continue;
         }
 
-        LOGGER.log(Level.FINER, "Retrieving index information: " + indexName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving index information, %s",
+                                               indexName));
         final MutableTable table = tableOptional.get();
         final Optional<MutableIndex> indexOptional = table
           .lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
-          LOGGER.log(Level.FINE,
-                     String.format("Cannot find index, %s.%s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName,
-                                   indexName));
+          LOGGER
+            .log(Level.FINE,
+                 new FormattedStringSupplier("Cannot find index, %s.%s.%s.%s",
+                                             catalogName,
+                                             schemaName,
+                                             tableName,
+                                             indexName));
           continue;
         }
 
@@ -389,16 +393,18 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
         final MutableTable table = tableOptional.get();
 
-        LOGGER.log(Level.FINER, "Retrieving table information: " + tableName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving table information, %s",
+                                               tableName));
         final String definition = results.getString("TABLE_DEFINITION");
 
         table.appendDefinition(definition);
@@ -468,7 +474,9 @@ final class TableExtRetriever
           .getString("TRIGGER_SCHEMA"));
         final String triggerName = quotedName(results
           .getString("TRIGGER_NAME"));
-        LOGGER.log(Level.FINER, "Retrieving trigger: " + triggerName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving trigger, %s",
+                                               triggerName));
 
         // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
@@ -479,10 +487,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
@@ -570,15 +578,17 @@ final class TableExtRetriever
         if (!viewOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   viewName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 viewName));
           continue;
         }
 
         final MutableView view = (MutableView) viewOptional.get();
-        LOGGER.log(Level.FINER, "Retrieving view information: " + viewName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving view information, %s",
+                                               viewName));
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = results
           .getEnum("CHECK_OPTION", CheckOptionType.unknown);
@@ -704,7 +714,9 @@ final class TableExtRetriever
           .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
-        LOGGER.log(Level.FINER, "Retrieving constraint: " + constraintName);
+        LOGGER.log(Level.FINER,
+                   new FormattedStringSupplier("Retrieving constraint, %s",
+                                               constraintName));
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
@@ -714,10 +726,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
@@ -781,7 +793,8 @@ final class TableExtRetriever
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER,
-                   "Retrieving constraint definition: " + constraintName);
+                   new FormattedStringSupplier("Retrieving constraint definition, %s",
+                                               constraintName));
 
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
@@ -791,8 +804,8 @@ final class TableExtRetriever
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
-                     "Could not add column for constraint to table: "
-                                   + constraintName);
+                     new FormattedStringSupplier("Could not add column for constraint to table, %s",
+                                                 constraintName));
           continue;
         }
 
@@ -805,10 +818,10 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find table, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName));
+                     new FormattedStringSupplier("Cannot find table, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName));
           continue;
         }
 
@@ -819,11 +832,11 @@ final class TableExtRetriever
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     String.format("Cannot find column, %s.%s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   tableName,
-                                   columnName));
+                     new FormattedStringSupplier("Cannot find column, %s.%s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 tableName,
+                                                 columnName));
           continue;
         }
         final MutableColumn column = columnOptional.get();
@@ -868,7 +881,8 @@ final class TableExtRetriever
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER,
-                   "Retrieving constraint definition: " + constraintName);
+                   new FormattedStringSupplier("Retrieving constraint definition, %s",
+                                               constraintName));
         final String definition = results.getString("CHECK_CLAUSE");
 
         final String constraintKey = new SchemaReference(catalogName,
@@ -879,8 +893,8 @@ final class TableExtRetriever
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
-                     "Could not add constraint definition to table: "
-                                   + constraintName);
+                     new FormattedStringSupplier("Could not add constraint definition to table, %s",
+                                                 constraintName));
           continue;
         }
         tableConstraint.appendDefinition(definition);

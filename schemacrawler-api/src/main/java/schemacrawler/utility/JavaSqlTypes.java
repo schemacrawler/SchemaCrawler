@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import sf.util.FormattedStringSupplier;
 
 /**
  * Utility to work with java.sql.Types.
@@ -63,8 +64,9 @@ public final class JavaSqlTypes
       catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not access java.sql.Types, field " + field,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not access java.sql.Types, field, %s",
+                                               field));
         // continue
       }
     }

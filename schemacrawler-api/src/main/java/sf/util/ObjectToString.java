@@ -94,7 +94,10 @@ public final class ObjectToString
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.FINER, "Could not access field, " + field, e);
+        LOGGER.log(Level.FINER,
+                   e,
+                   new FormattedStringSupplier("Could not access field, %s",
+                                               field));
       }
     }
   }

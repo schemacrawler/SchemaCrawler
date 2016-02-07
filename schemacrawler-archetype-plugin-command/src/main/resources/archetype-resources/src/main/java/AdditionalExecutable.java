@@ -1,8 +1,4 @@
-#set( $symbol_pound = '#' )
-#set( $symbol_dollar = '$' )
-#set( $symbol_escape = '\' )
-package ${package};
-
+#set($symbol_pound='#')#set($symbol_dollar='$')#set($symbol_escape='\')package ${package};
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,8 +15,9 @@ public class AdditionalExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(AdditionalExecutable.class.getName());
-	  
+  private static final Logger LOGGER = Logger
+    .getLogger(AdditionalExecutable.class.getName());
+
   static final String COMMAND = "additional";
 
   protected AdditionalExecutable()
@@ -32,16 +29,19 @@ public class AdditionalExecutable
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    // TODO: Possibly process command-line options, which are available in
+    // TODO: Possibly process command-line options, which are available
+    // in
     // additionalConfiguration
-    
+
     try (final PrintWriter writer = new PrintWriter(outputOptions
       .openNewOutputWriter());)
     {
       for (final Schema schema: catalog.getSchemas())
       {
-    	// SchemaCrawler will control output of log messages if you use JDK logging
-    	LOGGER.log(Level.INFO, "Processing, " + schema);
+        // SchemaCrawler will control output of log messages if you use
+        // JDK logging
+        LOGGER.log(Level.INFO,
+                   new FormattedStringSupplier("Processing, %s", schema));
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);

@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.utility.ProcessExecutor;
+import sf.util.FormattedStringSupplier;
 
 public class GraphProcessExecutor
   extends ProcessExecutor
@@ -95,7 +96,9 @@ public class GraphProcessExecutor
       LOGGER.log(Level.WARNING, processError);
     }
 
-    LOGGER.log(Level.INFO, "Generated diagram, " + outputFile);
+    LOGGER
+      .log(Level.INFO,
+           new FormattedStringSupplier("Generated diagram, %s", outputFile));
 
     return exitCode;
   }
