@@ -42,8 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
-import sf.util.FormattedStringSupplier;
 import sf.util.ObjectToString;
+import sf.util.StringFormat;
 
 /**
  * Main executor for the scripting engine integration.
@@ -103,13 +103,12 @@ public final class ScriptExecutable
     ScriptEngineFactory javaScriptEngineFactory = null;
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
-      LOGGER
-        .log(Level.FINER,
-             new FormattedStringSupplier("Evaluating script engine: %s %s (%s %s)",
-                                         engineFactory.getEngineName(),
-                                         engineFactory.getEngineVersion(),
-                                         engineFactory.getLanguageName(),
-                                         engineFactory.getLanguageVersion()));
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Evaluating script engine: %s %s (%s %s)",
+                                  engineFactory.getEngineName(),
+                                  engineFactory.getEngineVersion(),
+                                  engineFactory.getLanguageName(),
+                                  engineFactory.getLanguageVersion()));
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(getFileExtension(scriptFileName)))
       {
@@ -132,20 +131,16 @@ public final class ScriptExecutable
 
     if (LOGGER.isLoggable(Level.CONFIG))
     {
-      LOGGER
-        .log(Level.CONFIG,
-             new FormattedStringSupplier("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                                         scriptEngineFactory.getEngineName(),
-                                         scriptEngineFactory.getEngineVersion(),
-                                         scriptEngineFactory.getLanguageName(),
-                                         scriptEngineFactory
-                                           .getLanguageVersion(),
-                                         ObjectToString
-                                           .toString(scriptEngineFactory
-                                             .getNames()),
-                                         ObjectToString
-                                           .toString(scriptEngineFactory
-                                             .getExtensions())));
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                                  scriptEngineFactory.getEngineName(),
+                                  scriptEngineFactory.getEngineVersion(),
+                                  scriptEngineFactory.getLanguageName(),
+                                  scriptEngineFactory.getLanguageVersion(),
+                                  ObjectToString
+                                    .toString(scriptEngineFactory.getNames()),
+                                  ObjectToString.toString(scriptEngineFactory
+                                    .getExtensions())));
     }
 
     final CommandChainExecutable chain = new CommandChainExecutable();

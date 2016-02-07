@@ -42,7 +42,7 @@ import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Main executor for the Velocity integration.
@@ -119,8 +119,8 @@ public final class VelocityRenderer
                                       templatePath);
 
     LOGGER.log(Level.CONFIG,
-               new FormattedStringSupplier("Velocity configuration properties, %s",
-                                           p.toString()));
+               new StringFormat("Velocity configuration properties, %s",
+                                p.toString()));
 
     ve.init(p);
 
@@ -131,9 +131,9 @@ public final class VelocityRenderer
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
       LOGGER.log(Level.INFO,
-                 new FormattedStringSupplier("Reading Velocity template, %s, with encoding \"%s\"",
-                                             templateLocation,
-                                             templateEncoding));
+                 new StringFormat("Reading Velocity template, %s, with encoding \"%s\"",
+                                  templateLocation,
+                                  templateEncoding));
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);

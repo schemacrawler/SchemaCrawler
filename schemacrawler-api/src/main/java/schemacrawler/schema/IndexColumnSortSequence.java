@@ -24,7 +24,7 @@ package schemacrawler.schema;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * An enumeration wrapper around index sort sequences.
@@ -64,8 +64,7 @@ public enum IndexColumnSortSequence
         return type;
       }
     }
-    LOGGER.log(Level.FINE,
-               new FormattedStringSupplier("Unknown code, %s", code));
+    LOGGER.log(Level.FINE, new StringFormat("Unknown code, %s", code));
     return unknown;
   }
 

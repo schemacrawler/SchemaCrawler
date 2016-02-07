@@ -41,8 +41,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
 import sf.util.ObjectToString;
+import sf.util.StringFormat;
 
 /**
  * Configuration properties.
@@ -135,14 +135,14 @@ public final class Config
         || !isReadable(propertiesFile))
     {
       LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Cannot load properties from file, %s",
-                                             propertiesFile));
+                 new StringFormat("Cannot load properties from file, %s",
+                                  propertiesFile));
       return properties;
     }
 
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Loading properties from file, %s",
-                                           propertiesFile));
+               new StringFormat("Loading properties from file, %s",
+                                propertiesFile));
     loadProperties(properties,
                    newBufferedReader(propertiesFile, StandardCharsets.UTF_8));
     return properties;

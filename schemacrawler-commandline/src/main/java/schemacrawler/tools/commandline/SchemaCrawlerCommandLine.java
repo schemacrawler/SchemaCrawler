@@ -36,7 +36,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -71,10 +71,9 @@ public final class SchemaCrawlerCommandLine
     // server argument, or the JDBC connection URL
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
     dbConnector = dbServerTypeParser.getOptions();
-    LOGGER
-      .log(Level.INFO,
-           new FormattedStringSupplier("Using database plugin, %s",
-                                       dbConnector.getDatabaseServerType()));
+    LOGGER.log(Level.INFO,
+               new StringFormat("Using database plugin, %s",
+                                dbConnector.getDatabaseServerType()));
 
     config = new Config();
     loadConfig(argsMap);

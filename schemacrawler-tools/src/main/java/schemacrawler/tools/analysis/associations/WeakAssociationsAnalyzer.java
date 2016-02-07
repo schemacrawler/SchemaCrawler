@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.utility.MetaDataUtility;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 final class WeakAssociationsAnalyzer
 {
@@ -91,18 +91,16 @@ final class WeakAssociationsAnalyzer
     if (LOGGER.isLoggable(Level.FINER))
     {
       LOGGER.log(Level.FINER,
-                 new FormattedStringSupplier("Column match keys, %s",
-                                             columnMatchKeysMap));
+                 new StringFormat("Column match keys, %s", columnMatchKeysMap));
       LOGGER.log(Level.FINER,
-                 new FormattedStringSupplier("Column match keys, %s",
-                                             tableMatchKeys));
+                 new StringFormat("Column match keys, %s", tableMatchKeys));
     }
     for (final Table table: tables)
     {
       final TableCandidateKeys tableCandidateKeys = new TableCandidateKeys(table);
-      LOGGER.log(Level.FINER,
-                 new FormattedStringSupplier("Table candidate keys, %s",
-                                             tableCandidateKeys));
+      LOGGER
+        .log(Level.FINER,
+             new StringFormat("Table candidate keys, %s", tableCandidateKeys));
       for (final Column pkColumn: tableCandidateKeys)
       {
         final Set<String> fkColumnMatchKeys = new HashSet<>();
@@ -139,8 +137,8 @@ final class WeakAssociationsAnalyzer
               && !foreignKeys.contains(weakAssociation))
           {
             LOGGER.log(Level.FINE,
-                       new FormattedStringSupplier("Found weak association, %s",
-                                                   weakAssociation));
+                       new StringFormat("Found weak association, %s",
+                                        weakAssociation));
             addWeakAssociation(weakAssociation);
           }
         }

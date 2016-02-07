@@ -47,8 +47,7 @@ public enum Operation
   private final String description;
   private final String queryString;
 
-  private Operation(final String description,
-                    final String queryString)
+  private Operation(final String description, final String queryString)
   {
     this.description = description;
     this.queryString = queryString;

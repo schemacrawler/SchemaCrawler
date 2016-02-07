@@ -38,7 +38,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -93,8 +93,8 @@ final class TableColumnRetriever
         final String tableColumnsSql = informationSchemaViews
           .getTableColumnsSql();
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Executing SQL to retrieve table columns: %n%s",
-                                               tableColumnsSql));
+                   new StringFormat("Executing SQL to retrieve table columns: %n%s",
+                                    tableColumnsSql));
         final Connection connection = getDatabaseConnection();
         try (final Statement statement = connection.createStatement();
             final MetadataResultSet results = new MetadataResultSet("retrieveColumnsUsingSql",
@@ -167,13 +167,12 @@ final class TableColumnRetriever
       final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
       final String tableName = quotedName(results.getString("TABLE_NAME"));
       final String columnName = quotedName(results.getString("COLUMN_NAME"));
-      LOGGER
-        .log(Level.FINER,
-             new FormattedStringSupplier("Retrieving column, %s.%s%s.%s",
-                                         columnCatalogName,
-                                         schemaName,
-                                         tableName,
-                                         columnName));
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Retrieving column, %s.%s%s.%s",
+                                  columnCatalogName,
+                                  schemaName,
+                                  tableName,
+                                  columnName));
 
       final Optional<MutableTable> optionalTable = allTables
         .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
@@ -244,8 +243,8 @@ final class TableColumnRetriever
       if (add)
       {
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Adding column to table, %s",
-                                               column.getFullName()));
+                   new StringFormat("Adding column to table, %s",
+                                    column.getFullName()));
         table.addColumn(column);
       }
     }

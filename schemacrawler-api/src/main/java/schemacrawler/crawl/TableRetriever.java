@@ -40,7 +40,7 @@ import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.TableTypes;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -75,9 +75,9 @@ final class TableRetriever
     {
       LOGGER.log(Level.WARNING,
                  e.getCause(),
-                 new FormattedStringSupplier("Could not retrieve %sindexes for table %s, trying again",
-                                             unique? "unique ": "",
-                                             table));
+                 new StringFormat("Could not retrieve %sindexes for table %s, trying again",
+                                  unique? "unique ": "",
+                                  table));
       sqlEx = e;
     }
 
@@ -170,12 +170,10 @@ final class TableRetriever
       .getTableTypes();
     final String[] filteredTableTypes = supportedTableTypes
       .filterUnknown(tableTypes);
-    LOGGER
-      .log(Level.FINER,
-           new FormattedStringSupplier("Retrieving table types: %s",
-                                       filteredTableTypes == null? "<<all>>"
-                                                                 : Arrays
-                                                                   .asList(filteredTableTypes)));
+    LOGGER.log(Level.FINER,
+               new StringFormat("Retrieving table types: %s",
+                                filteredTableTypes == null? "<<all>>": Arrays
+                                  .asList(filteredTableTypes)));
 
     LOGGER.log(Level.INFO, "Retrieving tables");
 
@@ -204,9 +202,9 @@ final class TableRetriever
         if (!schemaOptional.isPresent())
         {
           LOGGER.log(Level.FINER,
-                     new FormattedStringSupplier("Cannot locate schema: %s.%s",
-                                                 catalogName,
-                                                 schemaName));
+                     new StringFormat("Cannot locate schema: %s.%s",
+                                      catalogName,
+                                      schemaName));
           continue;
         }
 
@@ -246,9 +244,9 @@ final class TableRetriever
         // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
         String indexName = quotedName(results.getString("INDEX_NAME"));
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Retrieving index: %s.%s",
-                                               table.getFullName(),
-                                               indexName));
+                   new StringFormat("Retrieving index: %s.%s",
+                                    table.getFullName(),
+                                    indexName));
 
         // Work-around PostgreSQL JDBC driver bugs by unquoting column
         // names first

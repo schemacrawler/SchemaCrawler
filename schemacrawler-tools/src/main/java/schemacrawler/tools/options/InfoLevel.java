@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public enum InfoLevel
 {
@@ -48,8 +48,7 @@ public enum InfoLevel
     catch (final IllegalArgumentException | NullPointerException e)
     {
       LOGGER.log(Level.INFO,
-                 new FormattedStringSupplier("Unknown infolevel, %s",
-                                             infoLevelValue));
+                 new StringFormat("Unknown infolevel, %s", infoLevelValue));
       return unknown;
     }
   }

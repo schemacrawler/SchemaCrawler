@@ -41,7 +41,7 @@ import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class ProcessExecutor
   implements Callable<Integer>
@@ -90,8 +90,7 @@ public class ProcessExecutor
       throw new IOException("No command provided");
     }
 
-    LOGGER.log(Level.CONFIG,
-               new FormattedStringSupplier("Executing:%n%s", command));
+    LOGGER.log(Level.CONFIG, new StringFormat("Executing:%n%s", command));
 
     final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
