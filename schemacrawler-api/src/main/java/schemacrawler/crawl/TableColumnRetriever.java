@@ -21,8 +21,13 @@
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.executeSql;
+
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +36,7 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 
 /**
@@ -57,6 +63,8 @@ final class TableColumnRetriever
                        final InclusionRule columnInclusionRule)
                          throws SQLException
   {
+    requireNonNull(allTables);
+
     final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                true);
     if (columnFilter.isExcludeAll())
@@ -66,44 +74,76 @@ final class TableColumnRetriever
       return;
     }
 
-    final boolean fastColumnRetrieval = getRetrieverConnection()
-      .isSupportsFastColumnRetrieval();
-
-    if (fastColumnRetrieval)
+    final TableColumnRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
+      .getTableColumnRetrievalStrategy();
+    switch (tableColumnRetrievalStrategy)
     {
-      LOGGER.log(Level.INFO, "Retrieving table columns, using fast retrieval");
-      try (
-          final MetadataResultSet results = new MetadataResultSet("retrieveColumns",
-                                                                  getMetaData()
-                                                                    .getColumns(null,
-                                                                                null,
-                                                                                "%",
-                                                                                "%"));)
-      {
-        createTableColumns(results, allTables, columnFilter);
-      }
-    }
-    else
-    {
-      LOGGER.log(Level.INFO, "Retrieving table columns");
-      for (final MutableTable table: allTables)
-      {
-        LOGGER.log(Level.FINE, "Retrieving columns for " + table);
-        try (
-            final MetadataResultSet results = new MetadataResultSet(getMetaData()
-              .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                          unquotedName(table.getSchema().getName()),
-                          unquotedName(table.getName()),
-                          null));)
+      case data_dictionary_all_tables:
+        LOGGER
+          .log(Level.INFO,
+               "Retrieving table columns, using fast data dictionary retrieval");
+        final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+          .getInformationSchemaViews();
+        if (!informationSchemaViews.hasTableColumnsSql())
+        {
+          throw new SchemaCrawlerSQLException("No table columns SQL provided",
+                                              null);
+        }
+        final String tableColumnsSql = informationSchemaViews
+          .getTableColumnsSql();
+        LOGGER.log(Level.FINER,
+                   String.format(
+                                 "Executing SQL to retrieve table columns: %n%s",
+                                 tableColumnsSql));
+        final Connection connection = getDatabaseConnection();
+        try (final Statement statement = connection.createStatement();
+            final MetadataResultSet results = new MetadataResultSet("retrieveColumnsUsingSql",
+                                                                    executeSql(statement,
+                                                                               tableColumnsSql));)
         {
           createTableColumns(results, allTables, columnFilter);
         }
-        catch (final SQLException e)
+        break;
+
+      case metadata_all_tables:
+        LOGGER.log(Level.INFO,
+                   "Retrieving table columns, using fast meta-data retrieval");
+        try (
+            final MetadataResultSet results = new MetadataResultSet("retrieveColumnsUsingMetadata",
+                                                                    getMetaData()
+                                                                      .getColumns(null,
+                                                                                  null,
+                                                                                  "%",
+                                                                                  "%"));)
         {
-          throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                              + table, e);
+          createTableColumns(results, allTables, columnFilter);
         }
-      }
+        break;
+
+      case metadata_each_table:
+        LOGGER.log(Level.INFO, "Retrieving table columns");
+        for (final MutableTable table: allTables)
+        {
+          LOGGER.log(Level.FINE, "Retrieving columns for " + table);
+          try (
+              final MetadataResultSet results = new MetadataResultSet(getMetaData()
+                .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                            unquotedName(table.getSchema().getName()),
+                            unquotedName(table.getName()),
+                            null));)
+          {
+            createTableColumns(results, allTables, columnFilter);
+          }
+          catch (final SQLException e)
+          {
+            throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
+                                                + table, e);
+          }
+        }
+        break;
+
+      default:
+        break;
     }
 
   }

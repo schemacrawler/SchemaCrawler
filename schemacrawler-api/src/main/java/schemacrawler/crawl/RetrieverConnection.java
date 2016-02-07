@@ -112,7 +112,7 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
-  private final boolean supportsFastColumnRetrieval;
+  private final TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
   private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
@@ -156,8 +156,8 @@ final class RetrieverConnection
                String.format("Database %s schemas",
                              supportsSchemas? "supports": "does not support"));
 
-    supportsFastColumnRetrieval = databaseSpecificOverrideOptions
-      .isSupportsFastColumnRetrieval();
+    tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
+      .getTableColumnRetrievalStrategy();
 
     final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                                      metaData);
@@ -205,6 +205,11 @@ final class RetrieverConnection
     return metaData;
   }
 
+  TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  {
+    return tableColumnRetrievalStrategy;
+  }
+
   TableTypes getTableTypes()
   {
     return tableTypes;
@@ -218,11 +223,6 @@ final class RetrieverConnection
   boolean isSupportsCatalogs()
   {
     return supportsCatalogs;
-  }
-
-  boolean isSupportsFastColumnRetrieval()
-  {
-    return supportsFastColumnRetrieval;
   }
 
   boolean isSupportsSchemas()

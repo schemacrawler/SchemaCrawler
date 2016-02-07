@@ -20,6 +20,7 @@
 package schemacrawler.server.db2;
 
 
+import schemacrawler.crawl.TableColumnRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
@@ -43,7 +44,8 @@ public final class DB2DatabaseConnector
   public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.supportsFastColumnRetrieval();
+    databaseSpecificOverrideOptionsBuilder
+      .withTableColumnRetrievalStrategy(TableColumnRetrievalStrategy.metadata_all_tables);
     return databaseSpecificOverrideOptionsBuilder;
   }
 
