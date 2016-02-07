@@ -42,7 +42,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A retriever uses database metadata to get the details about the
@@ -109,8 +109,8 @@ final class RoutineRetriever
           }
 
           LOGGER.log(Level.FINER,
-                     new FormattedStringSupplier("Retrieving function column, %s",
-                                                 columnName));
+                     new StringFormat("Retrieving function column, %s",
+                                      columnName));
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
           final int dataType = results.getInt("DATA_TYPE", 0);
           final String typeName = results.getString("TYPE_NAME");
@@ -175,9 +175,8 @@ final class RoutineRetriever
     }
 
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Retrieving functions, %s",
-                                           new SchemaReference(catalogName,
-                                                               schemaName)));
+               new StringFormat("Retrieving functions, %s",
+                                new SchemaReference(catalogName, schemaName)));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
@@ -188,8 +187,7 @@ final class RoutineRetriever
         final String functionName = quotedName(results
           .getString("FUNCTION_NAME"));
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Retrieving function, %s",
-                                               functionName));
+                   new StringFormat("Retrieving function, %s", functionName));
         if (isBlank(functionName))
         {
           continue;
@@ -281,8 +279,8 @@ final class RoutineRetriever
           }
 
           LOGGER.log(Level.FINER,
-                     new FormattedStringSupplier("Retrieving procedure column, %s",
-                                                 columnName));
+                     new StringFormat("Retrieving procedure column, %s",
+                                      columnName));
           final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
           final int dataType = results.getInt("DATA_TYPE", 0);
           final String typeName = results.getString("TYPE_NAME");
@@ -334,9 +332,8 @@ final class RoutineRetriever
     }
 
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Retrieving procedures for, %s",
-                                           new SchemaReference(catalogName,
-                                                               schemaName)));
+               new StringFormat("Retrieving procedures for, %s",
+                                new SchemaReference(catalogName, schemaName)));
 
     try (
         final MetadataResultSet results = new MetadataResultSet("retrieveProcedures",
@@ -351,8 +348,7 @@ final class RoutineRetriever
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Retrieving procedure, %s",
-                                               procedureName));
+                   new StringFormat("Retrieving procedure, %s", procedureName));
         if (isBlank(procedureName))
         {
           continue;

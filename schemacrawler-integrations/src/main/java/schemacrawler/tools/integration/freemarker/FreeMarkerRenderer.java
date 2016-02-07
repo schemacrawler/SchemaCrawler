@@ -39,7 +39,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Main executor for the FreeMarker integration.
@@ -83,9 +83,8 @@ public final class FreeMarkerRenderer
       .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
 
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Rendering using FreeMarker, version %s"
-                                           + Configuration.getVersion()
-                                             .toString()));
+               new StringFormat("Rendering using FreeMarker, version %s"
+                                + Configuration.getVersion().toString()));
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration();
@@ -101,9 +100,9 @@ public final class FreeMarkerRenderer
                     outputOptions.getInputCharset().name());
     cfg.setWhitespaceStripping(true);
 
-    LOGGER.log(Level.CONFIG,
-               new FormattedStringSupplier("FreeMarker configuration properties, %s",
-                                           cfg));
+    LOGGER
+      .log(Level.CONFIG,
+           new StringFormat("FreeMarker configuration properties, %s", cfg));
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<>();

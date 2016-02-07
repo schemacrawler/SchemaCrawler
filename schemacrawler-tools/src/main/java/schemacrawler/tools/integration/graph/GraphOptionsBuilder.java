@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class GraphOptionsBuilder
   extends SchemaTextOptionsBuilder
@@ -123,8 +123,8 @@ public class GraphOptionsBuilder
     if (!isBlank(scGraphVizOptsCfg))
     {
       LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Using additional GraphViz command-line options from config, %s",
-                                             scGraphVizOptsCfg));
+                 new StringFormat("Using additional GraphViz command-line options from config, %s",
+                                  scGraphVizOptsCfg));
       return scGraphVizOptsCfg;
     }
 
@@ -132,8 +132,8 @@ public class GraphOptionsBuilder
     if (!isBlank(scGraphVizOptsProp))
     {
       LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, %s",
-                                             scGraphVizOptsProp));
+                 new StringFormat("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, %s",
+                                  scGraphVizOptsProp));
       return scGraphVizOptsProp;
     }
 
@@ -141,8 +141,8 @@ public class GraphOptionsBuilder
     if (!isBlank(scGraphVizOptsEnv))
     {
       LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, %s",
-                                             scGraphVizOptsEnv));
+                 new StringFormat("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, %s",
+                                  scGraphVizOptsEnv));
       return scGraphVizOptsEnv;
     }
 

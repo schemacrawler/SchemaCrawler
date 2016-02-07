@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class CompressedFileInputResource
   implements InputResource
@@ -83,8 +83,8 @@ public class CompressedFileInputResource
 
     final Reader reader = new InputStreamReader(zipInputStream, charset);
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Opened input reader to compressed file, %s",
-                                           inputFile));
+               new StringFormat("Opened input reader to compressed file, %s",
+                                inputFile));
 
     return new InputReader(getDescription(), reader, true);
   }

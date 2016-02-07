@@ -43,7 +43,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class SchemaCrawlerSpringCommandLine
   implements CommandLine
@@ -73,16 +73,15 @@ public class SchemaCrawlerSpringCommandLine
     {
       final String contextFilePath = contextFile.toUri().toString();
       LOGGER.log(Level.INFO,
-                 new FormattedStringSupplier("Loading context from file, %s",
-                                             contextFilePath));
+                 new StringFormat("Loading context from file, %s",
+                                  contextFilePath));
       appContext = new FileSystemXmlApplicationContext(contextFilePath);
     }
     else
     {
-      LOGGER
-        .log(Level.INFO,
-             new FormattedStringSupplier("Loading context from classpath, %s",
-                                         springOptions.getContextFileName()));
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Loading context from classpath, %s",
+                                  springOptions.getContextFileName()));
       appContext = new ClassPathXmlApplicationContext(springOptions
         .getContextFileName());
     }

@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A retriever that uses database metadata to get the extended details
@@ -104,8 +104,8 @@ final class RoutineExtRetriever
         {
           final MutableRoutine routine = routineOptional.get();
           LOGGER.log(Level.FINER,
-                     new FormattedStringSupplier("Retrieving routine information, %s",
-                                                 routineName));
+                     new StringFormat("Retrieving routine information, %s",
+                                      routineName));
           final RoutineBodyType routineBodyType = results
             .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);
           final String definition = results.getString("ROUTINE_DEFINITION");

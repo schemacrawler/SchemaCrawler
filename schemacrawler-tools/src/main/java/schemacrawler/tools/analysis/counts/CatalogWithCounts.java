@@ -40,7 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.utility.Query;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public final class CatalogWithCounts
   extends BaseCatalogDecorator
@@ -88,8 +88,7 @@ public final class CatalogWithCounts
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not get count for, %s",
-                                               table));
+                   new StringFormat("Could not get count for, %s", table));
       }
     }
 

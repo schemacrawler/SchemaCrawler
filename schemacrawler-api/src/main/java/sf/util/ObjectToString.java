@@ -96,8 +96,7 @@ public final class ObjectToString
       {
         LOGGER.log(Level.FINER,
                    e,
-                   new FormattedStringSupplier("Could not access field, %s",
-                                               field));
+                   new StringFormat("Could not access field, %s", field));
       }
     }
   }

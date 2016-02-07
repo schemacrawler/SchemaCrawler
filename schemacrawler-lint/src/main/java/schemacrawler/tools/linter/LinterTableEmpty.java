@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.Query;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class LinterTableEmpty
   extends BaseLinter
@@ -72,8 +72,7 @@ public class LinterTableEmpty
     {
       LOGGER.log(Level.WARNING,
                  e,
-                 new FormattedStringSupplier("Could not get count for table, ",
-                                             table));
+                 new StringFormat("Could not get count for table, ", table));
     }
   }
 

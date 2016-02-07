@@ -90,9 +90,9 @@ public final class DatabaseUtility
           final ResultSet resultSet = executeSql(statement, sql);
           if (resultSet != null)
           {
-            LOGGER.log(Level.WARNING,
-                       new FormattedStringSupplier("Ignoring results from query, %s",
-                                                   sql));
+            LOGGER
+              .log(Level.WARNING,
+                   new StringFormat("Ignoring results from query, %s", sql));
             resultSet.close();
           }
         }
@@ -134,9 +134,9 @@ public final class DatabaseUtility
       {
         final int updateCount = statement.getUpdateCount();
         LOGGER.log(Level.FINE,
-                   new FormattedStringSupplier("No results. Update count of %d for query: %s",
-                                               updateCount,
-                                               sql));
+                   new StringFormat("No results. Update count of %d for query: %s",
+                                    updateCount,
+                                    sql));
       }
 
       SQLWarning sqlWarning = statement.getWarnings();
@@ -152,7 +152,7 @@ public final class DatabaseUtility
     {
       LOGGER.log(Level.WARNING,
                  e,
-                 new FormattedStringSupplier("Error executing SQL, %s", sql));
+                 new StringFormat("Error executing SQL, %s", sql));
       return null;
     }
   }
@@ -196,9 +196,9 @@ public final class DatabaseUtility
       }
       else
       {
-        LOGGER.log(Level.WARNING,
-                   new FormattedStringSupplier("No rows of data returned for query, %s",
-                                               sql));
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("No rows of data returned for query, %s", sql));
         scalar = null;
       }
 

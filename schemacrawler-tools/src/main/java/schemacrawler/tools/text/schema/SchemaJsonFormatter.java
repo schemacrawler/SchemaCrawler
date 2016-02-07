@@ -67,7 +67,7 @@ import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * JSON formatting of schema.
@@ -145,8 +145,8 @@ final class SchemaJsonFormatter
       {
         LOGGER.log(Level.FINER,
                    e,
-                   new FormattedStringSupplier("Error outputting ColumnDataType: %s",
-                                               e.getMessage()));
+                   new StringFormat("Error outputting ColumnDataType: %s",
+                                    e.getMessage()));
       }
     }
   }
@@ -201,10 +201,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting Routine: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting Routine: %s", e.getMessage()));
     }
 
   }
@@ -240,10 +240,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting sequence: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting sequence: %s", e.getMessage()));
     }
 
   }
@@ -285,10 +285,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting synonym: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting synonym: %s", e.getMessage()));
     }
 
   }
@@ -402,10 +402,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting table: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting table: %s", e.getMessage()));
     }
   }
 
@@ -511,8 +511,8 @@ final class SchemaJsonFormatter
       {
         LOGGER.log(Level.FINER,
                    e,
-                   new FormattedStringSupplier("Error outputting column reference: %s",
-                                               e.getMessage()));
+                   new StringFormat("Error outputting column reference: %s",
+                                    e.getMessage()));
       }
     }
     return jsonColumnReferences;
@@ -557,8 +557,8 @@ final class SchemaJsonFormatter
         {
           LOGGER.log(Level.FINER,
                      e,
-                     new FormattedStringSupplier("Error outputting foreign key: %s",
-                                                 e.getMessage()));
+                     new StringFormat("Error outputting foreign key: %s",
+                                      e.getMessage()));
         }
       }
     }
@@ -602,10 +602,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting index: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting index: %s", e.getMessage()));
     }
 
     return jsonIndex;
@@ -634,8 +634,8 @@ final class SchemaJsonFormatter
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting routine column: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting routine column: %s",
+                                  e.getMessage()));
     }
 
     return jsonColumn;
@@ -676,10 +676,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 e,
-                 new FormattedStringSupplier("Error outputting column: %s",
-                                             e.getMessage()));
+      LOGGER
+        .log(Level.FINER,
+             e,
+             new StringFormat("Error outputting column: %s", e.getMessage()));
     }
 
     return jsonColumn;
@@ -721,8 +721,8 @@ final class SchemaJsonFormatter
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting table constraint: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting table constraint: %s",
+                                  e.getMessage()));
     }
 
     return jsonTableConstraint;
@@ -765,8 +765,8 @@ final class SchemaJsonFormatter
         {
           LOGGER.log(Level.FINER,
                      e,
-                     new FormattedStringSupplier("Error outputting trigger: %s",
-                                                 e.getMessage()));
+                     new StringFormat("Error outputting trigger: %s",
+                                      e.getMessage()));
         }
       }
     }
@@ -795,8 +795,8 @@ final class SchemaJsonFormatter
         {
           LOGGER.log(Level.FINER,
                      e,
-                     new FormattedStringSupplier("Error outputting weak association: ",
-                                                 e.getMessage()));
+                     new StringFormat("Error outputting weak association: ",
+                                      e.getMessage()));
         }
       }
     }

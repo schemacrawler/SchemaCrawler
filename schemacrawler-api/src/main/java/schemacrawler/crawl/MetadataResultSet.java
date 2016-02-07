@@ -39,7 +39,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata
@@ -126,9 +126,9 @@ final class MetadataResultSet
     if (!isBlank(description) && LOGGER.isLoggable(Level.INFO))
     {
       LOGGER.log(Level.INFO,
-                 new FormattedStringSupplier("\"%s\" results had %d rows",
-                                             description,
-                                             rowCount));
+                 new StringFormat("\"%s\" results had %d rows",
+                                  description,
+                                  rowCount));
     }
   }
 
@@ -162,8 +162,8 @@ final class MetadataResultSet
            */
           LOGGER.log(Level.WARNING,
                      e,
-                     new FormattedStringSupplier("Could not read value for column, %s",
-                                                 columnName));
+                     new StringFormat("Could not read value for column, %s",
+                                      columnName));
         }
       }
     }
@@ -211,8 +211,8 @@ final class MetadataResultSet
         if (results.wasNull() || booleanValue == null)
         {
           LOGGER.log(Level.FINE,
-                     new FormattedStringSupplier("NULL value for column %s, so evaluating to 'false'",
-                                                 columnName));
+                     new StringFormat("NULL value for column %s, so evaluating to 'false'",
+                                      columnName));
           stringBooleanValue = null;
         }
         else
@@ -237,8 +237,8 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not read boolean value for column, %s",
-                                               columnName));
+                   new StringFormat("Could not read boolean value for column, %s",
+                                    columnName));
       }
     }
     return value;
@@ -298,9 +298,9 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     new FormattedStringSupplier("NULL int value for column %s, so using default %d",
-                                                 columnName,
-                                                 defaultValue));
+                     new StringFormat("NULL int value for column %s, so using default %d",
+                                      columnName,
+                                      defaultValue));
           value = defaultValue;
         }
       }
@@ -308,8 +308,8 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not read integer value for column, %s",
-                                               columnName));
+                   new StringFormat("Could not read integer value for column, %s",
+                                    columnName));
       }
     }
     return value;
@@ -336,9 +336,9 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     new FormattedStringSupplier("NULL long value for column %s, so using default %d",
-                                                 columnName,
-                                                 defaultValue));
+                     new StringFormat("NULL long value for column %s, so using default %d",
+                                      columnName,
+                                      defaultValue));
           value = defaultValue;
         }
       }
@@ -346,8 +346,8 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not read long value for column, %s",
-                                               columnName));
+                   new StringFormat("Could not read long value for column, %s",
+                                    columnName));
       }
     }
     return value;
@@ -374,9 +374,9 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     new FormattedStringSupplier("NULL short value for column %s, so using default %d",
-                                                 columnName,
-                                                 defaultValue));
+                     new StringFormat("NULL short value for column %s, so using default %d",
+                                      columnName,
+                                      defaultValue));
           value = defaultValue;
         }
       }
@@ -384,8 +384,8 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not read short value for column, %s",
-                                               columnName));
+                   new StringFormat("Could not read short value for column, %s",
+                                    columnName));
       }
     }
     return value;
@@ -409,8 +409,8 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     new FormattedStringSupplier("NULL value for column %s, so using null string",
-                                                 columnName));
+                     new StringFormat("NULL value for column %s, so using null string",
+                                      columnName));
           value = null;
         }
 
@@ -423,8 +423,8 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not read string value for column, %s",
-                                               columnName));
+                   new StringFormat("Could not read string value for column, %s",
+                                    columnName));
       }
     }
     return value;
