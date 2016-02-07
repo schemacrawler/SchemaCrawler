@@ -33,6 +33,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INF
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
@@ -136,7 +137,7 @@ public final class InformationSchemaViews
   /**
    * Gets the foreign keys SQL from the additional configuration.
    *
-   * @return foreign keys SQL.
+   * @return Foreign keys SQL.
    */
   public String getForeignKeysSql()
   {
@@ -192,6 +193,16 @@ public final class InformationSchemaViews
   public String getSynonymsSql()
   {
     return informationSchemaQueries.get(EXT_SYNONYMS);
+  }
+
+  /**
+   * Gets the table columns SQL from the additional configuration.
+   *
+   * @return Table columns SQL.
+   */
+  public String getTableColumnsSql()
+  {
+    return informationSchemaQueries.get(TABLE_COLUMNS);
   }
 
   /**
@@ -288,6 +299,11 @@ public final class InformationSchemaViews
   public boolean hasSynonymsSql()
   {
     return informationSchemaQueries.containsKey(EXT_SYNONYMS);
+  }
+
+  public boolean hasTableColumnsSql()
+  {
+    return informationSchemaQueries.containsKey(TABLE_COLUMNS);
   }
 
   public boolean hasTableConstraintsColumnsSql()

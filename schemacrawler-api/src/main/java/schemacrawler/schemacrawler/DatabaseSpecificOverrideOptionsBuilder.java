@@ -4,13 +4,15 @@ package schemacrawler.schemacrawler;
 import java.util.Map;
 import java.util.Optional;
 
+import schemacrawler.crawl.TableColumnRetrievalStrategy;
+
 public class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
-  private boolean supportsFastColumnRetrieval;
+  private TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -20,6 +22,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     supportsSchemas = Optional.empty();
     supportsCatalogs = Optional.empty();
     identifierQuoteString = "";
+    tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder(final Map<String, String> map)
@@ -75,6 +78,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return supportsSchemas;
   }
 
+  public TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  {
+    return tableColumnRetrievalStrategy;
+  }
+
   /**
    * Overrides the JDBC driver provided information about the identifier
    * quote string.
@@ -88,11 +96,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public boolean isSupportsFastColumnRetrieval()
-  {
-    return supportsFastColumnRetrieval;
-  }
-
   /**
    * Overrides the JDBC driver provided information about whether the
    * database supports catalogs.
@@ -100,12 +103,6 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
   {
     supportsCatalogs = Optional.of(true);
-    return this;
-  }
-
-  public DatabaseSpecificOverrideOptionsBuilder supportsFastColumnRetrieval()
-  {
-    supportsFastColumnRetrieval = true;
     return this;
   }
 
@@ -151,6 +148,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
   {
     supportsSchemas = Optional.empty();
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final TableColumnRetrievalStrategy tableColumnRetrievalStrategy)
+  {
+    if (tableColumnRetrievalStrategy == null)
+    {
+      this.tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
+    }
+    else
+    {
+      this.tableColumnRetrievalStrategy = tableColumnRetrievalStrategy;
+    }
     return this;
   }
 
