@@ -41,6 +41,8 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import sf.util.FormattedStringSupplier;
+
 public class CompressedFileOutputResource
   implements OutputResource
 {
@@ -94,7 +96,8 @@ public class CompressedFileOutputResource
 
     final Writer writer = new OutputStreamWriter(zipOutputStream, charset);
     LOGGER.log(Level.INFO,
-               "Opened output writer to compressed file, " + outputFile);
+               new FormattedStringSupplier("Opened output writer to compressed file, %s",
+                                           outputFile));
     return new OutputWriter(getDescription(), writer, true);
   }
 

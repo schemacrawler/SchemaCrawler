@@ -39,6 +39,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import sf.util.DatabaseUtility;
+import sf.util.FormattedStringSupplier;
 
 final class SchemaRetriever
   extends AbstractRetriever
@@ -96,8 +97,8 @@ final class SchemaRetriever
       if (!schemaFilter.test(schemaRef))
       {
         LOGGER.log(Level.FINER,
-                   "Dropping schema, since schema is excluded: "
-                                + schemaRef.getFullName());
+                   new FormattedStringSupplier("Dropping schema, since schema is excluded, %s",
+                                               schemaRef.getFullName()));
         iterator.remove();
         // continue
       }
@@ -142,7 +143,9 @@ final class SchemaRetriever
       {
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
-      LOGGER.log(Level.FINER, "Retrieved catalogs: " + catalogNames);
+      LOGGER.log(Level.FINER,
+                 new FormattedStringSupplier("Retrieved catalogs, %s",
+                                             catalogNames));
     }
 
     return catalogNames;
@@ -176,9 +179,9 @@ final class SchemaRetriever
           final String schemaName = quotedName(results
             .getString("TABLE_SCHEM"));
           LOGGER.log(Level.FINER,
-                     String.format("Retrieving schema: %s --> %s",
-                                   catalogName,
-                                   schemaName));
+                     new FormattedStringSupplier("Retrieving schema: %s --> %s",
+                                                 catalogName,
+                                                 schemaName));
           if (catalogName == null)
           {
             if (allCatalogNames.isEmpty())
@@ -206,9 +209,9 @@ final class SchemaRetriever
       for (final String catalogName: allCatalogNames)
       {
         LOGGER.log(Level.FINER,
-                   String.format("Retrieving schema: %s --> %s",
-                                 catalogName,
-                                 null));
+                   new FormattedStringSupplier("Retrieving schema: %s --> %s",
+                                               catalogName,
+                                               null));
         schemaRefs.add(new SchemaReference(catalogName, null));
       }
     }
@@ -242,9 +245,9 @@ final class SchemaRetriever
           .getString("CATALOG_NAME"));
         final String schemaName = quotedName(results.getString("SCHEMA_NAME"));
         LOGGER.log(Level.FINER,
-                   String.format("Retrieving schema: %s --> %s",
-                                 catalogName,
-                                 schemaName));
+                   new FormattedStringSupplier("Retrieving schema: %s --> %s",
+                                               catalogName,
+                                               schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
     }

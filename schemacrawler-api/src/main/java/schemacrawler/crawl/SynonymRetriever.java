@@ -39,6 +39,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import sf.util.FormattedStringSupplier;
 
 /**
  * A retriever that uses database metadata to get the extended details
@@ -119,10 +120,10 @@ final class SynonymRetriever
         if (isBlank(referencedObjectName))
         {
           LOGGER.log(Level.FINE,
-                     String.format("No reference for synonym, %s.%s.%s",
-                                   catalogName,
-                                   schemaName,
-                                   synonymName));
+                     new FormattedStringSupplier("No reference for synonym, %s.%s.%s",
+                                                 catalogName,
+                                                 schemaName,
+                                                 synonymName));
           continue;
         }
 

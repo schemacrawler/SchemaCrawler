@@ -44,6 +44,7 @@ import org.xml.sax.SAXException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 import sf.util.ObjectToString;
 
 public class LinterConfigs
@@ -313,9 +314,9 @@ public class LinterConfigs
       catch (final Exception e)
       {
         LOGGER.log(Level.CONFIG,
-                   String.format("Could not set a severity of %s for linter %s",
-                                 severityValue,
-                                 linterId));
+                   new FormattedStringSupplier("Could not set a severity of %s for linter %s",
+                                               severityValue,
+                                               linterId));
       }
     }
     return severity;

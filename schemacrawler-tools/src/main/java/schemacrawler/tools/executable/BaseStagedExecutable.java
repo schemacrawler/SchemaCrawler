@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import sf.util.FormattedStringSupplier;
 import sf.util.ObjectToString;
 
 /**
@@ -66,10 +67,17 @@ public abstract class BaseStagedExecutable
                    "No database specific overrides provided");
 
     LOGGER.log(Level.INFO,
-               "Executing SchemaCrawler command, \"" + getCommand() + "\"");
-    LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-    LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-    LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+               new FormattedStringSupplier("Executing SchemaCrawler command, \"%s\"",
+                                           getCommand()));
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+    }
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+    }
 
     final SchemaCrawler crawler = new SchemaCrawler(connection,
                                                     databaseSpecificOverrideOptions);

@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.FormattedStringSupplier;
 
 public class CommandLineUtility
 {
@@ -125,9 +126,9 @@ public class CommandLineUtility
     }
 
     LOGGER.log(Level.INFO,
-               String.format("%s, v%s",
-                             Version.getProductName(),
-                             Version.getVersion()));
+               new FormattedStringSupplier("%s, v%s",
+                                           Version.getProductName(),
+                                           Version.getVersion()));
 
     if (args == null)
     {
@@ -163,8 +164,10 @@ public class CommandLineUtility
       }
     }
 
-    LOGGER.log(Level.INFO,
-               "Command line: \n" + join(argsList, System.lineSeparator()));
+    LOGGER
+      .log(Level.INFO,
+           new FormattedStringSupplier("Command line: %n%s",
+                                       join(argsList, System.lineSeparator())));
   }
 
   public static void logSystemProperties()
@@ -185,14 +188,20 @@ public class CommandLineUtility
         systemProperties.put(name, (String) propertyValue.getValue());
       }
     }
-    LOGGER.log(Level.CONFIG,
-               "System properties: \n"
-                             + join(systemProperties, System.lineSeparator()));
-    LOGGER.log(Level.CONFIG,
-               "Classpath: \n" + join(
-                                      System.getProperty("java.class.path")
-                                        .split(File.pathSeparator),
-                                      System.lineSeparator()));
+
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG,
+                 new FormattedStringSupplier("System properties: %n%s",
+                                             join(systemProperties,
+                                                  System.lineSeparator())));
+      LOGGER.log(Level.CONFIG,
+                 new FormattedStringSupplier("Classpath: %n%s",
+                                             join(System
+                                               .getProperty("java.class.path")
+                                               .split(File.pathSeparator),
+                                                  System.lineSeparator())));
+    }
   }
 
   /**

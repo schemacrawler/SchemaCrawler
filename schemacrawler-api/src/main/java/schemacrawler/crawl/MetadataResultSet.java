@@ -39,6 +39,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.FormattedStringSupplier;
+
 /**
  * A wrapper around a JDBC resultset obtained from a database metadata
  * call. This allows type-safe methods to obtain boolean, integer and
@@ -124,9 +126,9 @@ final class MetadataResultSet
     if (!isBlank(description) && LOGGER.isLoggable(Level.INFO))
     {
       LOGGER.log(Level.INFO,
-                 String.format("\"%s\" results had %d rows",
-                               description,
-                               rowCount));
+                 new FormattedStringSupplier("\"%s\" results had %d rows",
+                                             description,
+                                             rowCount));
     }
   }
 
@@ -159,8 +161,9 @@ final class MetadataResultSet
            * database.
            */
           LOGGER.log(Level.WARNING,
-                     "Could not read value for column " + columnName,
-                     e);
+                     e,
+                     new FormattedStringSupplier("Could not read value for column, %s",
+                                                 columnName));
         }
       }
     }
@@ -208,9 +211,8 @@ final class MetadataResultSet
         if (results.wasNull() || booleanValue == null)
         {
           LOGGER.log(Level.FINE,
-                     String.format(
-                                   "NULL value for column %s, so evaluating to 'false'",
-                                   columnName));
+                     new FormattedStringSupplier("NULL value for column %s, so evaluating to 'false'",
+                                                 columnName));
           stringBooleanValue = null;
         }
         else
@@ -234,8 +236,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not read boolean value for column " + columnName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not read boolean value for column, %s",
+                                               columnName));
       }
     }
     return value;
@@ -295,18 +298,18 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     String.format(
-                                   "NULL int value for column %s, so using default %d",
-                                   columnName,
-                                   defaultValue));
+                     new FormattedStringSupplier("NULL int value for column %s, so using default %d",
+                                                 columnName,
+                                                 defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not read integer value for column " + columnName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not read integer value for column, %s",
+                                               columnName));
       }
     }
     return value;
@@ -333,18 +336,18 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     String.format(
-                                   "NULL long value for column %s, so using default %d",
-                                   columnName,
-                                   defaultValue));
+                     new FormattedStringSupplier("NULL long value for column %s, so using default %d",
+                                                 columnName,
+                                                 defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not read long value for column " + columnName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not read long value for column, %s",
+                                               columnName));
       }
     }
     return value;
@@ -371,18 +374,18 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     String.format(
-                                   "NULL short value for column %s, so using default %d",
-                                   columnName,
-                                   defaultValue));
+                     new FormattedStringSupplier("NULL short value for column %s, so using default %d",
+                                                 columnName,
+                                                 defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not read short value for column " + columnName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not read short value for column, %s",
+                                               columnName));
       }
     }
     return value;
@@ -406,9 +409,8 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINE,
-                     String.format(
-                                   "NULL value for column %s, so using null string",
-                                   columnName));
+                     new FormattedStringSupplier("NULL value for column %s, so using null string",
+                                                 columnName));
           value = null;
         }
 
@@ -420,8 +422,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   "Could not read string value for column " + columnName,
-                   e);
+                   e,
+                   new FormattedStringSupplier("Could not read string value for column, %s",
+                                               columnName));
       }
     }
     return value;
