@@ -35,7 +35,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.tools.options.InfoLevel;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Parses the command-line.
@@ -283,9 +283,9 @@ public final class SchemaCrawlerOptionsParser
                            final InclusionRule schemaInclusionRule)
   {
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Overriding %s inclusion rule from command-line to %s",
-                                           inclusionRuleName,
-                                           schemaInclusionRule));
+               new StringFormat("Overriding %s inclusion rule from command-line to %s",
+                                inclusionRuleName,
+                                schemaInclusionRule));
   }
 
 }

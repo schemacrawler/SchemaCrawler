@@ -28,7 +28,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 class RoutineGrepFilter
   implements Predicate<Routine>
@@ -115,8 +115,8 @@ class RoutineGrepFilter
     if (!include)
     {
       LOGGER.log(Level.FINE,
-                 new FormattedStringSupplier("Removing routine since it does not match the grep pattern, %s",
-                                             routine));
+                 new StringFormat("Removing routine since it does not match the grep pattern, %s",
+                                  routine));
     }
 
     return include;

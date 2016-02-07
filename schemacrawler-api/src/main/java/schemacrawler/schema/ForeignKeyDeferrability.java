@@ -25,7 +25,7 @@ import java.sql.DatabaseMetaData;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * The deferrability value for foreign keys.
@@ -72,7 +72,7 @@ public enum ForeignKeyDeferrability
         return fkDeferrability;
       }
     }
-    LOGGER.log(Level.FINE, new FormattedStringSupplier("Unknown id, %d", id));
+    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
     return unknown;
   }
 

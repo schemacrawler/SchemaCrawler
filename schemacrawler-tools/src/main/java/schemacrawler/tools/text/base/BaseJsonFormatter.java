@@ -38,7 +38,7 @@ import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONException;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Text formatting of schema.
@@ -113,8 +113,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting SchemaCrawlerHeaderInfo: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting SchemaCrawlerHeaderInfo: %s",
+                                  e.getMessage()));
     }
   }
 
@@ -154,8 +154,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting DatabaseInfo: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting DatabaseInfo: %s",
+                                  e.getMessage()));
     }
 
   }
@@ -196,8 +196,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting JdbcDriverInfo: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting JdbcDriverInfo: %s",
+                                  e.getMessage()));
     }
 
   }
@@ -225,8 +225,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting SchemaCrawlerInfo: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting SchemaCrawlerInfo: %s",
+                                  e.getMessage()));
     }
   }
 
@@ -276,8 +276,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     {
       LOGGER.log(Level.FINER,
                  e,
-                 new FormattedStringSupplier("Error outputting JdbcDriverProperty: %s",
-                                             e.getMessage()));
+                 new StringFormat("Error outputting JdbcDriverProperty: %s",
+                                  e.getMessage()));
     }
 
     return jsonDriverProperty;

@@ -31,6 +31,18 @@ public class CountsUtility
   private static final int UNKNOWN_TABLE_ROW_COUNT = -1;
   private static final String TABLE_ROW_COUNT_KEY = "schemacrawler.table.count";
 
+  public static final long getRowCount(final Table table)
+  {
+    if (table == null)
+    {
+      return UNKNOWN_TABLE_ROW_COUNT;
+    }
+
+    final long tableCount = table
+      .getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
+    return tableCount;
+  }
+
   /**
    * Message format for the counts.
    *
@@ -50,18 +62,6 @@ public class CountsUtility
     {
       return String.format("%,d rows", longValue);
     }
-  }
-
-  public static final long getRowCount(final Table table)
-  {
-    if (table == null)
-    {
-      return UNKNOWN_TABLE_ROW_COUNT;
-    }
-
-    final long tableCount = table
-      .getAttribute(TABLE_ROW_COUNT_KEY, Long.valueOf(UNKNOWN_TABLE_ROW_COUNT));
-    return tableCount;
   }
 
   public static final String getRowCountMessage(final Table table)

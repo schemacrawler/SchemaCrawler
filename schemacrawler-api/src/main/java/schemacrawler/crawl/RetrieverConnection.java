@@ -37,7 +37,7 @@ import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * A connection for the retriever. Wraps a live database connection.
@@ -149,17 +149,15 @@ final class RetrieverConnection
                                               metaData);
     LOGGER
       .log(Level.CONFIG,
-           new FormattedStringSupplier("Database %s catalogs",
-                                       supportsCatalogs? "supports"
-                                                       : "does not support"));
+           new StringFormat("Database %s catalogs",
+                            supportsCatalogs? "supports": "does not support"));
 
     supportsSchemas = lookupSupportsSchemas(databaseSpecificOverrideOptions,
                                             metaData);
     LOGGER
       .log(Level.CONFIG,
-           new FormattedStringSupplier("Database %s schemas",
-                                       supportsSchemas? "supports"
-                                                      : "does not support"));
+           new StringFormat("Database %s schemas",
+                            supportsSchemas? "supports": "does not support"));
 
     tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
       .getTableColumnRetrievalStrategy();
@@ -167,15 +165,14 @@ final class RetrieverConnection
     final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                                      metaData);
     LOGGER.log(Level.CONFIG,
-               new FormattedStringSupplier("Database identifier quote string is \"%s\"",
-                                           identifierQuoteString));
+               new StringFormat("Database identifier quote string is \"%s\"",
+                                identifierQuoteString));
     identifiers = Identifiers.identifiers().withConnection(connection)
       .withIdentifierQuoteString(identifierQuoteString).build();
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
-               new FormattedStringSupplier("Supported table types are %s",
-                                           tableTypes));
+               new StringFormat("Supported table types are %s", tableTypes));
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();

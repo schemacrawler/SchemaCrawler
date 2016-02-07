@@ -35,7 +35,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class FileOutputResource
   implements OutputResource
@@ -73,9 +73,9 @@ public class FileOutputResource
       openOptions = new OpenOption[] { WRITE, CREATE, TRUNCATE_EXISTING };
     }
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
-    LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Opened output writer to file, %s",
-                                           outputFile));
+    LOGGER
+      .log(Level.INFO,
+           new StringFormat("Opened output writer to file, %s", outputFile));
     return new OutputWriter(getDescription(), writer, true);
   }
 

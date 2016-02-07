@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public final class LintedCatalog
   extends BaseCatalogDecorator
@@ -90,8 +90,8 @@ public final class LintedCatalog
       if (!linterConfig.isRunLinter())
       {
         LOGGER.log(Level.FINE,
-                   new FormattedStringSupplier("Not running configured linter, %s",
-                                               linterConfig));
+                   new StringFormat("Not running configured linter, %s",
+                                    linterConfig));
         continue;
       }
 
@@ -115,9 +115,9 @@ public final class LintedCatalog
     // Perform lint
     for (final Linter linter: linters)
     {
-      LOGGER.log(Level.FINE,
-                 new FormattedStringSupplier("Linting with, %s",
-                                             linter.getClass().getName()));
+      LOGGER
+        .log(Level.FINE,
+             new StringFormat("Linting with, %s", linter.getClass().getName()));
       linter.lint(catalog, connection);
     }
   }
@@ -136,9 +136,8 @@ public final class LintedCatalog
     }
     else
     {
-      LOGGER
-        .log(Level.FINE,
-             new FormattedStringSupplier("Cannot find linter, %s", linterId));
+      LOGGER.log(Level.FINE,
+                 new StringFormat("Cannot find linter, %s", linterId));
     }
     return linter;
   }

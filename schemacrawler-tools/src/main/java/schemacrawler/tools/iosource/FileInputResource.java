@@ -32,7 +32,7 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 public class FileInputResource
   implements InputResource
@@ -66,8 +66,7 @@ public class FileInputResource
     requireNonNull(charset, "No input charset provided");
     final Reader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.INFO,
-               new FormattedStringSupplier("Opened input reader to file, %s",
-                                           inputFile));
+               new StringFormat("Opened input reader to file, %s", inputFile));
 
     return new InputReader(getDescription(), reader, true);
   }

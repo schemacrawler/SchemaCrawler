@@ -39,7 +39,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Command registry for mapping commands to executable.
@@ -85,10 +85,9 @@ public final class CommandRegistry
       {
         final String executableCommand = commandRegistryEntry.getCommand();
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Loading executable, %s=%s",
-                                               executableCommand,
-                                               commandRegistryEntry.getClass()
-                                                 .getName()));
+                   new StringFormat("Loading executable, %s=%s",
+                                    executableCommand,
+                                    commandRegistryEntry.getClass().getName()));
         commandProviders.add(commandRegistryEntry);
       }
     }

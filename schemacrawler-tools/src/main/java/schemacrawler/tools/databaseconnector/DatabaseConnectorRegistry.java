@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -74,10 +74,9 @@ public final class DatabaseConnectorRegistry
         try
         {
           LOGGER.log(Level.CONFIG,
-                     new FormattedStringSupplier("Loading database connector, %s=%s",
-                                                 databaseSystemIdentifier,
-                                                 databaseConnector.getClass()
-                                                   .getName()));
+                     new StringFormat("Loading database connector, %s=%s",
+                                      databaseSystemIdentifier,
+                                      databaseConnector.getClass().getName()));
           // Validate that the JDBC driver is available
           databaseConnector.checkDatabaseConnectionOptions();
           // Put in map
@@ -88,10 +87,9 @@ public final class DatabaseConnectorRegistry
         {
           LOGGER.log(Level.CONFIG,
                      e,
-                     new FormattedStringSupplier("Could not load database connector, %s=%s",
-                                                 databaseSystemIdentifier,
-                                                 databaseConnector.getClass()
-                                                   .getName()));
+                     new StringFormat("Could not load database connector, %s=%s",
+                                      databaseSystemIdentifier,
+                                      databaseConnector.getClass().getName()));
         }
       }
     }
@@ -195,8 +193,7 @@ public final class DatabaseConnectorRegistry
       }
       Collections.sort(drivers);
       LOGGER.log(Level.CONFIG,
-                 new FormattedStringSupplier("Registered JDBC drivers, %s",
-                                             drivers));
+                 new StringFormat("Registered JDBC drivers, %s", drivers));
     }
     catch (final Exception e)
     {

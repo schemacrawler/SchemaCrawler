@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.FormattedStringSupplier;
+import sf.util.StringFormat;
 
 /**
  * Linter registry for mapping linters by id.
@@ -60,9 +60,9 @@ public final class LinterRegistry
         final String linterId = linter.getId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
         LOGGER.log(Level.FINER,
-                   new FormattedStringSupplier("Loading linter, %s=%s",
-                                               linterId,
-                                               linterClass.getName()));
+                   new StringFormat("Loading linter, %s=%s",
+                                    linterId,
+                                    linterClass.getName()));
         linterRegistry.put(linterId, linterClass);
       }
     }
@@ -112,8 +112,8 @@ public final class LinterRegistry
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new FormattedStringSupplier("Could not instantiate linter, %s",
-                                               linterClass.getName()));
+                   new StringFormat("Could not instantiate linter, %s",
+                                    linterClass.getName()));
         return null;
       }
     }
