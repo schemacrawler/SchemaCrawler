@@ -113,7 +113,7 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
-  private final TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
@@ -208,7 +208,7 @@ final class RetrieverConnection
     return metaData;
   }
 
-  TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
   }

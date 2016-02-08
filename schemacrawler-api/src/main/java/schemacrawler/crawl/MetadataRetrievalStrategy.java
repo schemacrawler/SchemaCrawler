@@ -20,11 +20,11 @@
 package schemacrawler.crawl;
 
 
-public enum TableColumnRetrievalStrategy
+public enum MetadataRetrievalStrategy
 {
 
- metadata_each_table,
- metadata_all_tables,
- data_dictionary_all_tables;
+ metadata,
+ metadata_all,
+ data_dictionary_all;
 
 }
