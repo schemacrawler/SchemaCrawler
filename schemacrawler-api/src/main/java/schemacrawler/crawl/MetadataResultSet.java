@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
+import static sf.util.Utility.isIntegral;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -219,18 +220,19 @@ final class MetadataResultSet
         {
           stringBooleanValue = String.valueOf(booleanValue).trim();
         }
-        if (!isBlank(stringBooleanValue))
+
+        if (isIntegral(stringBooleanValue))
         {
-          try
-          {
-            final int booleanInt = Integer.parseInt(stringBooleanValue);
-            value = booleanInt != 0;
-          }
-          catch (final NumberFormatException e)
-          {
-            value = stringBooleanValue.equalsIgnoreCase("YES")
-                    || Boolean.valueOf(stringBooleanValue).booleanValue();
-          }
+          return !stringBooleanValue.equals("0");
+        }
+        else if (stringBooleanValue.equalsIgnoreCase("yes")
+                 || stringBooleanValue.equalsIgnoreCase("true"))
+        {
+          return true;
+        }
+        else
+        {
+          return false;
         }
       }
       catch (final SQLException e)
