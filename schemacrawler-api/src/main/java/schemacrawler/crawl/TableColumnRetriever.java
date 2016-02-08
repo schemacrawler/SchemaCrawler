@@ -75,24 +75,24 @@ final class TableColumnRetriever
       return;
     }
 
-    final TableColumnRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
+    final MetadataRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
       .getTableColumnRetrievalStrategy();
     switch (tableColumnRetrievalStrategy)
     {
-      case data_dictionary_all_tables:
+      case data_dictionary_all:
         LOGGER
           .log(Level.INFO,
                "Retrieving table columns, using fast data dictionary retrieval");
         retrieveColumnsFromDataDictionary(allTables, columnFilter);
         break;
 
-      case metadata_all_tables:
+      case metadata_all:
         LOGGER.log(Level.INFO,
                    "Retrieving table columns, using fast meta-data retrieval");
         retrieveColumnsFromMetadataForAllTables(allTables, columnFilter);
         break;
 
-      case metadata_each_table:
+      case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
         retrieveColumnsFromMetadata(allTables, columnFilter);
         break;
