@@ -20,7 +20,7 @@
 package schemacrawler.server.oracle;
 
 
-import schemacrawler.crawl.TableColumnRetrievalStrategy;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -56,7 +56,7 @@ public final class OracleDatabaseConnector
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder
-      .withTableColumnRetrievalStrategy(TableColumnRetrievalStrategy.data_dictionary_all_tables);
+      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return databaseSpecificOverrideOptionsBuilder;
   }
 

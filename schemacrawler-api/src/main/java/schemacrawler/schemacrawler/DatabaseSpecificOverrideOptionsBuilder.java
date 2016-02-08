@@ -4,7 +4,7 @@ package schemacrawler.schemacrawler;
 import java.util.Map;
 import java.util.Optional;
 
-import schemacrawler.crawl.TableColumnRetrievalStrategy;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
 
 public class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
@@ -12,7 +12,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
-  private TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
+  private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -22,7 +22,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     supportsSchemas = Optional.empty();
     supportsCatalogs = Optional.empty();
     identifierQuoteString = "";
-    tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
+    tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder(final Map<String, String> map)
@@ -78,7 +78,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return supportsSchemas;
   }
 
-  public TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
   }
@@ -151,11 +151,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final TableColumnRetrievalStrategy tableColumnRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy tableColumnRetrievalStrategy)
   {
     if (tableColumnRetrievalStrategy == null)
     {
-      this.tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
+      this.tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     }
     else
     {
