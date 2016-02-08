@@ -186,6 +186,31 @@ public final class Utility
   }
 
   /**
+   * Checks if the text contains an integer only.
+   *
+   * @param text
+   *        Text to check.
+   * @return Whether the string is an integer.
+   */
+  public static boolean isIntegral(final CharSequence text)
+  {
+    if (text == null || text.length() == 0)
+    {
+      return false;
+    }
+
+    for (int i = 0; i < text.length(); i++)
+    {
+      final char ch = text.charAt(i);
+      if (!Character.isDigit(ch) && ch != '+' && ch != '-')
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Checks if the text is all lowercase.
    *
    * @param text
