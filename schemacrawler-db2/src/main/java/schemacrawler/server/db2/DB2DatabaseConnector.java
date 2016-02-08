@@ -20,7 +20,7 @@
 package schemacrawler.server.db2;
 
 
-import schemacrawler.crawl.TableColumnRetrievalStrategy;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
@@ -45,7 +45,7 @@ public final class DB2DatabaseConnector
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder
-      .withTableColumnRetrievalStrategy(TableColumnRetrievalStrategy.metadata_all_tables);
+      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
     return databaseSpecificOverrideOptionsBuilder;
   }
 

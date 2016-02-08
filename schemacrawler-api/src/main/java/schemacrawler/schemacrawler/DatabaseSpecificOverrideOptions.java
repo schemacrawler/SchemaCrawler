@@ -5,7 +5,7 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Optional;
 
-import schemacrawler.crawl.TableColumnRetrievalStrategy;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
 
 public final class DatabaseSpecificOverrideOptions
   implements Options
@@ -15,7 +15,7 @@ public final class DatabaseSpecificOverrideOptions
 
   private final Optional<Boolean> supportsSchemas;
   private final Optional<Boolean> supportsCatalogs;
-  private final TableColumnRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -30,7 +30,7 @@ public final class DatabaseSpecificOverrideOptions
     {
       supportsSchemas = Optional.empty();
       supportsCatalogs = Optional.empty();
-      tableColumnRetrievalStrategy = TableColumnRetrievalStrategy.metadata_each_table;
+      tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
       identifierQuoteString = "";
       informationSchemaViews = new InformationSchemaViews();
     }
@@ -60,7 +60,7 @@ public final class DatabaseSpecificOverrideOptions
     return informationSchemaViews;
   }
 
-  public TableColumnRetrievalStrategy getTableColumnRetrievalStrategy()
+  public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
   }
