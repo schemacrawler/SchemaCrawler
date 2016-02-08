@@ -83,63 +83,18 @@ final class TableColumnRetriever
         LOGGER
           .log(Level.INFO,
                "Retrieving table columns, using fast data dictionary retrieval");
-        final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-          .getInformationSchemaViews();
-        if (!informationSchemaViews.hasTableColumnsSql())
-        {
-          throw new SchemaCrawlerSQLException("No table columns SQL provided",
-                                              null);
-        }
-        final String tableColumnsSql = informationSchemaViews
-          .getTableColumnsSql();
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Executing SQL to retrieve table columns: %n%s",
-                                    tableColumnsSql));
-        final Connection connection = getDatabaseConnection();
-        try (final Statement statement = connection.createStatement();
-            final MetadataResultSet results = new MetadataResultSet("retrieveColumnsUsingSql",
-                                                                    executeSql(statement,
-                                                                               tableColumnsSql));)
-        {
-          createTableColumns(results, allTables, columnFilter);
-        }
+        retrieveColumnsFromDataDictionary(allTables, columnFilter);
         break;
 
       case metadata_all_tables:
         LOGGER.log(Level.INFO,
                    "Retrieving table columns, using fast meta-data retrieval");
-        try (
-            final MetadataResultSet results = new MetadataResultSet("retrieveColumnsUsingMetadata",
-                                                                    getMetaData()
-                                                                      .getColumns(null,
-                                                                                  null,
-                                                                                  "%",
-                                                                                  "%"));)
-        {
-          createTableColumns(results, allTables, columnFilter);
-        }
+        retrieveColumnsFromMetadataForAllTables(allTables, columnFilter);
         break;
 
       case metadata_each_table:
         LOGGER.log(Level.INFO, "Retrieving table columns");
-        for (final MutableTable table: allTables)
-        {
-          LOGGER.log(Level.FINE, "Retrieving columns for " + table);
-          try (
-              final MetadataResultSet results = new MetadataResultSet(getMetaData()
-                .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                            unquotedName(table.getSchema().getName()),
-                            unquotedName(table.getName()),
-                            null));)
-          {
-            createTableColumns(results, allTables, columnFilter);
-          }
-          catch (final SQLException e)
-          {
-            throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                                + table, e);
-          }
-        }
+        retrieveColumnsFromMetadata(allTables, columnFilter);
         break;
 
       default:
@@ -249,6 +204,78 @@ final class TableColumnRetriever
       }
     }
     return column;
+  }
+
+  private void retrieveColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
+                                                 final InclusionRuleFilter<Column> columnFilter)
+                                                   throws SchemaCrawlerSQLException,
+                                                   SQLException
+  {
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasTableColumnsSql())
+    {
+      throw new SchemaCrawlerSQLException("No table columns SQL provided",
+                                          null);
+    }
+    final String tableColumnsSql = informationSchemaViews.getTableColumnsSql();
+    LOGGER.log(Level.FINER,
+               new StringFormat("Executing SQL to retrieve table columns: %n%s",
+                                tableColumnsSql));
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromDataDictionary",
+                                                                executeSql(statement,
+                                                                           tableColumnsSql));)
+    {
+      createTableColumns(results, allTables, columnFilter);
+    }
+  }
+
+  private void retrieveColumnsFromMetadata(final NamedObjectList<MutableTable> allTables,
+                                           final InclusionRuleFilter<Column> columnFilter)
+                                             throws SchemaCrawlerSQLException
+  {
+    for (final MutableTable table: allTables)
+    {
+      LOGGER.log(Level.FINE, "Retrieving columns for " + table);
+      try (
+          final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromMetadata",
+                                                                  getMetaData()
+                                                                    .getColumns(unquotedName(table
+                                                                      .getSchema()
+                                                                      .getCatalogName()),
+                                                                                unquotedName(table
+                                                                                  .getSchema()
+                                                                                  .getName()),
+                                                                                unquotedName(table
+                                                                                  .getName()),
+                                                                                null));)
+      {
+        createTableColumns(results, allTables, columnFilter);
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
+                                            + table, e);
+      }
+    }
+  }
+
+  private void retrieveColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
+                                                       final InclusionRuleFilter<Column> columnFilter)
+                                                         throws SQLException
+  {
+    try (
+        final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromMetadataForAllTables",
+                                                                getMetaData()
+                                                                  .getColumns(null,
+                                                                              null,
+                                                                              "%",
+                                                                              "%"));)
+    {
+      createTableColumns(results, allTables, columnFilter);
+    }
   }
 
 }
