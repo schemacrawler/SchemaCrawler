@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.StringFormat;
 
@@ -53,41 +54,17 @@ final class IndexRetriever
     super(retrieverConnection, catalog);
   }
 
-  void retrieveIndexes(final MutableTable table, final boolean unique)
+  void retrieveIndexes(final NamedObjectList<MutableTable> allTables)
     throws SQLException
   {
-
-    SQLException sqlEx = null;
-    try
+    for (final MutableTable table: allTables)
     {
-      retrieveIndexes1(table, unique);
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 e.getCause(),
-                 new StringFormat("Could not retrieve %sindexes for table %s, trying again",
-                                  unique? "unique ": "",
-                                  table));
-      sqlEx = e;
-    }
-
-    if (sqlEx != null)
-    {
-      try
+      if (table instanceof View)
       {
-        sqlEx = null;
-        retrieveIndexes2(table, unique);
+        continue;
       }
-      catch (final SQLException e)
-      {
-        sqlEx = e;
-      }
-    }
-
-    if (sqlEx != null)
-    {
-      throw sqlEx;
+      retrieveIndexes(table, false);
+      retrieveIndexes(table, true);
     }
   }
 
@@ -226,6 +203,44 @@ final class IndexRetriever
     finally
     {
       results.close();
+    }
+  }
+
+  private void retrieveIndexes(final MutableTable table, final boolean unique)
+    throws SQLException
+  {
+
+    SQLException sqlEx = null;
+    try
+    {
+      retrieveIndexes1(table, unique);
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 e.getCause(),
+                 new StringFormat("Could not retrieve %sindexes for table %s, trying again",
+                                  unique? "unique ": "",
+                                  table));
+      sqlEx = e;
+    }
+
+    if (sqlEx != null)
+    {
+      try
+      {
+        sqlEx = null;
+        retrieveIndexes2(table, unique);
+      }
+      catch (final SQLException e)
+      {
+        sqlEx = e;
+      }
+    }
+
+    if (sqlEx != null)
+    {
+      throw sqlEx;
     }
   }
 
