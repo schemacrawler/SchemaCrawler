@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.06.01" date="2016-02-03" description="Performance improvements">
+     <release version="14.06.01" date="2016-02-08" description="Performance improvements">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added table row counts in output and diagrams. Use schemacrawler.format.show_row_counts=true in the configuration file.
       ]]></action>  
