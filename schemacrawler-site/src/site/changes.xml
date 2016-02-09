@@ -8,9 +8,15 @@
      <release version="14.06.01" date="2016-02-03" description="Performance improvements">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added table row counts in output and diagrams. Use schemacrawler.format.show_row_counts=true in the configuration file.
-      ]]></action>                                   
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Significant performance improvements in Java code, especially related to logging. Idea courtesy of Patric Rufflar.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
+      ]]></action>                                               
      </release>  
-     <release version="14.05.05" date="2016-02-03" description="Fixed logging">
+     <release version="14.06.01" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
