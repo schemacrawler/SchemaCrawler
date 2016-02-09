@@ -521,16 +521,18 @@ public final class SchemaCrawler
 
     LOGGER.log(Level.INFO, "Crawling tables");
 
-    final TableRetriever retriever;
-    final TableColumnRetriever columnRetriever;
-    final ForeignKeyRetriever fkRetriever;
-    final TableExtRetriever retrieverExtra;
     try
     {
-      retriever = new TableRetriever(retrieverConnection, catalog);
-      columnRetriever = new TableColumnRetriever(retrieverConnection, catalog);
-      fkRetriever = new ForeignKeyRetriever(retrieverConnection, catalog);
-      retrieverExtra = new TableExtRetriever(retrieverConnection, catalog);
+      final TableRetriever retriever = new TableRetriever(retrieverConnection,
+                                                          catalog);
+      final TableColumnRetriever columnRetriever = new TableColumnRetriever(retrieverConnection,
+                                                                            catalog);
+      final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection,
+                                                               catalog);
+      final ForeignKeyRetriever fkRetriever = new ForeignKeyRetriever(retrieverConnection,
+                                                                      catalog);
+      final TableExtRetriever retrieverExtra = new TableExtRetriever(retrieverConnection,
+                                                                     catalog);
 
       stopWatch.time("retrieveTables", () -> {
         for (final Schema schema: retriever.getSchemas())
@@ -593,11 +595,11 @@ public final class SchemaCrawler
           final boolean isView = table instanceof MutableView;
           if (!isView && infoLevel.isRetrieveTableColumns())
           {
-            retriever.retrievePrimaryKey(table);
+            indexRetriever.retrievePrimaryKey(table);
             if (infoLevel.isRetrieveIndexes())
             {
-              retriever.retrieveIndexes(table, true);
-              retriever.retrieveIndexes(table, false);
+              indexRetriever.retrieveIndexes(table, true);
+              indexRetriever.retrieveIndexes(table, false);
               //
               table.replacePrimaryKey();
             }
