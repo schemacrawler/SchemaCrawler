@@ -29,6 +29,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
+import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
@@ -205,14 +206,26 @@ public final class InformationSchemaViewsBuilder
   }
 
   /**
-   * Sets the view definitions SQL.
+   * Sets the foreign key SQL.
    *
    * @param sql
-   *        View definitions SQL.
+   *        Foreign key SQL.
    */
   public InformationSchemaViewsBuilder withForeignKeysSql(final String sql)
   {
     informationSchemaQueries.put(FOREIGN_KEYS, sql);
+    return this;
+  }
+
+  /**
+   * Sets the indexes SQL.
+   *
+   * @param sql
+   *        Indexes SQL.
+   */
+  public InformationSchemaViewsBuilder withIndexesSql(final String sql)
+  {
+    informationSchemaQueries.put(INDEXES, sql);
     return this;
   }
 
