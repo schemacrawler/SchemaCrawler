@@ -10,6 +10,9 @@
   <artifactId>schemacrawler-integrations</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
+  <properties>
+    <springframework.version>4.2.4.RELEASE</springframework.version>
+  </properties>  
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
