@@ -12,6 +12,7 @@ import java.time.temporal.TemporalAccessor;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.IndexColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -99,8 +100,8 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected boolean isColumnSignificant(final Column column)
   {
     return column != null
-           && (column.isPartOfPrimaryKey() || column.isPartOfForeignKey()
-               || column.isPartOfIndex());
+           && (column instanceof IndexColumn || column.isPartOfPrimaryKey()
+               || column.isPartOfForeignKey() || column.isPartOfIndex());
   }
 
   protected String nodeId(final DatabaseObject dbObject)
