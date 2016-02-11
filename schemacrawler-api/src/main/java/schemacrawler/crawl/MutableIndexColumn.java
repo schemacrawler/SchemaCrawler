@@ -25,7 +25,7 @@ final class MutableIndexColumn
   private int indexOrdinalPosition;
   private IndexColumnSortSequence sortSequence;
 
-  MutableIndexColumn(final Index index, final MutableColumn column)
+  MutableIndexColumn(final Index index, final Column column)
   {
     super(new TableReference(column.getParent()), column.getName());
     this.index = index;
