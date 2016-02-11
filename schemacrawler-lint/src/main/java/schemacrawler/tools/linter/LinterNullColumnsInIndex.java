@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.Table;
@@ -64,10 +65,18 @@ public class LinterNullColumnsInIndex
       {
         for (final IndexColumn indexColumn: index)
         {
-          if (indexColumn.isNullable())
+          try
           {
-            nullableColumnsInUniqueIndex.add(index);
-            break;
+            if (indexColumn.isNullable())
+            {
+              nullableColumnsInUniqueIndex.add(index);
+              break;
+            }
+          }
+          catch (final NotLoadedException e)
+          {
+            // The column may be partial for index pseudo-columns
+            continue;
           }
         }
       }

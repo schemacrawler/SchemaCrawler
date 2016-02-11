@@ -32,6 +32,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.SchemaReference;
@@ -179,49 +180,58 @@ final class IndexRetriever
     final int cardinality = results.getInt("CARDINALITY", 0);
     final int pages = results.getInt("PAGES", 0);
 
+    final Column column;
     final Optional<MutableColumn> columnOptional = table
       .lookupColumn(columnName);
     if (columnOptional.isPresent())
     {
-      final MutableColumn column = columnOptional.get();
-      if (isBlank(indexName))
-      {
-        indexName = String
-          .format("SC_%s",
-                  Integer.toHexString(column.getFullName().hashCode())
-                    .toUpperCase());
-      }
-
-      final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
-      final MutableIndex index;
-      if (indexOptional.isPresent())
-      {
-        index = indexOptional.get();
-      }
-      else
-      {
-        index = new MutableIndex(table, indexName);
-        table.addIndex(index);
-      }
-
-      column.markAsPartOfIndex();
+      final MutableColumn mutableColumn = columnOptional.get();
+      mutableColumn.markAsPartOfIndex();
       if (uniqueIndex)
       {
-        column.markAsPartOfUniqueIndex();
+        mutableColumn.markAsPartOfUniqueIndex();
       }
-
-      final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
-                                                                    column);
-      indexColumn.setIndexOrdinalPosition(ordinalPosition);
-      indexColumn.setSortSequence(sortSequence);
-      //
-      index.addColumn(indexColumn);
-      index.setUnique(uniqueIndex);
-      index.setIndexType(IndexType.valueOf(type));
-      index.setCardinality(cardinality);
-      index.setPages(pages);
-      index.addAttributes(results.getAttributes());
+      column = mutableColumn;
     }
+    else
+    {
+      // Indexes may have pseudo-columns, that are not part of the table
+      // for example, Oracle function-based indexes have columns from
+      // the result of a function
+      column = new ColumnPartial(table, columnName);
+    }
+
+    if (isBlank(indexName))
+    {
+      indexName = String.format("SC_%s",
+                                Integer
+                                  .toHexString(column.getFullName().hashCode())
+                                  .toUpperCase());
+    }
+
+    final Optional<MutableIndex> indexOptional = table.lookupIndex(indexName);
+    final MutableIndex index;
+    if (indexOptional.isPresent())
+    {
+      index = indexOptional.get();
+    }
+    else
+    {
+      index = new MutableIndex(table, indexName);
+      table.addIndex(index);
+    }
+
+    final MutableIndexColumn indexColumn = new MutableIndexColumn(index,
+                                                                  column);
+    indexColumn.setIndexOrdinalPosition(ordinalPosition);
+    indexColumn.setSortSequence(sortSequence);
+    //
+    index.addColumn(indexColumn);
+    index.setUnique(uniqueIndex);
+    index.setIndexType(IndexType.valueOf(type));
+    index.setCardinality(cardinality);
+    index.setPages(pages);
+    index.addAttributes(results.getAttributes());
   }
 
   private void retrieveIndexes(final MutableTable table, final boolean unique)
