@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.06.03" date="2016-02-10" description="Support for Oracle function-based indexes">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Support for Oracle function-based indexes.
+      ]]></action>                                                
+     </release>     
      <release version="14.06.02" date="2016-02-10" description="Performance improvements for Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Distributing correct versions of JDBC driver jars.
@@ -24,7 +29,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.06.02" date="2016-02-03" description="Fixed logging">
+     <release version="14.06.03" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
