@@ -21,7 +21,7 @@
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.PartialDatabaseObject;
 
 public class NotLoadedException
   extends UnsupportedOperationException
@@ -29,12 +29,7 @@ public class NotLoadedException
 
   private static final long serialVersionUID = -1745422469189598709L;
 
-  public NotLoadedException()
-  {
-    super("Complete database metadata has not been loaded, due to table filters");
-  }
-
-  public NotLoadedException(final DatabaseObject databaseObject)
+  public NotLoadedException(final PartialDatabaseObject databaseObject)
   {
     super(String.format("Complete database metadata has not been loaded, %s",
                         databaseObject));
