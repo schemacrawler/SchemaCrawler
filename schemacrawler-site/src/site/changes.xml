@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.06.02" date="2016-02-10" description="Performance improvements for Oracle">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Distributing correct versions of JDBC driver jars.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Performance boost by using Oracle data dictionary query for table indexes. Idea courtesy of Patric Rufflar.
+      ]]></action>                                               
+     </release>   
      <release version="14.06.01" date="2016-02-08" description="Performance improvements">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added table row counts in output and diagrams. Use schemacrawler.format.show_row_counts=true in the configuration file.
@@ -16,7 +24,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.06.01" date="2016-02-03" description="Fixed logging">
+     <release version="14.06.02" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
