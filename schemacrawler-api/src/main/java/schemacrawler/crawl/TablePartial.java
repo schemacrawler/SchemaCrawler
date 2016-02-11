@@ -65,85 +65,85 @@ final class TablePartial
   @Override
   public List<Column> getColumns()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public String getDefinition()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<ForeignKey> getExportedForeignKeys()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<ForeignKey> getForeignKeys()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<ForeignKey> getImportedForeignKeys()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<Index> getIndexes()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public PrimaryKey getPrimaryKey()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<Privilege<Table>> getPrivileges()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<TableConstraint> getTableConstraints()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public TableType getTableType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<Trigger> getTriggers()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public TableType getType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean hasDefinition()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
@@ -175,19 +175,19 @@ final class TablePartial
   @Override
   public Optional<Index> lookupIndex(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<? extends Privilege<Table>> lookupPrivilege(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<Trigger> lookupTrigger(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   void addColumn(final Column column)

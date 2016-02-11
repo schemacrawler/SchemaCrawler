@@ -51,37 +51,37 @@ abstract class RoutinePartial
   @Override
   public String getDefinition()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public RoutineBodyType getRoutineBodyType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public RoutineType getRoutineType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public String getSpecificName()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public RoutineType getType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean hasDefinition()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
 }
