@@ -21,6 +21,8 @@
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.DatabaseObject;
+
 public class NotLoadedException
   extends UnsupportedOperationException
 {
@@ -30,6 +32,12 @@ public class NotLoadedException
   public NotLoadedException()
   {
     super("Complete database metadata has not been loaded, due to table filters");
+  }
+
+  public NotLoadedException(final DatabaseObject databaseObject)
+  {
+    super(String.format("Complete database metadata has not been loaded, %s",
+                        databaseObject));
   }
 
 }

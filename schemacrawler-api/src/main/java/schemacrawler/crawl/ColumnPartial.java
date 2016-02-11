@@ -56,31 +56,31 @@ final class ColumnPartial
   @Override
   public ColumnDataType getColumnDataType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public int getDecimalDigits()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public String getDefaultValue()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public int getOrdinalPosition()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Collection<Privilege<Column>> getPrivileges()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
@@ -92,19 +92,19 @@ final class ColumnPartial
   @Override
   public int getSize()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public ColumnDataType getType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public String getWidth()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   /**
@@ -115,7 +115,7 @@ final class ColumnPartial
   @Override
   public boolean isAutoIncremented()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   /**
@@ -126,43 +126,43 @@ final class ColumnPartial
   @Override
   public boolean isGenerated()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean isNullable()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean isPartOfForeignKey()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean isPartOfIndex()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean isPartOfPrimaryKey()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public boolean isPartOfUniqueIndex()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<Privilege<Column>> lookupPrivilege(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   void setReferencedColumn(final Column referencedColumn)

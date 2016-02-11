@@ -33,6 +33,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 
+import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
@@ -824,8 +825,20 @@ final class SchemaTextFormatter
 
   private void printTableColumnAutoIncremented(final Column column)
   {
-    if (column == null || !column.isAutoIncremented())
+    if (column == null)
     {
+      return;
+    }
+    try
+    {
+      if (!column.isAutoIncremented())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
       return;
     }
     formattingHelper.writeDetailRow("", "", "auto-incremented");
