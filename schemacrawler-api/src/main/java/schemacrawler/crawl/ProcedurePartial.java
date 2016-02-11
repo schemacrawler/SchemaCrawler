@@ -46,19 +46,19 @@ final class ProcedurePartial
   @Override
   public List<ProcedureColumn> getColumns()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public ProcedureReturnType getReturnType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<ProcedureColumn> lookupColumn(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
 }

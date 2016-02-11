@@ -46,19 +46,19 @@ final class FunctionPartial
   @Override
   public List<FunctionColumn> getColumns()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public FunctionReturnType getReturnType()
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
   @Override
   public Optional<FunctionColumn> lookupColumn(final String name)
   {
-    throw new NotLoadedException();
+    throw new NotLoadedException(this);
   }
 
 }
