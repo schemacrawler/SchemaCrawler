@@ -56,6 +56,7 @@ public final class SchemaInfoLevelBuilder
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
+    maximum.setRetrieveHiddenTableColumns(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setRetrieveSequenceInformation(true);
