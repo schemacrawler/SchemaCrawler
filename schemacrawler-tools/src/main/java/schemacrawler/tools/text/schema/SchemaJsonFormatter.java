@@ -318,6 +318,10 @@ final class SchemaJsonFormatter
                          .isAlphabeticalSortForTableColumns()));
       for (final Column column: columns)
       {
+        if (column.isHidden())
+        {
+          continue;
+        }
         if (isBrief && !isColumnSignificant(column))
         {
           continue;

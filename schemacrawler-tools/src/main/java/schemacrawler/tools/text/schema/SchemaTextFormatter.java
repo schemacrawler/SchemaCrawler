@@ -309,7 +309,7 @@ final class SchemaTextFormatter
     printRemarks(table);
 
     final List<Column> columns = table.getColumns();
-    printTableColumns(columns);
+    printTableColumns(columns, false);
     printPrimaryKey(table.getPrimaryKey());
     printForeignKeys(table);
     if (!isBrief)
@@ -704,7 +704,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(index.getColumns());
+          printTableColumns(index.getColumns(), true);
         }
 
         if (isVerbose)
@@ -738,7 +738,7 @@ final class SchemaTextFormatter
         pkName = "";
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
-      printTableColumns(primaryKey.getColumns());
+      printTableColumns(primaryKey.getColumns(), false);
     }
   }
 
@@ -853,7 +853,8 @@ final class SchemaTextFormatter
     formattingHelper.writeDetailRow("", "", column.getRemarks());
   }
 
-  private void printTableColumns(final List<? extends Column> columns)
+  private void printTableColumns(final List<? extends Column> columns,
+                                 final boolean showHidden)
   {
     if (columns.isEmpty())
     {
@@ -867,6 +868,10 @@ final class SchemaTextFormatter
 
     for (final Column column: columns)
     {
+      if (!showHidden && column.isHidden())
+      {
+        continue;
+      }
       if (isBrief && !isColumnSignificant(column))
       {
         continue;
@@ -964,7 +969,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(constraint.getColumns());
+          printTableColumns(constraint.getColumns(), true);
         }
 
         if (isVerbose)
