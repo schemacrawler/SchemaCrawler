@@ -103,82 +103,125 @@ final class TableColumnRetriever
 
   }
 
-  private void createTableColumns(final MetadataResultSet results,
-                                  final NamedObjectList<MutableTable> allTables,
-                                  final InclusionRuleFilter<Column> columnFilter)
-                                    throws SQLException
+  void retrieveHiddenColumns(final NamedObjectList<MutableTable> allTables,
+                             final InclusionRule columnInclusionRule)
+                               throws SQLException
   {
-    while (results.next())
+    requireNonNull(allTables);
+
+    final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
+                                                                               true);
+    if (columnFilter.isExcludeAll())
     {
-      // Get the "COLUMN_DEF" value first as it the Oracle drivers
-      // don't handle it properly otherwise.
-      // https://community.oracle.com/message/5940745#5940745
-      // NOTE: Still an issue with Oracle JDBC driver 11.2.0.3.0
-      final String defaultValue = results.getString("COLUMN_DEF");
-      //
+      LOGGER.log(Level.INFO,
+                 "Not retrieving columns, since this was not requested");
+      return;
+    }
 
-      final String columnCatalogName = quotedName(results
-        .getString("TABLE_CAT"));
-      final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-      final String tableName = quotedName(results.getString("TABLE_NAME"));
-      final String columnName = quotedName(results.getString("COLUMN_NAME"));
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Retrieving column, %s.%s%s.%s",
-                                  columnCatalogName,
-                                  schemaName,
-                                  tableName,
-                                  columnName));
-
-      final Optional<MutableTable> optionalTable = allTables
-        .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
-      if (!optionalTable.isPresent())
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasExtHiddenTableColumnsSql())
+    {
+      LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
+      return;
+    }
+    final String hiddenColumnsSql = informationSchemaViews
+      .getExtHiddenTableColumnsSql();
+    LOGGER.log(Level.FINER,
+               new StringFormat("Executing SQL to retrieve hidden table columns: %n%s",
+                                hiddenColumnsSql));
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet("retrieveHiddenColumns",
+                                                                executeSql(statement,
+                                                                           hiddenColumnsSql));)
+    {
+      while (results.next())
       {
-        continue;
-      }
-
-      final MutableTable table = optionalTable.get();
-      MutableColumn column;
-
-      column = lookupOrCreateColumn(table, columnName, /* add? */false);
-      if (columnFilter.test(column)
-          && belongsToSchema(table, columnCatalogName, schemaName))
-      {
-        column = lookupOrCreateColumn(table, columnName, /* add? */true);
-
-        final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
-        final int dataType = results.getInt("DATA_TYPE", 0);
-        final String typeName = results.getString("TYPE_NAME");
-        final int size = results.getInt("COLUMN_SIZE", 0);
-        final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
-        final boolean isNullable = results
-          .getInt("NULLABLE",
-                  DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
-        final boolean isAutoIncremented = results
-          .getBoolean("IS_AUTOINCREMENT");
-        final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
-        final String remarks = results.getString("REMARKS");
-
-        column.setOrdinalPosition(ordinalPosition);
-        column
-          .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                          dataType,
-                                                          typeName));
-        column.setSize(size);
-        column.setDecimalDigits(decimalDigits);
-        column.setNullable(isNullable);
-        column.setAutoIncremented(isAutoIncremented);
-        column.setGenerated(isGenerated);
-        column.setRemarks(remarks);
-        if (defaultValue != null)
+        final MutableColumn column = createTableColumn(results,
+                                                       allTables,
+                                                       columnFilter);
+        if (column != null)
         {
-          column.setDefaultValue(defaultValue);
+          column.setHidden(true);
         }
-
-        column.addAttributes(results.getAttributes());
-
-        table.addColumn(column);
       }
     }
+  }
+
+  private MutableColumn createTableColumn(final MetadataResultSet results,
+                                          final NamedObjectList<MutableTable> allTables,
+                                          final InclusionRuleFilter<Column> columnFilter)
+                                            throws SQLException
+  {
+    // Get the "COLUMN_DEF" value first as it the Oracle drivers
+    // don't handle it properly otherwise.
+    // https://community.oracle.com/message/5940745#5940745
+    // NOTE: Still an issue with Oracle JDBC driver 11.2.0.3.0
+    final String defaultValue = results.getString("COLUMN_DEF");
+    //
+
+    final String columnCatalogName = quotedName(results.getString("TABLE_CAT"));
+    final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
+    final String tableName = quotedName(results.getString("TABLE_NAME"));
+    final String columnName = quotedName(results.getString("COLUMN_NAME"));
+    LOGGER.log(Level.FINER,
+               new StringFormat("Retrieving column, %s.%s%s.%s",
+                                columnCatalogName,
+                                schemaName,
+                                tableName,
+                                columnName));
+
+    final Optional<MutableTable> optionalTable = allTables
+      .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
+    if (!optionalTable.isPresent())
+    {
+      return null;
+    }
+
+    final MutableTable table = optionalTable.get();
+    MutableColumn column;
+
+    column = lookupOrCreateColumn(table, columnName, /* add? */false);
+    if (columnFilter.test(column)
+        && belongsToSchema(table, columnCatalogName, schemaName))
+    {
+      column = lookupOrCreateColumn(table, columnName, /* add? */true);
+
+      final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
+      final int dataType = results.getInt("DATA_TYPE", 0);
+      final String typeName = results.getString("TYPE_NAME");
+      final int size = results.getInt("COLUMN_SIZE", 0);
+      final int decimalDigits = results.getInt("DECIMAL_DIGITS", 0);
+      final boolean isNullable = results
+        .getInt("NULLABLE",
+                DatabaseMetaData.columnNullableUnknown) == DatabaseMetaData.columnNullable;
+      final boolean isAutoIncremented = results.getBoolean("IS_AUTOINCREMENT");
+      final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
+      final String remarks = results.getString("REMARKS");
+
+      column.setOrdinalPosition(ordinalPosition);
+      column
+        .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                        dataType,
+                                                        typeName));
+      column.setSize(size);
+      column.setDecimalDigits(decimalDigits);
+      column.setNullable(isNullable);
+      column.setAutoIncremented(isAutoIncremented);
+      column.setGenerated(isGenerated);
+      column.setRemarks(remarks);
+      if (defaultValue != null)
+      {
+        column.setDefaultValue(defaultValue);
+      }
+
+      column.addAttributes(results.getAttributes());
+
+      table.addColumn(column);
+    }
+
+    return column;
   }
 
   private MutableColumn lookupOrCreateColumn(final MutableTable table,
@@ -228,7 +271,10 @@ final class TableColumnRetriever
                                                                 executeSql(statement,
                                                                            tableColumnsSql));)
     {
-      createTableColumns(results, allTables, columnFilter);
+      while (results.next())
+      {
+        createTableColumn(results, allTables, columnFilter);
+      }
     }
   }
 
@@ -239,20 +285,16 @@ final class TableColumnRetriever
     for (final MutableTable table: allTables)
     {
       LOGGER.log(Level.FINE, "Retrieving columns for " + table);
-      try (
-          final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromMetadata",
-                                                                  getMetaData()
-                                                                    .getColumns(unquotedName(table
-                                                                      .getSchema()
-                                                                      .getCatalogName()),
-                                                                                unquotedName(table
-                                                                                  .getSchema()
-                                                                                  .getName()),
-                                                                                unquotedName(table
-                                                                                  .getName()),
-                                                                                null));)
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getColumns(unquotedName(table.getSchema().getCatalogName()),
+                    unquotedName(table.getSchema().getName()),
+                    unquotedName(table.getName()),
+                    null));)
       {
-        createTableColumns(results, allTables, columnFilter);
+        while (results.next())
+        {
+          createTableColumn(results, allTables, columnFilter);
+        }
       }
       catch (final SQLException e)
       {
@@ -266,15 +308,13 @@ final class TableColumnRetriever
                                                        final InclusionRuleFilter<Column> columnFilter)
                                                          throws SQLException
   {
-    try (
-        final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromMetadataForAllTables",
-                                                                getMetaData()
-                                                                  .getColumns(null,
-                                                                              null,
-                                                                              "%",
-                                                                              "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumns(null, null, "%", "%"));)
     {
-      createTableColumns(results, allTables, columnFilter);
+      while (results.next())
+      {
+        createTableColumn(results, allTables, columnFilter);
+      }
     }
   }
 

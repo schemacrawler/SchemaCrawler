@@ -70,6 +70,13 @@ public interface Column
   boolean isGenerated();
 
   /**
+   * True if this column is a hidden column.
+   *
+   * @return If the column is a hidden column
+   */
+  boolean isHidden();
+
+  /**
    * True if this column is part of a foreign key.
    *
    * @return If the column is part of a foreign key

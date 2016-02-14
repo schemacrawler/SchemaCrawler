@@ -24,6 +24,7 @@ package schemacrawler.schemacrawler;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
@@ -166,6 +167,18 @@ public final class InformationSchemaViewsBuilder
   public InformationSchemaViewsBuilder withAdditionalTableAttributesSql(final String sql)
   {
     informationSchemaQueries.put(ADDITIONAL_TABLE_ATTRIBUTES, sql);
+    return this;
+  }
+
+  /**
+   * Sets the hidden table column definitions SQL.
+   *
+   * @param sql
+   *        Hidden table column definitions SQL.
+   */
+  public InformationSchemaViewsBuilder withExtHiddenTableColumnsSql(final String sql)
+  {
+    informationSchemaQueries.put(EXT_HIDDEN_TABLE_COLUMNS, sql);
     return this;
   }
 

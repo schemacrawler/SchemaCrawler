@@ -59,6 +59,11 @@ final class MutableTableConstraintColumn
     return comparison;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
+   */
   @Override
   public ColumnDataType getColumnDataType()
   {
@@ -176,7 +181,8 @@ final class MutableTableConstraintColumn
   }
 
   /**
-   * @return
+   * {@inheritDoc}
+   *
    * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
@@ -186,13 +192,25 @@ final class MutableTableConstraintColumn
   }
 
   /**
-   * @return
+   * {@inheritDoc}
+   *
    * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
   {
     return column.isGenerated();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isHidden()
+   */
+  @Override
+  public boolean isHidden()
+  {
+    return column.isHidden();
   }
 
   /**
