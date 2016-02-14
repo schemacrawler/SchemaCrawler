@@ -168,7 +168,7 @@ public final class SchemaDotFormatter
     printTableRemarks(table);
 
     final List<Column> columns = table.getColumns();
-    printTableColumns(columns);
+    printTableColumns(columns, false);
 
     printTableRowCount(table);
 
@@ -452,14 +452,25 @@ public final class SchemaDotFormatter
     formattingHelper.append(remarksRow.toString()).println();
   }
 
-  private void printTableColumns(final List<Column> columns)
+  private void printTableColumns(final List<Column> columns,
+                                 final boolean showHidden)
   {
+    if (columns.isEmpty())
+    {
+      return;
+    }
+
     Collections
       .sort(columns,
             NamedObjectSort
               .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
+
     for (final Column column: columns)
     {
+      if (!showHidden && column.isHidden())
+      {
+        continue;
+      }
       if (isBrief && !isColumnSignificant(column))
       {
         continue;
