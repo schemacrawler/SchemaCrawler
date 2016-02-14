@@ -59,6 +59,11 @@ final class MutableIndexColumn
     return comparison;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
+   */
   @Override
   public ColumnDataType getColumnDataType()
   {
@@ -187,7 +192,8 @@ final class MutableIndexColumn
   }
 
   /**
-   * @return
+   * {@inheritDoc}
+   *
    * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
@@ -197,13 +203,25 @@ final class MutableIndexColumn
   }
 
   /**
-   * @return
+   * {@inheritDoc}
+   *
    * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
   {
     return column.isGenerated();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isHidden()
+   */
+  @Override
+  public boolean isHidden()
+  {
+    return column.isHidden();
   }
 
   /**

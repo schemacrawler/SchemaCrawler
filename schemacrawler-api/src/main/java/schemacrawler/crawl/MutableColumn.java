@@ -45,6 +45,7 @@ class MutableColumn
   private String defaultValue;
   private boolean isAutoIncremented;
   private boolean isGenerated;
+  private boolean isHidden;
   private boolean isPartOfPrimaryKey;
   private boolean isPartOfUniqueIndex;
   private boolean isPartOfIndex;
@@ -90,7 +91,9 @@ class MutableColumn
   }
 
   /**
-   * @return the isAutoIncremented
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
   public boolean isAutoIncremented()
@@ -99,12 +102,25 @@ class MutableColumn
   }
 
   /**
-   * @return the isGenerated
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
   {
     return isGenerated;
+  }
+
+  /**
+   * {@inheritDoc}
+   * 
+   * @see schemacrawler.schema.Column#isHidden()
+   */
+  @Override
+  public boolean isHidden()
+  {
+    return isHidden;
   }
 
   /**
@@ -182,10 +198,6 @@ class MutableColumn
     isPartOfUniqueIndex = true;
   }
 
-  /**
-   * @param isAutoIncremented
-   *        the isAutoIncremented to set
-   */
   void setAutoIncremented(final boolean isAutoIncremented)
   {
     this.isAutoIncremented = isAutoIncremented;
@@ -196,13 +208,14 @@ class MutableColumn
     this.defaultValue = defaultValue;
   }
 
-  /**
-   * @param isGenerated
-   *        the isGenerated to set
-   */
   void setGenerated(final boolean isGenerated)
   {
     this.isGenerated = isGenerated;
+  }
+
+  void setHidden(final boolean isHidden)
+  {
+    this.isHidden = isHidden;
   }
 
   void setReferencedColumn(final Column referencedColumn)

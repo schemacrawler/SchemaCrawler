@@ -129,6 +129,17 @@ final class ColumnPartial
     throw new NotLoadedException(this);
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Column#isHidden()
+   */
+  @Override
+  public boolean isHidden()
+  {
+    throw new NotLoadedException(this);
+  }
+
   @Override
   public boolean isNullable()
   {

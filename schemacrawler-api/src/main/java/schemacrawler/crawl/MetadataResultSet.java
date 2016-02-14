@@ -124,12 +124,11 @@ final class MetadataResultSet
   {
     results.close();
 
-    if (!isBlank(description) && LOGGER.isLoggable(Level.INFO))
+    if (LOGGER.isLoggable(Level.INFO) && !isBlank(description))
     {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("\"%s\" results had %d rows",
-                                  description,
-                                  rowCount));
+      LOGGER.log(Level.INFO, new StringFormat("\"%s\" results had %d rows",
+                                              description,
+                                              rowCount));
     }
   }
 
