@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.06.04" date="2016-02-14" description="Support for hidden columns">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Complete support for Oracle hidden columns. Hidden columns are indicated with Table.isHidden(). 
+        Similarly, generated columns (including Oracle function-based columns) are indicated 
+        with Table.isGenerated(). You can get a complete list of all table columns, including 
+        hidden columns, with Table.getColumns(), if you have used the "maximum" schema info-level.
+      ]]></action>                                                
+     </release>      
      <release version="14.06.03" date="2016-02-10" description="Support for Oracle function-based indexes">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Support for Oracle function-based indexes.
@@ -29,7 +37,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.06.03" date="2016-02-03" description="Fixed logging">
+     <release version="14.06.04" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
