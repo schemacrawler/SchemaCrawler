@@ -213,7 +213,7 @@ final class MetadataResultSet
           LOGGER.log(Level.FINE,
                      new StringFormat("NULL value for column %s, so evaluating to 'false'",
                                       columnName));
-          stringBooleanValue = null;
+          return false;
         }
         else
         {
