@@ -3,6 +3,8 @@
 ## FAQs
 Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at the [resources].
 
+Also read the [Scribe Tools](http://scribetools.readthedocs.org/en/latest/schemacrawler/index.html) Read The Docs guide.
+
 ## Examples
 The first thing to try is the [SchemaCrawler examples].
 
