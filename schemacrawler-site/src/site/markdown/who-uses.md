@@ -39,7 +39,7 @@ Photograph courtesy of Adrien Sales.
 
 SchemaCrawler in open source projects.
 
-- [A large number of projects on GitHub](http://github.com/search?l=&o=desc&q=schemacrawler.schema&ref=advsearch&s=indexed&type=Code&utf8=%E2%9C%93)
+- [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh&type=Code)
 - [jQAssistant](http://jqassistant.org/)
 
 ## Press
@@ -56,3 +56,4 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Mike Zhukovskiy's exploration of ERD tools, [Twitter ERD](http://rubyrailsmz.blogspot.com/2014/08/blog-post.html)
 - Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](http://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
 - Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
+- Stefan Pröll's blog post, [Create an ER Diagram of an Existing SQLite Database (or many other RDBMS)](http://blog.stefanproell.at/2016/01/11/create-an-er-diagram-of-an-existing-sqlite-database-or-manyoother-rdbms/)
