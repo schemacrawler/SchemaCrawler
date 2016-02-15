@@ -22,9 +22,8 @@ package schemacrawler.tools.text.utility.html;
 
 import static sf.util.Utility.isBlank;
 
-import java.awt.Color;
-
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.Color;
 
 /**
  * Represents an HTML link.
