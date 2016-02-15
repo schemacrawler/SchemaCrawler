@@ -4,21 +4,14 @@ package schemacrawler.tools.text.utility;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schema.DatabaseObject;
+import sf.util.Color;
 
 public class DatabaseObjectColorMap
 {
-
-  public static String getHtmlColor(final Color color)
-  {
-    final String htmlColor = "#" + Integer.toHexString(color.getRGB())
-      .substring(2).toUpperCase();
-    return htmlColor;
-  }
 
   private final Map<String, Color> colorMap;
 
@@ -58,9 +51,9 @@ public class DatabaseObjectColorMap
     }
 
     final float saturation = 0.15f;
-    final float luminance = 0.95f;
+    final float brightness = 0.95f;
 
-    final Color color = Color.getHSBColor(hue, saturation, luminance);
+    final Color color = Color.fromHSV(hue, saturation, brightness);
     return color;
   }
 }

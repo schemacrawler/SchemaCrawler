@@ -21,15 +21,14 @@
 package schemacrawler.tools.text.utility;
 
 
-import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
 import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
-import java.awt.Color;
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.Color;
 
 /**
  * Methods to format entire rows of output as HTML.
@@ -144,7 +143,7 @@ public final class HtmlFormattingHelper
   {
     final StringBuilder buffer = new StringBuilder(1024);
     buffer.append("  <caption style='background-color: ")
-      .append(getHtmlColor(backgroundColor)).append(";'>");
+      .append(backgroundColor).append(";'>");
     if (!isBlank(name))
     {
       buffer.append("<span");
