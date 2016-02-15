@@ -25,8 +25,6 @@ package schemacrawler.tools.text.base;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.readResourceFully;
 
-import java.awt.Color;
-
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
@@ -37,6 +35,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.text.utility.html.TableCell;
 import schemacrawler.tools.text.utility.html.TableRow;
+import sf.util.Color;
 
 /**
  * Text formatting of schema.

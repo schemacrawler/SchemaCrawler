@@ -39,7 +39,6 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -66,7 +65,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 
-import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -256,10 +254,6 @@ public final class TestUtility
   {
     assertTrue("Diagram file not created", exists(diagramFile));
     assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
-
-    final BufferedImage image = ImageIO.read(diagramFile.toFile());
-    assertTrue("Diagram not created", image.getHeight() > 0);
-    assertTrue("Diagram not created", image.getWidth() > 0);
   }
 
   private static Path buildDirectory()

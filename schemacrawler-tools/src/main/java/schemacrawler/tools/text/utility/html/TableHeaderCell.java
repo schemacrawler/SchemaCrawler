@@ -20,9 +20,8 @@
 package schemacrawler.tools.text.utility.html;
 
 
-import java.awt.Color;
-
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.Color;
 
 public final class TableHeaderCell
   extends TableCell

@@ -20,16 +20,15 @@
 package schemacrawler.tools.text.utility.html;
 
 
-import static schemacrawler.tools.text.utility.DatabaseObjectColorMap.getHtmlColor;
 import static schemacrawler.tools.text.utility.html.Entities.escapeForXMLElement;
 import static sf.util.Utility.isBlank;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.Color;
 
 /**
  * Represents an HTML anchor.
@@ -155,7 +154,7 @@ abstract class BaseTag
     }
     if (bgColor != null && !bgColor.equals(Color.white))
     {
-      buffer.append(" bgcolor='").append(getHtmlColor(bgColor)).append("'");
+      buffer.append(" bgcolor='").append(bgColor).append("'");
     }
     if (!isBlank(styleClass))
     {
