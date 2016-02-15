@@ -21,9 +21,8 @@
 package schemacrawler.tools.text.utility;
 
 
-import java.awt.Color;
-
 import schemacrawler.tools.text.utility.html.Alignment;
+import sf.util.Color;
 
 /**
  * Methods to format entire rows of output.

@@ -26,7 +26,6 @@ import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessa
 import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -52,6 +51,7 @@ import schemacrawler.tools.text.utility.html.TableRow;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.utility.MetaDataUtility.ForeignKeyCardinality;
 import schemacrawler.utility.NamedObjectSort;
+import sf.util.Color;
 
 /**
  * GraphViz DOT formatting of schema.

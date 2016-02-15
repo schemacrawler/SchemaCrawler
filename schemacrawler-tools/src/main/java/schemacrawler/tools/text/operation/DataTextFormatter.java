@@ -23,7 +23,6 @@ package schemacrawler.tools.text.operation;
 
 import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
 
-import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -36,6 +35,7 @@ import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
 import schemacrawler.tools.text.utility.html.Alignment;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.Query;
+import sf.util.Color;
 
 /**
  * Text formatting of data.

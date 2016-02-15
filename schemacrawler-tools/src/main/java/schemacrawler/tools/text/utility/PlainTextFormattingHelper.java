@@ -23,10 +23,10 @@ package schemacrawler.tools.text.utility;
 
 import static sf.util.Utility.isBlank;
 
-import java.awt.Color;
 import java.io.PrintWriter;
 
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.Color;
 
 /**
  * Methods to format entire rows of output as text.
