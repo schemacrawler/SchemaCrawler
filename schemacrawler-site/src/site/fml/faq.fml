@@ -96,15 +96,15 @@
     <faq id="supported-java">
       <question> What Java version does SchemaCrawler work with? </question>
       <answer>
-        <p> SchemaCrawler works with Java SE 8 and above. SchemaCrawler does not depend on any Java libraries other than
-          the standard Java SE 8 runtime libraries and a JDBC driver.
+        <p> SchemaCrawler works with Java SE 8, Compact Profile 2 or better. SchemaCrawler does not depend on any Java libraries other than
+          the standard Java SE 8, Compact Profile 2 runtime libraries and a JDBC driver.
         </p>
       </answer>
     </faq>
     <faq id="supported-os">
       <question> What operating systems does SchemaCrawler work with?  </question>
       <answer>
-        <p> SchemaCrawler works with any operating system that supports Java SE 8 and above. </p>
+        <p> SchemaCrawler works with any operating system that supports Java SE 8, Compact Profile 2 or better. </p>
       </answer>
     </faq>
     <faq id="ant">

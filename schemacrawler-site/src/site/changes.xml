@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.06.06" date="2016-02-14" description="Bug fix">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Support for Compact Profile 2.
+      ]]></action>                                                
+     </release>  
      <release version="14.06.05" date="2016-02-14" description="Bug fix">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Bug fix for bug while retrieving metadata.
