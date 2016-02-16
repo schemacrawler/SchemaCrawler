@@ -230,6 +230,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.3</version>
         <configuration>
+          <compilerArguments>
+            <profile>compact2</profile>
+          </compilerArguments>        
           <source>8</source>
           <target>8</target>
           <compilerArgs>
