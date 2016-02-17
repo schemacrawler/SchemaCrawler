@@ -98,6 +98,23 @@ public final class MetaDataUtility
     return foreignKeyName;
   }
 
+  public static final boolean containsGeneratedColumns(final Index index)
+  {
+    if (index == null)
+    {
+      return false;
+    }
+
+    for (final Column indexColumn: index)
+    {
+      if (indexColumn.isGenerated())
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey<?> foreignKey)
   {
     if (foreignKey == null)
