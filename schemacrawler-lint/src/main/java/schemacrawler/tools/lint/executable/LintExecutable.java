@@ -86,6 +86,9 @@ public class LintExecutable
           case none:
             // No-op
             break;
+          case write_err:
+            System.err.println("Abnormal system termination, since a critical schema lint was found");
+            break;
           case throw_exception:
             throw new SchemaCrawlerException("Abnormal system termination, since a critical schema lint was found");
             // break;
