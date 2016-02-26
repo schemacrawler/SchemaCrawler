@@ -38,6 +38,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
+import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -71,6 +73,60 @@ public class LintExecutable
                                                     connection,
                                                     linterConfigs);
 
+    generateReport(catalog);
+
+    // Handle dispatch
+    for (final Lint<?> lint: catalog.getCollector())
+    {
+      final LintDispatch dispatch = lint.getDispatch();
+      if (dispatch != null)
+      {
+        switch (dispatch)
+        {
+          case none:
+            // No-op
+            break;
+          case throw_exception:
+            throw new SchemaCrawlerException("Abnormal system termination, since a critical schema lint was found");
+            // break;
+          case terminate_system:
+            LOGGER
+              .log(Level.SEVERE,
+                   "Abnormal system termination, since a critical schema lint was found");
+            System.exit(1);
+            break;
+          default:
+            break;
+        }
+      }
+
+    }
+
+  }
+
+  public final LintOptions getLintOptions()
+  {
+    final LintOptions lintOptions;
+    if (this.lintOptions == null)
+    {
+      lintOptions = new LintOptionsBuilder().fromConfig(additionalConfiguration)
+        .toOptions();
+    }
+    else
+    {
+      lintOptions = this.lintOptions;
+    }
+    return lintOptions;
+  }
+
+  public final void setLintOptions(final LintOptions lintOptions)
+  {
+    this.lintOptions = lintOptions;
+  }
+
+  private void generateReport(final LintedCatalog catalog)
+    throws SchemaCrawlerException
+  {
     final LintTraversalHandler formatter = getSchemaTraversalHandler();
 
     formatter.begin();
@@ -98,27 +154,6 @@ public class LintExecutable
     formatter.handleEnd();
 
     formatter.end();
-
-  }
-
-  public final LintOptions getLintOptions()
-  {
-    final LintOptions lintOptions;
-    if (this.lintOptions == null)
-    {
-      lintOptions = new LintOptionsBuilder().fromConfig(additionalConfiguration)
-        .toOptions();
-    }
-    else
-    {
-      lintOptions = this.lintOptions;
-    }
-    return lintOptions;
-  }
-
-  public final void setLintOptions(final LintOptions lintOptions)
-  {
-    this.lintOptions = lintOptions;
   }
 
   private LintTraversalHandler getSchemaTraversalHandler()

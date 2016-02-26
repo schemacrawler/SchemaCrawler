@@ -188,6 +188,28 @@ public class LinterConfigs
     return config;
   }
 
+  private LintDispatch parseDispatch(final Element linterElement,
+                                     final String linterId)
+  {
+    LintDispatch dispatch = LintDispatch.none;
+    final String dispatchValue = getTextValue(linterElement, "dispatch");
+    if (!isBlank(dispatchValue))
+    {
+      try
+      {
+        dispatch = LintDispatch.valueOf(dispatchValue);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.CONFIG,
+                   new StringFormat("Could not set a dispatch of %s for linter %s",
+                                    dispatchValue,
+                                    linterId));
+      }
+    }
+    return dispatch;
+  }
+
   private List<LinterConfig> parseDocument(final Document document)
   {
     requireNonNull(document, "No document provided");
@@ -234,6 +256,9 @@ public class LinterConfigs
 
     final LintSeverity severity = parseSeverity(linterElement, linterId);
     linterConfig.setSeverity(severity);
+
+    final LintDispatch dispatch = parseDispatch(linterElement, linterId);
+    linterConfig.setDispatch(dispatch);
 
     final String tableInclusionPattern = parseRegularExpressionPattern(linterElement,
                                                                        "table-inclusion-pattern");

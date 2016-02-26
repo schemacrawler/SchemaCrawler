@@ -1,0 +1,8 @@
+<schemacrawler-linter-configs>
+  <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
+    <config>
+      <severity>critical</severity>
+      <dispatch>terminate_system</dispatch>
+    </config>
+  </linter>
+</schemacrawler-linter-configs>
