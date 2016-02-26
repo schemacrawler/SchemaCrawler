@@ -20,26 +20,9 @@
 package schemacrawler.tools.lint;
 
 
-import java.io.Serializable;
-
-public interface Lint<V extends Serializable>
-  extends Serializable, Comparable<Lint<? extends Serializable>>
+public enum LintDispatch
 {
-
-  LintDispatch getDispatch();
-
-  String getId();
-
-  String getMessage();
-
-  String getObjectName();
-
-  LintSeverity getSeverity();
-
-  V getValue();
-
-  String getValueAsString();
-
-  boolean hasValue();
-
+ none,
+ throw_exception,
+ terminate_system,;
 }

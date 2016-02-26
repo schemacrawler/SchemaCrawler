@@ -43,12 +43,14 @@ public final class SimpleLint<V extends Serializable>
   private final LintSeverity severity;
   private final String message;
   private final V value;
+  private final LintDispatch dispatch;
 
   public <N extends NamedObject & AttributedObject> SimpleLint(final String id,
                                                                final N namedObject,
                                                                final LintSeverity severity,
                                                                final String message,
-                                                               final V value)
+                                                               final V value,
+                                                               final LintDispatch dispatch)
   {
     if (isBlank(id))
     {
@@ -75,6 +77,15 @@ public final class SimpleLint<V extends Serializable>
     this.message = message;
 
     this.value = value;
+
+    if (dispatch == null)
+    {
+      this.dispatch = LintDispatch.none;
+    }
+    else
+    {
+      this.dispatch = dispatch;
+    }
   }
 
   /**
@@ -175,6 +186,15 @@ public final class SimpleLint<V extends Serializable>
       return false;
     }
     return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public LintDispatch getDispatch()
+  {
+    return dispatch;
   }
 
   @Override
