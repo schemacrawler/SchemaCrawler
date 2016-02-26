@@ -23,6 +23,7 @@ package schemacrawler.tools.lint;
 public enum LintDispatch
 {
  none,
+ write_err,
  throw_exception,
  terminate_system,;
 }
