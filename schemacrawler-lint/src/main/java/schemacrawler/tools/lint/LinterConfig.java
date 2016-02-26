@@ -38,6 +38,7 @@ public class LinterConfig
   private final String id;
   private boolean runLinter;
   private LintSeverity severity;
+  private LintDispatch dispatch;
   private final Config config;
   private String tableInclusionPattern;
   private String tableExclusionPattern;
@@ -64,6 +65,11 @@ public class LinterConfig
   public Config getConfig()
   {
     return config;
+  }
+
+  public LintDispatch getDispatch()
+  {
+    return dispatch;
   }
 
   public String getId()
@@ -105,6 +111,11 @@ public class LinterConfig
   public void setColumnInclusionPattern(final String columnInclusionPattern)
   {
     this.columnInclusionPattern = columnInclusionPattern;
+  }
+
+  public void setDispatch(final LintDispatch dispatch)
+  {
+    this.dispatch = dispatch;
   }
 
   public void setRunLinter(final boolean runLinter)
