@@ -76,7 +76,7 @@ public class LintDispatcher
     }
 
     lintCounts.forEach((linterDispatchRule, count) -> {
-      if (count >= linterDispatchRule.getDispatchThreshold())
+      if (count > linterDispatchRule.getDispatchThreshold())
       {
         final LintDispatch dispatch = linterDispatchRule.getDispatch();
         if (dispatch != null)
