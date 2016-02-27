@@ -33,6 +33,8 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.collector.LintCollector;
+import schemacrawler.tools.lint.collector.SimpleLintCollector;
 import sf.util.StringFormat;
 
 public final class LintedCatalog

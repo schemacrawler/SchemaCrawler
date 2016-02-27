@@ -24,6 +24,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.collector.LintCollector;
 
 public interface Linter
 {
