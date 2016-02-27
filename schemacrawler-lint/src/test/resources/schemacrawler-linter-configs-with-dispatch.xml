@@ -3,6 +3,7 @@
     <config>
       <severity>critical</severity>
       <dispatch>terminate_system</dispatch>
+      <dispatch-threshold>1</dispatch-threshold>
     </config>
   </linter>
 </schemacrawler-linter-configs>

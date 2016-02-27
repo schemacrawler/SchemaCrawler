@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint;
+package schemacrawler.tools.lint.collector;
 
 
 import java.io.Serializable;
@@ -29,6 +29,7 @@ import java.util.List;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.tools.lint.Lint;
 
 public class SimpleLintCollector
   implements LintCollector
@@ -80,7 +81,7 @@ public class SimpleLintCollector
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.tools.lint.LintCollector#size()
+   * @see schemacrawler.tools.lint.collector.LintCollector#size()
    */
   @Override
   public int size()

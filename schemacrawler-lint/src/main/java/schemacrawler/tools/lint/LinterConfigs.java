@@ -210,6 +210,29 @@ public class LinterConfigs
     return dispatch;
   }
 
+  private int parseDispatchThreshold(final Element linterElement,
+                                     final String linterId)
+  {
+    int dispatchThreshold = 0;
+    final String dispatchThresholdValue = getTextValue(linterElement,
+                                                       "dispatch-threshold");
+    if (!isBlank(dispatchThresholdValue))
+    {
+      try
+      {
+        dispatchThreshold = Integer.valueOf(dispatchThresholdValue);
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.CONFIG,
+                   new StringFormat("Could not set a dispatch threshold of %s for linter %s",
+                                    dispatchThresholdValue,
+                                    linterId));
+      }
+    }
+    return dispatchThreshold;
+  }
+
   private List<LinterConfig> parseDocument(final Document document)
   {
     requireNonNull(document, "No document provided");
@@ -259,6 +282,10 @@ public class LinterConfigs
 
     final LintDispatch dispatch = parseDispatch(linterElement, linterId);
     linterConfig.setDispatch(dispatch);
+
+    final int dispatchThreshold = parseDispatchThreshold(linterElement,
+                                                         linterId);
+    linterConfig.setDispatchThreshold(dispatchThreshold);
 
     final String tableInclusionPattern = parseRegularExpressionPattern(linterElement,
                                                                        "table-inclusion-pattern");
