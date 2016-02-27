@@ -143,14 +143,7 @@ public class LinterConfig
 
   public void setSeverity(final LintSeverity severity)
   {
-    if (severity == null)
-    {
-      this.severity = LintSeverity.medium;
-    }
-    else
-    {
-      this.severity = severity;
-    }
+    this.severity = severity;
   }
 
   public void setTableExclusionPattern(final String tableExclusionPattern)
