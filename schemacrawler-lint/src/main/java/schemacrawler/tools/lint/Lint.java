@@ -26,9 +26,13 @@ public interface Lint<V extends Serializable>
   extends Serializable, Comparable<Lint<? extends Serializable>>
 {
 
-  LintDispatch getDispatch();
+  @Deprecated
+  default String getId()
+  {
+    return getLinterId();
+  }
 
-  String getId();
+  String getLinterId();
 
   String getMessage();
 

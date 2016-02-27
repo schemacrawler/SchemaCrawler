@@ -36,10 +36,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.collector.LintCollector;
 
 public class LintTest
   extends BaseDatabaseTest

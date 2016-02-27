@@ -38,8 +38,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -76,35 +74,8 @@ public class LintExecutable
     generateReport(catalog);
 
     // Handle dispatch
-    for (final Lint<?> lint: catalog.getCollector())
-    {
-      final LintDispatch dispatch = lint.getDispatch();
-      if (dispatch != null)
-      {
-        switch (dispatch)
-        {
-          case none:
-            // No-op
-            break;
-          case write_err:
-            System.err.println("Abnormal system termination, since a critical schema lint was found");
-            break;
-          case throw_exception:
-            throw new SchemaCrawlerException("Abnormal system termination, since a critical schema lint was found");
-            // break;
-          case terminate_system:
-            LOGGER
-              .log(Level.SEVERE,
-                   "Abnormal system termination, since a critical schema lint was found");
-            System.exit(1);
-            break;
-          default:
-            break;
-        }
-      }
-
-    }
-
+    final LintDispatcher lintDispatcher = new LintDispatcher(linterConfigs);
+    lintDispatcher.dispatch(catalog.getCollector());
   }
 
   public final LintOptions getLintOptions()

@@ -28,7 +28,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintedCatalog;
-import schemacrawler.tools.lint.SimpleLintCollector;
+import schemacrawler.tools.lint.collector.SimpleLintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
@@ -122,7 +122,7 @@ final class LintJsonFormatter
         {
           final JSONObject jsonLint = new JSONObject();
           jsonLints.put(jsonLint);
-          jsonLint.put("id", lint.getId());
+          jsonLint.put("id", lint.getLinterId());
           jsonLint.put("severity", lint.getSeverity().name());
           jsonLint.put("description", lint.getMessage());
           jsonLint.put("value", lint.getValueAsString());

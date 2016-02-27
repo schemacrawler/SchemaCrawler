@@ -43,7 +43,6 @@ public final class SimpleLint<V extends Serializable>
   private final LintSeverity severity;
   private final String message;
   private final V value;
-  private final LintDispatch dispatch;
 
   public <N extends NamedObject & AttributedObject> SimpleLint(final String id,
                                                                final N namedObject,
@@ -80,11 +79,9 @@ public final class SimpleLint<V extends Serializable>
 
     if (dispatch == null)
     {
-      this.dispatch = LintDispatch.none;
     }
     else
     {
-      this.dispatch = dispatch;
     }
   }
 
@@ -111,7 +108,7 @@ public final class SimpleLint<V extends Serializable>
     {
       return compareTo;
     }
-    compareTo = id.compareTo(lint.getId());
+    compareTo = id.compareTo(lint.getLinterId());
     if (compareTo != 0)
     {
       return compareTo;
@@ -188,17 +185,8 @@ public final class SimpleLint<V extends Serializable>
     return true;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public LintDispatch getDispatch()
-  {
-    return dispatch;
-  }
-
-  @Override
-  public String getId()
+  public String getLinterId()
   {
     return id;
   }

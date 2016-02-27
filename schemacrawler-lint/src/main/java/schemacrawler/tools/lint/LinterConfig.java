@@ -39,6 +39,7 @@ public class LinterConfig
   private boolean runLinter;
   private LintSeverity severity;
   private LintDispatch dispatch;
+  private int dispatchThreshold;
   private final Config config;
   private String tableInclusionPattern;
   private String tableExclusionPattern;
@@ -70,6 +71,11 @@ public class LinterConfig
   public LintDispatch getDispatch()
   {
     return dispatch;
+  }
+
+  public int getDispatchThreshold()
+  {
+    return dispatchThreshold;
   }
 
   public String getId()
@@ -115,7 +121,19 @@ public class LinterConfig
 
   public void setDispatch(final LintDispatch dispatch)
   {
-    this.dispatch = dispatch;
+    if (dispatch == null)
+    {
+      this.dispatch = LintDispatch.none;
+    }
+    else
+    {
+      this.dispatch = dispatch;
+    }
+  }
+
+  public void setDispatchThreshold(final int dispatchThreshold)
+  {
+    this.dispatchThreshold = dispatchThreshold;
   }
 
   public void setRunLinter(final boolean runLinter)
@@ -125,7 +143,14 @@ public class LinterConfig
 
   public void setSeverity(final LintSeverity severity)
   {
-    this.severity = severity;
+    if (severity == null)
+    {
+      this.severity = LintSeverity.medium;
+    }
+    else
+    {
+      this.severity = severity;
+    }
   }
 
   public void setTableExclusionPattern(final String tableExclusionPattern)
