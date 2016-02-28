@@ -87,7 +87,7 @@ public class LintDispatcher
           switch (dispatch)
           {
             case none:
-              LOGGER.log(Level.FINE, "Not dispatch");
+              LOGGER.log(Level.FINE, "Not dispatched");
               break;
             case write_err:
               System.err
