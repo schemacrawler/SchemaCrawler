@@ -618,5 +618,17 @@ for (final Schema schema: catalog.getSchemas())
         </p>
       </answer>
     </faq>
+    <faq id="fail_build_linter">
+      <question>
+        How to fail a build with too many SchemaCrawler lints
+      </question>
+      <answer>
+        <p>
+          See
+          <a href="lint.html">SchemaCrawler Lint</a>
+          for details.
+        </p>
+      </answer>
+    </faq>    
   </part>
 </faqs>
