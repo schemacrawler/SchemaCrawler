@@ -35,7 +35,8 @@ lint with an additional command-line option, for example,
 `-linterconfigs=[path to linter XML configuration file]`, 
 pointing to the path of the SchemaCrawler linter XML configuration file. You can
 configure whether or not to run a linter, change a linter's severity, or exclude
-certain tables and columns from the linter using the configuration file.
+certain tables and columns from the linter using the configuration file. You can 
+also configure a dispatch method to fail a build if too many lints are found.
 
 ## Lint Checks
 
@@ -106,15 +107,13 @@ is running against.
 Example configuration:
 
 ```
-<schemacrawler-linter-configs>
-  <linter id="schemacrawler.tools.linter.LinterTableSql">
-    <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
-    <config>
-      <property name="message">message for custom SQL lint</property>
-      <property name="sql"><![CDATA[SELECT TOP 1 1 FROM ${table}]]></property>
-    </config>
-  </linter>
-</schemacrawler-linter-configs>
+<linter id="schemacrawler.tools.linter.LinterTableSql">
+  <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
+  <config>
+    <property name="message">message for custom SQL lint</property>
+    <property name="sql"><![CDATA[SELECT TOP 1 1 FROM ${table}]]></property>
+  </config>
+</linter>
 ```
 
 **Linter:** *schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns*   
@@ -179,6 +178,35 @@ Example configuration:
 Checks for relationship tables with just foreign keys and no attributes,
 but still have a primary key.
 
+## Enforcing Good Schema Design During Builds
+
+SchemaCrawler Lint can be configured to fail a build using a configuration file. 
+You can call SchemaCrawler using a regularly constructed command-line, 
+from Maven using the Exec Maven Plugin, or from ant using the 
+java task, or from Gradle using JavaExec.
+
+In the configuration file, you can set a dispatch method, and a dispatch 
+threshold for linters. If the number of lints for that linter exceeds the 
+threshold, the lint dispatch will take effect. 
+
+Valid lint dispatch methods are 
+
+- terminate_system - Returns an error code of 1 to the system, by calling System.exit(1)
+- throw_exception - Throw a runtime exception
+- write_err - Write to stderr, and continue on
+- none - No dispatch, and continue on normally
+
+Here is an example linter configuration, with a dispatch:
+
+```
+<linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
+  <config>
+    <severity>critical</severity>
+    <dispatch>terminate_system</dispatch>
+    <dispatch-threshold>1</dispatch-threshold>
+  </config>
+</linter>
+```
 
 ## Lint Extensions
 
