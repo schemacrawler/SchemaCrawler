@@ -34,6 +34,7 @@ import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.collector.LintCollector;
+import sf.util.StringFormat;
 
 public class LintDispatcher
 {
@@ -81,9 +82,9 @@ public class LintDispatcher
         final LintDispatch dispatch = linterDispatchRule.getDispatch();
         if (dispatch != null)
         {
-          LOGGER
-            .log(Level.SEVERE,
-                 "Abnormal system termination, since a critical schema lint was found");
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Processing dispatches for lint, %s",
+                                      linterDispatchRule.getLinterId()));
           switch (dispatch)
           {
             case none:
@@ -105,6 +106,7 @@ public class LintDispatcher
         }
       }
     });
+
   }
 
 }
