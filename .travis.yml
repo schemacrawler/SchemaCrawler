@@ -17,8 +17,7 @@ addons:
     packages:
     - graphviz
 before_install:
-- mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8
-  -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
+- mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
 install:
 - mvn -Dcomplete install
 after_success:
@@ -28,5 +27,9 @@ deploy:
   api_key:
     secure: ozkdQjIFJqyzLaX1FNTn/nP+CpuQa9+HoO9pxdMYSNrRn4AWb1WBl37/76QBLBI6ehvRLqPolbz32JxUmyYW/HMuDqI+8vlE2i5iOy5DZHvSayU5U8GwzHg8ibSfXpnEwc2fMmnOEdQeEjnRRU9Aa2k1/8B/MVa6ouF9jjpt+g9tZeXyvitBndD9SlpHb/zlEfiGTjPWHXABBu6K1omWotClbDpr3u5PhljZiCMOwV6gi8FAXTcV9Q/JXp29d9kDlrLUFmAAh6rLaBCAMrum9AnLtEht85YzxZEZAgfnuqHLf77Z65u1J7mLe0rIYXCal1q/Kn2dzg2HXPChvaZqbXFxOQ2V1WoNiyqtYE9tdYIbDAaM3Igzq+WSovrAHil8aBeWXeFdUS+AgQL2yEu/KiV0ggnrviOV6gvVlDRMEbXEg2+rkvX+qeDnlriB/oS8v5sWiPVaVbP6YfBFfmG2VGKsHDdXonG7/id5aLIQ4t9q2IFgKe/qO8hOkZMIMScFkwrPleNpqqo0VvKPmCS07S9cEMqimXkj18Vmh6rMM0w6yt0vjpOT9NjRFWn/MvAGH0dLBO5Jm8z2wFjXggNw3XiglYy8EUxYQunvhJEZOmFtls5g5rSNVfTuZsjoOYOye6DrdtewmB7yzVOGgBaBVUsIr0POxQv+x238rkwfSyo=
   file: schemacrawler-distrib/target/schemacrawler-*-main.zip
+  file_glob: true
+  skip_cleanup: true
   on:
+    tags: true
     repo: sualeh/SchemaCrawler
+    all_branches: true
