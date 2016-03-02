@@ -1,27 +1,30 @@
 language: java
 jdk:
-- oraclejdk8
+  - oraclejdk8
 os:
-- linux
+  - linux
 sudo: false
 notifications:
   on_success:
-  - change
+    - change
   on_failure:
-  - change
+    - change
 cache:
   directories:
+    - .autoconf
     - $HOME/.m2
 addons:
   apt:
     packages:
-    - graphviz
-before_install:
-- mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
+      - graphviz
 install:
-- mvn -Dcomplete install
+  - mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
+script:
+  - mvn -DskipTests -Dcomplete package
 after_success:
-- mvn -Dcomplete clean cobertura:cobertura coveralls:report
+  - mvn clean cobertura:cobertura coveralls:report
+before_deploy:
+  - git fetch --tags
 deploy:
   provider: releases
   api_key:
