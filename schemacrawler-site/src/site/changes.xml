@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.07.01" date="2016-02-14" description="Bug fix">
+     <release version="14.07.02" date="2016-02-14" description="Bug fix">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Support for Compact Profile 2.
       ]]></action>  
@@ -51,7 +51,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.07.01" date="2016-02-03" description="Fixed logging">
+     <release version="14.07.02" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
