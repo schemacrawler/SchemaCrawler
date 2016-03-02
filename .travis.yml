@@ -20,9 +20,9 @@ addons:
 install:
   - mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true
 script:
-  - mvn -DskipTests -Dcomplete package
+  - mvn -DskipTests install
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn -Dcomplete clean cobertura:cobertura coveralls:report
 before_deploy:
   - git fetch --tags
 deploy:
