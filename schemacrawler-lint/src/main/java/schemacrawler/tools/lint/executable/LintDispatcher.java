@@ -85,19 +85,20 @@ public class LintDispatcher
           LOGGER.log(Level.FINE,
                      new StringFormat("Processing dispatches for lint, %s",
                                       linterDispatchRule.getLinterId()));
+          final String dispatchMessage = "Too many schema lints were found";
           switch (dispatch)
           {
             case none:
-              LOGGER.log(Level.FINE, "Not dispatched");
+              LOGGER.log(Level.FINE, dispatchMessage);
               break;
             case write_err:
-              System.err
-                .println("Abnormal system termination, since a critical schema lint was found");
+              System.err.println(dispatchMessage);
               break;
             case throw_exception:
-              throw new RuntimeException("Abnormal system termination, since a critical schema lint was found");
-              // break;
+              throw new RuntimeException(dispatchMessage);
+              // break; // Implied break
             case terminate_system:
+              LOGGER.log(Level.SEVERE, dispatchMessage);
               System.exit(1);
               break;
             default:
