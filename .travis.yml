@@ -36,3 +36,5 @@ deploy:
     tags: true
     repo: sualeh/SchemaCrawler
     all_branches: true
+
+  
