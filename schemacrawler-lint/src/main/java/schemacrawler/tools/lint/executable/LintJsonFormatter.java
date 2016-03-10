@@ -43,7 +43,7 @@ final class LintJsonFormatter
 
   LintJsonFormatter(final LintOptions options,
                     final OutputOptions outputOptions)
-                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
   }

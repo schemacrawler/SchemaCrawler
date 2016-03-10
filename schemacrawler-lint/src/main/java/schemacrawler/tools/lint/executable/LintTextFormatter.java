@@ -46,7 +46,7 @@ final class LintTextFormatter
 
   LintTextFormatter(final LintOptions options,
                     final OutputOptions outputOptions)
-                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, false, outputOptions);
   }

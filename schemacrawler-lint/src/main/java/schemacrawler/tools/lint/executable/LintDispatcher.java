@@ -24,8 +24,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,22 +39,15 @@ public class LintDispatcher
   private static final Logger LOGGER = Logger
     .getLogger(LintDispatcher.class.getName());
 
-  private final Map<String, LinterDispatchRule> linterDispatches;
-  private final SortedMap<LinterDispatchRule, Integer> lintCounts;
+  private final LinterConfigs linterConfigs;
+  private final Map<LinterConfig, Integer> lintCounts;
 
   public LintDispatcher(final LinterConfigs linterConfigs)
   {
     requireNonNull(linterConfigs, "No lint configs provided");
 
-    linterDispatches = new HashMap<>();
-    lintCounts = new TreeMap<>();
-
-    for (final LinterConfig linterConfig: linterConfigs)
-    {
-      final LinterDispatchRule linterDispatchRule = new LinterDispatchRule(linterConfig);
-      linterDispatches.put(linterDispatchRule.getLinterId(),
-                           linterDispatchRule);
-    }
+    this.linterConfigs = linterConfigs;
+    lintCounts = new HashMap<>();
   }
 
   public void dispatch(final LintCollector lintCollector)
@@ -66,23 +57,23 @@ public class LintDispatcher
     for (final Lint<?> lint: lintCollector)
     {
       final String linterId = lint.getLinterId();
-      if (linterDispatches.containsKey(linterId))
+      if (linterConfigs.containsKey(linterId))
       {
-        final LinterDispatchRule linterDispatchRule = linterDispatches
-          .get(linterId);
-        lintCounts.computeIfPresent(linterDispatchRule, (k, v) -> v + 1);
-        lintCounts.computeIfAbsent(linterDispatchRule, k -> 1);
+        final LinterConfig linterConfig = linterConfigs.get(linterId);
+        lintCounts.computeIfPresent(linterConfig, (k, v) -> v + 1);
+        lintCounts.computeIfAbsent(linterConfig, k -> 1);
       }
     }
 
-    lintCounts.entrySet().stream()
-      .filter(lintCountEntry -> lintCountEntry.getValue() > lintCountEntry.getKey().getDispatchThreshold())
+    lintCounts.entrySet()
+      .stream().filter(lintCountEntry -> lintCountEntry
+        .getValue() > lintCountEntry.getKey().getDispatchThreshold())
       .forEach(lintCountEntry -> {
-        final LinterDispatchRule linterDispatchRule = lintCountEntry.getKey();
+        final LinterConfig linterConfig = lintCountEntry.getKey();
         LOGGER.log(Level.FINE,
                    new StringFormat("Processing dispatches for lint, %s",
-                                    linterDispatchRule.getLinterId()));
-        linterDispatchRule.dispatch();
+                                    linterConfig.getLinterId()));
+        linterConfig.dispatch();
       });
   }
 

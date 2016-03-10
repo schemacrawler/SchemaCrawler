@@ -41,12 +41,10 @@ public abstract class BaseLinterCatalog
 
   private LintCollector collector;
   private LintSeverity severity;
-  private LintDispatch dispatch;
 
   protected BaseLinterCatalog()
   {
     severity = LintSeverity.medium;
-    dispatch = LintDispatch.none;
   }
 
   @Override
@@ -55,7 +53,6 @@ public abstract class BaseLinterCatalog
     if (linterConfig != null)
     {
       setSeverity(linterConfig.getSeverity());
-      setDispatch(linterConfig.getDispatch());
       configure(linterConfig.getConfig());
     }
   }
@@ -76,12 +73,6 @@ public abstract class BaseLinterCatalog
       descriptionText = readResourceFully(descriptionResource);
     }
     return descriptionText;
-  }
-
-  @Override
-  public LintDispatch getDispatch()
-  {
-    return dispatch;
   }
 
   @Override
@@ -117,8 +108,7 @@ public abstract class BaseLinterCatalog
                                             namedObject,
                                             getSeverity(),
                                             message,
-                                            value,
-                                            getDispatch());
+                                            value);
       collector.addLint(namedObject, lint);
     }
   }
@@ -127,14 +117,6 @@ public abstract class BaseLinterCatalog
   {
 
   };
-
-  protected final void setDispatch(final LintDispatch dispatch)
-  {
-    if (dispatch != null)
-    {
-      this.dispatch = dispatch;
-    }
-  }
 
   protected final void setSeverity(final LintSeverity severity)
   {

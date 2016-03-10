@@ -48,8 +48,7 @@ public final class SimpleLint<V extends Serializable>
                                                                final N namedObject,
                                                                final LintSeverity severity,
                                                                final String message,
-                                                               final V value,
-                                                               final LintDispatch dispatch)
+                                                               final V value)
   {
     if (isBlank(id))
     {
@@ -76,13 +75,6 @@ public final class SimpleLint<V extends Serializable>
     this.message = message;
 
     this.value = value;
-
-    if (dispatch == null)
-    {
-    }
-    else
-    {
-    }
   }
 
   /**
