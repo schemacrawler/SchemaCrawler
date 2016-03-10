@@ -4,7 +4,7 @@ package schemacrawler.test;
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
-import schemacrawler.tools.lint.SimpleLint;
+import schemacrawler.tools.lint.Lint;
 
 public class LintEqualsHashCodeTest
 {
@@ -12,7 +12,7 @@ public class LintEqualsHashCodeTest
   @Test
   public void equalsContract()
   {
-    EqualsVerifier.forClass(SimpleLint.class).verify();
+    EqualsVerifier.forClass(Lint.class).verify();
   }
 
 }
