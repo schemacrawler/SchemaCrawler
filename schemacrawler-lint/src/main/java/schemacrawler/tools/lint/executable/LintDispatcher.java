@@ -83,7 +83,7 @@ public class LintDispatcher
       LOGGER.log(Level.INFO, buffer.toString());
     }
 
-    // Dispatch, in a loop, since not all dispatcher may interrupt the
+    // Dispatch, in a loop, since not all dispatchers may interrupt the
     // loop
     getDispatchableLinters().forEach(lintCountEntry -> {
       final LinterConfig linterConfig = lintCountEntry.getKey();
