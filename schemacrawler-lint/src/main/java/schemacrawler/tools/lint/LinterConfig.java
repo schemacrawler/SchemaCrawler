@@ -23,6 +23,7 @@ package schemacrawler.tools.lint;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -36,6 +37,7 @@ public class LinterConfig
   private static final long serialVersionUID = 83079182550531365L;
 
   private final String linterId;
+  private final String linterInstanceId;
   private boolean runLinter;
   private LintSeverity severity;
   private LintDispatch dispatch;
@@ -53,8 +55,15 @@ public class LinterConfig
       throw new IllegalArgumentException("No linter id provided");
     }
     this.linterId = linterId;
+    linterInstanceId = UUID.randomUUID().toString();
     runLinter = true; // default value
     config = new Config();
+    dispatch = LintDispatch.none; // default value
+  }
+
+  public String getLinterInstanceId()
+  {
+    return linterInstanceId;
   }
 
   @Override

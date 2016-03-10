@@ -57,7 +57,7 @@ public final class LinterRegistry
         .load(Linter.class);
       for (final Linter linter: serviceLoader)
       {
-        final String linterId = linter.getId();
+        final String linterId = linter.getLinterId();
         final Class<Linter> linterClass = (Class<Linter>) linter.getClass();
         LOGGER.log(Level.FINER,
                    new StringFormat("Loading linter, %s=%s",
