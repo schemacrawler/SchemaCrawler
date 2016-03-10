@@ -22,12 +22,15 @@ package schemacrawler.tools.lint.executable;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.collector.LintCollector;
@@ -40,14 +43,14 @@ public class LintDispatcher
     .getLogger(LintDispatcher.class.getName());
 
   private final LinterConfigs linterConfigs;
-  private final Map<LinterConfig, Integer> lintCounts;
+  private final SortedMap<LinterConfig, Integer> lintCounts;
 
   public LintDispatcher(final LinterConfigs linterConfigs)
   {
     requireNonNull(linterConfigs, "No lint configs provided");
 
     this.linterConfigs = linterConfigs;
-    lintCounts = new HashMap<>();
+    lintCounts = new TreeMap<>();
   }
 
   public void dispatch(final LintCollector lintCollector)
@@ -65,16 +68,36 @@ public class LintDispatcher
       }
     }
 
-    lintCounts.entrySet()
-      .stream().filter(lintCountEntry -> lintCountEntry
-        .getValue() > lintCountEntry.getKey().getDispatchThreshold())
-      .forEach(lintCountEntry -> {
+    if (LOGGER.isLoggable(Level.INFO))
+    {
+      final StringBuilder buffer = new StringBuilder(1024);
+      buffer.append("Too many schema lints were found:");
+      getDispatchableLinters().forEach(lintCountEntry -> {
         final LinterConfig linterConfig = lintCountEntry.getKey();
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Processing dispatches for lint, %s",
-                                    linterConfig.getLinterId()));
-        linterConfig.dispatch();
+        final int count = lintCountEntry.getValue();
+        buffer.append(String.format("%n[%s] %s - %d",
+                                    linterConfig.getSeverity(),
+                                    linterConfig.getLinterId(),
+                                    count));
       });
+      LOGGER.log(Level.INFO, buffer.toString());
+    }
+
+    // Dispatch, in a loop, since not all dispatcher may interrupt the
+    // loop
+    getDispatchableLinters().forEach(lintCountEntry -> {
+      final LinterConfig linterConfig = lintCountEntry.getKey();
+      linterConfig.dispatch();
+    });
+  }
+
+  private Stream<Map.Entry<LinterConfig, Integer>> getDispatchableLinters()
+  {
+    return lintCounts.entrySet().stream()
+      .filter(lintCountEntry -> lintCountEntry.getKey()
+        .getDispatch() != LintDispatch.none)
+      .filter(lintCountEntry -> lintCountEntry.getValue() > lintCountEntry
+        .getKey().getDispatchThreshold());
   }
 
 }
