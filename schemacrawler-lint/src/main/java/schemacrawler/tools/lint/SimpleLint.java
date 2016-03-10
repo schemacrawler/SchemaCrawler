@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
@@ -38,23 +39,34 @@ public final class SimpleLint<V extends Serializable>
 
   private static final long serialVersionUID = -8627082144974643415L;
 
-  private final String id;
+  private final String lintId;
+  private final String linterId;
+  private final String linterInstanceId;
   private final String objectName;
   private final LintSeverity severity;
   private final String message;
   private final V value;
 
-  public <N extends NamedObject & AttributedObject> SimpleLint(final String id,
+  public <N extends NamedObject & AttributedObject> SimpleLint(final String linterId,
+                                                               final String linterInstanceId,
                                                                final N namedObject,
                                                                final LintSeverity severity,
                                                                final String message,
                                                                final V value)
   {
-    if (isBlank(id))
+    lintId = UUID.randomUUID().toString();
+
+    if (isBlank(linterId))
     {
-      throw new IllegalArgumentException("Lint id not provided");
+      throw new IllegalArgumentException("Linter id not provided");
     }
-    this.id = id;
+    this.linterId = linterId;
+
+    if (isBlank(linterInstanceId))
+    {
+      throw new IllegalArgumentException("Linter instance id not provided");
+    }
+    this.linterInstanceId = linterInstanceId;
 
     requireNonNull(namedObject, "Named object not provided");
     this.objectName = namedObject.getFullName();
@@ -100,7 +112,7 @@ public final class SimpleLint<V extends Serializable>
     {
       return compareTo;
     }
-    compareTo = id.compareTo(lint.getLinterId());
+    compareTo = linterId.compareTo(lint.getLinterId());
     if (compareTo != 0)
     {
       return compareTo;
@@ -126,14 +138,14 @@ public final class SimpleLint<V extends Serializable>
       return false;
     }
     final SimpleLint<?> other = (SimpleLint<?>) obj;
-    if (id == null)
+    if (linterId == null)
     {
-      if (other.id != null)
+      if (other.linterId != null)
       {
         return false;
       }
     }
-    else if (!id.equals(other.id))
+    else if (!linterId.equals(other.linterId))
     {
       return false;
     }
@@ -180,7 +192,19 @@ public final class SimpleLint<V extends Serializable>
   @Override
   public String getLinterId()
   {
-    return id;
+    return linterId;
+  }
+
+  @Override
+  public String getLinterInstanceId()
+  {
+    return linterInstanceId;
+  }
+
+  @Override
+  public String getLintId()
+  {
+    return lintId;
   }
 
   /**
@@ -270,7 +294,7 @@ public final class SimpleLint<V extends Serializable>
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + (id == null? 0: id.hashCode());
+    result = prime * result + (linterId == null? 0: linterId.hashCode());
     result = prime * result + (message == null? 0: message.hashCode());
     result = prime * result + (objectName == null? 0: objectName.hashCode());
     result = prime * result + (severity == null? 0: severity.hashCode());

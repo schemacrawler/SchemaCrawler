@@ -89,7 +89,7 @@ public class LinterTableCycles
   {
     super.start();
 
-    tablesGraph = new DirectedGraph<>(getId());
+    tablesGraph = new DirectedGraph<>(getLinterId());
   }
 
 }

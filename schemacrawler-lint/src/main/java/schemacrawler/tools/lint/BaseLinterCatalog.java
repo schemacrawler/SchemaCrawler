@@ -23,6 +23,7 @@ package schemacrawler.tools.lint;
 import static sf.util.Utility.readResourceFully;
 
 import java.io.Serializable;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,11 +40,13 @@ public abstract class BaseLinterCatalog
   private static final Logger LOGGER = Logger
     .getLogger(BaseLinterCatalog.class.getName());
 
+  private String linterInstanceId;
   private LintCollector collector;
   private LintSeverity severity;
 
   protected BaseLinterCatalog()
   {
+    linterInstanceId = UUID.randomUUID().toString();
     severity = LintSeverity.medium;
   }
 
@@ -76,9 +79,15 @@ public abstract class BaseLinterCatalog
   }
 
   @Override
-  public String getId()
+  public String getLinterId()
   {
     return getClass().getName();
+  }
+
+  @Override
+  public String getLinterInstanceId()
+  {
+    return linterInstanceId;
   }
 
   @Override
@@ -104,7 +113,8 @@ public abstract class BaseLinterCatalog
                                 value));
     if (collector != null)
     {
-      final Lint<V> lint = new SimpleLint<>(getId(),
+      final Lint<V> lint = new SimpleLint<>(getLinterId(),
+                                            getLinterInstanceId(),
                                             namedObject,
                                             getSeverity(),
                                             message,

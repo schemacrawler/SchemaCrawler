@@ -26,6 +26,8 @@ public interface Lint<V extends Serializable>
   extends Serializable, Comparable<Lint<? extends Serializable>>
 {
 
+  String getLintId();
+  
   @Deprecated
   default String getId()
   {
@@ -33,6 +35,8 @@ public interface Lint<V extends Serializable>
   }
 
   String getLinterId();
+  
+  String getLinterInstanceId();
 
   String getMessage();
 
