@@ -113,12 +113,12 @@ public abstract class BaseLinterCatalog
                                 value));
     if (collector != null)
     {
-      final Lint<V> lint = new SimpleLint<>(getLinterId(),
-                                            getLinterInstanceId(),
-                                            namedObject,
-                                            getSeverity(),
-                                            message,
-                                            value);
+      final Lint<V> lint = new Lint<>(getLinterId(),
+                                      getLinterInstanceId(),
+                                      namedObject,
+                                      getSeverity(),
+                                      message,
+                                      value);
       collector.addLint(namedObject, lint);
     }
   }
