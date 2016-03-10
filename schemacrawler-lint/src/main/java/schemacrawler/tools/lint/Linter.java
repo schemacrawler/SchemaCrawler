@@ -33,8 +33,6 @@ public interface Linter
 
   String getDescription();
 
-  LintDispatch getDispatch();
-
   String getId();
 
   LintSeverity getSeverity();
