@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LintedCatalog;
-import schemacrawler.tools.lint.collector.SimpleLintCollector;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseTabularFormatter;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -55,7 +55,7 @@ final class LintTextFormatter
   public void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
+    final Collection<Lint<?>> lints = LintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
       formattingHelper.writeObjectStart();
@@ -71,7 +71,7 @@ final class LintTextFormatter
   @Override
   public void handle(final Table table)
   {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    final Collection<Lint<?>> lints = LintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
       formattingHelper.writeObjectStart();

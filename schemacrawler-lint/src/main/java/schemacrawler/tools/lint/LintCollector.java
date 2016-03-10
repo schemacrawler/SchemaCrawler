@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  *
  */
-package schemacrawler.tools.lint.collector;
+package schemacrawler.tools.lint;
 
 
 import java.io.Serializable;
@@ -29,11 +29,12 @@ import java.util.List;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
-import schemacrawler.tools.lint.Lint;
 
-public class SimpleLintCollector
-  implements LintCollector
+public final class LintCollector
+  implements Iterable<Lint<? extends Serializable>>
 {
+
+  private static final String LINT_KEY = "schemacrawler.lint";
 
   public static Collection<Lint<?>> getLint(final AttributedObject namedObject)
   {
@@ -50,12 +51,11 @@ public class SimpleLintCollector
 
   private final List<Lint<? extends Serializable>> lints;
 
-  public SimpleLintCollector()
+  public LintCollector()
   {
     lints = new ArrayList<>();
   }
 
-  @Override
   public <N extends NamedObject & AttributedObject> void addLint(final N namedObject,
                                                                  final Lint<?> lint)
   {
@@ -78,12 +78,6 @@ public class SimpleLintCollector
     return lints.iterator();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.lint.collector.LintCollector#size()
-   */
-  @Override
   public int size()
   {
     return lints.size();

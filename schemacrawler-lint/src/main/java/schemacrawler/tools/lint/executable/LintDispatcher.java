@@ -30,11 +30,10 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import schemacrawler.tools.lint.Lint;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.tools.lint.collector.LintCollector;
-import sf.util.StringFormat;
 
 public class LintDispatcher
 {
