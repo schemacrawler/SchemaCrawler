@@ -20,10 +20,50 @@
 package schemacrawler.tools.lint;
 
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public enum LintDispatch
 {
- none,
- write_err,
- throw_exception,
- terminate_system,;
+ none
+ {
+   @Override
+   public void dispatch()
+   {
+     LOGGER.log(Level.FINE, dispatchMessage);
+   }
+ },
+ write_err
+ {
+   @Override
+   public void dispatch()
+   {
+     System.err.println(dispatchMessage);
+   }
+ },
+ throw_exception
+ {
+   @Override
+   public void dispatch()
+   {
+     throw new RuntimeException(dispatchMessage);
+   }
+ },
+ terminate_system
+ {
+   @Override
+   public void dispatch()
+   {
+     LOGGER.log(Level.SEVERE, dispatchMessage);
+     System.exit(1);
+   }
+ },;
+
+  private static final Logger LOGGER = Logger
+    .getLogger(LintDispatch.class.getName());
+
+  private static final String dispatchMessage = "Too many schema lints were found";
+
+  public abstract void dispatch();
+  
 }

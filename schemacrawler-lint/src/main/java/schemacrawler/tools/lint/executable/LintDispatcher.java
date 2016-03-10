@@ -30,7 +30,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.collector.LintCollector;
@@ -76,38 +75,15 @@ public class LintDispatcher
       }
     }
 
-    lintCounts.forEach((linterDispatchRule, count) -> {
-      if (count > linterDispatchRule.getDispatchThreshold())
-      {
-        final LintDispatch dispatch = linterDispatchRule.getDispatch();
-        if (dispatch != null)
-        {
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Processing dispatches for lint, %s",
-                                      linterDispatchRule.getLinterId()));
-          final String dispatchMessage = "Too many schema lints were found";
-          switch (dispatch)
-          {
-            case none:
-              LOGGER.log(Level.FINE, dispatchMessage);
-              break;
-            case write_err:
-              System.err.println(dispatchMessage);
-              break;
-            case throw_exception:
-              throw new RuntimeException(dispatchMessage);
-              // break; // Implied break
-            case terminate_system:
-              LOGGER.log(Level.SEVERE, dispatchMessage);
-              System.exit(1);
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    });
-
+    lintCounts.entrySet().stream()
+      .filter(lintCountEntry -> lintCountEntry.getValue() > lintCountEntry.getKey().getDispatchThreshold())
+      .forEach(lintCountEntry -> {
+        final LinterDispatchRule linterDispatchRule = lintCountEntry.getKey();
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Processing dispatches for lint, %s",
+                                    linterDispatchRule.getLinterId()));
+        linterDispatchRule.dispatch();
+      });
   }
 
 }
