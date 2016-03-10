@@ -28,12 +28,20 @@ import schemacrawler.tools.lint.collector.LintCollector;
 
 public interface Linter
 {
+  
+  @Deprecated
+  default String getId()
+  {
+    return getLinterId();
+  }
+
+  String getLinterId();
+  
+  String getLinterInstanceId();
 
   void configure(LinterConfig linterConfig);
 
   String getDescription();
-
-  String getId();
 
   LintSeverity getSeverity();
 

@@ -17,7 +17,7 @@ public class LinterHelp
     {
       final Linter linter = registry.newLinter(linterId);
 
-      buffer.append("Linter: ").append(linter.getId())
+      buffer.append("Linter: ").append(linter.getLinterId())
         .append(System.lineSeparator());
       buffer.append(linter.getDescription()).append(System.lineSeparator());
     }
