@@ -118,6 +118,30 @@ public class LinterConfigs
     }
   }
 
+  public boolean containsKey(final String linterId)
+  {
+    for (final LinterConfig linterConfig: linterConfigs)
+    {
+      if (linterConfig.getLinterId().equals(linterId))
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public LinterConfig get(final String linterId)
+  {
+    for (final LinterConfig linterConfig: linterConfigs)
+    {
+      if (linterConfig.getLinterId().equals(linterId))
+      {
+        return linterConfig;
+      }
+    }
+    return null;
+  }
+
   @Override
   public Iterator<LinterConfig> iterator()
   {

@@ -51,7 +51,7 @@ public final class LintedCatalog
   public LintedCatalog(final Catalog catalog,
                        final Connection connection,
                        final LinterConfigs linterConfigs)
-                         throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(catalog);
 

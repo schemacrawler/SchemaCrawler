@@ -65,5 +65,5 @@ public enum LintDispatch
   private static final String dispatchMessage = "Too many schema lints were found";
 
   public abstract void dispatch();
-  
+
 }

@@ -57,6 +57,14 @@ public class LinterConfig
     config = new Config();
   }
 
+  public void dispatch()
+  {
+    if (dispatch != null)
+    {
+      dispatch.dispatch();
+    }
+  }
+
   public InclusionRule getColumnInclusionRule()
   {
     return new RegularExpressionRule(columnInclusionPattern,
@@ -77,7 +85,7 @@ public class LinterConfig
   {
     return dispatchThreshold;
   }
-  
+
   @Deprecated
   public String getId()
   {
