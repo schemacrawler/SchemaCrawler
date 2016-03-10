@@ -31,7 +31,7 @@ public interface Lint<V extends Serializable>
   {
     return getLinterId();
   }
-
+  
   String getLinterId();
 
   String getMessage();

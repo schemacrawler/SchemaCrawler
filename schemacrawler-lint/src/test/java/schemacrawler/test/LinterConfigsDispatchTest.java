@@ -60,7 +60,7 @@ public class LinterConfigsDispatchTest
     assertEquals(1, linterConfigs.size());
     for (final LinterConfig linterConfig: linterConfigs)
     {
-      if (linterConfig.getId()
+      if (linterConfig.getLinterId()
         .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
       {
         assertEquals(LintSeverity.critical, linterConfig.getSeverity());
