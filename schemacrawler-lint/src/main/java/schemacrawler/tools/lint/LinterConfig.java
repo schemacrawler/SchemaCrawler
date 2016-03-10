@@ -30,7 +30,7 @@ import schemacrawler.schemacrawler.RegularExpressionRule;
 import sf.util.ObjectToString;
 
 public class LinterConfig
-  implements Serializable
+  implements Serializable, Comparable<LinterConfig>
 {
 
   private static final long serialVersionUID = 83079182550531365L;
@@ -55,6 +55,30 @@ public class LinterConfig
     this.linterId = linterId;
     runLinter = true; // default value
     config = new Config();
+  }
+
+  @Override
+  public int compareTo(final LinterConfig other)
+  {
+    if (other == null)
+    {
+      return -1;
+    }
+
+    int comparison = 0;
+
+    if (comparison == 0)
+    {
+      comparison = (severity == null? LintSeverity.low: severity)
+        .compareTo(other.severity == null? LintSeverity.low: other.severity);
+    }
+
+    if (comparison == 0)
+    {
+      comparison = linterId.compareTo(other.linterId);
+    }
+
+    return comparison;
   }
 
   public void dispatch()
