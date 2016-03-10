@@ -41,7 +41,7 @@ public final class LinterDispatchRule
   {
     requireNonNull(linterConfig, "No linter configuration provided");
 
-    linterId = linterConfig.getId();
+    linterId = linterConfig.getLinterId();
     dispatch = linterConfig.getDispatch();
     dispatchThreshold = linterConfig.getDispatchThreshold();
   }
@@ -116,6 +116,14 @@ public final class LinterDispatchRule
   public LintDispatch getDispatch()
   {
     return dispatch;
+  }
+
+  public void dispatch()
+  {
+    if (dispatch != null)
+    {
+      dispatch.dispatch();
+    }
   }
 
   public int getDispatchThreshold()

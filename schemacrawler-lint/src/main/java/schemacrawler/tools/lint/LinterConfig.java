@@ -35,7 +35,7 @@ public class LinterConfig
 
   private static final long serialVersionUID = 83079182550531365L;
 
-  private final String id;
+  private final String linterId;
   private boolean runLinter;
   private LintSeverity severity;
   private LintDispatch dispatch;
@@ -46,13 +46,13 @@ public class LinterConfig
   private String columnInclusionPattern;
   private String columnExclusionPattern;
 
-  public LinterConfig(final String id)
+  public LinterConfig(final String linterId)
   {
-    if (isBlank(id))
+    if (isBlank(linterId))
     {
       throw new IllegalArgumentException("No linter id provided");
     }
-    this.id = id;
+    this.linterId = linterId;
     runLinter = true; // default value
     config = new Config();
   }
@@ -77,10 +77,16 @@ public class LinterConfig
   {
     return dispatchThreshold;
   }
-
+  
+  @Deprecated
   public String getId()
   {
-    return id;
+    return getLinterId();
+  }
+
+  public String getLinterId()
+  {
+    return linterId;
   }
 
   public LintSeverity getSeverity()
