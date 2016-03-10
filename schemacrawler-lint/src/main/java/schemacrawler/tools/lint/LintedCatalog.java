@@ -86,7 +86,7 @@ public final class LintedCatalog
 
       // First remove the linter id, because it is "seen",
       // whether it needs to be run or not
-      final String linterId = linterConfig.getId();
+      final String linterId = linterConfig.getLinterId();
       registeredLinters.remove(linterId);
 
       if (!linterConfig.isRunLinter())
