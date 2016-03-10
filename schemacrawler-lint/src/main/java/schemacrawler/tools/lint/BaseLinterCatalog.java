@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.lint.collector.LintCollector;
 import sf.util.StringFormat;
 
 public abstract class BaseLinterCatalog

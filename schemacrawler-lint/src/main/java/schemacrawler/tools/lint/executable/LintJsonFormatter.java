@@ -28,7 +28,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintedCatalog;
-import schemacrawler.tools.lint.collector.SimpleLintCollector;
+import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.base.BaseJsonFormatter;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
@@ -52,7 +52,7 @@ final class LintJsonFormatter
   public void handle(final LintedCatalog catalog)
     throws SchemaCrawlerException
   {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(catalog);
+    final Collection<Lint<?>> lints = LintCollector.getLint(catalog);
     if (lints != null && !lints.isEmpty())
     {
       final JSONObject jsonDatabase = new JSONObject();
@@ -76,7 +76,7 @@ final class LintJsonFormatter
   @Override
   public void handle(final Table table)
   {
-    final Collection<Lint<?>> lints = SimpleLintCollector.getLint(table);
+    final Collection<Lint<?>> lints = LintCollector.getLint(table);
     if (lints != null && !lints.isEmpty())
     {
       final JSONObject jsonTable = new JSONObject();
