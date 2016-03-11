@@ -25,14 +25,13 @@ import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.lint.BaseLinterCatalog;
+import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.utility.Query;
 
 public class LinterCatalogSql
-  extends BaseLinterCatalog
+  extends BaseLinter
 {
 
   private String message;
@@ -42,26 +41,6 @@ public class LinterCatalogSql
   public String getSummary()
   {
     return message;
-  }
-
-  @Override
-  public void lint(final Catalog catalog, final Connection connection)
-    throws SchemaCrawlerException
-  {
-    if (isBlank(sql))
-    {
-      return;
-    }
-
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-
-    final Query query = new Query(message, sql);
-    final Object queryResult = query.executeForScalar(connection);
-    if (queryResult != null)
-    {
-      addLint(catalog, getSummary() + " " + queryResult, true);
-    }
   }
 
   @Override
@@ -79,6 +58,27 @@ public class LinterCatalogSql
     if (isBlank(sql))
     {
       throw new IllegalArgumentException("No SQL provided");
+    }
+  }
+
+  @Override
+  protected void start(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    super.start(connection);
+
+    if (isBlank(sql))
+    {
+      return;
+    }
+
+    requireNonNull(connection, "No connection provided");
+
+    final Query query = new Query(message, sql);
+    final Object queryResult = query.executeForScalar(connection);
+    if (queryResult != null)
+    {
+      addCatalogLint(getSummary() + " " + queryResult, true);
     }
   }
 

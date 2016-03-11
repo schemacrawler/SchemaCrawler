@@ -30,6 +30,7 @@ import java.util.List;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.graph.DirectedGraph;
 import sf.util.graph.TarjanStronglyConnectedComponentFinder;
@@ -47,7 +48,8 @@ public class LinterTableCycles
   }
 
   @Override
-  protected void end()
+  protected void end(final Connection connection)
+    throws SchemaCrawlerException
   {
     requireNonNull(tablesGraph, "Not initialized");
 
@@ -63,7 +65,7 @@ public class LinterTableCycles
 
     tablesGraph = null;
 
-    super.end();
+    super.end(connection);
   }
 
   @Override
@@ -85,9 +87,10 @@ public class LinterTableCycles
   }
 
   @Override
-  protected void start()
+  protected void start(final Connection connection)
+    throws SchemaCrawlerException
   {
-    super.start();
+    super.start(connection);
 
     tablesGraph = new DirectedGraph<>(getLinterId());
   }
