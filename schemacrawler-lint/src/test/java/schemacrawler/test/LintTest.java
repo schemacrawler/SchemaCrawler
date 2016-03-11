@@ -40,6 +40,7 @@ import schemacrawler.tools.lint.LintCollector;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.Linters;
 
 public class LintTest
   extends BaseDatabaseTest
@@ -71,9 +72,11 @@ public class LintTest
     linterConfig.put("bad-column-names", ".*\\.COUNTRY");
     linterConfigs.add(linterConfig);
 
+    final Linters linters = new Linters(linterConfigs);
+    
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
-                                                           linterConfigs);
+                                                           linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(49, lintCollector.size());
 
@@ -110,10 +113,11 @@ public class LintTest
                  catalog.getTables(schema).size());
 
     final LinterConfigs linterConfigs = new LinterConfigs();
-
+    final Linters linters = new Linters(linterConfigs);
+    
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
-                                                           linterConfigs);
+                                                           linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(38, lintCollector.size());
 

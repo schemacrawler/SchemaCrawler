@@ -24,7 +24,6 @@ import static sf.util.Utility.readResourceFully;
 
 import java.io.Serializable;
 import java.sql.Connection;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,13 +39,14 @@ abstract class Linter
 
   private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
 
-  private final String linterInstanceId;
   private LintCollector collector;
   private LintSeverity severity;
+  private LintDispatch dispatch;
+  private int dispatchThreshold;
+  private int lintCount;
 
   protected Linter()
   {
-    linterInstanceId = UUID.randomUUID().toString();
     severity = LintSeverity.medium;
   }
 
@@ -55,6 +55,8 @@ abstract class Linter
     if (linterConfig != null)
     {
       setSeverity(linterConfig.getSeverity());
+      setDispatch(linterConfig.getDispatch());
+      setDispatchThreshold(linterConfig.getDispatchThreshold());
       configure(linterConfig.getConfig());
     }
   }
@@ -76,14 +78,19 @@ abstract class Linter
     return descriptionText;
   }
 
+  public final int getLintCount()
+  {
+    return lintCount;
+  }
+
   public String getLinterId()
   {
     return getClass().getName();
   }
 
-  public String getLinterInstanceId()
+  public final String getLinterInstanceId()
   {
-    return linterInstanceId;
+    return super.toString();
   }
 
   public final LintSeverity getSeverity()
@@ -93,12 +100,9 @@ abstract class Linter
 
   public abstract String getSummary();
 
-  public abstract void lint(Catalog catalog, Connection connection)
-    throws SchemaCrawlerException;
-
-  public final void setLintCollector(final LintCollector lintCollector)
+  public void setLintCount(final int lintCount)
   {
-    collector = lintCollector;
+    this.lintCount = lintCount;
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
@@ -119,20 +123,79 @@ abstract class Linter
                                       message,
                                       value);
       collector.addLint(namedObject, lint);
+      lintCount = lintCount + 1;
     }
-  };
+  }
 
+  /**
+   * Allows subclasses to configure themselves with custom parameters.
+   * Can be overridden.
+   *
+   * @param config
+   *        Custom configuration
+   */
   protected void configure(final Config config)
   {
 
   }
 
+  /**
+   * Set the severity of the lints created by this linter.
+   *
+   * @param severity
+   *        Severity to set. No changes are made if the parameter is
+   *        null.
+   */
   protected final void setSeverity(final LintSeverity severity)
   {
     if (severity != null)
     {
       this.severity = severity;
     }
+  }
+
+  final void dispatch()
+  {
+    if (shouldDispatch())
+    {
+      dispatch.dispatch();
+    }
+  };
+
+  abstract void lint(Catalog catalog, Connection connection)
+    throws SchemaCrawlerException;;
+
+  final void setCollector(final LintCollector collector)
+  {
+    this.collector = collector;
+  }
+
+  final void setLintCollector(final LintCollector lintCollector)
+  {
+    collector = lintCollector;
+  }
+
+  final boolean shouldDispatch()
+  {
+    return dispatch != null && dispatch != LintDispatch.none
+           && lintCount > dispatchThreshold;
+  }
+
+  private void setDispatch(final LintDispatch dispatch)
+  {
+    if (dispatch == null)
+    {
+      this.dispatch = LintDispatch.none;
+    }
+    else
+    {
+      this.dispatch = dispatch;
+    }
+  }
+
+  private void setDispatchThreshold(final int dispatchThreshold)
+  {
+    this.dispatchThreshold = dispatchThreshold;
   }
 
 }

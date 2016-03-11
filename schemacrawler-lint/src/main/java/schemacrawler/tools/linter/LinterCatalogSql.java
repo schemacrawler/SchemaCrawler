@@ -25,6 +25,7 @@ import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
@@ -59,6 +60,13 @@ public class LinterCatalogSql
     {
       throw new IllegalArgumentException("No SQL provided");
     }
+  }
+
+  @Override
+  protected void lint(final Table table, final Connection connection)
+    throws SchemaCrawlerException
+  {
+    // No-op, since the actual linting is done in the start method
   }
 
   @Override
