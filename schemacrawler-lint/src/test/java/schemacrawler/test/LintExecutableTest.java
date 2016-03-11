@@ -79,7 +79,7 @@ public class LintExecutableTest
   private void executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
                                                        final boolean linterconfigs,
                                                        final String referenceFileName)
-                                                         throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
     {
@@ -109,7 +109,7 @@ public class LintExecutableTest
   private void executeLintExecutable(final OutputFormat outputFormat,
                                      final boolean linterconfigs,
                                      final String referenceFileName)
-                                       throws Exception
+    throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
     if (linterconfigs)

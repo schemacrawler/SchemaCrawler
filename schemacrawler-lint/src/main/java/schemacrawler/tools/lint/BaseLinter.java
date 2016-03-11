@@ -41,7 +41,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public abstract class BaseLinter
-  extends BaseLinterCatalog
+  extends Linter
 {
 
   private static final Logger LOGGER = Logger
@@ -76,7 +76,7 @@ public abstract class BaseLinter
   {
     this.catalog = requireNonNull(catalog, "No catalog provided");
 
-    start();
+    start(connection);
     for (final Table table: catalog.getTables())
     {
       if (tableInclusionRule.test(table.getFullName())
@@ -86,12 +86,13 @@ public abstract class BaseLinter
       }
       else
       {
-        LOGGER
-          .log(Level.FINE,
-               String.format("Excluding table %s for lint %s", table, getLinterId()));
+        LOGGER.log(Level.FINE,
+                   String.format("Excluding table %s for lint %s",
+                                 table,
+                                 getLinterId()));
       }
     }
-    end();
+    end(connection);
     this.catalog = null;
   }
 
@@ -118,7 +119,8 @@ public abstract class BaseLinter
     addLint(table, message, value);
   }
 
-  protected void end()
+  protected void end(final Connection connection)
+    throws SchemaCrawlerException
   {
   }
 
@@ -203,7 +205,8 @@ public abstract class BaseLinter
     }
   }
 
-  protected void start()
+  protected void start(final Connection connection)
+    throws SchemaCrawlerException
   {
   }
 
