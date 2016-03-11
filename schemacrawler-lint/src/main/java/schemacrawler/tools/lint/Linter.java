@@ -34,12 +34,20 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
 
+/**
+ * Evaluates a catalog and creates lints. This base class has core
+ * functionality for maintaining state, but not for visiting a catalog.
+ * Includes code for dispatching a linter.
+ *
+ * @author Sualeh Fatehi
+ */
 abstract class Linter
 {
 
   private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
+
   private LintSeverity severity;
   private LintDispatch dispatch;
   private int dispatchThreshold;
@@ -47,20 +55,16 @@ abstract class Linter
 
   protected Linter()
   {
-    severity = LintSeverity.medium;
+    severity = LintSeverity.medium; // default value
   }
 
-  public void configure(final LinterConfig linterConfig)
-  {
-    if (linterConfig != null)
-    {
-      setSeverity(linterConfig.getSeverity());
-      setDispatch(linterConfig.getDispatch());
-      setDispatchThreshold(linterConfig.getDispatchThreshold());
-      configure(linterConfig.getConfig());
-    }
-  }
-
+  /**
+   * Gets a lengthy description of the linter. By default, reads a
+   * resource file called /help/<class-name>.txt and if that is not
+   * present, returns the summary. Can be overridden.
+   *
+   * @return Lengthy description of the linter
+   */
   public String getDescription()
   {
     final String descriptionResource = String
@@ -78,31 +82,60 @@ abstract class Linter
     return descriptionText;
   }
 
+  /**
+   * Gets the number of lints produced by this linter.
+   *
+   * @return Lint counts
+   */
   public final int getLintCount()
   {
     return lintCount;
   }
 
+  /**
+   * Gets the identification of this linter.
+   *
+   * @return Identification of this linter
+   */
   public String getLinterId()
   {
     return getClass().getName();
   }
 
+  /**
+   * Gets the identification of this linter instance.
+   *
+   * @return Identification of this linter instance
+   */
   public final String getLinterInstanceId()
   {
     return super.toString();
   }
 
+  /**
+   * Gets the severity of the lints produced by this linter.
+   *
+   * @return Severity of the lints produced by this linter
+   */
   public final LintSeverity getSeverity()
   {
     return severity;
   }
 
+  /**
+   * Gets a brief summary of this linter. Needs to be overridden.
+   *
+   * @return Brief summary of this linter
+   */
   public abstract String getSummary();
 
-  public void setLintCount(final int lintCount)
+  @Override
+  public String toString()
   {
-    this.lintCount = lintCount;
+    return String.format("%s - %s [%s]",
+                         getLinterInstanceId(),
+                         getSummary(),
+                         getSeverity());
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
@@ -154,6 +187,17 @@ abstract class Linter
     }
   }
 
+  void configure(final LinterConfig linterConfig)
+  {
+    if (linterConfig != null)
+    {
+      setSeverity(linterConfig.getSeverity());
+      setDispatch(linterConfig.getDispatch());
+      setDispatchThreshold(linterConfig.getDispatchThreshold());
+      configure(linterConfig.getConfig());
+    }
+  }
+
   final void dispatch()
   {
     if (shouldDispatch())
@@ -163,12 +207,7 @@ abstract class Linter
   };
 
   abstract void lint(Catalog catalog, Connection connection)
-    throws SchemaCrawlerException;;
-
-  final void setCollector(final LintCollector collector)
-  {
-    this.collector = collector;
-  }
+    throws SchemaCrawlerException;
 
   final void setLintCollector(final LintCollector lintCollector)
   {
