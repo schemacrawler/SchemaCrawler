@@ -70,32 +70,6 @@ public abstract class BaseLinter
     }
   }
 
-  @Override
-  public final void lint(final Catalog catalog, final Connection connection)
-    throws SchemaCrawlerException
-  {
-    this.catalog = requireNonNull(catalog, "No catalog provided");
-
-    start(connection);
-    for (final Table table: catalog.getTables())
-    {
-      if (tableInclusionRule.test(table.getFullName())
-          && tableTypesFilter.test(table))
-      {
-        lint(table, connection);
-      }
-      else
-      {
-        LOGGER.log(Level.FINE,
-                   String.format("Excluding table %s for lint %s",
-                                 table,
-                                 getLinterId()));
-      }
-    }
-    end(connection);
-    this.catalog = null;
-  }
-
   protected final void addCatalogLint(final String message)
   {
     addLint(catalog, message, null);
@@ -164,10 +138,8 @@ public abstract class BaseLinter
     return table != null && tableInclusionRule.test(table.getFullName());
   }
 
-  protected void lint(final Table table, final Connection connection)
-    throws SchemaCrawlerException
-  {
-  }
+  protected abstract void lint(Table table, Connection connection)
+    throws SchemaCrawlerException;
 
   protected final void setColumnInclusionRule(final InclusionRule columnInclusionRule)
   {
@@ -208,6 +180,32 @@ public abstract class BaseLinter
   protected void start(final Connection connection)
     throws SchemaCrawlerException
   {
+  }
+
+  @Override
+  final void lint(final Catalog catalog, final Connection connection)
+    throws SchemaCrawlerException
+  {
+    this.catalog = requireNonNull(catalog, "No catalog provided");
+
+    start(connection);
+    for (final Table table: catalog.getTables())
+    {
+      if (tableInclusionRule.test(table.getFullName())
+          && tableTypesFilter.test(table))
+      {
+        lint(table, connection);
+      }
+      else
+      {
+        LOGGER.log(Level.FINE,
+                   String.format("Excluding table %s for lint %s",
+                                 table,
+                                 getLinterId()));
+      }
+    }
+    end(connection);
+    this.catalog = null;
   }
 
 }

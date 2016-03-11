@@ -24,16 +24,12 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.StringFormat;
 
 public final class LintedCatalog
   extends BaseCatalogDecorator
@@ -48,12 +44,10 @@ public final class LintedCatalog
 
   public LintedCatalog(final Catalog catalog,
                        final Connection connection,
-                       final LinterConfigs linterConfigs)
+                       final Linters linters)
     throws SchemaCrawlerException
   {
     super(catalog);
-
-    collector = new LintCollector();
 
     try
     {
@@ -66,80 +60,14 @@ public final class LintedCatalog
       LOGGER.log(Level.WARNING, "No connection provided", e);
     }
 
-    requireNonNull(linterConfigs, "No linter configs provided");
-
-    final List<Linter> linters = new ArrayList<>();
-
-    final LinterRegistry linterRegistry = new LinterRegistry();
-    final Set<String> registeredLinters = linterRegistry.allRegisteredLinters();
-
-    // Add all configured linters, with as many instances as were
-    // configured
-    for (final LinterConfig linterConfig: linterConfigs)
-    {
-      if (linterConfig == null)
-      {
-        continue;
-      }
-
-      // First remove the linter id, because it is "seen",
-      // whether it needs to be run or not
-      final String linterId = linterConfig.getLinterId();
-      registeredLinters.remove(linterId);
-
-      if (!linterConfig.isRunLinter())
-      {
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Not running configured linter, %s",
-                                    linterConfig));
-        continue;
-      }
-
-      final Linter linter = newLinter(linterRegistry, linterId);
-      if (linter != null)
-      {
-        // Configure linter
-        linter.configure(linterConfig);
-
-        linters.add(linter);
-      }
-    }
-
-    // Add in all remaining linters that were not configured
-    for (final String linterId: registeredLinters)
-    {
-      final Linter linter = newLinter(linterRegistry, linterId);
-      linters.add(linter);
-    }
-
-    // Perform lint
-    for (final Linter linter: linters)
-    {
-      LOGGER
-        .log(Level.FINE,
-             new StringFormat("Linting with, %s", linter.getClass().getName()));
-      linter.lint(catalog, connection);
-    }
+    requireNonNull(linters, "No linters provided");
+    linters.lint(catalog, connection);
+    collector = linters.getCollector();
   }
 
   public LintCollector getCollector()
   {
     return collector;
-  }
-
-  private Linter newLinter(final LinterRegistry registry, final String linterId)
-  {
-    final Linter linter = registry.newLinter(linterId);
-    if (linter != null)
-    {
-      linter.setLintCollector(collector);
-    }
-    else
-    {
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Cannot find linter, %s", linterId));
-    }
-    return linter;
   }
 
 }

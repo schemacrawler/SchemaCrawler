@@ -40,6 +40,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
+import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.utility.NamedObjectSort;
 
@@ -67,15 +68,13 @@ public class LintExecutable
     lintOptions = getLintOptions();
 
     final LinterConfigs linterConfigs = readLinterConfigs();
-    final LintedCatalog catalog = new LintedCatalog(db,
-                                                    connection,
-                                                    linterConfigs);
+    final Linters linters = new Linters(linterConfigs);
+
+    final LintedCatalog catalog = new LintedCatalog(db, connection, linters);
 
     generateReport(catalog);
 
-    // Handle dispatch
-    final LintDispatcher lintDispatcher = new LintDispatcher(linterConfigs);
-    lintDispatcher.dispatch(catalog.getCollector());
+    linters.dispatch();
   }
 
   public final LintOptions getLintOptions()
