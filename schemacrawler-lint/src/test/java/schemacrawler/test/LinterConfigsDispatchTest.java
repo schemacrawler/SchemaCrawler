@@ -44,7 +44,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class LinterConfigsDispatchTest
   extends BaseExecutableTest
 {
-  
+
   @Rule
   public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 

@@ -70,10 +70,11 @@ public class LintOutputTest
 
     final String[] commands = new String[] {
                                              SchemaTextDetailType.brief + ","
-                                             + Operation.count + "," + "lint",
-                                             queryCommand1 + "," + SchemaTextDetailType.brief
-                                                                               + ","
-                                                                               + "lint", };
+                                             + Operation.count + ","
+                                             + "lint",
+                                             queryCommand1 + ","
+                                                       + SchemaTextDetailType.brief
+                                                       + "," + "lint", };
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: EnumSet
