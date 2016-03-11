@@ -95,13 +95,16 @@ public final class Linters
     if (LOGGER.isLoggable(Level.INFO))
     {
       final StringBuilder buffer = new StringBuilder(1024);
-      buffer.append("Too many schema lints were found:");
       linters.stream().filter(linter -> linter.shouldDispatch())
         .forEach(linter -> buffer.append(String.format("%n[%s] %s - %d",
                                                        linter.getSeverity(),
                                                        linter.getSummary(),
                                                        linter.getLintCount())));
-      LOGGER.log(Level.INFO, buffer.toString());
+      if (buffer.length() > 0)
+      {
+        buffer.insert(0, "Too many schema lints were found:");
+        LOGGER.log(Level.INFO, buffer.toString());
+      }
     }
 
     // Dispatch, in a loop, since not all dispatchers may interrupt the
