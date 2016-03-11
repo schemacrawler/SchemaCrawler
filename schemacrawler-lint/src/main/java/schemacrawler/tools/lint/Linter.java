@@ -20,35 +20,119 @@
 package schemacrawler.tools.lint;
 
 
+import static sf.util.Utility.readResourceFully;
+
+import java.io.Serializable;
 import java.sql.Connection;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.StringFormat;
 
-public interface Linter
+abstract class Linter
 {
-  
-  @Deprecated
-  default String getId()
+
+  private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
+
+  private final String linterInstanceId;
+  private LintCollector collector;
+  private LintSeverity severity;
+
+  protected Linter()
   {
-    return getLinterId();
+    linterInstanceId = UUID.randomUUID().toString();
+    severity = LintSeverity.medium;
   }
 
-  String getLinterId();
-  
-  String getLinterInstanceId();
+  public void configure(final LinterConfig linterConfig)
+  {
+    if (linterConfig != null)
+    {
+      setSeverity(linterConfig.getSeverity());
+      configure(linterConfig.getConfig());
+    }
+  }
 
-  void configure(LinterConfig linterConfig);
+  public String getDescription()
+  {
+    final String descriptionResource = String
+      .format("/help/%s.txt", this.getClass().getName().replace(".", "/"));
 
-  String getDescription();
+    final String descriptionText;
+    if (Linter.class.getResource(descriptionResource) == null)
+    {
+      return getSummary();
+    }
+    else
+    {
+      descriptionText = readResourceFully(descriptionResource);
+    }
+    return descriptionText;
+  }
 
-  LintSeverity getSeverity();
+  public String getLinterId()
+  {
+    return getClass().getName();
+  }
 
-  String getSummary();
+  public String getLinterInstanceId()
+  {
+    return linterInstanceId;
+  }
 
-  void lint(Catalog catalog, Connection connection)
+  public final LintSeverity getSeverity()
+  {
+    return severity;
+  }
+
+  public abstract String getSummary();
+
+  public abstract void lint(Catalog catalog, Connection connection)
     throws SchemaCrawlerException;
 
-  void setLintCollector(LintCollector lintCollector);
+  public final void setLintCollector(final LintCollector lintCollector)
+  {
+    collector = lintCollector;
+  }
+
+  protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
+                                                                                                  final String message,
+                                                                                                  final V value)
+  {
+    LOGGER.log(Level.FINE,
+               new StringFormat("Found lint for %s: %s --> %s",
+                                namedObject,
+                                message,
+                                value));
+    if (collector != null)
+    {
+      final Lint<V> lint = new Lint<>(getLinterId(),
+                                      getLinterInstanceId(),
+                                      namedObject,
+                                      getSeverity(),
+                                      message,
+                                      value);
+      collector.addLint(namedObject, lint);
+    }
+  };
+
+  protected void configure(final Config config)
+  {
+
+  }
+
+  protected final void setSeverity(final LintSeverity severity)
+  {
+    if (severity != null)
+    {
+      this.severity = severity;
+    }
+  }
 
 }

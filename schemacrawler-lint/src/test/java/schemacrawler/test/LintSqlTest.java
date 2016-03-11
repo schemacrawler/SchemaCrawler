@@ -46,7 +46,7 @@ public class LintSqlTest
 
   private void executeLintExecutable(final OutputFormat outputFormat,
                                      final String referenceFileName)
-                                       throws Exception
+    throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
 

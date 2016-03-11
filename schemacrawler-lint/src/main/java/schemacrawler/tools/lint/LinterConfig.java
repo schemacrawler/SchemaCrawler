@@ -61,11 +61,6 @@ public class LinterConfig
     dispatch = LintDispatch.none; // default value
   }
 
-  public String getLinterInstanceId()
-  {
-    return linterInstanceId;
-  }
-
   @Override
   public int compareTo(final LinterConfig other)
   {
@@ -128,6 +123,11 @@ public class LinterConfig
   public String getLinterId()
   {
     return linterId;
+  }
+
+  public String getLinterInstanceId()
+  {
+    return linterInstanceId;
   }
 
   public LintSeverity getSeverity()
