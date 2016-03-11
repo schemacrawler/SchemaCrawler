@@ -204,7 +204,7 @@ public final class Lint<V extends Serializable>
     return lintId;
   }
 
-  public final String getMessage()
+  public String getMessage()
   {
     return message;
   }
@@ -219,7 +219,7 @@ public final class Lint<V extends Serializable>
     return severity;
   }
 
-  public final V getValue()
+  public V getValue()
   {
     return value;
   }
@@ -284,7 +284,7 @@ public final class Lint<V extends Serializable>
     return result;
   }
 
-  public final boolean hasValue()
+  public boolean hasValue()
   {
     return value == null;
   }
