@@ -1,5 +1,26 @@
+/*
+ *
+ * SchemaCrawler
+ * http://www.schemacrawler.com
+ * Copyright (c) 2000-2016, Sualeh Fatehi.
+ *
+ * This library is free software; you can redistribute it and/or modify it under the terms
+ * of the GNU Lesser General Public License as published by the Free Software Foundation;
+ * either version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with this
+ * library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA 02111-1307, USA.
+ *
+ */
 package schemacrawler.tools.lint;
 
+
+import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -20,13 +41,14 @@ public final class Linters
 
   private final List<Linter> linters = new ArrayList<>();
   private final LintCollector collector = new LintCollector();
+  private final LinterRegistry registry = new LinterRegistry();
 
   public Linters(final LinterConfigs linterConfigs)
     throws SchemaCrawlerException
   {
+    requireNonNull(linterConfigs, "No linter configs provided");
 
-    final LinterRegistry linterRegistry = new LinterRegistry();
-    final Set<String> registeredLinters = linterRegistry.allRegisteredLinters();
+    final Set<String> registeredLinters = registry.allRegisteredLinters();
 
     // Add all configured linters, with as many instances as were
     // configured
@@ -50,7 +72,7 @@ public final class Linters
         continue;
       }
 
-      final Linter linter = newLinter(linterRegistry, linterId);
+      final Linter linter = newLinter(linterId);
       if (linter != null)
       {
         // Configure linter
@@ -63,7 +85,7 @@ public final class Linters
     // Add in all remaining linters that were not configured
     for (final String linterId: registeredLinters)
     {
-      final Linter linter = newLinter(linterRegistry, linterId);
+      final Linter linter = newLinter(linterId);
       linters.add(linter);
     }
   }
@@ -104,7 +126,7 @@ public final class Linters
     }
   }
 
-  private Linter newLinter(final LinterRegistry registry, final String linterId)
+  private Linter newLinter(final String linterId)
   {
     final Linter linter = registry.newLinter(linterId);
     if (linter != null)
