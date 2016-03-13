@@ -12,7 +12,7 @@ public class LintEqualsHashCodeTest
   @Test
   public void equalsContract()
   {
-    EqualsVerifier.forClass(Lint.class).verify();
+    EqualsVerifier.forClass(Lint.class).withIgnoredFields("value").verify();
   }
 
 }
