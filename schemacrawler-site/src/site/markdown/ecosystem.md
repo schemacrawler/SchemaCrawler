@@ -19,7 +19,7 @@ Once this done, you can view it in neo4j web console, or perform CYPHER queries 
 
 ### SchemaCrawler Additional Lints
 [schemacrawler-additionnallints](https://github.com/mbarre/schemacrawler-additionnallints) is maintained by
-Michèle Barré <Michele.Barre at gmail.com>.
+Michèle Barré <Michele.Barre at gmail.com> Adrien Sales <Adrien.Sales at GMail>.
 
 
 ## Installation Packages
