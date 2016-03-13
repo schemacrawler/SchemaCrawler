@@ -225,5 +225,5 @@ The main distribution has example code. In order to add your own lint checks,
 - Package your code in a jar file, and make sure that the jar has a text file 
   called `META-INF\services\schemacrawler.tools.lint.Linter` , 
   which contains the classnames of your linter classes 
-- Drop your jar file in the SchemaCrawler lib directory, and create a 
+- Drop your jar file in the SchemaCrawler lib directory (and **make sure it is executable or it will be silently skipped**), and create a 
   SchemaCrawler Lint report
