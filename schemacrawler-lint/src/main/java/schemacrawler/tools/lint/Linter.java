@@ -170,10 +170,10 @@ abstract class Linter
   @Override
   public String toString()
   {
-    return String.format("%s - %s [%s]",
+    return String.format("%s [%s] - %s",
                          getLinterInstanceId(),
-                         getSummary(),
-                         getSeverity());
+                         getSeverity(),
+                         getSummary());
   }
 
   protected final <N extends NamedObject & AttributedObject, V extends Serializable> void addLint(final N namedObject,
