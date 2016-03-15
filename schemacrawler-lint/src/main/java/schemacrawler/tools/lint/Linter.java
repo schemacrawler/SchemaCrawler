@@ -42,7 +42,6 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 abstract class Linter
-  implements Comparable<Linter>
 {
 
   private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
@@ -56,44 +55,6 @@ abstract class Linter
   protected Linter()
   {
     severity = LintSeverity.medium; // default value
-  }
-
-  @Override
-  public int compareTo(final Linter otherLinter)
-  {
-    if (otherLinter == null)
-    {
-      return -1;
-    }
-
-    int comparison = 0;
-
-    if (comparison == 0)
-    {
-      comparison = severity.compareTo(otherLinter.severity);
-    }
-
-    if (comparison == 0)
-    {
-      comparison = getLinterId().compareTo(otherLinter.getLinterId());
-    }
-
-    if (comparison == 0)
-    {
-      comparison = lintCount - otherLinter.lintCount;
-    }
-
-    if (comparison == 0)
-    {
-      comparison = dispatch.compareTo(otherLinter.dispatch);
-    }
-
-    if (comparison == 0)
-    {
-      comparison = dispatchThreshold - otherLinter.dispatchThreshold;
-    }
-
-    return comparison;
   }
 
   /**
