@@ -25,6 +25,7 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -89,8 +90,6 @@ public final class Linters
       final Linter linter = newLinter(linterId);
       linters.add(linter);
     }
-
-    Collections.sort(linters);
   }
 
   public void dispatch()
@@ -116,6 +115,46 @@ public final class Linters
 
   public String getLintSummary()
   {
+    final class LinterComparator
+      implements Comparator<Linter>
+    {
+      @Override
+      public int compare(final Linter linter1, final Linter linter2)
+      {
+        if (linter1 == null)
+        {
+          return -1;
+        }
+
+        if (linter2 == null)
+        {
+          return 1;
+        }
+
+        int comparison = 0;
+
+        if (comparison == 0)
+        {
+          comparison = linter1.getSeverity().compareTo(linter2.getSeverity());
+        }
+
+        if (comparison == 0)
+        {
+          comparison = linter1.getLintCount() - linter2.getLintCount();
+        }
+
+        if (comparison == 0)
+        {
+          comparison = linter1.getLinterId().compareTo(linter2.getLinterId());
+        }
+
+        return comparison;
+      }
+    }
+
+    final List<Linter> linters = new ArrayList<>(this.linters);
+    Collections.sort(linters, new LinterComparator());
+
     final StringBuilder buffer = new StringBuilder(1024);
 
     linters.stream().filter(linter -> linter.getLintCount() > 0)
