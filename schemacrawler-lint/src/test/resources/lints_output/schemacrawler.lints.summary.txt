@@ -1,0 +1,20 @@
+Summary of schema lints:
+[   low]     6 - empty table
+[   low]    13 - should have remarks
+[   low]     1 - primary key not first
+[   low]     1 - too many binary objects
+[medium]     1 - column with same name but different data types
+[medium]     1 - unique index with nullable columns
+[medium]     2 - column where NULL may be intended
+[medium]     3 - all data columns are nullable
+[medium]     1 - cycles in table relationships
+[medium]     1 - badly named column
+[medium]     9 - incrementing columns
+[medium]     1 - no indexes
+[medium]     3 - spaces in name, or reserved word
+[medium]     1 - single column
+[medium]     1 - useless surrogate key
+[  high]     2 - foreign key data type different from primary key
+[  high]     1 - redundant index
+[  high]     1 - no primary key
+
