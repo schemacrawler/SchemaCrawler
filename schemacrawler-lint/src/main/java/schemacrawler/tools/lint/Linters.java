@@ -24,6 +24,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -88,6 +89,8 @@ public final class Linters
       final Linter linter = newLinter(linterId);
       linters.add(linter);
     }
+    
+    Collections.sort(linters);
   }
 
   public void dispatch()
@@ -127,6 +130,12 @@ public final class Linters
                                   linter.getLinterInstanceId()));
       linter.lint(catalog, connection);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return linters.toString();
   }
 
   private Linter newLinter(final String linterId)
