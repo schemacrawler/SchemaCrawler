@@ -89,7 +89,7 @@ public final class Linters
       final Linter linter = newLinter(linterId);
       linters.add(linter);
     }
-    
+
     Collections.sort(linters);
   }
 
@@ -97,16 +97,10 @@ public final class Linters
   {
     if (LOGGER.isLoggable(Level.INFO))
     {
-      final StringBuilder buffer = new StringBuilder(1024);
-      linters.stream().filter(linter -> linter.shouldDispatch())
-        .forEach(linter -> buffer.append(String.format("%n[%s] %s - %d",
-                                                       linter.getSeverity(),
-                                                       linter.getSummary(),
-                                                       linter.getLintCount())));
-      if (buffer.length() > 0)
+      final String lintSummary = getLintSummary();
+      if (lintSummary.isEmpty())
       {
-        buffer.insert(0, "Too many schema lints were found:");
-        LOGGER.log(Level.INFO, buffer.toString());
+        LOGGER.log(Level.INFO, lintSummary);
       }
     }
 
@@ -118,6 +112,26 @@ public final class Linters
   public LintCollector getCollector()
   {
     return collector;
+  }
+
+  public String getLintSummary()
+  {
+    final StringBuilder buffer = new StringBuilder(1024);
+
+    linters.stream().filter(linter -> linter.getLintCount() > 0)
+      .forEach(linter -> buffer.append(String.format("[%6s] %5d%s- %s%n",
+                                                     linter.getSeverity(),
+                                                     linter.getLintCount(),
+                                                     linter
+                                                       .shouldDispatch()? "*"
+                                                                        : " ",
+                                                     linter.getSummary())));
+    if (buffer.length() > 0)
+    {
+      buffer.insert(0, "Summary of schema lints:\n");
+    }
+
+    return buffer.toString();
   }
 
   public void lint(final Catalog catalog, final Connection connection)

@@ -73,7 +73,7 @@ public class LintTest
     linterConfigs.add(linterConfig);
 
     final Linters linters = new Linters(linterConfigs);
-    
+
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
                                                            linters);
@@ -88,6 +88,12 @@ public class LintTest
       }
 
       out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.txt");
+    }
+
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      out.println(linters.getLintSummary());
+      out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.summary.txt");
     }
   }
 
@@ -114,7 +120,7 @@ public class LintTest
 
     final LinterConfigs linterConfigs = new LinterConfigs();
     final Linters linters = new Linters(linterConfigs);
-    
+
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            getConnection(),
                                                            linters);
