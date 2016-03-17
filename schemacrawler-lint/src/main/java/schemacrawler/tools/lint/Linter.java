@@ -41,15 +41,14 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-abstract class Linter
+public abstract class Linter
 {
 
   private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
-  private LintDispatch dispatch;
-  private int dispatchThreshold;
+  private int threshold;
   private int lintCount;
 
   protected Linter()
@@ -191,19 +190,10 @@ abstract class Linter
     if (linterConfig != null)
     {
       setSeverity(linterConfig.getSeverity());
-      setDispatch(linterConfig.getDispatch());
-      setDispatchThreshold(linterConfig.getDispatchThreshold());
+      setThreshold(linterConfig.getThreshold());
       configure(linterConfig.getConfig());
     }
   }
-
-  final void dispatch()
-  {
-    if (shouldDispatch())
-    {
-      dispatch.dispatch();
-    }
-  };
 
   abstract void lint(Catalog catalog, Connection connection)
     throws SchemaCrawlerException;
@@ -213,27 +203,14 @@ abstract class Linter
     collector = lintCollector;
   }
 
-  final boolean shouldDispatch()
+  public final boolean exceedsThreshold()
   {
-    return dispatch != null && dispatch != LintDispatch.none
-           && lintCount > dispatchThreshold;
+    return lintCount > threshold;
   }
 
-  private void setDispatch(final LintDispatch dispatch)
+  private void setThreshold(final int dispatchThreshold)
   {
-    if (dispatch == null)
-    {
-      this.dispatch = LintDispatch.none;
-    }
-    else
-    {
-      this.dispatch = dispatch;
-    }
-  }
-
-  private void setDispatchThreshold(final int dispatchThreshold)
-  {
-    this.dispatchThreshold = dispatchThreshold;
+    this.threshold = dispatchThreshold;
   }
 
 }

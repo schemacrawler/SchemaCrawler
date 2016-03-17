@@ -241,14 +241,9 @@ public class LinterConfigs
       linterConfig
         .setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
     }
-    if (cfg.hasValue("dispatch"))
+    if (cfg.hasValue("threshold"))
     {
-      linterConfig.setDispatch(cfg.getEnumValue("dispatch", LintDispatch.none));
-    }
-    if (cfg.hasValue("dispatch-threshold"))
-    {
-      linterConfig
-        .setDispatchThreshold(cfg.getIntegerValue("dispatch-threshold", 0));
+      linterConfig.setThreshold(cfg.getIntegerValue("threshold", 0));
     }
 
     final String tableInclusionPattern = parseRegularExpressionPattern(cfg,
