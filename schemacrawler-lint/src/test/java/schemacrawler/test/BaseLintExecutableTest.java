@@ -41,9 +41,10 @@ public abstract class BaseLintExecutableTest
   extends BaseExecutableTest
 {
 
-  protected void executeCommandlineAndCheckForOutputFile(final OutputFormat outputFormat,
-                                                         final String linterConfigsResource,
-                                                         final String referenceFileName)
+  protected void executeLintCommandLine(final OutputFormat outputFormat,
+                                        final String linterConfigsResource,
+                                        final Config additionalConfig,
+                                        final String referenceFileName)
     throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
@@ -63,6 +64,11 @@ public abstract class BaseLintExecutableTest
       {
         final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
         argsMap.put("linterconfigs", linterConfigsFile.toString());
+      }
+
+      if (additionalConfig != null)
+      {
+        argsMap.putAll(additionalConfig);
       }
 
       Main.main(flattenCommandlineArgs(argsMap));

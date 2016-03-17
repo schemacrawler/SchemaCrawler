@@ -61,6 +61,22 @@ public class LinterConfigsDispatchTest
   }
 
   @Test
+  public void testSystemExitLinterConfigCommandLine()
+    throws Exception
+  {
+    final Config additionalConfig = new Config();
+    additionalConfig.put("lintdispatch", "terminate_system");
+
+    exit.expectSystemExitWithStatus(1);
+
+    executeLintCommandLine(TextOutputFormat.text,
+                           "/schemacrawler-linter-configs-with-dispatch.xml",
+                           additionalConfig,
+                           "schemacrawler-linter-configs-with-dispatch");
+
+  }
+
+  @Test
   public void testSystemExitLinterConfiguration()
     throws Exception
   {
