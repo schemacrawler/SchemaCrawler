@@ -200,11 +200,9 @@ Here is an example linter configuration, with a dispatch:
 
 ```
 <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
-  <config>
-    <severity>critical</severity>
-    <dispatch>terminate_system</dispatch>
-    <dispatch-threshold>1</dispatch-threshold>
-  </config>
+  <severity>critical</severity>
+  <dispatch>terminate_system</dispatch>
+  <dispatch-threshold>1</dispatch-threshold>
 </linter>
 ```
 
