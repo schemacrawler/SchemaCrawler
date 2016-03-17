@@ -45,7 +45,6 @@ import org.xml.sax.SAXException;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.ObjectToString;
-import sf.util.StringFormat;
 
 public class LinterConfigs
   implements Iterable<LinterConfig>
@@ -75,23 +74,6 @@ public class LinterConfigs
     }
 
     return subElement;
-  }
-
-  private static String getTextValue(final Element element,
-                                     final String tagName)
-  {
-    final String text;
-    final Element subElement = getSubElement(element, tagName);
-    if (subElement != null)
-    {
-      text = subElement.getFirstChild().getNodeValue();
-    }
-    else
-    {
-      text = null;
-    }
-
-    return text;
   }
 
   private static Document parseXml(final InputSource xmlStream)
@@ -212,51 +194,6 @@ public class LinterConfigs
     return config;
   }
 
-  private LintDispatch parseDispatch(final Element linterElement,
-                                     final String linterId)
-  {
-    LintDispatch dispatch = LintDispatch.none;
-    final String dispatchValue = getTextValue(linterElement, "dispatch");
-    if (!isBlank(dispatchValue))
-    {
-      try
-      {
-        dispatch = LintDispatch.valueOf(dispatchValue);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.CONFIG,
-                   new StringFormat("Could not set a dispatch of %s for linter %s",
-                                    dispatchValue,
-                                    linterId));
-      }
-    }
-    return dispatch;
-  }
-
-  private int parseDispatchThreshold(final Element linterElement,
-                                     final String linterId)
-  {
-    int dispatchThreshold = 0;
-    final String dispatchThresholdValue = getTextValue(linterElement,
-                                                       "dispatch-threshold");
-    if (!isBlank(dispatchThresholdValue))
-    {
-      try
-      {
-        dispatchThreshold = Integer.valueOf(dispatchThresholdValue);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.CONFIG,
-                   new StringFormat("Could not set a dispatch threshold of %s for linter %s",
-                                    dispatchThresholdValue,
-                                    linterId));
-      }
-    }
-    return dispatchThreshold;
-  }
-
   private List<LinterConfig> parseDocument(final Document document)
   {
     requireNonNull(document, "No document provided");
@@ -298,32 +235,63 @@ public class LinterConfigs
 
     final LinterConfig linterConfig = new LinterConfig(linterId);
 
-    final Boolean runLinter = parseRunLinter(linterElement);
-    linterConfig.setRunLinter(runLinter);
+    final Config cfg = new Config();
+    final NodeList childNodes = linterElement.getChildNodes();
+    if (childNodes != null && childNodes.getLength() > 0)
+    {
+      for (int i = 0; i < childNodes.getLength(); i++)
+      {
+        final Node childNode = childNodes.item(i);
+        if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE)
+        {
+          final String elementName = childNode.getNodeName();
+          final Node firstChild = childNode.getFirstChild();
+          final String text;
+          if (firstChild != null)
+          {
+            text = firstChild.getNodeValue();
+          }
+          else
+          {
+            text = null;
+          }
+          cfg.put(elementName, text);
+        }
+      }
+    }
 
-    final LintSeverity severity = parseSeverity(linterElement, linterId);
-    linterConfig.setSeverity(severity);
+    if (cfg.hasValue("run"))
+    {
+      linterConfig.setRunLinter(cfg.getBooleanValue("run"));
+    }
+    if (cfg.hasValue("severity"))
+    {
+      linterConfig
+        .setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
+    }
+    if (cfg.hasValue("dispatch"))
+    {
+      linterConfig.setDispatch(cfg.getEnumValue("dispatch", LintDispatch.none));
+    }
+    if (cfg.hasValue("dispatch-threshold"))
+    {
+      linterConfig
+        .setDispatchThreshold(cfg.getIntegerValue("dispatch-threshold", 0));
+    }
 
-    final LintDispatch dispatch = parseDispatch(linterElement, linterId);
-    linterConfig.setDispatch(dispatch);
-
-    final int dispatchThreshold = parseDispatchThreshold(linterElement,
-                                                         linterId);
-    linterConfig.setDispatchThreshold(dispatchThreshold);
-
-    final String tableInclusionPattern = parseRegularExpressionPattern(linterElement,
+    final String tableInclusionPattern = parseRegularExpressionPattern(cfg,
                                                                        "table-inclusion-pattern");
     linterConfig.setTableInclusionPattern(tableInclusionPattern);
 
-    final String tableExclusionPattern = parseRegularExpressionPattern(linterElement,
+    final String tableExclusionPattern = parseRegularExpressionPattern(cfg,
                                                                        "table-exclusion-pattern");
     linterConfig.setTableExclusionPattern(tableExclusionPattern);
 
-    final String columnInclusionPattern = parseRegularExpressionPattern(linterElement,
+    final String columnInclusionPattern = parseRegularExpressionPattern(cfg,
                                                                         "column-inclusion-pattern");
     linterConfig.setColumnInclusionPattern(columnInclusionPattern);
 
-    final String columnExclusionPattern = parseRegularExpressionPattern(linterElement,
+    final String columnExclusionPattern = parseRegularExpressionPattern(cfg,
                                                                         "column-exclusion-pattern");
     linterConfig.setColumnExclusionPattern(columnExclusionPattern);
 
@@ -347,10 +315,10 @@ public class LinterConfigs
     return linterId;
   }
 
-  private String parseRegularExpressionPattern(final Element linterElement,
+  private String parseRegularExpressionPattern(final Config cfg,
                                                final String elementName)
   {
-    final String patternValue = getTextValue(linterElement, elementName);
+    final String patternValue = cfg.getStringValue(elementName, null);
     if (isBlank(patternValue))
     {
       return null;
@@ -359,43 +327,6 @@ public class LinterConfigs
     {
       return patternValue;
     }
-  }
-
-  private boolean parseRunLinter(final Element linterElement)
-  {
-    final boolean runLinter;
-    final String runLinterValue = getTextValue(linterElement, "run");
-    if (!isBlank(runLinterValue))
-    {
-      runLinter = Boolean.valueOf(runLinterValue);
-    }
-    else
-    {
-      runLinter = true;
-    }
-    return runLinter;
-  }
-
-  private LintSeverity parseSeverity(final Element linterElement,
-                                     final String linterId)
-  {
-    LintSeverity severity = LintSeverity.medium;
-    final String severityValue = getTextValue(linterElement, "severity");
-    if (!isBlank(severityValue))
-    {
-      try
-      {
-        severity = LintSeverity.valueOf(severityValue);
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.CONFIG,
-                   new StringFormat("Could not set a severity of %s for linter %s",
-                                    severityValue,
-                                    linterId));
-      }
-    }
-    return severity;
   }
 
 }
