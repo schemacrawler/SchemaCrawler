@@ -50,7 +50,7 @@ public class LinterConfigsDispatchTest
   public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 
   @Test
-  public void testSystemExitLinterConfig()
+  public void testSystemExitLinterConfiguration()
     throws Exception
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
@@ -65,9 +65,20 @@ public class LinterConfigsDispatchTest
         .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
       {
         assertEquals(LintSeverity.critical, linterConfig.getSeverity());
+        assertEquals(1, linterConfig.getThreshold());
         assertTrue(linterConfig.isRunLinter());
       }
     }
+  }
+
+  @Test
+  public void testSystemExitLinterConfig()
+    throws Exception
+  {
+    final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
+                                            StandardCharsets.UTF_8);
+    final LinterConfigs linterConfigs = new LinterConfigs();
+    linterConfigs.parse(reader);
 
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
     final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-with-dispatch.xml");
