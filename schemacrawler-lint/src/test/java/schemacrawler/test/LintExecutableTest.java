@@ -33,18 +33,20 @@ public class LintExecutableTest
   public void commandlineLintReport()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
-                                            null,
-                                            "executableForLint");
+    executeLintCommandLine(TextOutputFormat.text,
+                           null,
+                           null,
+                           "executableForLint");
   }
 
   @Test
   public void commandlineLintReportWithConfig()
     throws Exception
   {
-    executeCommandlineAndCheckForOutputFile(TextOutputFormat.text,
-                                            "/schemacrawler-linter-configs-test.xml",
-                                            "executableForLintWithConfig");
+    executeLintCommandLine(TextOutputFormat.text,
+                           "/schemacrawler-linter-configs-test.xml",
+                           null,
+                           "executableForLintWithConfig");
   }
 
   @Test
