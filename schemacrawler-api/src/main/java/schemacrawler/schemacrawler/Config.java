@@ -24,6 +24,7 @@ package schemacrawler.schemacrawler;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -129,7 +130,7 @@ public final class Config
    */
   private static Properties loadProperties(final Properties properties,
                                            final Path propertiesFile)
-                                             throws IOException
+    throws IOException
   {
     if (propertiesFile == null || !isRegularFile(propertiesFile)
         || !isReadable(propertiesFile))
@@ -259,6 +260,7 @@ public final class Config
   public <E extends Enum<E>> E getEnumValue(final String propertyName,
                                             final E defaultValue)
   {
+    requireNonNull(defaultValue, "No default value provided");
     final String value = getStringValue(propertyName, defaultValue.name());
     E enumValue;
     if (value == null)
@@ -269,7 +271,12 @@ public final class Config
     {
       try
       {
-        enumValue = (E) Enum.valueOf(defaultValue.getClass(), value);
+        Class<?> enumClass = defaultValue.getClass();
+        if (enumClass.getEnclosingClass() != null)
+        {
+          enumClass = enumClass.getEnclosingClass();
+        }
+        enumValue = Enum.valueOf((Class<E>) enumClass, value);
       }
       catch (final Exception e)
       {
