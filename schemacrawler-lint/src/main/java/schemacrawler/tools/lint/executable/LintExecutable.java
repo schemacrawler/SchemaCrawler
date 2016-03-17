@@ -33,11 +33,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.StreamSupport;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
@@ -74,7 +76,7 @@ public class LintExecutable
 
     generateReport(catalog);
 
-    linters.dispatch();
+    dispatch(linters);
   }
 
   public final LintOptions getLintOptions()
@@ -95,6 +97,25 @@ public class LintExecutable
   public final void setLintOptions(final LintOptions lintOptions)
   {
     this.lintOptions = lintOptions;
+  }
+
+  private void dispatch(final Linters linters)
+  {
+    if (!StreamSupport.stream(linters.spliterator(), false)
+      .anyMatch(linter -> linter.exceedsThreshold()))
+    {
+      return;
+    }
+
+    final String lintSummary = linters.getLintSummary();
+    if (!lintSummary.isEmpty())
+    {
+      System.err.println(lintSummary);
+    }
+
+    final LintDispatch lintDispatch = additionalConfiguration
+      .getEnumValue("lintdispatch", LintDispatch.none);
+    lintDispatch.dispatch();
   }
 
   private void generateReport(final LintedCatalog catalog)
