@@ -22,32 +22,43 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class LinterConfigsDispatchTest
-  extends BaseExecutableTest
+  extends BaseLintExecutableTest
 {
 
   @Rule
   public final ExpectedSystemExit exit = ExpectedSystemExit.none();
+
+  @Test
+  public void testSystemExitLinterConfig()
+    throws Exception
+  {
+    final Config additionalConfig = new Config();
+    additionalConfig.put("lintdispatch", "terminate_system");
+
+    exit.expectSystemExitWithStatus(1);
+
+    executeLintExecutable(TextOutputFormat.text,
+                          "/schemacrawler-linter-configs-with-dispatch.xml",
+                          additionalConfig,
+                          "schemacrawler-linter-configs-with-dispatch");
+
+  }
 
   @Test
   public void testSystemExitLinterConfiguration()
@@ -69,30 +80,6 @@ public class LinterConfigsDispatchTest
         assertTrue(linterConfig.isRunLinter());
       }
     }
-  }
-
-  @Test
-  public void testSystemExitLinterConfig()
-    throws Exception
-  {
-    final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
-                                            StandardCharsets.UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs();
-    linterConfigs.parse(reader);
-
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
-    final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-with-dispatch.xml");
-    final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
-    optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
-
-    final Config additionalConfig = optionsBuilder.toConfig();
-    additionalConfig.put("lintdispatch", "terminate_system");
-    lintExecutable.setAdditionalConfiguration(additionalConfig);
-
-    exit.expectSystemExitWithStatus(1);
-    executeExecutable(lintExecutable,
-                      TextOutputFormat.text.getFormat(),
-                      "schemacrawler-linter-configs-with-dispatch.txt");
   }
 
 }
