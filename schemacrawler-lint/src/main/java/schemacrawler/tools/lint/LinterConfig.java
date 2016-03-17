@@ -38,8 +38,7 @@ public class LinterConfig
   private final String linterId;
   private boolean runLinter;
   private LintSeverity severity;
-  private LintDispatch dispatch;
-  private int dispatchThreshold;
+  private int threshold;
   private final Config config;
   private String tableInclusionPattern;
   private String tableExclusionPattern;
@@ -55,7 +54,6 @@ public class LinterConfig
     this.linterId = linterId;
     runLinter = true; // default value
     config = new Config();
-    dispatch = LintDispatch.none; // default value
   }
 
   @Override
@@ -93,14 +91,9 @@ public class LinterConfig
     return config;
   }
 
-  public LintDispatch getDispatch()
+  public int getThreshold()
   {
-    return dispatch;
-  }
-
-  public int getDispatchThreshold()
-  {
-    return dispatchThreshold;
+    return threshold;
   }
 
   public String getLinterId()
@@ -144,21 +137,9 @@ public class LinterConfig
     this.columnInclusionPattern = columnInclusionPattern;
   }
 
-  public void setDispatch(final LintDispatch dispatch)
+  public void setThreshold(final int threshold)
   {
-    if (dispatch == null)
-    {
-      this.dispatch = LintDispatch.none;
-    }
-    else
-    {
-      this.dispatch = dispatch;
-    }
-  }
-
-  public void setDispatchThreshold(final int dispatchThreshold)
-  {
-    this.dispatchThreshold = dispatchThreshold;
+    this.threshold = threshold;
   }
 
   public void setRunLinter(final boolean runLinter)

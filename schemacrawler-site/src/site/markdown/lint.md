@@ -185,9 +185,11 @@ You can call SchemaCrawler using a regularly constructed command-line,
 from Maven using the Exec Maven Plugin, or from ant using the 
 java task, or from Gradle using JavaExec.
 
-In the configuration file, you can set a dispatch method, and a dispatch 
-threshold for linters. If the number of lints for that linter exceeds the 
-threshold, the lint dispatch will take effect. 
+In the configuration file, you can set a dispatch threshold for linters. 
+If the number of lints for that linter exceeds the 
+threshold, the lint dispatch will take effect. To specify a dispatch method,
+provide an additional command-line argument, such as 
+`-lintdispatch=terminate_system`
 
 Valid lint dispatch methods are 
 
@@ -201,8 +203,7 @@ Here is an example linter configuration, with a dispatch:
 ```
 <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
   <severity>critical</severity>
-  <dispatch>terminate_system</dispatch>
-  <dispatch-threshold>1</dispatch-threshold>
+  <threshold>1</threshold>
 </linter>
 ```
 
