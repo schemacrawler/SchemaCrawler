@@ -33,6 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.LintSeverity;
@@ -73,7 +74,9 @@ public class LinterConfigsDispatchTest
     final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
     optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
-    lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
+    final Config additionalConfig = optionsBuilder.toConfig();
+    additionalConfig.put("lintdispatch", "terminate_system");
+    lintExecutable.setAdditionalConfiguration(additionalConfig);
 
     exit.expectSystemExitWithStatus(1);
     executeExecutable(lintExecutable,

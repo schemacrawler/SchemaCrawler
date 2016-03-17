@@ -26,6 +26,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -36,6 +37,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
 
 public final class Linters
+  implements Iterable<Linter>
 {
 
   private static final Logger LOGGER = Logger
@@ -92,22 +94,6 @@ public final class Linters
     }
   }
 
-  public void dispatch()
-  {
-    if (LOGGER.isLoggable(Level.INFO))
-    {
-      final String lintSummary = getLintSummary();
-      if (lintSummary.isEmpty())
-      {
-        LOGGER.log(Level.INFO, lintSummary);
-      }
-    }
-
-    // Dispatch, in a loop, since not all dispatchers may interrupt the
-    // loop
-    linters.forEach(linter -> linter.dispatch());
-  }
-
   public LintCollector getCollector()
   {
     return collector;
@@ -158,12 +144,12 @@ public final class Linters
     final StringBuilder buffer = new StringBuilder(1024);
 
     linters.stream().filter(linter -> linter.getLintCount() > 0)
-      .forEach(linter -> buffer.append(String.format("[%6s] %5d%s- %s%n",
+      .forEach(linter -> buffer.append(String.format("[%6s]%s %5d- %s%n",
                                                      linter.getSeverity(),
-                                                     linter.getLintCount(),
                                                      linter
-                                                       .shouldDispatch()? "*"
-                                                                        : " ",
+                                                       .exceedsThreshold()? "*"
+                                                                          : " ",
+                                                     linter.getLintCount(),
                                                      linter.getSummary())));
     if (buffer.length() > 0)
     {
@@ -171,6 +157,12 @@ public final class Linters
     }
 
     return buffer.toString();
+  }
+
+  @Override
+  public Iterator<Linter> iterator()
+  {
+    return linters.iterator();
   }
 
   public void lint(final Catalog catalog, final Connection connection)
