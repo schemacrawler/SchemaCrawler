@@ -51,7 +51,10 @@ public class LintExecutableTest
   public void executableLintReport()
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text, null, "executableForLint");
+    executeLintExecutable(TextOutputFormat.text,
+                          null,
+                          null,
+                          "executableForLint");
   }
 
   @Test
@@ -60,6 +63,7 @@ public class LintExecutableTest
   {
     executeLintExecutable(TextOutputFormat.text,
                           "/schemacrawler-linter-configs-test.xml",
+                          null,
                           "executableForLintWithConfig");
   }
 

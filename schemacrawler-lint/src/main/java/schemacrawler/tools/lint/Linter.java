@@ -56,6 +56,11 @@ public abstract class Linter
     severity = LintSeverity.medium; // default value
   }
 
+  public final boolean exceedsThreshold()
+  {
+    return lintCount > threshold;
+  }
+
   /**
    * Gets a lengthy description of the linter. By default, reads a
    * resource file called /help/<class-name>.txt and if that is not
@@ -203,14 +208,9 @@ public abstract class Linter
     collector = lintCollector;
   }
 
-  public final boolean exceedsThreshold()
-  {
-    return lintCount > threshold;
-  }
-
   private void setThreshold(final int dispatchThreshold)
   {
-    this.threshold = dispatchThreshold;
+    threshold = dispatchThreshold;
   }
 
 }

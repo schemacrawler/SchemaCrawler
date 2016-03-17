@@ -91,11 +91,6 @@ public class LinterConfig
     return config;
   }
 
-  public int getThreshold()
-  {
-    return threshold;
-  }
-
   public String getLinterId()
   {
     return linterId;
@@ -110,6 +105,11 @@ public class LinterConfig
   {
     return new RegularExpressionRule(tableInclusionPattern,
                                      tableExclusionPattern);
+  }
+
+  public int getThreshold()
+  {
+    return threshold;
   }
 
   public boolean isRunLinter()
@@ -137,11 +137,6 @@ public class LinterConfig
     this.columnInclusionPattern = columnInclusionPattern;
   }
 
-  public void setThreshold(final int threshold)
-  {
-    this.threshold = threshold;
-  }
-
   public void setRunLinter(final boolean runLinter)
   {
     this.runLinter = runLinter;
@@ -160,6 +155,11 @@ public class LinterConfig
   public void setTableInclusionPattern(final String tableInclusionPattern)
   {
     this.tableInclusionPattern = tableInclusionPattern;
+  }
+
+  public void setThreshold(final int threshold)
+  {
+    this.threshold = threshold;
   }
 
   @Override
