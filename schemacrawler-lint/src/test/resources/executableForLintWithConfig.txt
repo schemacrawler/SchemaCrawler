@@ -8,7 +8,7 @@ Lints
 PUBLIC.BOOKS.AUTHORS                                             [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY
 
 
@@ -16,7 +16,7 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	
 	should have remarks	ID, FIRSTNAME, LASTNAME
 
@@ -25,7 +25,7 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	BOOKID, AUTHORID, "UPDATE"
 
 
@@ -33,7 +33,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	PREVIOUSEDITIONID
 
 
@@ -42,17 +42,18 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	single column	
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	"Global Count"
-	single column	
 
 
 
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	WRITERID, PUBLICATIONID, ID
 
 
@@ -61,17 +62,18 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	single column	
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	"Global Count"
-	single column	
 
 
 
 PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
@@ -81,7 +83,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	PUBLICATIONID, WRITERID
@@ -91,7 +93,7 @@ PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
@@ -101,7 +103,7 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
@@ -111,7 +113,7 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	
 	should have remarks	CITY, STATE, POSTALCODE, COUNTRY
 
@@ -120,7 +122,7 @@ PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	should have remarks	
 	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
 
@@ -129,7 +131,7 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
+                                                             [lint, low]
 	empty table	
 	should have remarks	
 	should have remarks	SALESDATAID, YEARLYAMOUNT
