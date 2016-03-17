@@ -118,7 +118,7 @@ public class LinterConfigsTest
 
       if (linterConfig.getLinterId().equals("linter.Linter2"))
       {
-        assertEquals(LintSeverity.medium, linterConfig.getSeverity());
+        assertEquals(null, linterConfig.getSeverity());
         assertTrue(!linterConfig.isRunLinter());
         assertEquals(".*",
                      linterConfig.getConfig().getStringValue("exclude", null));
