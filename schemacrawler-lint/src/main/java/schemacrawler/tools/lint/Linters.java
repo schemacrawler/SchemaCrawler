@@ -144,8 +144,9 @@ public final class Linters
     final StringBuilder buffer = new StringBuilder(1024);
 
     linters.stream().filter(linter -> linter.getLintCount() > 0)
-      .forEach(linter -> buffer.append(String.format("[%6s]%s %5d- %s%n",
-                                                     linter.getSeverity(),
+      .forEach(linter -> buffer.append(String.format("%8s%s %5d- %s%n",
+                                                     "[" + linter.getSeverity()
+                                                                        + "]",
                                                      linter
                                                        .exceedsThreshold()? "*"
                                                                           : " ",
