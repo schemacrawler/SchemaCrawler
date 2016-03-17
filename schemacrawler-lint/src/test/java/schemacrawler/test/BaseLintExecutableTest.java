@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -72,6 +73,7 @@ public abstract class BaseLintExecutableTest
 
   protected void executeLintExecutable(final OutputFormat outputFormat,
                                        final String linterConfigsResource,
+                                       final Config additionalConfig,
                                        final String referenceFileName)
     throws Exception
   {
@@ -82,7 +84,12 @@ public abstract class BaseLintExecutableTest
       final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
-      lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
+      final Config config = optionsBuilder.toConfig();
+      if (additionalConfig != null)
+      {
+        config.putAll(additionalConfig);
+      }
+      lintExecutable.setAdditionalConfiguration(config);
     }
 
     executeExecutable(lintExecutable,
