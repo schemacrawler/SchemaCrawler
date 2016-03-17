@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.07.03" date="2016-03-10" description="Bug fix">
+     <release version="14.07.04" date="2016-03-16" description="Lint enhancements">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Lint enhancements to dispatch.
+      ]]></action>                                                     
+     </release>   
+     <release version="14.07.03" date="2016-03-10" description="Lint enhancements">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Add details of lints that were dispatched, before the dispatch takes place.
       ]]></action>                                                     
@@ -56,7 +61,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.07.03" date="2016-02-03" description="Fixed logging">
+     <release version="14.07.04" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
