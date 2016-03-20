@@ -1,3 +1,5 @@
+from schemacrawler.schema import TableRelationshipType
+
 print catalog.schemaCrawlerInfo
 print catalog.databaseInfo
 print catalog.jdbcDriverInfo
@@ -5,5 +7,5 @@ print catalog.jdbcDriverInfo
 for table in catalog.tables:
   print ''
   print table.fullName
-  for column in table.columns:
-    print "  " + column.name
+  for childTable in table.getRelatedTables(TableRelationshipType.child):
+    print "  [child] " + childTable.fullName
