@@ -1,8 +1,10 @@
 // Define all standard Java packages:
 var JavaPackages = new JavaImporter(
-    java.util,
-    java.io,
-    java.nio);
+  java.lang,
+  java.util,
+  java.io,
+  java.nio
+);
 
 // Define all classes:
 var TableRelationshipType = Java.type('schemacrawler.schema.TableRelationshipType');

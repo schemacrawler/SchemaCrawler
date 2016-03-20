@@ -1,5 +1,6 @@
 // Define all standard Java packages:
 var JavaPackages = new JavaImporter(
+  java.lang,
   java.util,
   java.io,
   java.nio
