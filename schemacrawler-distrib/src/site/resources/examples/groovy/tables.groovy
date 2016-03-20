@@ -1,3 +1,5 @@
+import schemacrawler.schema.TableRelationshipType
+
 println catalog.schemaCrawlerInfo
 println catalog.databaseInfo
 println catalog.jdbcDriverInfo
@@ -6,8 +8,8 @@ for (table in catalog.tables)
 {
   println ''
   println table.fullName
-  for (column in table.columns)
+  for (childTable in table.getRelatedTables(TableRelationshipType.child))
   {
-    println "  " + column.name
+    println "  [child] " + childTable.fullName
   }
 }
