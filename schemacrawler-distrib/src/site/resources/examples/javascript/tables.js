@@ -1,29 +1,31 @@
-if (typeof println != 'function') {
-   // Account for Java 8 Nashorn engine
-   println = function(args) { print(args); };
-}
+// Define all standard Java packages:
+var JavaPackages = new JavaImporter(
+    java.util,
+    java.io,
+    java.nio);
 
-var printDb = function()
-{
-  println(catalog.schemaCrawlerInfo);
-  println(catalog.databaseInfo);
-  println(catalog.jdbcDriverInfo);
-
-  var schemas = catalog.schemas.toArray();
-  for ( var i = 0; i < schemas.length; i++)
+// Define all classes:
+var TableRelationshipType = Java.type('schemacrawler.schema.TableRelationshipType');
+    
+with (JavaPackages) {
+ 
+var printChildren = function()
+{ 
+  for each (var schema in catalog.schemas)
   {
-    println(schemas[i].fullName);
-    var tables = catalog.getTables(schemas[i]).toArray();
-    for ( var j = 0; j < tables.length; j++)
+    print(schema.fullName);
+    for each (var table in catalog.getTables(schema))
     {
-      println("o--> " + tables[j].name);
-      var columns = tables[j].columns.toArray();
-      for ( var k = 0; k < columns.length; k++)
+      print("  o--> " + table.fullName);
+      var children = table.getRelatedTables(TableRelationshipType.child);
+      for each (var childTable in children)
       {
-        println("     o--> " + columns[k].name);
-      }
+        print("    [child] " + childTable.fullName);
+      }      
     }
   }
 };
 
-printDb();
+printChildren();
+
+}
