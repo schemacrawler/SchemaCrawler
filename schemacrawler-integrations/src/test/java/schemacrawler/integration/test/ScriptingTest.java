@@ -42,6 +42,15 @@ public class ScriptingTest
   }
 
   @Test
+  public void executableJavaScript()
+    throws Exception
+  {
+    executeExecutable(createScriptExecutable(),
+                      "/plaintextschema.js",
+                      "script_output.txt");
+  }
+
+  @Test
   public void executablePython()
     throws Exception
   {
