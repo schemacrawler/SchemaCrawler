@@ -181,11 +181,55 @@ public class LinterConfigs
         final Node node = linterNodesList.item(i);
         if (node instanceof Element)
         {
-          final LinterConfig linterConfig = parseLinterConfig((Element) node);
-          if (linterConfig != null)
+          final Element linterElement = (Element) node;
+          final String linterId = parseLinterId(linterElement);
+          if (isBlank(linterId))
           {
-            linterConfigs.add(linterConfig);
+            LOGGER.log(Level.CONFIG,
+                       "Not running linter, since linter id is not provided");
+            continue;
           }
+          final LinterConfig linterConfig = new LinterConfig(linterId);
+
+          final Config cfg = parseLinterConfig(linterElement);
+
+          if (cfg.hasValue("run"))
+          {
+            linterConfig.setRunLinter(cfg.getBooleanValue("run"));
+          }
+          if (cfg.hasValue("severity"))
+          {
+            linterConfig
+              .setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
+          }
+          if (cfg.hasValue("threshold"))
+          {
+            linterConfig.setThreshold(cfg.getIntegerValue("threshold",
+                                                          Integer.MAX_VALUE));
+          }
+
+          final String tableInclusionPattern = parseRegularExpressionPattern(cfg,
+                                                                             "table-inclusion-pattern");
+          linterConfig.setTableInclusionPattern(tableInclusionPattern);
+
+          final String tableExclusionPattern = parseRegularExpressionPattern(cfg,
+                                                                             "table-exclusion-pattern");
+          linterConfig.setTableExclusionPattern(tableExclusionPattern);
+
+          final String columnInclusionPattern = parseRegularExpressionPattern(cfg,
+                                                                              "column-inclusion-pattern");
+          linterConfig.setColumnInclusionPattern(columnInclusionPattern);
+
+          final String columnExclusionPattern = parseRegularExpressionPattern(cfg,
+                                                                              "column-exclusion-pattern");
+          linterConfig.setColumnExclusionPattern(columnExclusionPattern);
+
+          // Linter-specific config
+          final Config config = parseConfig(getSubElement(linterElement,
+                                                          "config"));
+          linterConfig.putAll(config);
+
+          linterConfigs.add(linterConfig);
         }
       }
     }
@@ -193,19 +237,9 @@ public class LinterConfigs
     return linterConfigs;
   }
 
-  private LinterConfig parseLinterConfig(final Element linterElement)
+  private Config parseLinterConfig(final Element linterElement)
   {
     requireNonNull(linterElement, "No linter configuration provided");
-
-    final String linterId = parseLinterId(linterElement);
-    if (isBlank(linterId))
-    {
-      LOGGER.log(Level.CONFIG,
-                 "Not running linter, since linter id is not provided");
-      return new LinterConfig("<unknown>");
-    }
-
-    final LinterConfig linterConfig = new LinterConfig(linterId);
 
     final Config cfg = new Config();
     final NodeList childNodes = linterElement.getChildNodes();
@@ -232,40 +266,7 @@ public class LinterConfigs
       }
     }
 
-    if (cfg.hasValue("run"))
-    {
-      linterConfig.setRunLinter(cfg.getBooleanValue("run"));
-    }
-    if (cfg.hasValue("severity"))
-    {
-      linterConfig
-        .setSeverity(cfg.getEnumValue("severity", LintSeverity.medium));
-    }
-    if (cfg.hasValue("threshold"))
-    {
-      linterConfig.setThreshold(cfg.getIntegerValue("threshold", 0));
-    }
-
-    final String tableInclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                       "table-inclusion-pattern");
-    linterConfig.setTableInclusionPattern(tableInclusionPattern);
-
-    final String tableExclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                       "table-exclusion-pattern");
-    linterConfig.setTableExclusionPattern(tableExclusionPattern);
-
-    final String columnInclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                        "column-inclusion-pattern");
-    linterConfig.setColumnInclusionPattern(columnInclusionPattern);
-
-    final String columnExclusionPattern = parseRegularExpressionPattern(cfg,
-                                                                        "column-exclusion-pattern");
-    linterConfig.setColumnExclusionPattern(columnExclusionPattern);
-
-    final Config config = parseConfig(getSubElement(linterElement, "config"));
-    linterConfig.putAll(config);
-
-    return linterConfig;
+    return cfg;
   }
 
   private String parseLinterId(final Element linterElement)
