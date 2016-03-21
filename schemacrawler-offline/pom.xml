@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>schemacrawler-parent</artifactId>
 		<groupId>us.fatehi</groupId>
-		<version>14.07.04</version>
+		<version>14.07.05</version>
 	</parent>
 	<artifactId>schemacrawler-offline</artifactId>
 	<packaging>jar</packaging>
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.8</version>
+      <version>1.4.9</version>
     </dependency>    
 	</dependencies>
 	<build>
