@@ -53,6 +53,7 @@ public class LinterConfig
     }
     this.linterId = linterId;
     runLinter = true; // default value
+    threshold = Integer.MAX_VALUE; // default value
     config = new Config();
   }
 
