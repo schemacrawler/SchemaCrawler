@@ -69,6 +69,7 @@ public class LintTest
 
     final LinterConfigs linterConfigs = new LinterConfigs();
     final LinterConfig linterConfig = new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
+    linterConfig.setThreshold(0);
     linterConfig.put("bad-column-names", ".*\\.COUNTRY");
     linterConfigs.add(linterConfig);
 
