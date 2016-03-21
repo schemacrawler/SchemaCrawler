@@ -54,6 +54,7 @@ public abstract class Linter
   protected Linter()
   {
     severity = LintSeverity.medium; // default value
+    threshold = Integer.MAX_VALUE; // default value
   }
 
   public final boolean exceedsThreshold()
@@ -208,9 +209,9 @@ public abstract class Linter
     collector = lintCollector;
   }
 
-  private void setThreshold(final int dispatchThreshold)
+  private void setThreshold(final int threshold)
   {
-    threshold = dispatchThreshold;
+    this.threshold = threshold;
   }
 
 }
