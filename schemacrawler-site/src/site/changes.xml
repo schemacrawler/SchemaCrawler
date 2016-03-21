@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.07.05" date="2016-03-19" description="Lint dispatch bug fixes">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        More detailed examples of how to use the SchemaCrawler API from script.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixing a bug with the default linter threshold.
+      ]]></action>                                                          
+     </release>   
      <release version="14.07.04" date="2016-03-16" description="Lint enhancements">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Lint enhancements to dispatch.
@@ -61,7 +69,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.07.04" date="2016-02-03" description="Fixed logging">
+     <release version="14.07.05" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
