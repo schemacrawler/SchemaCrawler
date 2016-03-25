@@ -210,7 +210,7 @@
                 <artifactItem>
                   <groupId>com.thoughtworks.xstream</groupId>
                   <artifactId>xstream</artifactId>
-                  <version>1.4.8</version>
+                  <version>1.4.9</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
