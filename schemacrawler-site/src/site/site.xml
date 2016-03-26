@@ -53,9 +53,10 @@
       <item name="Database System Support" href="database-support.html" />
       <item name="Download" href="http://github.com/sualeh/SchemaCrawler/releases/" />
       <item name="Change History" href="changes-report.html" />
+      <item name="License" href="license.html" />
       <item name="Consulting" href="consulting.html" />
     </menu>
-    <menu name="Special Features">
+    <menu name="Features">
       <item name="Text Output" href="output.html" />
       <item name="Grep" href="schemacrawler_grep.html" />
       <item name="Diagramming" href="diagramming.html" />
