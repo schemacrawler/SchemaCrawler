@@ -22,65 +22,38 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import sf.util.StringFormat;
 
 /**
  * An enumeration wrapper around procedure column types.
  */
 public enum FunctionColumnType
-    implements RoutineColumnType
+  implements RoutineColumnType
 {
 
  /**
   * Unknown.
   */
-  unknown(DatabaseMetaData.functionColumnUnknown, "unknown"),
+ unknown(DatabaseMetaData.functionColumnUnknown, "unknown"),
  /**
   * In.
   */
-  in(DatabaseMetaData.functionColumnIn, "in"),
+ in(DatabaseMetaData.functionColumnIn, "in"),
  /**
   * In/ out.
   */
-  inOut(DatabaseMetaData.functionColumnInOut, "in/ out"),
+ inOut(DatabaseMetaData.functionColumnInOut, "in/ out"),
  /**
   * Out.
   */
-  out(DatabaseMetaData.functionColumnOut, "out"),
+ out(DatabaseMetaData.functionColumnOut, "out"),
  /**
   * Return.
   */
-  returnValue(DatabaseMetaData.functionColumnResult, "return"),
+ returnValue(DatabaseMetaData.functionColumnResult, "return"),
  /**
   * Return.
   */
-  result(DatabaseMetaData.procedureColumnResult, "result");
-
-  private static final Logger LOGGER = Logger
-    .getLogger(FunctionColumnType.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyDeferrability
-   */
-  public static FunctionColumnType valueOf(final int id)
-  {
-    for (final FunctionColumnType type: FunctionColumnType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
+ result(DatabaseMetaData.procedureColumnResult, "result");
 
   private final int id;
   private final String text;

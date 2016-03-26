@@ -56,7 +56,7 @@ final class IndexRetriever
 
   IndexRetriever(final RetrieverConnection retrieverConnection,
                  final MutableCatalog catalog)
-                   throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -134,7 +134,7 @@ final class IndexRetriever
 
   private void createIndexes(final MutableTable table,
                              final MetadataResultSet results)
-                               throws SQLException
+    throws SQLException
   {
     try
     {
@@ -173,7 +173,7 @@ final class IndexRetriever
     }
 
     final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
-    final int type = results.getInt("TYPE", IndexType.unknown.getId());
+    final IndexType type = results.getEnumFromId("TYPE", IndexType.unknown);
     final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
     final IndexColumnSortSequence sortSequence = IndexColumnSortSequence
       .valueOfFromCode(results.getString("ASC_OR_DESC"));
@@ -228,7 +228,7 @@ final class IndexRetriever
     //
     index.addColumn(indexColumn);
     index.setUnique(uniqueIndex);
-    index.setIndexType(IndexType.valueOf(type));
+    index.setIndexType(type);
     index.setCardinality(cardinality);
     index.setPages(pages);
     index.addAttributes(results.getAttributes());
@@ -330,7 +330,7 @@ final class IndexRetriever
 
   private void retrieveIndexesUsingSql(final InformationSchemaViews informationSchemaViews,
                                        final NamedObjectList<MutableTable> allTables)
-                                         throws SchemaCrawlerSQLException
+    throws SchemaCrawlerSQLException
   {
     final String indexesSql = informationSchemaViews.getIndexesSql();
     LOGGER.log(Level.FINER,

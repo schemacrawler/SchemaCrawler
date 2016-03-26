@@ -59,7 +59,7 @@ final class ForeignKeyRetriever
 
   ForeignKeyRetriever(final RetrieverConnection retrieverConnection,
                       final MutableCatalog catalog)
-                        throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -87,7 +87,7 @@ final class ForeignKeyRetriever
 
   private void createForeignKeys(final MetadataResultSet results,
                                  final NamedObjectList<MutableForeignKey> foreignKeys)
-                                   throws SQLException
+    throws SQLException
   {
     try
     {
@@ -117,12 +117,12 @@ final class ForeignKeyRetriever
           .getString("FKCOLUMN_NAME"));
 
         final int keySequence = results.getInt("KEY_SEQ", 0);
-        final int updateRule = results
-          .getInt("UPDATE_RULE", ForeignKeyUpdateRule.unknown.getId());
-        final int deleteRule = results
-          .getInt("DELETE_RULE", ForeignKeyUpdateRule.unknown.getId());
-        final int deferrability = results
-          .getInt("DEFERRABILITY", ForeignKeyDeferrability.unknown.getId());
+        final ForeignKeyUpdateRule updateRule = results
+          .getEnumFromId("UPDATE_RULE", ForeignKeyUpdateRule.unknown);
+        final ForeignKeyUpdateRule deleteRule = results
+          .getEnumFromId("DELETE_RULE", ForeignKeyUpdateRule.unknown);
+        final ForeignKeyDeferrability deferrability = results
+          .getEnumFromId("DEFERRABILITY", ForeignKeyDeferrability.unknown);
 
         final Column pkColumn = lookupOrCreateColumn(pkTableCatalogName,
                                                      pkTableSchemaName,
@@ -161,10 +161,9 @@ final class ForeignKeyRetriever
         }
 
         foreignKey.addColumnReference(keySequence, pkColumn, fkColumn);
-        foreignKey.setUpdateRule(ForeignKeyUpdateRule.valueOf(updateRule));
-        foreignKey.setDeleteRule(ForeignKeyUpdateRule.valueOf(deleteRule));
-        foreignKey
-          .setDeferrability(ForeignKeyDeferrability.valueOf(deferrability));
+        foreignKey.setUpdateRule(updateRule);
+        foreignKey.setDeleteRule(deleteRule);
+        foreignKey.setDeferrability(deferrability);
         foreignKey.addAttributes(results.getAttributes());
 
         if (fkColumn instanceof MutableColumn)
