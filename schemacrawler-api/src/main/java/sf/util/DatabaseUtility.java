@@ -115,6 +115,15 @@ public final class DatabaseUtility
 
   public static ResultSet executeSql(final Statement statement,
                                      final String sql)
+    throws SQLException
+  {
+    return executeSql(statement, sql, false);
+  }
+
+  public static ResultSet executeSql(final Statement statement,
+                                     final String sql,
+                                     boolean throwSQLException)
+    throws SQLException
   {
     ResultSet results = null;
     if (statement == null)
@@ -161,6 +170,10 @@ public final class DatabaseUtility
       LOGGER.log(Level.WARNING,
                  e,
                  new StringFormat("Error executing SQL, %s", sql));
+      if (throwSQLException)
+      {
+        throw e;
+      }
       return null;
     }
   }

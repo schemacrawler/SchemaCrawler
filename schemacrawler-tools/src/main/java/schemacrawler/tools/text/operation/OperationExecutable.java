@@ -112,7 +112,7 @@ public final class OperationExecutable
       else
       {
         final String sql = query.getQuery();
-        try (final ResultSet results = executeSql(statement, sql);)
+        try (final ResultSet results = executeSql(statement, sql, true);)
         {
           handler.handleData(query, results);
         }
