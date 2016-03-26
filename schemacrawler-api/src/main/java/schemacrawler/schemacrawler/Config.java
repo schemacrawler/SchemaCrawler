@@ -25,6 +25,7 @@ import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -262,28 +263,7 @@ public final class Config
   {
     requireNonNull(defaultValue, "No default value provided");
     final String value = getStringValue(propertyName, defaultValue.name());
-    E enumValue;
-    if (value == null)
-    {
-      enumValue = defaultValue;
-    }
-    else
-    {
-      try
-      {
-        Class<?> enumClass = defaultValue.getClass();
-        if (enumClass.getEnclosingClass() != null)
-        {
-          enumClass = enumClass.getEnclosingClass();
-        }
-        enumValue = Enum.valueOf((Class<E>) enumClass, value);
-      }
-      catch (final Exception e)
-      {
-        enumValue = defaultValue;
-      }
-    }
-    return enumValue;
+    return enumValue(value, defaultValue);
   }
 
   public InclusionRule getExclusionRule(final String optionName)

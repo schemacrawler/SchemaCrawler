@@ -156,7 +156,7 @@ public class LintExecutable
     final LintTraversalHandler formatter;
 
     final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+      .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new LintJsonFormatter(lintOptions, outputOptions);

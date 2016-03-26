@@ -138,7 +138,7 @@ public final class OperationExecutable
     final OperationOptions operationOptions = getOperationOptions();
     final DataTraversalHandler formatter;
     final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+      .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new DataJsonFormatter(operation,
@@ -164,7 +164,7 @@ public final class OperationExecutable
     {
       operation = Operation.valueOf(command);
     }
-    catch (final IllegalArgumentException e)
+    catch (final IllegalArgumentException | NullPointerException e)
     {
       operation = null;
     }

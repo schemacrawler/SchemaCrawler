@@ -25,7 +25,7 @@ package schemacrawler.tools.options;
  * Enumeration for text format type.
  */
 public enum TextOutputFormat
-    implements OutputFormat
+  implements OutputFormat
 {
 
  text("Plain text format"),
@@ -34,14 +34,14 @@ public enum TextOutputFormat
  tsv("Tab-separated values (TSV) format"),
  json("JavaScript Object Notation (JSON) format"),;
 
-  public static TextOutputFormat fromFormat(final String format)
+  public static TextOutputFormat valueOfFromString(final String format)
   {
     TextOutputFormat outputFormat;
     try
     {
       outputFormat = TextOutputFormat.valueOf(format);
     }
-    catch (final IllegalArgumentException e)
+    catch (final IllegalArgumentException | NullPointerException e)
     {
       outputFormat = text;
     }
@@ -55,7 +55,7 @@ public enum TextOutputFormat
       TextOutputFormat.valueOf(format);
       return true;
     }
-    catch (final IllegalArgumentException e)
+    catch (final IllegalArgumentException | NullPointerException e)
     {
       return false;
     }

@@ -60,7 +60,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
 
     final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+      .valueOfFromString(outputOptions.getOutputFormatValue());
     switch (outputFormat)
     {
       case html:
