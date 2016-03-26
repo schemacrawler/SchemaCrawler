@@ -22,61 +22,36 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import sf.util.StringFormat;
+import sf.util.IdentifiedEnum;
 
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum SearchableType
+  implements IdentifiedEnum
 {
 
  /**
   * Unknown
   */
-  unknown(-1, "unknown"),
+ unknown(-1, "unknown"),
  /**
   * Not searchable.
   */
-  predNone(DatabaseMetaData.typePredNone, "not searchable"),
+ predNone(DatabaseMetaData.typePredNone, "not searchable"),
  /**
   * Only searchable with where .. like.
   */
-  predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
+ predChar(DatabaseMetaData.typePredChar, "only searchable with where .. like"),
  /**
   * Searchable except with where .. like.
   */
-  predBasic(DatabaseMetaData.typePredBasic,
-    "searchable except with where .. like"),
+ predBasic(DatabaseMetaData.typePredBasic, "searchable except with where .. like"),
  /**
   * Searchable.
   */
-  searchable(DatabaseMetaData.typeSearchable, "searchable");
-
-  private static final Logger LOGGER = Logger
-    .getLogger(SearchableType.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return SearchableType
-   */
-  public static SearchableType valueOf(final int id)
-  {
-    for (final SearchableType type: SearchableType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
+ searchable(DatabaseMetaData.typeSearchable, "searchable");
 
   private final int id;
   private final String text;

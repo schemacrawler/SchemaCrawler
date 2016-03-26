@@ -22,60 +22,36 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import sf.util.StringFormat;
+import sf.util.IdentifiedEnum;
 
 /**
  * An enumeration wrapper around index types.
  */
 public enum IndexType
+  implements IdentifiedEnum
 {
 
  /**
   * Unknown
   */
-  unknown(-1),
+ unknown(-1),
  /**
   * Statistic.
   */
-  statistic(DatabaseMetaData.tableIndexStatistic),
+ statistic(DatabaseMetaData.tableIndexStatistic),
  /**
   * Clustered.
   */
-  clustered(DatabaseMetaData.tableIndexClustered),
+ clustered(DatabaseMetaData.tableIndexClustered),
  /**
   * Hashed.
   */
-  hashed(DatabaseMetaData.tableIndexHashed),
+ hashed(DatabaseMetaData.tableIndexHashed),
  /**
   * Other.
   */
-  other(DatabaseMetaData.tableIndexOther);
-
-  private static final Logger LOGGER = Logger
-    .getLogger(IndexType.class.getName());
-
-  /**
-   * Gets the value from the id.
-   *
-   * @param id
-   *        Id of the enumeration.
-   * @return IndexType
-   */
-  public static IndexType valueOf(final int id)
-  {
-    for (final IndexType type: IndexType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
+ other(DatabaseMetaData.tableIndexOther);
 
   private final int id;
 

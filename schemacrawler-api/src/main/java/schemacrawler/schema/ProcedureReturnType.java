@@ -47,29 +47,6 @@ public enum ProcedureReturnType
   */
   returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ProcedureReturnType.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyDeferrability
-   */
-  public static ProcedureReturnType valueOf(final int id)
-  {
-    for (final ProcedureReturnType type: ProcedureReturnType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
-
   private final int id;
   private final String text;
 

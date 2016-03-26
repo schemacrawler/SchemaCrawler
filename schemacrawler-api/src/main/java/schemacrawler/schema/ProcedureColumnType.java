@@ -59,29 +59,6 @@ public enum ProcedureColumnType
   */
   result(DatabaseMetaData.procedureColumnResult, "result");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(ProcedureColumnType.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyDeferrability
-   */
-  public static ProcedureColumnType valueOf(final int id)
-  {
-    for (final ProcedureColumnType type: ProcedureColumnType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
-
   private final int id;
   private final String text;
 
