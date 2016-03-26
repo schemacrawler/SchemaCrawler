@@ -2,7 +2,7 @@
  *
  * SchemaCrawler
  * http://www.schemacrawler.com
- * Copyright (c) 2000-2016, Sualeh Fatehi.
+ * Copyright (c) 2000-2016, Sualeh Fatehi <sualeh@hotmail.com>.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms
  * of the GNU Lesser General Public License as published by the Free Software Foundation;
