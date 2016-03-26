@@ -22,59 +22,32 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import sf.util.StringFormat;
+import sf.util.IdentifiedEnum;
 
 /**
  * The deferrability value for foreign keys.
  */
 public enum ForeignKeyDeferrability
+  implements IdentifiedEnum
 {
 
  /**
   * Unknown
   */
-  unknown(-1, "unknown"),
+ unknown(-1, "unknown"),
  /**
   * Initially deferred.
   */
-  initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
-    "initially deferred"),
+ initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred, "initially deferred"),
  /**
   * Initially immediate.
   */
-  initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
-    "initially immediate"),
+ initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate, "initially immediate"),
  /**
   * Not deferrable.
   */
-  keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
-
-  private static final Logger LOGGER = Logger
-    .getLogger(ForeignKeyDeferrability.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyDeferrability
-   */
-  public static ForeignKeyDeferrability valueOf(final int id)
-  {
-    for (final ForeignKeyDeferrability fkDeferrability: ForeignKeyDeferrability
-      .values())
-    {
-      if (fkDeferrability.getId() == id)
-      {
-        return fkDeferrability;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
+ keyNotDeferrable(DatabaseMetaData.importedKeyNotDeferrable, "not deferrable");
 
   private final int id;
   private final String text;

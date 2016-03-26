@@ -22,64 +22,40 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import sf.util.StringFormat;
+import sf.util.IdentifiedEnum;
 
 /**
  * Foreign key update and delete rules.
  */
 public enum ForeignKeyUpdateRule
+  implements IdentifiedEnum
 {
 
  /**
   * Unknown
   */
-  unknown(-1, "unknown"),
+ unknown(-1, "unknown"),
  /**
   * No action.
   */
-  noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
+ noAction(DatabaseMetaData.importedKeyNoAction, "no action"),
  /**
   * Cascade.
   */
-  cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
+ cascade(DatabaseMetaData.importedKeyCascade, "cascade"),
  /**
   * Set null.
   */
-  setNull(DatabaseMetaData.importedKeySetNull, "set null"),
+ setNull(DatabaseMetaData.importedKeySetNull, "set null"),
  /**
   * Set default.
   */
-  setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
+ setDefault(DatabaseMetaData.importedKeySetDefault, "set default"),
  /**
   * Restrict.
   */
-  restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
-
-  private static final Logger LOGGER = Logger
-    .getLogger(ForeignKeyUpdateRule.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyUpdateRule
-   */
-  public static ForeignKeyUpdateRule valueOf(final int id)
-  {
-    for (final ForeignKeyUpdateRule type: ForeignKeyUpdateRule.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
+ restrict(DatabaseMetaData.importedKeyRestrict, "restrict");
 
   private final String text;
   private final int id;

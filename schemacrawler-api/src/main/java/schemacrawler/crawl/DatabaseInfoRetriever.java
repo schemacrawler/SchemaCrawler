@@ -143,8 +143,7 @@ final class DatabaseInfoRetriever
                                                                          final Method method,
                                                                          final int resultSetType,
                                                                          final String resultSetTypeName)
-                                                                           throws IllegalAccessException,
-                                                                           InvocationTargetException
+    throws IllegalAccessException, InvocationTargetException
   {
     final String name = method.getName() + "For" + resultSetTypeName
                         + "ResultSets";
@@ -155,7 +154,7 @@ final class DatabaseInfoRetriever
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
                         final MutableCatalog catalog)
-                          throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -219,8 +218,10 @@ final class DatabaseInfoRetriever
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = DatabaseUtility
             .readResultsVector(results);
-          dbProperties.add(new ImmutableDatabaseProperty(method
-            .getName(), resultsList.toArray(new String[resultsList.size()])));
+          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
+                                                         resultsList
+                                                           .toArray(new String[resultsList
+                                                             .size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
@@ -234,16 +235,14 @@ final class DatabaseInfoRetriever
                                                          method,
                                                          ResultSet.TYPE_FORWARD_ONLY,
                                                          "TYPE_FORWARD_ONLY"));
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                               "TYPE_SCROLL_INSENSITIVE"));
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_SCROLL_SENSITIVE,
-                                               "TYPE_SCROLL_SENSITIVE"));
+          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
+                                                         method,
+                                                         ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                                         "TYPE_SCROLL_INSENSITIVE"));
+          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
+                                                         method,
+                                                         ResultSet.TYPE_SCROLL_SENSITIVE,
+                                                         "TYPE_SCROLL_SENSITIVE"));
         }
       }
       catch (final IllegalAccessException | InvocationTargetException e)
@@ -410,8 +409,8 @@ final class DatabaseInfoRetriever
           .getInt("NULLABLE",
                   DatabaseMetaData.typeNullableUnknown) == DatabaseMetaData.typeNullable;
         final boolean isCaseSensitive = results.getBoolean("CASE_SENSITIVE");
-        final SearchableType searchable = SearchableType.valueOf(results
-          .getInt("SEARCHABLE", SearchableType.unknown.ordinal()));
+        final SearchableType searchable = results
+          .getEnumFromId("SEARCHABLE", SearchableType.unknown);
         final boolean isUnsigned = results.getBoolean("UNSIGNED_ATTRIBUTE");
         final boolean isFixedPrecisionScale = results
           .getBoolean("FIXED_PREC_SCALE");
@@ -461,11 +460,14 @@ final class DatabaseInfoRetriever
 
   void retrieveUserDefinedColumnDataTypes(final String catalogName,
                                           final String schemaName)
-                                            throws SQLException
+    throws SQLException
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName, schemaName, "%", null));)
+      .getUDTs(catalogName,
+               schemaName,
+               "%",
+               null));)
     {
       while (results.next())
       {

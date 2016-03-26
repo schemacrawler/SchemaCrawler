@@ -20,7 +20,10 @@
 package schemacrawler.schema;
 
 
+import sf.util.IdentifiedEnum;
+
 public interface RoutineReturnType
+  extends IdentifiedEnum
 {
 
 }

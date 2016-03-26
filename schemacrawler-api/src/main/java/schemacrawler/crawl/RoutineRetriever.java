@@ -59,14 +59,14 @@ final class RoutineRetriever
 
   RoutineRetriever(final RetrieverConnection retrieverConnection,
                    final MutableCatalog catalog)
-                     throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
 
   void retrieveFunctionColumns(final MutableFunction function,
                                final InclusionRule columnInclusionRule)
-                                 throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                        true);
@@ -111,7 +111,8 @@ final class RoutineRetriever
           LOGGER.log(Level.FINER,
                      new StringFormat("Retrieving function column, %s",
                                       columnName));
-          final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
+          final FunctionColumnType columnType = results
+            .getEnumFromShortId("COLUMN_TYPE", FunctionColumnType.unknown);
           final int dataType = results.getInt("DATA_TYPE", 0);
           final String typeName = results.getString("TYPE_NAME");
           final int length = results.getInt("LENGTH", 0);
@@ -121,7 +122,7 @@ final class RoutineRetriever
                       (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
-          column.setFunctionColumnType(FunctionColumnType.valueOf(columnType));
+          column.setFunctionColumnType(columnType);
           column.setColumnDataType(lookupOrCreateColumnDataType(
                                                                 function
                                                                   .getSchema(),
@@ -163,7 +164,7 @@ final class RoutineRetriever
   void retrieveFunctions(final String catalogName,
                          final String schemaName,
                          final InclusionRule routineInclusionRule)
-                           throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                    false);
@@ -192,9 +193,8 @@ final class RoutineRetriever
         {
           continue;
         }
-        final short functionType = results
-          .getShort("FUNCTION_TYPE",
-                    (short) FunctionReturnType.unknown.getId());
+        final FunctionReturnType functionType = results
+          .getEnumFromShortId("FUNCTION_TYPE", FunctionReturnType.unknown);
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
@@ -203,7 +203,7 @@ final class RoutineRetriever
                                                              functionName);
         if (functionFilter.test(function))
         {
-          function.setReturnType(FunctionReturnType.valueOf(functionType));
+          function.setReturnType(functionType);
           function.setSpecificName(specificName);
           function.setRemarks(remarks);
           function.addAttributes(results.getAttributes());
@@ -235,7 +235,7 @@ final class RoutineRetriever
 
   void retrieveProcedureColumns(final MutableProcedure procedure,
                                 final InclusionRule columnInclusionRule)
-                                  throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                         true);
@@ -281,7 +281,8 @@ final class RoutineRetriever
           LOGGER.log(Level.FINER,
                      new StringFormat("Retrieving procedure column, %s",
                                       columnName));
-          final short columnType = results.getShort("COLUMN_TYPE", (short) 0);
+          final ProcedureColumnType columnType = results
+            .getEnumFromShortId("COLUMN_TYPE", ProcedureColumnType.unknown);
           final int dataType = results.getInt("DATA_TYPE", 0);
           final String typeName = results.getString("TYPE_NAME");
           final int length = results.getInt("LENGTH", 0);
@@ -291,8 +292,7 @@ final class RoutineRetriever
                       (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
-          column
-            .setProcedureColumnType(ProcedureColumnType.valueOf(columnType));
+          column.setProcedureColumnType(columnType);
           column.setColumnDataType(lookupOrCreateColumnDataType(
                                                                 procedure
                                                                   .getSchema(),
@@ -320,7 +320,7 @@ final class RoutineRetriever
   void retrieveProcedures(final String catalogName,
                           final String schemaName,
                           final InclusionRule routineInclusionRule)
-                            throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                      false);
@@ -353,9 +353,8 @@ final class RoutineRetriever
         {
           continue;
         }
-        final short procedureType = results
-          .getShort("PROCEDURE_TYPE",
-                    (short) ProcedureReturnType.unknown.getId());
+        final ProcedureReturnType procedureType = results
+          .getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
@@ -364,7 +363,7 @@ final class RoutineRetriever
                                                                 procedureName);
         if (procedureFilter.test(procedure))
         {
-          procedure.setReturnType(ProcedureReturnType.valueOf(procedureType));
+          procedure.setReturnType(procedureType);
           procedure.setSpecificName(specificName);
           procedure.setRemarks(remarks);
           procedure.addAttributes(results.getAttributes());

@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -189,6 +190,28 @@ public final class Utility
       }
     }
     return enumValue;
+  }
+
+  public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
+                                                                         final E defaultValue)
+  {
+    requireNonNull(defaultValue, "No default value provided");
+    try
+    {
+      final Class<E> enumClass = (Class<E>) defaultValue.getClass();
+      for (final E enumValue: EnumSet.allOf(enumClass))
+      {
+        if (((IdentifiedEnum) enumValue).getId() == value)
+        {
+          return enumValue;
+        }
+      }
+    }
+    catch (final Exception e)
+    {
+      // Ignore
+    }
+    return defaultValue;
   }
 
   /**

@@ -47,29 +47,6 @@ public enum FunctionReturnType
   */
   returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
-  private static final Logger LOGGER = Logger
-    .getLogger(FunctionReturnType.class.getName());
-
-  /**
-   * Gets the enum value from the integer.
-   *
-   * @param id
-   *        Id of the integer
-   * @return ForeignKeyDeferrability
-   */
-  public static FunctionReturnType valueOf(final int id)
-  {
-    for (final FunctionReturnType type: FunctionReturnType.values())
-    {
-      if (type.getId() == id)
-      {
-        return type;
-      }
-    }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown id, %d", id));
-    return unknown;
-  }
-
   private final int id;
   private final String text;
 

@@ -23,6 +23,7 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
+import static sf.util.Utility.enumValueFromId;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
@@ -41,6 +42,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import sf.util.IdentifiedEnum;
 import sf.util.StringFormat;
 
 /**
@@ -260,6 +262,38 @@ final class MetadataResultSet
   {
     final String value = getString(columnName).toLowerCase(Locale.ENGLISH);
     return enumValue(value, defaultValue);
+  }
+
+  /**
+   * Reads the value of a column from the result set as an enum.
+   *
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default enum value to return
+   * @return Enum value of the column, or the default if not available
+   */
+  <E extends Enum<E> & IdentifiedEnum> E getEnumFromId(final String columnName,
+                                                       final E defaultValue)
+  {
+    final int value = getInt(columnName, 0);
+    return enumValueFromId(value, defaultValue);
+  }
+
+  /**
+   * Reads the value of a column from the result set as an enum.
+   *
+   * @param columnName
+   *        Column name
+   * @param defaultValue
+   *        Default enum value to return
+   * @return Enum value of the column, or the default if not available
+   */
+  <E extends Enum<E> & IdentifiedEnum> E getEnumFromShortId(final String columnName,
+                                                            final E defaultValue)
+  {
+    final int value = getShort(columnName, (short) 0);
+    return enumValueFromId(value, defaultValue);
   }
 
   /**
