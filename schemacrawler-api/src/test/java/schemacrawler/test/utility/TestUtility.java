@@ -126,7 +126,7 @@ public final class TestUtility
   public static List<String> compareCompressedOutput(final String referenceFile,
                                                      final Path testOutputTempFile,
                                                      final String outputFormat)
-                                                       throws Exception
+    throws Exception
   {
     return compareOutput(referenceFile, testOutputTempFile, outputFormat, true);
   }
@@ -134,7 +134,7 @@ public final class TestUtility
   public static List<String> compareOutput(final String referenceFile,
                                            final Path testOutputTempFile,
                                            final String outputFormat)
-                                             throws Exception
+    throws Exception
   {
     return compareOutput(referenceFile,
                          testOutputTempFile,
@@ -146,7 +146,7 @@ public final class TestUtility
                                            final Path testOutputTempFile,
                                            final String outputFormat,
                                            final boolean isCompressed)
-                                             throws Exception
+    throws Exception
   {
 
     requireNonNull(referenceFile, "Reference file is not defined");
@@ -231,7 +231,7 @@ public final class TestUtility
 
   public static Path createTempFile(final String stem,
                                     final String outputFormatValue)
-                                      throws IOException
+    throws IOException
   {
     final Path testOutputTempFilePath = Files
       .createTempFile(String.format("schemacrawler.%s.", stem),
@@ -244,7 +244,7 @@ public final class TestUtility
 
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
-                                           throws IOException
+    throws IOException
   {
     return readerForResource(resource, encoding, false);
   }
@@ -275,7 +275,7 @@ public final class TestUtility
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final Pattern... ignoreLinePatterns)
-                                         throws Exception
+    throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
     {
@@ -360,7 +360,7 @@ public final class TestUtility
 
   private static void fastChannelCopy(final ReadableByteChannel src,
                                       final WritableByteChannel dest)
-                                        throws IOException
+    throws IOException
   {
     final ByteBuffer buffer = ByteBuffer.allocateDirect(16 * 1024);
     while (src.read(buffer) != -1)
@@ -384,7 +384,7 @@ public final class TestUtility
 
   private static Reader openNewCompressedInputReader(final InputStream inputStream,
                                                      final Charset charset)
-                                                       throws IOException
+    throws IOException
   {
     final ZipInputStream zipInputStream = new ZipInputStream(inputStream);
     zipInputStream.getNextEntry();
@@ -399,7 +399,7 @@ public final class TestUtility
 
   private static Reader readerForFile(final Path testOutputTempFile,
                                       final boolean isCompressed)
-                                        throws IOException
+    throws IOException
   {
 
     final BufferedReader bufferedReader;
@@ -423,7 +423,7 @@ public final class TestUtility
   private static Reader readerForResource(final String resource,
                                           final Charset encoding,
                                           final boolean isCompressed)
-                                            throws IOException
+    throws IOException
   {
     final InputStream inputStream = TestUtility.class
       .getResourceAsStream("/" + resource);
@@ -457,8 +457,7 @@ public final class TestUtility
 
   private static boolean validateJSON(final Path testOutputFile,
                                       final List<String> failures)
-                                        throws FileNotFoundException,
-                                        SAXException, IOException
+    throws FileNotFoundException, SAXException, IOException
   {
     final JsonElement jsonElement;
     try (final Reader reader = readerForFile(testOutputFile);
@@ -500,7 +499,7 @@ public final class TestUtility
 
   private static void validateXML(final Path testOutputFile,
                                   final List<String> failures)
-                                    throws Exception
+    throws Exception
   {
     final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     factory.setValidating(false);

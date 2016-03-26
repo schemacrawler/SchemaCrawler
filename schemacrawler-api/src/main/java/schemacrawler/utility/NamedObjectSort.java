@@ -28,35 +28,35 @@ import java.util.Comparator;
 import schemacrawler.schema.NamedObject;
 
 public enum NamedObjectSort
-    implements Comparator<NamedObject>
+  implements Comparator<NamedObject>
 {
 
  /**
   * Alphabetical sort.
   */
-  alphabetical
-  {
-    @Override
-    public int compare(final NamedObject namedObject1,
-                       final NamedObject namedObject2)
-    {
-      return convertForComparison(namedObject1.getFullName())
-        .compareTo(convertForComparison(namedObject2.getFullName()));
-    }
-  },
+ alphabetical
+ {
+   @Override
+   public int compare(final NamedObject namedObject1,
+                      final NamedObject namedObject2)
+   {
+     return convertForComparison(namedObject1.getFullName())
+       .compareTo(convertForComparison(namedObject2.getFullName()));
+   }
+ },
 
  /**
   * Natural sort.
   */
-  natural
-  {
-    @Override
-    public int compare(final NamedObject namedObject1,
-                       final NamedObject namedObject2)
-    {
-      return namedObject1.compareTo(namedObject2);
-    }
-  };
+ natural
+ {
+   @Override
+   public int compare(final NamedObject namedObject1,
+                      final NamedObject namedObject2)
+   {
+     return namedObject1.compareTo(namedObject2);
+   }
+ };
 
   public static NamedObjectSort getNamedObjectSort(final boolean alphabeticalSort)
   {

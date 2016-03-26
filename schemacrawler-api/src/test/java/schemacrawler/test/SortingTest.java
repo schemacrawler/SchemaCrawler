@@ -105,7 +105,7 @@ public class SortingTest
   private void checkColumnSort(final String tableName,
                                final String[] expectedValues,
                                final boolean sortAlphabetically)
-                                 throws Exception
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -137,7 +137,7 @@ public class SortingTest
   private void checkFkSort(final String tableName,
                            final String[] expectedValues,
                            final boolean sortAlphabetically)
-                             throws Exception
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -172,7 +172,7 @@ public class SortingTest
   private void checkIndexSort(final String tableName,
                               final String[] expectedValues,
                               final boolean sortAlphabetically)
-                                throws Exception
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());

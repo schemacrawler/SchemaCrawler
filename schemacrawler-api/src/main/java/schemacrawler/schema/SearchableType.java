@@ -67,6 +67,7 @@ public enum SearchableType
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

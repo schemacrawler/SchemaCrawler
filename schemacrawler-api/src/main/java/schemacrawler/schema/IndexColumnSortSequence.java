@@ -35,15 +35,15 @@ public enum IndexColumnSortSequence
  /**
   * Unknown
   */
-  unknown("unknown"),
+ unknown("unknown"),
  /**
   * Ascending.
   */
-  ascending("A"),
+ ascending("A"),
  /**
   * Descending.
   */
-  descending("D");
+ descending("D");
 
   private static final Logger LOGGER = Logger
     .getLogger(IndexColumnSortSequence.class.getName());

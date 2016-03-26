@@ -73,7 +73,7 @@ public final class DatabaseUtility
 
   public static void executeScriptFromResource(final Connection connection,
                                                final String scriptResource)
-                                                 throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);)
     {
@@ -159,7 +159,7 @@ public final class DatabaseUtility
 
   public static long executeSqlForLong(final Connection connection,
                                        final String sql)
-                                         throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final Object longValue = executeSqlForScalar(connection, sql);
     // Error checking
@@ -173,7 +173,7 @@ public final class DatabaseUtility
 
   public static Object executeSqlForScalar(final Connection connection,
                                            final String sql)
-                                             throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);
         final ResultSet resultSet = executeSql(statement, sql);)

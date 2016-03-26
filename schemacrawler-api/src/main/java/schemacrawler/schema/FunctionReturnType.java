@@ -22,30 +22,26 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import sf.util.StringFormat;
 
 /**
  * An enumeration wrapper around JDBC function types.
  */
 public enum FunctionReturnType
-    implements RoutineReturnType
+  implements RoutineReturnType
 {
 
  /**
   * Result unknown.
   */
-  unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
+ unknown(DatabaseMetaData.functionResultUnknown, "result unknown"),
  /**
   * Does not return a table.
   */
-  noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
+ noTable(DatabaseMetaData.functionNoTable, "does not return a table"),
  /**
   * Returns a table.
   */
-  returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
+ returnsTable(DatabaseMetaData.functionReturnsTable, "returns table");
 
   private final int id;
   private final String text;
@@ -61,6 +57,7 @@ public enum FunctionReturnType
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

@@ -205,7 +205,6 @@ final class MetadataResultSet
    */
   boolean getBoolean(final String columnName)
   {
-    boolean value = false;
     if (useColumn(columnName))
     {
       try
@@ -246,7 +245,7 @@ final class MetadataResultSet
                                     columnName));
       }
     }
-    return value;
+    return false;
   }
 
   /**

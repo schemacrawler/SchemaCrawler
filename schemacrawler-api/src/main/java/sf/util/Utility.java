@@ -193,7 +193,7 @@ public final class Utility
   }
 
   public static <E extends Enum<E> & IdentifiedEnum> E enumValueFromId(final int value,
-                                                                         final E defaultValue)
+                                                                       final E defaultValue)
   {
     requireNonNull(defaultValue, "No default value provided");
     try

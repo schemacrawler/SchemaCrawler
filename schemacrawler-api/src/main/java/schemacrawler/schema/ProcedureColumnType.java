@@ -22,42 +22,38 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import sf.util.StringFormat;
 
 /**
  * An enumeration wrapper around procedure column types.
  */
 public enum ProcedureColumnType
-    implements RoutineColumnType
+  implements RoutineColumnType
 {
 
  /**
   * Unknown.
   */
-  unknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
+ unknown(DatabaseMetaData.procedureColumnUnknown, "unknown"),
  /**
   * In.
   */
-  in(DatabaseMetaData.procedureColumnIn, "in"),
+ in(DatabaseMetaData.procedureColumnIn, "in"),
  /**
   * In/ out.
   */
-  inOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
+ inOut(DatabaseMetaData.procedureColumnInOut, "in/ out"),
  /**
   * Out.
   */
-  out(DatabaseMetaData.procedureColumnOut, "out"),
+ out(DatabaseMetaData.procedureColumnOut, "out"),
  /**
   * Return.
   */
-  returnValue(DatabaseMetaData.procedureColumnReturn, "return"),
+ returnValue(DatabaseMetaData.procedureColumnReturn, "return"),
  /**
   * Return.
   */
-  result(DatabaseMetaData.procedureColumnResult, "result");
+ result(DatabaseMetaData.procedureColumnResult, "result");
 
   private final int id;
   private final String text;
@@ -73,6 +69,7 @@ public enum ProcedureColumnType
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

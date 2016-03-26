@@ -81,7 +81,7 @@ public abstract class BaseDatabaseTest
 
   protected Catalog getCatalog(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
-                                 throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
                                                           databaseSpecificOverrideOptions);

@@ -55,14 +55,14 @@ final class TableColumnRetriever
 
   TableColumnRetriever(final RetrieverConnection retrieverConnection,
                        final MutableCatalog catalog)
-                         throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
 
   void retrieveColumns(final NamedObjectList<MutableTable> allTables,
                        final InclusionRule columnInclusionRule)
-                         throws SQLException
+    throws SQLException
   {
     requireNonNull(allTables);
 
@@ -105,7 +105,7 @@ final class TableColumnRetriever
 
   void retrieveHiddenColumns(final NamedObjectList<MutableTable> allTables,
                              final InclusionRule columnInclusionRule)
-                               throws SQLException
+    throws SQLException
   {
     requireNonNull(allTables);
 
@@ -152,7 +152,7 @@ final class TableColumnRetriever
   private MutableColumn createTableColumn(final MetadataResultSet results,
                                           final NamedObjectList<MutableTable> allTables,
                                           final InclusionRuleFilter<Column> columnFilter)
-                                            throws SQLException
+    throws SQLException
   {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
     // don't handle it properly otherwise.
@@ -251,8 +251,7 @@ final class TableColumnRetriever
 
   private void retrieveColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
                                                  final InclusionRuleFilter<Column> columnFilter)
-                                                   throws SchemaCrawlerSQLException,
-                                                   SQLException
+    throws SchemaCrawlerSQLException, SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -280,7 +279,7 @@ final class TableColumnRetriever
 
   private void retrieveColumnsFromMetadata(final NamedObjectList<MutableTable> allTables,
                                            final InclusionRuleFilter<Column> columnFilter)
-                                             throws SchemaCrawlerSQLException
+    throws SchemaCrawlerSQLException
   {
     for (final MutableTable table: allTables)
     {
@@ -306,10 +305,13 @@ final class TableColumnRetriever
 
   private void retrieveColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
                                                        final InclusionRuleFilter<Column> columnFilter)
-                                                         throws SQLException
+    throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(null, null, "%", "%"));)
+      .getColumns(null,
+                  null,
+                  "%",
+                  "%"));)
     {
       while (results.next())
       {

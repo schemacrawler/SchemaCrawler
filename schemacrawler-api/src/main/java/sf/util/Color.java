@@ -41,7 +41,7 @@ public final class Color
                               final float saturation,
                               final float value)
   {
-    final float normaliedHue = (hue - (float) Math.floor(hue));
+    final float normaliedHue = hue - (float) Math.floor(hue);
     final int h = (int) (normaliedHue * 6);
     final float f = normaliedHue * 6 - h;
     final float p = value * (1 - saturation);
@@ -63,11 +63,11 @@ public final class Color
       case 5:
         return rgbToString(value, p, q);
       default:
-        throw new RuntimeException(String.format(
-                                                 "Could not convert from HSV (%f, %f, %f) to RGB",
-                                                 normaliedHue,
-                                                 saturation,
-                                                 value));
+        throw new RuntimeException(String
+          .format("Could not convert from HSV (%f, %f, %f) to RGB",
+                  normaliedHue,
+                  saturation,
+                  value));
     }
   }
 

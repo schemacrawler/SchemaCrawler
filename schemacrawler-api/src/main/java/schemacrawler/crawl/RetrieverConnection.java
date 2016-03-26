@@ -52,7 +52,7 @@ final class RetrieverConnection
 
   private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                     final DatabaseMetaData metaData)
-                                                      throws SQLException
+    throws SQLException
   {
     String identifierQuoteString;
     if (databaseSpecificOverrideOptions != null
@@ -76,7 +76,7 @@ final class RetrieverConnection
 
   private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                 final DatabaseMetaData metaData)
-                                                  throws SQLException
+    throws SQLException
   {
     final boolean supportsCatalogs;
     if (databaseSpecificOverrideOptions != null
@@ -93,7 +93,7 @@ final class RetrieverConnection
 
   private static boolean lookupSupportsSchemas(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                final DatabaseMetaData metaData)
-                                                 throws SQLException
+    throws SQLException
   {
     final boolean supportsSchemas;
     if (databaseSpecificOverrideOptions != null
@@ -122,7 +122,7 @@ final class RetrieverConnection
 
   RetrieverConnection(final Connection connection,
                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                        throws SQLException
+    throws SQLException
   {
     try
     {

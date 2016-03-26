@@ -92,7 +92,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
@@ -114,7 +114,7 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.Column#isHidden()
    */
   @Override

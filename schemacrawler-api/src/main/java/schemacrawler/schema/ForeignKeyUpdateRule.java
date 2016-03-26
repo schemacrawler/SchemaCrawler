@@ -71,6 +71,7 @@ public enum ForeignKeyUpdateRule
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

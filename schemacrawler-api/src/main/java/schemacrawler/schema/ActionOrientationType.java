@@ -30,14 +30,14 @@ public enum ActionOrientationType
  /**
   * Unknown
   */
-  unknown,
+ unknown,
  /**
   * Row
   */
-  row,
+ row,
  /**
   * Statement
   */
-  statement;
+ statement;
 
 }
