@@ -22,30 +22,26 @@ package schemacrawler.schema;
 
 
 import java.sql.DatabaseMetaData;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import sf.util.StringFormat;
 
 /**
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-    implements RoutineReturnType
+  implements RoutineReturnType
 {
 
  /**
   * Result unknown.
   */
-  unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
+ unknown(DatabaseMetaData.procedureResultUnknown, "result unknown"),
  /**
   * No result.
   */
-  noResult(DatabaseMetaData.procedureNoResult, "no result"),
+ noResult(DatabaseMetaData.procedureNoResult, "no result"),
  /**
   * Returns result.
   */
-  returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
+ returnsResult(DatabaseMetaData.procedureReturnsResult, "returns result");
 
   private final int id;
   private final String text;
@@ -61,6 +57,7 @@ public enum ProcedureReturnType
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

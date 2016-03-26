@@ -56,7 +56,7 @@ abstract class AbstractRetriever
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog)
-                      throws SQLException
+    throws SQLException
   {
     this.retrieverConnection = requireNonNull(retrieverConnection,
                                               "No retriever connection provided");

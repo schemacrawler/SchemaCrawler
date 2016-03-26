@@ -87,7 +87,7 @@ public final class SchemaCrawler
   private static void crawlColumnDataTypes(final MutableCatalog catalog,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)
-                                             throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {
@@ -158,7 +158,7 @@ public final class SchemaCrawler
   private static void crawlDatabaseInfo(final MutableCatalog catalog,
                                         final RetrieverConnection retrieverConnection,
                                         final SchemaCrawlerOptions options)
-                                          throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {
@@ -240,7 +240,7 @@ public final class SchemaCrawler
   private static void crawlRoutines(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-                                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final StopWatch stopWatch = new StopWatch("crawlRoutines");
 
@@ -352,7 +352,7 @@ public final class SchemaCrawler
   private static void crawlSchemas(final MutableCatalog catalog,
                                    final RetrieverConnection retrieverConnection,
                                    final SchemaCrawlerOptions options)
-                                     throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final StopWatch stopWatch = new StopWatch("crawlSchemas");
 
@@ -396,7 +396,7 @@ public final class SchemaCrawler
   private static void crawlSequences(final MutableCatalog catalog,
                                      final RetrieverConnection retrieverConnection,
                                      final SchemaCrawlerOptions options)
-                                       throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final StopWatch stopWatch = new StopWatch("crawlSequences");
 
@@ -451,7 +451,7 @@ public final class SchemaCrawler
   private static void crawlSynonyms(final MutableCatalog catalog,
                                     final RetrieverConnection retrieverConnection,
                                     final SchemaCrawlerOptions options)
-                                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final StopWatch stopWatch = new StopWatch("crawlSynonyms");
 
@@ -505,7 +505,7 @@ public final class SchemaCrawler
   private static void crawlTables(final MutableCatalog catalog,
                                   final RetrieverConnection retrieverConnection,
                                   final SchemaCrawlerOptions options)
-                                    throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
 
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
@@ -718,7 +718,7 @@ public final class SchemaCrawler
    */
   public SchemaCrawler(final Connection connection,
                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                         throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     this.connection = requireNonNull(connection, "No connection specified");
     this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,

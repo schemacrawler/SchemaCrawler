@@ -58,7 +58,7 @@ final class TableExtRetriever
 
   TableExtRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog)
-                      throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -300,7 +300,10 @@ final class TableExtRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumnPrivileges(null, null, "%", "%"));)
+      .getColumnPrivileges(null,
+                           null,
+                           "%",
+                           "%"));)
     {
       createPrivileges(results, true);
     }
@@ -422,7 +425,9 @@ final class TableExtRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTablePrivileges(null, null, "%"));)
+      .getTablePrivileges(null,
+                          null,
+                          "%"));)
     {
       createPrivileges(results, false);
     }
@@ -608,7 +613,7 @@ final class TableExtRetriever
 
   private void createPrivileges(final MetadataResultSet results,
                                 final boolean privilegesForColumn)
-                                  throws SQLException
+    throws SQLException
   {
     while (results.next())
     {

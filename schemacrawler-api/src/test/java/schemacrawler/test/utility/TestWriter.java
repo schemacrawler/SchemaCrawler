@@ -287,7 +287,7 @@ public class TestWriter
   private PrintWriter openOutputWriter(final Path tempFile,
                                        final Charset charset,
                                        final boolean isCompressed)
-                                         throws IOException
+    throws IOException
   {
     final OpenOption[] openOptions = new OpenOption[] {
                                                         WRITE,

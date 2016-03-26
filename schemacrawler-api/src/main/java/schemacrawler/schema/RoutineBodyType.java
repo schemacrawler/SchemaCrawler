@@ -30,14 +30,14 @@ public enum RoutineBodyType
  /**
   * Unknown
   */
-  unknown,
+ unknown,
  /**
   * SQL.
   */
-  sql,
+ sql,
  /**
   * External.
   */
-  external;
+ external;
 
 }

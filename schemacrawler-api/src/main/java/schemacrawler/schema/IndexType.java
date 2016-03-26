@@ -65,6 +65,7 @@ public enum IndexType
    *
    * @return id
    */
+  @Override
   public int getId()
   {
     return id;

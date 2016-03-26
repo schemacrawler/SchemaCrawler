@@ -56,7 +56,7 @@ final class SynonymRetriever
 
   SynonymRetriever(final RetrieverConnection retrieverConnection,
                    final MutableCatalog catalog)
-                     throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }

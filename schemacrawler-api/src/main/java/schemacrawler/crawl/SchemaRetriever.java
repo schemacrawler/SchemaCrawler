@@ -53,7 +53,7 @@ final class SchemaRetriever
 
   SchemaRetriever(final RetrieverConnection retrieverConnection,
                   final MutableCatalog catalog)
-                    throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
 
