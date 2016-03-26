@@ -21,6 +21,8 @@
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.enumValue;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
@@ -238,8 +240,9 @@ public class SchemaCrawlerOptionsBuilder
       {
         for (final String routineTypeString: routineTypeStrings)
         {
-          routineTypes.add(RoutineType
-            .valueOf(routineTypeString.toLowerCase(Locale.ENGLISH)));
+          final RoutineType routineType = enumValue(routineTypeString
+            .toLowerCase(Locale.ENGLISH), RoutineType.unknown);
+          routineTypes.add(routineType);
         }
       }
     }
