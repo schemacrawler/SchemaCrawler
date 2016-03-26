@@ -330,25 +330,8 @@
       <question> Is SchemaCrawler free? </question>
       <answer>
         <p>
-          <img src="http://www.gnu.org/graphics/lgplv3-88x31.png" alt="LGPL" />
-          SchemaCrawler is free, licensed under the
-          <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">GNU Lesser General Public License (LGPL).</a>
-        </p>
-        <p>
-          <img src="http://www.gnu.org/graphics/gplv3-88x31.png" alt="GPL" />
-          SchemaCrawler is also distributed bundled with a JDBC driver for different database systems such as
-          <a href="http://www.microsoft.com/sqlserver">Microsoft SQL Server,</a>
-          <a href="http://www.sqlite.org/">SQLite,</a>
-          <a href="https://mariadb.org/">MariaDB,</a>
-          <a href="http://www.mysql.com/">MySQL</a>
-          and
-          <a href="http://www.postgresql.org/">PostgreSQL.</a>
-          These
-          <a href="database-support.html">bundled distributions</a>
-          are distributed under the
-          <a href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License (GPL) license.</a>
-          The JDBC drivers that are packaged with these SchemaCrawler distributions are in their binary form, and retain
-          their original license.
+          See 
+          <a href="license.html">SchemaCrawler license</a> for details.
         </p>
       </answer>
     </faq>

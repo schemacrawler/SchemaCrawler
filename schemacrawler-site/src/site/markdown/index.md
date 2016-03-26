@@ -90,8 +90,8 @@ of the SchemaCrawler API are that:
 SchemaCrawler goes beyond what is available using JDBC, and can provide
 information on database triggers, sequences and synonyms as well.
 
-![LGPL](http://www.gnu.org/graphics/lgplv3-88x31.png) SchemaCrawler is free
-and open-source API available under the LGPL license. SchemaCrawler is written
+SchemaCrawler is free and open-source API, available under a number of 
+[licenses](license.html). SchemaCrawler is written
 in Java, making it operating system agnostic. Since it leverages JDBC, it is
 also database independent. It deliberately doesn't have any RDBMS-specific
 code. SchemaCrawler allows you to compare structures between two different
