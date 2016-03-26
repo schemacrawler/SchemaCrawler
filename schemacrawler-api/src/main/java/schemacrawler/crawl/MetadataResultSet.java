@@ -22,6 +22,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isIntegral;
 
@@ -126,9 +127,10 @@ final class MetadataResultSet
 
     if (LOGGER.isLoggable(Level.INFO) && !isBlank(description))
     {
-      LOGGER.log(Level.INFO, new StringFormat("\"%s\" results had %d rows",
-                                              description,
-                                              rowCount));
+      LOGGER.log(Level.INFO,
+                 new StringFormat("\"%s\" results had %d rows",
+                                  description,
+                                  rowCount));
     }
   }
 
@@ -256,25 +258,8 @@ final class MetadataResultSet
    */
   <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue)
   {
-    final String value = getString(columnName);
-    E enumValue;
-    if (value == null || defaultValue == null)
-    {
-      enumValue = defaultValue;
-    }
-    else
-    {
-      try
-      {
-        enumValue = (E) Enum.valueOf(defaultValue.getClass(),
-                                     value.toLowerCase(Locale.ENGLISH));
-      }
-      catch (final Exception e)
-      {
-        enumValue = defaultValue;
-      }
-    }
-    return enumValue;
+    final String value = getString(columnName).toLowerCase(Locale.ENGLISH);
+    return enumValue(value, defaultValue);
   }
 
   /**

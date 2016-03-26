@@ -21,6 +21,8 @@
 package schemacrawler.tools.text.schema;
 
 
+import static sf.util.Utility.enumValue;
+
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
@@ -56,16 +58,8 @@ public final class SchemaTextExecutable
   {
     loadSchemaTextOptions();
 
-    InfoLevel infoLevel;
-    try
-    {
-      infoLevel = InfoLevel
-        .valueOf(schemaCrawlerOptions.getSchemaInfoLevel().getTag());
-    }
-    catch (final Exception e)
-    {
-      infoLevel = InfoLevel.unknown;
-    }
+    final InfoLevel infoLevel = enumValue(schemaCrawlerOptions
+      .getSchemaInfoLevel().getTag(), InfoLevel.unknown);
 
     final Catalog catalog;
     if (infoLevel == InfoLevel.maximum)
@@ -128,7 +122,7 @@ public final class SchemaTextExecutable
     final SchemaTraversalHandler formatter;
 
     final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+      .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,

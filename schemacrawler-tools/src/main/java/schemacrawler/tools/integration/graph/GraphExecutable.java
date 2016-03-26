@@ -21,6 +21,7 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static sf.util.Utility.enumValue;
 import static sf.util.Utility.readResourceFully;
 
 import java.nio.file.Files;
@@ -69,16 +70,9 @@ public final class GraphExecutable
     throws Exception
   {
     // Determine what decorators to apply to the database
-    InfoLevel infoLevel;
-    try
-    {
-      infoLevel = InfoLevel
-        .valueOf(schemaCrawlerOptions.getSchemaInfoLevel().getTag());
-    }
-    catch (final Exception e)
-    {
-      infoLevel = InfoLevel.unknown;
-    }
+    final InfoLevel infoLevel = enumValue(schemaCrawlerOptions
+      .getSchemaInfoLevel().getTag(), InfoLevel.unknown);
+
     final Catalog catalog;
     if (infoLevel == InfoLevel.maximum)
     {

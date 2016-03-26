@@ -20,6 +20,8 @@
 package sf.util;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -159,6 +161,34 @@ public final class Utility
     {
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
+  }
+
+  public static <E extends Enum<E>> E enumValue(final String value,
+                                                final E defaultValue)
+  {
+    requireNonNull(defaultValue, "No default value provided");
+    E enumValue;
+    if (value == null)
+    {
+      enumValue = defaultValue;
+    }
+    else
+    {
+      try
+      {
+        Class<?> enumClass = defaultValue.getClass();
+        if (enumClass.getEnclosingClass() != null)
+        {
+          enumClass = enumClass.getEnclosingClass();
+        }
+        enumValue = Enum.valueOf((Class<E>) enumClass, value);
+      }
+      catch (final Exception e)
+      {
+        enumValue = defaultValue;
+      }
+    }
+    return enumValue;
   }
 
   /**
