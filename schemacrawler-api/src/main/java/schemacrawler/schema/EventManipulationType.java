@@ -30,18 +30,18 @@ public enum EventManipulationType
  /**
   * Unknown
   */
-  unknown,
+ unknown,
  /**
   * Insert
   */
-  insert,
+ insert,
  /**
   * Delete
   */
-  delete,
+ delete,
  /**
   * Update
   */
-  update;
+ update;
 
 }

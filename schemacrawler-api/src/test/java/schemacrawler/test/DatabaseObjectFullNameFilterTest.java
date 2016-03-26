@@ -84,7 +84,7 @@ public class DatabaseObjectFullNameFilterTest
 
   private Collection<Table> tableFilter(final Builder<Table> tableFilterBuilder,
                                         final String tableName)
-                                          throws Exception
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());

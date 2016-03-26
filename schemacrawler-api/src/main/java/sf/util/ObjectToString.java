@@ -160,17 +160,16 @@ public final class ObjectToString
     {
       buffer.append(object.toString());
     }
-    else if (Arrays
-      .asList(Integer.class,
-              Long.class,
-              Double.class,
-              Float.class,
-              Boolean.class,
-              Character.class,
-              Byte.class,
-              Void.class,
-              Short.class,
-              String.class)
+    else if (Arrays.asList(Integer.class,
+                           Long.class,
+                           Double.class,
+                           Float.class,
+                           Boolean.class,
+                           Character.class,
+                           Byte.class,
+                           Void.class,
+                           Short.class,
+                           String.class)
       .contains(objectClass))
     {
       buffer.append(object.toString());

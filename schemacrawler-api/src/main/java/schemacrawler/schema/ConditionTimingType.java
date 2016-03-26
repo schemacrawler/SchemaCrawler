@@ -35,19 +35,19 @@ public enum ConditionTimingType
  /**
   * Unknown
   */
-  unknown("unknown"),
+ unknown("unknown"),
  /**
   * Before
   */
-  before("BEFORE"),
+ before("BEFORE"),
  /**
   * Instead of
   */
-  instead_of("INSTEAD OF"),
+ instead_of("INSTEAD OF"),
  /**
   * After
   */
-  after("AFTER");
+ after("AFTER");
 
   private static final Logger LOGGER = Logger
     .getLogger(ConditionTimingType.class.getName());

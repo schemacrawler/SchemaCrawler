@@ -30,14 +30,14 @@ public enum CheckOptionType
  /**
   * Unknown.
   */
-  unknown,
+ unknown,
  /**
   * Check option none.
   */
-  none,
+ none,
  /**
   * Check option cascade.
   */
-  cascade;
+ cascade;
 
 }

@@ -49,7 +49,7 @@ final class RoutineExtRetriever
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
                       final MutableCatalog catalog)
-                        throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }

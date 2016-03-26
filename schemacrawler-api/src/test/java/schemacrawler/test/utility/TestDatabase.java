@@ -100,7 +100,7 @@ public class TestDatabase
       @Override
       public FileVisitResult visitFile(final Path file,
                                        final BasicFileAttributes attrs)
-                                         throws IOException
+        throws IOException
       {
         for (final String filename: new String[] {
                                                    serverFileStem + ".lck",
@@ -120,7 +120,7 @@ public class TestDatabase
       @Override
       public FileVisitResult visitFileFailed(final Path file,
                                              final IOException exc)
-                                               throws IOException
+        throws IOException
       {
         return FileVisitResult.CONTINUE;
       }
@@ -169,9 +169,8 @@ public class TestDatabase
   public void start()
     throws Exception
   {
-    LOGGER
-      .log(Level.FINE,
-           new StringFormat("%s - Setting up database", toString()));
+    LOGGER.log(Level.FINE,
+               new StringFormat("%s - Setting up database", toString()));
     // Attempt to delete the database files
     deleteServerFiles();
 

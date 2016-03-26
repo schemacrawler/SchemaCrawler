@@ -52,7 +52,7 @@ final class TableRetriever
 
   TableRetriever(final RetrieverConnection retrieverConnection,
                  final MutableCatalog catalog)
-                   throws SQLException
+    throws SQLException
   {
     super(retrieverConnection, catalog);
   }
@@ -62,7 +62,7 @@ final class TableRetriever
                       final String tableNamePattern,
                       final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
-                        throws SQLException
+    throws SQLException
   {
     final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
                                                                              false);

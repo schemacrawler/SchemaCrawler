@@ -61,7 +61,7 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override

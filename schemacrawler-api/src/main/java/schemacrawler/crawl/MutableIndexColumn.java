@@ -61,7 +61,7 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override

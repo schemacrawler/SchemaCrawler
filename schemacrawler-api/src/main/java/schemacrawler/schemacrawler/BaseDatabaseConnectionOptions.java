@@ -97,7 +97,7 @@ abstract class BaseDatabaseConnectionOptions
   @Override
   public final Connection getConnection(final String user,
                                         final String password)
-                                          throws SQLException
+    throws SQLException
   {
     if (isBlank(user))
     {
@@ -281,7 +281,7 @@ abstract class BaseDatabaseConnectionOptions
 
   private Properties createConnectionProperties(final String user,
                                                 final String password)
-                                                  throws SQLException
+    throws SQLException
   {
     final List<String> skipProperties = Arrays
       .asList("server",
