@@ -57,3 +57,4 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Thom Snoeren's blog post, [SchemaCrawler 1: Notes & Lint](http://tsn-admin.blogspot.com/2014/12/schemacrawler-1-notes-lint-by-sualeh.html)
 - Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - Stefan Pröll's blog post, [Create an ER Diagram of an Existing SQLite Database (or many other RDBMS)](http://blog.stefanproell.at/2016/01/11/create-an-er-diagram-of-an-existing-sqlite-database-or-manyoother-rdbms/)
+- Allison Tharp's blog post, [Using SchemaCrawler to Generate a SQLite DB Graph](http://www.techtrek.io/using-schemacrawler-to-generate-a-sqlite-db-graph/)
