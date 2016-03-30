@@ -45,11 +45,10 @@ as critical, high, medium and low. The results are shown on the lint report.
 The checks are:
 
 **Linter:** *schemacrawler.tools.linter.LinterCatalogSql*    
-Checks for columns that should not be named according to certain patterns.
-For example, you may have a policy that no column can be named `ID`,
-because you want columns with complete names, such as `ORDER_ID`.
-If you want to detect columns named `ID`, you could use configuration as
-shown in the example below.   
+Allows you to run SQL against the database. The SQL statement must
+return exactly one column and one row of data in the results. If one row
+is returned, it means that the lint has detected a problem. However, if
+no rows of data are returned, it means that there are no issues. 
 Example configuration:
 
 ```
@@ -117,10 +116,11 @@ Example configuration:
 ```
 
 **Linter:** *schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns*   
-Allows you to run SQL against the database. The SQL statement must
-return exactly one column and one row of data in the results. If one row
-is returned, it means that the lint has detected a problem. However, if
-no rows of data are returned, it means that there are no issues.   
+Checks for columns that should not be named according to certain patterns.
+For example, you may have a policy that no column can be named `ID`,
+because you want columns with complete names, such as `ORDER_ID`.
+If you want to detect columns named `ID`, you could use configuration as
+shown in the example below.  
 Example configuration:
 
 ```
