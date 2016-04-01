@@ -104,7 +104,7 @@ final class SchemaJsonFormatter
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-                        throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
@@ -347,8 +347,11 @@ final class SchemaJsonFormatter
           final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
           Collections.sort(weakAssociations);
 
-          jsonTable.put("weakAssociations",
-                        handleWeakAssociations(weakAssociations));
+          if (!options.isHideWeakAssociations())
+          {
+            jsonTable.put("weakAssociations",
+                          handleWeakAssociations(weakAssociations));
+          }
         }
 
         final JSONArray jsonIndexes = new JSONArray();
@@ -817,7 +820,7 @@ final class SchemaJsonFormatter
 
   private void printDefinition(final DefinedObject definedObject,
                                final JSONObject jsonObject)
-                                 throws JSONException
+    throws JSONException
   {
     if (!isVerbose)
     {
@@ -829,7 +832,7 @@ final class SchemaJsonFormatter
 
   private void printRemarks(final DatabaseObject object,
                             final JSONObject jsonObject)
-                              throws JSONException
+    throws JSONException
   {
     if (object == null || options.isHideRemarks())
     {
@@ -841,7 +844,7 @@ final class SchemaJsonFormatter
 
   private void printTableRowCount(final Table table,
                                   final JSONObject jsonObject)
-                                    throws JSONException
+    throws JSONException
   {
     if (!options.isShowRowCounts() || table == null || !hasRowCount(table))
     {
