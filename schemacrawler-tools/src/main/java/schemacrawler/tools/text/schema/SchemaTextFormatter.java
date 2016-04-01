@@ -116,7 +116,7 @@ final class SchemaTextFormatter
   SchemaTextFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
                       final OutputOptions outputOptions)
-                        throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
@@ -321,7 +321,7 @@ final class SchemaTextFormatter
     printForeignKeys(table);
     if (!isBrief)
     {
-      if (isVerbose)
+      if (isVerbose && !options.isHideWeakAssociations())
       {
         printWeakAssociations(table);
       }

@@ -88,7 +88,7 @@ public final class SchemaDotFormatter
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
                             final SchemaTextOptions options,
                             final OutputOptions outputOptions)
-                              throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
@@ -163,14 +163,19 @@ public final class SchemaDotFormatter
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#999999\">")
       .println();
 
-    formattingHelper.append(new TableRow(TextOutputFormat.html)
-      .add(newTableCell(tableName,
-                        Alignment.left,
-                        true,
-                        tableNameBgColor,
-                        colspan))
-      .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1))
-      .toString()).println();
+    formattingHelper
+      .append(new TableRow(TextOutputFormat.html).add(newTableCell(tableName,
+                                                                   Alignment.left,
+                                                                   true,
+                                                                   tableNameBgColor,
+                                                                   colspan))
+        .add(newTableCell(tableType,
+                          Alignment.right,
+                          false,
+                          tableNameBgColor,
+                          1))
+        .toString())
+      .println();
 
     printTableRemarks(table);
 
@@ -186,7 +191,7 @@ public final class SchemaDotFormatter
 
     printForeignKeys(table);
 
-    if (isVerbose)
+    if (isVerbose && !options.isHideWeakAssociations())
     {
       printWeakAssociations(table);
     }
@@ -384,11 +389,10 @@ public final class SchemaDotFormatter
           .getAttribute("schemacrawler.table.filtered_out", false);
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
-          formattingHelper
-            .append(printColumnReference(foreignKey.getName(),
-                                         columnRef,
-                                         fkCardinality,
-                                         isFkColumnFiltered));
+          formattingHelper.append(printColumnReference(foreignKey.getName(),
+                                                       columnRef,
+                                                       fkCardinality,
+                                                       isFkColumnFiltered));
         }
       }
     }
@@ -539,15 +543,13 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    formattingHelper
-      .append(new TableRow(TextOutputFormat.html)
-        .add(newTableCell(table.getRemarks(),
-                          Alignment.left,
-                          false,
-                          Color.white,
-                          3))
-        .toString())
-      .println();
+    formattingHelper.append(new TableRow(TextOutputFormat.html)
+      .add(newTableCell(table.getRemarks(),
+                        Alignment.left,
+                        false,
+                        Color.white,
+                        3))
+      .toString()).println();
   }
 
   private void printTableRowCount(final Table table)
@@ -556,15 +558,13 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    formattingHelper
-      .append(new TableRow(TextOutputFormat.html)
-        .add(newTableCell(getRowCountMessage(table),
-                          Alignment.right,
-                          false,
-                          Color.white,
-                          3))
-        .toString())
-      .println();
+    formattingHelper.append(new TableRow(TextOutputFormat.html)
+      .add(newTableCell(getRowCountMessage(table),
+                        Alignment.right,
+                        false,
+                        Color.white,
+                        3))
+      .toString()).println();
   }
 
   private void printWeakAssociations(final Table table)
