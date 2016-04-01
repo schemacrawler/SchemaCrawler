@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.07.07" date="2016-03-26" description="New output option">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added a new boolean property, schemacrawler.format.hide_weak_associations, 
+        to hide weak associations in SchemaCrawler output.
+      ]]></action>                                                          
+     </release>    
      <release version="14.07.06" date="2016-03-26" description="Licenses">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Making SchemaCrawler available under the Eclipse Public License, in addition to the GPL and LGPL.
@@ -77,7 +83,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.07.06" date="2016-02-03" description="Fixed logging">
+     <release version="14.07.07" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
