@@ -30,3 +30,9 @@ Adrien Sales <Adrien.Sales at GMail>.
 
 <a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
 <img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
+
+### RPM SchemaCrawler package
+The [rpm schemacrawler package](https://github.com/adriens/schemacrawler-rpm) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.
+
+Latest RPM can be downloaded from the <a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">release page</a>
