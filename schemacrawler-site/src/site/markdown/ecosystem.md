@@ -25,8 +25,15 @@ Michèle Barré <Michele.Barre at GMail> and  Adrien Sales <Adrien.Sales at GMai
 ## Installation Packages
 
 ### Debian SchemaCrawler package
-The [Debian schemacrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
+The [Debian SchemaCrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
 <a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
 <img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
+
+### RPM SchemaCrawler package
+The [RPM SchemaCrawler package](https://github.com/adriens/schemacrawler-rpm) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.
+
+<a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">
+<img src="https://img.shields.io/badge/download-rpm-7B2A90.svg" /></a>
