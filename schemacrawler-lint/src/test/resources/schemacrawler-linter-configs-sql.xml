@@ -79,7 +79,8 @@
     </config>
   </linter>
   <linter id="schemacrawler.tools.linter.LinterTableWithQuotedNames">
-    <run>false</run>
+    <run>true</run>
+    <column-exclusion-pattern><![CDATA[.*\."UPDATE"]]></column-exclusion-pattern>
     <config>
     </config>
   </linter>
