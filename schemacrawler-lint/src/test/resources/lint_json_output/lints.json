@@ -4,12 +4,6 @@
     {
       "lints": [
         {
-          "severity": "medium",
-          "description": "useless surrogate key",
-          "id": "schemacrawler.tools.linter.LinterUselessSurrogateKey",
-          "value": "PK_EXTRA_PK"
-        },
-        {
           "severity": "low",
           "description": "empty table",
           "id": "schemacrawler.tools.linter.LinterTableEmpty",

@@ -17,5 +17,4 @@ schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
 schemacrawler.tools.linter.LinterTableWithQuotedNames
 schemacrawler.tools.linter.LinterTableWithSingleColumn
 schemacrawler.tools.linter.LinterTooManyLobs
-schemacrawler.tools.linter.LinterUselessSurrogateKey
 schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns

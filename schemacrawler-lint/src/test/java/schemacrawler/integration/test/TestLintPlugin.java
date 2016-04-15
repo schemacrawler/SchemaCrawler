@@ -54,8 +54,7 @@ public class TestLintPlugin
                                              "schemacrawler.tools.linter.LinterTableWithNoIndexes",
                                              "schemacrawler.tools.linter.LinterTableWithQuotedNames",
                                              "schemacrawler.tools.linter.LinterTableWithSingleColumn",
-                                             "schemacrawler.tools.linter.LinterTooManyLobs",
-                                             "schemacrawler.tools.linter.LinterUselessSurrogateKey", })
+                                             "schemacrawler.tools.linter.LinterTooManyLobs", })
     {
       assertTrue(registry.hasLinter(linter));
     }

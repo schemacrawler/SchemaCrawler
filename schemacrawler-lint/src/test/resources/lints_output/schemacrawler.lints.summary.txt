@@ -9,7 +9,6 @@ Summary of schema lints:
 [medium]*     1- badly named column
 [medium]      1- no indexes
 [medium]      1- single column
-[medium]      1- useless surrogate key
 [medium]      2- column where NULL may be intended
 [medium]      3- all data columns are nullable
 [medium]      3- spaces in name, or reserved word

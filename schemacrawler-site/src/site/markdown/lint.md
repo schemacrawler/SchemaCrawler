@@ -36,7 +36,7 @@ lint with an additional command-line option, for example,
 pointing to the path of the SchemaCrawler linter XML configuration file. You can
 configure whether or not to run a linter, change a linter's severity, or exclude
 certain tables and columns from the linter using the configuration file. You can 
-also configure a dispatch method to fail a build if too many lints are found.
+also configure a threshold to fail a build if too many lints are found.
 
 ## Lint Checks
 
@@ -76,7 +76,7 @@ inefficient lookups.
 Checks for tables that have nullable columns in a unique index.
 
 **Linter:** *schemacrawler.tools.linter.LinterNullIntendedColumns*    
-Checks for tables where the default value is ‘NULL’ instead of NULL,
+Checks for tables where the default value is 'NULL' instead of NULL,
 since this may indicate a error when creating a table.
 
 **Linter:** *schemacrawler.tools.linter.LinterRedundantIndexes*   
@@ -174,10 +174,6 @@ Example configuration:
 </linter>
 ```
 
-**Linter:** *schemacrawler.tools.linter.LinterUselessSurrogateKey*   
-Checks for relationship tables with just foreign keys and no attributes,
-but still have a primary key.
-
 ## Enforcing Good Schema Design During Builds
 
 SchemaCrawler Lint can be configured to fail a build using a configuration file. 
@@ -193,12 +189,12 @@ provide an additional command-line argument, such as
 
 Valid lint dispatch methods are 
 
-- terminate_system - Returns an error code of 1 to the system, by calling System.exit(1)
-- throw_exception - Throw a runtime exception
-- write_err - Write to stderr, and continue on
-- none - No dispatch, and continue on normally
+- `terminate_system` - Return an error code of 1 to the system, by calling System.exit(1)
+- `throw_exception` - Throw a runtime exception
+- `write_err` - Write to stderr, and continue on
+- `none` - No dispatch, and continue on normally
 
-Here is an example linter configuration, with a dispatch:
+Here is an example linter configuration, with a threshold defined, making it eligible for dispatch:
 
 ```
 <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
