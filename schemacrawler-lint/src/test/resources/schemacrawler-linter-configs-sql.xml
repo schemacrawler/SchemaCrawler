@@ -97,13 +97,7 @@
   </linter>
   <linter id="schemacrawler.tools.linter.LinterTableEmpty">
     <run>false</run>
-  </linter>    
-  <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
-    <run>false</run>
-    <severity>critical</severity>
-    <config>
-    </config>
-  </linter>
+  </linter> 
   <linter id="schemacrawler.tools.linter.LinterTableWithNoPrimaryKey">
     <run>false</run>
   </linter> 

@@ -1,2 +1,0 @@
-Checks for relationship tables with just foreign keys and no attributes, 
-but still have a primary key. 

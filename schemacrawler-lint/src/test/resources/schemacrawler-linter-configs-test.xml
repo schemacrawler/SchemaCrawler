@@ -60,13 +60,7 @@
   <linter id="schemacrawler.tools.linter.LinterTableEmpty">
     <table-exclusion-pattern><![CDATA[.*EXTRA_PK]]></table-exclusion-pattern>
     <run>true</run>
-  </linter>  
-  <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
-    <run>false</run>
-    <severity>critical</severity>
-    <config>
-    </config>
-  </linter>
+  </linter> 
   <linter id="schemacrawler.tools.linter.LinterTableWithNoPrimaryKey">
     <run>false</run>
   </linter> 

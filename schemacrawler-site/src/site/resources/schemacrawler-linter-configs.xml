@@ -39,10 +39,6 @@
     <table-exclusion-pattern><![CDATA[.*EXTRA_PK]]></table-exclusion-pattern>
     <run>true</run>
   </linter>  
-  <linter id="schemacrawler.tools.linter.LinterUselessSurrogateKey">
-    <run>true</run>
-    <severity>critical</severity>
-  </linter>
   <linter id="schemacrawler.tools.linter.LinterTableWithNoPrimaryKey">
     <run>true</run>
   </linter> 
