@@ -10,6 +10,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseStagedExecutable;
+import sf.util.StringFormat;
 
 public class AdditionalExecutable
   extends BaseStagedExecutable
@@ -41,7 +42,7 @@ public class AdditionalExecutable
         // SchemaCrawler will control output of log messages if you use
         // JDK logging
         LOGGER.log(Level.INFO,
-                   new FormattedStringSupplier("Processing, %s", schema));
+                   new StringFormat("Processing, %s", schema));
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);
