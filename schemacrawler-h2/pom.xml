@@ -5,7 +5,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>14.07.07</version>
+    <version>14.07.08</version>
   </parent>
   <artifactId>schemacrawler-h2</artifactId>
   <packaging>jar</packaging>

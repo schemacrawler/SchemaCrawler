@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.07.07" date="2016-03-26" description="New output option">
+     <release version="14.07.08" date="2016-04-14" description="Removing a linter">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Removing linter for surrogate keys, since it is of dubious value.
+      ]]></action>                                                          
+     </release>    
+     <release version="14.07.07" date="2016-04-08" description="New output option">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added a new boolean property, schemacrawler.format.hide_weak_associations, 
         to hide weak associations in SchemaCrawler output.
@@ -83,7 +88,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.07.07" date="2016-02-03" description="Fixed logging">
+     <release version="14.07.08" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
