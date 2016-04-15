@@ -86,8 +86,6 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
-	useless surrogate key	PK_EXTRA_PK
                                                              [lint, low]
 	empty table	
 	should have remarks	WRITERID, PUBLICATIONID, ID
