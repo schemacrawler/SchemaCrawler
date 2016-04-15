@@ -74,8 +74,8 @@ public class LinterTableWithQuotedNames
       addTableLint(table, getSummary());
     }
 
-    final List<String> spacesInNamesList = findColumnsWithQuotedNames(table
-      .getColumns(), identifiers);
+    final List<String> spacesInNamesList = findColumnsWithQuotedNames(getColumns(table),
+                                                                      identifiers);
     for (final String spacesInName: spacesInNamesList)
     {
       addTableLint(table, getSummary(), spacesInName);
