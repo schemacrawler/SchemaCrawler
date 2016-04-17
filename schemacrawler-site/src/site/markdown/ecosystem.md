@@ -29,7 +29,7 @@ Michèle Barré <Michele.Barre at GMail> and  Adrien Sales <Adrien.Sales at GMai
 The original and full zip distribution with eaxmples.
 
 <a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
-<img src="https://img.shields.io/badge/zip-download-brightgreen.svg" /></a>
+<img src="https://img.shields.io/badge/download-zip-brightgreen.svg" /></a>
 
 
 
