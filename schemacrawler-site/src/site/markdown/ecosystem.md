@@ -24,6 +24,15 @@ Michèle Barré <Michele.Barre at GMail> and  Adrien Sales <Adrien.Sales at GMai
 
 ## Installation Packages
 
+### Zip package
+
+The original and full zip distribution with eaxmples.
+
+<a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
+<img src="https://img.shields.io/badge/zip-download-brightgreen.svg" /></a>
+
+
+
 ### Debian SchemaCrawler package
 The [Debian SchemaCrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
