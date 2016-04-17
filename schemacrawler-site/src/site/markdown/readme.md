@@ -1,5 +1,28 @@
 # Getting Started
 
+## Downloads
+
+### Complete SchemaCrawler distribution
+
+The complete SchemaCrawler distribution with examples.
+<a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
+<img src="https://img.shields.io/badge/zip-download-brightgreen.svg" /></a>
+
+### Debian SchemaCrawler package
+The [Debian SchemaCrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.
+
+<a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
+<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
+
+### RPM SchemaCrawler package
+The [RPM SchemaCrawler package](https://github.com/adriens/schemacrawler-rpm) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.
+
+<a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">
+<img src="https://img.shields.io/badge/download-rpm-7B2A90.svg" /></a>
+
+
 ## FAQs
 Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at the [resources].
 
