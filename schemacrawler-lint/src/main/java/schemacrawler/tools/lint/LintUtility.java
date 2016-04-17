@@ -28,10 +28,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
+import static java.nio.file.Files.isReadable;
+import static java.nio.file.Files.isRegularFile;
+import static java.nio.file.Files.newBufferedReader;
+import static sf.util.Utility.isBlank;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.lint.executable.LintOptions;
 
 public class LintUtility
 {
+
+  public static final Logger LOGGER = Logger
+    .getLogger(LintUtility.class.getName());
 
   public static final <E> boolean listStartsWith(final List<E> main,
                                                  final List<E> sub)
@@ -51,6 +66,52 @@ public class LintUtility
 
     return main.subList(0, sub.size()).equals(sub);
 
+  }
+
+  /**
+   * Obtain linter configuration from a system property
+   *
+   * @return LinterConfigs
+   * @throws SchemaCrawlerException
+   */
+  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions)
+  {
+    final LinterConfigs linterConfigs = new LinterConfigs();
+    String linterConfigsFile = null;
+    try
+    {
+      linterConfigsFile = lintOptions.getLinterConfigs();
+      if (!isBlank(linterConfigsFile))
+      {
+        final Path linterConfigsFilePath = Paths.get(linterConfigsFile)
+          .toAbsolutePath();
+        if (isRegularFile(linterConfigsFilePath)
+            && isReadable(linterConfigsFilePath))
+        {
+          linterConfigs.parse(newBufferedReader(linterConfigsFilePath));
+        }
+        else
+        {
+          LOGGER
+            .log(Level.WARNING,
+                 "Could not find linter configs file, " + linterConfigsFile);
+        }
+      }
+      else
+      {
+        LOGGER.log(Level.CONFIG, "Using default linter configs");
+      }
+
+      return linterConfigs;
+    }
+    catch (final Exception e)
+    {
+      LOGGER
+        .log(Level.WARNING,
+             "Could not load linter configs from file, " + linterConfigsFile,
+             e);
+      return linterConfigs;
+    }
   }
 
   private LintUtility()
