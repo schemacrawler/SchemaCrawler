@@ -4,6 +4,12 @@
 [![Maven Central](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 [![Join the chat at https://gitter.im/sualeh/SchemaCrawler](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sualeh/SchemaCrawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+<a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
+<img src="https://img.shields.io/badge/download-zip-brightgreen.svg" /></a><a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
+<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a><a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">
+<img src="https://img.shields.io/badge/download-rpm-7B2A90.svg" /></a>
+
+
 # ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/blob/master/schemacrawler-site/src/site/resources/images/schemacrawler_logo.png?raw=true) SchemaCrawler
 
 SchemaCrawler is a free database schema discovery and comprehension tool. SchemaCrawler has a good mix of useful features for data governance. You can [search for database schema objects](http://sualeh.github.io/SchemaCrawler/schemacrawler_grep.html) using regular expressions, and output the schema and data in a readable text format. The output serves for database documentation, and is designed to be [diff-ed](http://en.wikipedia.org/wiki/Diff) against other database schemas. SchemaCrawler also generates [schema diagrams.](http://sualeh.github.io/SchemaCrawler/diagramming.html) You can [execute scripts](http://sualeh.github.io/SchemaCrawler/scripting.html) in any standard scripting language against your database. You can find potential schema design issues with [lint](http://sualeh.github.io/SchemaCrawler/lint.html). SchemaCrawler is available under a number of [licenses](http://sualeh.github.io/SchemaCrawler/license.html).
