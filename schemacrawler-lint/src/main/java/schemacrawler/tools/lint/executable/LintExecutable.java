@@ -28,19 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
-import static java.nio.file.Files.newBufferedReader;
-import static sf.util.Utility.isBlank;
+import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.StreamSupport;
 
 import schemacrawler.schema.Catalog;
@@ -58,9 +51,6 @@ public class LintExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
-    .getLogger(LintExecutable.class.getName());
-
   public static final String COMMAND = "lint";
 
   private LintOptions lintOptions;
@@ -77,7 +67,7 @@ public class LintExecutable
     // Read lint options from the config
     lintOptions = getLintOptions();
 
-    final LinterConfigs linterConfigs = readLinterConfigs();
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog catalog = new LintedCatalog(db, connection, linters);
@@ -175,52 +165,6 @@ public class LintExecutable
     }
 
     return formatter;
-  }
-
-  /**
-   * Obtain linter configuration from a system property
-   *
-   * @return LinterConfigs
-   * @throws SchemaCrawlerException
-   */
-  private LinterConfigs readLinterConfigs()
-  {
-    final LinterConfigs linterConfigs = new LinterConfigs();
-    String linterConfigsFile = null;
-    try
-    {
-      linterConfigsFile = lintOptions.getLinterConfigs();
-      if (!isBlank(linterConfigsFile))
-      {
-        final Path linterConfigsFilePath = Paths.get(linterConfigsFile)
-          .toAbsolutePath();
-        if (isRegularFile(linterConfigsFilePath)
-            && isReadable(linterConfigsFilePath))
-        {
-          linterConfigs.parse(newBufferedReader(linterConfigsFilePath));
-        }
-        else
-        {
-          LOGGER
-            .log(Level.WARNING,
-                 "Could not find linter configs file, " + linterConfigsFile);
-        }
-      }
-      else
-      {
-        LOGGER.log(Level.CONFIG, "Using default linter configs");
-      }
-
-      return linterConfigs;
-    }
-    catch (final Exception e)
-    {
-      LOGGER
-        .log(Level.WARNING,
-             "Could not load linter configs from file, " + linterConfigsFile,
-             e);
-      return linterConfigs;
-    }
   }
 
 }
