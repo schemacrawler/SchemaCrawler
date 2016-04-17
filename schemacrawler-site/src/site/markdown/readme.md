@@ -5,22 +5,27 @@
 ### Complete SchemaCrawler distribution
 
 The complete SchemaCrawler distribution with examples.
-<a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
-<img src="https://img.shields.io/badge/zip-download-brightgreen.svg" /></a>
 
-### Debian SchemaCrawler package
-The [Debian SchemaCrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
+[![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/sualeh/SchemaCrawler/releases/latest)
+
+### SchemaCrawler Debian package
+The [SchemaCrawler Debian package](http://github.com/adriens/schemacrawler-deb) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-<a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
-<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
+[![Debian package](https://img.shields.io/badge/download-deb-7B2A90.svg)](https://github.com/adriens/schemacrawler-deb/releases/latest)
 
-### RPM SchemaCrawler package
-The [RPM SchemaCrawler package](https://github.com/adriens/schemacrawler-rpm) is maintained by
+### SchemaCrawler RPM package
+The [SchemaCrawler RPM package](https://github.com/adriens/schemacrawler-rpm) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
 
-<a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">
-<img src="https://img.shields.io/badge/download-rpm-7B2A90.svg" /></a>
+[![RPM package](https://img.shields.io/badge/download-rpm-7B2A90.svg)](https://github.com/adriens/schemacrawler-rpm/releases/latest)
+
+### Jars from the Central Repository
+
+SchemaCrawler jars are available from the Maven Central Repository too, for use with build tools
+such as Maven, Gradle, and Ivy.
+
+[![Maven Central](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 
 
 ## FAQs
@@ -62,13 +67,6 @@ distribution, in a directory called `_schemacrawler`. You can make a copy of thi
 directory to any location on your hard-disk, and rename the directory to something appropriate.
 Then, put this directory on your PATH. Once you open a command shell, you can run SchemaCrawler
 using `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
-
-## Installing From the Debian Package
-The [Debian schemacrawler package] is maintained by
-Adrien Sales <Adrien.Sales at GMail>.
-
-<a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
-<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a>
 
 SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
