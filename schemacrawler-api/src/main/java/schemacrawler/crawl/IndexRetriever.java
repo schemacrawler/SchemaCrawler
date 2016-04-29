@@ -46,6 +46,7 @@ import schemacrawler.schema.IndexType;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.StringFormat;
 
@@ -63,10 +64,11 @@ final class IndexRetriever
     .getLogger(IndexRetriever.class.getName());
 
   IndexRetriever(final RetrieverConnection retrieverConnection,
-                 final MutableCatalog catalog)
+                 final MutableCatalog catalog,
+                 final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   void retrieveIndexes(final NamedObjectList<MutableTable> allTables)
@@ -347,10 +349,10 @@ final class IndexRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet("retrieveIndexesUsingSql",
-                                                                executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            indexesSql));)
     {
+      results.logRowCount("retrieveIndexesUsingSql");
       while (results.next())
       {
         final String catalogName = quotedName(results.getString("TABLE_CAT"));

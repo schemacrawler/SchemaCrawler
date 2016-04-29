@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.StringFormat;
 
 /**
@@ -56,10 +57,11 @@ final class RoutineExtRetriever
     .getLogger(RoutineExtRetriever.class.getName());
 
   RoutineExtRetriever(final RetrieverConnection retrieverConnection,
-                      final MutableCatalog catalog)
+                      final MutableCatalog catalog,
+                      final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   /**

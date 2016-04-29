@@ -49,6 +49,7 @@ import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.StringFormat;
 
@@ -66,10 +67,11 @@ final class RoutineRetriever
     .getLogger(RoutineRetriever.class.getName());
 
   RoutineRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableCatalog catalog)
+                   final MutableCatalog catalog,
+                   final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   void retrieveFunctionColumns(final MutableFunction function,
@@ -343,13 +345,12 @@ final class RoutineRetriever
                new StringFormat("Retrieving procedures for, %s",
                                 new SchemaReference(catalogName, schemaName)));
 
-    try (
-        final MetadataResultSet results = new MetadataResultSet("retrieveProcedures",
-                                                                getMetaData()
-                                                                  .getProcedures(unquotedName(catalogName),
-                                                                                 unquotedName(schemaName),
-                                                                                 "%"));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedures(unquotedName(catalogName),
+                     unquotedName(schemaName),
+                     "%"));)
     {
+      results.logRowCount("retrieveProcedures");
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"

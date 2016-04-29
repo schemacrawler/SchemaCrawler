@@ -46,6 +46,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.DatabaseUtility;
 import sf.util.StringFormat;
 
@@ -60,10 +61,11 @@ final class SchemaRetriever
   private final boolean supportsSchemas;
 
   SchemaRetriever(final RetrieverConnection retrieverConnection,
-                  final MutableCatalog catalog)
+                  final MutableCatalog catalog,
+                  final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
 
     supportsCatalogs = retrieverConnection.isSupportsCatalogs();
     supportsSchemas = retrieverConnection.isSupportsSchemas();
@@ -167,11 +169,10 @@ final class SchemaRetriever
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
-      try (
-          final MetadataResultSet results = new MetadataResultSet("retrieveAllSchemas",
-                                                                  getMetaData()
-                                                                    .getSchemas());)
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getSchemas());)
       {
+        results.logRowCount("retrieveAllSchemas");
         while (results.next())
         {
           final String catalogName;
@@ -242,10 +243,10 @@ final class SchemaRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet("retrieveAllSchemasFromInformationSchemaViews",
-                                                                executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            schemataSql));)
     {
+      results.logRowCount("retrieveAllSchemasFromInformationSchemaViews");
       while (results.next())
       {
         final String catalogName = quotedName(results

@@ -49,6 +49,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.StringFormat;
 
 /**
@@ -65,10 +66,11 @@ final class TableExtRetriever
     .getLogger(TableExtRetriever.class.getName());
 
   TableExtRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableCatalog catalog)
+                    final MutableCatalog catalog,
+                    final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   /**
