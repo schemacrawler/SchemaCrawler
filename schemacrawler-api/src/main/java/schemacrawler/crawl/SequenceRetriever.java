@@ -45,6 +45,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 /**
  * A retriever that uses database metadata to get the extended details
@@ -60,10 +61,11 @@ final class SequenceRetriever
     .getLogger(SequenceRetriever.class.getName());
 
   SequenceRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableCatalog catalog)
+                    final MutableCatalog catalog,
+                    final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   /**
@@ -104,8 +106,8 @@ final class SequenceRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                     sequencesDefinitionSql));)
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
+                                                                           sequencesDefinitionSql));)
     {
       while (results.next())
       {

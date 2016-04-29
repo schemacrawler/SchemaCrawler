@@ -47,6 +47,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import sf.util.StringFormat;
 
 /**
@@ -63,10 +64,11 @@ final class SynonymRetriever
     .getLogger(SynonymRetriever.class.getName());
 
   SynonymRetriever(final RetrieverConnection retrieverConnection,
-                   final MutableCatalog catalog)
+                   final MutableCatalog catalog,
+                   final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   /**

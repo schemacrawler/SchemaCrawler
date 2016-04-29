@@ -44,6 +44,8 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TypeMap;
 
 /**
@@ -61,14 +63,17 @@ abstract class AbstractRetriever
 
   private final RetrieverConnection retrieverConnection;
   final MutableCatalog catalog;
+  private final SchemaCrawlerOptions options;
 
   AbstractRetriever(final RetrieverConnection retrieverConnection,
-                    final MutableCatalog catalog)
+                    final MutableCatalog catalog,
+                    final SchemaCrawlerOptions options)
     throws SQLException
   {
     this.retrieverConnection = requireNonNull(retrieverConnection,
                                               "No retriever connection provided");
     this.catalog = catalog;
+    this.options = requireNonNull(options, "No SchemaCrawler options provided");
   }
 
   /**
@@ -127,6 +132,11 @@ abstract class AbstractRetriever
   RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
+  }
+
+  InclusionRule getSchemaInclusionRule()
+  {
+    return options.getSchemaInclusionRule();
   }
 
   Collection<Schema> getSchemas()

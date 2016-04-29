@@ -45,6 +45,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.StringFormat;
 
@@ -62,10 +63,11 @@ final class TableColumnRetriever
     .getLogger(TableColumnRetriever.class.getName());
 
   TableColumnRetriever(final RetrieverConnection retrieverConnection,
-                       final MutableCatalog catalog)
+                       final MutableCatalog catalog,
+                       final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   void retrieveColumns(final NamedObjectList<MutableTable> allTables,
@@ -140,10 +142,10 @@ final class TableColumnRetriever
                                 hiddenColumnsSql));
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet("retrieveHiddenColumns",
-                                                                executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            hiddenColumnsSql));)
     {
+      results.logRowCount("retrieveHiddenColumns");
       while (results.next())
       {
         final MutableColumn column = createTableColumn(results,
@@ -274,10 +276,10 @@ final class TableColumnRetriever
                                 tableColumnsSql));
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet("retrieveColumnsFromDataDictionary",
-                                                                executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            tableColumnsSql));)
     {
+      results.logRowCount("retrieveColumnsFromDataDictionary");
       while (results.next())
       {
         createTableColumn(results, allTables, columnFilter);
