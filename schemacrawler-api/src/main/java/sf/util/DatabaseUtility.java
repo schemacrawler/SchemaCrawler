@@ -122,7 +122,7 @@ public final class DatabaseUtility
 
   public static ResultSet executeSql(final Statement statement,
                                      final String sql,
-                                     boolean throwSQLException)
+                                     final boolean throwSQLException)
     throws SQLException
   {
     ResultSet results = null;
@@ -156,12 +156,7 @@ public final class DatabaseUtility
                                     sql));
       }
 
-      SQLWarning sqlWarning = statement.getWarnings();
-      while (sqlWarning != null)
-      {
-        LOGGER.log(Level.INFO, sqlWarning.getMessage(), sqlWarning);
-        sqlWarning = sqlWarning.getNextWarning();
-      }
+      logSQLWarnings(statement.getWarnings());
 
       return results;
     }
@@ -234,6 +229,21 @@ public final class DatabaseUtility
     catch (final SQLException e)
     {
       throw new SchemaCrawlerException(sql, e);
+    }
+  }
+
+  public static void logSQLWarnings(final SQLWarning sqlWarning)
+  {
+    if (!LOGGER.isLoggable(Level.INFO))
+    {
+      return;
+    }
+
+    SQLWarning currentSqlWarning = sqlWarning;
+    while (currentSqlWarning != null)
+    {
+      LOGGER.log(Level.INFO, currentSqlWarning.getMessage(), currentSqlWarning);
+      currentSqlWarning = currentSqlWarning.getNextWarning();
     }
   }
 

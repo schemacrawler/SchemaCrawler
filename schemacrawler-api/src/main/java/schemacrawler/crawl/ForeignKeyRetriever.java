@@ -48,6 +48,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.MetaDataUtility;
 import sf.util.StringFormat;
@@ -66,10 +67,11 @@ final class ForeignKeyRetriever
     .getLogger(ForeignKeyRetriever.class.getName());
 
   ForeignKeyRetriever(final RetrieverConnection retrieverConnection,
-                      final MutableCatalog catalog)
+                      final MutableCatalog catalog,
+                      final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)
@@ -298,10 +300,10 @@ final class ForeignKeyRetriever
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet("retrieveForeignKeysUsingSql",
-                                                                executeSql(statement,
+        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
                                                                            fkSql));)
     {
+      results.logRowCount("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
     }
     catch (final SQLException e)

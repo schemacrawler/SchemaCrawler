@@ -56,6 +56,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.DatabaseUtility;
 import sf.util.StringFormat;
@@ -161,10 +162,11 @@ final class DatabaseInfoRetriever
   }
 
   DatabaseInfoRetriever(final RetrieverConnection retrieverConnection,
-                        final MutableCatalog catalog)
+                        final MutableCatalog catalog,
+                        final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   /**

@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.executeSql;
+import static sf.util.DatabaseUtility.logSQLWarnings;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
 import static sf.util.Utility.isBlank;
@@ -39,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,23 +73,27 @@ final class MetadataResultSet
 
   private static final int FETCHSIZE = 20;
 
-  private final String description;
+  private String description;
   private final ResultSet results;
   private final List<String> resultSetColumns;
   private Set<String> readColumns;
   private int rowCount;
 
-  MetadataResultSet(final ResultSet resultSet)
-    throws SQLException
-  {
-    this(null, resultSet);
-  }
-
-  MetadataResultSet(final String description, final ResultSet resultSet)
+  void logRowCount(final String description)
     throws SQLException
   {
     this.description = description;
+  }
 
+  MetadataResultSet(final Statement statement, final String sql)
+    throws SQLException
+  {
+    this(executeSql(statement, sql));
+  }
+
+  MetadataResultSet(final ResultSet resultSet)
+    throws SQLException
+  {
     results = requireNonNull(resultSet, "Cannot use null results");
     try
     {
@@ -267,8 +274,12 @@ final class MetadataResultSet
    */
   <E extends Enum<E>> E getEnum(final String columnName, final E defaultValue)
   {
-    final String value = getString(columnName).toLowerCase(Locale.ENGLISH);
-    return enumValue(value, defaultValue);
+    final String value = getString(columnName);
+    if (isBlank(value))
+    {
+      return defaultValue;
+    }
+    return enumValue(value.toLowerCase(Locale.ENGLISH), defaultValue);
   }
 
   /**
@@ -474,7 +485,10 @@ final class MetadataResultSet
   {
     rowCount = rowCount + 1;
     readColumns = new HashSet<>();
-    return results.next();
+
+    final boolean next = results.next();
+    logSQLWarnings(results.getWarnings());
+    return next;
   }
 
   private boolean useColumn(final String columnName)

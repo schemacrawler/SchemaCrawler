@@ -42,6 +42,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TableTypes;
 import sf.util.StringFormat;
 
@@ -59,10 +60,11 @@ final class TableRetriever
     .getLogger(TableRetriever.class.getName());
 
   TableRetriever(final RetrieverConnection retrieverConnection,
-                 final MutableCatalog catalog)
+                 final MutableCatalog catalog,
+                 final SchemaCrawlerOptions options)
     throws SQLException
   {
-    super(retrieverConnection, catalog);
+    super(retrieverConnection, catalog, options);
   }
 
   void retrieveTables(final String catalogName,
@@ -92,14 +94,13 @@ final class TableRetriever
 
     LOGGER.log(Level.INFO, "Retrieving tables");
 
-    try (
-        final MetadataResultSet results = new MetadataResultSet("retrieveTables",
-                                                                getMetaData()
-                                                                  .getTables(unquotedName(catalogName),
-                                                                             unquotedName(schemaName),
-                                                                             tableNamePattern,
-                                                                             filteredTableTypes));)
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getTables(unquotedName(catalogName),
+                 unquotedName(schemaName),
+                 tableNamePattern,
+                 filteredTableTypes));)
     {
+      results.logRowCount("retrieveTables");
       while (results.next())
       {
         // "TABLE_CAT", "TABLE_SCHEM"
