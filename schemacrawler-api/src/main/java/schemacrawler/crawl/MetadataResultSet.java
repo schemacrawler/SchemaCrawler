@@ -79,18 +79,6 @@ final class MetadataResultSet
   private Set<String> readColumns;
   private int rowCount;
 
-  void logRowCount(final String description)
-    throws SQLException
-  {
-    this.description = description;
-  }
-
-  MetadataResultSet(final Statement statement, final String sql)
-    throws SQLException
-  {
-    this(executeSql(statement, sql));
-  }
-
   MetadataResultSet(final ResultSet resultSet)
     throws SQLException
   {
@@ -126,6 +114,12 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
     readColumns = new HashSet<>();
+  }
+
+  MetadataResultSet(final Statement statement, final String sql)
+    throws SQLException
+  {
+    this(executeSql(statement, sql));
   }
 
   /**
@@ -466,6 +460,12 @@ final class MetadataResultSet
       }
     }
     return value;
+  }
+
+  void logRowCount(final String description)
+    throws SQLException
+  {
+    this.description = description;
   }
 
   /**
