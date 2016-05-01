@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeSql;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -300,8 +299,8 @@ final class ForeignKeyRetriever
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           fkSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement,
+                                                                fkSql);)
     {
       results.logRowCount("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);

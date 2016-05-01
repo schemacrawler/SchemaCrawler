@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.DatabaseUtility.executeSql;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -109,8 +108,8 @@ final class SynonymRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                     synonymsDefinitionSql));)
+        MetadataResultSet results = new MetadataResultSet(statement,
+                                                          synonymsDefinitionSql);)
     {
       while (results.next())
       {

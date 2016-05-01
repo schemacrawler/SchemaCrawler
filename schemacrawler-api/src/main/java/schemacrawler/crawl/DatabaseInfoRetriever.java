@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.DatabaseUtility.executeSql;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -393,7 +391,7 @@ final class DatabaseInfoRetriever
 
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
-      results = new MetadataResultSet(executeSql(statement, typeInfoSql));
+      results = new MetadataResultSet(statement, typeInfoSql);
     }
     else
     {
