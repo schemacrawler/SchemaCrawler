@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeSql;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -142,8 +141,8 @@ final class TableColumnRetriever
                                 hiddenColumnsSql));
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           hiddenColumnsSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement,
+                                                                hiddenColumnsSql);)
     {
       results.logRowCount("retrieveHiddenColumns");
       while (results.next())
@@ -276,8 +275,8 @@ final class TableColumnRetriever
                                 tableColumnsSql));
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           tableColumnsSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement,
+                                                                tableColumnsSql);)
     {
       results.logRowCount("retrieveColumnsFromDataDictionary");
       while (results.next())

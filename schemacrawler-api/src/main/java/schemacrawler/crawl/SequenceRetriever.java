@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.DatabaseUtility.executeSql;
-
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -106,8 +104,8 @@ final class SequenceRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(executeSql(statement,
-                                                                           sequencesDefinitionSql));)
+        final MetadataResultSet results = new MetadataResultSet(statement,
+                                                                sequencesDefinitionSql);)
     {
       while (results.next())
       {
