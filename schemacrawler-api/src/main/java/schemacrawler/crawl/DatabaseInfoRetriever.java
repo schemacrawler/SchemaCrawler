@@ -391,7 +391,7 @@ final class DatabaseInfoRetriever
 
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
-      results = new MetadataResultSet(statement, typeInfoSql);
+      results = new MetadataResultSet(statement, typeInfoSql, getSchemaInclusionRule());
     }
     else
     {
