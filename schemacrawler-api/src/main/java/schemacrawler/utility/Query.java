@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
+import static sf.util.DatabaseUtility.executeSql;
 import static sf.util.DatabaseUtility.executeSqlForLong;
 import static sf.util.DatabaseUtility.executeSqlForScalar;
 import static sf.util.TemplatingUtility.expandTemplate;
@@ -36,6 +37,9 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -110,6 +114,13 @@ public final class Query
     {
       throw new IllegalArgumentException("No SQL found for query");
     }
+  }
+
+  public ResultSet execute(final Statement statement,
+                           final InclusionRule schemaInclusionRule)
+    throws SQLException
+  {
+    return executeSql(statement, getQuery(schemaInclusionRule));
   }
 
   public long executeForLong(final Connection connection, final Table table)

@@ -54,7 +54,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.utility.Query;
-import sf.util.DatabaseUtility;
 import sf.util.IdentifiedEnum;
 import sf.util.StringFormat;
 
@@ -81,8 +80,7 @@ final class MetadataResultSet
     throws SQLException
   {
     final Query query = new Query("query", sql);
-    return DatabaseUtility.executeSql(statement,
-                                      query.getQuery(schemaInclusionRule));
+    return query.execute(statement, schemaInclusionRule);
   }
 
   private String description;
