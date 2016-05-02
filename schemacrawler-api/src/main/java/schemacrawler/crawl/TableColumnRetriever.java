@@ -142,7 +142,7 @@ final class TableColumnRetriever
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                hiddenColumnsSql);)
+                                                                hiddenColumnsSql, getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveHiddenColumns");
       while (results.next())
@@ -276,7 +276,7 @@ final class TableColumnRetriever
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableColumnsSql);)
+                                                                tableColumnsSql, getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveColumnsFromDataDictionary");
       while (results.next())

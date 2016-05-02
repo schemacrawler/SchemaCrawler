@@ -53,6 +53,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.InclusionRule;
 import sf.util.IdentifiedEnum;
 import sf.util.StringFormat;
 
@@ -116,7 +117,9 @@ final class MetadataResultSet
     readColumns = new HashSet<>();
   }
 
-  MetadataResultSet(final Statement statement, final String sql)
+  MetadataResultSet(final Statement statement,
+                    final String sql,
+                    final InclusionRule schemaInclusionRule)
     throws SQLException
   {
     this(executeSql(statement, sql));

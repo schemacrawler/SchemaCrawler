@@ -349,7 +349,7 @@ final class IndexRetriever
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                indexesSql);)
+                                                                indexesSql, getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveIndexesUsingSql");
       while (results.next())

@@ -242,7 +242,7 @@ final class SchemaRetriever
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                schemataSql);)
+                                                                schemataSql, getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveAllSchemasFromInformationSchemaViews");
       while (results.next())
