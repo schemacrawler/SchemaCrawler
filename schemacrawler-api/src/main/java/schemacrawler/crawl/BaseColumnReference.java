@@ -53,13 +53,6 @@ public abstract class BaseColumnReference
   {
     this.primaryKeyColumn = requireNonNull(primaryKeyColumn);
     this.foreignKeyColumn = requireNonNull(foreignKeyColumn);
-
-    if (primaryKeyColumn.equals(foreignKeyColumn))
-    {
-      throw new IllegalArgumentException(String.format(
-                                                       "Primary key column cannot equal foreign key column, %s",
-                                                       primaryKeyColumn));
-    }
   }
 
   @Override
