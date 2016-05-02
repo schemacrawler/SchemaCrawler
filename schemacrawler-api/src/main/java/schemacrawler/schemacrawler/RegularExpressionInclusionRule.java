@@ -105,6 +105,12 @@ public final class RegularExpressionInclusionRule
   }
 
   @Override
+  public Pattern getInclusionPattern()
+  {
+    return inclusionRule.getInclusionPattern();
+  }
+
+  @Override
   public int hashCode()
   {
     final int prime = 31;
