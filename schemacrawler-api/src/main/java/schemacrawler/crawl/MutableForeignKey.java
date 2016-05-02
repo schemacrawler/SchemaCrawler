@@ -152,6 +152,11 @@ class MutableForeignKey
                           final Column pkColumn,
                           final Column fkColumn)
   {
+    if (pkColumn != null && fkColumn != null && pkColumn.equals(fkColumn))
+    {
+      return;
+    }
+
     final MutableForeignKeyColumnReference fkColumnReference = new MutableForeignKeyColumnReference(keySequence,
                                                                                                     pkColumn,
                                                                                                     fkColumn);
