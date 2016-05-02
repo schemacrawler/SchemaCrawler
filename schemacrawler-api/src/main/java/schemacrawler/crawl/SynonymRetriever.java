@@ -109,7 +109,7 @@ final class SynonymRetriever
 
     try (final Statement statement = connection.createStatement();
         MetadataResultSet results = new MetadataResultSet(statement,
-                                                          synonymsDefinitionSql);)
+                                                          synonymsDefinitionSql, getSchemaInclusionRule());)
     {
       while (results.next())
       {

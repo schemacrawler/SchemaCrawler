@@ -300,7 +300,7 @@ final class ForeignKeyRetriever
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                fkSql);)
+                                                                fkSql, getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
