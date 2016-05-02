@@ -45,6 +45,7 @@ import java.util.Set;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
@@ -147,6 +148,33 @@ public final class Query
   public String getQuery()
   {
     return expandTemplate(query);
+  }
+
+  /**
+   * Gets the query with parameters substituted.
+   *
+   * @param schemaInclusionRule
+   *        Schema inclusion rule
+   * @return Ready-to-execute query
+   */
+  public String getQuery(final InclusionRule schemaInclusionRule)
+  {
+    final Map<String, String> properties = new HashMap<>();
+    if (schemaInclusionRule != null)
+    {
+      final String schemaInclusionPattern = schemaInclusionRule
+        .getInclusionPattern().pattern();
+      if (!isBlank(schemaInclusionPattern))
+      {
+        properties.put("schemas", schemaInclusionPattern);
+      }
+    }
+
+    String sql = query;
+    sql = expandTemplate(sql, properties);
+    sql = expandTemplate(sql);
+
+    return sql;
   }
 
   /**

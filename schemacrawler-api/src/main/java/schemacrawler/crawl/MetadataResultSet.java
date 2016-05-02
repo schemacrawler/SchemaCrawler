@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.executeSql;
 import static sf.util.DatabaseUtility.logSQLWarnings;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
@@ -54,6 +53,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.utility.Query;
+import sf.util.DatabaseUtility;
 import sf.util.IdentifiedEnum;
 import sf.util.StringFormat;
 
@@ -74,10 +75,21 @@ final class MetadataResultSet
 
   private static final int FETCHSIZE = 20;
 
+  private static ResultSet executeSql(final Statement statement,
+                                      final String sql,
+                                      final InclusionRule schemaInclusionRule)
+    throws SQLException
+  {
+    final Query query = new Query("query", sql);
+    return DatabaseUtility.executeSql(statement,
+                                      query.getQuery(schemaInclusionRule));
+  }
+
   private String description;
   private final ResultSet results;
   private final List<String> resultSetColumns;
   private Set<String> readColumns;
+
   private int rowCount;
 
   MetadataResultSet(final ResultSet resultSet)
@@ -122,7 +134,7 @@ final class MetadataResultSet
                     final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    this(executeSql(statement, sql));
+    this(executeSql(statement, sql, schemaInclusionRule));
   }
 
   /**

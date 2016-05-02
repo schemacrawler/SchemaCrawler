@@ -31,6 +31,7 @@ package schemacrawler.schemacrawler;
 
 import java.io.Serializable;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
@@ -46,5 +47,18 @@ import java.util.function.Predicate;
 public interface InclusionRule
   extends Serializable, Predicate<String>
 {
+
+  /**
+   * Returns the regular expression for the inclusion rule. Not all
+   * inclusion rules are based on regular expressions, so this method
+   * indicates that all strings should be considered for inclusion by
+   * default.
+   * 
+   * @return Regular expression for the inclusion rule
+   */
+  default Pattern getInclusionPattern()
+  {
+    return Pattern.compile(".*");
+  }
 
 }
