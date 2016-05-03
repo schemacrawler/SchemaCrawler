@@ -39,7 +39,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
@@ -50,7 +49,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
-import sf.util.StringFormat;
 
 /**
  * Basic SchemaCrawler executor.
@@ -95,15 +93,10 @@ public final class OperationExecutable
       {
         for (final Table table: getSortedTables(catalog))
         {
-          final String sql = query
-            .getQuery(table,
-                      operationOptions.isAlphabeticalSortForTableColumns());
-
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Executing query for table %s: %s",
-                                      table.getFullName(),
-                                      sql));
-          try (final ResultSet results = executeSql(statement, sql);)
+          final boolean isAlphabeticalSortForTableColumns = operationOptions
+            .isAlphabeticalSortForTableColumns();
+          try (final ResultSet results = query
+            .execute(statement, table, isAlphabeticalSortForTableColumns);)
           {
             handler.handleData(table, results);
           }

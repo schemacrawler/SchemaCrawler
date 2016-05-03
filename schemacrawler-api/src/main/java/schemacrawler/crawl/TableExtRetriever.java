@@ -48,6 +48,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -91,13 +92,14 @@ final class TableExtRetriever
                  "Additional column attributes SQL statement was not provided");
       return;
     }
-    final String columnAttributesSql = informationSchemaViews
+    final Query columnAttributesSql = informationSchemaViews
       .getAdditionalColumnAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                columnAttributesSql, getSchemaInclusionRule());)
+                                                                columnAttributesSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -172,13 +174,14 @@ final class TableExtRetriever
                  "Additional table attributes SQL statement was not provided");
       return;
     }
-    final String tableAttributesSql = informationSchemaViews
+    final Query tableAttributesSql = informationSchemaViews
       .getAdditionalTableAttributesSql();
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableAttributesSql, getSchemaInclusionRule());)
+                                                                tableAttributesSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -241,13 +244,13 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
-    final String extIndexesInformationSql = informationSchemaViews
+    final Query extIndexesInformationSql = informationSchemaViews
       .getExtIndexesSql();
-
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                extIndexesInformationSql, getSchemaInclusionRule());)
+                                                                extIndexesInformationSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -381,13 +384,13 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
-    final String tableDefinitionsInformationSql = informationSchemaViews
+    final Query tableDefinitionsInformationSql = informationSchemaViews
       .getExtTablesSql();
-
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableDefinitionsInformationSql, getSchemaInclusionRule());)
+                                                                tableDefinitionsInformationSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -469,13 +472,12 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
-    final String triggerInformationSql = informationSchemaViews
-      .getTriggersSql();
-
+    final Query triggerInformationSql = informationSchemaViews.getTriggersSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                triggerInformationSql, getSchemaInclusionRule());)
+                                                                triggerInformationSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -568,12 +570,12 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
-    final String viewInformationSql = informationSchemaViews.getViewsSql();
-
+    final Query viewInformationSql = informationSchemaViews.getViewsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                viewInformationSql, getSchemaInclusionRule());)
+                                                                viewInformationSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -710,11 +712,12 @@ final class TableExtRetriever
       return;
     }
 
-    final String tableConstraintsInformationSql = informationSchemaViews
+    final Query tableConstraintsInformationSql = informationSchemaViews
       .getTableConstraintsSql();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableConstraintsInformationSql, getSchemaInclusionRule());)
+                                                                tableConstraintsInformationSql,
+                                                                getSchemaInclusionRule());)
     {
 
       while (results.next())
@@ -788,12 +791,13 @@ final class TableExtRetriever
              "Extended table constraints columns SQL statement was not provided");
       return;
     }
-    final String tableConstraintsColumnsInformationSql = informationSchemaViews
+    final Query tableConstraintsColumnsInformationSql = informationSchemaViews
       .getTableConstraintsColumnsSql();
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableConstraintsColumnsInformationSql, getSchemaInclusionRule());)
+                                                                tableConstraintsColumnsInformationSql,
+                                                                getSchemaInclusionRule());)
     {
       while (results.next())
       {
@@ -875,13 +879,14 @@ final class TableExtRetriever
                  "Extended table constraints SQL statement was not provided");
       return;
     }
-    final String extTableConstraintInformationSql = informationSchemaViews
+    final Query extTableConstraintInformationSql = informationSchemaViews
       .getExtTableConstraintsSql();
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                extTableConstraintInformationSql, getSchemaInclusionRule());)
+                                                                extTableConstraintInformationSql,
+                                                                getSchemaInclusionRule());)
     {
       while (results.next())
       {

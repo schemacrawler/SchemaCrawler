@@ -46,6 +46,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -134,15 +135,13 @@ final class TableColumnRetriever
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
       return;
     }
-    final String hiddenColumnsSql = informationSchemaViews
+    final Query hiddenColumnsSql = informationSchemaViews
       .getExtHiddenTableColumnsSql();
-    LOGGER.log(Level.FINER,
-               new StringFormat("Executing SQL to retrieve hidden table columns: %n%s",
-                                hiddenColumnsSql));
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                hiddenColumnsSql, getSchemaInclusionRule());)
+                                                                hiddenColumnsSql,
+                                                                getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveHiddenColumns");
       while (results.next())
@@ -269,14 +268,12 @@ final class TableColumnRetriever
       throw new SchemaCrawlerSQLException("No table columns SQL provided",
                                           null);
     }
-    final String tableColumnsSql = informationSchemaViews.getTableColumnsSql();
-    LOGGER.log(Level.FINER,
-               new StringFormat("Executing SQL to retrieve table columns: %n%s",
-                                tableColumnsSql));
+    final Query tableColumnsSql = informationSchemaViews.getTableColumnsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableColumnsSql, getSchemaInclusionRule());)
+                                                                tableColumnsSql,
+                                                                getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveColumnsFromDataDictionary");
       while (results.next())
