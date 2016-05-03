@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -85,13 +86,12 @@ final class RoutineExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving procedure definitions");
 
-    final String routineDefinitionsSql = informationSchemaViews
-      .getRoutinesSql();
-
+    final Query routineDefinitionsSql = informationSchemaViews.getRoutinesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                routineDefinitionsSql, getSchemaInclusionRule());)
+                                                                routineDefinitionsSql,
+                                                                getSchemaInclusionRule());)
     {
       while (results.next())
       {

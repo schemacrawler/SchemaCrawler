@@ -75,11 +75,11 @@ final class MetadataResultSet
   private static final int FETCHSIZE = 20;
 
   private static ResultSet executeSql(final Statement statement,
-                                      final String sql,
+                                      final Query query,
                                       final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    final Query query = new Query("query", sql);
+    requireNonNull(query, "No query provided");
     return query.execute(statement, schemaInclusionRule);
   }
 
@@ -128,11 +128,11 @@ final class MetadataResultSet
   }
 
   MetadataResultSet(final Statement statement,
-                    final String sql,
+                    final Query query,
                     final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    this(executeSql(statement, sql, schemaInclusionRule));
+    this(executeSql(statement, query, schemaInclusionRule));
   }
 
   /**

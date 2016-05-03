@@ -47,6 +47,7 @@ import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -341,15 +342,12 @@ final class IndexRetriever
                                        final NamedObjectList<MutableTable> allTables)
     throws SchemaCrawlerSQLException
   {
-    final String indexesSql = informationSchemaViews.getIndexesSql();
-    LOGGER.log(Level.FINER,
-               new StringFormat("Executing SQL to retrieve indexes: %n%s",
-                                indexesSql));
-
+    final Query indexesSql = informationSchemaViews.getIndexesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                indexesSql, getSchemaInclusionRule());)
+                                                                indexesSql,
+                                                                getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveIndexesUsingSql");
       while (results.next())
