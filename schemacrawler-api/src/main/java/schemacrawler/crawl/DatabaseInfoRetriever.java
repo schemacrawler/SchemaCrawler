@@ -56,6 +56,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.Query;
 import sf.util.DatabaseUtility;
 import sf.util.StringFormat;
 
@@ -386,12 +387,12 @@ final class DatabaseInfoRetriever
       .getInformationSchemaViews();
     if (informationSchemaViews.hasOverrideTypeInfoSql())
     {
-      final String typeInfoSql = informationSchemaViews
-        .getOverrideTypeInfoSql();
-
+      final Query typeInfoSql = informationSchemaViews.getOverrideTypeInfoSql();
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
-      results = new MetadataResultSet(statement, typeInfoSql, getSchemaInclusionRule());
+      results = new MetadataResultSet(statement,
+                                      typeInfoSql,
+                                      getSchemaInclusionRule());
     }
     else
     {

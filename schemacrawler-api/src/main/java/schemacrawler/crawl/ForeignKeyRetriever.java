@@ -50,6 +50,7 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.MetaDataUtility;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -291,16 +292,13 @@ final class ForeignKeyRetriever
   private void retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
     throws SchemaCrawlerSQLException
   {
-    final String fkSql = informationSchemaViews.getForeignKeysSql();
-    LOGGER.log(Level.FINER,
-               new StringFormat("Executing SQL to retrieve foreign keys: %n%s",
-                                fkSql));
-
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    final Query fkSql = informationSchemaViews.getForeignKeysSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                fkSql, getSchemaInclusionRule());)
+                                                                fkSql,
+                                                                getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);

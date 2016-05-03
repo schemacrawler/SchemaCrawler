@@ -52,6 +52,7 @@ import java.sql.DatabaseMetaData;
 import java.util.HashMap;
 import java.util.Map;
 
+import schemacrawler.utility.Query;
 import sf.util.ObjectToString;
 
 /**
@@ -97,9 +98,10 @@ public final class InformationSchemaViews
    *
    * @return Additional attributes SQL for columns.
    */
-  public String getAdditionalColumnAttributesSql()
+  public Query getAdditionalColumnAttributesSql()
   {
-    return informationSchemaQueries.get(ADDITIONAL_COLUMN_ATTRIBUTES);
+    return new Query(ADDITIONAL_COLUMN_ATTRIBUTES
+      .name(), informationSchemaQueries.get(ADDITIONAL_COLUMN_ATTRIBUTES));
   }
 
   /**
@@ -108,9 +110,10 @@ public final class InformationSchemaViews
    *
    * @return Additional attributes SQL for tables.
    */
-  public String getAdditionalTableAttributesSql()
+  public Query getAdditionalTableAttributesSql()
   {
-    return informationSchemaQueries.get(ADDITIONAL_TABLE_ATTRIBUTES);
+    return new Query(ADDITIONAL_TABLE_ATTRIBUTES.name(),
+                     informationSchemaQueries.get(ADDITIONAL_TABLE_ATTRIBUTES));
   }
 
   /**
@@ -119,9 +122,10 @@ public final class InformationSchemaViews
    *
    * @return Hidden table column definitions SQL.
    */
-  public String getExtHiddenTableColumnsSql()
+  public Query getExtHiddenTableColumnsSql()
   {
-    return informationSchemaQueries.get(EXT_HIDDEN_TABLE_COLUMNS);
+    return new Query(EXT_HIDDEN_TABLE_COLUMNS.name(),
+                     informationSchemaQueries.get(EXT_HIDDEN_TABLE_COLUMNS));
   }
 
   /**
@@ -129,9 +133,10 @@ public final class InformationSchemaViews
    *
    * @return Index definitions SQL.
    */
-  public String getExtIndexesSql()
+  public Query getExtIndexesSql()
   {
-    return informationSchemaQueries.get(EXT_INDEXES);
+    return new Query(EXT_INDEXES.name(),
+                     informationSchemaQueries.get(EXT_INDEXES));
   }
 
   /**
@@ -140,9 +145,10 @@ public final class InformationSchemaViews
    *
    * @return Table check constraints SQL.
    */
-  public String getExtTableConstraintsSql()
+  public Query getExtTableConstraintsSql()
   {
-    return informationSchemaQueries.get(EXT_TABLE_CONSTRAINTS);
+    return new Query(EXT_TABLE_CONSTRAINTS.name(),
+                     informationSchemaQueries.get(EXT_TABLE_CONSTRAINTS));
   }
 
   /**
@@ -150,9 +156,10 @@ public final class InformationSchemaViews
    *
    * @return Table definitions SQL.
    */
-  public String getExtTablesSql()
+  public Query getExtTablesSql()
   {
-    return informationSchemaQueries.get(EXT_TABLES);
+    return new Query(EXT_TABLES.name(),
+                     informationSchemaQueries.get(EXT_TABLES));
   }
 
   /**
@@ -160,9 +167,10 @@ public final class InformationSchemaViews
    *
    * @return Foreign keys SQL.
    */
-  public String getForeignKeysSql()
+  public Query getForeignKeysSql()
   {
-    return informationSchemaQueries.get(FOREIGN_KEYS);
+    return new Query(FOREIGN_KEYS.name(),
+                     informationSchemaQueries.get(FOREIGN_KEYS));
   }
 
   /**
@@ -170,9 +178,9 @@ public final class InformationSchemaViews
    *
    * @return Indexes SQL.
    */
-  public String getIndexesSql()
+  public Query getIndexesSql()
   {
-    return informationSchemaQueries.get(INDEXES);
+    return new Query(INDEXES.name(), informationSchemaQueries.get(INDEXES));
   }
 
   /**
@@ -181,9 +189,10 @@ public final class InformationSchemaViews
    *
    * @return SQL that overrides DatabaseMetaData#getTypeInfo().
    */
-  public String getOverrideTypeInfoSql()
+  public Query getOverrideTypeInfoSql()
   {
-    return informationSchemaQueries.get(OVERRIDE_TYPE_INFO);
+    return new Query(OVERRIDE_TYPE_INFO.name(),
+                     informationSchemaQueries.get(OVERRIDE_TYPE_INFO));
   }
 
   /**
@@ -191,9 +200,9 @@ public final class InformationSchemaViews
    *
    * @return Routine definitions SQL.
    */
-  public String getRoutinesSql()
+  public Query getRoutinesSql()
   {
-    return informationSchemaQueries.get(ROUTINES);
+    return new Query(ROUTINES.name(), informationSchemaQueries.get(ROUTINES));
   }
 
   /**
@@ -201,9 +210,9 @@ public final class InformationSchemaViews
    *
    * @return Schemata SQL.
    */
-  public String getSchemataSql()
+  public Query getSchemataSql()
   {
-    return informationSchemaQueries.get(SCHEMATA);
+    return new Query(SCHEMATA.name(), informationSchemaQueries.get(SCHEMATA));
   }
 
   /**
@@ -211,9 +220,9 @@ public final class InformationSchemaViews
    *
    * @return Sequences SQL.
    */
-  public String getSequencesSql()
+  public Query getSequencesSql()
   {
-    return informationSchemaQueries.get(SEQUENCES);
+    return new Query(SEQUENCES.name(), informationSchemaQueries.get(SEQUENCES));
   }
 
   /**
@@ -221,9 +230,10 @@ public final class InformationSchemaViews
    *
    * @return Synonyms SQL.
    */
-  public String getSynonymsSql()
+  public Query getSynonymsSql()
   {
-    return informationSchemaQueries.get(EXT_SYNONYMS);
+    return new Query(EXT_SYNONYMS.name(),
+                     informationSchemaQueries.get(EXT_SYNONYMS));
   }
 
   /**
@@ -231,9 +241,10 @@ public final class InformationSchemaViews
    *
    * @return Table columns SQL.
    */
-  public String getTableColumnsSql()
+  public Query getTableColumnsSql()
   {
-    return informationSchemaQueries.get(TABLE_COLUMNS);
+    return new Query(TABLE_COLUMNS.name(),
+                     informationSchemaQueries.get(TABLE_COLUMNS));
   }
 
   /**
@@ -242,9 +253,10 @@ public final class InformationSchemaViews
    *
    * @return Table constraints columns SQL.
    */
-  public String getTableConstraintsColumnsSql()
+  public Query getTableConstraintsColumnsSql()
   {
-    return informationSchemaQueries.get(CONSTRAINT_COLUMN_USAGE);
+    return new Query(CONSTRAINT_COLUMN_USAGE.name(),
+                     informationSchemaQueries.get(CONSTRAINT_COLUMN_USAGE));
   }
 
   /**
@@ -252,9 +264,10 @@ public final class InformationSchemaViews
    *
    * @return Table constraints SQL.
    */
-  public String getTableConstraintsSql()
+  public Query getTableConstraintsSql()
   {
-    return informationSchemaQueries.get(TABLE_CONSTRAINTS);
+    return new Query(TABLE_CONSTRAINTS.name(),
+                     informationSchemaQueries.get(TABLE_CONSTRAINTS));
   }
 
   /**
@@ -262,9 +275,9 @@ public final class InformationSchemaViews
    *
    * @return Trigger definitions SQL.
    */
-  public String getTriggersSql()
+  public Query getTriggersSql()
   {
-    return informationSchemaQueries.get(TRIGGERS);
+    return new Query(TRIGGERS.name(), informationSchemaQueries.get(TRIGGERS));
   }
 
   /**
@@ -272,9 +285,9 @@ public final class InformationSchemaViews
    *
    * @return View definitions SQL.
    */
-  public String getViewsSql()
+  public Query getViewsSql()
   {
-    return informationSchemaQueries.get(VIEWS);
+    return new Query(VIEWS.name(), informationSchemaQueries.get(VIEWS));
   }
 
   public boolean hasAdditionalColumnAttributesSql()

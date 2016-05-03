@@ -45,12 +45,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.StringFormat;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
@@ -60,6 +63,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public final class Query
   implements Serializable
 {
+
+  private static final Logger LOGGER = Logger.getLogger(Query.class.getName());
 
   private static final long serialVersionUID = 2820769346069413473L;
 
@@ -120,25 +125,43 @@ public final class Query
                            final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    return executeSql(statement, getQuery(schemaInclusionRule));
+    final String sql = getQuery(schemaInclusionRule);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
+    return executeSql(statement, sql);
+  }
+
+  public ResultSet execute(final Statement statement,
+                           final Table table,
+                           final boolean isAlphabeticalSortForTableColumns)
+    throws SQLException
+  {
+    final String sql = getQuery(table, isAlphabeticalSortForTableColumns);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
+    return executeSql(statement, sql);
   }
 
   public long executeForLong(final Connection connection, final Table table)
     throws SchemaCrawlerException
   {
-    return executeSqlForLong(connection, getQuery(table, true));
+    final String sql = getQuery(table, true);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
+    return executeSqlForLong(connection, sql);
   }
 
   public Object executeForScalar(final Connection connection)
     throws SchemaCrawlerException
   {
-    return executeSqlForScalar(connection, getQuery());
+    final String sql = getQuery();
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
+    return executeSqlForScalar(connection, sql);
   }
 
   public Object executeForScalar(final Connection connection, final Table table)
     throws SchemaCrawlerException
   {
-    return executeSqlForScalar(connection, getQuery(table, true));
+    final String sql = getQuery(table, true);
+    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
+    return executeSqlForScalar(connection, sql);
   }
 
   /**
@@ -162,13 +185,36 @@ public final class Query
   }
 
   /**
+   * Determines if this query has substitutable parameters, and whether
+   * it should be run once for each table.
+   *
+   * @return If the query is to be run over each table
+   */
+  public boolean isQueryOver()
+  {
+    final Set<String> keys = extractTemplateVariables(query);
+    return keys.contains("table");
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString()
+  {
+    return name + ":" + query;
+  }
+
+  /**
    * Gets the query with parameters substituted.
    *
    * @param schemaInclusionRule
    *        Schema inclusion rule
    * @return Ready-to-execute query
    */
-  public String getQuery(final InclusionRule schemaInclusionRule)
+  private String getQuery(final InclusionRule schemaInclusionRule)
   {
     final Map<String, String> properties = new HashMap<>();
     if (schemaInclusionRule != null)
@@ -195,8 +241,8 @@ public final class Query
    *        Table information
    * @return Ready-to-execute query
    */
-  public String getQuery(final Table table,
-                         final boolean isAlphabeticalSortForTableColumns)
+  private String getQuery(final Table table,
+                          final boolean isAlphabeticalSortForTableColumns)
   {
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
@@ -223,29 +269,6 @@ public final class Query
     sql = expandTemplate(sql);
 
     return sql;
-  }
-
-  /**
-   * Determines if this query has substitutable parameters, and whether
-   * it should be run once for each table.
-   *
-   * @return If the query is to be run over each table
-   */
-  public boolean isQueryOver()
-  {
-    final Set<String> keys = extractTemplateVariables(query);
-    return keys.contains("table");
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
-   */
-  @Override
-  public String toString()
-  {
-    return name + ":" + query;
   }
 
 }

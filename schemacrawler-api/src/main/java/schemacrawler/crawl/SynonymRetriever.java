@@ -47,6 +47,7 @@ import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Query;
 import sf.util.StringFormat;
 
 /**
@@ -100,16 +101,15 @@ final class SynonymRetriever
                  "Synonym definition SQL statement was not provided");
       return;
     }
-    final String synonymsDefinitionSql = informationSchemaViews
-      .getSynonymsSql();
 
     final Collection<Schema> schemas = catalog.getSchemaNames();
 
+    final Query synonymsDefinitionSql = informationSchemaViews.getSynonymsSql();
     final Connection connection = getDatabaseConnection();
-
     try (final Statement statement = connection.createStatement();
         MetadataResultSet results = new MetadataResultSet(statement,
-                                                          synonymsDefinitionSql, getSchemaInclusionRule());)
+                                                          synonymsDefinitionSql,
+                                                          getSchemaInclusionRule());)
     {
       while (results.next())
       {

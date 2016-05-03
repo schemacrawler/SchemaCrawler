@@ -45,6 +45,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Query;
 import sf.util.DatabaseUtility;
 import sf.util.StringFormat;
 
@@ -236,13 +237,14 @@ final class SchemaRetriever
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
-    final String schemataSql = informationSchemaViews.getSchemataSql();
+    final Query schemataSql = informationSchemaViews.getSchemataSql();
 
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                schemataSql, getSchemaInclusionRule());)
+                                                                schemataSql,
+                                                                getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveAllSchemasFromInformationSchemaViews");
       while (results.next())

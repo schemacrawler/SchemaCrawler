@@ -44,6 +44,7 @@ import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.utility.Query;
 
 /**
  * A retriever that uses database metadata to get the extended details
@@ -96,16 +97,17 @@ final class SequenceRetriever
                  "Sequence definition SQL statement was not provided");
       return;
     }
-    final String sequencesDefinitionSql = informationSchemaViews
-      .getSequencesSql();
 
     final Collection<Schema> schemas = catalog.getSchemaNames();
 
+    final Query sequencesDefinitionSql = informationSchemaViews
+      .getSequencesSql();
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                sequencesDefinitionSql, getSchemaInclusionRule());)
+                                                                sequencesDefinitionSql,
+                                                                getSchemaInclusionRule());)
     {
       while (results.next())
       {
