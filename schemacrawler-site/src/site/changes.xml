@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.08.01" date="2016-04-14" description="Better performance with Oracle">
+     <release version="14.08.01" date="2016-05-04" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Improved performance with Oracle, by substituting schemas.
       ]]></action>                                                          
