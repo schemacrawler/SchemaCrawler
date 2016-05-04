@@ -76,15 +76,15 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.python</groupId>
-      <artifactId>jython-standalone</artifactId>
-      <version>2.7.1b3</version>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby</artifactId>
+      <version>9.1.0.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.jruby</groupId>
-      <artifactId>jruby-complete</artifactId>
-      <version>9.1.0.0</version>
+      <groupId>org.python</groupId>
+      <artifactId>jython-standalone</artifactId>
+      <version>2.7.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
