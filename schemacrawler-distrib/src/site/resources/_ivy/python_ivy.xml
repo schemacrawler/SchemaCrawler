@@ -5,7 +5,7 @@
   <info organisation="schemacrawler" module="schemacrawler-python" />
   <dependencies>
     <dependency org="org.python" name="jython-standalone"
-      rev="2.5.3" />
+      rev="2.7.0" />
       
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />

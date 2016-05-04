@@ -4,7 +4,7 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-ruby" />
   <dependencies>
-    <dependency org="org.jruby" name="jruby" rev="1.7.16.1" />
+    <dependency org="org.jruby" name="jruby" rev="9.1.0.0" />
     
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
