@@ -28,32 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
-import static sf.util.DatabaseUtility.executeSql;
-import static sf.util.DatabaseUtility.executeSqlForLong;
-import static sf.util.DatabaseUtility.executeSqlForScalar;
-import static sf.util.TemplatingUtility.expandTemplate;
 import static sf.util.TemplatingUtility.extractTemplateVariables;
 import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.StringFormat;
 
 /**
  * A SQL query. May be parameterized with ant-like variable references.
@@ -64,31 +43,7 @@ public final class Query
   implements Serializable
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Query.class.getName());
-
   private static final long serialVersionUID = 2820769346069413473L;
-
-  private static String getColumnsListAsString(final List<Column> columns,
-                                               final boolean omitLargeObjectColumns)
-  {
-    final StringBuilder buffer = new StringBuilder(1024);
-    for (int i = 0; i < columns.size(); i++)
-    {
-      final Column column = columns.get(i);
-      final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
-        .getJavaSqlType().getJavaSqlTypeGroup();
-      if (!(omitLargeObjectColumns
-            && javaSqlTypeGroup == JavaSqlTypeGroup.large_object))
-      {
-        if (i > 0)
-        {
-          buffer.append(", ");
-        }
-        buffer.append(column.getName());
-      }
-    }
-    return buffer.toString();
-  }
 
   private final String name;
   private final String query;
@@ -121,49 +76,6 @@ public final class Query
     }
   }
 
-  public ResultSet execute(final Statement statement,
-                           final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
-    final String sql = getQuery(schemaInclusionRule);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
-    return executeSql(statement, sql);
-  }
-
-  public ResultSet execute(final Statement statement,
-                           final Table table,
-                           final boolean isAlphabeticalSortForTableColumns)
-    throws SQLException
-  {
-    final String sql = getQuery(table, isAlphabeticalSortForTableColumns);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
-    return executeSql(statement, sql);
-  }
-
-  public long executeForLong(final Connection connection, final Table table)
-    throws SchemaCrawlerException
-  {
-    final String sql = getQuery(table, true);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
-    return executeSqlForLong(connection, sql);
-  }
-
-  public Object executeForScalar(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    final String sql = getQuery();
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
-    return executeSqlForScalar(connection, sql);
-  }
-
-  public Object executeForScalar(final Connection connection, final Table table)
-    throws SchemaCrawlerException
-  {
-    final String sql = getQuery(table, true);
-    LOGGER.log(Level.FINE, new StringFormat("Executing %s: %n%s", name, sql));
-    return executeSqlForScalar(connection, sql);
-  }
-
   /**
    * Gets the query name.
    *
@@ -181,7 +93,7 @@ public final class Query
    */
   public String getQuery()
   {
-    return expandTemplate(query);
+    return query;
   }
 
   /**
@@ -204,71 +116,7 @@ public final class Query
   @Override
   public String toString()
   {
-    return name + ":" + query;
-  }
-
-  /**
-   * Gets the query with parameters substituted.
-   *
-   * @param schemaInclusionRule
-   *        Schema inclusion rule
-   * @return Ready-to-execute query
-   */
-  private String getQuery(final InclusionRule schemaInclusionRule)
-  {
-    final Map<String, String> properties = new HashMap<>();
-    if (schemaInclusionRule != null)
-    {
-      final String schemaInclusionPattern = schemaInclusionRule
-        .getInclusionPattern().pattern();
-      if (!isBlank(schemaInclusionPattern))
-      {
-        properties.put("schemas", schemaInclusionPattern);
-      }
-    }
-
-    String sql = query;
-    sql = expandTemplate(sql, properties);
-    sql = expandTemplate(sql);
-
-    return sql;
-  }
-
-  /**
-   * Gets the query with parameters substituted.
-   *
-   * @param table
-   *        Table information
-   * @return Ready-to-execute query
-   */
-  private String getQuery(final Table table,
-                          final boolean isAlphabeticalSortForTableColumns)
-  {
-    final Map<String, String> tableProperties = new HashMap<>();
-    if (table != null)
-    {
-      final NamedObjectSort columnsSort = NamedObjectSort
-        .getNamedObjectSort(isAlphabeticalSortForTableColumns);
-      final List<Column> columns = table.getColumns();
-      Collections.sort(columns, columnsSort);
-
-      if (table.getSchema() != null)
-      {
-        tableProperties.put("schema", table.getSchema().getFullName());
-      }
-      tableProperties.put("table", table.getFullName());
-      tableProperties.put("tablename", table.getName());
-      tableProperties.put("columns", getColumnsListAsString(columns, false));
-      tableProperties.put("orderbycolumns",
-                          getColumnsListAsString(columns, true));
-      tableProperties.put("tabletype", table.getTableType().toString());
-    }
-
-    String sql = query;
-    sql = expandTemplate(sql, tableProperties);
-    sql = expandTemplate(sql);
-
-    return sql;
+    return String.format("%s%n%s", name, query);
   }
 
 }

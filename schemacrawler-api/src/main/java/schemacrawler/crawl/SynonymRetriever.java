@@ -107,8 +107,8 @@ final class SynonymRetriever
     final Query synonymsDefinitionSql = informationSchemaViews.getSynonymsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        MetadataResultSet results = new MetadataResultSet(statement,
-                                                          synonymsDefinitionSql,
+        MetadataResultSet results = new MetadataResultSet(synonymsDefinitionSql,
+                                                          statement,
                                                           getSchemaInclusionRule());)
     {
       while (results.next())

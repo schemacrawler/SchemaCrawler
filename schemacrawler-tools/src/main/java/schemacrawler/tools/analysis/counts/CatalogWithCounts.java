@@ -29,6 +29,7 @@ package schemacrawler.tools.analysis.counts;
 
 
 import static schemacrawler.tools.analysis.counts.CountsUtility.addRowCountToTable;
+import static schemacrawler.utility.QueryUtility.executeForLong;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
@@ -63,7 +64,7 @@ public final class CatalogWithCounts
   public CatalogWithCounts(final Catalog catalog,
                            final Connection connection,
                            final SchemaCrawlerOptions options)
-                             throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(catalog);
 
@@ -87,7 +88,7 @@ public final class CatalogWithCounts
     {
       try
       {
-        final long count = query.executeForLong(connection, table);
+        final long count = executeForLong(query, connection, table);
         counts.put(table, count);
         addRowCountToTable(table, count);
       }
