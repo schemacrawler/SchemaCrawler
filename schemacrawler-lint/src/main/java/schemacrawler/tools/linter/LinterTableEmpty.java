@@ -29,6 +29,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.QueryUtility.executeForLong;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -70,7 +71,7 @@ public class LinterTableEmpty
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try
     {
-      final long count = query.executeForLong(connection, table);
+      final long count = executeForLong(query, connection, table);
       if (count == 0)
       {
         addTableLint(table, getSummary());

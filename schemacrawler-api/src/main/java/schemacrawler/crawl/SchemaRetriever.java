@@ -242,8 +242,8 @@ final class SchemaRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                schemataSql,
+        final MetadataResultSet results = new MetadataResultSet(schemataSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveAllSchemasFromInformationSchemaViews");

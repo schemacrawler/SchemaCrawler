@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.enumValueFromId;
@@ -73,15 +74,6 @@ final class MetadataResultSet
     .getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
-
-  private static ResultSet executeSql(final Statement statement,
-                                      final Query query,
-                                      final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
-    requireNonNull(query, "No query provided");
-    return query.execute(statement, schemaInclusionRule);
-  }
 
   private String description;
   private final ResultSet results;
@@ -127,12 +119,12 @@ final class MetadataResultSet
     readColumns = new HashSet<>();
   }
 
-  MetadataResultSet(final Statement statement,
-                    final Query query,
+  MetadataResultSet(final Query query,
+                    final Statement statement,
                     final InclusionRule schemaInclusionRule)
     throws SQLException
   {
-    this(executeSql(statement, query, schemaInclusionRule));
+    this(executeAgainstSchema(query, statement, schemaInclusionRule));
   }
 
   /**

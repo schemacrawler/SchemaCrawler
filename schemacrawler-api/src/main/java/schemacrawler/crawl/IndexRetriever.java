@@ -345,8 +345,8 @@ final class IndexRetriever
     final Query indexesSql = informationSchemaViews.getIndexesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                indexesSql,
+        final MetadataResultSet results = new MetadataResultSet(indexesSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveIndexesUsingSql");
