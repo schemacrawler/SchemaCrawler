@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
+import static schemacrawler.utility.QueryUtility.executeAgainstTable;
 import static sf.util.DatabaseUtility.createStatement;
 import static sf.util.DatabaseUtility.executeSql;
 
@@ -39,7 +40,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -58,9 +58,6 @@ import schemacrawler.utility.Query;
 public final class OperationExecutable
   extends BaseStagedExecutable
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -95,8 +92,11 @@ public final class OperationExecutable
         {
           final boolean isAlphabeticalSortForTableColumns = operationOptions
             .isAlphabeticalSortForTableColumns();
-          try (final ResultSet results = query
-            .execute(statement, table, isAlphabeticalSortForTableColumns);)
+          try (
+              final ResultSet results = executeAgainstTable(query,
+                                                            statement,
+                                                            table,
+                                                            isAlphabeticalSortForTableColumns);)
           {
             handler.handleData(table, results);
           }

@@ -139,8 +139,8 @@ final class TableColumnRetriever
       .getExtHiddenTableColumnsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                hiddenColumnsSql,
+        final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveHiddenColumns");
@@ -271,8 +271,8 @@ final class TableColumnRetriever
     final Query tableColumnsSql = informationSchemaViews.getTableColumnsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableColumnsSql,
+        final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       results.logRowCount("retrieveColumnsFromDataDictionary");

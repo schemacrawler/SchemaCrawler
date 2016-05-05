@@ -390,8 +390,8 @@ final class DatabaseInfoRetriever
       final Query typeInfoSql = informationSchemaViews.getOverrideTypeInfoSql();
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
-      results = new MetadataResultSet(statement,
-                                      typeInfoSql,
+      results = new MetadataResultSet(typeInfoSql,
+                                      statement,
                                       getSchemaInclusionRule());
     }
     else

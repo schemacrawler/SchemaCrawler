@@ -89,8 +89,8 @@ final class RoutineExtRetriever
     final Query routineDefinitionsSql = informationSchemaViews.getRoutinesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                routineDefinitionsSql,
+        final MetadataResultSet results = new MetadataResultSet(routineDefinitionsSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       while (results.next())

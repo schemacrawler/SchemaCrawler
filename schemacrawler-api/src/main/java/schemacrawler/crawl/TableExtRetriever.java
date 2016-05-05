@@ -97,8 +97,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                columnAttributesSql,
+        final MetadataResultSet results = new MetadataResultSet(columnAttributesSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -179,8 +179,8 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableAttributesSql,
+        final MetadataResultSet results = new MetadataResultSet(tableAttributesSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -248,8 +248,8 @@ final class TableExtRetriever
       .getExtIndexesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                extIndexesInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(extIndexesInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -388,8 +388,8 @@ final class TableExtRetriever
       .getExtTablesSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableDefinitionsInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(tableDefinitionsInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -475,8 +475,8 @@ final class TableExtRetriever
     final Query triggerInformationSql = informationSchemaViews.getTriggersSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                triggerInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(triggerInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -573,8 +573,8 @@ final class TableExtRetriever
     final Query viewInformationSql = informationSchemaViews.getViewsSql();
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                viewInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(viewInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -715,8 +715,8 @@ final class TableExtRetriever
     final Query tableConstraintsInformationSql = informationSchemaViews
       .getTableConstraintsSql();
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableConstraintsInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(tableConstraintsInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
 
@@ -795,8 +795,8 @@ final class TableExtRetriever
       .getTableConstraintsColumnsSql();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                tableConstraintsColumnsInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(tableConstraintsColumnsInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       while (results.next())
@@ -884,8 +884,8 @@ final class TableExtRetriever
 
     // Get check constraint definitions
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                extTableConstraintInformationSql,
+        final MetadataResultSet results = new MetadataResultSet(extTableConstraintInformationSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       while (results.next())

@@ -105,8 +105,8 @@ final class SequenceRetriever
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(statement,
-                                                                sequencesDefinitionSql,
+        final MetadataResultSet results = new MetadataResultSet(sequencesDefinitionSql,
+                                                                statement,
                                                                 getSchemaInclusionRule());)
     {
       while (results.next())

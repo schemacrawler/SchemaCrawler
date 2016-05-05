@@ -29,6 +29,7 @@ package schemacrawler.tools.linter;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.utility.QueryUtility.executeForScalar;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -83,7 +84,7 @@ public class LinterTableSql
     requireNonNull(connection, "No connection provided");
 
     final Query query = new Query(message, sql);
-    final Object queryResult = query.executeForScalar(connection, table);
+    final Object queryResult = executeForScalar(query, connection, table);
     if (queryResult != null)
     {
       addTableLint(table, getSummary() + " " + queryResult);
