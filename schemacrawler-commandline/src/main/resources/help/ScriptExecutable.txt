@@ -6,8 +6,10 @@
 --- Output Options ---
 
 -outputformat=<outputformat>
-  Where <outputformat> is the file path to the JavaScript
+  Where <outputformat> is the file path to the script
   file
+  The file extension should indicate the scripting
+  language - for example, use .js for JavaScript
 
 -o=<outputfile> (short for -outputfile=<outputfile>)
 	Optional 
