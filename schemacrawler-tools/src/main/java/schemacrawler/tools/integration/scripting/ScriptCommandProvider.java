@@ -42,14 +42,8 @@ public class ScriptCommandProvider
                                            final OutputOptions outputOptions)
   {
     final ScriptExecutable executable = new ScriptExecutable();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
     return executable;
   }
 

@@ -37,7 +37,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.StringFormat;
 
-class ExecutableCommandProvider
+abstract class ExecutableCommandProvider
   implements CommandProvider
 {
 
@@ -57,7 +57,7 @@ class ExecutableCommandProvider
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
-                                             throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
 
     Class<? extends Executable> commandExecutableClass;
@@ -95,17 +95,8 @@ class ExecutableCommandProvider
       }
     }
 
-    if (executable != null)
-    {
-      if (schemaCrawlerOptions != null)
-      {
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      }
-      if (outputOptions != null)
-      {
-        executable.setOutputOptions(outputOptions);
-      }
-    }
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
 
     return executable;
   }

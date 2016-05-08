@@ -43,6 +43,8 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.integration.graph.GraphCommandProvider;
+import schemacrawler.tools.integration.scripting.ScriptCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -78,11 +80,8 @@ public final class CommandRegistry
       commandProviders.add(new OperationExecutableCommandProvider(operation));
     }
 
-    commandProviders.addAll(Arrays
-      .asList(new ExecutableCommandProvider("script",
-                                            "schemacrawler.tools.integration.scripting.ScriptExecutable"),
-              new ExecutableCommandProvider("graph",
-                                            "schemacrawler.tools.integration.graph.GraphExecutable")));
+    commandProviders.addAll(Arrays.asList(new ScriptCommandProvider(),
+                                          new GraphCommandProvider()));
 
     try
     {
@@ -164,7 +163,7 @@ public final class CommandRegistry
   Executable configureNewExecutable(final String command,
                                     final SchemaCrawlerOptions schemaCrawlerOptions,
                                     final OutputOptions outputOptions)
-                                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final CommandProvider commandProvider;
     if (commandRegistry.containsKey(command))
@@ -173,8 +172,7 @@ public final class CommandRegistry
     }
     else
     {
-      commandProvider = new ExecutableCommandProvider(command,
-                                                      "schemacrawler.tools.text.operation.OperationExecutable");
+      commandProvider = new OperationExecutableCommandProvider(command);
     }
 
     return commandProvider.configureNewExecutable(schemaCrawlerOptions,
