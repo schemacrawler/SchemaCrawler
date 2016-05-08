@@ -42,14 +42,8 @@ public class GraphCommandProvider
                                            final OutputOptions outputOptions)
   {
     final GraphExecutable executable = new GraphExecutable();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
     return executable;
   }
 

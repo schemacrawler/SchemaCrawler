@@ -36,10 +36,18 @@ final class OperationExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
+  private static final String OPERATION_EXECUTABLE = "schemacrawler.tools.text.operation.OperationExecutable";
+
   OperationExecutableCommandProvider(final Operation operation)
   {
     super(requireNonNull(operation, "No operation provided").name(),
-          "schemacrawler.tools.text.operation.OperationExecutable");
+          OPERATION_EXECUTABLE);
+  }
+
+  OperationExecutableCommandProvider(final String operation)
+  {
+    super(requireNonNull(operation, "No operation provided"),
+          OPERATION_EXECUTABLE);
   }
 
 }
