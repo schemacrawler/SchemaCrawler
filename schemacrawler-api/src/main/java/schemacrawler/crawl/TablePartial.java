@@ -95,6 +95,12 @@ final class TablePartial
   }
 
   @Override
+  public Collection<Column> getHiddenColumns()
+  {
+    throw new NotLoadedException(this);
+  }
+
+  @Override
   public Collection<ForeignKey> getImportedForeignKeys()
   {
     throw new NotLoadedException(this);

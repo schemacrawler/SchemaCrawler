@@ -76,6 +76,7 @@ class MutableTable
   private TableType tableType = TableType.UNKNOWN; // Default value
   private MutablePrimaryKey primaryKey;
   private final NamedObjectList<MutableColumn> columns = new NamedObjectList<>();
+  private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
   private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
@@ -123,7 +124,7 @@ class MutableTable
   @Override
   public List<Column> getColumns()
   {
-    return new ArrayList<Column>(columns.values());
+    return new ArrayList<>(columns.values());
   }
 
   /**
@@ -159,6 +160,17 @@ class MutableTable
     return getForeignKeys(TableAssociationType.all);
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   * @see Table#getColumns()
+   */
+  @Override
+  public Collection<Column> getHiddenColumns()
+  {
+    return new HashSet<>(hiddenColumns.values());
+  }
+
   @Override
   public Collection<ForeignKey> getImportedForeignKeys()
   {
@@ -173,7 +185,7 @@ class MutableTable
   @Override
   public Collection<Index> getIndexes()
   {
-    return new ArrayList<Index>(indexes.values());
+    return new ArrayList<>(indexes.values());
   }
 
   /**
@@ -254,7 +266,7 @@ class MutableTable
   @Override
   public Collection<TableConstraint> getTableConstraints()
   {
-    return new ArrayList<TableConstraint>(constraints.values());
+    return new ArrayList<>(constraints.values());
   }
 
   /**
@@ -276,7 +288,7 @@ class MutableTable
   @Override
   public Collection<Trigger> getTriggers()
   {
-    return new ArrayList<Trigger>(triggers.values());
+    return new ArrayList<>(triggers.values());
   }
 
   /**
@@ -304,7 +316,12 @@ class MutableTable
   @Override
   public Optional<MutableColumn> lookupColumn(final String name)
   {
-    return columns.lookup(this, name);
+    Optional<MutableColumn> optionalColumn = columns.lookup(this, name);
+    if (!optionalColumn.isPresent())
+    {
+      optionalColumn = hiddenColumns.lookup(this, name);
+    }
+    return optionalColumn;
   }
 
   /**
@@ -361,6 +378,11 @@ class MutableTable
   void addForeignKey(final MutableForeignKey foreignKey)
   {
     foreignKeys.add(foreignKey);
+  }
+
+  void addHiddenColumn(final MutableColumn column)
+  {
+    hiddenColumns.add(column);
   }
 
   void addIndex(final MutableIndex index)
