@@ -148,7 +148,8 @@ final class TableColumnRetriever
       {
         final MutableColumn column = createTableColumn(results,
                                                        allTables,
-                                                       columnFilter);
+                                                       columnFilter,
+                                                       false);
         if (column != null)
         {
           column.setHidden(true);
@@ -159,7 +160,8 @@ final class TableColumnRetriever
 
   private MutableColumn createTableColumn(final MetadataResultSet results,
                                           final NamedObjectList<MutableTable> allTables,
-                                          final InclusionRuleFilter<Column> columnFilter)
+                                          final InclusionRuleFilter<Column> columnFilter,
+                                          final boolean isHidden)
     throws SQLException
   {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
@@ -190,11 +192,11 @@ final class TableColumnRetriever
     final MutableTable table = optionalTable.get();
     MutableColumn column;
 
-    column = lookupOrCreateColumn(table, columnName, /* add? */false);
+    column = lookupOrCreateColumn(table, columnName);
     if (columnFilter.test(column)
         && belongsToSchema(table, columnCatalogName, schemaName))
     {
-      column = lookupOrCreateColumn(table, columnName, /* add? */true);
+      column = lookupOrCreateColumn(table, columnName);
 
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
@@ -226,15 +228,25 @@ final class TableColumnRetriever
 
       column.addAttributes(results.getAttributes());
 
-      table.addColumn(column);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Adding %scolumn to table, %s",
+                                  isHidden? "hidden ": "",
+                                  column.getFullName()));
+      if (isHidden)
+      {
+        table.addHiddenColumn(column);
+      }
+      else
+      {
+        table.addColumn(column);
+      }
     }
 
     return column;
   }
 
   private MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                             final String columnName,
-                                             final boolean add)
+                                             final String columnName)
   {
     final Optional<MutableColumn> columnOptional = table
       .lookupColumn(columnName);
@@ -246,13 +258,6 @@ final class TableColumnRetriever
     else
     {
       column = new MutableColumn(table, columnName);
-      if (add)
-      {
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Adding column to table, %s",
-                                    column.getFullName()));
-        table.addColumn(column);
-      }
     }
     return column;
   }
@@ -278,7 +283,7 @@ final class TableColumnRetriever
       results.logRowCount("retrieveColumnsFromDataDictionary");
       while (results.next())
       {
-        createTableColumn(results, allTables, columnFilter);
+        createTableColumn(results, allTables, columnFilter, false);
       }
     }
   }
@@ -298,7 +303,7 @@ final class TableColumnRetriever
       {
         while (results.next())
         {
-          createTableColumn(results, allTables, columnFilter);
+          createTableColumn(results, allTables, columnFilter, false);
         }
       }
       catch (final SQLException e)
@@ -321,7 +326,7 @@ final class TableColumnRetriever
     {
       while (results.next())
       {
-        createTableColumn(results, allTables, columnFilter);
+        createTableColumn(results, allTables, columnFilter, false);
       }
     }
   }

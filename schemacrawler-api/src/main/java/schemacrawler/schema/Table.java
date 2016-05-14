@@ -66,6 +66,13 @@ public interface Table
   Collection<ForeignKey> getForeignKeys();
 
   /**
+   * Gets hidden columns.
+   *
+   * @return Columns of the table
+   */
+  Collection<Column> getHiddenColumns();
+
+  /**
    * Gets the list of imported foreign keys. That is, only those that
    * reference a primary key another table.
    *
