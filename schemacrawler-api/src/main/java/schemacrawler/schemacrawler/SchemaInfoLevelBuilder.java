@@ -44,6 +44,7 @@ public final class SchemaInfoLevelBuilder
     detailed.setRetrieveUserDefinedColumnDataTypes(true);
     detailed.setRetrieveTriggerInformation(true);
     detailed.setRetrieveTableConstraintInformation(true);
+    detailed.setRetrieveTableConstraintDefinitions(true);
     detailed.setRetrieveViewInformation(true);
     detailed.setRetrieveRoutineInformation(true);
     detailed.setTag("detailed");
