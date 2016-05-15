@@ -44,8 +44,6 @@ public final class SchemaInfoLevelBuilder
     detailed.setRetrieveUserDefinedColumnDataTypes(true);
     detailed.setRetrieveTriggerInformation(true);
     detailed.setRetrieveTableConstraintInformation(true);
-    detailed.setRetrieveTableDefinitionsInformation(true);
-    detailed.setRetrieveIndexInformation(true);
     detailed.setRetrieveViewInformation(true);
     detailed.setRetrieveRoutineInformation(true);
     detailed.setTag("detailed");
@@ -64,9 +62,11 @@ public final class SchemaInfoLevelBuilder
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
+    maximum.setRetrieveTableDefinitionsInformation(true);
     maximum.setRetrieveHiddenTableColumns(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
+    maximum.setRetrieveIndexInformation(true);
     maximum.setRetrieveSequenceInformation(true);
     maximum.setRetrieveSynonymInformation(true);
     maximum.setTag("maximum");
