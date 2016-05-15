@@ -105,7 +105,8 @@ public final class SchemaCrawler
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
-                                                                        catalog, options);
+                                                                        catalog,
+                                                                        options);
 
       stopWatch.time("retrieveSystemColumnDataTypes", () -> {
         if (infoLevel.isRetrieveColumnDataTypes())
@@ -174,7 +175,8 @@ public final class SchemaCrawler
 
       final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
-                                                                        catalog, options);
+                                                                        catalog,
+                                                                        options);
 
       LOGGER.log(Level.INFO, "Crawling SchemaCrawler information");
 
@@ -268,7 +270,9 @@ public final class SchemaCrawler
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, catalog, options);
-      retrieverExtra = new RoutineExtRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new RoutineExtRetriever(retrieverConnection,
+                                               catalog,
+                                               options);
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
@@ -369,7 +373,8 @@ public final class SchemaCrawler
     try
     {
       final SchemaRetriever retriever = new SchemaRetriever(retrieverConnection,
-                                                            catalog, options);
+                                                            catalog,
+                                                            options);
 
       stopWatch.time("retrieveSchemas", () -> {
         retriever.retrieveSchemas(options.getSchemaInclusionRule());
@@ -422,7 +427,9 @@ public final class SchemaCrawler
     final SequenceRetriever retrieverExtra;
     try
     {
-      retrieverExtra = new SequenceRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new SequenceRetriever(retrieverConnection,
+                                             catalog,
+                                             options);
 
       stopWatch.time("retrieveSequenceInformation", () -> {
         retrieverExtra
@@ -477,7 +484,9 @@ public final class SchemaCrawler
     final SynonymRetriever retrieverExtra;
     try
     {
-      retrieverExtra = new SynonymRetriever(retrieverConnection, catalog, options);
+      retrieverExtra = new SynonymRetriever(retrieverConnection,
+                                            catalog,
+                                            options);
       stopWatch.time("retrieveSynonymInformation", () -> {
         retrieverExtra
           .retrieveSynonymInformation(options.getSynonymInclusionRule());
@@ -532,15 +541,23 @@ public final class SchemaCrawler
     try
     {
       final TableRetriever retriever = new TableRetriever(retrieverConnection,
-                                                          catalog, options);
+                                                          catalog,
+                                                          options);
       final TableColumnRetriever columnRetriever = new TableColumnRetriever(retrieverConnection,
-                                                                            catalog, options);
+                                                                            catalog,
+                                                                            options);
       final IndexRetriever indexRetriever = new IndexRetriever(retrieverConnection,
-                                                               catalog, options);
+                                                               catalog,
+                                                               options);
       final ForeignKeyRetriever fkRetriever = new ForeignKeyRetriever(retrieverConnection,
-                                                                      catalog, options);
+                                                                      catalog,
+                                                                      options);
+      final TableConstraintRetriever constraintRetriever = new TableConstraintRetriever(retrieverConnection,
+                                                                                        catalog,
+                                                                                        options);
       final TableExtRetriever retrieverExtra = new TableExtRetriever(retrieverConnection,
-                                                                     catalog, options);
+                                                                     catalog,
+                                                                     options);
 
       stopWatch.time("retrieveTables", () -> {
         for (final Schema schema: retriever.getSchemas())
@@ -628,7 +645,14 @@ public final class SchemaCrawler
       stopWatch.time("retrieveTableConstraintInformation", () -> {
         if (infoLevel.isRetrieveTableConstraintInformation())
         {
-          retrieverExtra.retrieveTableConstraintInformation();
+          constraintRetriever.retrieveTableConstraintInformation();
+        }
+        return null;
+      });
+      stopWatch.time("isRetrieveTableConstraintDefinitions", () -> {
+        if (infoLevel.isRetrieveTableConstraintDefinitions())
+        {
+          constraintRetriever.retrieveTableConstraintDefinitions();
         }
         return null;
       });
