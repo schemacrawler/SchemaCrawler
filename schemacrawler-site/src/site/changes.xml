@@ -8,7 +8,10 @@
      <release version="14.08.02" date="2016-05-16" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Adding hidden columns in a separate list, accessed with a new method, Table.getHiddenColuns().
-      ]]></action>                                                          
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Allow table constraint definitions to be obtained separately from table constraint information.
+      ]]></action>                                                                 
      </release>   
      <release version="14.08.01" date="2016-05-04" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
@@ -98,7 +101,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.08.01" date="2016-02-03" description="Fixed logging">
+     <release version="14.08.02" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
