@@ -349,13 +349,13 @@ final class TableExtRetriever
 
     if (!tableConstraintsMap.isEmpty())
     {
-      getTableConstraintsColumns(connection,
-                                 tableConstraintsMap,
-                                 informationSchemaViews);
+      retrieveTableConstraintsColumns(connection,
+                                      tableConstraintsMap,
+                                      informationSchemaViews);
 
-      getTableConstraintsDefinitions(connection,
-                                     tableConstraintsMap,
-                                     informationSchemaViews);
+      retrieveTableConstraintsDefinitions(connection,
+                                          tableConstraintsMap,
+                                          informationSchemaViews);
     }
   }
 
@@ -780,9 +780,9 @@ final class TableExtRetriever
     }
   }
 
-  private void getTableConstraintsColumns(final Connection connection,
-                                          final Map<String, MutableTableConstraint> tableConstraintsMap,
-                                          final InformationSchemaViews informationSchemaViews)
+  private void retrieveTableConstraintsColumns(final Connection connection,
+                                               final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                               final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsColumnsSql())
     {
@@ -869,9 +869,9 @@ final class TableExtRetriever
     }
   }
 
-  private void getTableConstraintsDefinitions(final Connection connection,
-                                              final Map<String, MutableTableConstraint> tableConstraintsMap,
-                                              final InformationSchemaViews informationSchemaViews)
+  private void retrieveTableConstraintsDefinitions(final Connection connection,
+                                                   final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                                   final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasExtTableConstraintsSql())
     {
