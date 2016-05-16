@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <properties>
-    <springframework.version>4.2.5.RELEASE</springframework.version>
+    <springframework.version>4.2.6.RELEASE</springframework.version>
   </properties>  
   <dependencies>
     <dependency>
@@ -42,7 +42,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>2.1.4.RELEASE</version>
+      <version>3.0.0.RELEASE</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

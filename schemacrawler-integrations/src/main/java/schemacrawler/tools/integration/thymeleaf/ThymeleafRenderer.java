@@ -35,10 +35,10 @@ import java.sql.Connection;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import schemacrawler.schema.Catalog;
@@ -66,30 +66,35 @@ public final class ThymeleafRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection)
-                                throws Exception
+    throws Exception
   {
     final Context ctx = new Context();
     ctx.setVariable("catalog", catalog);
 
     final TemplateEngine templateEngine = new TemplateEngine();
     final Charset inputCharset = outputOptions.getInputCharset();
+
+    final FileTemplateResolver fileResolver = new FileTemplateResolver();
+    fileResolver.setCheckExistence(true);
+    templateEngine.addTemplateResolver(configure(fileResolver, inputCharset));
+
+    final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
+    classpathResolver.setCheckExistence(true);
     templateEngine
-      .addTemplateResolver(configure(new FileTemplateResolver(), inputCharset));
-    templateEngine
-      .addTemplateResolver(configure(new ClassLoaderTemplateResolver(),
-                                     inputCharset));
-    templateEngine
-      .addTemplateResolver(configure(new UrlTemplateResolver(), inputCharset));
+      .addTemplateResolver(configure(classpathResolver, inputCharset));
+
+    final UrlTemplateResolver urlResolver = new UrlTemplateResolver();
+    urlResolver.setCheckExistence(true);
+    templateEngine.addTemplateResolver(configure(urlResolver, inputCharset));
 
     final String templateLocation = outputOptions.getOutputFormatValue();
-
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       templateEngine.process(templateLocation, ctx, writer);
     }
   }
 
-  private ITemplateResolver configure(final TemplateResolver templateResolver,
+  private ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
                                       final Charset inputEncoding)
   {
     templateResolver.setCharacterEncoding(inputEncoding.name());
