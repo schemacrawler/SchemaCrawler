@@ -32,6 +32,7 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.List;
 
+import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -40,9 +41,9 @@ import schemacrawler.schema.TableConstraintType;
 /**
  * Represents a table constraint.
  */
-class MutableTableConstraint
+class MutableDependantTableConstraint
   extends AbstractDependantObject<Table>
-  implements TableConstraint
+  implements DependantTableConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;
@@ -53,7 +54,7 @@ class MutableTableConstraint
   private boolean initiallyDeferred;
   private final StringBuilder definition;
 
-  MutableTableConstraint(final Table parent, final String name)
+  MutableDependantTableConstraint(final Table parent, final String name)
   {
     super(new TableReference(parent), name);
     definition = new StringBuilder();

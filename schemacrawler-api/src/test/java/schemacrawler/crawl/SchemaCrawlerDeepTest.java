@@ -114,8 +114,8 @@ public class SchemaCrawlerDeepTest
     }
     for (final TableConstraint tableConstraint: table0.getTableConstraints())
     {
-      table1.addTableConstraint((MutableTableConstraint) tableConstraint);
-      table2.addTableConstraint((MutableTableConstraint) tableConstraint);
+      table1.addTableConstraint((MutableDependantTableConstraint) tableConstraint);
+      table2.addTableConstraint((MutableDependantTableConstraint) tableConstraint);
     }
 
     assertFalse("Tables should not be equal", table1.equals(table2));
