@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.PartialDatabaseObject;
+import schemacrawler.schema.TableConstraint;
 
 public class NotLoadedException
   extends UnsupportedOperationException
@@ -41,6 +42,13 @@ public class NotLoadedException
   {
     super(String.format("Complete database metadata has not been loaded, %s",
                         databaseObject));
+  }
+
+  public NotLoadedException(final TableConstraint constraint)
+  {
+    super(String.format(
+                        "Complete table constraint metadata has not been loaded, %s",
+                        constraint));
   }
 
 }

@@ -33,18 +33,22 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableConstraintType;
 
 /**
  * Represents a primary key in a table.
  *
  * @author Sualeh Fatehi
  */
-class MutablePrimaryKey
+final class MutablePrimaryKey
   extends MutableIndex
   implements PrimaryKey
 {
 
   private static final long serialVersionUID = -7169206178562782087L;
+
+  private Boolean deferrable; // initialize to null
+  private Boolean initiallyDeferred; // initialize to null
 
   /**
    * Copies information from an index.
@@ -72,6 +76,32 @@ class MutablePrimaryKey
     super(parent, name);
   }
 
+  @Override
+  public TableConstraintType getTableConstraintType()
+  {
+    return TableConstraintType.primary_key;
+  }
+
+  @Override
+  public boolean isDeferrable()
+  {
+    if (deferrable == null)
+    {
+      throw new NotLoadedException(this);
+    }
+    return deferrable;
+  }
+
+  @Override
+  public boolean isInitiallyDeferred()
+  {
+    if (initiallyDeferred == null)
+    {
+      throw new NotLoadedException(this);
+    }
+    return initiallyDeferred;
+  }
+
   /**
    * {@inheritDoc}
    *
@@ -81,6 +111,16 @@ class MutablePrimaryKey
   public final boolean isUnique()
   {
     return true;
+  }
+
+  void setDeferrable(final boolean deferrable)
+  {
+    this.deferrable = deferrable;
+  }
+
+  void setInitiallyDeferred(final boolean initiallyDeferred)
+  {
+    this.initiallyDeferred = initiallyDeferred;
   }
 
 }
