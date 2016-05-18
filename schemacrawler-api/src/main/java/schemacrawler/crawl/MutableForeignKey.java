@@ -43,6 +43,7 @@ import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.TableConstraintType;
 import schemacrawler.utility.CompareUtility;
 
 /**
@@ -50,7 +51,7 @@ import schemacrawler.utility.CompareUtility;
  *
  * @author Sualeh Fatehi
  */
-class MutableForeignKey
+final class MutableForeignKey
   extends AbstractNamedObjectWithAttributes
   implements ForeignKey
 {
@@ -58,13 +59,19 @@ class MutableForeignKey
   private static final long serialVersionUID = 4121411795974895671L;
 
   private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
+
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
+  private Boolean deferrable; // initialize to null
+  private Boolean initiallyDeferred; // initialize to null
+  private final StringBuilder definition;
 
   MutableForeignKey(final String name)
   {
     super(name);
+
+    definition = new StringBuilder();
 
     // Default values
     updateRule = ForeignKeyUpdateRule.unknown;
@@ -122,12 +129,29 @@ class MutableForeignKey
   /**
    * {@inheritDoc}
    *
+   * @see ForeignKey#getDefinition()
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * @see ForeignKey#getDeleteRule()
    */
   @Override
   public final ForeignKeyUpdateRule getDeleteRule()
   {
     return deleteRule;
+  }
+
+  @Override
+  public TableConstraintType getTableConstraintType()
+  {
+    return TableConstraintType.foreign_key;
   }
 
   /**
@@ -139,6 +163,32 @@ class MutableForeignKey
   public final ForeignKeyUpdateRule getUpdateRule()
   {
     return updateRule;
+  }
+
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
+  @Override
+  public boolean isDeferrable()
+  {
+    if (deferrable == null)
+    {
+      throw new NotLoadedException(this);
+    }
+    return deferrable;
+  }
+
+  @Override
+  public boolean isInitiallyDeferred()
+  {
+    if (initiallyDeferred == null)
+    {
+      throw new NotLoadedException(this);
+    }
+    return initiallyDeferred;
   }
 
   @Override
@@ -163,14 +213,32 @@ class MutableForeignKey
     columnReferences.add(fkColumnReference);
   }
 
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
+  }
+
   final void setDeferrability(final ForeignKeyDeferrability deferrability)
   {
     this.deferrability = deferrability;
   }
 
+  void setDeferrable(final boolean deferrable)
+  {
+    this.deferrable = deferrable;
+  }
+
   final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
   {
     this.deleteRule = deleteRule;
+  }
+
+  void setInitiallyDeferred(final boolean initiallyDeferred)
+  {
+    this.initiallyDeferred = initiallyDeferred;
   }
 
   final void setUpdateRule(final ForeignKeyUpdateRule updateRule)

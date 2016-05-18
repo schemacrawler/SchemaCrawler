@@ -35,7 +35,7 @@ package schemacrawler.schema;
  * @author Sualeh Fatehi
  */
 public interface TableConstraint
-  extends DatabaseObject, DefinedObject
+  extends NamedObject, DefinedObject
 {
 
   /**
