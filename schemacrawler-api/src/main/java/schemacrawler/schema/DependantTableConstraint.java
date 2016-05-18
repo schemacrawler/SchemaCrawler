@@ -29,34 +29,29 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
+import java.util.List;
+
 /**
  * Represents a table constraint.
  *
  * @author Sualeh Fatehi
  */
-public interface TableConstraint
-  extends DatabaseObject, DefinedObject
+public interface DependantTableConstraint
+  extends TableConstraint, DependantObject<Table>,
+  TypedObject<TableConstraintType>
 {
 
   /**
-   * Gets the table constraint type.
+   * Gets the list of columns in ordinal order.
    *
-   * @return Table constraint type
+   * @return Columns of the table constraint.
    */
-  TableConstraintType getTableConstraintType();
+  List<TableConstraintColumn> getColumns();
 
-  /**
-   * Whether the constraint is deferrable.
-   *
-   * @return Whether the constraint is deferrable
-   */
-  boolean isDeferrable();
-
-  /**
-   * Whether the constraint is initially deferred.
-   *
-   * @return Whether the constraint is initially deferred
-   */
-  boolean isInitiallyDeferred();
+  @Override
+  default TableConstraintType getType()
+  {
+    return getTableConstraintType();
+  }
 
 }
