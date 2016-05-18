@@ -50,6 +50,7 @@ import org.junit.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -482,13 +483,18 @@ public class SchemaCrawlerTest
           for (final TableConstraint tableConstraint: tableConstraints)
           {
             out.println("    constraint: " + tableConstraint.getName());
-            out.println("      type: " + tableConstraint.getType());
-            final List<TableConstraintColumn> columns = tableConstraint
-              .getColumns();
-            for (final TableConstraintColumn tableConstraintColumn: columns)
+            out.println("      type: "
+                        + tableConstraint.getTableConstraintType());
+            if (tableConstraint instanceof DependantTableConstraint)
             {
-              out
-                .println("      on column: " + tableConstraintColumn.getName());
+              final DependantTableConstraint dependentTableConstraint = (DependantTableConstraint) tableConstraint;
+              final List<TableConstraintColumn> columns = dependentTableConstraint
+                .getColumns();
+              for (final TableConstraintColumn tableConstraintColumn: columns)
+              {
+                out.println("      on column: "
+                            + tableConstraintColumn.getName());
+              }
             }
           }
         }

@@ -79,7 +79,7 @@ class MutableTable
   private final NamedObjectList<MutableColumn> hiddenColumns = new NamedObjectList<>();
   private final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
   private final NamedObjectList<MutableIndex> indexes = new NamedObjectList<>();
-  private final NamedObjectList<MutableTableConstraint> constraints = new NamedObjectList<>();
+  private final NamedObjectList<MutableDependantTableConstraint> constraints = new NamedObjectList<>();
   private final NamedObjectList<MutableTrigger> triggers = new NamedObjectList<>();
   private final NamedObjectList<MutablePrivilege<Table>> privileges = new NamedObjectList<>();
   private int sortIndex;
@@ -395,7 +395,7 @@ class MutableTable
     privileges.add(privilege);
   }
 
-  void addTableConstraint(final MutableTableConstraint tableConstraint)
+  void addTableConstraint(final MutableDependantTableConstraint tableConstraint)
   {
     constraints.add(tableConstraint);
   }

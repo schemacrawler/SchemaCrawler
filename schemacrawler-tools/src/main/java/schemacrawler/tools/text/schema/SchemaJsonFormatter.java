@@ -37,6 +37,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
@@ -45,6 +46,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
+import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -372,16 +374,20 @@ final class SchemaJsonFormatter
 
         final JSONArray jsonTableConstraints = new JSONArray();
         jsonTable.put("tableConstraints", jsonTableConstraints);
-        final Collection<TableConstraint> tableConstraintsCollection = table
+        final Collection<TableConstraint> constraintsCollection = table
           .getTableConstraints();
-        final List<TableConstraint> tableConstraints = new ArrayList<>(tableConstraintsCollection);
+        final List<DependantTableConstraint> constraints = constraintsCollection
+          .stream()
+          .filter(constraint -> constraint instanceof DependantTableConstraint)
+          .map(constraint -> (DependantTableConstraint) constraint)
+          .collect(Collectors.toList());
         Collections
-          .sort(tableConstraints,
+          .sort(constraints,
                 NamedObjectSort
                   .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
-        for (final TableConstraint tableConstraint: tableConstraints)
+        for (final DependantTableConstraint constraint: constraints)
         {
-          jsonTableConstraints.put(handleTableConstraint(tableConstraint));
+          jsonTableConstraints.put(handleTableConstraint(constraint));
         }
 
         if (isVerbose)
@@ -699,37 +705,37 @@ final class SchemaJsonFormatter
     return jsonColumn;
   }
 
-  private JSONObject handleTableConstraint(final TableConstraint tableConstraint)
+  private JSONObject handleTableConstraint(final DependantTableConstraint constraint)
   {
 
-    final JSONObject jsonTableConstraint = new JSONObject();
+    final JSONObject jsonConstraint = new JSONObject();
 
-    if (tableConstraint == null)
+    if (constraint == null)
     {
-      return jsonTableConstraint;
+      return jsonConstraint;
     }
 
     try
     {
       if (!options.isHideTableConstraintNames())
       {
-        jsonTableConstraint.put("name", tableConstraint.getName());
+        jsonConstraint.put("name", constraint.getName());
       }
 
-      final TableConstraintType tableConstraintType = tableConstraint
+      final TableConstraintType tableConstraintType = constraint
         .getTableConstraintType();
       if (tableConstraintType != TableConstraintType.unknown)
       {
-        jsonTableConstraint.put("type", tableConstraintType.toString());
+        jsonConstraint.put("type", tableConstraintType.toString());
       }
 
-      for (final TableConstraintColumn tableConstraintColumn: tableConstraint
+      for (final TableConstraintColumn tableConstraintColumn: constraint
         .getColumns())
       {
-        jsonTableConstraint
+        jsonConstraint
           .accumulate("columns", handleTableColumn(tableConstraintColumn));
       }
-      printDefinition(tableConstraint, jsonTableConstraint);
+      printDefinition(constraint, jsonConstraint);
     }
     catch (final JSONException e)
     {
@@ -739,7 +745,7 @@ final class SchemaJsonFormatter
                                   e.getMessage()));
     }
 
-    return jsonTableConstraint;
+    return jsonConstraint;
   }
 
   private JSONArray handleTriggers(final Collection<Trigger> triggers)

@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
@@ -49,6 +50,7 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
+import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -936,7 +938,11 @@ final class SchemaTextFormatter
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
   {
-    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
+    final List<DependantTableConstraint> constraints = constraintsCollection
+      .stream()
+      .filter(constraint -> constraint instanceof DependantTableConstraint)
+      .map(constraint -> (DependantTableConstraint) constraint)
+      .collect(Collectors.toList());
     if (constraints.isEmpty())
     {
       return;
@@ -950,7 +956,7 @@ final class SchemaTextFormatter
             NamedObjectSort
               .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
 
-    for (final TableConstraint constraint: constraints)
+    for (final DependantTableConstraint constraint: constraints)
     {
       if (constraint != null)
       {
