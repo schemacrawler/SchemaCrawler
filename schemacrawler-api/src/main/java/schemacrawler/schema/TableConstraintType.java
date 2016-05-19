@@ -38,6 +38,7 @@ import sf.util.StringFormat;
  * Table constraint type.
  */
 public enum TableConstraintType
+  implements ConstraintType
 {
 
  unknown("unknown"),
@@ -81,6 +82,7 @@ public enum TableConstraintType
    *
    * @return Value
    */
+  @Override
   public final String getValue()
   {
     return value;

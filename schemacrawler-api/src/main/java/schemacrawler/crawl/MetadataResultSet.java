@@ -82,6 +82,14 @@ final class MetadataResultSet
 
   private int rowCount;
 
+  MetadataResultSet(final Query query,
+                    final Statement statement,
+                    final InclusionRule schemaInclusionRule)
+    throws SQLException
+  {
+    this(executeAgainstSchema(query, statement, schemaInclusionRule));
+  }
+
   MetadataResultSet(final ResultSet resultSet)
     throws SQLException
   {
@@ -117,14 +125,6 @@ final class MetadataResultSet
     this.resultSetColumns = Collections.unmodifiableList(resultSetColumns);
 
     readColumns = new HashSet<>();
-  }
-
-  MetadataResultSet(final Query query,
-                    final Statement statement,
-                    final InclusionRule schemaInclusionRule)
-    throws SQLException
-  {
-    this(executeAgainstSchema(query, statement, schemaInclusionRule));
   }
 
   /**

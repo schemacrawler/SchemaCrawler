@@ -58,7 +58,7 @@ final class TableConstraintRetriever
   private static final Logger LOGGER = Logger
     .getLogger(TableConstraintRetriever.class.getName());
 
-  private final Map<String, MutableDependantTableConstraint> tableConstraintsMap;
+  private final Map<String, MutableTableConstraint> tableConstraintsMap;
 
   TableConstraintRetriever(final RetrieverConnection retrieverConnection,
                            final MutableCatalog catalog,
@@ -113,7 +113,7 @@ final class TableConstraintRetriever
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
                                      + "." + constraintName;
-        final MutableDependantTableConstraint tableConstraint = tableConstraintsMap
+        final MutableTableConstraint tableConstraint = tableConstraintsMap
           .get(constraintKey);
         if (tableConstraint == null)
         {
@@ -163,7 +163,7 @@ final class TableConstraintRetriever
   }
 
   private void createTableConstraints(final Connection connection,
-                                      final Map<String, MutableDependantTableConstraint> tableConstraintsMap,
+                                      final Map<String, MutableTableConstraint> tableConstraintsMap,
                                       final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsSql())
@@ -214,7 +214,7 @@ final class TableConstraintRetriever
         final boolean initiallyDeferred = results
           .getBoolean("INITIALLY_DEFERRED");
 
-        final MutableDependantTableConstraint tableConstraint = new MutableDependantTableConstraint(table,
+        final MutableTableConstraint tableConstraint = new MutableTableConstraint(table,
                                                                                   constraintName);
         tableConstraint.setTableConstraintType(TableConstraintType
           .valueOfFromValue(constraintType));
@@ -242,7 +242,7 @@ final class TableConstraintRetriever
   }
 
   private void retrieveTableConstraintsColumns(final Connection connection,
-                                               final Map<String, MutableDependantTableConstraint> tableConstraintsMap,
+                                               final Map<String, MutableTableConstraint> tableConstraintsMap,
                                                final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsColumnsSql())
@@ -275,7 +275,7 @@ final class TableConstraintRetriever
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
                                      + "." + constraintName;
-        final MutableDependantTableConstraint tableConstraint = tableConstraintsMap
+        final MutableTableConstraint tableConstraint = tableConstraintsMap
           .get(constraintKey);
         if (tableConstraint == null)
         {

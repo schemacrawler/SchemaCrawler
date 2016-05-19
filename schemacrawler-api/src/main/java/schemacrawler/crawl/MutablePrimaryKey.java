@@ -77,7 +77,7 @@ final class MutablePrimaryKey
   }
 
   @Override
-  public TableConstraintType getTableConstraintType()
+  public TableConstraintType getConstraintType()
   {
     return TableConstraintType.primary_key;
   }

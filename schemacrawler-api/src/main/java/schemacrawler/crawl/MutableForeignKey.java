@@ -115,6 +115,12 @@ final class MutableForeignKey
     return new ArrayList<ForeignKeyColumnReference>(columnReferences);
   }
 
+  @Override
+  public TableConstraintType getConstraintType()
+  {
+    return TableConstraintType.foreign_key;
+  }
+
   /**
    * {@inheritDoc}
    *
@@ -146,12 +152,6 @@ final class MutableForeignKey
   public final ForeignKeyUpdateRule getDeleteRule()
   {
     return deleteRule;
-  }
-
-  @Override
-  public TableConstraintType getTableConstraintType()
-  {
-    return TableConstraintType.foreign_key;
   }
 
   /**
