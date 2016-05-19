@@ -53,7 +53,7 @@ public interface InclusionRule
    * inclusion rules are based on regular expressions, so this method
    * indicates that all strings should be considered for inclusion by
    * default.
-   * 
+   *
    * @return Regular expression for the inclusion rule
    */
   default Pattern getInclusionPattern()

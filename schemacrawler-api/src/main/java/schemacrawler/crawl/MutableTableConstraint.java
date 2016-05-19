@@ -32,7 +32,7 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.DependantTableConstraint;
+import schemacrawler.schema.Constraint;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -41,9 +41,9 @@ import schemacrawler.schema.TableConstraintType;
 /**
  * Represents a table constraint.
  */
-class MutableDependantTableConstraint
+class MutableTableConstraint
   extends AbstractDependantObject<Table>
-  implements DependantTableConstraint
+  implements TableConstraint
 {
 
   private static final long serialVersionUID = 1155277343302693656L;
@@ -54,7 +54,7 @@ class MutableDependantTableConstraint
   private boolean initiallyDeferred;
   private final StringBuilder definition;
 
-  MutableDependantTableConstraint(final Table parent, final String name)
+  MutableTableConstraint(final Table parent, final String name)
   {
     super(new TableReference(parent), name);
     definition = new StringBuilder();
@@ -63,7 +63,7 @@ class MutableDependantTableConstraint
   /**
    * {@inheritDoc}
    *
-   * @see TableConstraint#getColumns()
+   * @see Constraint#getColumns()
    */
   @Override
   public List<TableConstraintColumn> getColumns()
@@ -74,7 +74,18 @@ class MutableDependantTableConstraint
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.TableConstraint#getDefinition()
+   * @see schemacrawler.schema.Constraint#getConstraintType()
+   */
+  @Override
+  public TableConstraintType getConstraintType()
+  {
+    return tableConstraintType;
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Constraint#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -82,15 +93,10 @@ class MutableDependantTableConstraint
     return definition.toString();
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TableConstraint#getTableConstraintType()
-   */
   @Override
-  public TableConstraintType getTableConstraintType()
+  public TableConstraintType getType()
   {
-    return tableConstraintType;
+    return getConstraintType();
   }
 
   @Override
@@ -102,7 +108,7 @@ class MutableDependantTableConstraint
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.TableConstraint#isDeferrable()
+   * @see schemacrawler.schema.Constraint#isDeferrable()
    */
   @Override
   public boolean isDeferrable()
@@ -113,7 +119,7 @@ class MutableDependantTableConstraint
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.TableConstraint#isInitiallyDeferred()
+   * @see schemacrawler.schema.Constraint#isInitiallyDeferred()
    */
   @Override
   public boolean isInitiallyDeferred()

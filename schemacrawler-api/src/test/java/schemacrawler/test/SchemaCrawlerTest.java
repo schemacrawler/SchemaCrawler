@@ -50,7 +50,7 @@ import org.junit.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.DependantTableConstraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -58,7 +58,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.Constraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
@@ -478,16 +478,16 @@ public class SchemaCrawlerTest
         for (final Table table: tables)
         {
           out.println("  table: " + table.getFullName());
-          final TableConstraint[] tableConstraints = table.getTableConstraints()
-            .toArray(new TableConstraint[0]);
-          for (final TableConstraint tableConstraint: tableConstraints)
+          final Constraint[] tableConstraints = table.getTableConstraints()
+            .toArray(new Constraint[0]);
+          for (final Constraint tableConstraint: tableConstraints)
           {
             out.println("    constraint: " + tableConstraint.getName());
             out.println("      type: "
-                        + tableConstraint.getTableConstraintType());
-            if (tableConstraint instanceof DependantTableConstraint)
+                        + tableConstraint.getConstraintType());
+            if (tableConstraint instanceof TableConstraint)
             {
-              final DependantTableConstraint dependentTableConstraint = (DependantTableConstraint) tableConstraint;
+              final TableConstraint dependentTableConstraint = (TableConstraint) tableConstraint;
               final List<TableConstraintColumn> columns = dependentTableConstraint
                 .getColumns();
               for (final TableConstraintColumn tableConstraintColumn: columns)

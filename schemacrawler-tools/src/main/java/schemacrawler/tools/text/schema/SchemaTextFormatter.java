@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
@@ -50,7 +49,6 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
-import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -938,12 +936,7 @@ final class SchemaTextFormatter
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
   {
-    final List<DependantTableConstraint> constraints = constraintsCollection
-      .stream()
-      .filter(constraint -> constraint instanceof DependantTableConstraint)
-      .map(constraint -> (DependantTableConstraint) constraint)
-      .collect(Collectors.toList());
-    if (constraints.isEmpty())
+    if (constraintsCollection.isEmpty())
     {
       return;
     }
@@ -951,12 +944,13 @@ final class SchemaTextFormatter
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Table Constraints", "section");
 
+    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
     Collections
       .sort(constraints,
             NamedObjectSort
               .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
 
-    for (final DependantTableConstraint constraint: constraints)
+    for (final TableConstraint constraint: constraints)
     {
       if (constraint != null)
       {
@@ -965,13 +959,13 @@ final class SchemaTextFormatter
         {
           constraintName = constraint.getName();
         }
-        final String constraintType = constraint.getTableConstraintType()
-          .getValue().toLowerCase();
+        final String constraintType = constraint.getConstraintType().getValue()
+          .toLowerCase();
 
         // Show only check or unique constraints, or any constraint that
         // has a definition
         if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
-          .contains(constraint.getTableConstraintType())
+          .contains(constraint.getConstraintType())
               || constraint.hasDefinition()))
         {
           continue;

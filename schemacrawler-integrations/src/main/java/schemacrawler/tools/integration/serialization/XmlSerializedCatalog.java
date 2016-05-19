@@ -162,7 +162,7 @@ public final class XmlSerializedCatalog
       }, 5000);
 
       final String[] mutable = new String[] {
-                                              "dependantTableConstraint",
+                                              "tableConstraint",
                                               "column",
                                               "columnDataType",
                                               "catalog",
