@@ -36,7 +36,7 @@ package schemacrawler.schema;
  */
 public interface ForeignKey
   extends BaseForeignKey<ForeignKeyColumnReference>, AttributedObject,
-  DescribedObject, TableConstraint
+  DescribedObject, Constraint
 {
 
   /**

@@ -37,7 +37,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
@@ -46,7 +45,6 @@ import schemacrawler.schema.ColumnReference;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DefinedObject;
-import schemacrawler.schema.DependantTableConstraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
@@ -376,16 +374,12 @@ final class SchemaJsonFormatter
         jsonTable.put("tableConstraints", jsonTableConstraints);
         final Collection<TableConstraint> constraintsCollection = table
           .getTableConstraints();
-        final List<DependantTableConstraint> constraints = constraintsCollection
-          .stream()
-          .filter(constraint -> constraint instanceof DependantTableConstraint)
-          .map(constraint -> (DependantTableConstraint) constraint)
-          .collect(Collectors.toList());
+        final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
         Collections
           .sort(constraints,
                 NamedObjectSort
                   .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
-        for (final DependantTableConstraint constraint: constraints)
+        for (final TableConstraint constraint: constraints)
         {
           jsonTableConstraints.put(handleTableConstraint(constraint));
         }
@@ -705,7 +699,7 @@ final class SchemaJsonFormatter
     return jsonColumn;
   }
 
-  private JSONObject handleTableConstraint(final DependantTableConstraint constraint)
+  private JSONObject handleTableConstraint(final TableConstraint constraint)
   {
 
     final JSONObject jsonConstraint = new JSONObject();
@@ -723,7 +717,7 @@ final class SchemaJsonFormatter
       }
 
       final TableConstraintType tableConstraintType = constraint
-        .getTableConstraintType();
+        .getConstraintType();
       if (tableConstraintType != TableConstraintType.unknown)
       {
         jsonConstraint.put("type", tableConstraintType.toString());
@@ -732,8 +726,8 @@ final class SchemaJsonFormatter
       for (final TableConstraintColumn tableConstraintColumn: constraint
         .getColumns())
       {
-        jsonConstraint
-          .accumulate("columns", handleTableColumn(tableConstraintColumn));
+        jsonConstraint.accumulate("columns",
+                                  handleTableColumn(tableConstraintColumn));
       }
       printDefinition(constraint, jsonConstraint);
     }
