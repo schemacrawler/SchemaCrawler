@@ -58,6 +58,7 @@
         }
       ],
       "foreignKeys": [{
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -408,6 +409,7 @@
       ],
       "foreignKeys": [
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -416,6 +418,7 @@
           "updateRule": "no action"
         },
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -580,6 +583,7 @@
       ],
       "foreignKeys": [
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -588,6 +592,7 @@
           "updateRule": "no action"
         },
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -972,6 +977,7 @@
         }
       ],
       "foreignKeys": [{
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [
           {
@@ -1145,6 +1151,7 @@
       ],
       "foreignKeys": [
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -1153,6 +1160,7 @@
           "updateRule": "no action"
         },
         {
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [
             {
@@ -1338,6 +1346,7 @@
         }
       ],
       "foreignKeys": [{
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -2582,7 +2591,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-28 21:30:22",
+    "crawlTimestamp": "2016-05-21 18:46:38",
     "title": ""
   },
   "routines": [

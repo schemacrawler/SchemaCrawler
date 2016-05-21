@@ -9,6 +9,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_Z_AUTHOR",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -236,6 +237,7 @@
       "foreignKeys": [
         {
           "name": "FK_Z_AUTHOR",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -245,6 +247,7 @@
         },
         {
           "name": "FK_Y_BOOK",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -337,6 +340,7 @@
       "foreignKeys": [
         {
           "name": "FK_Y_BOOK",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -346,6 +350,7 @@
         },
         {
           "name": "FK_PREVIOUSEDITION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -561,6 +566,7 @@
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION_JOIN",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -570,6 +576,7 @@
         },
         {
           "name": "FK_WRITER_JOIN",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -688,6 +695,7 @@
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION_JOIN",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -697,6 +705,7 @@
         },
         {
           "name": "FK_PUBLICATION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -706,6 +715,7 @@
         },
         {
           "name": "FK_WRITERS_PUBLICATION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -715,6 +725,7 @@
         },
         {
           "name": "FK_PUBLICATIONS_WRITER",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -855,6 +866,7 @@
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -864,6 +876,7 @@
         },
         {
           "name": "FK_WRITER",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -930,6 +943,7 @@
       "foreignKeys": [
         {
           "name": "FK_WRITERS_PUBLICATION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.PUBLICATIONS.ID",
@@ -939,6 +953,7 @@
         },
         {
           "name": "FK_WRITER_JOIN",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -948,6 +963,7 @@
         },
         {
           "name": "FK_PUBLICATIONS_WRITER",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -957,6 +973,7 @@
         },
         {
           "name": "FK_WRITER",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -966,6 +983,7 @@
         },
         {
           "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -1283,6 +1301,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
@@ -1366,6 +1385,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_SALES_REGIONS",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [
           {
@@ -1468,6 +1488,7 @@
       "foreignKeys": [
         {
           "name": "FK_SALES_SALESDATA",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -1477,6 +1498,7 @@
         },
         {
           "name": "FK_SALES_REGIONS",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [
             {
@@ -1598,6 +1620,7 @@
       "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_SALES_SALESDATA",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -1860,7 +1883,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:22:55",
+    "crawlTimestamp": "2016-05-21 18:55:05",
     "title": ""
   },
   "routines": [
