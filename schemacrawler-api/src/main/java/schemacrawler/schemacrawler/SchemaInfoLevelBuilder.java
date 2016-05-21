@@ -30,7 +30,6 @@ package schemacrawler.schemacrawler;
 
 
 public final class SchemaInfoLevelBuilder
-// implements OptionsBuilder<SchemaInfoLevel>
 {
 
   /**
@@ -64,6 +63,8 @@ public final class SchemaInfoLevelBuilder
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
     maximum.setRetrieveTableDefinitionsInformation(true);
+    maximum.setRetrieveForeignKeyDefinitions(true);
+    maximum.setRetrievePrimaryKeyDefinitions(true);
     maximum.setRetrieveHiddenTableColumns(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);

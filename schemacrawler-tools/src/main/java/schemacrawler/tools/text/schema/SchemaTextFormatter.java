@@ -602,11 +602,29 @@ final class SchemaTextFormatter
     {
       return;
     }
+    if (!isVerbose)
+    {
+      return;
+    }
 
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Definition", "section");
 
     formattingHelper.writeNameRow("", "[definition]");
+    formattingHelper.writeWideRow(definedObject.getDefinition(), "definition");
+  }
+
+  private void printDependantObjectDefinition(final DefinedObject definedObject)
+  {
+    if (definedObject == null || !definedObject.hasDefinition())
+    {
+      return;
+    }
+    if (!isVerbose)
+    {
+      return;
+    }
+
     formattingHelper.writeWideRow(definedObject.getDefinition(), "definition");
   }
 
@@ -668,6 +686,7 @@ final class SchemaTextFormatter
         final String fkDetails = "[foreign key" + ruleString + "]";
         formattingHelper.writeNameRow(fkName, fkDetails);
         printColumnReferences(true, table, foreignKey);
+        printDependantObjectDefinition(foreignKey);
       }
     }
   }
@@ -713,14 +732,7 @@ final class SchemaTextFormatter
         {
           printTableColumns(index.getColumns(), true);
         }
-
-        if (isVerbose)
-        {
-          if (index.hasDefinition())
-          {
-            formattingHelper.writeWideRow(index.getDefinition(), "definition");
-          }
-        }
+        printDependantObjectDefinition(index);
       }
     }
   }
@@ -746,6 +758,7 @@ final class SchemaTextFormatter
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printTableColumns(primaryKey.getColumns(), false);
+      printDependantObjectDefinition(primaryKey);
     }
   }
 
@@ -978,16 +991,7 @@ final class SchemaTextFormatter
         {
           printTableColumns(constraint.getColumns(), true);
         }
-
-        if (isVerbose)
-        {
-          if (constraint.hasDefinition())
-          {
-            formattingHelper.writeWideRow(constraint.getDefinition(),
-                                          "definition");
-          }
-        }
-
+        printDependantObjectDefinition(constraint);
       }
     }
   }

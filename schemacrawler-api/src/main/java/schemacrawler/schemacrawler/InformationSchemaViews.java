@@ -32,8 +32,10 @@ package schemacrawler.schemacrawler;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -117,6 +119,18 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the foreign key constraints SQL from the additional
+   * configuration.
+   *
+   * @return Foreign key constraints SQL.
+   */
+  public Query getExtForeignKeysSql()
+  {
+    return new Query(EXT_FOREIGN_KEYS.name(),
+                     informationSchemaQueries.get(EXT_FOREIGN_KEYS));
+  }
+
+  /**
    * Gets the hidden table column definitions SQL from the additional
    * configuration.
    *
@@ -137,6 +151,18 @@ public final class InformationSchemaViews
   {
     return new Query(EXT_INDEXES.name(),
                      informationSchemaQueries.get(EXT_INDEXES));
+  }
+
+  /**
+   * Gets the primary key constraints SQL from the additional
+   * configuration.
+   *
+   * @return Primary key constraints SQL.
+   */
+  public Query getExtPrimaryKeysSql()
+  {
+    return new Query(EXT_PRIMARY_KEYS.name(),
+                     informationSchemaQueries.get(EXT_PRIMARY_KEYS));
   }
 
   /**
@@ -300,6 +326,11 @@ public final class InformationSchemaViews
     return informationSchemaQueries.containsKey(ADDITIONAL_TABLE_ATTRIBUTES);
   }
 
+  public boolean hasExtForeignKeysSql()
+  {
+    return informationSchemaQueries.containsKey(EXT_FOREIGN_KEYS);
+  }
+
   public boolean hasExtHiddenTableColumnsSql()
   {
     return informationSchemaQueries.containsKey(EXT_HIDDEN_TABLE_COLUMNS);
@@ -308,6 +339,11 @@ public final class InformationSchemaViews
   public boolean hasExtIndexesSql()
   {
     return informationSchemaQueries.containsKey(EXT_INDEXES);
+  }
+
+  public boolean hasExtPrimaryKeysSql()
+  {
+    return informationSchemaQueries.containsKey(EXT_PRIMARY_KEYS);
   }
 
   public boolean hasExtTableConstraintsSql()

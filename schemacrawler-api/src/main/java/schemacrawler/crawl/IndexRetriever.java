@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
+import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -138,6 +139,70 @@ final class IndexRetriever
     {
       throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
                                           + table, e);
+    }
+
+  }
+
+  void retrievePrimaryKeyDefinitions(final NamedObjectList<MutableTable> allTables)
+  {
+    requireNonNull(allTables);
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    final Connection connection = getDatabaseConnection();
+
+    if (!informationSchemaViews.hasExtPrimaryKeysSql())
+    {
+      LOGGER.log(Level.FINE,
+                 "Extended primary keys SQL statement was not provided");
+      return;
+    }
+
+    final NamedObjectList<MutablePrimaryKey> allPks = new NamedObjectList<>();
+    for (final MutableTable table: allTables)
+    {
+      if (table.hasPrimaryKey())
+      {
+        final PrimaryKey primaryKey = table.getPrimaryKey();
+        allPks.add((MutablePrimaryKey) primaryKey);
+      }
+    }
+
+    final Query extPrimaryKeysSql = informationSchemaViews
+      .getExtPrimaryKeysSql();
+
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      while (results.next())
+      {
+        final String catalogName = quotedName(results
+          .getString("PRIMARY_KEY_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("PRIMARY_KEY_SCHEMA"));
+        final String constraintName = quotedName(results
+          .getString("PRIMARY_KEY_NAME"));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving constraint definition, %s",
+                                    constraintName));
+        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
+
+        final String constraintKey = new SchemaReference(catalogName,
+                                                         schemaName)
+                                     + "." + constraintName;
+        allPks.lookup(constraintName).ifPresent(pkConstraint -> {
+          pkConstraint.appendDefinition(definition);
+          pkConstraint.addAttributes(results.getAttributes());
+        });
+
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
 
   }
