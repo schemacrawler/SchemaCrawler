@@ -135,6 +135,16 @@ public interface Table
   Collection<Trigger> getTriggers();
 
   /**
+   * Checks if the table has a primary key.
+   *
+   * @return True if the table has a primary key.
+   */
+  default boolean hasPrimaryKey()
+  {
+    return getPrimaryKey() != null;
+  }
+
+  /**
    * Gets a column by unqualified name.
    *
    * @param name
