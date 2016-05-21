@@ -566,6 +566,7 @@ final class SchemaJsonFormatter
           }
 
           jsonFk.put("columnReferences", handleColumnReferences(foreignKey));
+          printDefinition(foreignKey, jsonFk);
         }
         catch (final JSONException e)
         {

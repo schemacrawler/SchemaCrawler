@@ -59,6 +59,7 @@
       ],
       "foreignKeys": [{
         "name": "FK_Z_AUTHOR",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -440,6 +441,7 @@
       "foreignKeys": [
         {
           "name": "FK_Z_AUTHOR",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -450,6 +452,7 @@
         },
         {
           "name": "FK_Y_BOOK",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -630,6 +633,7 @@
       "foreignKeys": [
         {
           "name": "FK_Y_BOOK",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -640,6 +644,7 @@
         },
         {
           "name": "FK_PREVIOUSEDITION",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -1054,6 +1059,7 @@
       ],
       "foreignKeys": [{
         "name": "FK_SALES_REGIONS",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [
           {
@@ -1245,6 +1251,7 @@
       "foreignKeys": [
         {
           "name": "FK_SALES_SALESDATA",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -1255,6 +1262,7 @@
         },
         {
           "name": "FK_SALES_REGIONS",
+          "definition": "",
           "deleteRule": "no action",
           "columnReferences": [
             {
@@ -1458,6 +1466,7 @@
       ],
       "foreignKeys": [{
         "name": "FK_SALES_SALESDATA",
+        "definition": "",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.\"PUBLISHER SALES\".SALESDATA.SALESDATAID",
@@ -2708,7 +2717,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-28 21:30:23",
+    "crawlTimestamp": "2016-05-21 18:46:39",
     "title": ""
   },
   "routines": [

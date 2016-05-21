@@ -54,7 +54,9 @@ public final class SchemaInfoLevel
   private boolean retrieveTableConstraintDefinitions;
   private boolean retrieveViewInformation;
   private boolean retrieveIndexInformation;
+  private boolean retrievePrimaryKeyDefinitions;
   private boolean retrieveForeignKeys;
+  private boolean retrieveForeignKeyDefinitions;
   private boolean retrieveIndexes;
   private boolean retrieveTablePrivileges;
   private boolean retrieveTableColumnPrivileges;
@@ -97,6 +99,11 @@ public final class SchemaInfoLevel
     return retrieveColumnDataTypes;
   }
 
+  public boolean isRetrieveForeignKeyDefinitions()
+  {
+    return retrieveForeignKeyDefinitions;
+  }
+
   public boolean isRetrieveForeignKeys()
   {
     return retrieveForeignKeys;
@@ -115,6 +122,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveIndexInformation()
   {
     return retrieveIndexInformation;
+  }
+
+  public boolean isRetrievePrimaryKeyDefinitions()
+  {
+    return retrievePrimaryKeyDefinitions;
   }
 
   public boolean isRetrieveRoutineColumns()
@@ -217,6 +229,11 @@ public final class SchemaInfoLevel
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
   }
 
+  public void setRetrieveForeignKeyDefinitions(final boolean retrieveForeignKeyDefinitions)
+  {
+    this.retrieveForeignKeyDefinitions = retrieveForeignKeyDefinitions;
+  }
+
   public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
   {
     this.retrieveForeignKeys = retrieveForeignKeys;
@@ -235,6 +252,11 @@ public final class SchemaInfoLevel
   public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
   {
     this.retrieveIndexInformation = retrieveIndexInformation;
+  }
+
+  public void setRetrievePrimaryKeyDefinitions(final boolean retrievePrimaryKeyDefinitions)
+  {
+    this.retrievePrimaryKeyDefinitions = retrievePrimaryKeyDefinitions;
   }
 
   public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)

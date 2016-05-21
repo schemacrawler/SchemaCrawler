@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
+import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
 import schemacrawler.schema.SchemaReference;
@@ -72,6 +73,69 @@ final class ForeignKeyRetriever
     throws SQLException
   {
     super(retrieverConnection, catalog, options);
+  }
+
+  void retrieveForeignKeyDefinitions(final NamedObjectList<MutableTable> allTables)
+  {
+    requireNonNull(allTables);
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    final Connection connection = getDatabaseConnection();
+
+    if (!informationSchemaViews.hasExtForeignKeysSql())
+    {
+      LOGGER.log(Level.FINE,
+                 "Extended foreign keys SQL statement was not provided");
+      return;
+    }
+
+    final NamedObjectList<MutableForeignKey> allFks = new NamedObjectList<>();
+    for (final MutableTable table: allTables)
+    {
+      for (final ForeignKey foreignKey: table.getForeignKeys())
+      {
+        allFks.add((MutableForeignKey) foreignKey);
+      }
+    }
+
+    final Query extForeignKeysSql = informationSchemaViews
+      .getExtForeignKeysSql();
+
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(extForeignKeysSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      while (results.next())
+      {
+        final String catalogName = quotedName(results
+          .getString("FOREIGN_KEY_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("FOREIGN_KEY_SCHEMA"));
+        final String constraintName = quotedName(results
+          .getString("FOREIGN_KEY_NAME"));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving constraint definition, %s",
+                                    constraintName));
+        final String definition = results.getString("FOREIGN_KEY_DEFINITION");
+
+        final String constraintKey = new SchemaReference(catalogName,
+                                                         schemaName)
+                                     + "." + constraintName;
+        allFks.lookup(constraintName).ifPresent(fkConstraint -> {
+          fkConstraint.appendDefinition(definition);
+          fkConstraint.addAttributes(results.getAttributes());
+        });
+
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
+    }
+
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)
