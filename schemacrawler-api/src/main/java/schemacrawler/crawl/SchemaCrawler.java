@@ -593,6 +593,10 @@ public final class SchemaCrawler
           if (infoLevel.isRetrieveTableColumns())
           {
             fkRetriever.retrieveForeignKeys(allTables);
+            if (infoLevel.isRetrieveForeignKeyDefinitions())
+            {
+              fkRetriever.retrieveForeignKeyDefinitions(allTables);
+            }
           }
         }
         else
@@ -628,6 +632,10 @@ public final class SchemaCrawler
             if (!isView)
             {
               indexRetriever.retrievePrimaryKey(table);
+              if (infoLevel.isRetrievePrimaryKeyDefinitions())
+              {
+                indexRetriever.retrievePrimaryKeyDefinitions(allTables);
+              }
             }
           }
           if (infoLevel.isRetrieveIndexes())

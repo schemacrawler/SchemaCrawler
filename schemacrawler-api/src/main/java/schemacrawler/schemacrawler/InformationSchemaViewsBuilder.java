@@ -32,8 +32,10 @@ package schemacrawler.schemacrawler;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
@@ -179,6 +181,18 @@ public final class InformationSchemaViewsBuilder
   }
 
   /**
+   * Sets the foreign key constraints SQL.
+   *
+   * @param sql
+   *        Foreign key constraints SQL.
+   */
+  public InformationSchemaViewsBuilder withExtForeignKeysSql(final String sql)
+  {
+    informationSchemaQueries.put(EXT_FOREIGN_KEYS, sql);
+    return this;
+  }
+
+  /**
    * Sets the hidden table column definitions SQL.
    *
    * @param sql
@@ -199,6 +213,18 @@ public final class InformationSchemaViewsBuilder
   public InformationSchemaViewsBuilder withExtIndexesSql(final String sql)
   {
     informationSchemaQueries.put(EXT_INDEXES, sql);
+    return this;
+  }
+
+  /**
+   * Sets the primary key constraints SQL.
+   *
+   * @param sql
+   *        Primary key constraints SQL.
+   */
+  public InformationSchemaViewsBuilder withExtPrimaryKeysSql(final String sql)
+  {
+    informationSchemaQueries.put(EXT_PRIMARY_KEYS, sql);
     return this;
   }
 
