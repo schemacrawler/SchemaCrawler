@@ -632,10 +632,6 @@ public final class SchemaCrawler
             if (!isView)
             {
               indexRetriever.retrievePrimaryKey(table);
-              if (infoLevel.isRetrievePrimaryKeyDefinitions())
-              {
-                indexRetriever.retrievePrimaryKeyDefinitions(allTables);
-              }
             }
           }
           if (infoLevel.isRetrieveIndexes())
@@ -645,6 +641,10 @@ public final class SchemaCrawler
             {
               table.replacePrimaryKey();
             }
+          }
+          if (infoLevel.isRetrievePrimaryKeyDefinitions())
+          {
+            indexRetriever.retrievePrimaryKeyDefinitions(allTables);
           }
         }
         return null;
