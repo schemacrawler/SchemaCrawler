@@ -54,6 +54,7 @@ public final class SchemaInfoLevel
   private boolean retrieveTableConstraintDefinitions;
   private boolean retrieveViewInformation;
   private boolean retrieveIndexInformation;
+  private boolean retrieveIndexColumnInformation;
   private boolean retrievePrimaryKeyDefinitions;
   private boolean retrieveForeignKeys;
   private boolean retrieveForeignKeyDefinitions;
@@ -112,6 +113,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveHiddenTableColumns()
   {
     return retrieveHiddenTableColumns;
+  }
+
+  public boolean isRetrieveIndexColumnInformation()
+  {
+    return retrieveIndexColumnInformation;
   }
 
   public boolean isRetrieveIndexes()
@@ -242,6 +248,11 @@ public final class SchemaInfoLevel
   public void setRetrieveHiddenTableColumns(final boolean retrieveHiddenTableColumns)
   {
     this.retrieveHiddenTableColumns = retrieveHiddenTableColumns;
+  }
+
+  public void setRetrieveIndexColumnInformation(final boolean retrieveIndexColumnInformation)
+  {
+    this.retrieveIndexColumnInformation = retrieveIndexColumnInformation;
   }
 
   public void setRetrieveIndexes(final boolean retrieveIndexes)

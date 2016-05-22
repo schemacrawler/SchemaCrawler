@@ -29,7 +29,7 @@ package schemacrawler.schema;
 
 
 public interface IndexColumn
-  extends Column
+  extends Column, DefinedObject
 {
 
   /**

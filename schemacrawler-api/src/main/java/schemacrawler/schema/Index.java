@@ -30,6 +30,7 @@ package schemacrawler.schema;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Represents an index on a database table.
@@ -90,5 +91,14 @@ public interface Index
    * @return If the index is unique
    */
   boolean isUnique();
+
+  /**
+   * Gets a column by unqualified name.
+   *
+   * @param name
+   *        Unqualified name
+   * @return Column.
+   */
+  Optional<? extends IndexColumn> lookupColumn(String name);
 
 }
