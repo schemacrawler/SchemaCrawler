@@ -51,12 +51,14 @@ final class MutableIndexColumn
   private final Index index;
   private int indexOrdinalPosition;
   private IndexColumnSortSequence sortSequence;
+  private final StringBuilder definition;
 
   MutableIndexColumn(final Index index, final Column column)
   {
     super(new TableReference(column.getParent()), column.getName());
     this.index = index;
     this.column = column;
+    definition = new StringBuilder();
   }
 
   /**
@@ -117,6 +119,15 @@ final class MutableIndexColumn
   public String getDefaultValue()
   {
     return column.getDefaultValue();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getDefinition()
+  {
+    return definition.toString();
   }
 
   /**
@@ -218,6 +229,12 @@ final class MutableIndexColumn
     return column.getWidth();
   }
 
+  @Override
+  public boolean hasDefinition()
+  {
+    return definition.length() > 0;
+  }
+
   /**
    * {@inheritDoc}
    *
@@ -315,6 +332,14 @@ final class MutableIndexColumn
   public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)
   {
     return column.lookupPrivilege(name);
+  }
+
+  void appendDefinition(final String definition)
+  {
+    if (definition != null)
+    {
+      this.definition.append(definition);
+    }
   }
 
   void setIndexOrdinalPosition(final int indexOrdinalPosition)

@@ -689,6 +689,10 @@ public final class SchemaCrawler
         if (infoLevel.isRetrieveIndexInformation())
         {
           retrieverExtra.retrieveIndexInformation();
+          if (infoLevel.isRetrieveIndexColumnInformation())
+          {
+            retrieverExtra.retrieveIndexColumnInformation();
+          }
         }
         return null;
       });

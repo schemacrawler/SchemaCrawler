@@ -203,7 +203,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
+            "name": "ID",
+            "definition": ""
           },
           "unique": true,
           "definition": ""
@@ -212,11 +213,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "LASTNAME"
+              "name": "LASTNAME",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "FIRSTNAME"
+              "name": "FIRSTNAME",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -226,19 +229,23 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "CITY"
+              "name": "CITY",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "STATE"
+              "name": "STATE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE"
+              "name": "POSTALCODE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY"
+              "name": "COUNTRY",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -251,7 +258,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "definition": ""
@@ -487,7 +495,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "AUTHORID"
+            "name": "AUTHORID",
+            "definition": ""
           },
           "unique": false,
           "definition": ""
@@ -495,7 +504,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "BOOKID"
+            "name": "BOOKID",
+            "definition": ""
           },
           "unique": false,
           "definition": ""
@@ -504,11 +514,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "BOOKID"
+              "name": "BOOKID",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "AUTHORID"
+              "name": "AUTHORID",
+              "definition": ""
             }
           ],
           "unique": true,
@@ -709,7 +721,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
+            "name": "ID",
+            "definition": ""
           },
           "unique": true,
           "definition": ""
@@ -717,7 +730,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID"
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
           },
           "unique": true,
           "definition": ""
@@ -725,7 +739,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID"
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
           },
           "unique": false,
           "definition": ""
@@ -737,7 +752,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "definition": ""
@@ -907,7 +923,8 @@
       "indexes": [{
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "definition": ""
@@ -918,7 +935,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "definition": ""
@@ -1066,11 +1084,13 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE"
+            "name": "POSTALCODE",
+            "definition": ""
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY"
+            "name": "COUNTRY",
+            "definition": ""
           }
         ],
         "unique": true,
@@ -1083,11 +1103,13 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE"
+            "name": "POSTALCODE",
+            "definition": ""
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY"
+            "name": "COUNTRY",
+            "definition": ""
           }
         ],
         "unique": true,
@@ -1268,7 +1290,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "SALESDATAID"
+            "name": "SALESDATAID",
+            "definition": ""
           },
           "unique": false,
           "definition": ""
@@ -1277,11 +1300,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE"
+              "name": "POSTALCODE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY"
+              "name": "COUNTRY",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -1388,7 +1413,8 @@
       "indexes": [{
         "columns": {
           "sortSequence": "ascending",
-          "name": "SALESDATAID"
+          "name": "SALESDATAID",
+          "definition": ""
         },
         "unique": true,
         "definition": ""
@@ -2591,7 +2617,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-21 18:46:38",
+    "crawlTimestamp": "2016-05-22 14:53:44",
     "title": ""
   },
   "routines": [
