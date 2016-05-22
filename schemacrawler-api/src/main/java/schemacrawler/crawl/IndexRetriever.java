@@ -183,20 +183,32 @@ final class IndexRetriever
           .getString("PRIMARY_KEY_CATALOG"));
         final String schemaName = quotedName(results
           .getString("PRIMARY_KEY_SCHEMA"));
-        final String constraintName = quotedName(results
-          .getString("PRIMARY_KEY_NAME"));
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving constraint definition, %s",
-                                    constraintName));
-        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
+        final String tableName = quotedName(results
+          .getString("PRIMARY_KEY_TABLE_NAME"));
+        final String pkName = quotedName(results.getString("PRIMARY_KEY_NAME"));
 
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
-                                     + "." + constraintName;
-        allPks.lookup(constraintName).ifPresent(pkConstraint -> {
+                                     + "." + tableName + "." + pkName;
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving primary key definition, %s",
+                                    constraintKey));
+        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
+
+        final Optional<MutablePrimaryKey> optionalPk = allPks
+          .lookup(constraintKey);
+        if (optionalPk.isPresent())
+        {
+          final MutablePrimaryKey pkConstraint = optionalPk.get();
           pkConstraint.appendDefinition(definition);
           pkConstraint.addAttributes(results.getAttributes());
-        });
+        }
+        else
+        {
+          LOGGER.log(Level.FINER,
+                     new StringFormat("Could not find primary key, %s",
+                                      constraintKey));
+        }
 
       }
     }

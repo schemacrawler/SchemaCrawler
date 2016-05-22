@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
@@ -949,19 +950,24 @@ final class SchemaTextFormatter
 
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
   {
-    if (constraintsCollection.isEmpty())
+
+    final List<TableConstraint> constraints = constraintsCollection.stream()
+      .filter(constraint -> (EnumSet
+        .of(TableConstraintType.check, TableConstraintType.unique)
+        .contains(constraint.getConstraintType())))
+      .collect(Collectors.toList());
+    Collections
+      .sort(constraints,
+            NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+
+    if (constraints.isEmpty())
     {
       return;
     }
 
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Table Constraints", "section");
-
-    final List<TableConstraint> constraints = new ArrayList<>(constraintsCollection);
-    Collections
-      .sort(constraints,
-            NamedObjectSort
-              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
 
     for (final TableConstraint constraint: constraints)
     {
@@ -974,15 +980,6 @@ final class SchemaTextFormatter
         }
         final String constraintType = constraint.getConstraintType().getValue()
           .toLowerCase();
-
-        // Show only check or unique constraints, or any constraint that
-        // has a definition
-        if (!(EnumSet.of(TableConstraintType.check, TableConstraintType.unique)
-          .contains(constraint.getConstraintType())
-              || constraint.hasDefinition()))
-        {
-          continue;
-        }
         final String constraintDetails = "[" + constraintType + " constraint]";
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow(constraintName, constraintDetails);
