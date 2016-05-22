@@ -110,25 +110,26 @@ final class ForeignKeyRetriever
     {
       while (results.next())
       {
-        final String catalogName = quotedName(results
-          .getString("FOREIGN_KEY_CATALOG"));
-        final String schemaName = quotedName(results
-          .getString("FOREIGN_KEY_SCHEMA"));
-        final String constraintName = quotedName(results
-          .getString("FOREIGN_KEY_NAME"));
+        // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
+        final String fkName = quotedName(results.getString("FOREIGN_KEY_NAME"));
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving constraint definition, %s",
-                                    constraintName));
+                   new StringFormat("Retrieving foreign key definition, %s",
+                                    fkName));
         final String definition = results.getString("FOREIGN_KEY_DEFINITION");
 
-        final String constraintKey = new SchemaReference(catalogName,
-                                                         schemaName)
-                                     + "." + constraintName;
-        allFks.lookup(constraintName).ifPresent(fkConstraint -> {
+        final Optional<MutableForeignKey> optionalFk = allFks.lookup(fkName);
+        if (optionalFk.isPresent())
+        {
+          final MutableForeignKey fkConstraint = optionalFk.get();
           fkConstraint.appendDefinition(definition);
           fkConstraint.addAttributes(results.getAttributes());
-        });
-
+        }
+        else
+        {
+          LOGGER
+            .log(Level.FINER,
+                 new StringFormat("Could not find foreign key, %s", fkName));
+        }
       }
     }
     catch (final Exception e)
