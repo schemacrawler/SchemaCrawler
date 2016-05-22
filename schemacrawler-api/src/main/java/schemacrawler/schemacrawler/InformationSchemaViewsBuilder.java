@@ -35,6 +35,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
@@ -201,6 +202,18 @@ public final class InformationSchemaViewsBuilder
   public InformationSchemaViewsBuilder withExtHiddenTableColumnsSql(final String sql)
   {
     informationSchemaQueries.put(EXT_HIDDEN_TABLE_COLUMNS, sql);
+    return this;
+  }
+
+  /**
+   * Sets the index column definitions SQL.
+   *
+   * @param sql
+   *        Index column definitions SQL.
+   */
+  public InformationSchemaViewsBuilder withExtIndexColumnSql(final String sql)
+  {
+    informationSchemaQueries.put(EXT_INDEX_COLUMNS, sql);
     return this;
   }
 
