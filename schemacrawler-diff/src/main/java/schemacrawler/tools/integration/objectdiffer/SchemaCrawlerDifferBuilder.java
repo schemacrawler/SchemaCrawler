@@ -86,6 +86,8 @@ public class SchemaCrawlerDifferBuilder
       .propertyName("importedForeignKeys");
     objectDifferBuilder.comparison().ofType(NamedObject.class)
       .toUse(new NamedObjectComparisonStrategy());
+    objectDifferBuilder.inclusion().exclude().propertyName("deferrable");
+    objectDifferBuilder.inclusion().exclude().propertyName("initiallyDeferred");
   }
 
   public ObjectDiffer build()
