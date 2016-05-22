@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.08.03" date="2016-05-22" description="Foreign key, primary key, and index column definitions">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for retrieving foreign key, primary key, and index column definitions.
+      ]]></action>                                                              
+     </release>    
      <release version="14.08.02" date="2016-05-16" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Adding hidden columns in a separate list, accessed with a new method, Table.getHiddenColuns().
@@ -101,7 +106,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.08.02" date="2016-02-03" description="Fixed logging">
+     <release version="14.08.03" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
