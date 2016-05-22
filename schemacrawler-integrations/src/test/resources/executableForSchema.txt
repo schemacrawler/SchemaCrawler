@@ -181,8 +181,6 @@ SYS_IDX_SYS_PK_10092_10093                                [unique index]
 1   ID                                ascending                   
                                     auto-incremented            
 
-Table Constraints
-
 
 
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]

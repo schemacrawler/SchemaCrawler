@@ -177,7 +177,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
+            "name": "ID",
+            "definition": ""
           },
           "unique": true,
           "name": "SYS_IDX_PK_AUTHORS_10097",
@@ -187,11 +188,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "LASTNAME"
+              "name": "LASTNAME",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "FIRSTNAME"
+              "name": "FIRSTNAME",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -202,19 +205,23 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "CITY"
+              "name": "CITY",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "STATE"
+              "name": "STATE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE"
+              "name": "POSTALCODE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY"
+              "name": "COUNTRY",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -228,7 +235,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "name": "PK_AUTHORS",
@@ -452,7 +460,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "AUTHORID"
+            "name": "AUTHORID",
+            "definition": ""
           },
           "unique": false,
           "name": "SYS_IDX_10118",
@@ -461,7 +470,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "BOOKID"
+            "name": "BOOKID",
+            "definition": ""
           },
           "unique": false,
           "name": "SYS_IDX_10116",
@@ -471,11 +481,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "BOOKID"
+              "name": "BOOKID",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "AUTHORID"
+              "name": "AUTHORID",
+              "definition": ""
             }
           ],
           "unique": true,
@@ -659,7 +671,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ID"
+            "name": "ID",
+            "definition": ""
           },
           "unique": true,
           "name": "SYS_IDX_PK_BOOKS_10105",
@@ -668,7 +681,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID"
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
           },
           "unique": true,
           "name": "UIDX_PREVIOUSEDITION",
@@ -677,7 +691,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID"
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
           },
           "unique": false,
           "name": "SYS_IDX_10109",
@@ -690,7 +705,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "name": "PK_BOOKS",
@@ -860,7 +876,8 @@
       "indexes": [{
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "name": "SYS_IDX_SYS_PK_10092_10093",
@@ -872,7 +889,8 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ID"
+          "name": "ID",
+          "definition": ""
         },
         "unique": true,
         "name": "SYS_PK_10092",
@@ -1002,11 +1020,13 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE"
+            "name": "POSTALCODE",
+            "definition": ""
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY"
+            "name": "COUNTRY",
+            "definition": ""
           }
         ],
         "unique": true,
@@ -1020,11 +1040,13 @@
         "columns": [
           {
             "sortSequence": "ascending",
-            "name": "POSTALCODE"
+            "name": "POSTALCODE",
+            "definition": ""
           },
           {
             "sortSequence": "ascending",
-            "name": "COUNTRY"
+            "name": "COUNTRY",
+            "definition": ""
           }
         ],
         "unique": true,
@@ -1192,7 +1214,8 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "SALESDATAID"
+            "name": "SALESDATAID",
+            "definition": ""
           },
           "unique": false,
           "name": "SYS_IDX_10158",
@@ -1202,11 +1225,13 @@
           "columns": [
             {
               "sortSequence": "ascending",
-              "name": "POSTALCODE"
+              "name": "POSTALCODE",
+              "definition": ""
             },
             {
               "sortSequence": "ascending",
-              "name": "COUNTRY"
+              "name": "COUNTRY",
+              "definition": ""
             }
           ],
           "unique": false,
@@ -1313,7 +1338,8 @@
       "indexes": [{
         "columns": {
           "sortSequence": "ascending",
-          "name": "SALESDATAID"
+          "name": "SALESDATAID",
+          "definition": ""
         },
         "unique": true,
         "name": "SYS_IDX_UQ_CUSTOMERS_10150",
@@ -2517,7 +2543,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-21 18:46:44",
+    "crawlTimestamp": "2016-05-22 14:53:53",
     "title": ""
   },
   "routines": [
