@@ -69,6 +69,7 @@ public final class SchemaInfoLevelBuilder
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setRetrieveIndexInformation(true);
+    maximum.setRetrieveIndexColumnInformation(true);
     maximum.setRetrieveSequenceInformation(true);
     maximum.setRetrieveSynonymInformation(true);
     maximum.setTag("maximum");

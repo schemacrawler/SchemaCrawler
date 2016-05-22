@@ -944,7 +944,10 @@ final class SchemaTextFormatter
 
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
-
+      if (column instanceof DefinedObject)
+      {
+        printDependantObjectDefinition((DefinedObject) column);
+      }
     }
   }
 

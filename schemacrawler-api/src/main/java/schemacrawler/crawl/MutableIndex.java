@@ -34,6 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
@@ -194,6 +195,17 @@ class MutableIndex
   public Iterator<IndexColumn> iterator()
   {
     return getColumns().iterator();
+  }
+
+  /**
+   * {@inheritDoc}
+   *
+   * @see schemacrawler.schema.Index#lookupColumn(java.lang.String)
+   */
+  @Override
+  public Optional<MutableIndexColumn> lookupColumn(final String name)
+  {
+    return columns.lookup(this, name);
   }
 
   void addColumn(final MutableIndexColumn column)

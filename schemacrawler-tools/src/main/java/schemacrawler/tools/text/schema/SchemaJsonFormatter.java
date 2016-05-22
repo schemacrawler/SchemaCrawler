@@ -688,6 +688,10 @@ final class SchemaJsonFormatter
       {
         jsonColumn.put("ordinal", column.getOrdinalPosition());
       }
+      if (column instanceof DefinedObject)
+      {
+        printDefinition((DefinedObject) column, jsonColumn);
+      }
     }
     catch (final JSONException e)
     {
