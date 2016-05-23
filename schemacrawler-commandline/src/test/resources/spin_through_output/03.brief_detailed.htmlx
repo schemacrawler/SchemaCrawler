@@ -239,11 +239,11 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
-		<td class='property_value'>HSQL Database Engine 2.3.3</td>
+		<td class='property_value'>HSQL Database Engine 2.3.4</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>HSQL Database Engine Driver 2.3.3</td>
+		<td class='property_value'>HSQL Database Engine Driver 2.3.4</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -260,9 +260,9 @@ td.section {
 <text text-anchor="start" x="1014.5" y="-35.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">generated on</text>
 <text text-anchor="start" x="1067.5" y="-35.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">2015&#45;10&#45;25 22:22:59</text>
 <text text-anchor="start" x="999.5" y="-22.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">database version</text>
-<text text-anchor="start" x="1067.5" y="-22.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">HSQL Database Engine 2.3.3</text>
+<text text-anchor="start" x="1067.5" y="-22.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">HSQL Database Engine 2.3.4</text>
 <text text-anchor="start" x="1012.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">driver version</text>
-<text text-anchor="start" x="1067.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">HSQL Database Engine Driver 2.3.3</text>
+<text text-anchor="start" x="1067.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#999999">HSQL Database Engine Driver 2.3.4</text>
 <polygon fill="none" stroke="#999999" points="996,-4 996,-58 1199,-58 1199,-4 996,-4"/>
 <!-- authors_dba8a1ff -->
 <g id="node1" class="node"><title>authors_dba8a1ff</title>

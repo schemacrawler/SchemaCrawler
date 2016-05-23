@@ -604,6 +604,7 @@ PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
 PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
 ------------------------------------------------------------------------
 1   LIMIT_ID                          BIGINT, in                  
+2   TOTAL_COUNT                       INTEGER, out                
 
 
 
