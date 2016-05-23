@@ -1488,6 +1488,14 @@
       "searchable": "searchable except with where .. like"
     },
     {
+      "nullable": true,
+      "databaseSpecificTypeName": "UUID",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "searchable"
+    },
+    {
       "createParameters": "LENGTH",
       "nullable": true,
       "databaseSpecificTypeName": "VARBINARY",
@@ -1534,7 +1542,7 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.3.3",
+    "databaseProductVersion": "2.3.4",
     "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
@@ -1605,6 +1613,7 @@
           "readonly",
           "runtime.gc_interval",
           "sql.avg_scale",
+          "sql.char_literal",
           "sql.compare_in_locale",
           "sql.concat_nulls",
           "sql.convert_trunc",
@@ -1616,6 +1625,7 @@
           "sql.enforce_tdc_update",
           "sql.enforce_types",
           "sql.ignore_case",
+          "sql.live_object",
           "sql.longvar_is_lob",
           "sql.nulls_first",
           "sql.nulls_order",
@@ -1637,6 +1647,7 @@
           "textdb.fs",
           "textdb.ignore_first",
           "textdb.lvs",
+          "textdb.qc",
           "textdb.quoted",
           "textdb.vs"
         ]
@@ -2477,6 +2488,7 @@
           "BIGINT",
           "VARBINARY",
           "BINARY",
+          "UUID",
           "CHARACTER",
           "NUMERIC",
           "DECIMAL",
@@ -2510,7 +2522,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-22 14:53:48",
+    "crawlTimestamp": "2016-05-22 20:40:32",
     "title": ""
   },
   "routines": [
@@ -2598,7 +2610,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.3.3",
+    "driverVersion": "2.3.4",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",

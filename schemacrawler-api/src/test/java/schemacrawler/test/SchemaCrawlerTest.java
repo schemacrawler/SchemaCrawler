@@ -50,7 +50,7 @@ import org.junit.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.TableConstraint;
+import schemacrawler.schema.Constraint;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -58,7 +58,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schema.Constraint;
+import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
@@ -104,7 +104,7 @@ public class SchemaCrawlerTest
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
       assertEquals("ColumnDataType count does not match",
-                   26,
+                   27,
                    columnDataTypes.size());
       for (final ColumnDataType columnDataType: columnDataTypes)
       {
@@ -483,8 +483,7 @@ public class SchemaCrawlerTest
           for (final Constraint tableConstraint: tableConstraints)
           {
             out.println("    constraint: " + tableConstraint.getName());
-            out.println("      type: "
-                        + tableConstraint.getConstraintType());
+            out.println("      type: " + tableConstraint.getConstraintType());
             if (tableConstraint instanceof TableConstraint)
             {
               final TableConstraint dependentTableConstraint = (TableConstraint) tableConstraint;
