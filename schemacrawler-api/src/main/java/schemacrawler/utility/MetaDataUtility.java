@@ -125,7 +125,7 @@ public final class MetaDataUtility
 
   public static ForeignKeyCardinality findForeignKeyCardinality(final BaseForeignKey<?> foreignKey)
   {
-    if (foreignKey == null)
+    if (foreignKey == null || foreignKey.getColumnReferences().size() == 0)
     {
       return ForeignKeyCardinality.unknown;
     }
@@ -167,7 +167,7 @@ public final class MetaDataUtility
 
   public static boolean isForeignKeyUnique(final BaseForeignKey<?> foreignKey)
   {
-    if (foreignKey == null)
+    if (foreignKey == null || foreignKey.getColumnReferences().size() == 0)
     {
       return false;
     }
