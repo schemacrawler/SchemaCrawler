@@ -1578,7 +1578,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:22:55",
+    "crawlTimestamp": "2016-05-22 20:49:28",
     "title": ""
   },
   "routines": [
@@ -1854,13 +1854,22 @@
       "name": "DELETE_UNUSED_LOBS",
       "fullName": "PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS",
       "type": "procedure",
-      "parameters": [{
-        "databaseSpecificType": "BIGINT",
-        "dataType": "BIGINT",
-        "name": "LIMIT_ID",
-        "width": "",
-        "type": "in"
-      }],
+      "parameters": [
+        {
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "LIMIT_ID",
+          "width": "",
+          "type": "in"
+        },
+        {
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "TOTAL_COUNT",
+          "width": "",
+          "type": "out"
+        }
+      ],
       "returnType": "no result",
       "remarks": ""
     },
