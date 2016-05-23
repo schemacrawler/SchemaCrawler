@@ -38,6 +38,8 @@ column data-type: TIMESTAMP
   is user-defined: false
 column data-type: TINYINT
   is user-defined: false
+column data-type: UUID
+  is user-defined: false
 column data-type: VARBINARY
   is user-defined: false
 column data-type: VARCHAR
