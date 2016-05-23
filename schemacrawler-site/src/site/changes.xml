@@ -8,7 +8,10 @@
      <release version="14.08.03" date="2016-05-22" description="Foreign key, primary key, and index column definitions">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for retrieving foreign key, primary key, and index column definitions.
-      ]]></action>                                                              
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added support for HSQLDB 2.3.4.
+      ]]></action>                                                                    
      </release>    
      <release version="14.08.02" date="2016-05-16" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
