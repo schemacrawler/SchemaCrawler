@@ -16,4 +16,5 @@ Summary of schema lints:
   [high]      1- no primary key
   [high]      2- foreign key data type different from primary key
   [high]      3- redundant index
+[critical]      1- foreign key self-references primary key
 
