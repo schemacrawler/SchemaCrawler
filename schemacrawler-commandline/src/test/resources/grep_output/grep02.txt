@@ -51,15 +51,19 @@ UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
 Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
+  STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
 SYS_CT_10094                                          [check constraint]
+  ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
 SYS_CT_10095                                          [check constraint]
+  FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
 SYS_CT_10096                                          [check constraint]
+  LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
 
@@ -148,20 +152,26 @@ IDX_A_WRITERS                                         [non-unique index]
 Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
+  STATE                                                         
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
 SYS_CT_10160                                          [check constraint]
+  ID                                                            
 FOR_LINT.WRITERS.ID IS NOT NULL
 
 SYS_CT_10161                                          [check constraint]
+  FIRSTNAME                                                     
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
 SYS_CT_10162                                          [check constraint]
+  LASTNAME                                                      
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
 SYS_CT_10163                                          [check constraint]
+  ADDRESS2                                                      
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
 SYS_CT_10164                                          [check constraint]
+  PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 
