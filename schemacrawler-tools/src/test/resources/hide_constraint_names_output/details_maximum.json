@@ -179,22 +179,72 @@
       }],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 2,
+            "nullable": true,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "STATE",
+            "width": "(2)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.AUTHORS.ID IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 20,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "FIRSTNAME",
+            "width": "(20)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.AUTHORS.FIRSTNAME IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 20,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "LASTNAME",
+            "width": "(20)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.AUTHORS.LASTNAME IS NOT NULL",
           "type": "check"
         }
@@ -475,18 +525,58 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "BOOKID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "AUTHORID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "BOOKID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.BOOKAUTHORS.BOOKID IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "AUTHORID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.BOOKAUTHORS.AUTHORID IS NOT NULL",
           "type": "check"
         }
@@ -697,22 +787,72 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "PREVIOUSEDITIONID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.BOOKS.ID IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 255,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "TITLE",
+            "width": "(255)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.BOOKS.TITLE IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "PUBLISHERID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "BOOKS.BOOKS.PUBLISHERID IS NOT NULL",
           "type": "check"
         }
@@ -917,6 +1057,16 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
+        "columns": {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": true
+        },
         "definition": "",
         "type": "primary_key"
       }],
@@ -1060,22 +1210,84 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": [
+            {
+              "size": 50,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "COUNTRY",
+              "width": "(50)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            },
+            {
+              "size": 10,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "POSTALCODE",
+              "width": "(10)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            }
+          ],
           "definition": "",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "CITY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".REGIONS.CITY IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 2,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "STATE",
+            "width": "(2)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".REGIONS.STATE IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 10,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "POSTALCODE",
+            "width": "(10)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".REGIONS.POSTALCODE IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "COUNTRY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".REGIONS.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -1270,18 +1482,70 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": [
+            {
+              "size": 50,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "COUNTRY",
+              "width": "(50)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            },
+            {
+              "size": 10,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "POSTALCODE",
+              "width": "(10)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            }
+          ],
           "definition": "",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "SALESDATAID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 10,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "POSTALCODE",
+            "width": "(10)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".SALES.POSTALCODE IS NOT NULL",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "COUNTRY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "definition": "\"PUBLISHER SALES\".SALES.COUNTRY IS NOT NULL",
           "type": "check"
         }
@@ -1407,6 +1671,16 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
+        "columns": {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
         "definition": "",
         "type": "unique"
       }],
@@ -2629,7 +2903,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-22 20:40:30",
+    "crawlTimestamp": "2016-05-23 23:20:36",
     "title": ""
   },
   "routines": [
