@@ -43,6 +43,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -257,8 +258,21 @@ public class GraphExecutableOptionsTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+    executableGraph(schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
+  }
+
+  @Test
+  public void executableForGraph_lintschema()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+    final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(schemaCrawlerOptions,
                     graphOptions,
@@ -268,10 +282,13 @@ public class GraphExecutableOptionsTest
   private void executableGraph(final SchemaCrawlerOptions schemaCrawlerOptions,
                                final GraphOptions graphOptions,
                                final String testMethodName)
-                                 throws Exception
+    throws Exception
   {
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    if (schemaCrawlerOptions.getSchemaInclusionRule().equals(new IncludeAll()))
+    {
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+    }
 
     final GraphExecutable executable = new GraphExecutable();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
