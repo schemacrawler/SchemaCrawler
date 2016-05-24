@@ -200,10 +200,11 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS")
-        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS");
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -303,10 +304,11 @@ public class SchemaCrawlerTest
   public void routineDefinitions()
     throws Exception
   {
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-      .withRoutinesSql("SELECT * FROM INFORMATION_SCHEMA.ROUTINES");
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      .fromConfig(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -362,9 +364,11 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withSequencesSql("SELECT * FROM INFORMATION_SCHEMA.SEQUENCES");
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSequenceInformation(true);
@@ -400,18 +404,11 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withSynonymsSql("SELECT                                          \n"
-                         + "  SYNONYM_CATALOG,                            \n"
-                         + "  SYNONYM_SCHEMA,                             \n"
-                         + "  SYNONYM_NAME,                               \n"
-                         + "  OBJECT_CATALOG AS REFERENCED_OBJECT_CATALOG,\n"
-                         + "  OBJECT_SCHEMA AS REFERENCED_OBJECT_SCHEMA,  \n"
-                         + "  OBJECT_NAME AS REFERENCED_OBJECT_NAME,      \n"
-                         + "  OBJECT_TYPE AS REFERENCED_OBJECT_TYPE       \n"
-                         + "FROM                                          \n"
-                         + "  INFORMATION_SCHEMA.SYSTEM_SYNONYMS          \n");
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSynonymInformation(true);
@@ -445,11 +442,11 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-      databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS")
-        .withExtTableConstraintsSql("SELECT * FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS")
-        .withTableConstraintsColumnsSql("SELECT * FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE");
+      final Config config = Config
+        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -602,9 +599,11 @@ public class SchemaCrawlerTest
   public void triggers()
     throws Exception
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-      .withTriggersSql("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS");
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      .fromConfig(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -634,9 +633,11 @@ public class SchemaCrawlerTest
   public void viewDefinitions()
     throws Exception
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-      .withViewsSql("SELECT * FROM INFORMATION_SCHEMA.VIEWS");
+    final Config config = Config
+      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      .fromConfig(config);
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
     schemaCrawlerOptionsBuilder.tableTypes("VIEW");
