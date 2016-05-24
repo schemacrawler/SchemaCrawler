@@ -32,6 +32,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
@@ -48,8 +49,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Test;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
@@ -100,6 +99,7 @@ public class TestHsqldbCommandline
       argsMap.put("g", testConfigFile.toString());
       argsMap.put("command", "details,dump,count,hsqldb.tables");
       argsMap.put("infolevel", "maximum");
+      argsMap.put("synonyms", ".*");
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));

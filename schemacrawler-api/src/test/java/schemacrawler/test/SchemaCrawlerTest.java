@@ -402,29 +402,16 @@ public class SchemaCrawlerTest
     {
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
       databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-        .withSynonymsSql("SELECT TOP 3                                      \n"
-                         + "  TABLE_CATALOG AS SYNONYM_CATALOG,             \n"
-                         + "  TABLE_SCHEMA AS SYNONYM_SCHEMA,               \n"
-                         + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                         + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                         + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                         + "  TABLE_NAME AS REFERENCED_OBJECT_NAME          \n"
-                         + "FROM                                            \n"
-                         + "  INFORMATION_SCHEMA.TABLES                     \n"
-                         + "WHERE                                           \n"
-                         + "  TABLE_SCHEMA = 'BOOKS'                        \n"
-                         + "UNION                                           \n"
-                         + "SELECT TOP 3                                    \n"
-                         + "  'PUBLIC' AS SYNONYM_CATALOG,                  \n"
-                         + "  'BOOKS' AS SYNONYM_SCHEMA,                    \n"
-                         + "  TABLE_NAME AS SYNONYM_NAME,                   \n"
-                         + "  TABLE_CATALOG AS REFERENCED_OBJECT_CATALOG,   \n"
-                         + "  TABLE_SCHEMA AS REFERENCED_OBJECT_SCHEMA,     \n"
-                         + "  TABLE_NAME + '1' AS REFERENCED_OBJECT_NAME    \n"
-                         + "FROM                                            \n"
-                         + "  INFORMATION_SCHEMA.TABLES                     \n"
-                         + "WHERE                                           \n"
-                         + "  TABLE_SCHEMA != 'BOOKS'                       ");
+        .withSynonymsSql("SELECT                                          \n"
+                         + "  SYNONYM_CATALOG,                            \n"
+                         + "  SYNONYM_SCHEMA,                             \n"
+                         + "  SYNONYM_NAME,                               \n"
+                         + "  OBJECT_CATALOG AS REFERENCED_OBJECT_CATALOG,\n"
+                         + "  OBJECT_SCHEMA AS REFERENCED_OBJECT_SCHEMA,  \n"
+                         + "  OBJECT_NAME AS REFERENCED_OBJECT_NAME,      \n"
+                         + "  OBJECT_TYPE AS REFERENCED_OBJECT_TYPE       \n"
+                         + "FROM                                          \n"
+                         + "  INFORMATION_SCHEMA.SYSTEM_SYNONYMS          \n");
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSynonymInformation(true);
@@ -439,7 +426,7 @@ public class SchemaCrawlerTest
       assertNotNull("BOOKS Schema not found", schema);
       final Synonym[] synonyms = catalog.getSynonyms(schema)
         .toArray(new Synonym[0]);
-      assertEquals("Synonym count does not match", 6, synonyms.length);
+      assertEquals("Synonym count does not match", 1, synonyms.length);
       for (final Synonym synonym: synonyms)
       {
         assertNotNull(synonym);
