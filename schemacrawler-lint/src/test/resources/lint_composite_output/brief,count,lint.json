@@ -451,7 +451,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 20:18:51",
+    "crawlTimestamp": "2016-05-23 23:50:18",
     "title": ""
   }
 },
@@ -640,6 +640,12 @@
     },
     {
       "lints": [
+        {
+          "severity": "critical",
+          "description": "foreign key self-references primary key",
+          "id": "schemacrawler.tools.linter.LinterForeignKeySelfReference",
+          "value": "FK_SELFREFERENCE"
+        },
         {
           "severity": "high",
           "description": "redundant index",
