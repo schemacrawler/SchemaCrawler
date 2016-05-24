@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2015-10-25 22:22:53</td>
+		<td align='left'>2016-05-23 20:07:50</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -192,6 +192,20 @@ digraph "SchemaCrawler_Diagram" {
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
 		<td colspan='2' bgcolor='#F2EACE' align='left'><b><i>PUBLIC.FOR_LINT.PUBLICATIONWRITERS</i></b></td>
+		<td bgcolor='#F2EACE' align='right'>[table]</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.FOR_LINT.SELFREFERENCE -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "selfreference_5b0b972f" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#F2EACE' align='left'><b><i>PUBLIC.FOR_LINT.SELFREFERENCE</i></b></td>
 		<td bgcolor='#F2EACE' align='right'>[table]</td>
 	</tr>
       </table>

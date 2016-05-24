@@ -153,6 +153,43 @@
       "lints": [
         {
           "severity": "high",
+          "description": "redundant index",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
+          "value": "SYS_IDX_10212"
+        },
+        {
+          "severity": "high",
+          "description": "redundant index",
+          "id": "schemacrawler.tools.linter.LinterRedundantIndexes",
+          "value": "SYS_IDX_PK_SELFREFERENCE_10209"
+        },
+        {
+          "severity": "low",
+          "description": "empty table",
+          "id": "schemacrawler.tools.linter.LinterTableEmpty",
+          "value": ""
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": ""
+        },
+        {
+          "severity": "low",
+          "description": "should have remarks",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
+          "value": "ID, TITLE"
+        }
+      ],
+      "name": "SELFREFERENCE",
+      "fullName": "PUBLIC.FOR_LINT.SELFREFERENCE",
+      "type": "table"
+    },
+    {
+      "lints": [
+        {
+          "severity": "high",
           "description": "foreign key data type different from primary key",
           "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
           "value": "FK_WRITERS_PUBLICATION"

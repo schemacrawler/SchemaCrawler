@@ -75,6 +75,15 @@ CREATE TABLE πίνακαβάσηςδεδομένων
 )
 ;
 
+CREATE TABLE SelfReference
+(
+  Id INTEGER NOT NULL,
+  Title VARCHAR(255) NOT NULL,
+  CONSTRAINT PK_SelfReference PRIMARY KEY (Id),
+  CONSTRAINT FK_SelfReference FOREIGN KEY (Id) REFERENCES SelfReference (Id)
+)
+;
+
 ALTER TABLE Writers ADD CONSTRAINT FK_Writers_Publication FOREIGN KEY (Publication_Id) REFERENCES Publications (Id);
 
 -- Indexes

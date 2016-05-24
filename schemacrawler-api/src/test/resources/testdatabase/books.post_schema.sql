@@ -1,3 +1,6 @@
+-- Synonyms
+CREATE SYNONYM Publications FOR Books
+
 -- Remarks
 COMMENT ON TABLE  Publishers IS 'List of book publishers'
 ;

@@ -94,6 +94,15 @@
     {
       "foreignKeys": [],
       "columns": [],
+      "name": "SELFREFERENCE",
+      "fullName": "PUBLIC.FOR_LINT.SELFREFERENCE",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table",
@@ -138,7 +147,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:22:51",
+    "crawlTimestamp": "2016-05-23 20:07:48",
     "title": ""
   },
   "routines": [

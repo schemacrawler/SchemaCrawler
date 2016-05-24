@@ -1012,6 +1012,90 @@
       "primaryKey": {}
     },
     {
+      "foreignKeys": [{
+        "name": "FK_SELFREFERENCE",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.FOR_LINT.SELFREFERENCE.ID",
+          "fkColumn": "PUBLIC.FOR_LINT.SELFREFERENCE.ID"
+        }],
+        "updateRule": "no action"
+      }],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_SELFREFERENCE_10209"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID"
+          },
+          "unique": false,
+          "name": "SYS_IDX_10212"
+        }
+      ],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 255,
+          "nullable": false,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "TITLE",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "SELFREFERENCE",
+      "fullName": "PUBLIC.FOR_LINT.SELFREFERENCE",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "name": "PK_SELFREFERENCE",
+          "type": "primary_key"
+        },
+        {
+          "name": "FK_SELFREFERENCE",
+          "type": "foreign_key"
+        },
+        {
+          "name": "SYS_CT_10207",
+          "type": "check"
+        },
+        {
+          "name": "SYS_CT_10208",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_SELFREFERENCE"
+      }
+    },
+    {
       "foreignKeys": [
         {
           "name": "FK_WRITERS_PUBLICATION",
@@ -1074,7 +1158,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10208"
+          "name": "SYS_IDX_10215"
         },
         {
           "columns": [
@@ -1797,7 +1881,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-22 20:49:33",
+    "crawlTimestamp": "2016-05-23 20:07:56",
     "title": ""
   },
   "routines": [
