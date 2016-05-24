@@ -859,8 +859,12 @@
       "primaryKey": {}
     }
   ],
+  "synonyms": {
+    "name": "PUBLICATIONS",
+    "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
+  },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 20:08:01",
+    "crawlTimestamp": "2016-05-23 23:38:25",
     "title": ""
   },
   "routines": [
