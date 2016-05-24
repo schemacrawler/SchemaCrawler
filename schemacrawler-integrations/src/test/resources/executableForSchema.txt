@@ -308,6 +308,37 @@ SYS_CT_10182                                          [check constraint]
 
 
 
+PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
+------------------------------------------------------------------------
+1   ID                                INTEGER NOT NULL            
+2   TITLE                             VARCHAR(255) NOT NULL       
+
+Primary Key
+
+PK_SELFREFERENCE                                           [primary key]
+1   ID                                ascending                   
+
+Foreign Keys
+
+FK_SELFREFERENCE                           [foreign key, with no action]
+ 1  ID <--(0..1) ID                                               
+
+Indexes
+
+SYS_IDX_PK_SELFREFERENCE_10209                            [unique index]
+1   ID                                ascending                   
+
+SYS_IDX_10212                                         [non-unique index]
+1   ID                                ascending                   
+
+Table Constraints
+
+SYS_CT_10207                                          [check constraint]
+
+SYS_CT_10208                                          [check constraint]
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 1   ID                                BIGINT NOT NULL             
@@ -356,7 +387,7 @@ Indexes
 SYS_IDX_PK_WRITERS_10165                                  [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_10208                                         [non-unique index]
+SYS_IDX_10215                                         [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
