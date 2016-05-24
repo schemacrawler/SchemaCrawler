@@ -235,7 +235,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2016-04-14 20:30:41</td>
+		<td class='property_value'>2016-05-23 20:18:50</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -474,6 +474,55 @@ td.section {
 
 
 <table>
+  <caption style='background-color: #F2EACE;'><span id='selfreference_5b0b972f' class='caption_name'>PUBLIC.FOR_LINT.SELFREFERENCE</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_SELFREFERENCE</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_SELFREFERENCE</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='subname'>ID ←(0..1) <a href='#selfreference_5b0b972f'>ID</a></td>
+		<td class='type'></td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
   <caption style='background-color: #F2EACE;'><span id='writers_bf84ac10' class='caption_name'>PUBLIC.FOR_LINT.WRITERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
@@ -685,6 +734,10 @@ td.section {
 		<td class='property_value right'>empty</td>
 	</tr>
 	<tr>
+		<td class='property_name'>PUBLIC.FOR_LINT.SELFREFERENCE</td>
+		<td class='property_value right'>empty</td>
+	</tr>
+	<tr>
 		<td class='property_name'>PUBLIC.FOR_LINT.WRITERS</td>
 		<td class='property_value right'>empty</td>
 	</tr>
@@ -889,6 +942,50 @@ td.section {
 		<td></td>
 		<td>should have remarks</td>
 		<td>PUBLICATIONID, WRITERID</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+
+
+  <caption style='background-color: #F2EACE;'><span id='selfreference_5b0b972f' class='caption_name'>PUBLIC.FOR_LINT.SELFREFERENCE</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, high]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>redundant index</td>
+		<td>SYS_IDX_10212</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>redundant index</td>
+		<td>SYS_IDX_PK_SELFREFERENCE_10209</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[lint, low]</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>empty table</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td>should have remarks</td>
+		<td>ID, TITLE</td>
 	</tr>
 </table>
 <p>&#160;</p>

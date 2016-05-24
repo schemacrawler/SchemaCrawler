@@ -165,6 +165,12 @@ PUBLICATIONID	WRITERID
 
 
 
+PUBLIC.FOR_LINT.SELFREFERENCE                                           
+------------------------------------------------------------------------
+ID	TITLE
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID

@@ -125,6 +125,18 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
+      "name": "SELFREFERENCE",
+      "fullName": "PUBLIC.FOR_LINT.SELFREFERENCE",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
       "type": "table",
@@ -183,7 +195,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:22:51",
+    "crawlTimestamp": "2016-05-23 20:07:49",
     "title": ""
   },
   "routines": [

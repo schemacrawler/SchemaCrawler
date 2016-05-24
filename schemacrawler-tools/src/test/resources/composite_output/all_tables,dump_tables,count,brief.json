@@ -185,6 +185,21 @@
       [
         "PUBLIC",
         "FOR_LINT",
+        "SELFREFERENCE",
+        "TABLE",
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "MEMORY",
+        false,
+        null
+      ],
+      [
+        "PUBLIC",
+        "FOR_LINT",
         "TEMP1",
         "GLOBAL TEMPORARY",
         null,
