@@ -100,6 +100,19 @@ schema: PUBLIC.FOR_LINT
     constraint: SYS_CT_10182
       type: check
       on column: WRITERID
+  table: PUBLIC.FOR_LINT.SELFREFERENCE
+    constraint: PK_SELFREFERENCE
+      type: primary_key
+      on column: ID
+    constraint: FK_SELFREFERENCE
+      type: foreign_key
+      on column: ID
+    constraint: SYS_CT_10207
+      type: check
+      on column: ID
+    constraint: SYS_CT_10208
+      type: check
+      on column: TITLE
   table: PUBLIC.FOR_LINT.WRITERS
     constraint: PK_WRITERS
       type: primary_key

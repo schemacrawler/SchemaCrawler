@@ -462,6 +462,40 @@
       "primaryKey": {}
     },
     {
+      "foreignKeys": [{
+        "name": "FK_SELFREFERENCE",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.FOR_LINT.SELFREFERENCE.ID",
+          "fkColumn": "PUBLIC.FOR_LINT.SELFREFERENCE.ID"
+        }],
+        "updateRule": "no action"
+      }],
+      "columns": [{
+        "size": 32,
+        "nullable": false,
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ID",
+        "width": "",
+        "decimalDigits": 0,
+        "remarks": "",
+        "autoIncremented": false
+      }],
+      "name": "SELFREFERENCE",
+      "fullName": "PUBLIC.FOR_LINT.SELFREFERENCE",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_SELFREFERENCE"
+      }
+    },
+    {
       "foreignKeys": [
         {
           "name": "FK_WRITERS_PUBLICATION",
@@ -826,7 +860,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-25 22:22:54",
+    "crawlTimestamp": "2016-05-23 20:07:52",
     "title": ""
   },
   "routines": [
