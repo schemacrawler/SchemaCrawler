@@ -49,12 +49,15 @@ SYS_IDX_10109                                         [non-unique index]
 Table Constraints
 
 SYS_CT_10102                                          [check constraint]
+  ID                                                            
 BOOKS.BOOKS.ID IS NOT NULL
 
 SYS_CT_10103                                          [check constraint]
+  TITLE                                                         
 BOOKS.BOOKS.TITLE IS NOT NULL
 
 SYS_CT_10104                                          [check constraint]
+  PUBLISHERID                                                   
 BOOKS.BOOKS.PUBLISHERID IS NOT NULL
 
 
@@ -101,11 +104,14 @@ SYS_IDX_PK_PUBLICATIONS_10175                             [unique index]
 Table Constraints
 
 SYS_CT_10172                                          [check constraint]
+  ID                                                            
 FOR_LINT.PUBLICATIONS.ID IS NOT NULL
 
 SYS_CT_10173                                          [check constraint]
+  TITLE                                                         
 FOR_LINT.PUBLICATIONS.TITLE IS NOT NULL
 
 SYS_CT_10174                                          [check constraint]
+  WRITERID                                                      
 FOR_LINT.PUBLICATIONS.WRITERID IS NOT NULL
 

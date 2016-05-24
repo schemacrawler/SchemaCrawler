@@ -171,22 +171,72 @@
       }],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "PK_AUTHORS",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 2,
+            "nullable": true,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "STATE",
+            "width": "(2)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "CHECK_UPPERCASE_STATE",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10094",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 20,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "FIRSTNAME",
+            "width": "(20)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10095",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 20,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "LASTNAME",
+            "width": "(20)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10096",
           "type": "check"
         }
@@ -341,18 +391,58 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "BOOKID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "FK_Y_BOOK",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "AUTHORID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "FK_Z_AUTHOR",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "BOOKID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10111",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "AUTHORID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10112",
           "type": "check"
         }
@@ -492,22 +582,72 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "PK_BOOKS",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "PREVIOUSEDITIONID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "FK_PREVIOUSEDITION",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10102",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 255,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "TITLE",
+            "width": "(255)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10103",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "PUBLISHERID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10104",
           "type": "check"
         }
@@ -583,6 +723,16 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
+        "columns": {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": true
+        },
         "name": "SYS_PK_10092",
         "type": "primary_key"
       }],
@@ -678,22 +828,84 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": [
+            {
+              "size": 50,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "COUNTRY",
+              "width": "(50)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            },
+            {
+              "size": 10,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "POSTALCODE",
+              "width": "(10)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            }
+          ],
           "name": "PK_CUSTOMERS",
           "type": "primary_key"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "CITY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10140",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 2,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "STATE",
+            "width": "(2)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10141",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 10,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "POSTALCODE",
+            "width": "(10)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10142",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "COUNTRY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10143",
           "type": "check"
         }
@@ -839,18 +1051,70 @@
       "triggers": [],
       "tableConstraints": [
         {
+          "columns": [
+            {
+              "size": 50,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "COUNTRY",
+              "width": "(50)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            },
+            {
+              "size": 10,
+              "nullable": false,
+              "databaseSpecificType": "VARCHAR",
+              "dataType": "VARCHAR",
+              "name": "POSTALCODE",
+              "width": "(10)",
+              "decimalDigits": 0,
+              "autoIncremented": false
+            }
+          ],
           "name": "FK_SALES_REGIONS",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "SALESDATAID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "FK_SALES_SALESDATA",
           "type": "foreign_key"
         },
         {
+          "columns": {
+            "size": 10,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "POSTALCODE",
+            "width": "(10)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10151",
           "type": "check"
         },
         {
+          "columns": {
+            "size": 50,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "COUNTRY",
+            "width": "(50)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
           "name": "SYS_CT_10152",
           "type": "check"
         }
@@ -905,6 +1169,16 @@
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
+        "columns": {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "SALESDATAID",
+          "width": "",
+          "decimalDigits": 0,
+          "autoIncremented": false
+        },
         "name": "UQ_CUSTOMERS",
         "type": "unique"
       }],
@@ -913,7 +1187,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2015-10-21 22:11:56",
+    "crawlTimestamp": "2016-05-23 23:28:24",
     "title": "Database Design for Books and Publishers"
   }
 }]
