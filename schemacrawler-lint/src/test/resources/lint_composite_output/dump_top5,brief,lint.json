@@ -679,6 +679,12 @@
     {
       "lints": [
         {
+          "severity": "critical",
+          "description": "foreign key self-references primary key",
+          "id": "schemacrawler.tools.linter.LinterForeignKeySelfReference",
+          "value": "FK_SELFREFERENCE"
+        },
+        {
           "severity": "high",
           "description": "redundant index",
           "id": "schemacrawler.tools.linter.LinterRedundantIndexes",

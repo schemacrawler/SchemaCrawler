@@ -174,6 +174,12 @@ Example configuration:
 </linter>
 ```
 
+**Linter:** *schemacrawler.tools.linter.LinterForeignKeySelfReference*   
+Checks tables where the foreign key self-references the primary key. 
+This means that a record in the table references itself, and
+cannot be deleted.
+
+
 ## Enforcing Good Schema Design During Builds
 
 SchemaCrawler Lint can be configured to fail a build using a configuration file. 

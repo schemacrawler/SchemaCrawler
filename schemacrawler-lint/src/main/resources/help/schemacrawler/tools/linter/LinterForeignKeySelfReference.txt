@@ -1,0 +1,3 @@
+Checks tables where the foreign key self-references the primary key. 
+This means that a record in the table references itself, and
+cannot be deleted.
