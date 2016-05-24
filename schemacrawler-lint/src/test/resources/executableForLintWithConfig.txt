@@ -93,6 +93,8 @@ PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
 ------------------------------------------------------------------------
 
+                                                        [lint, critical]
+	foreign key self-references primary key	FK_SELFREFERENCE
                                                              [lint, low]
 	empty table	
 	should have remarks	

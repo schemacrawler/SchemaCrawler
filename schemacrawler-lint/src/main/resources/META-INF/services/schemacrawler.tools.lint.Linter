@@ -1,6 +1,7 @@
 schemacrawler.tools.linter.LinterCatalogSql
 schemacrawler.tools.linter.LinterColumnTypes
 schemacrawler.tools.linter.LinterForeignKeyMismatch
+schemacrawler.tools.linter.LinterForeignKeySelfReference
 schemacrawler.tools.linter.LinterForeignKeyWithNoIndexes
 schemacrawler.tools.linter.LinterNullColumnsInIndex
 schemacrawler.tools.linter.LinterNullIntendedColumns

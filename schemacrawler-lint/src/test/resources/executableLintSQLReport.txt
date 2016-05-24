@@ -75,6 +75,14 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 
 
 
+PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
+------------------------------------------------------------------------
+
+                                                        [lint, critical]
+	foreign key self-references primary key	FK_SELFREFERENCE
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 
