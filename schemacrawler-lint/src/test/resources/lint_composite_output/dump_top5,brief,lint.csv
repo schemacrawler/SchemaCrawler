@@ -29,6 +29,12 @@ PUBLICATIONID,WRITERID
 
 
 
+PUBLIC.FOR_LINT.SELFREFERENCE,""
+------------------------------------------------------------------------
+ID,TITLE
+
+
+
 PUBLIC.FOR_LINT.WRITERS,""
 ------------------------------------------------------------------------
 ID,FIRSTNAME,LASTNAME,ADDRESS1,ADDRESS2,CITY,STATE,POSTALCODE,COUNTRY,PHONE1,PHONE2,EMAIL1,EMAIL2,FAX,FAX3,HOMEEMAIL11,HOMEEMAIL12,PUBLICATION_ID
@@ -111,6 +117,22 @@ FK_PUBLICATION,"[foreign key, with no action]"
 ""
 FK_WRITER,"[foreign key, with no action]"
 "",WRITERID (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID,""
+
+
+
+PUBLIC.FOR_LINT.SELFREFERENCE,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER NOT NULL
+""
+Primary Key
+""
+PK_SELFREFERENCE,[primary key]
+"",ID,ascending
+""
+Foreign Keys
+""
+FK_SELFREFERENCE,"[foreign key, with no action]"
+"",ID <--(0..1) ID,""
 
 
 
@@ -227,6 +249,19 @@ PUBLIC.FOR_LINT.PUBLICATIONWRITERS,[table]
 "",empty table,""
 "",should have remarks,""
 "",should have remarks,"PUBLICATIONID, WRITERID"
+
+
+
+PUBLIC.FOR_LINT.SELFREFERENCE,[table]
+------------------------------------------------------------------------
+""
+"","[lint, high]"
+"",redundant index,SYS_IDX_10212
+"",redundant index,SYS_IDX_PK_SELFREFERENCE_10209
+"","[lint, low]"
+"",empty table,""
+"",should have remarks,""
+"",should have remarks,"ID, TITLE"
 
 
 

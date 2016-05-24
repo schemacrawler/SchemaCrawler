@@ -90,6 +90,16 @@ PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 
 
 
+PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ID, TITLE
+
+
+
 PUBLIC.FOR_LINT.WRITERS                                          [table]
 ------------------------------------------------------------------------
 
