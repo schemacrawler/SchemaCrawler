@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.08.04" date="2016-05-25" description="Allow foreign key to self-reference primary key">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Allow foreign key to self-reference primary key.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added new lint to check for foreign keys that self-reference primary key.
+      ]]></action>                                                                    
+     </release>   
      <release version="14.08.03" date="2016-05-22" description="Foreign key, primary key, and index column definitions">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added support for retrieving foreign key, primary key, and index column definitions.
