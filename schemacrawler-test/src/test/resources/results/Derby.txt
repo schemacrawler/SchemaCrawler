@@ -10,14 +10,14 @@ SchemaCrawler Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 product name                          SchemaCrawler
-product version                       14.08.03
+product version                       14.08.04
 
 
 Database Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 database product name                 Apache Derby
-database product version              14.08.03.1.2 - (1095077)
+database product version              14.08.04.1.2 - (1095077)
 database user name                    books
 
 
@@ -185,7 +185,7 @@ JDBC Driver Information
 -=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=--=-
 
 driver name                           Apache Derby Network Client JDBC Driver
-driver version                        14.08.03.2.2 - (1181258)
+driver version                        14.08.04.2.2 - (1181258)
 driver class name                     org.apache.derby.jdbc.ClientDriver40
 url                                   jdbc:derby://192.168.62.133:1527/books
 is JDBC compliant                     true
