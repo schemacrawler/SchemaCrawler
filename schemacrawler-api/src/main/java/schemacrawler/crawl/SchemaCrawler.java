@@ -562,8 +562,7 @@ public final class SchemaCrawler
       stopWatch.time("retrieveTables", () -> {
         for (final Schema schema: retriever.getSchemas())
         {
-          retriever.retrieveTables(schema.getCatalogName(),
-                                   schema.getName(),
+          retriever.retrieveTables(schema,
                                    options.getTableNamePattern(),
                                    options.getTableTypes(),
                                    options.getTableInclusionRule());
