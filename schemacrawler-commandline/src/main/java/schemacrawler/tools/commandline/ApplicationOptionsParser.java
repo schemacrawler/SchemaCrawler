@@ -29,9 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
-
 import java.util.logging.Level;
+
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.ApplicationOptions;
@@ -63,8 +63,15 @@ public final class ApplicationOptionsParser
       final String logLevelString = config.getStringValue("loglevel", "OFF");
       if (!isBlank(logLevelString))
       {
-        final Level applicationLogLevel = Level
-          .parse(logLevelString.toUpperCase());
+        Level applicationLogLevel;
+        try
+        {
+          applicationLogLevel = Level.parse(logLevelString.toUpperCase());
+        }
+        catch (final IllegalArgumentException e)
+        {
+          applicationLogLevel = Level.OFF;
+        }
         options.setApplicationLogLevel(applicationLogLevel);
       }
       consumeOption("loglevel");
