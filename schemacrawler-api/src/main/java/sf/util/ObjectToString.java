@@ -149,11 +149,22 @@ public final class ObjectToString
     final Class<?> objectClass = object.getClass();
     if (Map.class.isAssignableFrom(objectClass))
     {
-      final Set<Map.Entry> mapEntries = new TreeMap((Map) object).entrySet();
-      for (final Map.Entry mapEntry: mapEntries)
+      final Set<Map.Entry<?, ?>> mapEntries = new TreeMap((Map) object)
+        .entrySet();
+      for (final Map.Entry<?, ?> mapEntry: mapEntries)
       {
-        buffer.append(System.lineSeparator()).append(indent(indent))
-          .append(mapEntry.getKey()).append(": ").append(mapEntry.getValue());
+        final Object key = mapEntry.getKey();
+        final Object value;
+        if (key != null && String.valueOf(key).equals("password"))
+        {
+          value = "*****";
+        }
+        else
+        {
+          value = mapEntry.getValue();
+        }
+        buffer.append(System.lineSeparator()).append(indent(indent)).append(key)
+          .append(": ").append(value);
       }
     }
     else if (Collection.class.isAssignableFrom(objectClass))
