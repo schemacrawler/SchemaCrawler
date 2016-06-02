@@ -29,13 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler;
 
 
-import static java.util.Objects.requireNonNull;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
@@ -56,19 +57,21 @@ public final class Main
   {
     requireNonNull(args);
 
-    final Config argsMap = CommandLineUtility.parseArgs(args);
-
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(argsMap);
-    final ApplicationOptions applicationOptions = applicationOptionsParser
-      .getOptions();
-
-    applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
-
-    logSafeArguments(args);
-    logSystemProperties();
-
     try
     {
+      applyApplicationLogLevel(Level.OFF);
+
+      final Config argsMap = CommandLineUtility.parseArgs(args);
+
+      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(argsMap);
+      final ApplicationOptions applicationOptions = applicationOptionsParser
+        .getOptions();
+
+      applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
+
+      logSafeArguments(args);
+      logSystemProperties();
+
       final boolean showHelp = args.length == 0
                                || args.length == 1 && Main.class
                                  .getCanonicalName().equals(args[0])
@@ -87,11 +90,18 @@ public final class Main
       }
       commandLine.execute();
     }
-    catch (final Exception e)
+    catch (final Throwable e)
     {
+      System.err.printf("%s %s%n%n",
+                        Version.getProductName(),
+                        Version.getVersion());
       final String errorMessage = e.getMessage();
+      System.err.print("Error: ");
       System.err.println(errorMessage);
-      System.err.println("Re-run SchemaCrawler with the\n-?\noption for help");
+      System.err.println();
+      System.err
+        .println("Re-run SchemaCrawler with just the\n-?\noption for help");
+      System.err.println();
       System.err
         .println("Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
       logSafeArguments(args);
