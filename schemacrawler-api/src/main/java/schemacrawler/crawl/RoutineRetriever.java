@@ -350,7 +350,7 @@ final class RoutineRetriever
                      unquotedName(schemaName),
                      "%"));)
     {
-      results.logRowCount("retrieveProcedures");
+      results.setDescription("retrieveProcedures");
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
