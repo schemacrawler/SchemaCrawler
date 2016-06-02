@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -38,6 +36,8 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
@@ -175,8 +175,8 @@ final class TableColumnRetriever
     final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
     final String tableName = quotedName(results.getString("TABLE_NAME"));
     final String columnName = quotedName(results.getString("COLUMN_NAME"));
-    LOGGER.log(Level.FINER,
-               new StringFormat("Retrieving column, %s.%s%s.%s",
+    LOGGER.log(Level.FINE,
+               new StringFormat("Retrieving column: %s.%s.%s.%s",
                                 columnCatalogName,
                                 schemaName,
                                 tableName,
@@ -229,7 +229,7 @@ final class TableColumnRetriever
       column.addAttributes(results.getAttributes());
 
       LOGGER.log(Level.FINER,
-                 new StringFormat("Adding %scolumn to table, %s",
+                 new StringFormat("Adding %scolumn to table: %s",
                                   isHidden? "hidden ": "",
                                   column.getFullName()));
       if (isHidden)

@@ -44,9 +44,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
@@ -467,14 +470,31 @@ final class DatabaseInfoRetriever
     }
   }
 
-  void retrieveUserDefinedColumnDataTypes(final String catalogName,
-                                          final String schemaName)
+  void retrieveUserDefinedColumnDataTypes(final Schema schema)
     throws SQLException
   {
+    requireNonNull(schema, "No schema provided");
+
+    final Optional<Schema> schemaOptional = catalog
+      .lookupSchema(schema.getFullName());
+    if (!schemaOptional.isPresent())
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Cannot locate schema, so not retrieving data types for schema: %s",
+                                  schema));
+      return;
+    }
+
+    LOGGER
+      .log(Level.INFO,
+           new StringFormat("Retrieving data types for schema: %s", schema));
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName,
-               schemaName,
+      .getUDTs(unquotedName(catalogName),
+               unquotedName(schemaName),
                "%",
                null));)
     {
@@ -482,14 +502,15 @@ final class DatabaseInfoRetriever
       {
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving data type, %s", typeName));
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Retrieving data type, %s.%s",
+                                    schema,
+                                    typeName));
         final int dataType = results.getInt("DATA_TYPE", 0);
         final String className = results.getString("CLASS_NAME");
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
         final ColumnDataType baseType = catalog
           .lookupColumnDataTypeByType(baseTypeValue);
         final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
