@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
@@ -67,8 +66,7 @@ final class TableRetriever
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveTables(final String catalogName,
-                      final String schemaName,
+  void retrieveTables(final Schema schema,
                       final String tableNamePattern,
                       final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
@@ -83,6 +81,19 @@ final class TableRetriever
       return;
     }
 
+    final Optional<Schema> schemaOptional = catalog
+      .lookupSchema(schema.getFullName());
+    if (!schemaOptional.isPresent())
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Cannot locate schema, so not retrieving tables for schema: %s",
+                                  schema));
+      return;
+    }
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Retrieving tables for schema: %s", schema));
+
     final TableTypes supportedTableTypes = getRetrieverConnection()
       .getTableTypes();
     final String[] filteredTableTypes = supportedTableTypes
@@ -92,7 +103,8 @@ final class TableRetriever
                                 filteredTableTypes == null? "<<all>>": Arrays
                                   .asList(filteredTableTypes)));
 
-    LOGGER.log(Level.INFO, "Retrieving tables");
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTables(unquotedName(catalogName),
@@ -105,26 +117,10 @@ final class TableRetriever
       {
         // "TABLE_CAT", "TABLE_SCHEM"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
-        LOGGER
-          .log(Level.FINER,
-               String.format("Retrieving table: %s.%s", schemaName, tableName));
+        LOGGER.log(Level.FINER,
+                   String.format("Retrieving table: %s.%s", schema, tableName));
         final String tableTypeString = results.getString("TABLE_TYPE");
         final String remarks = results.getString("REMARKS");
-
-        final SchemaReference schemaReference = new SchemaReference(catalogName,
-                                                                    schemaName);
-        final Optional<Schema> schemaOptional = catalog
-          .lookupSchema(schemaReference.getFullName());
-        if (!schemaOptional.isPresent())
-        {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Cannot locate schema: %s.%s",
-                                      catalogName,
-                                      schemaName));
-          continue;
-        }
-
-        final Schema schema = schemaOptional.get();
 
         final TableType tableType = supportedTableTypes
           .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
