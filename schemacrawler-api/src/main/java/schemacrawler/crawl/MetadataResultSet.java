@@ -467,7 +467,7 @@ final class MetadataResultSet
     return value;
   }
 
-  void logRowCount(final String description)
+  void setDescription(final String description)
     throws SQLException
   {
     this.description = description;
@@ -488,11 +488,14 @@ final class MetadataResultSet
   boolean next()
     throws SQLException
   {
-    rowCount = rowCount + 1;
     readColumns = new HashSet<>();
 
     final boolean next = results.next();
     logSQLWarnings(results.getWarnings());
+    if (next)
+    {
+      rowCount = rowCount + 1;
+    }
     return next;
   }
 
