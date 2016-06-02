@@ -365,7 +365,7 @@ final class ForeignKeyRetriever
                                                                 statement,
                                                                 getSchemaInclusionRule());)
     {
-      results.logRowCount("retrieveForeignKeysUsingSql");
+      results.setDescription("retrieveForeignKeysUsingSql");
       createForeignKeys(results, foreignKeys);
     }
     catch (final SQLException e)
