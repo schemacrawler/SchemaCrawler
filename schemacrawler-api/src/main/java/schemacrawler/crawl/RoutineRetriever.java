@@ -29,13 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
-
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Function;
@@ -47,7 +50,6 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -118,9 +120,11 @@ final class RoutineRetriever
             continue;
           }
 
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Retrieving function column, %s",
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Retrieving function column: %s.%s",
+                                      function.getFullName(),
                                       columnName));
+
           final FunctionColumnType columnType = results
             .getEnumFromShortId("COLUMN_TYPE", FunctionColumnType.unknown);
           final int dataType = results.getInt("DATA_TYPE", 0);
@@ -171,11 +175,12 @@ final class RoutineRetriever
 
   }
 
-  void retrieveFunctions(final String catalogName,
-                         final String schemaName,
+  void retrieveFunctions(final Schema schema,
                          final InclusionRule routineInclusionRule)
     throws SQLException
   {
+    requireNonNull(schema, "No schema provided");
+
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                    false);
     if (functionFilter.isExcludeAll())
@@ -185,9 +190,21 @@ final class RoutineRetriever
       return;
     }
 
+    final Optional<Schema> schemaOptional = catalog
+      .lookupSchema(schema.getFullName());
+    if (!schemaOptional.isPresent())
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Cannot locate schema, so not retrieving functions for schema: %s",
+                                  schema));
+      return;
+    }
+
     LOGGER.log(Level.INFO,
-               new StringFormat("Retrieving functions, %s",
-                                new SchemaReference(catalogName, schemaName)));
+               new StringFormat("Retrieving functions for schema: %s", schema));
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(unquotedName(catalogName), unquotedName(schemaName), "%"));)
@@ -197,8 +214,10 @@ final class RoutineRetriever
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
         final String functionName = quotedName(results
           .getString("FUNCTION_NAME"));
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving function, %s", functionName));
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Retrieving function: %s.%s",
+                                    schema,
+                                    functionName));
         if (isBlank(functionName))
         {
           continue;
@@ -208,7 +227,6 @@ final class RoutineRetriever
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableFunction function = new MutableFunction(schema,
                                                              functionName);
         if (functionFilter.test(function))
@@ -288,9 +306,11 @@ final class RoutineRetriever
             continue;
           }
 
-          LOGGER.log(Level.FINER,
-                     new StringFormat("Retrieving procedure column, %s",
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Retrieving procedure column: %s.%s",
+                                      procedure.getFullName(),
                                       columnName));
+
           final ProcedureColumnType columnType = results
             .getEnumFromShortId("COLUMN_TYPE", ProcedureColumnType.unknown);
           final int dataType = results.getInt("DATA_TYPE", 0);
@@ -327,11 +347,12 @@ final class RoutineRetriever
 
   }
 
-  void retrieveProcedures(final String catalogName,
-                          final String schemaName,
+  void retrieveProcedures(final Schema schema,
                           final InclusionRule routineInclusionRule)
     throws SQLException
   {
+    requireNonNull(schema, "No schema provided");
+
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                      false);
     if (procedureFilter.isExcludeAll())
@@ -341,9 +362,22 @@ final class RoutineRetriever
       return;
     }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Retrieving procedures for, %s",
-                                new SchemaReference(catalogName, schemaName)));
+    final Optional<Schema> schemaOptional = catalog
+      .lookupSchema(schema.getFullName());
+    if (!schemaOptional.isPresent())
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Cannot locate schema, so not retrieving procedures for schema: %s",
+                                  schema));
+      return;
+    }
+
+    LOGGER
+      .log(Level.INFO,
+           new StringFormat("Retrieving procedures for schema: %s", schema));
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(unquotedName(catalogName),
@@ -356,8 +390,10 @@ final class RoutineRetriever
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
         final String procedureName = quotedName(results
           .getString("PROCEDURE_NAME"));
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving procedure, %s", procedureName));
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Retrieving procedure: %s.%s",
+                                    schema,
+                                    procedureName));
         if (isBlank(procedureName))
         {
           continue;
@@ -367,7 +403,6 @@ final class RoutineRetriever
         final String remarks = results.getString("REMARKS");
         final String specificName = results.getString("SPECIFIC_NAME");
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
         final MutableProcedure procedure = new MutableProcedure(schema,
                                                                 procedureName);
         if (procedureFilter.test(procedure))

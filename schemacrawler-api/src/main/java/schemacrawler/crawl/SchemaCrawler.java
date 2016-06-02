@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -40,6 +39,8 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -129,10 +130,7 @@ public final class SchemaCrawler
           LOGGER.log(Level.INFO, "Retrieving user column data types");
           for (final Schema schema: retriever.getSchemas())
           {
-            retriever.retrieveUserDefinedColumnDataTypes(
-                                                         schema
-                                                           .getCatalogName(),
-                                                         schema.getName());
+            retriever.retrieveUserDefinedColumnDataTypes(schema);
           }
         }
         else
@@ -280,14 +278,12 @@ public final class SchemaCrawler
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
-            retriever.retrieveProcedures(schema.getCatalogName(),
-                                         schema.getName(),
+            retriever.retrieveProcedures(schema,
                                          options.getRoutineInclusionRule());
           }
           if (routineTypes.contains(RoutineType.function))
           {
-            retriever.retrieveFunctions(schema.getCatalogName(),
-                                        schema.getName(),
+            retriever.retrieveFunctions(schema,
                                         options.getRoutineInclusionRule());
           }
         }

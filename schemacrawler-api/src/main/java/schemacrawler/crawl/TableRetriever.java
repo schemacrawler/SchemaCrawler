@@ -36,6 +36,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -72,6 +74,8 @@ final class TableRetriever
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
+    requireNonNull(schema, "No schema provided");
+
     final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
                                                                              false);
     if (tableFilter.isExcludeAll())
@@ -117,7 +121,7 @@ final class TableRetriever
       {
         // "TABLE_CAT", "TABLE_SCHEM"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
-        LOGGER.log(Level.FINER,
+        LOGGER.log(Level.FINE,
                    String.format("Retrieving table: %s.%s", schema, tableName));
         final String tableTypeString = results.getString("TABLE_TYPE");
         final String remarks = results.getString("REMARKS");
