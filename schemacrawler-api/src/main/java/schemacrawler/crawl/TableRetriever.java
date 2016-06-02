@@ -100,7 +100,7 @@ final class TableRetriever
                  tableNamePattern,
                  filteredTableTypes));)
     {
-      results.logRowCount("retrieveTables");
+      results.setDescription("retrieveTables");
       while (results.next())
       {
         // "TABLE_CAT", "TABLE_SCHEM"

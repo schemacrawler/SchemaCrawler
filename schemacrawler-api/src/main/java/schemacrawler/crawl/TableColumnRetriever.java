@@ -143,7 +143,7 @@ final class TableColumnRetriever
                                                                 statement,
                                                                 getSchemaInclusionRule());)
     {
-      results.logRowCount("retrieveHiddenColumns");
+      results.setDescription("retrieveHiddenColumns");
       while (results.next())
       {
         final MutableColumn column = createTableColumn(results,
@@ -280,7 +280,7 @@ final class TableColumnRetriever
                                                                 statement,
                                                                 getSchemaInclusionRule());)
     {
-      results.logRowCount("retrieveColumnsFromDataDictionary");
+      results.setDescription("retrieveColumnsFromDataDictionary");
       while (results.next())
       {
         createTableColumn(results, allTables, columnFilter, false);
