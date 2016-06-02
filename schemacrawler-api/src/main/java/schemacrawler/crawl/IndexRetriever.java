@@ -426,7 +426,7 @@ final class IndexRetriever
                                                                 statement,
                                                                 getSchemaInclusionRule());)
     {
-      results.logRowCount("retrieveIndexesUsingSql");
+      results.setDescription("retrieveIndexesUsingSql");
       while (results.next())
       {
         final String catalogName = quotedName(results.getString("TABLE_CAT"));

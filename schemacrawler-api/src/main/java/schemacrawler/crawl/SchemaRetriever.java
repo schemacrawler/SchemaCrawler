@@ -171,7 +171,7 @@ final class SchemaRetriever
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getSchemas());)
       {
-        results.logRowCount("retrieveAllSchemas");
+        results.setDescription("retrieveAllSchemas");
         while (results.next())
         {
           final String catalogName;
@@ -246,7 +246,7 @@ final class SchemaRetriever
                                                                 statement,
                                                                 getSchemaInclusionRule());)
     {
-      results.logRowCount("retrieveAllSchemasFromInformationSchemaViews");
+      results.setDescription("retrieveAllSchemasFromInformationSchemaViews");
       while (results.next())
       {
         final String catalogName = quotedName(results
