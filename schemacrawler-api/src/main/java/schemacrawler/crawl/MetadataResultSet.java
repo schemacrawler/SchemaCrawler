@@ -445,9 +445,6 @@ final class MetadataResultSet
         value = results.getString(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINE,
-                     new StringFormat("NULL value for column %s, so using null string",
-                                      columnName));
           value = null;
         }
 
