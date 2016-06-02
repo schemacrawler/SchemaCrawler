@@ -29,9 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -39,6 +36,10 @@ import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
@@ -170,8 +171,8 @@ final class ForeignKeyRetriever
       {
         String foreignKeyName = quotedName(results.getString("FK_NAME"));
         LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving foreign key, %s", foreignKeyName));
+          .log(Level.FINE,
+               new StringFormat("Retrieving foreign key: %s", foreignKeyName));
 
         final String pkTableCatalogName = quotedName(results
           .getString("PKTABLE_CAT"));
