@@ -34,6 +34,7 @@ import java.util.logging.Level;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.options.ApplicationOptions;
 
 /**
@@ -55,6 +56,7 @@ public final class ApplicationOptionsParser
 
   @Override
   public ApplicationOptions getOptions()
+    throws SchemaCrawlerCommandLineException
   {
     final ApplicationOptions options = new ApplicationOptions();
 
@@ -70,7 +72,7 @@ public final class ApplicationOptionsParser
         }
         catch (final IllegalArgumentException e)
         {
-          applicationLogLevel = Level.OFF;
+          throw new SchemaCrawlerCommandLineException(e.getMessage());
         }
         options.setApplicationLogLevel(applicationLogLevel);
       }
