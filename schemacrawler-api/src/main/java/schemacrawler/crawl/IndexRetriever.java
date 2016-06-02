@@ -29,15 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
@@ -241,7 +242,7 @@ final class IndexRetriever
   {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     String indexName = quotedName(results.getString("INDEX_NAME"));
-    LOGGER.log(Level.FINER,
+    LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index: %s.%s",
                                 table.getFullName(),
                                 indexName));
