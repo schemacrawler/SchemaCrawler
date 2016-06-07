@@ -60,8 +60,7 @@ public class LinterNullIntendedColumns
   {
     requireNonNull(table, "No table provided");
 
-    final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(table
-      .getColumns());
+    final List<Column> nullDefaultValueMayBeIntendedColumns = findNullDefaultValueMayBeIntendedColumns(getColumns(table));
     for (final Column column: nullDefaultValueMayBeIntendedColumns)
     {
       addTableLint(table, getSummary(), column);
