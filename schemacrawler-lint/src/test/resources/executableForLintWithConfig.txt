@@ -54,7 +54,7 @@ PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
 
                                                              [lint, low]
-	should have remarks	WRITERID, PUBLICATIONID, ID
+	should have remarks	WRITERID, ID
 
 
 
