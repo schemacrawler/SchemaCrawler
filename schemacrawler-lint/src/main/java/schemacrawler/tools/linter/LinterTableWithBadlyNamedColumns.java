@@ -79,8 +79,7 @@ public class LinterTableWithBadlyNamedColumns
   {
     requireNonNull(table, "No table provided");
 
-    final List<Column> badlyNamedColumns = findBadlyNamedColumns(table
-      .getColumns());
+    final List<Column> badlyNamedColumns = findBadlyNamedColumns(getColumns(table));
     for (final Column column: badlyNamedColumns)
     {
       addTableLint(table, getSummary(), column);

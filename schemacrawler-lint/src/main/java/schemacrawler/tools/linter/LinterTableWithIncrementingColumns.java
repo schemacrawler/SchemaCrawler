@@ -96,8 +96,7 @@ public class LinterTableWithIncrementingColumns
   {
     requireNonNull(table, "No table provided");
 
-    final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(table
-      .getColumns());
+    final Multimap<String, IncrementingColumn> incrementingColumns = findIncrementingColumns(getColumns(table));
     for (final List<IncrementingColumn> incrementingColumnsList: incrementingColumns
       .values())
     {
