@@ -28,25 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.lint.BaseLinter;
 import sf.util.Multimap;
 import sf.util.Utility;
+
+import java.sql.Connection;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static java.util.Objects.requireNonNull;
 
 public class LinterTableWithIncrementingColumns
   extends BaseLinter
