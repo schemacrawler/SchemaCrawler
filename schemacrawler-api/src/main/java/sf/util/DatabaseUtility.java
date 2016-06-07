@@ -28,10 +28,6 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
-import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,6 +37,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static java.util.Objects.requireNonNull;
+
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -242,7 +243,9 @@ public final class DatabaseUtility
     SQLWarning currentSqlWarning = sqlWarning;
     while (currentSqlWarning != null)
     {
-      LOGGER.log(Level.INFO, currentSqlWarning.getMessage(), currentSqlWarning);
+      LOGGER.log(Level.FINER,
+                 currentSqlWarning.getMessage(),
+                 currentSqlWarning);
       currentSqlWarning = currentSqlWarning.getNextWarning();
     }
   }
