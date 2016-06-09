@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.readResourceFully;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,11 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -157,7 +156,7 @@ public final class DatabaseUtility
                                     sql));
       }
 
-      logSQLWarnings(statement.getWarnings());
+      logSQLWarnings(statement);
 
       return results;
     }
@@ -233,21 +232,50 @@ public final class DatabaseUtility
     }
   }
 
-  public static void logSQLWarnings(final SQLWarning sqlWarning)
+  public static void logSQLWarnings(final ResultSet resultSet)
   {
+    if (resultSet == null)
+    {
+      return;
+    }
     if (!LOGGER.isLoggable(Level.INFO))
     {
       return;
     }
 
-    SQLWarning currentSqlWarning = sqlWarning;
-    while (currentSqlWarning != null)
+    try
     {
-      LOGGER.log(Level.FINER,
-                 currentSqlWarning.getMessage(),
-                 currentSqlWarning);
-      currentSqlWarning = currentSqlWarning.getNextWarning();
+      logSQLWarnings(resultSet.getWarnings());
+      resultSet.clearWarnings();
     }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set", e);
+    }
+
+  }
+
+  public static void logSQLWarnings(final Statement statement)
+  {
+    if (statement == null)
+    {
+      return;
+    }
+    if (!LOGGER.isLoggable(Level.INFO))
+    {
+      return;
+    }
+
+    try
+    {
+      logSQLWarnings(statement.getWarnings());
+      statement.clearWarnings();
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set", e);
+    }
+
   }
 
   /**
@@ -284,6 +312,23 @@ public final class DatabaseUtility
       results.close();
     }
     return values;
+  }
+
+  private static void logSQLWarnings(final SQLWarning sqlWarning)
+  {
+    if (!LOGGER.isLoggable(Level.INFO))
+    {
+      return;
+    }
+
+    SQLWarning currentSqlWarning = sqlWarning;
+    while (currentSqlWarning != null)
+    {
+      LOGGER.log(Level.FINER,
+                 currentSqlWarning.getMessage(),
+                 currentSqlWarning);
+      currentSqlWarning = currentSqlWarning.getNextWarning();
+    }
   }
 
   private DatabaseUtility()

@@ -29,8 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.QueryUtility.executeAgainstSchema;
 import static sf.util.DatabaseUtility.logSQLWarnings;
+import static sf.util.Utility.enumValue;
+import static sf.util.Utility.enumValueFromId;
+import static sf.util.Utility.isBlank;
+import static sf.util.Utility.isIntegral;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -47,13 +52,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
-import static sf.util.Utility.enumValue;
-import static sf.util.Utility.enumValueFromId;
-import static sf.util.Utility.isBlank;
-import static sf.util.Utility.isIntegral;
 
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.utility.Query;
@@ -490,7 +488,7 @@ final class MetadataResultSet
     readColumns = new HashSet<>();
 
     final boolean next = results.next();
-    logSQLWarnings(results.getWarnings());
+    logSQLWarnings(results);
     if (next)
     {
       rowCount = rowCount + 1;
