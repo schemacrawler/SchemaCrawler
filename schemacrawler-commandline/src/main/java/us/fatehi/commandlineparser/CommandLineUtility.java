@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -89,26 +88,6 @@ public class CommandLineUtility
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
-  }
-
-  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
-  {
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: argsMap.entrySet())
-    {
-      final String key = arg.getKey();
-      final String value = arg.getValue();
-      if (value != null)
-      {
-        argsList.add(String.format("-%s=%s", key, value));
-      }
-      else
-      {
-        argsList.add(String.format("-%s", key));
-      }
-    }
-    final String[] args = argsList.toArray(new String[0]);
-    return args;
   }
 
   public static void logFullStackTrace(final Level level, final Throwable t)

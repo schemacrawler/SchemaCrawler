@@ -34,7 +34,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -200,7 +200,7 @@ public class OfflineSnapshotTest
   protected void executeExecutable(final Executable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
-                                     throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
