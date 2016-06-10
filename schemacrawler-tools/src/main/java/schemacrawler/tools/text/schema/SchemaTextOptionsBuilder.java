@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import java.util.Map;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -78,7 +76,7 @@ public class SchemaTextOptionsBuilder
   }
 
   @Override
-  public SchemaTextOptionsBuilder fromConfig(final Map<String, String> map)
+  public SchemaTextOptionsBuilder fromConfig(final Config map)
   {
     if (map == null)
     {

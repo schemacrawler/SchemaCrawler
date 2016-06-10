@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
-import java.util.Map;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -55,7 +53,7 @@ public final class OperationOptionsBuilder
   }
 
   @Override
-  public OperationOptionsBuilder fromConfig(final Map<String, String> map)
+  public OperationOptionsBuilder fromConfig(final Config map)
   {
     if (map == null)
     {

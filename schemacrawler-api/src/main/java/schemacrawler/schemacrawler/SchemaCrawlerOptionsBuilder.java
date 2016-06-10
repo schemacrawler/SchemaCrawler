@@ -34,7 +34,6 @@ import static sf.util.Utility.enumValue;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
 
 import schemacrawler.schema.RoutineType;
 
@@ -96,7 +95,7 @@ public class SchemaCrawlerOptionsBuilder
    *        Configuration properties
    */
   @Override
-  public SchemaCrawlerOptionsBuilder fromConfig(final Map<String, String> config)
+  public SchemaCrawlerOptionsBuilder fromConfig(final Config config)
   {
     final Config configProperties;
     if (config == null)

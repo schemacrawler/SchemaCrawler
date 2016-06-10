@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import java.util.Map;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -47,7 +45,7 @@ public class LintOptionsBuilder
   }
 
   @Override
-  public LintOptionsBuilder fromConfig(final Map<String, String> map)
+  public LintOptionsBuilder fromConfig(final Config map)
   {
     if (map == null)
     {
