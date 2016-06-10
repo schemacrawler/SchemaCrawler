@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

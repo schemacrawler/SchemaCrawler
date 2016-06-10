@@ -30,7 +30,7 @@ package schemacrawler.test;
 
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -245,7 +245,7 @@ public class CommandLineTest
 
   private void run(final Map<String, String> argsMap,
                    final Map<String, String> config)
-                     throws Exception
+    throws Exception
   {
 
     try (final TestWriter out = new TestWriter("text");)
