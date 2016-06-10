@@ -35,9 +35,9 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import schemacrawler.schemacrawler.Config;
 
 /**
  * Command-line options parser. Not POSIX compliant. Follows these POSIX
@@ -77,13 +77,13 @@ public class CommandLineArgumentsParser
   private static final String DASH = "-";
 
   private final String[] args;
-  private final Map<String, String> optionsMap;
+  private final Config optionsMap;
   private final List<String> nonOptionArguments;
 
   public CommandLineArgumentsParser(final String[] args)
   {
     this.args = requireNonNull(args);
-    optionsMap = new HashMap<>();
+    optionsMap = new Config();
     nonOptionArguments = new ArrayList<>();
   }
 
@@ -92,7 +92,7 @@ public class CommandLineArgumentsParser
     return nonOptionArguments;
   }
 
-  public Map<String, String> getOptionsMap()
+  public Config getOptionsMap()
   {
     return optionsMap;
   }
