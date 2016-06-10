@@ -44,6 +44,7 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -60,8 +61,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class Config
-  extends HashMap<String, String>
-  implements Options
+  implements Options, Map<String, String>
 {
 
   private static final long serialVersionUID = 8720699738076915453L;
@@ -208,11 +208,14 @@ public final class Config
     return propertiesMap;
   }
 
+  private final Map<String, String> config;
+
   /**
    * Creates an empty config.
    */
   public Config()
   {
+    config = new HashMap<>();
   }
 
   /**
@@ -223,6 +226,7 @@ public final class Config
    */
   public Config(final Map<String, String> config)
   {
+    this();
     if (config != null)
     {
       putAll(config);
@@ -237,7 +241,37 @@ public final class Config
    */
   public Config(final Properties properties)
   {
-    super(propertiesMap(properties));
+    this(propertiesMap(properties));
+  }
+
+  @Override
+  public void clear()
+  {
+    config.clear();
+  }
+
+  @Override
+  public boolean containsKey(final Object key)
+  {
+    return config.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(final Object value)
+  {
+    return config.containsValue(value);
+  }
+
+  @Override
+  public Set<java.util.Map.Entry<String, String>> entrySet()
+  {
+    return config.entrySet();
+  }
+
+  @Override
+  public String get(final Object key)
+  {
+    return config.get(key);
   }
 
   /**
@@ -384,7 +418,37 @@ public final class Config
    */
   public boolean hasValue(final String propertyName)
   {
-    return super.containsKey(propertyName);
+    return config.containsKey(propertyName);
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    return config.isEmpty();
+  }
+
+  @Override
+  public Set<String> keySet()
+  {
+    return config.keySet();
+  }
+
+  @Override
+  public String put(final String key, final String value)
+  {
+    return config.put(key, value);
+  }
+
+  @Override
+  public void putAll(final Map<? extends String, ? extends String> m)
+  {
+    config.putAll(m);
+  }
+
+  @Override
+  public String remove(final Object key)
+  {
+    return config.remove(key);
   }
 
   public void setBooleanValue(final String propertyName, final boolean value)
@@ -418,9 +482,21 @@ public final class Config
   }
 
   @Override
+  public int size()
+  {
+    return config.size();
+  }
+
+  @Override
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  @Override
+  public Collection<String> values()
+  {
+    return config.values();
   }
 
 }
