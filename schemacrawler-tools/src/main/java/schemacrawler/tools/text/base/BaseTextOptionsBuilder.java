@@ -31,8 +31,6 @@ package schemacrawler.tools.text.base;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Map;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
 
@@ -77,7 +75,7 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   }
 
   @Override
-  public BaseTextOptionsBuilder<O> fromConfig(final Map<String, String> map)
+  public BaseTextOptionsBuilder<O> fromConfig(final Config map)
   {
     if (map == null)
     {
