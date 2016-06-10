@@ -217,8 +217,8 @@ public class CommandLineUtility
   {
     final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
     argsParser.parse();
-    final Map<String, String> optionsMap = argsParser.getOptionsMap();
-    return new Config(optionsMap);
+    final Config optionsMap = argsParser.getOptionsMap();
+    return optionsMap;
   }
 
   private CommandLineUtility()
