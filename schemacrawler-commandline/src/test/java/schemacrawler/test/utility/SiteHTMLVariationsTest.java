@@ -31,7 +31,7 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -201,7 +201,7 @@ public class SiteHTMLVariationsTest
   private void run(final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-                     throws Exception
+    throws Exception
   {
     deleteIfExists(outputFile);
 

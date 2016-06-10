@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -107,7 +107,7 @@ public class TemplatingIntegrationTest
   private void executeCommandlineAndCheckForOutputFile(final String command,
                                                        final String outputFormatValue,
                                                        final String referenceFileName)
-                                                         throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -130,7 +130,7 @@ public class TemplatingIntegrationTest
   private void executeExecutableAndCheckForOutputFile(final Executable executable,
                                                       final String outputFormatValue,
                                                       final String referenceFileName)
-                                                        throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {

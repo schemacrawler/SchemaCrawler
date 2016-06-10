@@ -31,7 +31,7 @@ package schemacrawler.test;
 import static java.nio.file.Files.newBufferedWriter;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -111,7 +111,7 @@ public class TitleTest
                    final OutputFormat outputFormat,
                    final String referenceFile,
                    final List<String> allFailures)
-                     throws Exception
+    throws Exception
   {
 
     try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
