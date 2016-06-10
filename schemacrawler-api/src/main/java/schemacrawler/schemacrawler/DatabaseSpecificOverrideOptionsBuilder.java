@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import java.util.Map;
 import java.util.Optional;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
@@ -52,7 +51,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder(final Map<String, String> map)
+  public DatabaseSpecificOverrideOptionsBuilder(final Config map)
   {
     this();
     fromConfig(map);
@@ -79,7 +78,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Map<String, String> map)
+  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Config map)
   {
     informationSchemaViewsBuilder.fromConfig(map);
     return this;

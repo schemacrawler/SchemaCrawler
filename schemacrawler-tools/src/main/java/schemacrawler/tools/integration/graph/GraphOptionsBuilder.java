@@ -33,7 +33,6 @@ import static sf.util.Utility.join;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,7 +65,7 @@ public class GraphOptionsBuilder
   }
 
   @Override
-  public GraphOptionsBuilder fromConfig(final Map<String, String> map)
+  public GraphOptionsBuilder fromConfig(final Config map)
   {
     if (map == null)
     {
