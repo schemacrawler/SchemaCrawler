@@ -82,7 +82,7 @@ public final class InformationSchemaViewsBuilder
    *        Map of information schema view definitions.
    */
   @Override
-  public InformationSchemaViewsBuilder fromConfig(final Map<String, String> informationSchemaViewsSql)
+  public InformationSchemaViewsBuilder fromConfig(final Config informationSchemaViewsSql)
   {
     if (informationSchemaViewsSql == null)
     {

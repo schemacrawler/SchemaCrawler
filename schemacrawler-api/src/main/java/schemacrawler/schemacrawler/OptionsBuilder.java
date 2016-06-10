@@ -27,13 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
-
-import java.util.Map;
-
 public interface OptionsBuilder<O extends Options>
 {
 
-  OptionsBuilder<O> fromConfig(Map<String, String> config);
+  OptionsBuilder<O> fromConfig(Config config);
 
   Config toConfig();
 
