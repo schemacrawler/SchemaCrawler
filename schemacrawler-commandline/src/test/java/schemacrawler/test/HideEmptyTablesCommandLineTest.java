@@ -32,6 +32,7 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -47,7 +48,6 @@ import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import us.fatehi.commandlineparser.CommandLineUtility;
 
 public class HideEmptyTablesCommandLineTest
   extends BaseDatabaseTest
@@ -82,8 +82,7 @@ public class HideEmptyTablesCommandLineTest
     args.put("noinfo", "true");
     args.put("routines", "");
     args.put("hideemptytables", "true");
-    final String[] flattenCommandlineArgs = CommandLineUtility
-      .flattenCommandlineArgs(args);
+    final String[] flattenCommandlineArgs = flattenCommandlineArgs(args);
 
     Main.main(flattenCommandlineArgs);
 

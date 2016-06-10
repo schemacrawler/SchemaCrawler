@@ -31,7 +31,7 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -203,7 +203,7 @@ public class SpinThroughTest
   private Path createTempFile(final SchemaTextDetailType schemaTextDetailType,
                               final InfoLevel infoLevel,
                               final OutputFormat outputFormat)
-                                throws IOException
+    throws IOException
   {
     return TestUtility
       .createTempFile(String.format("%s.%s", schemaTextDetailType, infoLevel),

@@ -36,8 +36,8 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.DatabaseUtility.checkConnection;
-import static us.fatehi.commandlineparser.CommandLineUtility.flattenCommandlineArgs;
 
 import java.io.PrintWriter;
 import java.io.Writer;
