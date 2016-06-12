@@ -45,21 +45,23 @@ public final class CommandParser
   extends BaseOptionsParser<Command>
 {
 
+  private static final String COMMAND = "command";
+
   public CommandParser(final Config config)
   {
     super(config);
-    normalizeOptionName("command", "c");
+    normalizeOptionName(COMMAND, "c");
   }
 
   @Override
   public Command getOptions()
     throws SchemaCrawlerException
   {
-    final String command = config.getStringValue("command", null);
+    final String command = config.getStringValue(COMMAND, null);
     if (!isBlank(command))
     {
       final Command commandOption = new Command(command);
-      consumeOption("command");
+      consumeOption(COMMAND);
       return commandOption;
     }
     else
@@ -70,7 +72,7 @@ public final class CommandParser
 
   public boolean hasOptions()
   {
-    final String command = config.getStringValue("command", null);
+    final String command = config.getStringValue(COMMAND, null);
     return !isBlank(command);
   }
 
