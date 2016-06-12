@@ -39,6 +39,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
@@ -53,7 +54,7 @@ public class LinterConfigsTest
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
                                             StandardCharsets.UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
 
@@ -82,7 +83,7 @@ public class LinterConfigsTest
   public void testParseBadXml0()
     throws SchemaCrawlerException
   {
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(null);
   }
 
@@ -91,7 +92,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = new StringReader("some random string that is not XML");
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
     assertEquals(0, linterConfigs.size());
   }
@@ -102,7 +103,7 @@ public class LinterConfigsTest
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
                                             StandardCharsets.UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
   }
 
@@ -112,7 +113,7 @@ public class LinterConfigsTest
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
                                             StandardCharsets.UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
 
     assertEquals(3, linterConfigs.size());

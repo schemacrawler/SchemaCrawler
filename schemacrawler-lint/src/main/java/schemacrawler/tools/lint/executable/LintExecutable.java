@@ -67,7 +67,8 @@ public class LintExecutable
     // Read lint options from the config
     lintOptions = getLintOptions();
 
-    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions);
+    final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
+                                                          getAdditionalConfiguration());
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog catalog = new LintedCatalog(db, connection, linters);

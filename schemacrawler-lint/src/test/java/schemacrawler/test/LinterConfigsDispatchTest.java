@@ -90,7 +90,7 @@ public class LinterConfigsDispatchTest
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
                                             StandardCharsets.UTF_8);
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
 
     assertEquals(1, linterConfigs.size());
