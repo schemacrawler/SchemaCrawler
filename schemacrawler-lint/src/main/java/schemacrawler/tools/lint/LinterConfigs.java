@@ -94,10 +94,12 @@ public class LinterConfigs
   }
 
   private final List<LinterConfig> linterConfigs;
+  private final Config additionalConfig;
 
-  public LinterConfigs()
+  public LinterConfigs(final Config additionalConfig)
   {
     linterConfigs = new ArrayList<>();
+    this.additionalConfig = requireNonNull(additionalConfig, "No config provided");
   }
 
   public void add(final LinterConfig linterConfig)
@@ -171,6 +173,8 @@ public class LinterConfigs
       }
     }
 
+    config.putAll(additionalConfig);
+    
     return config;
   }
 
