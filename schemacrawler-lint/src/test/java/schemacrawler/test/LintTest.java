@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -75,7 +76,7 @@ public class LintTest
                  8,
                  catalog.getTables(schema).size());
 
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final LinterConfig linterConfig = new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
     linterConfig.setThreshold(0);
     linterConfig.put("bad-column-names", ".*\\.COUNTRY");
@@ -127,7 +128,7 @@ public class LintTest
                  8,
                  catalog.getTables(schema).size());
 
-    final LinterConfigs linterConfigs = new LinterConfigs();
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
