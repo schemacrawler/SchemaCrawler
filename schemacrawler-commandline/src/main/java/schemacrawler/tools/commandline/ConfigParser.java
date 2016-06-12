@@ -43,11 +43,14 @@ public class ConfigParser
   extends BaseConfigOptionsParser
 {
 
+  private static final String CONFIG_FILE = "configfile";
+  private static final String ADDITIONAL_CONFIG_FILE = "additionalconfigfile";
+
   public ConfigParser(final Config config)
   {
     super(config);
-    normalizeOptionName("configfile", "g");
-    normalizeOptionName("additionalconfigfile", "p");
+    normalizeOptionName(CONFIG_FILE, "g");
+    normalizeOptionName(ADDITIONAL_CONFIG_FILE, "p");
   }
 
   @Override
@@ -57,19 +60,22 @@ public class ConfigParser
     try
     {
       final String configfile = config
-        .getStringValue("configfile", "schemacrawler.config.properties");
+        .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
       final String additionalconfigfile = config
-        .getStringValue("additionalconfigfile",
+        .getStringValue(ADDITIONAL_CONFIG_FILE,
                         "schemacrawler.additional.config.properties");
       config.putAll(Config.load(configfile, additionalconfigfile));
-
-      consumeOption("configfile");
-      consumeOption("additionalconfigfile");
     }
     catch (final IOException e)
     {
       throw new SchemaCrawlerException("Could not load config files", e);
     }
+  }
+
+  public void consumeOptions()
+  {
+    consumeOption(CONFIG_FILE);
+    consumeOption(ADDITIONAL_CONFIG_FILE);
   }
 
 }

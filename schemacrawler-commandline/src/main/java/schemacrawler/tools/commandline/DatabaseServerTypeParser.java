@@ -70,12 +70,15 @@ public final class DatabaseServerTypeParser
     if (serverType != null)
     {
       dbConnector = registry.lookupDatabaseConnector(serverType);
+      consumeOption(SERVER);
     }
     else
     {
       final String connectionUrl = config.getStringValue(URL, null);
       dbConnector = registry.lookupDatabaseConnectorFromUrl(connectionUrl);
+      // NOTE: Do not consume URL option, since it is needed later
     }
+
     return dbConnector;
   }
 
