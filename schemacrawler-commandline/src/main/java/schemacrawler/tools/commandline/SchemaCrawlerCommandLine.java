@@ -170,11 +170,12 @@ public final class SchemaCrawlerCommandLine
 
     // 2. Load config from files, in place
     config.putAll(argsMap);
-    final ConfigParser configParser = new ConfigParser(config);
-    configParser.loadConfig();
+    new ConfigParser(config).loadConfig();
 
     // 3. Override/ overwrite from the command-line options
     config.putAll(argsMap);
+
+    new ConfigParser(config).consumeOptions();
   }
 
   /**

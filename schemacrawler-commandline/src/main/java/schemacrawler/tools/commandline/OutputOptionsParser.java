@@ -47,13 +47,16 @@ public final class OutputOptionsParser
   extends BaseOptionsParser<OutputOptions>
 {
 
+  private static final String OUTPUT_FILE = "outputfile";
+  private static final String OUTPUT_FORMAT = "outputformat";
+
   final OutputOptions outputOptions;
 
   public OutputOptionsParser(final Config config)
   {
     super(config);
-    normalizeOptionName("outputformat");
-    normalizeOptionName("outputfile", "o");
+    normalizeOptionName(OUTPUT_FORMAT);
+    normalizeOptionName(OUTPUT_FILE, "o");
 
     outputOptions = new OutputOptions(config);
   }
@@ -62,10 +65,12 @@ public final class OutputOptionsParser
   public OutputOptions getOptions()
   {
     final String outputFormatValue = config
-      .getStringValue("outputformat", TextOutputFormat.text.getFormat());
+      .getStringValue(OUTPUT_FORMAT, TextOutputFormat.text.getFormat());
+    consumeOption(OUTPUT_FORMAT);
     outputOptions.setOutputFormatValue(outputFormatValue);
 
-    final String outputFileName = config.getStringValue("outputfile", null);
+    final String outputFileName = config.getStringValue(OUTPUT_FILE, null);
+    consumeOption(OUTPUT_FILE);
     if (!isBlank(outputFileName))
     {
       final Path outputFile = Paths.get(outputFileName).toAbsolutePath();

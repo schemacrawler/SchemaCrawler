@@ -60,6 +60,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.noInfo();
       }
+      consumeOption("noinfo");
     }
     if (config.hasValue("noremarks"))
     {
@@ -68,6 +69,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.hideRemarks();
       }
+      consumeOption("noremarks");
     }
     if (config.hasValue("sorttables"))
     {
@@ -82,6 +84,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.naturalSortTables();
       }
+      consumeOption("sorttables");
     }
     if (config.hasValue("sortcolumns"))
     {
@@ -90,6 +93,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.sortTableColumns();
       }
+      consumeOption("sortcolumns");
     }
     if (config.hasValue("sortinout"))
     {
@@ -98,6 +102,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.sortInOut();
       }
+      consumeOption("sortinout");
     }
     if (config.hasValue("portablenames"))
     {
@@ -107,7 +112,7 @@ public final class AdditionalConfigOptionsParser
       {
         textOptionsBuilder.portableNames();
       }
-
+      consumeOption("portablenames");
     }
 
     config.putAll(textOptionsBuilder.toConfig());

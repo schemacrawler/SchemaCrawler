@@ -47,6 +47,8 @@ public final class OfflineSnapshotOptionsParser
   extends BaseOptionsParser<OutputOptions>
 {
 
+  private static final String DATABASE = "database";
+
   final OutputOptions options;
 
   public OfflineSnapshotOptionsParser(final Config config)
@@ -59,7 +61,8 @@ public final class OfflineSnapshotOptionsParser
   public OutputOptions getOptions()
     throws SchemaCrawlerCommandLineException
   {
-    final String inputSource = config.getStringValue("database", null);
+    final String inputSource = config.getStringValue(DATABASE, null);
+    consumeOption(DATABASE);
     try
     {
       final Path databaseFile = Paths.get(inputSource);
