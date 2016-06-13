@@ -185,6 +185,10 @@ public abstract class DatabaseConnector
       connectionOptions = new DatabaseConfigConnectionOptions(config);
     }
 
+    // Remove sensitive properties from the original configuration
+    additionalConfig.remove("user");
+    additionalConfig.remove("password");
+
     return connectionOptions;
   }
 
