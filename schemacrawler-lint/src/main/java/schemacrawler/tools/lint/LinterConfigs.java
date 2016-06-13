@@ -99,7 +99,8 @@ public class LinterConfigs
   public LinterConfigs(final Config additionalConfig)
   {
     linterConfigs = new ArrayList<>();
-    this.additionalConfig = requireNonNull(additionalConfig, "No config provided");
+    this.additionalConfig = requireNonNull(additionalConfig,
+                                           "No config provided");
   }
 
   public void add(final LinterConfig linterConfig)
@@ -152,6 +153,8 @@ public class LinterConfigs
   private Config parseConfig(final Element configElement)
   {
     final Config config = new Config();
+    config.putAll(additionalConfig);
+
     if (configElement == null)
     {
       return config;
@@ -173,8 +176,6 @@ public class LinterConfigs
       }
     }
 
-    config.putAll(additionalConfig);
-    
     return config;
   }
 
