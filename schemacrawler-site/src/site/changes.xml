@@ -5,13 +5,20 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.08.06" date="2016-06-14" description="Linter configuration">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Command-line parameters as well as parameters from the SchemaCrawler configuration file 
+        are available to individual linters, and accessible from the linter's config method.
+      ]]></action> 
+     </release>    
      <release version="14.08.05" date="2016-06-09" description="Better logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Better logging of metadata result sets.
       ]]></action>   
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Allowing column exclusion in all linters.
-      ]]></action>         
+      ]]></action> 
+     </release>          
      <release version="14.08.04" date="2016-05-25" description="Allow foreign key to self-reference primary key">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Allow foreign key to self-reference primary key.
@@ -124,7 +131,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.08.05" date="2016-02-03" description="Fixed logging">
+     <release version="14.08.06" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
