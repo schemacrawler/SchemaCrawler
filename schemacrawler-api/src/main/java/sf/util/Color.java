@@ -86,7 +86,9 @@ public final class Color
                      (int) (b * 255 + 0.5));
   }
 
-  private final int r, g, b;
+  private final int r;
+  private final int g;
+  private final int b;
 
   private Color(final int r, final int g, final int b)
   {
