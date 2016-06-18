@@ -34,7 +34,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class FilterFactory
+public final class FilterFactory
 {
 
   public static Predicate<Routine> routineFilter(final SchemaCrawlerOptions options)

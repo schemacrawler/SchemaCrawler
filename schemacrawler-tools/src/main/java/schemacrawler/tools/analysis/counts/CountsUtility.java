@@ -32,7 +32,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Table;
 
-public class CountsUtility
+public final class CountsUtility
 {
 
   private static final int UNKNOWN_TABLE_ROW_COUNT = -1;

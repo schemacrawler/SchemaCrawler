@@ -37,7 +37,7 @@ import java.util.TreeSet;
 
 import schemacrawler.schema.Table;
 
-public class WeakAssociationsUtility
+public final class WeakAssociationsUtility
 {
 
   private static final String WEAK_ASSOCIATIONS_KEY = "schemacrawler.weak_associations";
