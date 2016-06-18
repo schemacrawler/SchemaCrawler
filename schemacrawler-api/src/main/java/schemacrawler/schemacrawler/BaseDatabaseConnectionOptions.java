@@ -334,11 +334,11 @@ abstract class BaseDatabaseConnectionOptions
           jdbcConnectionProperties.put(connectionProperty, value);
         }
       }
-    }
 
-    final Properties urlxConnectionProperties = parseConnectionProperties(connectionProperties
-      .get("urlx"));
-    jdbcConnectionProperties.putAll(urlxConnectionProperties);
+      final Properties urlxConnectionProperties = parseConnectionProperties(connectionProperties
+        .get("urlx"));
+      jdbcConnectionProperties.putAll(urlxConnectionProperties);
+    }
 
     return jdbcConnectionProperties;
   }

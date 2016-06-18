@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.Utility.isBlank;
 
@@ -143,15 +144,11 @@ final class RetrieverConnection
     this.connection = connection;
     metaData = connection.getMetaData();
 
-    if (databaseSpecificOverrideOptions == null)
-    {
-      informationSchemaViews = new InformationSchemaViews();
-    }
-    else
-    {
-      informationSchemaViews = databaseSpecificOverrideOptions
-        .getInformationSchemaViews();
-    }
+    requireNonNull(databaseSpecificOverrideOptions,
+                   "No database specific overrides provided");
+
+    informationSchemaViews = databaseSpecificOverrideOptions
+      .getInformationSchemaViews();
 
     supportsCatalogs = lookupSupportsCatalogs(databaseSpecificOverrideOptions,
                                               metaData);
