@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-public class LinterHelp
+public final class LinterHelp
 {
 
   public static String getLinterHelpText()

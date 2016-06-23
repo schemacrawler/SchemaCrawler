@@ -49,7 +49,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
 
-public class CommandLineUtility
+public final class CommandLineUtility
 {
 
   private static final Logger LOGGER = Logger

@@ -89,6 +89,8 @@ final class SchemaTextFormatter
   implements SchemaTraversalHandler
 {
 
+  private static final String SPACE = " ";
+
   private static String negate(final boolean positive, final String text)
   {
     String textValue = text;
@@ -723,7 +725,7 @@ final class SchemaTextFormatter
         String indexTypeString = "";
         if (indexType != IndexType.unknown && indexType != IndexType.other)
         {
-          indexTypeString = indexType.toString() + " ";
+          indexTypeString = indexType.toString() + SPACE;
         }
         final String indexDetails = "[" + (index.isUnique()? "": "non-")
                                     + "unique " + indexTypeString + "index]";
@@ -1034,7 +1036,7 @@ final class SchemaTextFormatter
             && eventManipulationType != null
             && eventManipulationType != EventManipulationType.unknown)
         {
-          timing = ", " + conditionTiming + " " + eventManipulationType;
+          timing = ", " + conditionTiming + SPACE + eventManipulationType;
         }
         String orientation = "";
         if (trigger.getActionOrientation() != null

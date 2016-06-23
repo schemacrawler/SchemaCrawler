@@ -43,7 +43,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
 
-public class LintUtility
+public final class LintUtility
 {
 
   public static final Logger LOGGER = Logger
