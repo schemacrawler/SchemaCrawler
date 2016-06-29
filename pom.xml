@@ -71,7 +71,6 @@
     <module>schemacrawler-db2</module>
     <module>schemacrawler-h2</module>
     <module>schemacrawler-hsqldb</module>
-    <module>schemacrawler-mariadb</module>
     <module>schemacrawler-mysql</module>
     <module>schemacrawler-oracle</module>
     <module>schemacrawler-postgresql</module>
