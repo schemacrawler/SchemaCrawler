@@ -128,6 +128,14 @@ final class TableRetriever
 
         final TableType tableType = supportedTableTypes
           .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
+        if (tableType.equals(TableType.UNKNOWN))
+        {
+          LOGGER.log(Level.FINE,
+                     new StringFormat("Unknown table type, %s, for %s.%s",
+                                      tableTypeString,
+                                      schema,
+                                      tableName));
+        }
 
         final MutableTable table;
         if (tableType.isView())
