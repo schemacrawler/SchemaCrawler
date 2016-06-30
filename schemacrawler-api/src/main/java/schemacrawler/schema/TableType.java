@@ -44,7 +44,7 @@ public final class TableType
 
   private static final long serialVersionUID = -8172248482959041873L;
 
-  public static final TableType UNKNOWN = new TableType();
+  public static final TableType UNKNOWN = new TableType("unknown");
 
   private final String tableType;
 
@@ -58,11 +58,6 @@ public final class TableType
       throw new IllegalArgumentException("No table type provided");
     }
     tableType = tableTypeString.trim();
-  }
-
-  private TableType()
-  {
-    tableType = null;
   }
 
   /**
