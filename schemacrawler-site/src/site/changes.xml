@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.09.01" date="2016-06-29" description="Removing MariaDB custom implementation">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        The MariaDB driver interferes with the use of the MySQL driver.
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixing null pointer exception for table types, by introducing an unknown table type.
+      ]]></action>                                                                 
+     </release>   
      <release version="14.08.02" date="2016-05-16" description="Better performance with Oracle">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Adding hidden columns in a separate list, accessed with a new method, Table.getHiddenColuns().
@@ -101,7 +109,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.08.02" date="2016-02-03" description="Fixed logging">
+     <release version="14.09.01" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
