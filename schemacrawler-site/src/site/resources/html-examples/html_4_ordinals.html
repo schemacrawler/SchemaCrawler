@@ -238,15 +238,15 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2016-05-15 12:03:20</td>
+		<td class='property_value'>2016-07-02 00:30:58</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
-		<td class='property_value'>HSQL Database Engine 2.3.3</td>
+		<td class='property_value'>HSQL Database Engine 2.3.4</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>HSQL Database Engine Driver 2.3.3</td>
+		<td class='property_value'>HSQL Database Engine Driver 2.3.4</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1152,6 +1152,90 @@ td.section {
 	<tr>
 		<td class='spacer'>1</td>
 		<td class='subname'>PUBLICATIONID</td>
+		<td class='type'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #F2EACE;'><span id='selfreference_5b0b972f' class='caption_name'>SELFREFERENCE</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'>1</td>
+		<td class='subname'><b><i>ID</i></b></td>
+		<td class='type'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'>2</td>
+		<td class='subname'>TITLE</td>
+		<td class='type'>VARCHAR(255) NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'>1</td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'> 1</td>
+		<td class='subname'>ID ←(0..1) <a href='#selfreference_5b0b972f'>ID</a></td>
+		<td class='type'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'>1</td>
+		<td class='subname'>ID</td>
+		<td class='type'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'>1</td>
+		<td class='subname'>ID</td>
 		<td class='type'>ascending</td>
 	</tr>
 </table>
