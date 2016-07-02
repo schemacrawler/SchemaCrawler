@@ -23,8 +23,7 @@ You may elect to redistribute this code under any of these licenses.
 SchemaCrawler is also distributed bundled with JDBC drivers for 
 different database systems such as [Microsoft SQL 
 Server](http://www.microsoft.com/sqlserver), 
-[SQLite](http://www.sqlite.org/), [MariaDB](https://mariadb.org/), 
-[MySQL](http://www.mysql.com/)and 
+[SQLite](http://www.sqlite.org/), [MySQL](http://www.mysql.com/)and 
 [PostgreSQL](http://www.postgresql.org). These [bundled 
 distributions](database-support.html) are distributed only under the 
 ![GNU General Public License  v3](http://www.gnu.org/graphics/gplv3-88x31.png) 

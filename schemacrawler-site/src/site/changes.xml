@@ -7,7 +7,7 @@
   <body>
      <release version="14.09.01" date="2016-06-29" description="Removing MariaDB custom implementation">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        The MariaDB driver interferes with the use of the MySQL driver.
+        The MariaDB driver interferes with the use of the MySQL driver, so it is no longer distributed.
       ]]></action>
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixing null pointer exception for table types, by introducing an unknown table type.
