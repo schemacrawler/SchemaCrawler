@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Connection;
@@ -48,8 +50,6 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
@@ -511,8 +511,15 @@ final class DatabaseInfoRetriever
         final String remarks = results.getString("REMARKS");
         final short baseTypeValue = results.getShort("BASE_TYPE", (short) 0);
 
-        final ColumnDataType baseType = catalog
-          .lookupColumnDataTypeByType(baseTypeValue);
+        final ColumnDataType baseType;
+        if (baseTypeValue != 0)
+        {
+          baseType = catalog.lookupColumnDataTypeByType(baseTypeValue);
+        }
+        else
+        {
+          baseType = null;
+        }
         final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
                                                                                   dataType,
                                                                                   typeName,
