@@ -29,16 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
-import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
@@ -90,56 +89,6 @@ final class IndexRetriever
     {
       LOGGER.log(Level.INFO, "Retrieving indexes, using SQL");
       retrieveIndexesUsingSql(informationSchemaViews, allTables);
-    }
-
-  }
-
-  void retrievePrimaryKey(final MutableTable table)
-    throws SQLException
-  {
-
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                      unquotedName(table.getSchema().getName()),
-                      unquotedName(table.getName())));)
-    {
-
-      MutablePrimaryKey primaryKey;
-      while (results.next())
-      {
-        // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        final String primaryKeyName = quotedName(results.getString("PK_NAME"));
-        final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
-
-        primaryKey = table.getPrimaryKey();
-        if (primaryKey == null)
-        {
-          primaryKey = new MutablePrimaryKey(table, primaryKeyName);
-        }
-
-        // Register primary key information
-        final Optional<MutableColumn> columnOptional = table
-          .lookupColumn(columnName);
-        if (columnOptional.isPresent())
-        {
-          final MutableColumn column = columnOptional.get();
-          column.markAsPartOfPrimaryKey();
-          final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
-                                                                        column);
-          indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
-          indexColumn.setIndexOrdinalPosition(keySequence);
-          //
-          primaryKey.addColumn(indexColumn);
-        }
-
-        table.setPrimaryKey(primaryKey);
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
-                                          + table, e);
     }
 
   }
@@ -216,6 +165,28 @@ final class IndexRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
+    }
+
+  }
+
+  void retrievePrimaryKeys(final NamedObjectList<MutableTable> allTables)
+    throws SQLException
+  {
+    requireNonNull(allTables);
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasPrimaryKeysSql())
+    {
+      LOGGER.log(Level.INFO,
+                 "Retrieving primary keys, using database metadata");
+      retrievePrimaryKeysUsingDatabaseMetadata(allTables);
+    }
+    else
+    {
+      LOGGER.log(Level.INFO, "Retrieving primary keys, using SQL");
+      retrievePrimaryKeysUsingSql(informationSchemaViews, allTables);
     }
 
   }
@@ -320,6 +291,38 @@ final class IndexRetriever
     index.setCardinality(cardinality);
     index.setPages(pages);
     index.addAttributes(results.getAttributes());
+  }
+
+  private void createPrimaryKeyForTable(final MutableTable table,
+                                        final MetadataResultSet results)
+  {
+    MutablePrimaryKey primaryKey;
+    // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
+    final String columnName = quotedName(results.getString("COLUMN_NAME"));
+    final String primaryKeyName = quotedName(results.getString("PK_NAME"));
+    final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
+
+    primaryKey = table.getPrimaryKey();
+    if (primaryKey == null)
+    {
+      primaryKey = new MutablePrimaryKey(table, primaryKeyName);
+      table.setPrimaryKey(primaryKey);
+    }
+
+    // Register primary key information
+    final Optional<MutableColumn> columnOptional = table
+      .lookupColumn(columnName);
+    if (columnOptional.isPresent())
+    {
+      final MutableColumn column = columnOptional.get();
+      column.markAsPartOfPrimaryKey();
+      final MutableIndexColumn indexColumn = new MutableIndexColumn(primaryKey,
+                                                                    column);
+      indexColumn.setSortSequence(IndexColumnSortSequence.ascending);
+      indexColumn.setIndexOrdinalPosition(keySequence);
+      //
+      primaryKey.addColumn(indexColumn);
+    }
   }
 
   private void retrieveIndexes(final MutableTable table, final boolean unique)
@@ -448,6 +451,78 @@ final class IndexRetriever
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes from SQL:\n"
                                           + indexesSql, e);
+    }
+  }
+
+  private void retrievePrimaryKey(final MutableTable table)
+    throws SQLException
+  {
+
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
+                      unquotedName(table.getSchema().getName()),
+                      unquotedName(table.getName())));)
+    {
+
+      while (results.next())
+      {
+        createPrimaryKeyForTable(table, results);
+
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
+                                          + table, e);
+    }
+
+  }
+
+  private void retrievePrimaryKeysUsingDatabaseMetadata(final NamedObjectList<MutableTable> allTables)
+    throws SQLException
+  {
+    for (final MutableTable table: allTables)
+    {
+      if (table instanceof View)
+      {
+        continue;
+      }
+      retrievePrimaryKey(table);
+    }
+  }
+
+  private void retrievePrimaryKeysUsingSql(final InformationSchemaViews informationSchemaViews,
+                                           final NamedObjectList<MutableTable> allTables)
+    throws SchemaCrawlerSQLException
+  {
+    final Query pkSql = informationSchemaViews.getPrimaryKeysSql();
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(pkSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrievePrimaryKeysUsingSql");
+      while (results.next())
+      {
+        final String catalogName = quotedName(results.getString("TABLE_CAT"));
+        final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
+        final String tableName = quotedName(results.getString("TABLE_NAME"));
+
+        final Optional<MutableTable> optionalTable = allTables
+          .lookup(new SchemaReference(catalogName, schemaName), tableName);
+        if (!optionalTable.isPresent())
+        {
+          continue;
+        }
+        final MutableTable table = optionalTable.get();
+        createPrimaryKeyForTable(table, results);
+      }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not retrieve primary keys from SQL:\n"
+                                          + pkSql, e);
     }
   }
 
