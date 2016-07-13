@@ -43,6 +43,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRA
 import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
+import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
@@ -235,6 +236,17 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the primary keys SQL from the additional configuration.
+   *
+   * @return Primary keys SQL.
+   */
+  public Query getPrimaryKeysSql()
+  {
+    return new Query(PRIMARY_KEYS.name(),
+                     informationSchemaQueries.get(PRIMARY_KEYS));
+  }
+
+  /**
    * Gets the routine definitions SQL from the additional configuration.
    *
    * @return Routine definitions SQL.
@@ -387,6 +399,11 @@ public final class InformationSchemaViews
   public boolean hasOverrideTypeInfoSql()
   {
     return informationSchemaQueries.containsKey(OVERRIDE_TYPE_INFO);
+  }
+
+  public boolean hasPrimaryKeysSql()
+  {
+    return informationSchemaQueries.containsKey(PRIMARY_KEYS);
   }
 
   public boolean hasRoutinesSql()
