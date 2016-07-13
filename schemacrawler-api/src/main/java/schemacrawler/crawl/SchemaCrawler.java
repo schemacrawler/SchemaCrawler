@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -39,8 +40,6 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -626,7 +625,7 @@ public final class SchemaCrawler
             final boolean isView = table instanceof MutableView;
             if (!isView)
             {
-              indexRetriever.retrievePrimaryKey(table);
+              indexRetriever.retrievePrimaryKeys(allTables);
             }
           }
           if (infoLevel.isRetrieveIndexes())
