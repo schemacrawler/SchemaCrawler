@@ -306,7 +306,7 @@ final class IndexRetriever
     if (primaryKey == null)
     {
       primaryKey = new MutablePrimaryKey(table, primaryKeyName);
-      table.setPrimaryKey(primaryKey);
+      table.setPrimaryKeyAndReplaceIndex(primaryKey);
     }
 
     // Register primary key information
@@ -467,7 +467,6 @@ final class IndexRetriever
       while (results.next())
       {
         createPrimaryKeyForTable(table, results);
-
       }
     }
     catch (final SQLException e)

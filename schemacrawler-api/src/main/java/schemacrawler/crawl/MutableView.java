@@ -71,12 +71,6 @@ class MutableView
     return updatable;
   }
 
-  @Override
-  void replacePrimaryKey()
-  {
-    return;
-  }
-
   void setCheckOption(final CheckOptionType checkOption)
   {
     this.checkOption = checkOption;

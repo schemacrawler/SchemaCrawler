@@ -42,7 +42,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.Index;
-import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
 import schemacrawler.schema.Schema;
@@ -413,7 +412,7 @@ class MutableTable
     }
   }
 
-  void replacePrimaryKey()
+  void setPrimaryKeyAndReplaceIndex(final MutablePrimaryKey primaryKey)
   {
     if (primaryKey == null)
     {
@@ -426,31 +425,13 @@ class MutableTable
     if (indexOptional.isPresent())
     {
       final MutableIndex index = indexOptional.get();
-      boolean indexHasPkColumns = false;
-      final List<IndexColumn> pkColumns = primaryKey.getColumns();
-      final List<IndexColumn> indexColumns = index.getColumns();
-      if (pkColumns.size() == indexColumns.size())
-      {
-        for (int i = 0; i < indexColumns.size(); i++)
-        {
-          if (!pkColumns.get(i).equals(indexColumns.get(i)))
-          {
-            break;
-          }
-        }
-        indexHasPkColumns = true;
-      }
-      if (indexHasPkColumns)
-      {
-        indexes.remove(index);
-        setPrimaryKey(new MutablePrimaryKey(index));
-      }
+      indexes.remove(index);
+      this.primaryKey = new MutablePrimaryKey(index);
     }
-  }
-
-  void setPrimaryKey(final MutablePrimaryKey primaryKey)
-  {
-    this.primaryKey = primaryKey;
+    else
+    {
+      this.primaryKey = primaryKey;
+    }
   }
 
   void setSortIndex(final int sortIndex)
