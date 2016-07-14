@@ -95,7 +95,7 @@ public final class DatabaseUtility
             continue;
           }
 
-          final ResultSet resultSet = executeSql(statement, sql);
+          final ResultSet resultSet = executeSql(statement, sql, false);
           if (resultSet != null)
           {
             LOGGER
