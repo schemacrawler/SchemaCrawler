@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.09.02" date="2016-07-14" description="Optimization for Oracle primary keys">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Allow primary keys to be retrieved in bulk, to speed up Oracle execution.
+      ]]></action>                                                               
+     </release>   
      <release version="14.09.01" date="2016-06-29" description="Removing MariaDB custom implementation">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         The MariaDB driver interferes with the use of the MySQL driver, so it is no longer distributed.
@@ -109,7 +114,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.09.01" date="2016-02-03" description="Fixed logging">
+     <release version="14.09.02" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
