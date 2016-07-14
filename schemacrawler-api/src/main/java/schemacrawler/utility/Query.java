@@ -47,6 +47,7 @@ public final class Query
 
   private final String name;
   private final String query;
+  private final boolean throwSQLException;
 
   /**
    * Definition of a query, including a name, and parameterized or
@@ -58,6 +59,24 @@ public final class Query
    *        Query SQL.
    */
   public Query(final String name, final String query)
+  {
+    this(name, query, false);
+  }
+
+  /**
+   * Definition of a query, including a name, and parameterized or
+   * regular SQL.
+   *
+   * @param name
+   *        Query name.
+   * @param query
+   *        Query SQL.
+   * @param throwSQLException
+   *        Whether the query should throw a SQL exception on an error.
+   */
+  public Query(final String name,
+               final String query,
+               final boolean throwSQLException)
   {
     final boolean isNameProvided = !isBlank(name);
     final boolean isQueryProvided = !isBlank(query);
@@ -74,6 +93,7 @@ public final class Query
     {
       throw new IllegalArgumentException("No SQL found for query");
     }
+    this.throwSQLException = throwSQLException;
   }
 
   /**
@@ -109,6 +129,17 @@ public final class Query
   }
 
   /**
+   * Whether the query should throw a SQL exception on an error during
+   * execution.
+   *
+   * @return Whether the query should throw a SQL exception on an error
+   */
+  public boolean isThrowSQLException()
+  {
+    return throwSQLException;
+  }
+
+  /**
    * {@inheritDoc}
    *
    * @see java.lang.Object#toString()
@@ -116,7 +147,7 @@ public final class Query
   @Override
   public String toString()
   {
-    return String.format("%s%n%s", name, query);
+    return String.format("-- \"%s\"%n%s", name, query);
   }
 
 }
