@@ -210,7 +210,8 @@ public final class InformationSchemaViews
   public Query getForeignKeysSql()
   {
     return new Query(FOREIGN_KEYS.name(),
-                     informationSchemaQueries.get(FOREIGN_KEYS));
+                     informationSchemaQueries.get(FOREIGN_KEYS),
+                     true);
   }
 
   /**
@@ -220,7 +221,9 @@ public final class InformationSchemaViews
    */
   public Query getIndexesSql()
   {
-    return new Query(INDEXES.name(), informationSchemaQueries.get(INDEXES));
+    return new Query(INDEXES.name(),
+                     informationSchemaQueries.get(INDEXES),
+                     true);
   }
 
   /**
@@ -243,7 +246,8 @@ public final class InformationSchemaViews
   public Query getPrimaryKeysSql()
   {
     return new Query(PRIMARY_KEYS.name(),
-                     informationSchemaQueries.get(PRIMARY_KEYS));
+                     informationSchemaQueries.get(PRIMARY_KEYS),
+                     true);
   }
 
   /**
@@ -295,7 +299,8 @@ public final class InformationSchemaViews
   public Query getTableColumnsSql()
   {
     return new Query(TABLE_COLUMNS.name(),
-                     informationSchemaQueries.get(TABLE_COLUMNS));
+                     informationSchemaQueries.get(TABLE_COLUMNS),
+                     true);
   }
 
   /**
