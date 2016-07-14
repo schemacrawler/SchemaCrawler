@@ -620,22 +620,13 @@ public final class SchemaCrawler
         LOGGER.log(Level.INFO, "Retrieving primary keys and indexes");
         if (infoLevel.isRetrieveTableColumns())
         {
-          for (final MutableTable table: allTables)
-          {
-            final boolean isView = table instanceof MutableView;
-            if (!isView)
-            {
-              indexRetriever.retrievePrimaryKeys(allTables);
-            }
-          }
           if (infoLevel.isRetrieveIndexes())
           {
             indexRetriever.retrieveIndexes(allTables);
-            for (final MutableTable table: allTables)
-            {
-              table.replacePrimaryKey();
-            }
           }
+          // Setting primary keys will use indexes with a similar name,
+          // if available
+          indexRetriever.retrievePrimaryKeys(allTables);
           if (infoLevel.isRetrievePrimaryKeyDefinitions())
           {
             indexRetriever.retrievePrimaryKeyDefinitions(allTables);
