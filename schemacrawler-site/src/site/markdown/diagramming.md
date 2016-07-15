@@ -16,11 +16,6 @@ Then you can run SchemaCrawler with the correct command-line options - for examp
 in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
 download. An example of a SchemaCrawler database diagram is below.
 
-You can provide additional GraphViz command-line options using the `SC_GRAPHVIZ_OPTS`
-environmental variable, or pass in the additional arguments using the `SC_GRAPHVIZ_OPTS`
-Java system property. SchemaCrawler does not set the dpi, or resolution of generated graphs.
-A useful GraphViz command-line option to set is `-Gdpi=300`.
-
 You can decide whether foreign-key names, column ordinal numbers, and schema names are displayed
 by setting the following properties in the SchemaCrawler configuration file,
 `schemacrawler.config.properties`.
@@ -38,6 +33,20 @@ by setting the following properties in the SchemaCrawler configuration file,
 ```
 schemacrawler.format.show_row_counts=true
 ```
+
+You can provide additional GraphViz command-line options in one of three ways:
+
+* using the `schemacrawler.graph.graphviz_opts` property in the SchemaCrawler configuration file,
+* by passing in the additional arguments using the `SC_GRAPHVIZ_OPTS` Java system property, 
+* or by setting the `SC_GRAPHVIZ_OPTS` environmental variable.
+
+SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful GraphViz command-line 
+option to set is `-Gdpi=300`. In the SchemaCrawler configuration file, 
+`schemacrawler.config.properties`, this would look like: 
+    
+```        
+schemacrawler.graph.graphviz_opts=-Gdpi=300
+```    
 
 For more details, see the diagram example in the
 [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
