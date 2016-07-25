@@ -58,8 +58,8 @@ public interface Table
   Collection<ForeignKey> getExportedForeignKeys();
 
   /**
-   * Gets the list of foreign keys. Same as calling
-   * getForeignKeys(TableAssociationType.all).
+   * Gets the list of all foreign keys of the table, including imported
+   * and exported foreign keys.
    *
    * @return Foreign keys of the table.
    */
