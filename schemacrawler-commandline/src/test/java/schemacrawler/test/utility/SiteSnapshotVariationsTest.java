@@ -85,14 +85,23 @@ public class SiteSnapshotVariationsTest
                                                                TextOutputFormat.text,
                                                                GraphOutputFormat.htmlx })
     {
-      final String format = outputFormat.getFormat();
+      final String outputFormatValue = outputFormat.getFormat();
+      final String extension;
+      if ("htmlx".equals(outputFormatValue))
+      {
+        extension = "svg.html";
+      }
+      else
+      {
+        extension = outputFormatValue;
+      }
       final Map<String, String> args = new HashMap<String, String>();
       args.put("infolevel", "maximum");
-      args.put("outputformat", format);
+      args.put("outputformat", outputFormatValue);
 
       final Map<String, String> config = new HashMap<>();
 
-      run(args, config, directory.resolve("snapshot." + format));
+      run(args, config, directory.resolve("snapshot." + extension));
     }
   }
 

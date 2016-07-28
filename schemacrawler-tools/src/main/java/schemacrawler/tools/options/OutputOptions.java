@@ -241,9 +241,19 @@ public class OutputOptions
     }
     else
     {
+      // Tacky hack for htmlx format
+      final String extension;
+      if ("htmlx".equals(outputFormatValue))
+      {
+        extension = "svg.html";
+      }
+      else
+      {
+        extension = outputFormatValue;
+      }
+      // Create output file path
       outputFile = Paths
-        .get(".",
-             String.format("sc.%s.%s", nextRandomString(), outputFormatValue))
+        .get(".", String.format("sc.%s.%s", nextRandomString(), extension))
         .normalize().toAbsolutePath();
     }
     return outputFile;
