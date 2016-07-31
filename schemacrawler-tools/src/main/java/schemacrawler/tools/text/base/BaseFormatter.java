@@ -64,14 +64,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
                           final OutputOptions outputOptions)
-                            throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     this.options = requireNonNull(options, "Options not provided");
 
     this.outputOptions = requireNonNull(outputOptions,
                                         "Output options not provided");
 
-    colorMap = new DatabaseObjectColorMap();
+    colorMap = new DatabaseObjectColorMap(options.isNoSchemaColors());
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;

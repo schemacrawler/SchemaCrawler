@@ -333,6 +333,22 @@ schemacrawler.format.hide_constraint_names=false
         </p>
       </answer>
     </faq>
+    <faq id="hide-schema-colors">
+      <question>
+        How to hide catalog and schema colors in HTML output and graphs
+      </question>
+      <answer>
+        <p>
+          Change the configuration for the SchemaCrawler
+          <code>schemacrawler.format.no_schema_colors=true
+          </code>
+          in the
+          <code>schemacrawler.config.properties </code>
+          file. This setting will not show color-coded catalog and schema names 
+          in HTML and graph output.
+        </p>
+      </answer>
+    </faq>    
   </part>
   <part id="integrations">
     <title>Integrations</title>

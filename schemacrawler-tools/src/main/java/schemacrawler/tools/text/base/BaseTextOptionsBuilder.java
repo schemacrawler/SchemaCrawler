@@ -61,6 +61,9 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   private static final String SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
                                                                     + "sort_alphabetically.routine_columns";
 
+  private static final String NO_SCHEMA_COLORS = SCHEMACRAWLER_FORMAT_PREFIX
+                                                 + "no_schema_colors";
+
   protected final O options;
 
   protected BaseTextOptionsBuilder(final O options)
@@ -106,6 +109,8 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     options.setAlphabeticalSortForRoutineColumns(config
       .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
                        options.isAlphabeticalSortForRoutineColumns()));
+
+    options.setNoSchemaColors(config.getBooleanValue(NO_SCHEMA_COLORS));
 
     return this;
   }
@@ -193,6 +198,8 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
 
     config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
                            options.isAlphabeticalSortForRoutineColumns());
+
+    config.setBooleanValue(NO_SCHEMA_COLORS, options.isNoSchemaColors());
 
     return config;
   }

@@ -37,7 +37,9 @@ import static schemacrawler.test.utility.TestUtility.createTempFile;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -52,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -74,6 +77,7 @@ public class SchemaCrawlerOutputTest
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
+  private static final String NO_SCHEMA_COLORS_OUTPUT = "no_schema_colors_output/";
 
   @Test
   public void compareCompositeOutput()
@@ -103,8 +107,7 @@ public class SchemaCrawlerOutputTest
                                                                                   + SchemaTextDetailType.brief, };
 
     final List<String> failures = new ArrayList<>();
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       for (final String command: commands)
       {
@@ -165,8 +168,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setHideIndexNames(true);
     textOptions.setHideConstraintNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -229,8 +231,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setHideWeakAssociations(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -330,8 +331,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoInfo(true);
     textOptions.setHideRemarks(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
@@ -368,6 +368,55 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
+  public void compareNoSchemaColorsOutput()
+    throws Exception
+  {
+    clean(NO_SCHEMA_COLORS_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(true);
+    textOptions.setHideRemarks(true);
+    textOptions.setNoSchemaColors(true);
+
+    for (final OutputFormat outputFormat: getOutputFormats())
+    {
+      final String referenceFile = "schema_detailed."
+                                   + outputFormat.getFormat();
+
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            testOutputFile);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
+      executable.execute(getConnection());
+
+      failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
   public void compareOrdinalOutput()
     throws Exception
   {
@@ -381,8 +430,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowOrdinalNumbers(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -444,8 +492,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "routines." + outputFormat.getFormat();
 
@@ -506,8 +553,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowRowCounts(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -558,8 +604,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
 
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
+    for (final OutputFormat outputFormat: getOutputFormats())
     {
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -605,6 +650,16 @@ public class SchemaCrawlerOutputTest
     {
       fail(failures.toString());
     }
+  }
+
+  private Set<OutputFormat> getOutputFormats()
+  {
+    final Set<OutputFormat> outputFormats = new HashSet<>();
+    outputFormats
+      .addAll(EnumSet.complementOf(EnumSet.of(TextOutputFormat.tsv)));
+    outputFormats.add(GraphOutputFormat.scdot);
+
+    return outputFormats;
   }
 
 }

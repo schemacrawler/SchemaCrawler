@@ -78,7 +78,7 @@ public class SiteGraphVariationsTest
   public void diagram()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
 
     final Map<String, String> config = new HashMap<>();
@@ -87,10 +87,24 @@ public class SiteGraphVariationsTest
   }
 
   @Test
+  public void diagram_10_no_schema_colors()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("infolevel", "standard");
+    args.put("portablenames", "true");
+
+    final Map<String, String> config = new HashMap<>();
+    config.put("schemacrawler.format.no_schema_colors", "true");
+
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+  }
+
+  @Test
   public void diagram_2_portablenames()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
 
@@ -103,7 +117,7 @@ public class SiteGraphVariationsTest
   public void diagram_3_important_columns()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("command", "brief");
     args.put("portablenames", "true");
@@ -117,7 +131,7 @@ public class SiteGraphVariationsTest
   public void diagram_4_ordinals()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
 
@@ -131,7 +145,7 @@ public class SiteGraphVariationsTest
   public void diagram_5_alphabetical()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
     args.put("sortcolumns", "true");
@@ -145,7 +159,7 @@ public class SiteGraphVariationsTest
   public void diagram_6_grep()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
@@ -160,7 +174,7 @@ public class SiteGraphVariationsTest
   public void diagram_7_grep_onlymatching()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
@@ -176,7 +190,7 @@ public class SiteGraphVariationsTest
   public void diagram_8_no_cardinality()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
 
@@ -191,7 +205,7 @@ public class SiteGraphVariationsTest
   public void diagram_9_row_counts()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
 
