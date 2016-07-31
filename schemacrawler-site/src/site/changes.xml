@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.09.03" date="2016-08-01" description="Do not show schema colors">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        A new configuration options <code>schemacrawler.format.no_schema_colors<code> if you do not want to show catalog and schema colors.
+      ]]></action>                                                               
+     </release>   
      <release version="14.09.02" date="2016-07-14" description="Optimization for Oracle primary keys">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Allow primary keys to be retrieved in bulk, to speed up Oracle execution.

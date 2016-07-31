@@ -41,15 +41,22 @@ public class DatabaseObjectColorMap
 {
 
   private final Map<String, Color> colorMap;
+  private final boolean noColors;
 
-  public DatabaseObjectColorMap()
+  public DatabaseObjectColorMap(final boolean noColors)
   {
+    this.noColors = noColors;
     colorMap = new HashMap<>();
   }
 
   public Color getColor(final DatabaseObject dbObject)
   {
     requireNonNull(dbObject, "No database object provided");
+    if (noColors)
+    {
+      return Color.white;
+    }
+
     final Color tableColor;
     final String schemaName = dbObject.getSchema().getFullName();
     if (!colorMap.containsKey(schemaName))

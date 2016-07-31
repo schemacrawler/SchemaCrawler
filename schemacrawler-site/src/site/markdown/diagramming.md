@@ -95,10 +95,15 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="images/diagram_8_no_cardinality.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_8_no_cardinality.png" width="200" />
 </a>
-- Show table row counts on the diagrams,set configuration option `schemacrawler.format.show_row_counts=true` and `-infolevel=maximum` on the command-line.
+- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` and `-infolevel=maximum` on the command-line.
 <br />
 <a href="images/diagram_9_row_counts.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_9_row_counts.png" width="200" />
+</a>
+- Do not show catalog and schema colors on the diagrams, set configuration option `schemacrawler.format.no_schema_colors=true`.
+<br />
+<a href="images/diagram_10_row_counts.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
+<img src="images/diagram_10_row_counts.png" width="200" />
 </a>
 
 ## SchemaCrawler Diagrams in Use

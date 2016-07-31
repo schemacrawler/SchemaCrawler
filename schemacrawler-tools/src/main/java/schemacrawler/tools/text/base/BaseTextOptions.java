@@ -46,6 +46,7 @@ public abstract class BaseTextOptions
   private boolean isNoHeader;
   private boolean isNoInfo;
   private boolean isShowUnqualifiedNames;
+  private boolean isNoSchemaColors;
 
   public boolean isAlphabeticalSortForRoutineColumns()
   {
@@ -85,6 +86,11 @@ public abstract class BaseTextOptions
   public boolean isNoInfo()
   {
     return isNoInfo;
+  }
+
+  public boolean isNoSchemaColors()
+  {
+    return isNoSchemaColors;
   }
 
   public boolean isShowUnqualifiedNames()
@@ -130,6 +136,11 @@ public abstract class BaseTextOptions
   public void setNoInfo(final boolean isNoInfo)
   {
     this.isNoInfo = isNoInfo;
+  }
+
+  public void setNoSchemaColors(final boolean isNoSchemaColors)
+  {
+    this.isNoSchemaColors = isNoSchemaColors;
   }
 
   public void setShowUnqualifiedNames(final boolean isShowUnqualifiedNames)
