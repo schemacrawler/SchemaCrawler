@@ -102,8 +102,8 @@ SchemaCrawler offers several options to change what you see on the database diag
 </a>
 - Do not show catalog and schema colors on the diagrams, set configuration option `schemacrawler.format.no_schema_colors=true`.
 <br />
-<a href="images/diagram_10_row_counts.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
-<img src="images/diagram_10_row_counts.png" width="200" />
+<a href="images/diagram_10_no_schema_colors.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
+<img src="images/diagram_10_no_schema_colors.png" width="200" />
 </a>
 
 ## SchemaCrawler Diagrams in Use

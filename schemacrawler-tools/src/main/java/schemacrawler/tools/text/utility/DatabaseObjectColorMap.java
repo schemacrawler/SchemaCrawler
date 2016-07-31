@@ -40,6 +40,8 @@ import sf.util.Color;
 public class DatabaseObjectColorMap
 {
 
+  public static Color default_object_color = Color.fromHSV(0, 0, 0.95f);
+
   private final Map<String, Color> colorMap;
   private final boolean noColors;
 
@@ -54,7 +56,7 @@ public class DatabaseObjectColorMap
     requireNonNull(dbObject, "No database object provided");
     if (noColors)
     {
-      return Color.white;
+      return default_object_color;
     }
 
     final Color tableColor;
