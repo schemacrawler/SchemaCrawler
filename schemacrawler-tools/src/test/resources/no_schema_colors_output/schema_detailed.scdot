@@ -26,8 +26,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
-		<td align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_ecfc5f6a.start' align='left'><b><i>ID</i></b></td>
@@ -86,8 +86,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
-		<td align='right'>[view]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[view]</td>
 	</tr>
 	<tr>
 		<td port='id_837fd18c.start' align='left'>ID</td>
@@ -115,8 +115,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
-		<td align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='bookid_931bd73c.start' align='left'>BOOKID</td>
@@ -144,8 +144,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
-		<td align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_bb8abc08.start' align='left'><b><i>ID</i></b></td>
@@ -195,8 +195,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
-		<td align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='globalcount_22cfa042.start' align='left'>"Global Count"</td>
@@ -214,8 +214,8 @@ digraph "SchemaCrawler_Diagram" {
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
-		<td align='right'>[table]</td>
+		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
+		<td bgcolor='#F2F2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
 		<td port='id_6fc9dd09.start' align='left'><b><i>ID</i></b></td>
