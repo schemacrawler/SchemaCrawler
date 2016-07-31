@@ -14,5 +14,3 @@ SchemaCrawler supports almost any database that has a JDBC driver, but for conve
 SchemaCrawler is also a Java API that makes working with database metadata as easy as working with plain old Java objects.
 
 All SchemaCrawler jars are in the [Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](http://maven.apache.org/) projects, or with any other build system that supports the Central Repository.
-
-[SchemaCrawler - Quick Overview](https://docs.google.com/presentation/d/1lcH4gyQP6Kecm9QR98rkpYi2CUMVf3PhdZCISTh9-_c/edit?usp=sharing)
