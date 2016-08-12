@@ -107,7 +107,7 @@ public final class SchemaCrawlerOptionsParser
     }
     else
     {
-      throw new SchemaCrawlerCommandLineException("No infolevel specified");
+      throw new SchemaCrawlerCommandLineException("Please specify an infolevel");
     }
 
     if (config.hasValue("schemas"))

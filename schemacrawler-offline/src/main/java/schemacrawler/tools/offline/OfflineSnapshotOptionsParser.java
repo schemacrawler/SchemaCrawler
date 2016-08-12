@@ -70,7 +70,8 @@ public final class OfflineSnapshotOptionsParser
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerCommandLineException(e.getMessage(), e);
+      throw new SchemaCrawlerCommandLineException(String
+        .format("Unable to read database snapshot from %s", inputSource), e);
     }
 
     return options;
