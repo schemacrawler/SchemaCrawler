@@ -44,13 +44,11 @@ public class ConfigParser
 {
 
   private static final String CONFIG_FILE = "configfile";
-  private static final String ADDITIONAL_CONFIG_FILE = "additionalconfigfile";
 
   public ConfigParser(final Config config)
   {
     super(config);
     normalizeOptionName(CONFIG_FILE, "g");
-    normalizeOptionName(ADDITIONAL_CONFIG_FILE, "p");
   }
 
   @Override
@@ -61,10 +59,7 @@ public class ConfigParser
     {
       final String configfile = config
         .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
-      final String additionalconfigfile = config
-        .getStringValue(ADDITIONAL_CONFIG_FILE,
-                        "schemacrawler.additional.config.properties");
-      config.putAll(Config.load(configfile, additionalconfigfile));
+      config.putAll(Config.load(configfile));
     }
     catch (final IOException e)
     {
@@ -75,7 +70,6 @@ public class ConfigParser
   public void consumeOptions()
   {
     consumeOption(CONFIG_FILE);
-    consumeOption(ADDITIONAL_CONFIG_FILE);
   }
 
 }
