@@ -86,7 +86,7 @@ public final class VelocityRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection)
-                                throws Exception
+    throws Exception
   {
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
@@ -147,7 +147,8 @@ public final class VelocityRenderer
     }
     catch (final ResourceNotFoundException e)
     {
-      throw new SchemaCrawlerCommandLineException("No template specified", e);
+      throw new SchemaCrawlerCommandLineException("Please specify an Apache Velocity template",
+                                                  e);
     }
 
   }

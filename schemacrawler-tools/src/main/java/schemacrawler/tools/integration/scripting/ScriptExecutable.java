@@ -93,13 +93,13 @@ public final class ScriptExecutable
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection)
-                                throws Exception
+    throws Exception
   {
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (isBlank(scriptFileName))
     {
-      throw new SchemaCrawlerCommandLineException("No script specified");
+      throw new SchemaCrawlerCommandLineException("Please specify a script to execute");
     }
 
     // Create a new instance of the engine

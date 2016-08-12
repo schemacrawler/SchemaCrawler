@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -69,10 +67,9 @@ public final class SchemaCrawlerCommandLine
   public SchemaCrawlerCommandLine(final Config argsMap)
     throws SchemaCrawlerException
   {
-    requireNonNull(argsMap, "No command-line arguments provided");
-    if (argsMap.isEmpty())
+    if (argsMap == null || argsMap.isEmpty())
     {
-      throw new SchemaCrawlerCommandLineException("No command-line arguments provided");
+      throw new SchemaCrawlerCommandLineException("Please provide command-line arguments");
     }
 
     // Match the database connector in the best possible way, using the

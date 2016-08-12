@@ -62,7 +62,7 @@ final class CommandLineConnectionOptionsParser
     final String connectionUrl = config.getStringValue(URL, null);
     if (isBlank(connectionUrl))
     {
-      throw new SchemaCrawlerCommandLineException("No database connection URL provided");
+      throw new SchemaCrawlerCommandLineException("Please provde a database connection URL");
     }
   }
 

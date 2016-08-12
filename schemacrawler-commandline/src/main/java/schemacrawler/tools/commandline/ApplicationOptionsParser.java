@@ -72,7 +72,9 @@ public final class ApplicationOptionsParser
         }
         catch (final IllegalArgumentException e)
         {
-          throw new SchemaCrawlerCommandLineException(e.getMessage());
+          throw new SchemaCrawlerCommandLineException(String
+            .format("Please provide a valid log level, not \"%s\"",
+                    logLevelString), e);
         }
         options.setApplicationLogLevel(applicationLogLevel);
       }
