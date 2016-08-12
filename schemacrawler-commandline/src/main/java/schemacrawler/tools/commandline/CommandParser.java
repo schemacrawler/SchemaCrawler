@@ -66,7 +66,7 @@ public final class CommandParser
     }
     else
     {
-      throw new SchemaCrawlerCommandLineException("No command specified");
+      throw new SchemaCrawlerCommandLineException("Please specify a command");
     }
   }
 
