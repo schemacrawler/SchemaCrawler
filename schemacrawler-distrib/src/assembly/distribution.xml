@@ -157,9 +157,12 @@
     </java>
 
     <!-- Stage examples -->
-    <copy file="${SchemaCrawler.home}/schemacrawler-test/src/main/java/ApiExample.java"
-          todir="${main-distribution.staging.dir}/examples/api" />
-
+    <copy todir="${main-distribution.staging.dir}/examples/api">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-test/src/main/java">
+        <include name="*.java" />
+      </fileset>
+    </copy>
+        	
     <!-- Copy config files -->
     <copy todir="${main-distribution.staging.dir}/examples/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
