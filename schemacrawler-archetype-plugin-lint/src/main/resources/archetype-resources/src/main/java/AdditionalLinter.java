@@ -31,7 +31,8 @@ public class AdditionalLinter
         // JDK logging
         LOGGER
           .log(Level.INFO,
-               new FormattedStringSupplier("Adding lint for table, %s", table));
+               String.format("Adding lint for table, %s", table));
+        
         addLint(table, getSummary(), table.getFullName());
       }
     }
