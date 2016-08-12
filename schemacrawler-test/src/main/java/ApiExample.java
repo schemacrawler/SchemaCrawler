@@ -1,4 +1,8 @@
+import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
+
 import java.sql.Connection;
+import java.util.logging.Level;
 
 import javax.sql.DataSource;
 
@@ -20,6 +24,11 @@ public final class ApiExample
   public static void main(final String[] args)
     throws Exception
   {
+    // Set logging on
+    applyApplicationLogLevel(Level.ALL);
+    // Log system properties and classpath
+    logSystemProperties();
+    
     // Create a database connection
     final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
     final Connection connection = dataSource.getConnection("sa", "");
