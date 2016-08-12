@@ -40,20 +40,13 @@ public class SchemaCrawlerCommandLineException
 
   public SchemaCrawlerCommandLineException(final String message)
   {
-    super(helpfulMessage(message));
+    super(message);
   }
 
   public SchemaCrawlerCommandLineException(final String message,
                                            final Throwable cause)
   {
-    super(helpfulMessage(message), cause);
-  }
-
-  private static String helpfulMessage(final String message)
-  {
-    return String.format(
-                         "%s%nPlease re-run SchemaCrawler without any arguments for help",
-                         message);
+    super(message, cause);
   }
 
 }
