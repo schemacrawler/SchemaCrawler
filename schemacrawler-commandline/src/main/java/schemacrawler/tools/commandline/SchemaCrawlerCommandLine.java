@@ -80,8 +80,7 @@ public final class SchemaCrawlerCommandLine
                new StringFormat("Using database plugin, %s",
                                 dbConnector.getDatabaseServerType()));
 
-    config = new Config();
-    loadConfig(argsMap);
+    config = loadConfig(argsMap);
 
     final CommandParser commandParser = new CommandParser(config);
     command = commandParser.getOptions().toString();
@@ -159,20 +158,27 @@ public final class SchemaCrawlerCommandLine
   /**
    * Loads configuration from a number of sources, in order of priority.
    */
-  private void loadConfig(final Config argsMap)
+  private Config loadConfig(final Config argsMap)
     throws SchemaCrawlerException
   {
+    final Config config = new Config();
+
     // 1. Get bundled database config
     config.putAll(dbConnector.getConfig());
 
-    // 2. Load config from files, in place
+    // 2. Load config from CLASSPATH, in place
+    config.putAll(Config.loadResource("/schemacrawler.config.properties"));
+
+    // 3. Load config from files, in place
     config.putAll(argsMap);
     new ConfigParser(config).loadConfig();
 
-    // 3. Override/ overwrite from the command-line options
+    // 4. Override/ overwrite from the command-line options
     config.putAll(argsMap);
 
     new ConfigParser(config).consumeOptions();
+
+    return config;
   }
 
   /**
