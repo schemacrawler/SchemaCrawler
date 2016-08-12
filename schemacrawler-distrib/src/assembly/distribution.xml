@@ -67,9 +67,9 @@
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
         <attribute name="Copyright" value="Copyright (c) 2000-2016, Sualeh Fatehi" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
-      	<section name="schemacrawler/crawl/">
-      	  <attribute name="Sealed" value="true"/>
-      	</section>
+        <section name="schemacrawler/crawl/">
+          <attribute name="Sealed" value="true"/>
+        </section>
       </manifest>
     </jar>
 
@@ -78,7 +78,7 @@
     classpath="bnd-1.50.0.jar"/>
     <copy file="${distribution.assembly}/schemacrawler.bnd"
           tofile="./schemacrawler-${SchemaCrawler.version}.bnd" />
-  	<!--
+    <!--
     <bndwrap output="${distribution.target}">
         <fileset dir="${distribution.target}" includes="*.jar" />
     </bndwrap>
@@ -162,7 +162,7 @@
         <include name="*.java" />
       </fileset>
     </copy>
-        	
+
     <!-- Copy config files -->
     <copy todir="${main-distribution.staging.dir}/examples/db-specific-query">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
@@ -189,18 +189,18 @@
         <include name="context.xml" />
       </fileset>
     </copy>
-    
+
     <move
       file="${schemacrawler.complete-distribution}"
       tofile="${main-distribution.staging.dir}/_schemacrawler" />
 
-    <fixcrlf 
-      srcdir="${main-distribution.staging.dir}" 
+    <fixcrlf
+      srcdir="${main-distribution.staging.dir}"
       includes="**/*.sh"
-      eol="unix" 
-      eof="remove" 
-      tab="remove" 
-      tablength="2" 
+      eol="unix"
+      eof="remove"
+      tab="remove"
+      tablength="2"
       outputencoding="UTF-8" />
 
     <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
@@ -212,13 +212,13 @@
                   prefix="${main-distribution.stem}"
                   defaultexcludes="yes">
         <exclude name="**/*.sh"/>
-      </zipfileset> 
+      </zipfileset>
       <zipfileset dir="${main-distribution.staging.dir}"
                   prefix="${main-distribution.stem}"
                   defaultexcludes="yes"
                   filemode="771">
         <include name="**/*.sh"/>
-      </zipfileset>       
+      </zipfileset>
     </zip>
 
   </target>
@@ -270,13 +270,16 @@
     </copy>
 
     <!-- Move SchemaCrawler distribution, for use in the examples -->
-    <copy file="${schemacrawler.api-tests.jar}"
-          todir="${schemacrawler.complete-distribution}/lib" />
-
+    <copy 
+      file="${schemacrawler.api-tests.jar}"
+      todir="${schemacrawler.complete-distribution}/lib" />
     <copy
       file="${schemacrawler.distribution.jar}"
       todir="${schemacrawler.complete-distribution}/lib"/>
-
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.config.properties"
+      todir="${schemacrawler.complete-distribution}/lib"/> 
+    
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
     <create-dbserver-distribution database="h2" />
