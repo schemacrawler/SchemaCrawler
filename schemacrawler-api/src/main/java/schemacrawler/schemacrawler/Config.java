@@ -294,6 +294,31 @@ public final class Config
   }
 
   /**
+   * Gets the value of a property as an double.
+   *
+   * @param propertyName
+   *        Property name
+   * @return Double value
+   */
+  public double getDoubleValue(final String propertyName,
+                               final double defaultValue)
+  {
+    try
+    {
+      return Double.parseDouble(getStringValue(propertyName,
+                                               String.valueOf(defaultValue)));
+    }
+    catch (final NumberFormatException e)
+    {
+      LOGGER.log(Level.FINEST,
+                 e,
+                 new StringFormat("Could not parse double value for property, %s",
+                                  propertyName));
+      return defaultValue;
+    }
+  }
+
+  /**
    * Gets the value of a property as an enum.
    *
    * @param propertyName
@@ -385,8 +410,43 @@ public final class Config
    */
   public int getIntegerValue(final String propertyName, final int defaultValue)
   {
-    return Integer
-      .parseInt(getStringValue(propertyName, String.valueOf(defaultValue)));
+    try
+    {
+      return Integer
+        .parseInt(getStringValue(propertyName, String.valueOf(defaultValue)));
+    }
+    catch (final NumberFormatException e)
+    {
+      LOGGER.log(Level.FINEST,
+                 e,
+                 new StringFormat("Could not parse integer value for property, %s",
+                                  propertyName));
+      return defaultValue;
+    }
+  }
+
+  /**
+   * Gets the value of a property as an long.
+   *
+   * @param propertyName
+   *        Property name
+   * @return Long value
+   */
+  public long getLongValue(final String propertyName, final long defaultValue)
+  {
+    try
+    {
+      return Long
+        .parseLong(getStringValue(propertyName, String.valueOf(defaultValue)));
+    }
+    catch (final NumberFormatException e)
+    {
+      LOGGER.log(Level.FINEST,
+                 e,
+                 new StringFormat("Could not parse long value for property, %s",
+                                  propertyName));
+      return defaultValue;
+    }
   }
 
   /**
