@@ -87,9 +87,9 @@ public abstract class BaseStagedExecutable
       LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
     }
 
-    final SchemaCrawler crawler = new SchemaCrawler(connection,
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                     databaseSpecificOverrideOptions);
-    final Catalog catalog = crawler.crawl(schemaCrawlerOptions);
+    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     executeOn(catalog, connection);
   }

@@ -743,7 +743,7 @@ public final class SchemaCrawler
    * @param databaseSpecificOverrideOptions
    *        Database specific overrides
    * @throws SchemaCrawlerException
-   *         On a crawler exception
+   *         On a SchemaCrawler exception
    */
   public SchemaCrawler(final Connection connection,
                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
