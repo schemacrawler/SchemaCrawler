@@ -62,8 +62,10 @@ public final class DatabaseServerTypeParser
     if (config.hasValue(SERVER)
         && !registry.hasDatabaseSystemIdentifier(serverType))
     {
-      throw new SchemaCrawlerCommandLineException("Unsupported server, "
-                                                  + serverType);
+      throw new SchemaCrawlerCommandLineException(String
+        .format("Unsupported server, %s %n"
+                + "Please provide a database connection URL on the command-line, %n"
+                + "and rerun without the -server argument", serverType));
     }
 
     final DatabaseConnector dbConnector;
