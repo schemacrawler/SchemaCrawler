@@ -1,2 +1,2 @@
 #!/bin/sh
-java -cp $(echo lib/*.jar | tr ' ' ':') schemacrawler.Main $*
+java -cp $(echo lib/*.jar | tr ' ' ':'):lib schemacrawler.Main $*

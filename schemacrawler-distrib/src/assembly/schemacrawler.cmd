@@ -1,1 +1,1 @@
-@java -classpath lib/*;. schemacrawler.Main %*
+@java -classpath lib/*;lib;. schemacrawler.Main %*
