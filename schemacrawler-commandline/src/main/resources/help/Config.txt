@@ -1,13 +1,19 @@
 --- Configuration Options ---
 Command-line options will override configuration file options.
 
+SchemaCrawler configuration reads a resource called
+schemacrawler.config.properties from the CLASSPATH, which
+includes the lib/ folder. You can modify the default settings
+in this file. 
+
+The order of loading configuration settings is:
+1. From a CLASSPATH resource called
+   schemacrawler.config.properties
+2. Which can be overridden by settings in a 
+   configuration file (see below)
+3. Which can be overridden by other command-line options
+
 -g=<config-file> (short for -configfile <config-file>)
   Reads SchemaCrawler configuration properties from <config-file>
   Optional, uses the default schemacrawler.config.properties file
   in the current directory, or in-built default options
-
--p=<additional-config-file> (short for -additionalconfigfile <additional-config-file>)
-  Reads SchemaCrawler configuration properties from 
-  <additional-config-file> for command-specific configuration
-  Overrides configuration from configuration properties file <config-file>
-  Optional, defaults to no additional configuration

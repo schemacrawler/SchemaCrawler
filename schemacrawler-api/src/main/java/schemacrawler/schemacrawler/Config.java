@@ -69,29 +69,22 @@ public final class Config
   private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
 
   /**
-   * Loads the SchemaCrawler configuration, and override configuration,
-   * from properties files.
+   * Loads the SchemaCrawler configuration from properties file.
    *
-   * @param configFilenames
+   * @param configFilename
    *        Configuration file name.
    * @return Configuration properties.
    * @throws IOException
    */
-  public static Config load(final String... configFilenames)
+  public static Config load(final String configFilename)
     throws IOException
   {
     Properties configProperties = new Properties();
-    if (configFilenames != null)
+    if (!isBlank(configFilename))
     {
-      for (final String configFilename: configFilenames)
-      {
-        if (!isBlank(configFilename))
-        {
-          final Path configPath = Paths.get(configFilename).normalize()
-            .toAbsolutePath();
-          configProperties = loadProperties(configProperties, configPath);
-        }
-      }
+      final Path configPath = Paths.get(configFilename).normalize()
+        .toAbsolutePath();
+      configProperties = loadProperties(configProperties, configPath);
     }
     return new Config(configProperties);
   }
