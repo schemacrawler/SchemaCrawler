@@ -164,21 +164,6 @@
     </copy>
 
     <!-- Copy config files -->
-    <copy todir="${main-distribution.staging.dir}/examples/db-specific-query">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy>
-    <copy todir="${main-distribution.staging.dir}/examples/user-defined-query">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy>
-    <copy todir="${main-distribution.staging.dir}/examples/velocity">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config">
-        <include name="*config*.properties" />
-      </fileset>
-    </copy>
     <copy todir="${main-distribution.staging.dir}/examples/lint">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources">
         <include name="schemacrawler-linter-configs.xml" />
