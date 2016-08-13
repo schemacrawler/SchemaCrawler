@@ -67,20 +67,6 @@
       <artifactId>schemacrawler-hsqldb</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- 
-    <dependency>
-      <groupId>oracle</groupId>
-      <artifactId>oracle-jdbc</artifactId>
-      <version>11.2.0.3.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>db2</groupId>
-      <artifactId>db2-jdbc</artifactId>
-      <version>3.50.152</version>
-      <scope>provided</scope>
-    </dependency>
-     -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
