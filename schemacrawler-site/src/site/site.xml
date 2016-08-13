@@ -70,6 +70,7 @@
     <menu name="Resources">
       <item name="Getting Started" href="readme.html" />    
       <item name="Resources" href="resources.html" />
+      <item name="Code Examples" href="code-examples.html" />
       <item name="FAQS" href="faq.html" />
       <item name="How-tos" href="how-to.html" />      
       <item name="Get Help"
