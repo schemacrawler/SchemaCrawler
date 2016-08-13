@@ -54,7 +54,6 @@ public abstract class AbstractSchemaCrawlerSystemTest
   protected final String[] dataSources = {
                                            "MicrosoftSQLServer", "Oracle",
                                            "IBM_DB2", "MySQL", "PostgreSQL",
-      // "Derby",
   };
 
   @Test
@@ -109,7 +108,7 @@ public abstract class AbstractSchemaCrawlerSystemTest
   protected Catalog
     retrieveDatabase(final String dataSourceName,
                      final SchemaCrawlerOptions schemaCrawlerOptions)
-                       throws Exception
+      throws Exception
   {
     final Connection connection = connect(dataSourceName);
     try

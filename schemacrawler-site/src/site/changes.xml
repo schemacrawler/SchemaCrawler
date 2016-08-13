@@ -5,14 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.10.01" date="2016-08-01" description="Configuration changes">
+     <release version="14.10.01" date="2016-08-31" description="Configuration changes">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Ability to read default configuration settings from the classpath, from a file called 
         schemacrawler.config.properties. This file is distributed in the lib/ folder.
       ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Removed command-line option -p to specify an additional configuration file.
-      ]]></action>                                                                      
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added documentation on how to do programmatic diff of schemas on the website. Added
+        code examples to the website.
+      ]]></action>                                                                           
      </release>   
      <release version="14.09.03" date="2016-08-01" description="Do not show schema colors">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
