@@ -104,31 +104,6 @@ code. SchemaCrawler allows you to compare structures between two different
 database servers, or even two different database systems, from different
 vendors.
 
-The sample code below demonstrates just how easy it is to use SchemaCrawler:
-
-<div class="source"><pre>
-final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-// Set what details are required in the schema - this affects the
-// time taken to crawl the schema
-options.setSchemaInfoLevel(SchemaInfoLevel.standard());
-
-final Catalog catalog = SchemaCrawlerUtility.getCatalog(connection, options);
-for (final Schema schema: catalog.getSchemas())
-{
-  System.out.println(schema);
-  for (final Table table: catalog.getTables(schema))
-  {
-    System.out.print(&quot;o--&gt; &quot; + table);
-    for (final Column column: table.getColumns())
-    {
-      System.out.println(&quot;     o--&gt; &quot; + column);
-    }
-  }
-}
-</pre></div>
-        
-For more details, please refer to the [javadocs](apidocs/index.html).
-        
 SchemaCrawler provides metadata for the following database objects:  
      
 * Column data types
@@ -144,3 +119,8 @@ SchemaCrawler provides metadata for the following database objects:
 * Synonyms
 * Privileges and grants
 
+The sample code below demonstrates just how easy it is to use SchemaCrawler:
+
+<script src="https://gist.github.com/sualeh/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
+        
+For more details, please refer to the [javadocs](apidocs/index.html).
