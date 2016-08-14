@@ -31,24 +31,24 @@ package schemacrawler.tools.text.utility;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
 import schemacrawler.schema.DatabaseObject;
 import sf.util.Color;
+import sf.util.RegularExpressionColorMap;
 
 public class DatabaseObjectColorMap
 {
 
   public static Color default_object_color = Color.fromHSV(0, 0, 0.95f);
 
-  private final Map<String, Color> colorMap;
+  private final RegularExpressionColorMap colorMap;
   private final boolean noColors;
 
   public DatabaseObjectColorMap(final boolean noColors)
   {
     this.noColors = noColors;
-    colorMap = new HashMap<>();
+    colorMap = new RegularExpressionColorMap();
   }
 
   public Color getColor(final DatabaseObject dbObject)
@@ -61,14 +61,15 @@ public class DatabaseObjectColorMap
 
     final Color tableColor;
     final String schemaName = dbObject.getSchema().getFullName();
-    if (!colorMap.containsKey(schemaName))
+    Optional<Color> colorMatch = colorMap.match(schemaName);
+    if (!colorMatch.isPresent())
     {
       tableColor = generatePastelColor(schemaName);
-      colorMap.put(schemaName, tableColor);
+      colorMap.putLiteral(schemaName, tableColor);
     }
     else
     {
-      tableColor = colorMap.get(schemaName);
+      tableColor = colorMatch.get();
     }
     return tableColor;
   }
@@ -92,4 +93,5 @@ public class DatabaseObjectColorMap
     final Color color = Color.fromHSV(hue, saturation, brightness);
     return color;
   }
+
 }
