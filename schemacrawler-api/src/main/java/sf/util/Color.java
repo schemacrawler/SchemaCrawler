@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static sf.util.Utility.isBlank;
+
 /**
  * Color breaks the dependency on java.awt.Color. The AWT comes with a
  * lot of baggage, and is not part of Java Compact Profile 2.
@@ -76,6 +78,32 @@ public final class Color
                   normaliedHue,
                   saturation,
                   value));
+    }
+  }
+
+  public static Color fromHTMLColor(final String htmlColor)
+  {
+    if (isBlank(htmlColor))
+    {
+      throw new IllegalArgumentException("No color provided, " + htmlColor);
+    }
+    if (htmlColor.length() != 7 || !htmlColor.startsWith("#"))
+    {
+      throw new IllegalArgumentException("Bad color provided, " + htmlColor);
+    }
+
+    // Parse color
+    try
+    {
+      final int r = Integer.parseInt(htmlColor.substring(1, 3), 16);
+      final int b = Integer.parseInt(htmlColor.substring(3, 5), 16);
+      final int g = Integer.parseInt(htmlColor.substring(5, 7), 16);
+
+      return new Color(r, b, g);
+    }
+    catch (final Exception e)
+    {
+      throw new IllegalArgumentException("Bad color provided, " + htmlColor, e);
     }
   }
 
