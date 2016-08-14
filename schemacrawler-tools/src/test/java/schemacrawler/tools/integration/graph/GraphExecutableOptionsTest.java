@@ -294,7 +294,7 @@ public class GraphExecutableOptionsTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
-    graphOptionsBuilder.sortTables();
+    graphOptionsBuilder.sortTables(true);
     executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
 
     // Generate diagram, so that we have something to look at, even if

@@ -70,9 +70,9 @@ public final class OperationOptionsBuilder
   /**
    * Whether to show LOBs.
    */
-  public OperationOptionsBuilder showLobs()
+  public OperationOptionsBuilder showLobs(final boolean value)
   {
-    options.setShowLobs(true);
+    options.setShowLobs(value);
     return this;
   }
 
