@@ -32,6 +32,7 @@ import static sf.util.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,6 +106,12 @@ public class RegularExpressionColorMap
                                   literal,
                                   color));
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return Objects.toString(colorMap);
   }
 
 }
