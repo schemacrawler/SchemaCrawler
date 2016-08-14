@@ -73,22 +73,22 @@ public final class CommandDaisyChainExecutable
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          commonTextOptions.hideFooter();
+          commonTextOptions.noFooter(true);
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          commonTextOptions.hideHeader();
-          commonTextOptions.hideInfo();
+          commonTextOptions.noHeader(true);
+          commonTextOptions.noInfo(true);
 
           commonTextOptions.appendOutput();
         }
         else
         {
           // Middle command - no header, footer, or info
-          commonTextOptions.hideHeader();
-          commonTextOptions.hideInfo();
-          commonTextOptions.hideFooter();
+          commonTextOptions.noHeader(true);
+          commonTextOptions.noInfo(true);
+          commonTextOptions.noFooter(true);
 
           commonTextOptions.appendOutput();
         }

@@ -113,33 +113,28 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public SchemaTextOptionsBuilder hideRemarks()
+  public SchemaTextOptionsBuilder noRemarks(final boolean value)
   {
-    options.setHideRemarks(true);
+    options.setHideRemarks(value);
     return this;
   }
 
-  public SchemaTextOptionsBuilder noInfo()
+  public SchemaTextOptionsBuilder portableNames(final boolean value)
   {
-    options.setNoInfo(true);
+    options.setHideConstraintNames(value);
+    options.setHideForeignKeyNames(value);
+    options.setHideIndexNames(value);
+    options.setHidePrimaryKeyNames(value);
+    options.setHideTriggerNames(value);
+    options.setHideRoutineSpecificNames(value);
+    options.setShowUnqualifiedNames(value);
+
     return this;
   }
 
-  public SchemaTextOptionsBuilder portableNames()
+  public SchemaTextOptionsBuilder sortInOut(final boolean value)
   {
-    options.setHideConstraintNames(true);
-    options.setHideForeignKeyNames(true);
-    options.setHideIndexNames(true);
-    options.setHidePrimaryKeyNames(true);
-    options.setHideTriggerNames(true);
-    options.setHideRoutineSpecificNames(true);
-    options.setShowUnqualifiedNames(true);
-    return this;
-  }
-
-  public SchemaTextOptionsBuilder sortInOut()
-  {
-    options.setAlphabeticalSortForRoutineColumns(true);
+    options.setAlphabeticalSortForRoutineColumns(value);
     return this;
   }
 

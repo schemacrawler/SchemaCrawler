@@ -55,63 +55,40 @@ public final class AdditionalConfigOptionsParser
       .fromConfig(config);
     if (config.hasValue("noinfo"))
     {
-      final boolean booleanValue = config.getBooleanValue("noinfo", true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.noInfo();
-      }
+      final boolean value = config.getBooleanValue("noinfo", true);
+      textOptionsBuilder.noInfo(value);
       consumeOption("noinfo");
     }
     if (config.hasValue("noremarks"))
     {
-      final boolean booleanValue = config.getBooleanValue("noremarks", true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.hideRemarks();
-      }
+      final boolean value = config.getBooleanValue("noremarks", true);
+      textOptionsBuilder.noRemarks(value);
       consumeOption("noremarks");
     }
     if (config.hasValue("sorttables"))
     {
       // Special treatment, since -sorttables is true by default in the
       // options
-      final boolean booleanValue = config.getBooleanValue("sorttables", true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.sortTables();
-      }
-      else
-      {
-        textOptionsBuilder.naturalSortTables();
-      }
+      final boolean value = config.getBooleanValue("sorttables", true);
+      textOptionsBuilder.sortTables(value);
       consumeOption("sorttables");
     }
     if (config.hasValue("sortcolumns"))
     {
-      final boolean booleanValue = config.getBooleanValue("sortcolumns", true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.sortTableColumns();
-      }
+      final boolean value = config.getBooleanValue("sortcolumns", true);
+      textOptionsBuilder.sortTableColumns(value);
       consumeOption("sortcolumns");
     }
     if (config.hasValue("sortinout"))
     {
-      final boolean booleanValue = config.getBooleanValue("sortinout", true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.sortInOut();
-      }
+      final boolean value = config.getBooleanValue("sortinout", true);
+      textOptionsBuilder.sortInOut(value);
       consumeOption("sortinout");
     }
     if (config.hasValue("portablenames"))
     {
-      final boolean booleanValue = config.getBooleanValue("portablenames",
-                                                          true);
-      if (booleanValue)
-      {
-        textOptionsBuilder.portableNames();
-      }
+      final boolean value = config.getBooleanValue("portablenames", true);
+      textOptionsBuilder.portableNames(value);
       consumeOption("portablenames");
     }
 
