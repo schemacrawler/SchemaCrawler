@@ -32,8 +32,10 @@ import static sf.util.Utility.isBlank;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -49,6 +51,32 @@ public class RegularExpressionColorMap
   public RegularExpressionColorMap()
   {
     colorMap = new HashMap<>();
+  }
+
+  public RegularExpressionColorMap(final Properties properties)
+  {
+    this();
+    if (properties == null || properties.isEmpty())
+    {
+      return;
+    }
+    for (final Entry<Object, Object> match: properties.entrySet())
+    {
+      if (match != null)
+      {
+        final Object key = match.getKey();
+        final Object value = match.getValue();
+        if (key != null && value != null)
+        {
+          put(value.toString(), key.toString());
+        }
+      }
+    }
+  }
+
+  public boolean isEmpty()
+  {
+    return colorMap.isEmpty();
   }
 
   public Optional<Color> match(final String value)
@@ -106,6 +134,11 @@ public class RegularExpressionColorMap
                                   literal,
                                   color));
     }
+  }
+
+  public int size()
+  {
+    return colorMap.size();
   }
 
   @Override
