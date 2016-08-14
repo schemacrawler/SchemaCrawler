@@ -81,7 +81,7 @@ public final class Color
     }
   }
 
-  public static Color fromHTMLColor(final String htmlColor)
+  public static Color fromHexTriplet(final String htmlColor)
   {
     if (isBlank(htmlColor))
     {

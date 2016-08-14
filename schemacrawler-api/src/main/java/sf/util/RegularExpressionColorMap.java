@@ -72,7 +72,7 @@ public class RegularExpressionColorMap
       }
 
       final Pattern pattern = Pattern.compile(regExpPattern, 0);
-      final Color color = Color.fromHTMLColor(htmlColor);
+      final Color color = Color.fromHexTriplet(htmlColor);
       colorMap.put(pattern, color);
     }
     catch (final Exception e)
