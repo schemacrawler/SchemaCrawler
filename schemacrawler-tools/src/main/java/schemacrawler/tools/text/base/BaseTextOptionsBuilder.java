@@ -115,27 +115,27 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> hideFooter()
+  public BaseTextOptionsBuilder<O> noFooter(final boolean value)
   {
-    options.setNoFooter(true);
+    options.setNoFooter(value);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> hideHeader()
+  public BaseTextOptionsBuilder<O> noHeader(final boolean value)
   {
-    options.setNoHeader(true);
+    options.setNoHeader(value);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> hideInfo()
+  public BaseTextOptionsBuilder<O> noInfo(final boolean value)
   {
-    options.setNoInfo(true);
+    options.setNoInfo(value);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> naturalSortTables()
+  public BaseTextOptionsBuilder<O> sortTables(final boolean value)
   {
-    options.setAlphabeticalSortForTables(false);
+    options.setAlphabeticalSortForTables(value);
     return this;
   }
 
@@ -145,33 +145,9 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> showFooter()
+  public BaseTextOptionsBuilder<O> sortTableColumns(final boolean value)
   {
-    options.setNoFooter(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> showHeader()
-  {
-    options.setNoHeader(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> showInfo()
-  {
-    options.setNoInfo(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> sortTableColumns()
-  {
-    options.setAlphabeticalSortForTableColumns(true);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> sortTables()
-  {
-    options.setAlphabeticalSortForTables(true);
+    options.setAlphabeticalSortForTableColumns(value);
     return this;
   }
 
