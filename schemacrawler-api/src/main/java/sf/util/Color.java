@@ -41,46 +41,6 @@ public final class Color
 
   public static Color white = new Color(255, 255, 255);
 
-  /**
-   * <a href=
-   * "http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe">
-   * Converting from HSV (HSB in Java) to RGB without using
-   * java.awt.Color</a>
-   */
-  public static Color fromHSV(final float hue,
-                              final float saturation,
-                              final float value)
-  {
-    final float normaliedHue = hue - (float) Math.floor(hue);
-    final int h = (int) (normaliedHue * 6);
-    final float f = normaliedHue * 6 - h;
-    final float p = value * (1 - saturation);
-    final float q = value * (1 - f * saturation);
-    final float t = value * (1 - (1 - f) * saturation);
-
-    switch (h)
-    {
-      case 0:
-        return rgbToString(value, t, p);
-      case 1:
-        return rgbToString(q, value, p);
-      case 2:
-        return rgbToString(p, value, t);
-      case 3:
-        return rgbToString(p, q, value);
-      case 4:
-        return rgbToString(t, p, value);
-      case 5:
-        return rgbToString(value, p, q);
-      default:
-        throw new RuntimeException(String
-          .format("Could not convert from HSV (%f, %f, %f) to RGB",
-                  normaliedHue,
-                  saturation,
-                  value));
-    }
-  }
-
   public static Color fromHexTriplet(final String htmlColor)
   {
     if (isBlank(htmlColor))
@@ -107,7 +67,52 @@ public final class Color
     }
   }
 
-  public static Color rgbToString(final float r, final float g, final float b)
+  /**
+   * <a href=
+   * "http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe">
+   * Converting from HSV (HSB in Java) to RGB without using
+   * java.awt.Color</a>
+   */
+  public static Color fromHSV(final float hue,
+                              final float saturation,
+                              final float value)
+  {
+    final float normaliedHue = hue - (float) Math.floor(hue);
+    final int h = (int) (normaliedHue * 6);
+    final float f = normaliedHue * 6 - h;
+    final float p = value * (1 - saturation);
+    final float q = value * (1 - f * saturation);
+    final float t = value * (1 - (1 - f) * saturation);
+
+    switch (h)
+    {
+      case 0:
+        return fromRGB(value, t, p);
+      case 1:
+        return fromRGB(q, value, p);
+      case 2:
+        return fromRGB(p, value, t);
+      case 3:
+        return fromRGB(p, q, value);
+      case 4:
+        return fromRGB(t, p, value);
+      case 5:
+        return fromRGB(value, p, q);
+      default:
+        throw new RuntimeException(String
+          .format("Could not convert from HSV (%f, %f, %f) to RGB",
+                  normaliedHue,
+                  saturation,
+                  value));
+    }
+  }
+
+  public static Color fromRGB(final int r, final int g, final int b)
+  {
+    return new Color(r, g, b);
+  }
+
+  private static Color fromRGB(final float r, final float g, final float b)
   {
     return new Color((int) (r * 255 + 0.5),
                      (int) (g * 255 + 0.5),
@@ -158,6 +163,48 @@ public final class Color
     {
       this.b = b;
     }
+  }
+
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+    final Color other = (Color) obj;
+    if (b != other.b)
+    {
+      return false;
+    }
+    if (g != other.g)
+    {
+      return false;
+    }
+    if (r != other.r)
+    {
+      return false;
+    }
+    return true;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + b;
+    result = prime * result + g;
+    result = prime * result + r;
+    return result;
   }
 
   @Override
