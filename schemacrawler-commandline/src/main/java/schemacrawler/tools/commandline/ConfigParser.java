@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import java.io.IOException;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -55,16 +53,9 @@ public class ConfigParser
   public void loadConfig()
     throws SchemaCrawlerException
   {
-    try
-    {
-      final String configfile = config
-        .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
-      config.putAll(Config.load(configfile));
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Could not load config files", e);
-    }
+    final String configfile = config
+      .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
+    config.putAll(Config.loadFile(configfile));
   }
 
   public void consumeOptions()

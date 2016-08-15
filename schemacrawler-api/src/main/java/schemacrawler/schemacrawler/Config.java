@@ -29,19 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
-import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
+import static sf.util.PropertiesUtility.loadProperties;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
@@ -76,15 +69,18 @@ public final class Config
    * @return Configuration properties.
    * @throws IOException
    */
-  public static Config load(final String configFilename)
-    throws IOException
+  public static Config loadFile(final String configFilename)
   {
-    Properties configProperties = new Properties();
+    final Properties configProperties;
     if (!isBlank(configFilename))
     {
       final Path configPath = Paths.get(configFilename).normalize()
         .toAbsolutePath();
-      configProperties = loadProperties(configProperties, configPath);
+      configProperties = loadProperties(configPath);
+    }
+    else
+    {
+      configProperties = new Properties();
     }
     return new Config(configProperties);
   }
@@ -99,85 +95,8 @@ public final class Config
    */
   public static Config loadResource(final String resource)
   {
-    Properties configProperties = new Properties();
-
-    final InputStream stream;
-    if (!isBlank(resource))
-    {
-      stream = Config.class.getResourceAsStream(resource);
-    }
-    else
-    {
-      stream = null;
-    }
-
-    if (stream != null)
-    {
-      configProperties = loadProperties(configProperties,
-                                        new InputStreamReader(stream));
-    }
-
+    final Properties configProperties = loadProperties(resource);
     return new Config(configProperties);
-  }
-
-  /**
-   * Loads a properties file.
-   *
-   * @param properties
-   *        Properties object.
-   * @param propertiesFile
-   *        Properties file.
-   * @return Properties
-   * @throws IOException
-   */
-  private static Properties loadProperties(final Properties properties,
-                                           final Path propertiesFile)
-    throws IOException
-  {
-    if (propertiesFile == null || !isRegularFile(propertiesFile)
-        || !isReadable(propertiesFile))
-    {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Cannot load properties from file, %s",
-                                  propertiesFile));
-      return properties;
-    }
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Loading properties from file, %s",
-                                propertiesFile));
-    loadProperties(properties,
-                   newBufferedReader(propertiesFile, StandardCharsets.UTF_8));
-    return properties;
-  }
-
-  /**
-   * Loads a properties file.
-   *
-   * @param properties
-   *        Properties object.
-   * @param reader
-   *        Properties data stream.
-   * @return Properties
-   */
-  private static Properties loadProperties(final Properties properties,
-                                           final Reader reader)
-  {
-    if (properties == null || reader == null)
-    {
-      LOGGER.log(Level.WARNING, "No properties provided");
-      return new Properties();
-    }
-
-    try (final BufferedReader bufferedReader = new BufferedReader(reader);)
-    {
-      properties.load(bufferedReader);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING, "Error loading properties", e);
-    }
-    return properties;
   }
 
   /**

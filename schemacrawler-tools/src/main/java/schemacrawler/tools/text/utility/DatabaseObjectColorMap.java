@@ -29,9 +29,12 @@ package schemacrawler.tools.text.utility;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.PropertiesUtility.loadProperties;
 import static sf.util.Utility.isBlank;
 
+import java.nio.file.Paths;
 import java.util.Optional;
+import java.util.Properties;
 
 import schemacrawler.schema.DatabaseObject;
 import sf.util.Color;
@@ -40,15 +43,34 @@ import sf.util.RegularExpressionColorMap;
 public class DatabaseObjectColorMap
 {
 
+  private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES = "schemacrawler.colormap.properties";
+
   public static Color default_object_color = Color.fromHSV(0, 0, 0.95f);
+
+  public static DatabaseObjectColorMap initialize(final boolean noColors)
+  {
+    final Properties properties = new Properties();
+    if (noColors)
+    {
+      return new DatabaseObjectColorMap(properties, noColors);
+    }
+
+    // Load from classpath and also current directory, in that order
+    properties.putAll(loadProperties("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
+    properties.putAll(loadProperties(Paths
+      .get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES)));
+
+    return new DatabaseObjectColorMap(properties, noColors);
+  }
 
   private final RegularExpressionColorMap colorMap;
   private final boolean noColors;
 
-  public DatabaseObjectColorMap(final boolean noColors)
+  private DatabaseObjectColorMap(final Properties properties,
+                                 final boolean noColors)
   {
     this.noColors = noColors;
-    colorMap = new RegularExpressionColorMap();
+    colorMap = new RegularExpressionColorMap(properties);
   }
 
   public Color getColor(final DatabaseObject dbObject)
@@ -61,7 +83,7 @@ public class DatabaseObjectColorMap
 
     final Color tableColor;
     final String schemaName = dbObject.getSchema().getFullName();
-    Optional<Color> colorMatch = colorMap.match(schemaName);
+    final Optional<Color> colorMatch = colorMap.match(schemaName);
     if (!colorMatch.isPresent())
     {
       tableColor = generatePastelColor(schemaName);
