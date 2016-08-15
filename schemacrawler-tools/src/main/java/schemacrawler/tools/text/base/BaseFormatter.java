@@ -71,7 +71,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     this.outputOptions = requireNonNull(outputOptions,
                                         "Output options not provided");
 
-    colorMap = new DatabaseObjectColorMap(options.isNoSchemaColors());
+    colorMap = DatabaseObjectColorMap.initialize(options.isNoSchemaColors());
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
