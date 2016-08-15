@@ -115,7 +115,7 @@ public class SpinThroughTest
           final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                                 testOutputFile);
 
-          final Config config = Config.load(hsqldbProperties.toString());
+          final Config config = Config.loadFile(hsqldbProperties.toString());
 
           final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
           databaseSpecificOverrideOptionsBuilder.fromConfig(config);
