@@ -68,7 +68,20 @@ public class RegularExpressionColorMap
         final Object value = match.getValue();
         if (key != null && value != null)
         {
-          put(value.toString(), key.toString());
+          final String regExpPattern = value.toString();
+          final String htmlColor = key.toString();
+          if (!isBlank(regExpPattern) && !isBlank(htmlColor)
+              && htmlColor.startsWith("-#"))
+          {
+            put(regExpPattern, htmlColor.substring(1));
+          }
+          else
+          {
+            LOGGER.log(Level.CONFIG,
+                       new StringFormat("Could not add color mapping for %s = %s",
+                                        regExpPattern,
+                                        htmlColor));
+          }
         }
       }
     }
