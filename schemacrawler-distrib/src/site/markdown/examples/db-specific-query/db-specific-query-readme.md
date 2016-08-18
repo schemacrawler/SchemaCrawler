@@ -12,5 +12,5 @@ is database-specific. This example demonstrates how to execute arbitrary SQL.
 
 ## How to Experiment
 1. Try generating different output formats, such as HTML or JSON. 
-2. Try modifying `lib/schemacrawler.config.properties` with different queries. 
+2. Try modifying `config/schemacrawler.config.properties` with different queries. 
 3. Redirect the output of SchemaCrawler into a file, by running `db-specific-query.cmd > file.txt`. 
