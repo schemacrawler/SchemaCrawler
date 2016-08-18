@@ -71,9 +71,9 @@ public class RegularExpressionColorMap
           final String regExpPattern = value.toString();
           final String htmlColor = key.toString();
           if (!isBlank(regExpPattern) && !isBlank(htmlColor)
-              && htmlColor.startsWith("-#"))
+              && htmlColor.length() == 6)
           {
-            put(regExpPattern, htmlColor.substring(1));
+            put(regExpPattern, "#" + htmlColor);
           }
           else
           {

@@ -16,7 +16,7 @@ The command example demonstrates the use of SchemaCrawler from the shell command
 2. Take a look at the SchemaCrawler lint example, in the [lint](../lint/lint-readme.html) example directory. 
 3. Take a look at the SchemaCrawler offline snapshot example, in the [offline](../offline/offline-readme.html) example directory. 
 4. Try using different SchemaCrawler command-line options.
-5. Try modifying `lib/schemacrawler.config.properties` with different options. 
+5. Try modifying `config/schemacrawler.config.properties` with different options. 
 6. Try running an arbitrary query, with a query command `"-command=SELECT * FROM PUBLIC.BOOKS.AUTHORS"`. 
    (The quotes are required.) 
 7. Redirect the output of SchemaCrawler into a file, by adding ` > file.txt` to the command-line. 

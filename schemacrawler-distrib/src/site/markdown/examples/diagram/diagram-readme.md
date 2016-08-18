@@ -12,7 +12,7 @@ The diagram example demonstrates the integration of SchemaCrawler with GraphViz.
 ## How to Experiment
 1. Try using grep options to include certain tables. For example, try using a command-line option of `-grepcolumns=.*\\.AUTHOR.*`
 2. Try controlling display of foreign-key names, column ordinal numbers, and schema names by setting the 
-   following properties in the SchemaCrawler configuration file, `schemacrawler.config.properties`. 
+   following properties in the SchemaCrawler configuration file, `config/schemacrawler.config.properties`. 
 
 ```           
 schemacrawler.format.show_ordinal_numbers=true        
@@ -21,7 +21,7 @@ schemacrawler.format.show_unqualified_names=true
 ```    
 
 3. Try using GraphViz command-line options by setting the following property in the SchemaCrawler configuration file, 
-   `schemacrawler.config.properties`. 
+   `config/schemacrawler.config.properties`. 
     
 ```        
 schemacrawler.graph.graphviz_opts=-Gdpi=300
