@@ -49,12 +49,14 @@ public class TestRegularExpressionColorMap
   {
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
-    colorMap.put("SC.*", "1A3B5C");
+    colorMap.put("SC.*", "1A3B5");
     assertFalse(colorMap.match("SCH").isPresent());
 
-    colorMap.put("SC.*", test_color.toString() + "A");
+    colorMap.put("SC.*", test_color.toString().substring(1) + "A");
     assertFalse(colorMap.match("SCH").isPresent());
 
+    colorMap.put("SC.*", test_color.toString().substring(1));
+    assertFalse(colorMap.match("SCH").isPresent());
   }
 
   @Test
@@ -71,9 +73,9 @@ public class TestRegularExpressionColorMap
   public void fromProperties()
   {
     final Properties properties = new Properties();
-    properties.put("-" + test_color.toString(), "SC.*");
-    properties.put("-" + test_color.toString() + "A", "SC.*");
-    properties.put("-" + "#000000", "QW.*");
+    properties.put(test_color.toString().substring(1), "SC.*");
+    properties.put(test_color.toString().substring(1) + "A", "SC.*");
+    properties.put("000000", "QW.*");
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap(properties);
 
     assertEquals(2, colorMap.size());

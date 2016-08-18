@@ -263,8 +263,11 @@
       todir="${schemacrawler.complete-distribution}/lib"/>
     <copy
       file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.config.properties"
-      todir="${schemacrawler.complete-distribution}/lib"/> 
-    
+      todir="${schemacrawler.complete-distribution}/config"/> 
+    <copy
+      file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.colormap.properties"
+      todir="${schemacrawler.complete-distribution}/config"/> 
+      	
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
     <create-dbserver-distribution database="h2" />
