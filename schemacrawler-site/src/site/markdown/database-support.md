@@ -48,3 +48,21 @@ You should always use the -schemas command-line switch for databases that suppor
 for the `-schemas` switch is a regular expression that determines which schemas SchemaCrawler will 
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically 
 schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).
+
+## Connections to Database
+
+### Microsoft SQL Server
+
+You need to specify the host, port, database name, and the schemas you are interested in, for Microsoft SQL Server. 
+Typical command-line arguments will look like:
+```
+-server=sqlserver -host=db.example.com -port=1433 -database=rdsadmin -schemas=rdsadmin.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+```
+
+### PostgreSQL
+
+You need to specify the host, port, database name, and the schemas you are interested in, for PostgreSQL. 
+Typical command-line arguments will look like:
+```
+-server=postgresql -host=db.example.com -port=5432 -database=schemacrawler -schemas=public -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+```
