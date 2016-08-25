@@ -49,14 +49,34 @@ for the `-schemas` switch is a regular expression that determines which schemas 
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically 
 schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).
 
-## Connections to Database
+## Making Connections to a Database
 
 ### Microsoft SQL Server
 
 You need to specify the host, port, database name, and the schemas you are interested in, for Microsoft SQL Server. 
+
 Typical command-line arguments will look like:
 ```
--server=sqlserver -host=db.example.com -port=1433 -database=rdsadmin -schemas=rdsadmin.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+-server=sqlserver -host=db.example.com -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+```
+
+If your SQL Server instance is set up with Windows authentication, you
+will need to use a database connection URL. See the [jTDS
+FAQ](http://jtds.sourceforge.net/faq.html), which explains that you will
+have to use`useNTLMv2=true` and `domain=yourdomain` as part of the database
+connection URL. You do not need to supply a username and password.
+
+```
+-server=sqlserver -url=<url> -schemas=schemacrawler.dbo -user= -password= -infolevel=standard -command=schema
+```
+
+### Oracle
+
+You need to specify the host, port, database name, and the schemas you are interested in, for Oracle. 
+
+Typical command-line arguments will look like:
+```
+-server=oracle -host=db.example.com -port=1521 -database=ORCL -schemas=SCHEMACRAWLER -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
 
 ### PostgreSQL
