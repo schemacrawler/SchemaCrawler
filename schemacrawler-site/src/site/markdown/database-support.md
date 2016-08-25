@@ -53,7 +53,9 @@ schemas look like "database_name.user", but for Oracle, typically, schemas look 
 
 ### Microsoft SQL Server
 
-You need to specify the host, port, database name, and the schemas you are interested in, for Microsoft SQL Server. 
+You need to specify the host, port, database name, and the schemas you
+are interested in, for Microsoft SQL Server.
+
 
 Typical command-line arguments will look like:
 ```
@@ -66,23 +68,53 @@ FAQ](http://jtds.sourceforge.net/faq.html), which explains that you will
 have to use`useNTLMv2=true` and `domain=yourdomain` as part of the database
 connection URL. You do not need to supply a username and password.
 
+Typical command-line arguments will look like:
 ```
 -server=sqlserver -url=<url> -schemas=schemacrawler.dbo -user= -password= -infolevel=standard -command=schema
 ```
 
 ### Oracle
 
-You need to specify the host, port, database name, and the schemas you are interested in, for Oracle. 
+You need to specify the host, port, database name, and the schemas you
+are interested in, for Oracle.
+
 
 Typical command-line arguments will look like:
 ```
 -server=oracle -host=db.example.com -port=1521 -database=ORCL -schemas=SCHEMACRAWLER -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
 
+### MySQL
+
+You need to specify the host, port, database name, and the schemas you
+are interested in, for MySQL.
+
+
+Typical command-line arguments will look like:
+```
+-server=mysql -host=db.example.com -port=3306 -database=schemacrawler -schemas=schemacrawler -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+```
+
 ### PostgreSQL
 
-You need to specify the host, port, database name, and the schemas you are interested in, for PostgreSQL. 
+You need to specify the host, port, database name, and the schemas you
+are interested in, for PostgreSQL.
+
+
 Typical command-line arguments will look like:
 ```
 -server=postgresql -host=db.example.com -port=5432 -database=schemacrawler -schemas=public -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+```
+
+### MariaDB
+
+You need to specify the database connection URL, and the schemas you are
+interested in, for MariaDB. First make sure that the MariaDB driver is
+in the `lib/` folder.
+
+
+Typical command-line arguments will look like:
+
+```
+-url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler -schemas=schemacrawler -user=schemacrawler -password=schemacrawler -tabletypes=UNKNOWN,VIEW -infolevel=standard -command=schema 
 ```
