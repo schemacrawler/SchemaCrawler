@@ -30,28 +30,23 @@ package schemacrawler.testdb;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class TestDatabase
+public class EmbeddedTestDatabase
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(TestDatabase.class.getName());
 
   private final String databaseServer;
   private final DataSource dataSource;
 
-  public TestDatabase(final String server)
+  public EmbeddedTestDatabase(final String server)
     throws SQLException
   {
     try (
-      final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
-                                                                                                       getContext(server)
-      });)
+        final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
+                                                                                                         getContext(server) });)
     {
       dataSource = context.getBean("dataSource", DataSource.class);
     }
@@ -59,7 +54,8 @@ public class TestDatabase
     try (final Connection connection = dataSource.getConnection();)
     {
       databaseServer = String
-        .format("%s %s", connection.getMetaData().getDatabaseProductName(),
+        .format("%s %s",
+                connection.getMetaData().getDatabaseProductName(),
                 connection.getMetaData().getDatabaseProductVersion());
     }
   }
