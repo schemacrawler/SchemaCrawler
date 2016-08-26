@@ -58,6 +58,9 @@
     </repository>
   </distributionManagement>
   <modules>
+		
+    <module>schemacrawler-testdb</module>
+		
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>
@@ -67,7 +70,6 @@
     <module>schemacrawler-lint</module>
 
     <module>schemacrawler-examplecode</module>
-    <module>schemacrawler-testdb</module>
 
     <module>schemacrawler-db2</module>
     <module>schemacrawler-h2</module>
@@ -79,6 +81,7 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-offline</module>
+		
   </modules>
   <profiles>
     <profile>
