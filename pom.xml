@@ -24,7 +24,7 @@
     <license>
       <name>GNU General Public License</name>
       <url>http://www.gnu.org/licenses/gpl.html</url>
-    </license>    
+    </license>
   </licenses>
   <developers>
     <developer>
@@ -66,8 +66,6 @@
 
     <module>schemacrawler-lint</module>
 
-    <module>schemacrawler-testdb</module>
-
     <module>schemacrawler-db2</module>
     <module>schemacrawler-h2</module>
     <module>schemacrawler-hsqldb</module>
@@ -78,6 +76,9 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-offline</module>
+
+    <module>schemacrawler-test</module>
+    <module>schemacrawler-testdb</module>
   </modules>
   <profiles>
     <profile>
@@ -152,7 +153,7 @@
       <artifactId>system-rules</artifactId>
       <version>1.16.0</version>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
     <dependency>
       <groupId>xmlunit</groupId>
       <artifactId>xmlunit</artifactId>
@@ -228,12 +229,12 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
-        </plugin> 
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>2.6</version>
-        </plugin>        
+        </plugin>
       </plugins>
     </pluginManagement>
     <plugins>
@@ -245,7 +246,7 @@
         <configuration>
           <compilerArguments>
             <profile>compact2</profile>
-          </compilerArguments>        
+          </compilerArguments>
           <source>8</source>
           <target>8</target>
           <compilerArgs>
