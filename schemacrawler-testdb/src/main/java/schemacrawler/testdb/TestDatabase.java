@@ -29,6 +29,8 @@ package schemacrawler.testdb;
 
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -37,30 +39,28 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestDatabase
 {
 
-  public static void main(final String[] args)
-    throws Exception
-  {
-    final String server;
-    if (args == null || args.length == 0)
-    {
-      server = "hsqldb";
-    }
-    else
-    {
-      server = args[0];
-    }
-    new TestDatabase(server).testConnection();
-  }
+  private static final Logger LOGGER = Logger
+    .getLogger(TestDatabase.class.getName());
 
+  private final String databaseServer;
   private final DataSource dataSource;
 
   public TestDatabase(final String server)
+    throws SQLException
   {
-    try (final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
-      getContext(server)
-    });)
+    try (
+      final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {
+                                                                                                       getContext(server)
+      });)
     {
       dataSource = context.getBean("dataSource", DataSource.class);
+    }
+
+    try (final Connection connection = dataSource.getConnection();)
+    {
+      databaseServer = String
+        .format("%s %s", connection.getMetaData().getDatabaseProductName(),
+                connection.getMetaData().getDatabaseProductVersion());
     }
   }
 
@@ -69,13 +69,10 @@ public class TestDatabase
     return dataSource;
   }
 
-  public final void testConnection()
-    throws Exception
+  @Override
+  public String toString()
   {
-    final Connection connection = dataSource.getConnection();
-    System.out.println(String.format("%s %s", connection.getMetaData()
-      .getDatabaseProductName(), connection.getMetaData()
-      .getDatabaseProductVersion()));
+    return databaseServer;
   }
 
   private String getContext(final String server)
