@@ -158,7 +158,7 @@
 
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}/examples/api">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-test/src/main/java">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
         <include name="*.java" />
       </fileset>
     </copy>

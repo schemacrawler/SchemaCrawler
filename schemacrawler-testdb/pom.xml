@@ -15,7 +15,7 @@
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <springframework.version>4.3.2.RELEASE</springframework.version>
   </properties>
-  <dependencies>
+  <dependencies>	
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
