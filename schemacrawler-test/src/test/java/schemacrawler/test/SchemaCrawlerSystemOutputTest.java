@@ -34,6 +34,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -43,6 +44,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.ObjectToString;
 
+@Ignore
 public class SchemaCrawlerSystemOutputTest
   extends AbstractSchemaCrawlerSystemTest
 {

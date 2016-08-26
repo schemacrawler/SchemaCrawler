@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -48,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import sf.util.ObjectToString;
 
+@Ignore
 public class SchemaCrawlerSystemTest
   extends AbstractSchemaCrawlerSystemTest
 {
