@@ -66,6 +66,9 @@
 
     <module>schemacrawler-lint</module>
 
+    <module>schemacrawler-examplecode</module>
+    <module>schemacrawler-testdb</module>
+
     <module>schemacrawler-db2</module>
     <module>schemacrawler-h2</module>
     <module>schemacrawler-hsqldb</module>
@@ -76,9 +79,6 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-offline</module>
-
-    <module>schemacrawler-examplecode</module>
-    <module>schemacrawler-testdb</module>
   </modules>
   <profiles>
     <profile>

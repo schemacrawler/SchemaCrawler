@@ -27,7 +27,8 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.testdb;
 
-public class TestDatabaseMain
+
+public class EmbeddedTestDatabaseMain
 {
 
   public static void main(final String[] args)
@@ -42,7 +43,7 @@ public class TestDatabaseMain
     {
       server = args[0];
     }
-    System.out.println(new TestDatabase(server));
+    System.out.println(new EmbeddedTestDatabase(server));
   }
 
 }
