@@ -26,15 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.utility;
+package schemacrawler.testdb;
 
 
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
-import static sf.util.DatabaseUtility.executeScriptFromResource;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,14 +46,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hsqldb.server.Server;
-
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.StringFormat;
 
 /**
  * Sets up a database schema for tests and examples.
@@ -178,7 +176,7 @@ public class TestDatabase
     throws Exception
   {
     LOGGER.log(Level.FINE,
-               new StringFormat("%s - Setting up database", toString()));
+               String.format("%s - Setting up database", toString()));
     // Attempt to delete the database files
     deleteServerFiles();
 
@@ -238,7 +236,6 @@ public class TestDatabase
   }
 
   private void createDatabase()
-    throws SchemaCrawlerException
   {
     try (final Connection connection = getConnection();)
     {
@@ -253,17 +250,22 @@ public class TestDatabase
                                                      "post_schema",
                                                      "data", })
         {
-          final String scriptResource = String
-            .format("/testdatabase/%s.%s.sql", schema, scriptType)
-            .toLowerCase(Locale.ENGLISH);
-          executeScriptFromResource(connection, scriptResource);
+          final String scriptResource = String.format("/testdatabase/%s.%s.sql",
+                                                      schema,
+                                                      scriptType);
+          final Reader reader = new InputStreamReader(TestDatabase.class
+            .getResourceAsStream(scriptResource), StandardCharsets.UTF_8);
+
+          final SqlScript sqlScript = new SqlScript(connection);
+          sqlScript.run(reader);
         }
       }
     }
-    catch (final SQLException e)
+    catch (final SQLException | IOException e)
     {
       System.err.println(e.getMessage());
       LOGGER.log(Level.WARNING, e.getMessage(), e);
+      throw new RuntimeException(e);
     }
   }
 

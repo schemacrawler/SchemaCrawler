@@ -10,6 +10,14 @@
   <artifactId>schemacrawler-api</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler API</name>
+  <dependencies>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-testdb</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
