@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2016-08-28 14:14:29</td>
+		<td align='left'>2016-08-28 22:31:51</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -296,20 +296,3 @@ along with the latest updated information</td>
 
 
 }
-
-
-Row Count
-========================================================================
-
-Row Count                                                               
-------------------------------------------------------------------------
-PUBLIC.BOOKS.AUTHORS                                             20 rows
-PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
-PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
-PUBLIC.BOOKS.BOOKS                                               20 rows
-PUBLIC.BOOKS."Global Counts"                                       empty
-PUBLIC.BOOKS.PUBLISHERS                                          20 rows
-PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
-PUBLIC."PUBLISHER SALES".SALES                                   20 rows
-PUBLIC."PUBLISHER SALES".SALESDATA                                 empty
-

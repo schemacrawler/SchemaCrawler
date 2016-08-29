@@ -40,6 +40,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -49,6 +51,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
+import sf.util.StringFormat;
 
 /**
  * Basic SchemaCrawler executor.
@@ -58,6 +61,8 @@ import schemacrawler.utility.Query;
 public final class OperationExecutable
   extends BaseStagedExecutable
 {
+  private static final Logger LOGGER = Logger
+    .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
 
@@ -71,6 +76,11 @@ public final class OperationExecutable
     throws Exception
   {
     loadOperationOptions();
+
+    if (!isOutputFormatSupported())
+    {
+      return;
+    }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -124,6 +134,21 @@ public final class OperationExecutable
   {
     loadOperationOptions();
     return operationOptions;
+  }
+
+  public boolean isOutputFormatSupported()
+  {
+    getOperationOptions();
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    final boolean isOutputFormatSupported = TextOutputFormat
+      .isTextOutputFormat(outputFormatValue);
+    if (!isOutputFormatSupported)
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Operations cannot support output to %s",
+                                  outputFormatValue));
+    }
+    return isOutputFormatSupported;
   }
 
   public final void setOperationOptions(final OperationOptions operationOptions)
