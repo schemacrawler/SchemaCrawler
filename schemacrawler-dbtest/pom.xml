@@ -8,7 +8,7 @@
     <version>14.10.01</version>
   </parent>
   <artifactId>schemacrawler-dbtest</artifactId>
-	<packaging>jar</packaging>
+  <packaging>jar</packaging>
   <name>SchemaCrawler Database Tests</name>
   <dependencies>
     <dependency>
@@ -16,21 +16,21 @@
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>     
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-tools</artifactId>
       <version>${project.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
-    </dependency>     
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
@@ -40,6 +40,11 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.192</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbyclient</artifactId>
+      <version>10.12.1.1</version>
     </dependency>
   </dependencies>
 </project>
