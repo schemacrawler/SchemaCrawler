@@ -270,7 +270,6 @@
       	
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
-    <create-dbserver-distribution database="h2" />
     <create-dbserver-distribution database="hsqldb" />
     <create-dbserver-distribution database="mysql" />
     <create-dbserver-distribution database="oracle" />
