@@ -12,18 +12,6 @@
   <artifactId>schemacrawler-sqlite</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler for SQLite</name>
-    <repositories>
-    <repository>
-      <id>xerial</id>
-      <name>Xerial</name>
-      <layout>default</layout>
-      <url>http://www.xerial.org/maven/repository/snapshot/</url>
-      <snapshots>
-        <enabled>true</enabled>
-        <updatePolicy>always</updatePolicy>
-      </snapshots>
-    </repository>
-  </repositories>
   <licenses>
     <license>
       <name>GNU General Public License</name>
