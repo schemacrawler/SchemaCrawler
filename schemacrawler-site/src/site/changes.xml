@@ -7,6 +7,9 @@
   <body>
      <release version="14.10.01" date="2016-08-31" description="Configuration changes">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Support for newlines in table and column comments.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Ability to read default configuration settings from the classpath, from a file called 
         schemacrawler.config.properties. This file is distributed in the lib/ folder.
       ]]></action> 

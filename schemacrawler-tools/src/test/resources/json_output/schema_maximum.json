@@ -447,7 +447,7 @@
           "type": "check"
         }
       ],
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "remarks": "Relationship between books and their authors, \nalong with the latest updated information",
       "primaryKey": {}
     },
     {
@@ -1187,7 +1187,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 23:20:40",
+    "crawlTimestamp": "2016-08-28 16:29:51",
     "title": ""
   },
   "routines": [

@@ -27,7 +27,8 @@ COMMENT ON COLUMN Books.PublicationDate IS 'Book publication date'
 COMMENT ON COLUMN Books.Price IS 'Current price for the book'
 ;
 
-COMMENT ON TABLE  BookAuthors IS 'Relationship between books and their authors, along with the latest updated information'
+COMMENT ON TABLE  BookAuthors IS 'Relationship between books and their authors, 
+along with the latest updated information'
 ;
 
 -- Stored procedures

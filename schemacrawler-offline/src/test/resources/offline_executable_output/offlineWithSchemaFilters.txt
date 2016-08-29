@@ -7,7 +7,8 @@ PUBLIC.BOOKS.AUTHORS                                             [table]
   Contact details for book authors
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
-  Relationship between books and their authors, along with the latest updated information
+  Relationship between books and their authors, 
+along with the latest updated information
 PUBLIC.BOOKS.BOOKS                                               [table]
   Details for published books
 PUBLIC.BOOKS."Global Counts"                                     [table]

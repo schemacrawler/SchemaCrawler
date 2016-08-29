@@ -196,6 +196,15 @@ a:hover, a:active {
     color: rgb(16, 16, 16); 
 }
 
+.remarks {
+    word-break: normal; 
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
+    white-space: pre\9; 
+}
+
 td.section {
     font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
     padding-top: 1.5rem;
@@ -283,7 +292,8 @@ td.section {
 		<td>BOOKS</td>
 		<td>BOOKAUTHORS</td>
 		<td>TABLE</td>
-		<td>Relationship between books and their authors, along with the latest updated information</td>
+		<td>Relationship between books and their authors, 
+along with the latest updated information</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
 		<td class='data_null'>NULL</td>
@@ -3054,7 +3064,7 @@ td.section {
   <caption style='background-color: #CEE2F2;'><span id='authors_dba8a1ff' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3'>Contact details for book authors</td>
+		<td colspan='3' class='remarks'>Contact details for book authors</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -3144,7 +3154,8 @@ td.section {
   <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3'>Relationship between books and their authors, along with the latest updated information</td>
+		<td colspan='3' class='remarks'>Relationship between books and their authors, 
+along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -3195,7 +3206,7 @@ td.section {
   <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3'>Details for published books</td>
+		<td colspan='3' class='remarks'>Details for published books</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
@@ -3277,7 +3288,7 @@ td.section {
   <caption style='background-color: #CEE2F2;'><span id='publishers_b8da20c0' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
-		<td colspan='3'>List of book publishers</td>
+		<td colspan='3' class='remarks'>List of book publishers</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
