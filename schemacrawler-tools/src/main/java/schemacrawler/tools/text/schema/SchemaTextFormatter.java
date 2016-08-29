@@ -283,13 +283,13 @@ final class SchemaTextFormatter
       {
         referencedObjectName = synonym.getReferencedObject().getFullName();
       }
-      formattingHelper.writeDetailRow("",
-                                      String.format("%s %s %s",
-                                                    synonym.getName(),
-                                                    formattingHelper
-                                                      .createRightArrow(),
-                                                    referencedObjectName),
-                                      "");
+      formattingHelper
+        .writeDetailRow("",
+                        String.format("%s %s %s",
+                                      synonym.getName(),
+                                      formattingHelper.createRightArrow(),
+                                      referencedObjectName),
+                        "");
     }
 
     formattingHelper.writeObjectEnd();
@@ -801,7 +801,7 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.writeWideRow(object.getRemarks(), "");
+    formattingHelper.writeWideRow(object.getRemarks(), "remarks");
   }
 
   private void printRoutineColumns(final List<? extends RoutineColumn<?>> columns)

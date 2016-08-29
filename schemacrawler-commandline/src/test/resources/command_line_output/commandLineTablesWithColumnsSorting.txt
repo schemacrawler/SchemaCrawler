@@ -35,7 +35,8 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-Relationship between books and their authors, along with the latest updated information
+Relationship between books and their authors, 
+along with the latest updated information
   AUTHORID                          INTEGER NOT NULL            
   BOOKID                            INTEGER NOT NULL            
 

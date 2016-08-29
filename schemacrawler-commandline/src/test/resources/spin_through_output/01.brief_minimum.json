@@ -25,7 +25,7 @@
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table",
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "remarks": "Relationship between books and their authors, \nalong with the latest updated information",
       "primaryKey": {}
     },
     {
@@ -147,7 +147,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 20:07:48",
+    "crawlTimestamp": "2016-08-28 16:49:55",
     "title": ""
   },
   "routines": [

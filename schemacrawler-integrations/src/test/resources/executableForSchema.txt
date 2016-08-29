@@ -70,7 +70,8 @@ PUBLIC.BOOKS.AUTHORSLIST                                          [view]
 
 PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
-Relationship between books and their authors, along with the latest updated information
+Relationship between books and their authors, 
+along with the latest updated information
 1   BOOKID                            INTEGER NOT NULL            
 2   AUTHORID                          INTEGER NOT NULL            
 3   "UPDATE"                          CLOB                        
