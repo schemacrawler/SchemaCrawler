@@ -35,7 +35,8 @@ AUTHORSLIST                                                       [view]
 
 BOOKAUTHORS                                                      [table]
 ------------------------------------------------------------------------
-Relationship between books and their authors, along with the latest updated information
+Relationship between books and their authors, 
+along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
 

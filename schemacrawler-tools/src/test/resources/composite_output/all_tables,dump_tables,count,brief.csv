@@ -10,7 +10,8 @@ all_tables,""
 TABLE_CAT,TABLE_SCHEM,TABLE_NAME,TABLE_TYPE,REMARKS,TYPE_CAT,TYPE_SCHEM,TYPE_NAME,SELF_REFERENCING_COL_NAME,REF_GENERATION,HSQLDB_TYPE,READ_ONLY,COMMIT_ACTION
 PUBLIC,BOOKS,AUTHORS,TABLE,Contact details for book authors,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,AUTHORSLIST,VIEW,NULL,NULL,NULL,NULL,NULL,NULL,NULL,false,NULL
-PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, along with the latest updated information",NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
+PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, 
+along with the latest updated information",NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,Global Counts,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
@@ -374,7 +375,8 @@ PUBLIC.BOOKS.AUTHORSLIST,[view]
 
 PUBLIC.BOOKS.BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
-"Relationship between books and their authors, along with the latest updated information"
+"Relationship between books and their authors, 
+along with the latest updated information"
 "",BOOKID,INTEGER NOT NULL
 "",AUTHORID,INTEGER NOT NULL
 ""

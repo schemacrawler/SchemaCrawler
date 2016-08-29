@@ -638,7 +638,7 @@
       ],
       "name": "BOOKAUTHORS",
       "definition": "",
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "remarks": "Relationship between books and their authors, \nalong with the latest updated information",
       "primaryKey": {}
     },
     {
@@ -2955,7 +2955,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 23:20:45",
+    "crawlTimestamp": "2016-08-28 14:14:30",
     "title": ""
   },
   "routines": [

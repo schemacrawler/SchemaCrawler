@@ -52,7 +52,7 @@
         "BOOKS",
         "BOOKAUTHORS",
         "TABLE",
-        "Relationship between books and their authors, along with the latest updated information",
+        "Relationship between books and their authors, \nalong with the latest updated information",
         null,
         null,
         null,
@@ -2938,7 +2938,7 @@
       "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
       "type": "table",
-      "remarks": "Relationship between books and their authors, along with the latest updated information",
+      "remarks": "Relationship between books and their authors, \nalong with the latest updated information",
       "primaryKey": {}
     },
     {
