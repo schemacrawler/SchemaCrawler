@@ -38,6 +38,29 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class EmbeddedTestDatabase
 {
 
+  /**
+   * Starts up a embedded test database.
+   *
+   * @param args
+   *        Command-line arguments
+   * @throws Exception
+   *         Exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final String server;
+    if (args == null || args.length == 0)
+    {
+      server = "hsqldb";
+    }
+    else
+    {
+      server = args[0];
+    }
+    System.out.println(new EmbeddedTestDatabase(server));
+  }
+
   private final String databaseServer;
   private final DataSource dataSource;
 
