@@ -52,11 +52,6 @@ public final class ExcludeAll
     return 2;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schemacrawler.InclusionRule#test(java.lang.String)
-   */
   @Override
   public boolean test(final String text)
   {

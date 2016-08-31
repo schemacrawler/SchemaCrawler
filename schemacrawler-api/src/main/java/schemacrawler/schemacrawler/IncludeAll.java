@@ -52,11 +52,6 @@ public final class IncludeAll
     return 1;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schemacrawler.InclusionRule#test(java.lang.String)
-   */
   @Override
   public boolean test(final String text)
   {

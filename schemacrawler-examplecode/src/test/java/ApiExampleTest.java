@@ -30,6 +30,7 @@ http://www.gnu.org/licenses/
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.SystemErrRule;
 import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -48,7 +50,9 @@ public class ApiExampleTest
 {
 
   @Rule
-  public final SystemOutRule sysOutRule = new SystemOutRule().enableLog();
+  public final SystemErrRule sysErrLog = new SystemErrRule().enableLog().mute();
+  @Rule
+  public final SystemOutRule sysOutLog = new SystemOutRule().enableLog().mute();
 
   @Test
   public void apiExample()
@@ -57,14 +61,18 @@ public class ApiExampleTest
     // Test
     ApiExample.main(new String[0]);
 
-    // Write output
+    checkSystemOutLog();
+  }
+
+  private void checkSystemOutLog()
+    throws IOException, Exception
+  {
     final Path tempFile = Files.createTempFile("sc", ".txt");
     Files.write(tempFile,
-                Arrays.asList(sysOutRule.getLogWithNormalizedLineSeparator()),
+                Arrays.asList(sysOutLog.getLogWithNormalizedLineSeparator()),
                 StandardOpenOption.WRITE);
 
-    final List<String> failures = compareOutput("ApiExample.txt",
-                                                tempFile,
+    final List<String> failures = compareOutput("ApiExample.txt", tempFile,
                                                 TextOutputFormat.text.name());
     if (failures.size() > 0)
     {
