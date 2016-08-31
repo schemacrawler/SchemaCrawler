@@ -12,10 +12,6 @@
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.distribution.javadoc.jar"
             value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
-  <property name="schemacrawler.api-tests.jar"
-            value="${SchemaCrawler.home}/schemacrawler-api/target/schemacrawler-api-${SchemaCrawler.version}-tests.jar" />
-  <property name="schemacrawler.lint.jar"
-            value="${SchemaCrawler.home}/schemacrawler-lint/target/schemacrawler-lint-${SchemaCrawler.version}.jar" />
 
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt"/>
   <available file="bnd-1.50.0.jar" property="available.bnd.jar"/>
@@ -145,9 +141,18 @@
     <copy file="lgpl-3.0.txt"
           tofile="${main-distribution.staging.dir}/LICENSE.txt" />
 
+    <!-- Create test database -->
+    <copy file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
+          todir="${main-distribution.staging.dir}/_testdb/lib"/>
+    <copy todir="${main-distribution.staging.dir}/_testdb">
+      <fileset dir="${schemacrawler.complete-distribution}">
+        <include name="**/hsqldb*.jar" />
+      </fileset>
+    </copy>
+
     <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0.jar"
-          tofile="${main-distribution.staging.dir}/_ivy/ivy-2.4.0.jar" />
+          todir="${main-distribution.staging.dir}/_ivy" />
 
     <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
       <arg value="${main-distribution.staging.dir}/examples/sc.css"/>
@@ -255,19 +260,16 @@
     </copy>
 
     <!-- Move SchemaCrawler distribution, for use in the examples -->
-    <copy 
-      file="${schemacrawler.api-tests.jar}"
-      todir="${schemacrawler.complete-distribution}/lib" />
     <copy
       file="${schemacrawler.distribution.jar}"
       todir="${schemacrawler.complete-distribution}/lib"/>
     <copy
       file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.config.properties"
-      todir="${schemacrawler.complete-distribution}/config"/> 
+      todir="${schemacrawler.complete-distribution}/config"/>
     <copy
       file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.colormap.properties"
-      todir="${schemacrawler.complete-distribution}/config"/> 
-      	
+      todir="${schemacrawler.complete-distribution}/config"/>
+
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
     <create-dbserver-distribution database="hsqldb" />
