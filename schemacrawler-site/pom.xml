@@ -24,27 +24,6 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-doap-plugin</artifactId>
-        <version>1.1</version>
-        <configuration>
-          <artifact>
-            <groupId>us.fatehi</groupId>
-            <artifactId>schemacrawler-parent</artifactId>
-            <version>${project.version}</version>
-          </artifact>
-        </configuration>
-        <executions>
-          <execution>
-            <id>site</id>
-            <phase>package</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
         <version>3.3</version>
         <dependencies>
