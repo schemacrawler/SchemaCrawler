@@ -61,14 +61,11 @@ public abstract class BaseStagedExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#execute(Connection,
-   *      DatabaseSpecificOverrideOptions))
    */
   @Override
   public final void execute(final Connection connection,
                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                              throws Exception
+    throws Exception
   {
     requireNonNull(connection, "No connection provided");
     requireNonNull(databaseSpecificOverrideOptions,
@@ -88,7 +85,7 @@ public abstract class BaseStagedExecutable
     }
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                    databaseSpecificOverrideOptions);
+                                                          databaseSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     executeOn(catalog, connection);

@@ -1,0 +1,31 @@
+Summary of schema lints:
+   [low]      1- too many binary objects
+   [low]      2- primary key not first
+   [low]      9- empty table
+   [low]     26- should have remarks
+[medium]      1- column with same name but different data types
+[medium]      1- cycles in table relationships
+[medium]      2- column where NULL may be intended
+[medium]      2- single column
+[medium]      3- unique index with nullable columns
+[medium]      5- all data columns are nullable
+[medium]      6- spaces in name, or reserved word
+[medium]     10- incrementing columns
+  [high]      2- foreign key data type different from primary key
+  [high]      5- no primary key
+  [high]      6- redundant index
+[critical]      1- foreign key self-references primary key
+[critical]*     2- no indexes
+
+SchemaCrawler 14.10.01
+
+Error: Tried to exit with status 1.
+
+Re-run SchemaCrawler with just the
+-?
+option for help
+
+Or, re-run SchemaCrawler with an additional
+-loglevel=CONFIG
+option for details on the error
+

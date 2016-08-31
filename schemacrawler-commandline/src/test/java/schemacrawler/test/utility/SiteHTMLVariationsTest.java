@@ -231,7 +231,6 @@ public class SiteHTMLVariationsTest
     argsMap.put("g", configFile.toString());
 
     Main.main(flattenCommandlineArgs(argsMap));
-    System.out.println(outputFile.toString());
   }
 
 }
