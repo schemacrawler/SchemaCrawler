@@ -26,8 +26,8 @@ public final class ApiExample
   public static void main(final String[] args)
     throws Exception
   {
-    // Set logging on
-    applyApplicationLogLevel(Level.ALL);
+    // Turn application logging on by applying the correct log level
+    applyApplicationLogLevel(Level.OFF);
     // Log system properties and classpath
     logSystemProperties();
 
