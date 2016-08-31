@@ -12,10 +12,10 @@
   <name>SchemaCrawler Diff</name>
   <dependencies>
     <dependency>
-      <groupId>de.danielbechler</groupId>
-      <artifactId>java-object-diff</artifactId>
-      <version>0.92.1</version>
-      <scope>provided</scope>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-testdb</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
@@ -41,6 +41,12 @@
       <artifactId>schemacrawler-sqlite</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>de.danielbechler</groupId>
+      <artifactId>java-object-diff</artifactId>
+      <version>0.92.1</version>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
