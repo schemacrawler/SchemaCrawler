@@ -27,7 +27,7 @@ Follow these instructions to download and install libraries that
 SchemaCrawler integrates with, using the provided scripts.
 
 1. Make sure that java is on your PATH
-2. Start a command shell in the `_ivy` directory 
+2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd` (or `download.sh` on Unix). 
    Provide one of the following arguments:    
     - `groovy` - for Groovy language scripting with SchemaCrawler

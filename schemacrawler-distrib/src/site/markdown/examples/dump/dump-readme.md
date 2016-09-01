@@ -5,7 +5,7 @@ The dump example shows how to dump the contents of a database in a diff-able for
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the dump example directory 
 4. Run `dump.cmd` (or `dump.sh` on Unix) 
 
