@@ -4,8 +4,8 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-velocity" />
   <dependencies>
-    <dependency org="org.thymeleaf" name="thymeleaf" rev="2.1.4.RELEASE" />
-    <dependency org="org.slf4j" name="slf4j-jdk14" rev="1.6.1" />
+    <dependency org="org.thymeleaf" name="thymeleaf" rev="3.0.1.RELEASE" />
+    <dependency org="org.slf4j" name="slf4j-jdk14" rev="1.7.21" />
 
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
