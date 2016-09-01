@@ -83,13 +83,6 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-h2</artifactId>
-                  <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-hsqldb</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
