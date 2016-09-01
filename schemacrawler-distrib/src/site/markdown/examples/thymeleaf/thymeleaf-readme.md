@@ -11,7 +11,7 @@ The command example demonstrates the integration of SchemaCrawler with Thymeleaf
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `thymeleaf` example directory
 5. Run `thymeleaf.cmd tables.vm` (or `thymeleaf.sh tables.vm` on Unix) 
 

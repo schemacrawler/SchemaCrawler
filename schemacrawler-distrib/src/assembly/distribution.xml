@@ -152,7 +152,7 @@
 
     <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0.jar"
-          todir="${main-distribution.staging.dir}/_ivy" />
+          todir="${main-distribution.staging.dir}/_downloader" />
 
     <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
       <arg value="${main-distribution.staging.dir}/examples/sc.css"/>

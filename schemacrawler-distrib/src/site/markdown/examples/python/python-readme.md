@@ -12,7 +12,7 @@ example shows how to script with Python.
 
 ## How to Run
 1. Make sure that java is on your PATH
-2. Start the test database server by running the StartDatabaseServer script from the distribution directory 
+2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `python` example directory
 4. Run `python.cmd tables.py` (or `python.sh tables.py` on Unix) 
 
