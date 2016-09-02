@@ -34,6 +34,7 @@ import static java.nio.file.Files.walkFileTree;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -196,6 +197,17 @@ public class TestDatabase
 
     // Start the server
     final Server server = new Server();
+    if (!trace)
+    {
+      server.setLogWriter(new PrintWriter(new OutputStream()
+      {
+        @Override
+        public void write(int b)
+          throws IOException
+        {
+        }
+      }));
+    }
     server.setSilent(!trace);
     server.setTrace(trace);
     server.setLogWriter(logWriter);
