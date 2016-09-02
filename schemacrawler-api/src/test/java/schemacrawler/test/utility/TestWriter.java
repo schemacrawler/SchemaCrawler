@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.Files.newOutputStream;
+import static java.nio.file.Files.size;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
@@ -104,6 +105,17 @@ public class TestWriter
     if (!failures.isEmpty())
     {
       fail(failures.toString());
+    }
+  }
+
+  public void assertEmpty()
+    throws Exception
+  {
+    out.close();
+
+    if (size(tempFile) > 0)
+    {
+      fail("Output is not empty");
     }
   }
 

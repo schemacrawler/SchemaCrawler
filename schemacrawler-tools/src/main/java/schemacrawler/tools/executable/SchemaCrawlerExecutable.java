@@ -85,6 +85,8 @@ public final class SchemaCrawlerExecutable
         LOGGER.log(Level.INFO,
                    new StringFormat("Executing as a query, %s", getCommand()));
         executable = new OperationExecutable(getCommand());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setOutputOptions(outputOptions);
         break;
       }
     }

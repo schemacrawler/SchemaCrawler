@@ -138,7 +138,6 @@ public final class OperationExecutable
 
   public boolean isOutputFormatSupported()
   {
-    getOperationOptions();
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isOutputFormatSupported = TextOutputFormat
       .isTextOutputFormat(outputFormatValue);

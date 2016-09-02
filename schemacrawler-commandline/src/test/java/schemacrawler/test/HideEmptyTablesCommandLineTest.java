@@ -82,9 +82,8 @@ public class HideEmptyTablesCommandLineTest
     args.put("noinfo", "true");
     args.put("routines", "");
     args.put("hideemptytables", "true");
-    final String[] flattenCommandlineArgs = flattenCommandlineArgs(args);
 
-    Main.main(flattenCommandlineArgs);
+    Main.main(flattenCommandlineArgs(args));
 
     failures.addAll(compareOutput(HIDE_EMPTY_TABLES_OUTPUT + referenceFile,
                                   testOutputFile,
