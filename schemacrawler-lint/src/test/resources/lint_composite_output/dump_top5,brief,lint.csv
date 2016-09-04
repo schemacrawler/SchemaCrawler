@@ -216,6 +216,7 @@ PUBLIC.FOR_LINT.EXTRA_PK,[table]
 ""
 "","[lint, high]"
 "",no primary key,""
+"",primary key may not be a surrogate,""
 "","[lint, medium]"
 "",all data columns are nullable,""
 "",no indexes,""
@@ -245,6 +246,8 @@ PUBLIC.FOR_LINT.PUBLICATIONS,[table]
 PUBLIC.FOR_LINT.PUBLICATIONWRITERS,[table]
 ------------------------------------------------------------------------
 ""
+"","[lint, high]"
+"",primary key may not be a surrogate,""
 "","[lint, low]"
 "",empty table,""
 "",should have remarks,""

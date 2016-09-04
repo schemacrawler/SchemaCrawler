@@ -148,6 +148,10 @@ relationships, without any attributes are ignored.
 **Linter:** *schemacrawler.tools.linter.LinterTableWithNoRemarks*   
 Checks for tables and columns with no remarks.
 
+**Linter:** *schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey*   
+Checks for tables that have more than one column as a primary key, and recommends 
+that a surrogate key column be used as a primary key instead.
+
 **Linter:** *schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst*   
 Checks for tables where the primary key columns are not first, since
 this is the convention.

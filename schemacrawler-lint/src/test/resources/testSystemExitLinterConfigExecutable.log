@@ -14,6 +14,7 @@ Summary of schema lints:
   [high]      2- foreign key data type different from primary key
   [high]      5- no primary key
   [high]      6- redundant index
+  [high]      7- primary key may not be a surrogate
 [critical]      1- foreign key self-references primary key
 [critical]*     2- no indexes
 
