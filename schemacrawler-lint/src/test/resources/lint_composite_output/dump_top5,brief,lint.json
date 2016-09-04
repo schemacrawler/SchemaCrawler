@@ -562,6 +562,12 @@
           "value": ""
         },
         {
+          "severity": "high",
+          "description": "primary key may not be a surrogate",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
+          "value": ""
+        },
+        {
           "severity": "medium",
           "description": "all data columns are nullable",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
@@ -653,6 +659,12 @@
     },
     {
       "lints": [
+        {
+          "severity": "high",
+          "description": "primary key may not be a surrogate",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
+          "value": ""
+        },
         {
           "severity": "low",
           "description": "empty table",

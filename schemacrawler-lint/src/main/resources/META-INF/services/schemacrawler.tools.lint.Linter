@@ -10,12 +10,13 @@ schemacrawler.tools.linter.LinterTableAllNullableColumns
 schemacrawler.tools.linter.LinterTableCycles
 schemacrawler.tools.linter.LinterTableEmpty
 schemacrawler.tools.linter.LinterTableSql
+schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns
 schemacrawler.tools.linter.LinterTableWithIncrementingColumns
 schemacrawler.tools.linter.LinterTableWithNoIndexes
 schemacrawler.tools.linter.LinterTableWithNoPrimaryKey
 schemacrawler.tools.linter.LinterTableWithNoRemarks
+schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey
 schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst
 schemacrawler.tools.linter.LinterTableWithQuotedNames
 schemacrawler.tools.linter.LinterTableWithSingleColumn
 schemacrawler.tools.linter.LinterTooManyLobs
-schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns

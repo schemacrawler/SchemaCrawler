@@ -1,4 +1,5 @@
 [PUBLIC.FOR_LINT."Global Counts"] no primary key
+[PUBLIC.FOR_LINT."Global Counts"] primary key may not be a surrogate
 [PUBLIC.FOR_LINT."Global Counts"] all data columns are nullable
 [PUBLIC.FOR_LINT."Global Counts"] no indexes
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word
@@ -15,6 +16,7 @@
 [PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks
 [PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks: ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
 [PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: "UPDATE", PRESS_RELEASE
+[PUBLIC.FOR_LINT.PUBLICATIONWRITERS] primary key may not be a surrogate
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] empty table
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] should have remarks
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] should have remarks: PUBLICATIONID, WRITERID

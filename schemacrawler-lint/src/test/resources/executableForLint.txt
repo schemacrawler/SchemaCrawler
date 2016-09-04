@@ -37,6 +37,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
                                                             [lint, high]
 	redundant index	SYS_IDX_10116
 	no primary key	
+	primary key may not be a surrogate	
                                                           [lint, medium]
 	spaces in name, or reserved word	"UPDATE"
                                                              [lint, low]
@@ -62,6 +63,7 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
 
                                                             [lint, high]
 	no primary key	
+	primary key may not be a surrogate	
                                                           [lint, medium]
 	all data columns are nullable	
 	no indexes	
@@ -98,6 +100,7 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 
                                                             [lint, high]
 	no primary key	
+	primary key may not be a surrogate	
                                                           [lint, medium]
 	all data columns are nullable	
 	no indexes	
@@ -127,6 +130,8 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
 ------------------------------------------------------------------------
 
+                                                            [lint, high]
+	primary key may not be a surrogate	
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -192,6 +197,8 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                        
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 
+                                                            [lint, high]
+	primary key may not be a surrogate	
                                                              [lint, low]
 	should have remarks	
 	should have remarks	CITY, STATE, POSTALCODE, COUNTRY
@@ -204,6 +211,7 @@ PUBLIC."PUBLISHER SALES".SALES                                   [table]
 
                                                             [lint, high]
 	no primary key	
+	primary key may not be a surrogate	
                                                              [lint, low]
 	should have remarks	
 	should have remarks	POSTALCODE, COUNTRY, BOOKID, PERIODENDDATE, TOTALAMOUNT, SALESDATAID
@@ -215,6 +223,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 
                                                             [lint, high]
 	no primary key	
+	primary key may not be a surrogate	
                                                           [lint, medium]
 	unique index with nullable columns	SYS_IDX_UQ_CUSTOMERS_10150
 	all data columns are nullable	

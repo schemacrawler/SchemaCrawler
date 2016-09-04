@@ -451,7 +451,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-05-23 23:50:18",
+    "crawlTimestamp": "2016-09-03 22:46:43",
     "title": ""
   }
 },
@@ -521,6 +521,12 @@
           "severity": "high",
           "description": "no primary key",
           "id": "schemacrawler.tools.linter.LinterTableWithNoPrimaryKey",
+          "value": ""
+        },
+        {
+          "severity": "high",
+          "description": "primary key may not be a surrogate",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
           "value": ""
         },
         {
@@ -615,6 +621,12 @@
     },
     {
       "lints": [
+        {
+          "severity": "high",
+          "description": "primary key may not be a surrogate",
+          "id": "schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey",
+          "value": ""
+        },
         {
           "severity": "low",
           "description": "empty table",

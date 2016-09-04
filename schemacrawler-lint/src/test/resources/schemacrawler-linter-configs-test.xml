@@ -73,5 +73,8 @@
   </linter>  
   <linter id="schemacrawler.tools.linter.LinterTableWithPrimaryKeyNotFirst">
     <run>false</run>
+  </linter>  
+  <linter id="schemacrawler.tools.linter.LinterTableWithNoSurrogatePrimaryKey">
+    <run>false</run>
   </linter>          
 </schemacrawler-linter-configs>
