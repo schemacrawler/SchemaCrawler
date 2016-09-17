@@ -5,7 +5,7 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>14.10.01</version>
+    <version>14.10.02</version>
   </parent>
   <artifactId>schemacrawler-integrations</artifactId>
   <packaging>jar</packaging>
@@ -84,7 +84,7 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.1.1.0</version>
+      <version>9.1.5.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

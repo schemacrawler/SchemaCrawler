@@ -7,7 +7,7 @@
   <groupId>us.fatehi</groupId>
   <artifactId>schemacrawler-parent</artifactId>
   <packaging>pom</packaging>
-  <version>14.10.01</version>
+  <version>14.10.02</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
   <url>https://github.com/sualeh/SchemaCrawler</url>
@@ -154,7 +154,7 @@
     <dependency>
       <groupId>com.github.stefanbirkner</groupId>
       <artifactId>system-rules</artifactId>
-      <version>1.16.0</version>
+      <version>1.16.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
