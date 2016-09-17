@@ -85,8 +85,13 @@
     tsv
       For tab-separated values output
     json
-      For JavaScript Object Notation output            
-  Optional, defaults to text    
+      For JavaScript Object Notation output 
+    scdot
+      For GraphViz DOT output, for schema only           
+  Optional, defaults to text  
+  Additional output formats are available with the graph command.
+  For help on the graph command, re-run SchemaCrawler with:
+  -help -c=graph  
       
 -o=<outputfile> (short for -outputfile=<outputfile>)
   <outputfile> is the path to the output file

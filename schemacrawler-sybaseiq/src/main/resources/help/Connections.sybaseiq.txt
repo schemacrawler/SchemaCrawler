@@ -1,5 +1,8 @@
 --- Connection Options ---
 
+-server=sybaseiq
+  Loads SchemaCrawler plug-in for Sybase IQ.
+  
 -host=<host>
 	Host name. Optional, defaults to localhost.
 	

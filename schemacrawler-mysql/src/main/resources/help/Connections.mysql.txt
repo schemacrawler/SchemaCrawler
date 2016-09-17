@@ -1,5 +1,8 @@
 --- Connection Options ---
 
+-server=mysql
+  Loads SchemaCrawler plug-in for MySQL.
+  
 -host=<host>
 	Host name. Optional, defaults to localhost.
 	
