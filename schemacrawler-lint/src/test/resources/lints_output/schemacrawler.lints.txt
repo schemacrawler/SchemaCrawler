@@ -1,6 +1,6 @@
 [PUBLIC.FOR_LINT."Global Counts"] no primary key
 [PUBLIC.FOR_LINT."Global Counts"] primary key may not be a surrogate
-[PUBLIC.FOR_LINT."Global Counts"] all data columns are nullable
+[PUBLIC.FOR_LINT."Global Counts"] no non-nullable data columns
 [PUBLIC.FOR_LINT."Global Counts"] no indexes
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
@@ -26,7 +26,7 @@
 [PUBLIC.FOR_LINT.SELFREFERENCE] empty table
 [PUBLIC.FOR_LINT.SELFREFERENCE] should have remarks
 [PUBLIC.FOR_LINT.SELFREFERENCE] should have remarks: ID, TITLE
-[PUBLIC.FOR_LINT.TEMP1] all data columns are nullable
+[PUBLIC.FOR_LINT.TEMP1] no non-nullable data columns
 [PUBLIC.FOR_LINT.TEMP1] should have remarks
 [PUBLIC.FOR_LINT.TEMP1] should have remarks: ID, SCORES, NAMES, DATA
 [PUBLIC.FOR_LINT.WRITERS] foreign key data type different from primary key: FK_WRITERS_PUBLICATION
@@ -48,7 +48,7 @@
 [PUBLIC.FOR_LINT.WRITERS] should have remarks
 [PUBLIC.FOR_LINT.WRITERS] should have remarks: ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] foreign key data type different from primary key: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS
-[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] all data columns are nullable
+[PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] no non-nullable data columns
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] empty table
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks
 [PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ] should have remarks: ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
