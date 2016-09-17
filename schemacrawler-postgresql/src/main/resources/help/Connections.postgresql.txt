@@ -1,5 +1,8 @@
 --- Connection Options ---
 
+-server=postgresql
+  Loads SchemaCrawler plug-in for PostgreSQL.
+  
 -host=<host>
 	Host name. Optional, defaults to localhost.
 	

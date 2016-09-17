@@ -1,5 +1,8 @@
 --- Connection Options ---
 
+-server=hsqldb
+  Loads SchemaCrawler plug-in for HyperSQL.
+
 -host=<host>
   Host name. Optional, defaults to localhost.
   
