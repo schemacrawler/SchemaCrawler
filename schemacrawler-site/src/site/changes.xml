@@ -5,10 +5,16 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.10.02" date="2016-09-15" description="Lint changes">
+     <release version="14.10.02" date="2016-09-17" description="Lint changes">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New lint to recommend that a surrogate key column be used as a primary key.
-      ]]></action>                                                                           
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed lint that checks foreign key and primry key data types.
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Additional documentation on how to connect to Microsoft SQL Server with Windows authentication.
+      ]]></action>                                                                                      
      </release>    
      <release version="14.10.01" date="2016-08-31" description="Configuration changes">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
@@ -140,7 +146,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.10.01" date="2016-02-03" description="Fixed logging">
+     <release version="14.10.02" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  

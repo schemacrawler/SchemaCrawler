@@ -5,7 +5,7 @@
   <parent>
     <groupId>us.fatehi</groupId>
     <artifactId>schemacrawler-parent</artifactId>
-    <version>14.10.01</version>
+    <version>14.10.02</version>
   </parent>
   <artifactId>schemacrawler-distrib</artifactId>
   <packaging>pom</packaging>
@@ -140,7 +140,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>9.4.1208</version>
+                  <version>9.4.1210</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
@@ -148,7 +148,7 @@
                 <artifactItem>
                   <groupId>mysql</groupId>
                   <artifactId>mysql-connector-java</artifactId>
-                  <version>6.0.3</version>
+                  <version>6.0.4</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
