@@ -20,4 +20,7 @@
   Optional, no default.
   For example,
   -urlx=applicationName=SchemaCrawler;readOnly=true
-  	
+ 
+Please refer to
+http://sualeh.github.io/SchemaCrawler/database-support.html
+for more information.

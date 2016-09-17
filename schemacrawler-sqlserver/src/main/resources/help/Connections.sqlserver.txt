@@ -27,4 +27,9 @@
   For example,
   -urlx=applicationName=SchemaCrawler;readOnly=true
 
-  	
+If you are using named pipes, or Windows authentication, you will need
+to proivde a database connection URL on the SchemaCrawler command-line. 
+
+Please refer to
+http://sualeh.github.io/SchemaCrawler/database-support.html
+for more information.

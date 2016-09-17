@@ -62,13 +62,14 @@ Typical command-line arguments will look like:
 -server=sqlserver -host=db.example.com -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
 
-If your SQL Server instance is set up with Windows authentication, you
+If your SQL Server instance is set up with Windows authentication or named pipes, you
 will need to use a database connection URL. See the [jTDS
-FAQ](http://jtds.sourceforge.net/faq.html), which explains that you will
-have to use`useNTLMv2=true` and `domain=yourdomain` as part of the database
-connection URL. You do not need to supply a username and password.
+FAQ](http://jtds.sourceforge.net/faq.html) for details. You will also need to download
+the [jTDS distribution](http://sourceforge.net/projects/jtds/files), which contains
+`ntlmauth.dll`, and install the DLL according to instructions in the `README.SSO` file
+in the jTDS distribution.
 
-Typical command-line arguments will look like:
+Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 ```
 -server=sqlserver -url=<url> -schemas=schemacrawler.dbo -user= -password= -infolevel=standard -command=schema
 ```
