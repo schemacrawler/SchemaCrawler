@@ -451,7 +451,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-03 22:46:43",
+    "crawlTimestamp": "2016-09-16 21:39:05",
     "title": ""
   }
 },
@@ -531,7 +531,7 @@
         },
         {
           "severity": "medium",
-          "description": "all data columns are nullable",
+          "description": "no non-nullable data columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
           "value": ""
         },
@@ -812,7 +812,7 @@
         },
         {
           "severity": "medium",
-          "description": "all data columns are nullable",
+          "description": "no non-nullable data columns",
           "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
           "value": ""
         },
