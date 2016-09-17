@@ -10,7 +10,7 @@ Summary of schema lints:
 [medium]      1- no indexes
 [medium]      1- single column
 [medium]      2- column where NULL may be intended
-[medium]      3- all data columns are nullable
+[medium]      3- no non-nullable data columns
 [medium]      3- spaces in name, or reserved word
 [medium]      9- incrementing columns
   [high]      1- no primary key

@@ -45,7 +45,7 @@ public class LinterTableAllNullableColumns
   @Override
   public String getSummary()
   {
-    return "all data columns are nullable";
+    return "no non-nullable data columns";
   }
 
   @Override

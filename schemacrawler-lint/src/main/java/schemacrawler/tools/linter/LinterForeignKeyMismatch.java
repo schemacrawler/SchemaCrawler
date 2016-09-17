@@ -80,7 +80,7 @@ public class LinterForeignKeyMismatch
         {
           final Column pkColumn = columnReference.getPrimaryKeyColumn();
           final Column fkColumn = columnReference.getForeignKeyColumn();
-          if (!pkColumn.getColumnDataType().equals(fkColumn.getColumnDataType())
+          if (!pkColumn.getColumnDataType().getJavaSqlType().equals(fkColumn.getColumnDataType().getJavaSqlType())
               || pkColumn.getSize() != fkColumn.getSize())
           {
             mismatchedForeignKeys.add(foreignKey);
