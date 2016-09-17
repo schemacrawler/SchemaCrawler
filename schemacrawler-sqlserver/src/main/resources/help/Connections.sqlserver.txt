@@ -1,5 +1,8 @@
 --- Connection Options ---
 
+-server=sqlserver
+  Loads SchemaCrawler plug-in for Microsoft SQL Server.
+  
 -host=<host>
 	Host name. Optional, defaults to localhost.
 	

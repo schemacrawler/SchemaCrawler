@@ -3,14 +3,14 @@
 For connecting to specific databases, use
 
 -server=<database system identifier>
-  Where <database system identifier> is a database where
-  a SchemaCrawler plugin is available.   
+  Where <database system identifier> is a database 
+  for which a SchemaCrawler plug-in is available.   
   For help on server specific connection options, 
   re-run SchemaCrawler with:
   -help -server=<database system identifier>
 
 On the other hand, if your database does not have a 
-SchemaCrawler plugin, use
+SchemaCrawler plug-in, use
 
 -url=<url>
   JDBC connection URL to the database.

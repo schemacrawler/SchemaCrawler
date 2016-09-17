@@ -1,4 +1,7 @@
 --- Connection Options ---
 
+-server=sqlite
+  Loads SchemaCrawler plug-in for SQLite.
+  
 -database=<database>
 	Database file name.
