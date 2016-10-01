@@ -148,7 +148,8 @@ public interface TextFormattingHelper
                       String text2,
                       String text3,
                       boolean escapeText,
-                      boolean emphasize);
+                      boolean emphasize,
+                      String style);
 
   /**
    * Creates a detail row, with four fields.

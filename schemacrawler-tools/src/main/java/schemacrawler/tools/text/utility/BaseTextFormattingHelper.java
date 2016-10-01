@@ -131,17 +131,27 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    *
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String, boolean, boolean)
+   *      java.lang.String, java.lang.String, boolean, boolean, String)
    */
   @Override
   public void writeDetailRow(final String text1,
                              final String text2,
                              final String text3,
                              final boolean escapeText,
-                             final boolean emphasize)
+                             final boolean emphasize,
+                             final String style)
   {
     final int text2Width = 32;
     final int text3Width = 28;
+    final String text3Sytle;
+    if (!isBlank(style))
+    {
+      text3Sytle = " " + style;
+    }
+    else
+    {
+      text3Sytle = "";
+    }
 
     final TableRow row = new TableRow(outputFormat);
     if (isBlank(text1))
@@ -174,7 +184,7 @@ abstract class BaseTextFormattingHelper
                           text3Width,
                           Alignment.inherit,
                           false,
-                          "minwidth",
+                          "minwidth" + text3Sytle,
                           Color.white,
                           1,
                           outputFormat));
@@ -192,7 +202,7 @@ abstract class BaseTextFormattingHelper
                              final String text2,
                              final String text3)
   {
-    writeDetailRow(text1, text2, text3, true, false);
+    writeDetailRow(text1, text2, text3, true, false, "");
   }
 
   /**
