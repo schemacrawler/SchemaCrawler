@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.signing.artifacts>true</skip.signing.artifacts>
-    <springframework.version>4.3.2.RELEASE</springframework.version>
+    <springframework.version>4.3.3.RELEASE</springframework.version>
   </properties>
   <dependencies>	
     <dependency>
