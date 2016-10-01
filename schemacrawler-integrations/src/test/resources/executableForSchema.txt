@@ -112,7 +112,8 @@ Details for published books
 2   TITLE                             VARCHAR(255) NOT NULL       
                                     Book title                  
 3   DESCRIPTION                       VARCHAR(255)                
-                                    Book description            
+                                    Book description
+(Usually the blurb from the book jacket or promotional materials)
 4   PUBLISHERID                       INTEGER NOT NULL            
                                     Foreign key to the book publisher
 5   PUBLICATIONDATE                   DATE                        
