@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <properties>
-    <springframework.version>4.3.2.RELEASE</springframework.version>
+    <springframework.version>4.3.3.RELEASE</springframework.version>
   </properties>  
   <dependencies>
     <dependency>
