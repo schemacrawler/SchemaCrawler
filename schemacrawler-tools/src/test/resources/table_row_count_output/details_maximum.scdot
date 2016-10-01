@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2016-08-28 16:29:54</td>
+		<td align='left'>2016-09-30 20:35:35</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -218,7 +218,8 @@ along with the latest updated information</td>
 	<tr>
 		<td align='left'></td>
 		<td align='left'> </td>
-		<td align='left'>Book description</td>
+		<td align='left'>Book description
+(Usually the blurb from the book jacket or promotional materials)</td>
 	</tr>
 	<tr>
 		<td port='publisherid_3413fbaa.start' align='left'>PUBLISHERID</td>
