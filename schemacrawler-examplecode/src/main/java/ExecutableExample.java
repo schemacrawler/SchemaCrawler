@@ -1,3 +1,4 @@
+import static sf.util.Utility.isBlank;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
@@ -40,8 +41,7 @@ public final class ExecutableExample
     options
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
-    final Path outputFile = Paths.get("./schemacrawler_output.html")
-      .toAbsolutePath().normalize();
+    final Path outputFile = getOutputFile(args);
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html,
                                                           outputFile);
     final String command = "schema";
@@ -52,6 +52,21 @@ public final class ExecutableExample
     executable.execute(getConnection());
 
     System.out.println("Created output file, " + outputFile);
+  }
+
+  private static Path getOutputFile(final String[] args)
+  {
+    final String outputfile;
+    if (args != null && args.length > 0 && !isBlank(args[0]))
+    {
+      outputfile = args[0];
+    }
+    else
+    {
+      outputfile = "./schemacrawler_output.html";
+    }
+    final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
+    return outputFile;
   }
 
   private static Connection getConnection()
