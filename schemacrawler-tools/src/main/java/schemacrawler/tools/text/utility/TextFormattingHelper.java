@@ -141,37 +141,27 @@ public interface TextFormattingHelper
 
   /**
    * Creates a detail row, with four fields. The name can be emphasized.
-   *
-   * @param ordinal
-   *        Ordinal value
-   * @param subName
-   *        Name
-   * @param escapeText
-   *        TODO
-   * @param type
-   *        Type
-   * @param emphasize
-   *        Emphasize name.
+   * 
    * @return Row as a string
    */
-  void writeDetailRow(String ordinal,
-                      String subName,
+  void writeDetailRow(String text1,
+                      String text2,
+                      String text3,
                       boolean escapeText,
-                      String type,
                       boolean emphasize);
 
   /**
    * Creates a detail row, with four fields.
    *
-   * @param ordinal
+   * @param text1
    *        Ordinal value
-   * @param subName
+   * @param text2
    *        Name
-   * @param type
+   * @param text3
    *        Type
    * @return Row as a string
    */
-  void writeDetailRow(String ordinal, String subName, String type);
+  void writeDetailRow(String text1, String text2, String text3);
 
   /**
    * Document end.

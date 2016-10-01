@@ -131,26 +131,26 @@ abstract class BaseTextFormattingHelper
    * {@inheritDoc}
    *
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeDetailRow(java.lang.String,
-   *      java.lang.String, boolean, java.lang.String, boolean)
+   *      java.lang.String, java.lang.String, boolean, boolean)
    */
   @Override
-  public void writeDetailRow(final String ordinal,
-                             final String subName,
+  public void writeDetailRow(final String text1,
+                             final String text2,
+                             final String text3,
                              final boolean escapeText,
-                             final String type,
                              final boolean emphasize)
   {
-    final int subNameWidth = 32;
-    final int typeWidth = 28;
+    final int text2Width = 32;
+    final int text3Width = 28;
 
     final TableRow row = new TableRow(outputFormat);
-    if (isBlank(ordinal))
+    if (isBlank(text1))
     {
       row.add(newTableCell("", "spacer", outputFormat));
     }
     else
     {
-      row.add(new TableCell(ordinal,
+      row.add(new TableCell(text1,
                             true,
                             2,
                             Alignment.inherit,
@@ -160,21 +160,21 @@ abstract class BaseTextFormattingHelper
                             1,
                             outputFormat));
     }
-    row.add(new TableCell(subName,
+    row.add(new TableCell(text2,
                           escapeText,
-                          subNameWidth,
+                          text2Width,
                           Alignment.inherit,
                           emphasize,
-                          "subname",
+                          "minwidth",
                           Color.white,
                           1,
                           outputFormat));
-    row.add(new TableCell(type,
+    row.add(new TableCell(text3,
                           true,
-                          typeWidth,
+                          text3Width,
                           Alignment.inherit,
                           false,
-                          "type",
+                          "minwidth",
                           Color.white,
                           1,
                           outputFormat));
@@ -188,11 +188,11 @@ abstract class BaseTextFormattingHelper
    *      java.lang.String, java.lang.String)
    */
   @Override
-  public void writeDetailRow(final String ordinal,
-                             final String subName,
-                             final String type)
+  public void writeDetailRow(final String text1,
+                             final String text2,
+                             final String text3)
   {
-    writeDetailRow(ordinal, subName, true, type, false);
+    writeDetailRow(text1, text2, text3, true, false);
   }
 
   /**

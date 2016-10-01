@@ -58,11 +58,7 @@ a:hover, a:active {
 	min-width: 20px;
 }
 
-.subname {
-	min-width: 150px;
-}
-
-.type {
+.minwidth {
 	min-width: 150px;
 }
 
