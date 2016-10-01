@@ -273,38 +273,38 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(20) NOT NULL</td>
+		<td class='minwidth'>FIRSTNAME</td>
+		<td class='minwidth'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR(20) NOT NULL</td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>CITY</td>
-		<td class='type'>VARCHAR(50)</td>
+		<td class='minwidth'>CITY</td>
+		<td class='minwidth'>VARCHAR(50)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>STATE</td>
-		<td class='type'>VARCHAR(2)</td>
+		<td class='minwidth'>STATE</td>
+		<td class='minwidth'>VARCHAR(2)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>VARCHAR(10)</td>
+		<td class='minwidth'>POSTALCODE</td>
+		<td class='minwidth'>VARCHAR(10)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>VARCHAR(50)</td>
+		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>VARCHAR(50)</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -321,8 +321,8 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -339,8 +339,8 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#bookauthors_aa4376'>BOOKAUTHORS.AUTHORID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_aa4376'>BOOKAUTHORS.AUTHORID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -364,13 +364,13 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>BOOKID</td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'>BOOKID</td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>AUTHORID</td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'>AUTHORID</td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -387,8 +387,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>AUTHORID (0..many)→ <a href='#authors_dba8a1ff'>AUTHORS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>AUTHORID (0..many)→ <a href='#authors_dba8a1ff'>AUTHORS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -399,8 +399,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>BOOKID (0..many)→ <a href='#books_afd2ba21'>BOOKS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>BOOKID (0..many)→ <a href='#books_afd2ba21'>BOOKS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -415,18 +415,18 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Unique (internal) id for book</td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>Unique (internal) id for book</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PREVIOUSEDITIONID</td>
-		<td class='type'>INTEGER</td>
+		<td class='minwidth'>PREVIOUSEDITIONID</td>
+		<td class='minwidth'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -443,8 +443,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -461,8 +461,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#bookauthors_aa4376'>BOOKAUTHORS.BOOKID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_aa4376'>BOOKAUTHORS.BOOKID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -473,8 +473,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..1) <a href='#books_afd2ba21'>PREVIOUSEDITIONID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..1) <a href='#books_afd2ba21'>PREVIOUSEDITIONID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -497,18 +497,18 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>auto-incremented</td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>auto-incremented</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>Unique (internal) id for book publisher</td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>Unique (internal) id for book publisher</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -525,13 +525,13 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'></td>
-		<td class='type'>auto-incremented</td>
+		<td class='minwidth'></td>
+		<td class='minwidth'>auto-incremented</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -546,18 +546,18 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID</td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'>WRITERID</td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID</td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'>PUBLICATIONID</td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -574,8 +574,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -592,8 +592,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -604,8 +604,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -625,13 +625,13 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID</td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'>WRITERID</td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -648,8 +648,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -666,8 +666,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#extra_pk_334890da'>EXTRA_PK.PUBLICATIONID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#extra_pk_334890da'>EXTRA_PK.PUBLICATIONID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -678,8 +678,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLICATIONWRITERS.PUBLICATIONID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLICATIONWRITERS.PUBLICATIONID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -690,8 +690,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#writers_bf84ac10'>WRITERS.PUBLICATION_ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#writers_bf84ac10'>WRITERS.PUBLICATION_ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -702,8 +702,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -715,13 +715,13 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID</td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'>PUBLICATIONID</td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID</td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'>WRITERID</td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -738,8 +738,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>PUBLICATIONID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -750,8 +750,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>WRITERID (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -763,8 +763,8 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>INTEGER NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -781,8 +781,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -799,8 +799,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..1) <a href='#selfreference_5b0b972f'>ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..1) <a href='#selfreference_5b0b972f'>ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -812,48 +812,48 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ID</i></b></td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>FIRSTNAME</td>
-		<td class='type'>VARCHAR(20) NOT NULL</td>
+		<td class='minwidth'>FIRSTNAME</td>
+		<td class='minwidth'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>LASTNAME</td>
-		<td class='type'>VARCHAR(20) NOT NULL</td>
+		<td class='minwidth'>LASTNAME</td>
+		<td class='minwidth'>VARCHAR(20) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>CITY</td>
-		<td class='type'>VARCHAR(50)</td>
+		<td class='minwidth'>CITY</td>
+		<td class='minwidth'>VARCHAR(50)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>STATE</td>
-		<td class='type'>VARCHAR(2)</td>
+		<td class='minwidth'>STATE</td>
+		<td class='minwidth'>VARCHAR(2)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>VARCHAR(10)</td>
+		<td class='minwidth'>POSTALCODE</td>
+		<td class='minwidth'>VARCHAR(10)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>VARCHAR(50)</td>
+		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>VARCHAR(50)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>EMAIL1</td>
-		<td class='type'>VARCHAR(10)</td>
+		<td class='minwidth'>EMAIL1</td>
+		<td class='minwidth'>VARCHAR(10)</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATION_ID</td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'>PUBLICATION_ID</td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -870,8 +870,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -888,8 +888,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>PUBLICATION_ID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>PUBLICATION_ID (0..many)→ <a href='#publications_949377f7'>PUBLICATIONS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -900,8 +900,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#extra_pk_334890da'>EXTRA_PK.WRITERID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#extra_pk_334890da'>EXTRA_PK.WRITERID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -912,8 +912,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#publications_949377f7'>PUBLICATIONS.WRITERID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#publications_949377f7'>PUBLICATIONS.WRITERID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -924,8 +924,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLICATIONWRITERS.WRITERID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#publicationwriters_db3a2e4'>PUBLICATIONWRITERS.WRITERID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -936,8 +936,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_199e00a3'>ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_199e00a3'>ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -949,13 +949,13 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
-		<td class='type'>BIGINT NOT NULL</td>
+		<td class='minwidth'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ</td>
-		<td class='type'>INTEGER</td>
+		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='minwidth'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -972,8 +972,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -990,8 +990,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#writers_bf84ac10'>WRITERS.ID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1003,13 +1003,13 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>POSTALCODE</i></b></td>
-		<td class='type'>VARCHAR(10) NOT NULL</td>
+		<td class='minwidth'><b><i>POSTALCODE</i></b></td>
+		<td class='minwidth'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'><b><i>COUNTRY</i></b></td>
-		<td class='type'>VARCHAR(50) NOT NULL</td>
+		<td class='minwidth'><b><i>COUNTRY</i></b></td>
+		<td class='minwidth'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1026,13 +1026,13 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>POSTALCODE</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>ascending</td>
+		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1049,13 +1049,13 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE ←(0..many) <a href='#sales_20be6f95'>SALES.POSTALCODE</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>POSTALCODE ←(0..many) <a href='#sales_20be6f95'>SALES.POSTALCODE</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY ←(0..many) <a href='#sales_20be6f95'>SALES.COUNTRY</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>COUNTRY ←(0..many) <a href='#sales_20be6f95'>SALES.COUNTRY</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1067,18 +1067,18 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE</td>
-		<td class='type'>VARCHAR(10) NOT NULL</td>
+		<td class='minwidth'>POSTALCODE</td>
+		<td class='minwidth'>VARCHAR(10) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY</td>
-		<td class='type'>VARCHAR(50) NOT NULL</td>
+		<td class='minwidth'>COUNTRY</td>
+		<td class='minwidth'>VARCHAR(50) NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>SALESDATAID</td>
-		<td class='type'>INTEGER</td>
+		<td class='minwidth'>SALESDATAID</td>
+		<td class='minwidth'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1095,8 +1095,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>SALESDATA.SALESDATAID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>SALESDATA.SALESDATAID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1107,13 +1107,13 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>POSTALCODE (0..many)→ <a href='#regions_bc895c48'>REGIONS.POSTALCODE</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>POSTALCODE (0..many)→ <a href='#regions_bc895c48'>REGIONS.POSTALCODE</a></td>
+		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>COUNTRY (0..many)→ <a href='#regions_bc895c48'>REGIONS.COUNTRY</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>COUNTRY (0..many)→ <a href='#regions_bc895c48'>REGIONS.COUNTRY</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1125,8 +1125,8 @@ along with the latest updated information</td>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>SALESDATAID</td>
-		<td class='type'>INTEGER</td>
+		<td class='minwidth'>SALESDATAID</td>
+		<td class='minwidth'>INTEGER</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1143,8 +1143,8 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='subname'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>SALES.SALESDATAID</a></td>
-		<td class='type'></td>
+		<td class='minwidth'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>SALES.SALESDATAID</a></td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
