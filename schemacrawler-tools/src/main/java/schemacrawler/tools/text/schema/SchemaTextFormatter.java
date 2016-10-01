@@ -595,7 +595,8 @@ final class SchemaTextFormatter
                                       relationship,
                                       "",
                                       false,
-                                      false);
+                                      false,
+                                      "");
     }
   }
 
@@ -873,7 +874,8 @@ final class SchemaTextFormatter
     {
       return;
     }
-    formattingHelper.writeDetailRow("", "", column.getRemarks(), true, false);
+    formattingHelper
+      .writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
   }
 
   private void printTableColumns(final List<? extends Column> columns,
@@ -942,7 +944,8 @@ final class SchemaTextFormatter
                                       columnName,
                                       columnDetails,
                                       true,
-                                      emphasize);
+                                      emphasize,
+                                      "");
 
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
