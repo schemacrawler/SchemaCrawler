@@ -798,7 +798,7 @@
           "name": "DESCRIPTION",
           "width": "(255)",
           "decimalDigits": 0,
-          "remarks": "Book description",
+          "remarks": "Book description\n(Usually the blurb from the book jacket or promotional materials)",
           "autoIncremented": false,
           "ordinal": 3
         },
@@ -3056,7 +3056,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-08-28 16:29:48",
+    "crawlTimestamp": "2016-09-30 20:35:28",
     "title": ""
   },
   "routines": [
