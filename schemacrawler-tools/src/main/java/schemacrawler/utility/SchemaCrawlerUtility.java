@@ -58,7 +58,7 @@ public final class SchemaCrawlerUtility
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
-                                     throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     checkConnection(connection);
 

@@ -59,7 +59,7 @@ public class GraphProcessExecutor
                               final Path outputFile,
                               final GraphOptions graphOptions,
                               final GraphOutputFormat graphOutputFormat)
-                                throws IOException
+    throws IOException
   {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No graph output file provided");

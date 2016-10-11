@@ -58,7 +58,7 @@ public final class CommandChainExecutable
   public final Executable addNext(final String command,
                                   final OutputFormat outputFormat,
                                   final Path outputFile)
-                                    throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     requireNonNull(command, "No command provided");
     requireNonNull(outputFormat, "No output format provided");
@@ -72,7 +72,7 @@ public final class CommandChainExecutable
   public final Executable addNext(final String command,
                                   final String outputFormat,
                                   final String outputFileName)
-                                    throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {

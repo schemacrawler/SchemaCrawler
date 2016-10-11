@@ -37,7 +37,7 @@ public interface CommandProvider
 
   Executable configureNewExecutable(SchemaCrawlerOptions schemaCrawlerOptions,
                                     OutputOptions outputOptions)
-                                      throws SchemaCrawlerException;
+    throws SchemaCrawlerException;
 
   String getCommand();
 

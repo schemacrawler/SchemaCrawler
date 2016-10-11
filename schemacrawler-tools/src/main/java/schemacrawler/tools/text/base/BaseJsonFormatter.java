@@ -64,7 +64,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   protected BaseJsonFormatter(final O options,
                               final boolean printVerboseDatabaseInfo,
                               final OutputOptions outputOptions)
-                                throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, printVerboseDatabaseInfo, outputOptions);
     jsonRoot = new JSONObject();

@@ -71,7 +71,7 @@ final class DataTextFormatter
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
                     final OutputOptions outputOptions)
-                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
@@ -173,7 +173,7 @@ final class DataTextFormatter
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
-                                                  throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     long aggregate = 0;
     try
