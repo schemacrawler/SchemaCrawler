@@ -54,6 +54,13 @@ public final class ExecutableExample
     System.out.println("Created output file, " + outputFile);
   }
 
+  private static Connection getConnection()
+    throws SchemaCrawlerException, SQLException
+  {
+    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    return dataSource.getConnection("sa", "");
+  }
+
   private static Path getOutputFile(final String[] args)
   {
     final String outputfile;
@@ -67,13 +74,6 @@ public final class ExecutableExample
     }
     final Path outputFile = Paths.get(outputfile).toAbsolutePath().normalize();
     return outputFile;
-  }
-
-  private static Connection getConnection()
-    throws SchemaCrawlerException, SQLException
-  {
-    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
-    return dataSource.getConnection("sa", "");
   }
 
 }
