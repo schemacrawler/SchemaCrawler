@@ -116,7 +116,7 @@ final class MutableCatalog
   @Override
   public Collection<ColumnDataType> getColumnDataTypes()
   {
-    return new ArrayList<ColumnDataType>(columnDataTypes.values());
+    return new ArrayList<>(columnDataTypes.values());
   }
 
   /**
@@ -164,7 +164,7 @@ final class MutableCatalog
   public Collection<Routine> getRoutines()
   {
     final List<MutableRoutine> values = routines.values();
-    return new ArrayList<Routine>(values);
+    return new ArrayList<>(values);
   }
 
   /**
@@ -199,7 +199,7 @@ final class MutableCatalog
   @Override
   public Collection<Schema> getSchemas()
   {
-    final List<Schema> schemas = new ArrayList<Schema>(this.schemas);
+    final List<Schema> schemas = new ArrayList<>(this.schemas);
     Collections.sort(schemas);
     return schemas;
   }
@@ -212,7 +212,7 @@ final class MutableCatalog
   @Override
   public Collection<Sequence> getSequences()
   {
-    return new ArrayList<Sequence>(sequences.values());
+    return new ArrayList<>(sequences.values());
   }
 
   /**
@@ -236,7 +236,7 @@ final class MutableCatalog
   @Override
   public Collection<Synonym> getSynonyms()
   {
-    return new ArrayList<Synonym>(synonyms.values());
+    return new ArrayList<>(synonyms.values());
   }
 
   /**
@@ -271,7 +271,7 @@ final class MutableCatalog
   @Override
   public Collection<Table> getTables()
   {
-    final List<Table> values = new ArrayList<Table>(tables.values());
+    final List<Table> values = new ArrayList<>(tables.values());
     return values;
   }
 

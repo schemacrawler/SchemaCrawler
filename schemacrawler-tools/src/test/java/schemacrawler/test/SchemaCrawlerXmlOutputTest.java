@@ -97,8 +97,7 @@ public class SchemaCrawlerXmlOutputTest
 
   private void checkValidXmlOutput(final String command,
                                    final List<String> failures)
-                                     throws IOException, Exception,
-                                     SchemaCrawlerException
+    throws IOException, Exception, SchemaCrawlerException
   {
     final String referenceFile = command + ".html";
     final Path testOutputFile = createTempFile(referenceFile,

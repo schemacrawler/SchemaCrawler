@@ -132,7 +132,7 @@ public class SpringIntegrationTest
                                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                             final List<String> failures,
                                             final boolean isCompressedOutput)
-                                              throws Exception
+    throws Exception
   {
     final Path testOutputFile = createTempFile(executableName, "data");
 

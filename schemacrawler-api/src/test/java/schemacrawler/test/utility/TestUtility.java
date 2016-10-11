@@ -251,6 +251,26 @@ public final class TestUtility
     return testOutputTempFilePath;
   }
 
+  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
+  {
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: argsMap.entrySet())
+    {
+      final String key = arg.getKey();
+      final String value = arg.getValue();
+      if (value != null)
+      {
+        argsList.add(String.format("-%s=%s", key, value));
+      }
+      else
+      {
+        argsList.add(String.format("-%s", key));
+      }
+    }
+    final String[] args = argsList.toArray(new String[0]);
+    return args;
+  }
+
   public static Reader readerForResource(final String resource,
                                          final Charset encoding)
     throws IOException
@@ -562,26 +582,6 @@ public final class TestUtility
   private TestUtility()
   {
     // Prevent instantiation
-  }
-
-  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
-  {
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: argsMap.entrySet())
-    {
-      final String key = arg.getKey();
-      final String value = arg.getValue();
-      if (value != null)
-      {
-        argsList.add(String.format("-%s=%s", key, value));
-      }
-      else
-      {
-        argsList.add(String.format("-%s", key));
-      }
-    }
-    final String[] args = argsList.toArray(new String[0]);
-    return args;
   }
 
 }

@@ -57,7 +57,7 @@ abstract class GraphTestBase
 
   protected <T extends Comparable<? super T>> boolean containsCycleTarjan(final DirectedGraph<T> graph)
   {
-    final Collection<List<T>> sccs = new TarjanStronglyConnectedComponentFinder<T>(graph)
+    final Collection<List<T>> sccs = new TarjanStronglyConnectedComponentFinder<>(graph)
       .detectCycles();
 
     if (DEBUG)

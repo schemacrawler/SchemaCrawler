@@ -960,9 +960,9 @@ final class SchemaTextFormatter
   {
 
     final List<TableConstraint> constraints = constraintsCollection.stream()
-      .filter(constraint -> (EnumSet
+      .filter(constraint -> EnumSet
         .of(TableConstraintType.check, TableConstraintType.unique)
-        .contains(constraint.getConstraintType())))
+        .contains(constraint.getConstraintType()))
       .collect(Collectors.toList());
     Collections
       .sort(constraints,

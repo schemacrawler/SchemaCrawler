@@ -464,12 +464,6 @@ final class MetadataResultSet
     return value;
   }
 
-  void setDescription(final String description)
-    throws SQLException
-  {
-    this.description = description;
-  }
-
   /**
    * Moves the cursor down one row from its current position. A
    * <code>ResultSet</code> cursor is initially positioned before the
@@ -494,6 +488,12 @@ final class MetadataResultSet
       rowCount = rowCount + 1;
     }
     return next;
+  }
+
+  void setDescription(final String description)
+    throws SQLException
+  {
+    this.description = description;
   }
 
   private boolean useColumn(final String columnName)

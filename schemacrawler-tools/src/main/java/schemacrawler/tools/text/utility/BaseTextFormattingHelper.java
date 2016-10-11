@@ -130,6 +130,20 @@ abstract class BaseTextFormattingHelper
   /**
    * {@inheritDoc}
    *
+   * @see TextFormattingHelper#writeDetailRow(java.lang.String,
+   *      java.lang.String, java.lang.String)
+   */
+  @Override
+  public void writeDetailRow(final String text1,
+                             final String text2,
+                             final String text3)
+  {
+    writeDetailRow(text1, text2, text3, true, false, "");
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeDetailRow(java.lang.String,
    *      java.lang.String, java.lang.String, boolean, boolean, String)
    */
@@ -189,20 +203,6 @@ abstract class BaseTextFormattingHelper
                           1,
                           outputFormat));
     out.println(row.toString());
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#writeDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String)
-   */
-  @Override
-  public void writeDetailRow(final String text1,
-                             final String text2,
-                             final String text3)
-  {
-    writeDetailRow(text1, text2, text3, true, false, "");
   }
 
   /**

@@ -595,7 +595,7 @@ public class JSONObject
   static String valueToString(final Object value,
                               final int indentFactor,
                               final int indent)
-                                throws JSONException
+    throws JSONException
   {
     if (value == null || value.equals(null))
     {

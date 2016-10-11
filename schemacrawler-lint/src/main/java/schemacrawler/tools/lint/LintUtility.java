@@ -71,7 +71,7 @@ public final class LintUtility
 
   /**
    * Obtain linter configuration from a system property
-   * 
+   *
    * @param config
    *        TODO
    * @return LinterConfigs

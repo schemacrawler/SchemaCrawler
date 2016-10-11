@@ -133,12 +133,6 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> sortTables(final boolean value)
-  {
-    options.setAlphabeticalSortForTables(value);
-    return this;
-  }
-
   public BaseTextOptionsBuilder<O> overwriteOutput()
   {
     options.setAppendOutput(false);
@@ -148,6 +142,12 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public BaseTextOptionsBuilder<O> sortTableColumns(final boolean value)
   {
     options.setAlphabeticalSortForTableColumns(value);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> sortTables(final boolean value)
+  {
+    options.setAlphabeticalSortForTables(value);
     return this;
   }
 

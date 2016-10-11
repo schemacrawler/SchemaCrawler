@@ -78,7 +78,7 @@ public final class StopWatch
     .toFormatter();
 
   private final String id;
-  private final List<TaskInfo> tasks = new LinkedList<TaskInfo>();
+  private final List<TaskInfo> tasks = new LinkedList<>();
 
   // State for current task
   private Instant start;
