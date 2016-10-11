@@ -71,12 +71,14 @@ public final class LintUtility
 
   /**
    * Obtain linter configuration from a system property
-   * @param config TODO
-   *
+   * 
+   * @param config
+   *        TODO
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
-  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions, final Config config)
+  public static LinterConfigs readLinterConfigs(final LintOptions lintOptions,
+                                                final Config config)
   {
     final LinterConfigs linterConfigs = new LinterConfigs(config);
     String linterConfigsFile = null;
