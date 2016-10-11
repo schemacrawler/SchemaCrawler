@@ -58,7 +58,7 @@ public class CompressedFileInputResource
 
   public CompressedFileInputResource(final Path filePath,
                                      final String internalPath)
-                                       throws IOException
+    throws IOException
   {
     inputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();

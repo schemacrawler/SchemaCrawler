@@ -112,7 +112,7 @@ public class EmbeddedGraphExecutable
 
   private void insertSvg(final BufferedWriter finalHtmlFileWriter,
                          final BufferedReader baseSvgFileReader)
-                           throws IOException
+    throws IOException
   {
     finalHtmlFileWriter.append(System.lineSeparator());
     boolean skipLines = true;

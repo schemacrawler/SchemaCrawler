@@ -59,7 +59,7 @@ public interface Executable
    */
   void execute(Connection connection,
                DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                 throws Exception;
+    throws Exception;
 
   Config getAdditionalConfiguration();
 

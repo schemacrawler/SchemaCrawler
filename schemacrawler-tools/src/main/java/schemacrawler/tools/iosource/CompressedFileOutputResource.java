@@ -63,7 +63,7 @@ public class CompressedFileOutputResource
 
   public CompressedFileOutputResource(final Path filePath,
                                       final String internalPath)
-                                        throws IOException
+    throws IOException
   {
     outputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
@@ -87,7 +87,7 @@ public class CompressedFileOutputResource
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
-                                      throws IOException
+    throws IOException
   {
     if (appendOutput)
     {

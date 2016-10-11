@@ -72,7 +72,7 @@ abstract class BaseCommandChainExecutable
 
   protected final void executeChain(final Catalog catalog,
                                     final Connection connection)
-                                      throws Exception
+    throws Exception
   {
     if (executables.isEmpty())
     {

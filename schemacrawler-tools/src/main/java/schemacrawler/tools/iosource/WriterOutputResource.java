@@ -54,7 +54,7 @@ public class WriterOutputResource
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
-                                      throws IOException
+    throws IOException
   {
     LOGGER.log(Level.INFO, "Output to provided writer");
     return new OutputWriter(getDescription(),

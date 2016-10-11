@@ -46,7 +46,7 @@ public class ConsoleOutputResource
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
-                                      throws IOException
+    throws IOException
   {
     final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
     LOGGER.log(Level.INFO, "Opened output writer to console");

@@ -68,7 +68,7 @@ public class FileOutputResource
   @Override
   public Writer openNewOutputWriter(final Charset charset,
                                     final boolean appendOutput)
-                                      throws IOException
+    throws IOException
   {
     requireNonNull(charset, "No output charset provided");
     final OpenOption[] openOptions;
