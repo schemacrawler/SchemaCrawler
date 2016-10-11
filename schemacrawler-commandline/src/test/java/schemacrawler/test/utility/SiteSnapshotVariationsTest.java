@@ -95,7 +95,7 @@ public class SiteSnapshotVariationsTest
       {
         extension = outputFormatValue;
       }
-      final Map<String, String> args = new HashMap<String, String>();
+      final Map<String, String> args = new HashMap<>();
       args.put("infolevel", "maximum");
       args.put("outputformat", outputFormatValue);
 

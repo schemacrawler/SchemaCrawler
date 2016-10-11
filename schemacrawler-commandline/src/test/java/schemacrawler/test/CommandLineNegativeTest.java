@@ -67,7 +67,7 @@ public class CommandLineNegativeTest
   public void commandLine_BadCommand()
     throws Exception
   {
-    final Map<String, String> argsMapOverride = new HashMap<String, String>();
+    final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("command", "badcommand");
 
     run(argsMapOverride, null);

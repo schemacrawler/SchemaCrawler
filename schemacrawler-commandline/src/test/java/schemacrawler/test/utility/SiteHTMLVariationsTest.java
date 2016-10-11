@@ -78,7 +78,7 @@ public class SiteHTMLVariationsTest
   public void html()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
 
     final Map<String, String> config = new HashMap<>();
@@ -92,7 +92,7 @@ public class SiteHTMLVariationsTest
   public void html_2_portablenames()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
 
@@ -107,7 +107,7 @@ public class SiteHTMLVariationsTest
   public void html_3_important_columns()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("command", "brief");
     args.put("portablenames", "true");
@@ -123,7 +123,7 @@ public class SiteHTMLVariationsTest
   public void html_4_ordinals()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
 
@@ -139,7 +139,7 @@ public class SiteHTMLVariationsTest
   public void html_5_alphabetical()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
     args.put("portablenames", "true");
     args.put("sortcolumns", "true");
@@ -155,7 +155,7 @@ public class SiteHTMLVariationsTest
   public void html_6_grep()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
@@ -172,7 +172,7 @@ public class SiteHTMLVariationsTest
   public void html_7_grep_onlymatching()
     throws Exception
   {
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");

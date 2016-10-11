@@ -68,7 +68,7 @@ public class TitleTest
                                                               TextOutputFormat.json,
                                                               GraphOutputFormat.scdot };
 
-    final Map<String, String> args = new HashMap<String, String>();
+    final Map<String, String> args = new HashMap<>();
     args.put("title", "Database Design for Books and Publishers");
     args.put("routines", "");
     // Testing no sequences, synonyms

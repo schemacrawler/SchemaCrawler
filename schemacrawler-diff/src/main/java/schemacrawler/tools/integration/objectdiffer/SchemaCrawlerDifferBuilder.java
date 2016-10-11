@@ -42,10 +42,8 @@ public class SchemaCrawlerDifferBuilder
     implements ComparisonStrategy
   {
     @Override
-    public void compare(final DiffNode node,
-                        final Class<?> type,
-                        final Object working,
-                        final Object base)
+    public void compare(final DiffNode node, final Class<?> type,
+                        final Object working, final Object base)
     {
       if (NamedObject.class.isAssignableFrom(type))
       {

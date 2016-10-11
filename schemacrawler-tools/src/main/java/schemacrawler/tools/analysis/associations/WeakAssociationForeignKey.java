@@ -119,7 +119,7 @@ public class WeakAssociationForeignKey
   @Override
   public List<WeakAssociation> getColumnReferences()
   {
-    return new ArrayList<WeakAssociation>(columnReferences);
+    return new ArrayList<>(columnReferences);
   }
 
   @Override

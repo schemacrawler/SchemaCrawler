@@ -58,7 +58,7 @@ public class DatabaseObjectFullNameFilter<D extends DatabaseObject>
 
     public DatabaseObjectFullNameFilter<D> build()
     {
-      return new DatabaseObjectFullNameFilter<D>(this);
+      return new DatabaseObjectFullNameFilter<>(this);
     }
 
     public Builder<D> withConnection(final Connection connection)

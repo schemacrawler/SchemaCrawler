@@ -202,7 +202,7 @@ public class TestDatabase
       server.setLogWriter(new PrintWriter(new OutputStream()
       {
         @Override
-        public void write(int b)
+        public void write(final int b)
           throws IOException
         {
         }

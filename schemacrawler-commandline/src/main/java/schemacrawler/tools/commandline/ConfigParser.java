@@ -49,6 +49,11 @@ public class ConfigParser
     normalizeOptionName(CONFIG_FILE, "g");
   }
 
+  public void consumeOptions()
+  {
+    consumeOption(CONFIG_FILE);
+  }
+
   @Override
   public void loadConfig()
     throws SchemaCrawlerException
@@ -56,11 +61,6 @@ public class ConfigParser
     final String configfile = config
       .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
     config.putAll(Config.loadFile(configfile));
-  }
-
-  public void consumeOptions()
-  {
-    consumeOption(CONFIG_FILE);
   }
 
 }

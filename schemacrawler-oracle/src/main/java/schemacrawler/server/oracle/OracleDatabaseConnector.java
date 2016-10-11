@@ -53,19 +53,19 @@ public final class OracleDatabaseConnector
   }
 
   @Override
-  public Executable newExecutable(final String command)
-    throws SchemaCrawlerException
-  {
-    return new OracleExecutable(command);
-  }
-
-  @Override
   public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return databaseSpecificOverrideOptionsBuilder;
+  }
+
+  @Override
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new OracleExecutable(command);
   }
 
 }

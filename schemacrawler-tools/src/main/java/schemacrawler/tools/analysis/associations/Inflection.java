@@ -18,11 +18,11 @@ import java.util.regex.Pattern;
 public class Inflection
 {
 
-  private static final List<Inflection> plural = new ArrayList<Inflection>();
+  private static final List<Inflection> plural = new ArrayList<>();
 
-  private static final List<Inflection> singular = new ArrayList<Inflection>();
+  private static final List<Inflection> singular = new ArrayList<>();
 
-  private static final List<String> uncountable = new ArrayList<String>();
+  private static final List<String> uncountable = new ArrayList<>();
 
   static
   {

@@ -140,18 +140,6 @@ public interface TextFormattingHelper
   void writeDescriptionRow(String description);
 
   /**
-   * Creates a detail row, with four fields. The name can be emphasized.
-   * 
-   * @return Row as a string
-   */
-  void writeDetailRow(String text1,
-                      String text2,
-                      String text3,
-                      boolean escapeText,
-                      boolean emphasize,
-                      String style);
-
-  /**
    * Creates a detail row, with four fields.
    *
    * @param text1
@@ -163,6 +151,18 @@ public interface TextFormattingHelper
    * @return Row as a string
    */
   void writeDetailRow(String text1, String text2, String text3);
+
+  /**
+   * Creates a detail row, with four fields. The name can be emphasized.
+   *
+   * @return Row as a string
+   */
+  void writeDetailRow(String text1,
+                      String text2,
+                      String text3,
+                      boolean escapeText,
+                      boolean emphasize,
+                      String style);
 
   /**
    * Document end.

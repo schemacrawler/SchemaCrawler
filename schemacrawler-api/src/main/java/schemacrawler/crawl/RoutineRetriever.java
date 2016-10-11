@@ -29,16 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
-
-import static sf.util.Utility.isBlank;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Function;
