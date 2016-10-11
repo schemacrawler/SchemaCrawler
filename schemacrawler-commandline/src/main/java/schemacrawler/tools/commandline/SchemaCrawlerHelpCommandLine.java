@@ -77,7 +77,7 @@ public final class SchemaCrawlerHelpCommandLine
    */
   public SchemaCrawlerHelpCommandLine(final Config argsMap,
                                       final boolean showVersionOnly)
-                                        throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     requireNonNull(argsMap, "No command-line arguments provided");
 
