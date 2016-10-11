@@ -49,11 +49,10 @@ public class ExecutableExampleTest
   {
     // Test
     final Path tempFile = Files.createTempFile("sc", ".out").toAbsolutePath();
-    ExecutableExample.main(new String[] {
-                                          tempFile.toString()
-    });
+    ExecutableExample.main(new String[] { tempFile.toString() });
 
-    final List<String> failures = compareOutput("ExecutableExample.html", tempFile,
+    final List<String> failures = compareOutput("ExecutableExample.html",
+                                                tempFile,
                                                 TextOutputFormat.html.name());
     if (failures.size() > 0)
     {

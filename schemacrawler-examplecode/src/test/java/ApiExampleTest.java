@@ -72,7 +72,8 @@ public class ApiExampleTest
                 Arrays.asList(sysOutLog.getLogWithNormalizedLineSeparator()),
                 StandardOpenOption.WRITE);
 
-    final List<String> failures = compareOutput("ApiExample.txt", tempFile,
+    final List<String> failures = compareOutput("ApiExample.txt",
+                                                tempFile,
                                                 TextOutputFormat.text.name());
     if (failures.size() > 0)
     {
