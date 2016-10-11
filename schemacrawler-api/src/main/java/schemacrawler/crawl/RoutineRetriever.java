@@ -137,11 +137,8 @@ final class RoutineRetriever
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column.setFunctionColumnType(columnType);
-          column.setColumnDataType(lookupOrCreateColumnDataType(
-                                                                function
-                                                                  .getSchema(),
-                                                                dataType,
-                                                                typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(function
+            .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
@@ -323,11 +320,8 @@ final class RoutineRetriever
           final String remarks = results.getString("REMARKS");
           column.setOrdinalPosition(ordinalNumber++);
           column.setProcedureColumnType(columnType);
-          column.setColumnDataType(lookupOrCreateColumnDataType(
-                                                                procedure
-                                                                  .getSchema(),
-                                                                dataType,
-                                                                typeName));
+          column.setColumnDataType(lookupOrCreateColumnDataType(procedure
+            .getSchema(), dataType, typeName));
           column.setSize(length);
           column.setPrecision(precision);
           column.setNullable(isNullable);
