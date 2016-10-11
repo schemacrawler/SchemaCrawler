@@ -72,7 +72,7 @@ public final class FreeMarkerRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection)
-                                throws Exception
+    throws Exception
   {
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
