@@ -35,7 +35,7 @@ import schemacrawler.tools.options.OutputFormat;
 import sf.util.StringFormat;
 
 public enum GraphOutputFormat
-    implements OutputFormat
+  implements OutputFormat
 {
 
  htmlx("htmlx", "SchemaCrawler graph embedded in HTML5"),

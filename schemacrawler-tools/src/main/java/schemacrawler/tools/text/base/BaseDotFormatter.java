@@ -56,7 +56,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
   protected BaseDotFormatter(final O options,
                              final boolean printVerboseDatabaseInfo,
                              final OutputOptions outputOptions)
-                               throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, printVerboseDatabaseInfo, outputOptions);
   }

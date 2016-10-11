@@ -69,7 +69,7 @@ final class DataJsonFormatter
   DataJsonFormatter(final Operation operation,
                     final OperationOptions options,
                     final OutputOptions outputOptions)
-                      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(options, /* printVerboseDatabaseInfo */false, outputOptions);
     this.operation = operation;
@@ -152,7 +152,7 @@ final class DataJsonFormatter
    */
   private long handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
-                                                  throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     try
     {
