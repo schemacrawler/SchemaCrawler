@@ -88,7 +88,7 @@ public class PrimaryKeyWeakAssociationsTest
 
   private void weakAssociations(final String currentMethodFullName,
                                 final String database)
-                                  throws Exception
+    throws Exception
   {
     final Path sqliteDbFile = copyResourceToTempFile(database);
     final Config config = new Config();

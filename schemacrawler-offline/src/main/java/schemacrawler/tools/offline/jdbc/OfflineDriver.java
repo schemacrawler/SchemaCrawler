@@ -106,7 +106,7 @@ public class OfflineDriver
   @Override
   public DriverPropertyInfo[] getPropertyInfo(final String url,
                                               final Properties info)
-                                                throws SQLException
+    throws SQLException
   {
     return new DriverPropertyInfo[0];
   }

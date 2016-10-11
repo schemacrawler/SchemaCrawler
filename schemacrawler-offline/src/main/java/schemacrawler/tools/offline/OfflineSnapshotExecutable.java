@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -38,8 +39,6 @@ import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 import schemacrawler.crawl.RoutinesReducer;
 import schemacrawler.crawl.SchemasReducer;
@@ -85,7 +84,7 @@ public class OfflineSnapshotExecutable
   @Override
   public void execute(final Connection connection,
                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                        throws Exception
+    throws Exception
   {
     checkConnection(connection);
 

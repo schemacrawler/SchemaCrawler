@@ -65,6 +65,46 @@ public class DiffTest
   public TestName testName = new TestName();
 
   @Test
+  public void diffCatalog()
+    throws Exception
+  {
+    final Catalog catalog1 = getCatalog("/test1.db");
+    final Catalog catalog2 = getCatalog("/test2.db");
+
+    final String currentMethodFullName = testName.currentMethodFullName();
+
+    final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
+
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final DiffNode diff = objectDifferBuilder.build().compare(catalog1,
+                                                                catalog2);
+      diff.visit((node, visit) -> {
+        final State nodeState = node.getState();
+        final boolean print = DatabaseObject.class
+          .isAssignableFrom(node.getValueType());
+
+        if (print)
+        {
+          out.println(node.getPath() + " (" + nodeState + ")");
+        }
+
+        if (Table.class.isAssignableFrom(node.getValueType())
+            && nodeState != State.CHANGED)
+        {
+          visit.dontGoDeeper();
+        }
+        if (Column.class.isAssignableFrom(node.getValueType()))
+        {
+          visit.dontGoDeeper();
+        }
+      });
+
+      out.assertEquals(currentMethodFullName);
+    }
+  }
+
+  @Test
   public void printColumns1()
     throws Exception
   {
@@ -100,7 +140,7 @@ public class DiffTest
 
   private void printColumns(final String currentMethodFullName,
                             final String database)
-                              throws Exception
+    throws Exception
   {
 
     try (final TestWriter out = new TestWriter("text");)
@@ -123,46 +163,6 @@ public class DiffTest
           }
         }
       }
-
-      out.assertEquals(currentMethodFullName);
-    }
-  }
-
-  @Test
-  public void diffCatalog()
-    throws Exception
-  {
-    final Catalog catalog1 = getCatalog("/test1.db");
-    final Catalog catalog2 = getCatalog("/test2.db");
-
-    final String currentMethodFullName = testName.currentMethodFullName();
-
-    final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
-
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      final DiffNode diff = objectDifferBuilder.build().compare(catalog1,
-                                                                catalog2);
-      diff.visit((node, visit) -> {
-        final State nodeState = node.getState();
-        final boolean print = DatabaseObject.class
-          .isAssignableFrom(node.getValueType());
-
-        if (print)
-        {
-          out.println(node.getPath() + " (" + nodeState + ")");
-        }
-
-        if (Table.class.isAssignableFrom(node.getValueType())
-            && nodeState != State.CHANGED)
-        {
-          visit.dontGoDeeper();
-        }
-        if (Column.class.isAssignableFrom(node.getValueType()))
-        {
-          visit.dontGoDeeper();
-        }
-      });
 
       out.assertEquals(currentMethodFullName);
     }

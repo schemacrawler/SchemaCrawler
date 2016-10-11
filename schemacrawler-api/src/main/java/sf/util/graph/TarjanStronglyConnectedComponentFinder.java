@@ -56,7 +56,7 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
     this.graph = Objects.requireNonNull(graph);
 
     stronglyConnectedComponents = new HashSet<>();
-    stack = new Stack<Vertex<T>>();
+    stack = new Stack<>();
   }
 
   /**

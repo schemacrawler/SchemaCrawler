@@ -51,7 +51,7 @@ public class OracleExecutable
   @Override
   public void execute(final Connection connection,
                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-                        throws Exception
+    throws Exception
   {
     executeOracleScripts(connection);
 

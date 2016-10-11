@@ -98,16 +98,6 @@ public class TestWriter
     return out.append(csq, start, end);
   }
 
-  public void assertEquals(final String referenceFile)
-    throws Exception
-  {
-    final List<String> failures = collectFailures(referenceFile);
-    if (!failures.isEmpty())
-    {
-      fail(failures.toString());
-    }
-  }
-
   public void assertEmpty()
     throws Exception
   {
@@ -116,6 +106,16 @@ public class TestWriter
     if (size(tempFile) > 0)
     {
       fail("Output is not empty");
+    }
+  }
+
+  public void assertEquals(final String referenceFile)
+    throws Exception
+  {
+    final List<String> failures = collectFailures(referenceFile);
+    if (!failures.isEmpty())
+    {
+      fail(failures.toString());
     }
   }
 

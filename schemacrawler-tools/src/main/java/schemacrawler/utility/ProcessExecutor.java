@@ -164,7 +164,7 @@ public class ProcessExecutor
       throw new IllegalArgumentException("No command provided");
     }
 
-    command = new ArrayList<String>();
+    command = new ArrayList<>();
     for (final String arg: args)
     {
       if (isBlank(arg))

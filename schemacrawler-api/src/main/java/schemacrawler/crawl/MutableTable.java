@@ -206,7 +206,7 @@ class MutableTable
   @Override
   public Collection<Privilege<Table>> getPrivileges()
   {
-    return new ArrayList<Privilege<Table>>(privileges.values());
+    return new ArrayList<>(privileges.values());
   }
 
   /**
@@ -453,7 +453,7 @@ class MutableTable
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
   {
-    final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
+    final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
       .values());
     if (tableAssociationType != null
         && tableAssociationType != TableAssociationType.all)
