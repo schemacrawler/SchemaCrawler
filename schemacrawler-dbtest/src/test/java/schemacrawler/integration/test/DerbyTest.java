@@ -42,7 +42,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -68,7 +67,8 @@ public class DerbyTest
     assertNotNull(dataSource);
     final Connection connection = getConnection();
     assertNotNull(connection);
-    assertEquals("org.apache.derby.impl.jdbc.EmbedConnection", connection.getClass().getName());
+    assertEquals("org.apache.derby.impl.jdbc.EmbedConnection",
+                 connection.getClass().getName());
   }
 
   @Test
@@ -77,8 +77,7 @@ public class DerbyTest
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    options
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
+    options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
