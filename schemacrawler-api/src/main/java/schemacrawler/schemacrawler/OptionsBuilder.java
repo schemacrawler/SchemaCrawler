@@ -27,6 +27,7 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schemacrawler;
 
+
 public interface OptionsBuilder<O extends Options>
 {
 
