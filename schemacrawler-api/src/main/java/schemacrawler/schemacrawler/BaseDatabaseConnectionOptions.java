@@ -141,8 +141,9 @@ abstract class BaseDatabaseConnectionOptions
                               connectionUrl,
                               user,
                               safeProperties(jdbcConnectionProperties)));
-      final Connection connection = DriverManager
-        .getConnection(connectionUrl, jdbcConnectionProperties);
+      final Driver driver = DriverManager.getDriver(connectionUrl);
+      final Connection connection = driver.connect(connectionUrl,
+                                                   jdbcConnectionProperties);
 
       LOGGER
         .log(Level.INFO,
