@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.10.04" date="2016-10-23" description="Loading JDBC drivers">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed issue with loading of JDBC drivers.
+      ]]></action>                                                                                      
+     </release>   
      <release version="14.10.03" date="2016-10-01" description="Formatting remarks in HTML">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed formatting of multi-line column remarks in HTML output.
@@ -151,7 +156,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.10.03" date="2016-02-03" description="Fixed logging">
+     <release version="14.10.04" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
