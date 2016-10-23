@@ -131,7 +131,8 @@ abstract class BaseDatabaseConnectionOptions
         .format("Could not connect to database, for user \'%s\'", user), e);
     }
 
-    final Properties jdbcConnectionProperties = createConnectionProperties(user,
+    final Properties jdbcConnectionProperties = createConnectionProperties(connectionUrl,
+                                                                           user,
                                                                            password);
     try
     {
@@ -141,7 +142,13 @@ abstract class BaseDatabaseConnectionOptions
                               connectionUrl,
                               user,
                               safeProperties(jdbcConnectionProperties)));
-      final Driver driver = DriverManager.getDriver(connectionUrl);
+      // (Using java.sql.DriverManager.getConnection(String, Properties)
+      // to make a connection is not the best idea,
+      // since for some strange reason, it does not check if a Driver
+      // will accept the connection URL, and some non-compliant drivers
+      // (MySQL Connector/J) may raise an exception other than a
+      // SQLException in this case.)
+      final Driver driver = getJdbcDriver(connectionUrl);
       final Connection connection = driver.connect(connectionUrl,
                                                    jdbcConnectionProperties);
 
@@ -184,15 +191,7 @@ abstract class BaseDatabaseConnectionOptions
   public final Driver getJdbcDriver()
     throws SQLException
   {
-    try
-    {
-      return DriverManager.getDriver(getConnectionUrl());
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not find a suitable JDBC driver for database connection URL, "
-                                          + getConnectionUrl(), e);
-    }
+    return getJdbcDriver(getConnectionUrl());
   }
 
   @Override
@@ -288,7 +287,8 @@ abstract class BaseDatabaseConnectionOptions
     throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
-  private Properties createConnectionProperties(final String user,
+  private Properties createConnectionProperties(final String connectionUrl,
+                                                final String user,
                                                 final String password)
     throws SQLException
   {
@@ -301,7 +301,7 @@ abstract class BaseDatabaseConnectionOptions
               "user",
               "password",
               "url");
-    final Driver jdbcDriver = getJdbcDriver();
+    final Driver jdbcDriver = getJdbcDriver(connectionUrl);
     final DriverPropertyInfo[] propertyInfo = jdbcDriver
       .getPropertyInfo(getConnectionUrl(), new Properties());
     final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
@@ -342,6 +342,20 @@ abstract class BaseDatabaseConnectionOptions
     }
 
     return jdbcConnectionProperties;
+  }
+
+  private final Driver getJdbcDriver(final String connectionUrl)
+    throws SQLException
+  {
+    try
+    {
+      return DriverManager.getDriver(connectionUrl);
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Could not find a suitable JDBC driver for database connection URL, "
+                                          + getConnectionUrl(), e);
+    }
   }
 
   private void logConnection(final Connection connection)
