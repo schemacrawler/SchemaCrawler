@@ -124,6 +124,9 @@ final class SchemaRetriever
       catalog.addSchema(new SchemaReference(null, null));
     }
 
+    LOGGER.log(Level.FINER,
+               new StringFormat("Retrieved %d schemas",
+                                catalog.getSchemas().size()));
   }
 
   /**
