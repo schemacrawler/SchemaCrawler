@@ -11,7 +11,10 @@
       ]]></action> 
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Distribution now contains an example SQLite database.
-      ]]></action>                                                                                             
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fail if the SQLite database does not exist.
+      ]]></action>                                                                                                   
      </release>   
      <release version="14.10.04" date="2016-10-23" description="Loading JDBC drivers">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
