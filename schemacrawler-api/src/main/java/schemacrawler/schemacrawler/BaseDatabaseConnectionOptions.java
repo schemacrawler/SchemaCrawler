@@ -127,8 +127,17 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final Exception e)
     {
+      final String username;
+      if (user != null)
+      {
+        username = String.format("user \'%s\'", user);
+      }
+      else
+      {
+        username = "unspecified user";
+      }
       throw new SQLException(String
-        .format("Could not connect to database, for user \'%s\'", user), e);
+        .format("Could not connect to database, for %s", username), e);
     }
 
     final Properties jdbcConnectionProperties = createConnectionProperties(connectionUrl,
@@ -161,10 +170,19 @@ abstract class BaseDatabaseConnectionOptions
     }
     catch (final SQLException e)
     {
+      final String username;
+      if (user != null)
+      {
+        username = String.format("user \'%s\'", user);
+      }
+      else
+      {
+        username = "unspecified user";
+      }
       throw new SchemaCrawlerSQLException(String
-        .format("Could not connect to %s, for user \'%s\', with properties %s",
+        .format("Could not connect to %s, for %s, with properties %s",
                 connectionUrl,
-                user,
+                username,
                 safeProperties(jdbcConnectionProperties)), e);
     }
   }
