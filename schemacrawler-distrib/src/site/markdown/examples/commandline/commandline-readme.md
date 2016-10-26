@@ -12,7 +12,7 @@ The command example demonstrates the use of SchemaCrawler from the shell command
    `schemacrawler.cmd -server=hsqldb -database=schemacrawler -password= -infolevel=minimum -command=list` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
 6. Run using a SQLite database with 
-   `schemacrawler.cmd -server=sqlite -database=../_testdb/sc.sb -password= -infolevel=minimum -command=list` 
+   `schemacrawler.cmd -server=sqlite -database=../_testdb/sc.db -password= -infolevel=minimum -command=list` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
    
 ## How to Experiment
