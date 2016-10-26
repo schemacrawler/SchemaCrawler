@@ -149,7 +149,9 @@
         <include name="**/hsqldb*.jar" />
       </fileset>
     </copy>
-
+    <copy file="${SchemaCrawler.home}/schemacrawler-sqlite/src/test/resources/sc.db"
+          todir="${main-distribution.staging.dir}/_testdb"/>
+          	
     <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0.jar"
           todir="${main-distribution.staging.dir}/_downloader" />
