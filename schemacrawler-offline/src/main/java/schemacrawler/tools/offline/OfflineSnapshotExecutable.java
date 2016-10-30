@@ -76,7 +76,7 @@ public class OfflineSnapshotExecutable
 
   private OutputOptions inputOptions;
 
-  protected OfflineSnapshotExecutable(final String command)
+  public OfflineSnapshotExecutable(final String command)
   {
     super(command);
   }
