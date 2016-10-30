@@ -1,4 +1,4 @@
-SchemaCrawler 14.10.05
+SchemaCrawler 14.10.06
 
 Error: Cannot perform operation: unexpected token: BADCOMMAND
 

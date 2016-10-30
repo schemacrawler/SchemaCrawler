@@ -5,6 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.10.06" date="2016-10-29" description="Offline executable">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Made OfflineSnapshotExecutable constructor public, so that offline 
+        snapshots can be loaded programatically.
+      ]]></action>                                                                                                   
+     </release>   
      <release version="14.10.05" date="2016-10-26" description="SQLite diagrams">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed issue with generating SQLite diagrams.
@@ -167,7 +173,7 @@
         Performance boost by using Oracle data dictionary query for table columns. Idea courtesy of Patric Rufflar.
       ]]></action>                                               
      </release>  
-     <release version="14.10.05" date="2016-02-03" description="Fixed logging">
+     <release version="14.10.06" date="2016-02-03" description="Fixed logging">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed logging for features that the JDBC driver does not support.
       ]]></action>  
