@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.offline;
+package schemacrawler.integration.test;
 
 
 import static java.nio.file.Files.size;
@@ -59,6 +59,7 @@ import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.offline.OfflineSnapshotExecutable;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
 
