@@ -294,9 +294,10 @@ final class MutableCatalog
    */
   @Override
   public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
+                                                              final int sqlTypeInt,
                                                               final String name)
   {
-    return columnDataTypes.lookup(schema, name);
+    return columnDataTypes.lookup(schema, name, sqlTypeInt);
   }
 
   /**
@@ -350,12 +351,12 @@ final class MutableCatalog
   /**
    * {@inheritDoc}
    *
-   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
+   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(int, java.lang.String)
    */
   @Override
-  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
+  public Optional<MutableColumnDataType> lookupSystemColumnDataType(final int sqlTypeInt, final String name)
   {
-    return lookupColumnDataType(new SchemaReference(), name);
+    return lookupColumnDataType(new SchemaReference(), sqlTypeInt, name);
   }
 
   /**

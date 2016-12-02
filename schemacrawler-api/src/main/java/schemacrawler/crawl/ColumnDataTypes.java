@@ -28,7 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
+
+import java.util.Optional;
 
 class ColumnDataTypes
   extends NamedObjectList<MutableColumnDataType>
@@ -52,6 +56,10 @@ class ColumnDataTypes
       }
     }
     return columnDataType;
+  }
+
+  Optional<MutableColumnDataType> lookup(final NamedObject namedObject, final String name, final int sqlType) {
+    return this.lookup(namedObject, name + "." + sqlType);
   }
 
 }
