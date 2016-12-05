@@ -29,9 +29,10 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 class ColumnDataTypes
@@ -56,6 +57,18 @@ class ColumnDataTypes
       }
     }
     return columnDataType;
+  }
+
+  List<MutableColumnDataType> lookupColumnDataTypesByName(final String name) {
+    final SchemaReference systemSchema = new SchemaReference();
+    List<MutableColumnDataType> types = new ArrayList<>();
+    for (final MutableColumnDataType currentColumnDataType : this) {
+      if (name.equals(currentColumnDataType.getDatabaseSpecificTypeName())
+              && systemSchema.equals(currentColumnDataType.getSchema())) {
+        types.add(currentColumnDataType);
+      }
+    }
+    return types;
   }
 
   Optional<MutableColumnDataType> lookup(final NamedObject namedObject, final String name, final int sqlType) {
