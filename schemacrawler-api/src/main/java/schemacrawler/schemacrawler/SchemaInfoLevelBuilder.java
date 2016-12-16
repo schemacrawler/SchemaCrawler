@@ -84,6 +84,7 @@ public final class SchemaInfoLevelBuilder
   public static SchemaInfoLevel minimum()
   {
     final SchemaInfoLevel minimum = new SchemaInfoLevel();
+    minimum.setRetrieveDatabaseInfo(true);
     minimum.setRetrieveTables(true);
     minimum.setRetrieveRoutines(true);
     minimum.setTag("minimum");

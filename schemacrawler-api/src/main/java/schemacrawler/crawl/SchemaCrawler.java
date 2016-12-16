@@ -168,14 +168,21 @@ public final class SchemaCrawler
   {
     try
     {
+      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
+      final boolean retrieveDatabaseInfo = infoLevel.isRetrieveDatabaseInfo();
+      if (!retrieveDatabaseInfo)
+      {
+        LOGGER
+          .log(Level.INFO,
+               "Not retrieving database information, since this was not requested");
+        return;
+      }
+
       final StopWatch stopWatch = new StopWatch("crawlDatabaseInfo");
 
-      final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
       final DatabaseInfoRetriever retriever = new DatabaseInfoRetriever(retrieverConnection,
                                                                         catalog,
                                                                         options);
-
-      LOGGER.log(Level.INFO, "Crawling SchemaCrawler information");
 
       LOGGER.log(Level.INFO, "Retrieving database information");
 
@@ -249,7 +256,6 @@ public final class SchemaCrawler
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    final StopWatch stopWatch = new StopWatch("crawlRoutines");
 
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveRoutines = infoLevel.isRetrieveRoutines();
@@ -259,6 +265,8 @@ public final class SchemaCrawler
                  "Not retrieving routines, since this was not requested");
       return;
     }
+
+    final StopWatch stopWatch = new StopWatch("crawlRoutines");
 
     LOGGER.log(Level.INFO, "Crawling routines");
 
@@ -406,7 +414,6 @@ public final class SchemaCrawler
                                      final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    final StopWatch stopWatch = new StopWatch("crawlSequences");
 
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSequences = infoLevel.isRetrieveSequenceInformation();
@@ -416,6 +423,8 @@ public final class SchemaCrawler
                  "Not retrieving sequences, since this was not requested");
       return;
     }
+
+    final StopWatch stopWatch = new StopWatch("crawlSequences");
 
     LOGGER.log(Level.INFO, "Crawling sequences");
 
@@ -463,7 +472,6 @@ public final class SchemaCrawler
                                     final SchemaCrawlerOptions options)
     throws SchemaCrawlerException
   {
-    final StopWatch stopWatch = new StopWatch("crawlSynonyms");
 
     final SchemaInfoLevel infoLevel = options.getSchemaInfoLevel();
     final boolean retrieveSynonyms = infoLevel.isRetrieveSynonymInformation();
@@ -473,6 +481,8 @@ public final class SchemaCrawler
                  "Not retrieving synonyms, since this was not requested");
       return;
     }
+
+    final StopWatch stopWatch = new StopWatch("crawlSynonyms");
 
     LOGGER.log(Level.INFO, "Crawling synonyms");
 
