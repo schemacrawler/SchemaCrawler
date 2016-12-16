@@ -29,14 +29,13 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.sql.Connection;
+import java.nio.file.Path;
 import java.util.Arrays;
 
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.zapodot.junit.db.EmbeddedDatabaseRule;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.DiffNode.State;
@@ -45,37 +44,32 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
+import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
-
 public class DiffTest
+  extends BaseDatabaseTest
 {
 
   @Rule
   public TestName testName = new TestName();
-  @Rule
-  public EmbeddedDatabaseRule testdb1Rule = EmbeddedDatabaseRule.builder()
-    .withName("testdb1").withInitialSqlFromResource("classpath:testdb1.sql")
-    .build();
-  @Rule
-  public EmbeddedDatabaseRule testdb2Rule = EmbeddedDatabaseRule.builder()
-    .withName("testdb2").withInitialSqlFromResource("classpath:testdb2.sql")
-    .build();
 
   @Test
-  @Ignore
   public void diffCatalog()
     throws Exception
   {
-    final Catalog catalog1 = getCatalog(testdb1Rule.getConnection());
-    final Catalog catalog2 = getCatalog(testdb2Rule.getConnection());
+    final Catalog catalog1 = getCatalog("/test1.db");
+    final Catalog catalog2 = getCatalog("/test2.db");
 
     final String currentMethodFullName = testName.currentMethodFullName();
 
@@ -111,44 +105,50 @@ public class DiffTest
   }
 
   @Test
-  @Ignore
   public void printColumns1()
     throws Exception
   {
-    printColumns(testName.currentMethodFullName(), testdb1Rule.getConnection());
+    printColumns(testName.currentMethodFullName(), "/test1.db");
   }
 
   @Test
-  @Ignore
   public void printColumns2()
     throws Exception
   {
-    printColumns(testName.currentMethodFullName(), testdb2Rule.getConnection());
+    printColumns(testName.currentMethodFullName(), "/test2.db");
   }
 
-  private Catalog getCatalog(final Connection connection)
+  private Catalog getCatalog(final String database)
     throws Exception
   {
+    final Path sqliteDbFile = copyResourceToTempFile(database);
+    final Config config = new Config();
+    config.put("server", "sqlite");
+    config.put("database", sqliteDbFile.toString());
+
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
+    final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
+      .newDatabaseConnectionOptions(config);
+
     final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connection, schemaCrawlerOptions);
+      .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
 
     return catalog;
   }
 
   private void printColumns(final String currentMethodFullName,
-                            final Connection connection)
+                            final String database)
     throws Exception
   {
 
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Catalog baseCatalog = getCatalog(connection);
+      final Catalog baseCatalog = getCatalog(database);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 2, schemas.length);
+      assertEquals("Schema count does not match", 1, schemas.length);
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
