@@ -5,6 +5,17 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.11.01" date="2016-12-16" description="Fix to support Teradata driver">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Show a better error message when a script file cannot be read.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Handle SQLException when retrieving JDBC driver information.                                                                                   
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Extended copyright messages through 2017.                                                                                   
+      ]]></action>                         
+     </release>  
      <release version="14.10.06" date="2016-10-29" description="Offline executable">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Made OfflineSnapshotExecutable constructor public, so that offline 
