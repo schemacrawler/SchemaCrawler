@@ -278,7 +278,12 @@ public class OutputOptions
   public Reader openNewInputReader()
     throws IOException
   {
-    return obtainInputResource().openNewInputReader(getInputCharset());
+    obtainInputResource();
+    if (inputResource == null)
+    {
+      throw new IOException("Cannot read " + outputFormatValue);
+    }
+    return inputResource.openNewInputReader(getInputCharset());
   }
 
   /**
@@ -302,8 +307,8 @@ public class OutputOptions
   public Writer openNewOutputWriter(final boolean appendOutput)
     throws IOException
   {
-    return obtainOutputResource().openNewOutputWriter(getOutputCharset(),
-                                                      appendOutput);
+    obtainOutputResource();
+    return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
   }
 
   /**
@@ -501,7 +506,7 @@ public class OutputOptions
    * Gets the input resource. If the input resource is null, first set
    * it to a value based off the output format value.
    */
-  private InputResource obtainInputResource()
+  private void obtainInputResource()
   {
     if (inputResource == null)
     {
@@ -514,20 +519,18 @@ public class OutputOptions
         inputResource = null;
       }
     }
-    return inputResource;
   }
 
   /**
    * Gets the output resource. If the output resource is null, first set
    * it to console output.
    */
-  private OutputResource obtainOutputResource()
+  private void obtainOutputResource()
   {
     if (outputResource == null)
     {
       outputResource = new ConsoleOutputResource();
     }
-    return outputResource;
   }
 
 }
