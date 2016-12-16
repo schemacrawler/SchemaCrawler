@@ -58,7 +58,9 @@ public class FileInputResource
       .toAbsolutePath();
     if (!exists(filePath) || !isReadable(filePath))
     {
-      throw new IOException("Cannot read file, " + filePath);
+      final IOException e = new IOException("Cannot read file, " + filePath);
+      LOGGER.log(Level.CONFIG, e.getMessage(), e);
+      throw e;
     }
   }
 

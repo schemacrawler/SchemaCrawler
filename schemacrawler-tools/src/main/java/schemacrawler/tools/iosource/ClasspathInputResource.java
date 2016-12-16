@@ -56,8 +56,10 @@ public class ClasspathInputResource
     if (ClasspathInputResource.class
       .getResource(this.classpathResource) == null)
     {
-      throw new IOException("Cannot read classpath resource, "
-                            + this.classpathResource);
+      final IOException e = new IOException("Cannot read classpath resource, "
+                                            + this.classpathResource);
+      LOGGER.log(Level.CONFIG, e.getMessage(), e);
+      throw e;
     }
   }
 
