@@ -45,6 +45,7 @@ public final class SchemaInfoLevel
   private boolean retrieveTables;
   private boolean retrieveRoutines;
   private boolean retrieveColumnDataTypes;
+  private boolean retrieveDatabaseInfo;
   private boolean retrieveAdditionalDatabaseInfo;
   private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
@@ -98,6 +99,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveColumnDataTypes()
   {
     return retrieveColumnDataTypes;
+  }
+
+  public boolean isRetrieveDatabaseInfo()
+  {
+    return retrieveDatabaseInfo;
   }
 
   public boolean isRetrieveForeignKeyDefinitions()
@@ -233,6 +239,11 @@ public final class SchemaInfoLevel
   public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
   {
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
+  }
+
+  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
+  {
+    this.retrieveDatabaseInfo = retrieveDatabaseInfo;
   }
 
   public void setRetrieveForeignKeyDefinitions(final boolean retrieveForeignKeyDefinitions)
