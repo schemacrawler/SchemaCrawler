@@ -56,9 +56,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Query;
 import sf.util.DatabaseUtility;
 import sf.util.StringFormat;
@@ -178,7 +176,6 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalDatabaseInfo()
-    throws SQLException
   {
     final DatabaseMetaData dbMetaData = getMetaData();
     final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
@@ -277,7 +274,9 @@ final class DatabaseInfoRetriever
         }
         else
         {
-          throw new SchemaCrawlerSQLException("Could not execute " + method, e);
+          LOGGER.log(Level.WARNING,
+                     e,
+                     new StringFormat("Could not execute %s", method));
         }
       }
 
@@ -294,31 +293,30 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveAdditionalJdbcDriverInfo()
-    throws SQLException
   {
-    final DatabaseMetaData dbMetaData = getMetaData();
-    final String url = dbMetaData.getURL();
-
     final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
-    if (driverInfo != null)
+    if (driverInfo == null)
     {
-      try
+      return;
+    }
+
+    try
+    {
+      final DatabaseMetaData dbMetaData = getMetaData();
+      final String url = dbMetaData.getURL();
+
+      final Driver jdbcDriver = DriverManager.getDriver(url);
+      final DriverPropertyInfo[] propertyInfo = jdbcDriver
+        .getPropertyInfo(url, new Properties());
+      for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
       {
-        final Driver jdbcDriver = DriverManager.getDriver(url);
-        final DriverPropertyInfo[] propertyInfo = jdbcDriver
-          .getPropertyInfo(url, new Properties());
-        for (final DriverPropertyInfo driverPropertyInfo: propertyInfo)
-        {
-          driverInfo
-            .addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
-        }
+        driverInfo
+          .addJdbcDriverProperty(new ImmutableJdbcDriverProperty(driverPropertyInfo));
       }
-      catch (final SQLException e)
-      {
-        LOGGER.log(Level.WARNING,
-                   "Could not obtain JDBC driver information",
-                   e);
-      }
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
 
   }
@@ -335,15 +333,26 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveDatabaseInfo()
-    throws SQLException
   {
-    final DatabaseMetaData dbMetaData = getMetaData();
 
     final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
+    if (dbInfo == null)
+    {
+      return;
+    }
 
-    dbInfo.setUserName(dbMetaData.getUserName());
-    dbInfo.setProductName(dbMetaData.getDatabaseProductName());
-    dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
+    try
+    {
+      final DatabaseMetaData dbMetaData = getMetaData();
+
+      dbInfo.setUserName(dbMetaData.getUserName());
+      dbInfo.setProductName(dbMetaData.getDatabaseProductName());
+      dbInfo.setProductVersion(dbMetaData.getDatabaseProductVersion());
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
+    }
   }
 
   /**
@@ -353,20 +362,28 @@ final class DatabaseInfoRetriever
    *         On a SQL exception
    */
   void retrieveJdbcDriverInfo()
-    throws SQLException
   {
-    final DatabaseMetaData dbMetaData = getMetaData();
-    final String url = dbMetaData.getURL();
-
     final MutableJdbcDriverInfo driverInfo = catalog.getJdbcDriverInfo();
-    if (driverInfo != null)
+    if (driverInfo == null)
     {
+      return;
+    }
+
+    try
+    {
+      final DatabaseMetaData dbMetaData = getMetaData();
+      final String url = dbMetaData.getURL();
+
       driverInfo.setDriverName(dbMetaData.getDriverName());
       driverInfo.setDriverVersion(dbMetaData.getDriverVersion());
       driverInfo.setConnectionUrl(url);
       final Driver jdbcDriver = DriverManager.getDriver(url);
       driverInfo.setJdbcDriverClassName(jdbcDriver.getClass().getName());
       driverInfo.setJdbcCompliant(jdbcDriver.jdbcCompliant());
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
     }
 
   }
@@ -376,10 +393,9 @@ final class DatabaseInfoRetriever
    *
    * @throws SQLException
    *         On a SQL exception
-   * @throws SchemaCrawlerException
    */
   void retrieveSystemColumnDataTypes()
-    throws SQLException, SchemaCrawlerException
+    throws SQLException
   {
     final Schema systemSchema = new SchemaReference();
 
