@@ -262,22 +262,15 @@ final class DatabaseInfoRetriever
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
-        logSQLFeatureNotSupported("JDBC driver does not support " + method, e);
+        logSQLFeatureNotSupported(new StringFormat("Could not execute method %s",
+                                                   method),
+                                  e);
       }
       catch (final SQLException e)
       {
-        // HYC00 = Optional feature not implemented
-        if ("HYC00".equalsIgnoreCase(e.getSQLState()))
-        {
-          logSQLFeatureNotSupported("JDBC driver does not support " + method,
-                                    e);
-        }
-        else
-        {
-          LOGGER.log(Level.WARNING,
-                     e,
-                     new StringFormat("Could not execute %s", method));
-        }
+        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not execute method %s",
+                                                          method),
+                                         e);
       }
 
     }
