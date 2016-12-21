@@ -69,17 +69,16 @@ public final class SchemaTextExecutable
     final InfoLevel infoLevel = enumValue(schemaCrawlerOptions
       .getSchemaInfoLevel().getTag(), InfoLevel.unknown);
 
-    final Catalog catalog;
+    Catalog catalog = db;
+    if (!schemaTextOptions.isHideWeakAssociations())
+    {
+      catalog = new CatalogWithAssociations(catalog);
+    }
     if (infoLevel == InfoLevel.maximum)
     {
-      final Catalog catalogAssociations = new CatalogWithAssociations(db);
-      catalog = new CatalogWithCounts(catalogAssociations,
+      catalog = new CatalogWithCounts(catalog,
                                       connection,
                                       schemaCrawlerOptions);
-    }
-    else
-    {
-      catalog = db;
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();

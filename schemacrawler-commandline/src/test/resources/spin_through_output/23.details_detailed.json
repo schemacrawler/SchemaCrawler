@@ -492,7 +492,16 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
+      "weakAssociations": [
+        {"columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+        }]},
+        {"columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+        }]}
+      ],
       "foreignKeys": [
         {
           "name": "FK_Y_BOOK",
@@ -745,7 +754,10 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
+      "weakAssociations": [{"columnReferences": [{
+        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
+      }]}],
       "foreignKeys": [],
       "indexes": [{
         "columns": {
@@ -2385,7 +2397,10 @@
       }
     },
     {
-      "weakAssociations": [],
+      "weakAssociations": [{"columnReferences": [{
+        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
+        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
+      }]}],
       "foreignKeys": [
         {
           "name": "FK_SALES_SALESDATA",
@@ -2901,7 +2916,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:46:06",
+    "crawlTimestamp": "2016-12-20 23:50:38",
     "title": ""
   },
   "routines": [
