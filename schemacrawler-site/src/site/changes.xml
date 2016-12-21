@@ -5,6 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.11.02" date="2016-12-20" description="Fix to support Teradata driver">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Support for the Teradata JDBC driver.
+        The Teradata JDBC driver does not follow JDBC specifications. 
+        It should throw a SQLFeatureNotSupportedException for getFunctions, or at the least 
+        a SQLException state HYC00 ("Optional feature not implemented"). 
+        Instead, it throws with a state of HY000 ("General error"). 
+      ]]></action>                          
+     </release>    
      <release version="14.11.01" date="2016-12-16" description="Fix to support Teradata driver">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Show a better error message when a script file cannot be read.

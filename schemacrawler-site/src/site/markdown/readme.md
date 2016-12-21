@@ -91,7 +91,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
   &lt;dependency&gt;
     &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
     &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
-    &lt;version&gt;14.11.01&lt;/version&gt;
+    &lt;version&gt;14.11.02&lt;/version&gt;
   &lt;/dependency&gt;
 &lt;/dependencies&gt;
 </pre></div>
@@ -101,7 +101,7 @@ In order to use SchemaCrawler in your [Gradle](https://gradle.org/) projects, ad
 
 <div class="source"><pre>
 dependencies {
-  compile group: 'us.fatehi', name: 'schemacrawler', version: '14.11.01'
+  compile group: 'us.fatehi', name: 'schemacrawler', version: '14.11.02'
 }
 </pre></div>
 
