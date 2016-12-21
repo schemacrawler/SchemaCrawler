@@ -65,6 +65,12 @@ public final class AdditionalConfigOptionsParser
       textOptionsBuilder.noRemarks(value);
       consumeOption("noremarks");
     }
+    if (config.hasValue("noweak"))
+    {
+      final boolean value = config.getBooleanValue("noweak", true);
+      textOptionsBuilder.portableNames(value);
+      consumeOption("portablenames");
+    }
     if (config.hasValue("sorttables"))
     {
       // Special treatment, since -sorttables is true by default in the
