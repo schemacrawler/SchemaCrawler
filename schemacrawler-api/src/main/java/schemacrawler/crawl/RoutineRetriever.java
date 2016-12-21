@@ -151,22 +151,15 @@ final class RoutineRetriever
     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
-      logSQLFeatureNotSupported("JDBC driver does not support retrieving function columns",
+      logSQLFeatureNotSupported(new StringFormat("Could not retrieve columns for function %s",
+                                                 function),
                                 e);
     }
     catch (final SQLException e)
     {
-      // HYC00 = Optional feature not implemented
-      if ("HYC00".equalsIgnoreCase(e.getSQLState()))
-      {
-        logSQLFeatureNotSupported("JDBC driver does not support retrieving function columns",
-                                  e);
-      }
-      else
-      {
-        throw new SchemaCrawlerSQLException("Could not retrieve columns for function "
-                                            + function, e);
-      }
+      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve columns for function %s",
+                                                        function),
+                                       e);
     }
 
   }
@@ -238,21 +231,13 @@ final class RoutineRetriever
     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
-      logSQLFeatureNotSupported("JDBC driver does not support retrieving functions",
+      logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"),
                                 e);
     }
     catch (final SQLException e)
     {
-      // HYC00 = Optional feature not implemented
-      if ("HYC00".equalsIgnoreCase(e.getSQLState()))
-      {
-        logSQLFeatureNotSupported("JDBC driver does not support retrieving functions",
-                                  e);
-      }
-      else
-      {
-        throw new SchemaCrawlerSQLException("Could not retrieve functions", e);
-      }
+      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"),
+                                       e);
     }
 
   }
