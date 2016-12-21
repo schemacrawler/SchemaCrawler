@@ -47,6 +47,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TypeMap;
+import sf.util.StringFormat;
 
 /**
  * Base class for retriever that uses database metadata to get the
@@ -144,10 +145,28 @@ abstract class AbstractRetriever
     return catalog.getSchemas();
   }
 
-  void logSQLFeatureNotSupported(final String message, final Throwable e)
+  void logSQLFeatureNotSupported(final StringFormat message, final Throwable e)
   {
     LOGGER.log(Level.WARNING, message);
-    LOGGER.log(Level.FINE, message, e);
+    LOGGER.log(Level.FINE, e, message);
+  }
+
+  void logPossiblyUnsupportedSQLFeature(final StringFormat message,
+                                        final SQLException e)
+  {
+    // HYC00 = Optional feature not implemented
+    // HY000 = General error
+    // (HY000 is thrown by the Teradata JDBC driver for unsupported
+    // functions)
+    if ("HYC00".equalsIgnoreCase(e.getSQLState())
+        || "HY000".equalsIgnoreCase(e.getSQLState()))
+    {
+      logSQLFeatureNotSupported(message, e);
+    }
+    else
+    {
+      LOGGER.log(Level.WARNING, e, message);
+    }
   }
 
   /**
