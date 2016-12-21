@@ -77,21 +77,22 @@ public final class GraphExecutable
   public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
+    loadGraphOptions();
+
     // Determine what decorators to apply to the database
     final InfoLevel infoLevel = enumValue(schemaCrawlerOptions
       .getSchemaInfoLevel().getTag(), InfoLevel.unknown);
 
-    final Catalog catalog;
+    Catalog catalog = db;
+    if (!graphOptions.isHideWeakAssociations())
+    {
+      catalog = new CatalogWithAssociations(catalog);
+    }
     if (infoLevel == InfoLevel.maximum)
     {
-      final Catalog catalogAssociations = new CatalogWithAssociations(db);
-      catalog = new CatalogWithCounts(catalogAssociations,
+      catalog = new CatalogWithCounts(catalog,
                                       connection,
                                       schemaCrawlerOptions);
-    }
-    else
-    {
-      catalog = db;
     }
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
@@ -143,16 +144,7 @@ public final class GraphExecutable
 
   public final GraphOptions getGraphOptions()
   {
-    final GraphOptions graphOptions;
-    if (this.graphOptions == null)
-    {
-      graphOptions = new GraphOptionsBuilder()
-        .fromConfig(additionalConfiguration).toOptions();
-    }
-    else
-    {
-      graphOptions = this.graphOptions;
-    }
+    loadGraphOptions();
     return graphOptions;
   }
 
@@ -192,6 +184,15 @@ public final class GraphExecutable
                                        outputOptions);
 
     return formatter;
+  }
+
+  private void loadGraphOptions()
+  {
+    if (graphOptions == null)
+    {
+      graphOptions = new GraphOptionsBuilder()
+        .fromConfig(additionalConfiguration).toOptions();
+    }
   }
 
 }

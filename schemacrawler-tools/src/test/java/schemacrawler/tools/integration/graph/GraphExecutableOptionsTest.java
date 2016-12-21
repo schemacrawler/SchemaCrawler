@@ -295,6 +295,10 @@ public class GraphExecutableOptionsTest
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
     graphOptionsBuilder.sortTables(true);
+    if (!"maximum".equals(schemaCrawlerOptions.getSchemaInfoLevel().getTag()))
+    {
+      graphOptionsBuilder.noWeak(true);
+    }
     executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
 
     // Generate diagram, so that we have something to look at, even if

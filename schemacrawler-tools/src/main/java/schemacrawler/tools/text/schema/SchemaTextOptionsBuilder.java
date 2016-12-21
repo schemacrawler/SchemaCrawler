@@ -119,6 +119,12 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
+  public SchemaTextOptionsBuilder noWeak(final boolean value)
+  {
+    options.setHideWeakAssociations(value);
+    return this;
+  }
+
   public SchemaTextOptionsBuilder portableNames(final boolean value)
   {
     options.setHideConstraintNames(value);
