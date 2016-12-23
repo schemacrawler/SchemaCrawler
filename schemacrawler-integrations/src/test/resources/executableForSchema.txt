@@ -135,6 +135,14 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
  1  ID <--(0..1) PREVIOUSEDITIONID                                
 
+Weak Associations
+
+                                                      [weak association]
+  ID <~~(0..many) PUBLIC."PUBLISHER SALES".SALES.BOOKID                              
+
+                                                      [weak association]
+  PUBLISHERID (0..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID                              
+
 Indexes
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
@@ -176,6 +184,11 @@ Primary Key
 SYS_PK_10092                                               [primary key]
 1   ID                                ascending                   
                                     auto-incremented            
+
+Weak Associations
+
+                                                      [weak association]
+  ID <~~(0..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
 Indexes
 
@@ -510,6 +523,11 @@ FK_SALES_SALESDATA                         [foreign key, with no action]
 FK_SALES_REGIONS                           [foreign key, with no action]
  1  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
  2  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
+
+Weak Associations
+
+                                                      [weak association]
+  BOOKID (0..many)~~> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
