@@ -65,11 +65,11 @@ public final class AdditionalConfigOptionsParser
       textOptionsBuilder.noRemarks(value);
       consumeOption("noremarks");
     }
-    if (config.hasValue("noweak"))
+    if (config.hasValue("weakassociations"))
     {
-      final boolean value = config.getBooleanValue("noweak", true);
-      textOptionsBuilder.portableNames(value);
-      consumeOption("portablenames");
+      final boolean value = config.getBooleanValue("weakassociations", true);
+      textOptionsBuilder.weakAssociations(value);
+      consumeOption("weakassociations");
     }
     if (config.hasValue("sorttables"))
     {

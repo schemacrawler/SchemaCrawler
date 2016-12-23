@@ -65,7 +65,13 @@
   Hides table and column remarks
   <boolean> can be true or false
   Optional, defaults to false
-    
+
+-weakassociations=<boolean>
+  Shows inferred relationships between tables, based on
+  common table and column naming conventions
+  <boolean> can be true or false
+  Optional, defaults to false
+  
 -portablenames=<boolean>
   Allows for easy comparison between databases, by hiding
   foreign key names, constraint names, trigger names, 
