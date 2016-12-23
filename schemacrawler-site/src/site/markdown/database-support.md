@@ -14,7 +14,7 @@ The JDBC drivers bundled with SchemaCrawler are:
   is included with the SchemaCrawler download. _Please do not replace this bundled driver, or SchemaCrawler will not function._
 - The [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html) 
   needs to be downloaded separately.
-- The [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [jTDS JDBC driver](http://jtds.sourceforge.net/) 
+- The [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc) 
   is included with the SchemaCrawler download.
 - The [IBM DB2](http://www.ibm.com/software/data/db2/) [JDBC driver](http://www.ibm.com/software/data/db2/linux-unix-windows/download.html) 
   needs to be downloaded separately.
@@ -62,12 +62,10 @@ Typical command-line arguments will look like:
 -server=sqlserver -host=db.example.com -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
 
-If your SQL Server instance is set up with Windows authentication or named pipes, you
-will need to use a database connection URL. See the [jTDS
-FAQ](http://jtds.sourceforge.net/faq.html) for details. You will also need to download
-the [jTDS distribution](http://sourceforge.net/projects/jtds/files), which contains
-`ntlmauth.dll`, and install the DLL according to instructions in the `README.SSO` file
-in the jTDS distribution.
+If your Microsoft SQL Server instance is set up with Windows authentication or named pipes, you
+will need to use a database connection URL. See the 
+[documentation for the Microsoft JDBC Driver for SQL Server](https://msdn.microsoft.com/en-us/library/mt720657) 
+for details. 
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 ```
