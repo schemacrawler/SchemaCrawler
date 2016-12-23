@@ -324,10 +324,7 @@ final class SchemaTextFormatter
     printForeignKeys(table);
     if (!isBrief)
     {
-      if (isVerbose && !options.isHideWeakAssociations())
-      {
-        printWeakAssociations(table);
-      }
+      printWeakAssociations(table);
       printIndexes(table.getIndexes());
       printTriggers(table.getTriggers());
       printTableConstraints(table.getTableConstraints());
@@ -1079,6 +1076,11 @@ final class SchemaTextFormatter
 
   private void printWeakAssociations(final Table table)
   {
+    if (options.isHideWeakAssociations())
+    {
+      return;
+    }
+
     final Collection<WeakAssociationForeignKey> weakAssociationsCollection = WeakAssociationsUtility
       .getWeakAssociations(table);
     if (weakAssociationsCollection.isEmpty())
