@@ -51,10 +51,10 @@ final class MutableJdbcDriverInfo
 
   private static final long serialVersionUID = 8030156654422512161L;
 
-  private String driverName;
-  private String driverClassName;
-  private String driverVersion;
-  private String connectionUrl;
+  private String driverName = "";
+  private String driverClassName = "";
+  private String driverVersion = "";
+  private String connectionUrl = "";
   private boolean jdbcCompliant;
   private final Set<ImmutableJdbcDriverProperty> jdbcDriverProperties = new HashSet<>();
 

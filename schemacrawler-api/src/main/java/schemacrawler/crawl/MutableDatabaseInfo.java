@@ -51,9 +51,9 @@ final class MutableDatabaseInfo
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private String userName;
-  private String productName;
-  private String productVersion;
+  private String userName = "";
+  private String productName = "";
+  private String productVersion = "";
   private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
 
   /**
