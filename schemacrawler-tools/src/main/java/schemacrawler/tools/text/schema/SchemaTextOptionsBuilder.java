@@ -119,9 +119,9 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public SchemaTextOptionsBuilder noWeak(final boolean value)
+  public SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
-    options.setHideWeakAssociations(value);
+    options.setHideWeakAssociations(!value);
     return this;
   }
 
