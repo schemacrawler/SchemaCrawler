@@ -190,11 +190,7 @@ public final class SchemaDotFormatter
     formattingHelper.println();
 
     printForeignKeys(table);
-
-    if (isVerbose && !options.isHideWeakAssociations())
-    {
-      printWeakAssociations(table);
-    }
+    printWeakAssociations(table);
 
     formattingHelper.println();
     formattingHelper.println();
@@ -569,6 +565,11 @@ public final class SchemaDotFormatter
 
   private void printWeakAssociations(final Table table)
   {
+    if (options.isHideWeakAssociations())
+    {
+      return;
+    }
+
     final Collection<WeakAssociationForeignKey> weakFks = WeakAssociationsUtility
       .getWeakAssociations(table);
     printForeignKeys(table, weakFks);
