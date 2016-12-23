@@ -297,7 +297,7 @@ public class GraphExecutableOptionsTest
     graphOptionsBuilder.sortTables(true);
     if (!"maximum".equals(schemaCrawlerOptions.getSchemaInfoLevel().getTag()))
     {
-      graphOptionsBuilder.noWeak(true);
+      graphOptionsBuilder.weakAssociations(true);
     }
     executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
 
