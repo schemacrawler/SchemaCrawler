@@ -8,7 +8,13 @@
      <release version="14.12.01" date="2016-12-22" description="Option to show weak associations">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New command-line option to show weak associations, irrespective of the infolevel. 
-      ]]></action>                          
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Changed the boolean property, schemacrawler.format.hide_weak_associations to 
+        schemacrawler.format.show_weak_associations, since weak associations are hidden by default
+        in SchemaCrawler output. Also added a new command-line switch, -weakassociations to
+        show weak associations. Weak associations now can be shown with any infolevel setting.
+      ]]></action>                           
      </release>   
      <release version="14.11.02" date="2016-12-20" description="Fix to support Teradata driver">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[

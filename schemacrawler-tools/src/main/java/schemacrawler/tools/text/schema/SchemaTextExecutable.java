@@ -65,7 +65,7 @@ public final class SchemaTextExecutable
 
     // Determine what decorators to apply to the database
     Catalog catalog = db;
-    if (!schemaTextOptions.isHideWeakAssociations())
+    if (schemaTextOptions.isShowWeakAssociations())
     {
       catalog = new CatalogWithAssociations(catalog);
     }
