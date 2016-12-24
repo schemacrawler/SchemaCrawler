@@ -71,7 +71,7 @@ public class SchemaCrawlerOutputTest
   private static final String COMPOSITE_OUTPUT = "composite_output/";
   private static final String ORDINAL_OUTPUT = "ordinal_output/";
   private static final String TABLE_ROW_COUNT_OUTPUT = "table_row_count_output/";
-  private static final String HIDE_WEAK_ASSOCIATIONS_OUTPUT = "hide_weak_associations_output/";
+  private static final String SHOW_WEAK_ASSOCIATIONS_OUTPUT = "show_weak_associations_output/";
   private static final String JSON_OUTPUT = "json_output/";
   private static final String HIDE_CONSTRAINT_NAMES_OUTPUT = "hide_constraint_names_output/";
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
@@ -218,10 +218,10 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void compareHideWeakAssociationsOutput()
+  public void compareShowWeakAssociationsOutput()
     throws Exception
   {
-    clean(HIDE_WEAK_ASSOCIATIONS_OUTPUT);
+    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
 
     final List<String> failures = new ArrayList<>();
 
@@ -229,11 +229,11 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
-    textOptions.setShowWeakAssociations(false);
+    textOptions.setShowWeakAssociations(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
-      final String referenceFile = "details_maximum."
+      final String referenceFile = "schema_standard."
                                    + outputFormat.getFormat();
 
       final Path testOutputFile = createTempFile(referenceFile,
@@ -243,14 +243,15 @@ public class SchemaCrawlerOutputTest
                                                             testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
@@ -259,7 +260,7 @@ public class SchemaCrawlerOutputTest
       executable.execute(getConnection());
 
       failures
-        .addAll(compareOutput(HIDE_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
+        .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
                               testOutputFile,
                               outputFormat.getFormat()));
     }
