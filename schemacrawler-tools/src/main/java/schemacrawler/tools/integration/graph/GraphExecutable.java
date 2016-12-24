@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static sf.util.Utility.enumValue;
 import static sf.util.Utility.readResourceFully;
 
 import java.nio.file.Files;
@@ -41,7 +40,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -80,15 +78,13 @@ public final class GraphExecutable
     loadGraphOptions();
 
     // Determine what decorators to apply to the database
-    final InfoLevel infoLevel = enumValue(schemaCrawlerOptions
-      .getSchemaInfoLevel().getTag(), InfoLevel.unknown);
-
     Catalog catalog = db;
     if (!graphOptions.isHideWeakAssociations())
     {
       catalog = new CatalogWithAssociations(catalog);
     }
-    if (infoLevel == InfoLevel.maximum)
+    if (graphOptions.isShowRowCounts()
+        || schemaCrawlerOptions.isHideEmptyTables())
     {
       catalog = new CatalogWithCounts(catalog,
                                       connection,
