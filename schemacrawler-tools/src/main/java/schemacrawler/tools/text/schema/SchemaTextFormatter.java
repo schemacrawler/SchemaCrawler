@@ -1076,7 +1076,7 @@ final class SchemaTextFormatter
 
   private void printWeakAssociations(final Table table)
   {
-    if (options.isHideWeakAssociations())
+    if (!options.isShowWeakAssociations())
     {
       return;
     }

@@ -57,8 +57,8 @@ public class SchemaTextOptionsBuilder
                                                             + "hide_routine_specific_names";
   private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX
                                              + "hide_remarks";
-  private static final String HIDE_WEAK_ASSOCIATIONS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_weak_associations";
+  private static final String SHOW_WEAK_ASSOCIATIONS = SCHEMACRAWLER_FORMAT_PREFIX
+                                                       + "show_weak_associations";
 
   private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
                                                                      + "sort_alphabetically.table_indexes";
@@ -103,7 +103,7 @@ public class SchemaTextOptionsBuilder
       .setHideConstraintNames(config.getBooleanValue(HIDE_CONSTRAINT_NAMES));
     options.setHideRemarks(config.getBooleanValue(HIDE_REMARKS));
     options
-      .setHideWeakAssociations(config.getBooleanValue(HIDE_WEAK_ASSOCIATIONS));
+      .setShowWeakAssociations(config.getBooleanValue(SHOW_WEAK_ASSOCIATIONS));
 
     options.setAlphabeticalSortForForeignKeys(config
       .getBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS));
@@ -121,7 +121,7 @@ public class SchemaTextOptionsBuilder
 
   public SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
-    options.setHideWeakAssociations(!value);
+    options.setShowWeakAssociations(value);
     return this;
   }
 
@@ -166,8 +166,8 @@ public class SchemaTextOptionsBuilder
     config.setBooleanValue(HIDE_CONSTRAINT_NAMES,
                            options.isHideTableConstraintNames());
     config.setBooleanValue(HIDE_REMARKS, options.isHideRemarks());
-    config.setBooleanValue(HIDE_WEAK_ASSOCIATIONS,
-                           options.isHideWeakAssociations());
+    config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS,
+                           options.isShowWeakAssociations());
 
     config.setBooleanValue(SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS,
                            options.isAlphabeticalSortForForeignKeys());

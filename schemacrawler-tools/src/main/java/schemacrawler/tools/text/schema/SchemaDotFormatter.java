@@ -565,7 +565,7 @@ public final class SchemaDotFormatter
 
   private void printWeakAssociations(final Table table)
   {
-    if (options.isHideWeakAssociations())
+    if (!options.isShowWeakAssociations())
     {
       return;
     }
