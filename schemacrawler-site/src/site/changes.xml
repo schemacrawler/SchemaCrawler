@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.12.01" date="2016-12-22" description="Option to show weak associations">
+     <release version="14.12.01" date="2016-12-24" description="Option to show weak associations">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         New command-line option to show weak associations, irrespective of the infolevel. 
       ]]></action>
