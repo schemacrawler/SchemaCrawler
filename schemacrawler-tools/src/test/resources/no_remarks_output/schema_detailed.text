@@ -103,11 +103,6 @@ FK_Y_BOOK                                  [foreign key, with no action]
 FK_PREVIOUSEDITION                         [foreign key, with no action]
   ID <--(0..1) PREVIOUSEDITIONID                                
 
-Weak Associations
-
-                                                      [weak association]
-  PUBLISHERID (0..many)~~> PUBLIC.BOOKS.PUBLISHERS.ID                              
-
 Indexes
 
 SYS_IDX_PK_BOOKS_10105                                    [unique index]
@@ -138,11 +133,6 @@ Primary Key
 SYS_PK_10092                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
-
-Weak Associations
-
-                                                      [weak association]
-  ID <~~(0..many) PUBLIC.BOOKS.BOOKS.PUBLISHERID                              
 
 Indexes
 

@@ -6,7 +6,6 @@
   },
   "tables": [
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -67,6 +66,62 @@
         }],
         "updateRule": "no action"
       }],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "definition": ""
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_AUTHORS_10097",
+          "definition": ""
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "LASTNAME",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "FIRSTNAME",
+              "definition": ""
+            }
+          ],
+          "unique": false,
+          "name": "IDX_B_AUTHORS",
+          "definition": ""
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "CITY",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "STATE",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY",
+              "definition": ""
+            }
+          ],
+          "unique": false,
+          "name": "IDX_A_AUTHORS",
+          "definition": ""
+        }
+      ],
       "columns": [
         {
           "size": 32,
@@ -168,7 +223,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "AUTHORS",
       "fullName": "PUBLIC.BOOKS.AUTHORS",
+      "definition": "",
       "type": "table",
       "triggers": [{
         "actionOrientation": "row",
@@ -255,64 +312,6 @@
           "type": "check"
         }
       ],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ID",
-            "definition": ""
-          },
-          "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10097",
-          "definition": ""
-        },
-        {
-          "columns": [
-            {
-              "sortSequence": "ascending",
-              "name": "LASTNAME",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "FIRSTNAME",
-              "definition": ""
-            }
-          ],
-          "unique": false,
-          "name": "IDX_B_AUTHORS",
-          "definition": ""
-        },
-        {
-          "columns": [
-            {
-              "sortSequence": "ascending",
-              "name": "CITY",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "STATE",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "POSTALCODE",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "COUNTRY",
-              "definition": ""
-            }
-          ],
-          "unique": false,
-          "name": "IDX_A_AUTHORS",
-          "definition": ""
-        }
-      ],
-      "name": "AUTHORS",
-      "definition": "",
       "remarks": "Contact details for book authors",
       "primaryKey": {
         "columns": {
@@ -326,7 +325,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -378,6 +376,7 @@
         }
       ],
       "foreignKeys": [],
+      "indexes": [],
       "columns": [
         {
           "size": 32,
@@ -413,18 +412,16 @@
           "autoIncremented": false
         }
       ],
+      "name": "AUTHORSLIST",
       "fullName": "PUBLIC.BOOKS.AUTHORSLIST",
+      "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
       "type": "view",
       "triggers": [],
       "tableConstraints": [],
-      "indexes": [],
-      "name": "AUTHORSLIST",
-      "definition": "SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS",
       "remarks": "",
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -497,6 +494,45 @@
           "updateRule": "no action"
         }
       ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "AUTHORID",
+            "definition": ""
+          },
+          "unique": false,
+          "name": "SYS_IDX_10118",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "BOOKID",
+            "definition": ""
+          },
+          "unique": false,
+          "name": "SYS_IDX_10116",
+          "definition": ""
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "BOOKID",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "AUTHORID",
+              "definition": ""
+            }
+          ],
+          "unique": true,
+          "name": "UIDX_BOOKAUTHORS",
+          "definition": ""
+        }
+      ],
       "columns": [
         {
           "size": 32,
@@ -532,7 +568,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "BOOKAUTHORS",
       "fullName": "PUBLIC.BOOKS.BOOKAUTHORS",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [
@@ -597,61 +635,10 @@
           "type": "check"
         }
       ],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "AUTHORID",
-            "definition": ""
-          },
-          "unique": false,
-          "name": "SYS_IDX_10118",
-          "definition": ""
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "BOOKID",
-            "definition": ""
-          },
-          "unique": false,
-          "name": "SYS_IDX_10116",
-          "definition": ""
-        },
-        {
-          "columns": [
-            {
-              "sortSequence": "ascending",
-              "name": "BOOKID",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "AUTHORID",
-              "definition": ""
-            }
-          ],
-          "unique": true,
-          "name": "UIDX_BOOKAUTHORS",
-          "definition": ""
-        }
-      ],
-      "name": "BOOKAUTHORS",
-      "definition": "",
       "remarks": "Relationship between books and their authors, \nalong with the latest updated information",
       "primaryKey": {}
     },
     {
-      "weakAssociations": [
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        }]},
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-        }]}
-      ],
       "privileges": [
         {
           "grants": {
@@ -722,6 +709,38 @@
             "fkColumn": "PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID"
           }],
           "updateRule": "no action"
+        }
+      ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ID",
+            "definition": ""
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_BOOKS_10105",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
+          },
+          "unique": true,
+          "name": "UIDX_PREVIOUSEDITION",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "PREVIOUSEDITIONID",
+            "definition": ""
+          },
+          "unique": false,
+          "name": "SYS_IDX_10109",
+          "definition": ""
         }
       ],
       "columns": [
@@ -803,7 +822,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "BOOKS",
       "fullName": "PUBLIC.BOOKS.BOOKS",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [
@@ -883,40 +904,6 @@
           "type": "check"
         }
       ],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ID",
-            "definition": ""
-          },
-          "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10105",
-          "definition": ""
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID",
-            "definition": ""
-          },
-          "unique": true,
-          "name": "UIDX_PREVIOUSEDITION",
-          "definition": ""
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "PREVIOUSEDITIONID",
-            "definition": ""
-          },
-          "unique": false,
-          "name": "SYS_IDX_10109",
-          "definition": ""
-        }
-      ],
-      "name": "BOOKS",
-      "definition": "",
       "remarks": "Details for published books",
       "primaryKey": {
         "columns": {
@@ -930,7 +917,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -982,6 +968,7 @@
         }
       ],
       "foreignKeys": [],
+      "indexes": [],
       "columns": [{
         "size": 32,
         "nullable": true,
@@ -993,21 +980,16 @@
         "remarks": "",
         "autoIncremented": false
       }],
+      "name": "\"Global Counts\"",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
-      "indexes": [],
-      "name": "\"Global Counts\"",
-      "definition": "",
       "remarks": "",
       "primaryKey": {}
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -1059,6 +1041,16 @@
         }
       ],
       "foreignKeys": [],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "name": "SYS_IDX_SYS_PK_10092_10093",
+        "definition": ""
+      }],
       "columns": [
         {
           "size": 32,
@@ -1083,7 +1075,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "PUBLISHERS",
       "fullName": "PUBLIC.BOOKS.PUBLISHERS",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
@@ -1101,18 +1095,6 @@
         "definition": "",
         "type": "primary_key"
       }],
-      "indexes": [{
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ID",
-          "definition": ""
-        },
-        "unique": true,
-        "name": "SYS_IDX_SYS_PK_10092_10093",
-        "definition": ""
-      }],
-      "name": "PUBLISHERS",
-      "definition": "",
       "remarks": "List of book publishers",
       "primaryKey": {
         "columns": {
@@ -1126,7 +1108,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -1193,6 +1174,23 @@
         ],
         "updateRule": "no action"
       }],
+      "indexes": [{
+        "columns": [
+          {
+            "sortSequence": "ascending",
+            "name": "POSTALCODE",
+            "definition": ""
+          },
+          {
+            "sortSequence": "ascending",
+            "name": "COUNTRY",
+            "definition": ""
+          }
+        ],
+        "unique": true,
+        "name": "SYS_IDX_PK_CUSTOMERS_10144",
+        "definition": ""
+      }],
       "columns": [
         {
           "size": 50,
@@ -1239,7 +1237,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [
@@ -1331,25 +1331,6 @@
           "type": "check"
         }
       ],
-      "indexes": [{
-        "columns": [
-          {
-            "sortSequence": "ascending",
-            "name": "POSTALCODE",
-            "definition": ""
-          },
-          {
-            "sortSequence": "ascending",
-            "name": "COUNTRY",
-            "definition": ""
-          }
-        ],
-        "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10144",
-        "definition": ""
-      }],
-      "name": "REGIONS",
-      "definition": "",
       "remarks": "",
       "primaryKey": {
         "columns": [
@@ -1370,10 +1351,6 @@
       }
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -1452,6 +1429,35 @@
           "updateRule": "no action"
         }
       ],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "SALESDATAID",
+            "definition": ""
+          },
+          "unique": false,
+          "name": "SYS_IDX_10158",
+          "definition": ""
+        },
+        {
+          "columns": [
+            {
+              "sortSequence": "ascending",
+              "name": "POSTALCODE",
+              "definition": ""
+            },
+            {
+              "sortSequence": "ascending",
+              "name": "COUNTRY",
+              "definition": ""
+            }
+          ],
+          "unique": false,
+          "name": "SYS_IDX_10156",
+          "definition": ""
+        }
+      ],
       "columns": [
         {
           "size": 10,
@@ -1520,7 +1526,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "SALES",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALES",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [
@@ -1597,42 +1605,10 @@
           "type": "check"
         }
       ],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "SALESDATAID",
-            "definition": ""
-          },
-          "unique": false,
-          "name": "SYS_IDX_10158",
-          "definition": ""
-        },
-        {
-          "columns": [
-            {
-              "sortSequence": "ascending",
-              "name": "POSTALCODE",
-              "definition": ""
-            },
-            {
-              "sortSequence": "ascending",
-              "name": "COUNTRY",
-              "definition": ""
-            }
-          ],
-          "unique": false,
-          "name": "SYS_IDX_10156",
-          "definition": ""
-        }
-      ],
-      "name": "SALES",
-      "definition": "",
       "remarks": "",
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -1693,6 +1669,16 @@
         }],
         "updateRule": "no action"
       }],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "SALESDATAID",
+          "definition": ""
+        },
+        "unique": true,
+        "name": "SYS_IDX_UQ_CUSTOMERS_10150",
+        "definition": ""
+      }],
       "columns": [
         {
           "size": 32,
@@ -1717,7 +1703,9 @@
           "autoIncremented": false
         }
       ],
+      "name": "SALESDATA",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".SALESDATA",
+      "definition": "",
       "type": "table",
       "triggers": [],
       "tableConstraints": [{
@@ -1735,18 +1723,6 @@
         "definition": "",
         "type": "unique"
       }],
-      "indexes": [{
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "SALESDATAID",
-          "definition": ""
-        },
-        "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10150",
-        "definition": ""
-      }],
-      "name": "SALESDATA",
-      "definition": "",
       "remarks": "",
       "primaryKey": {}
     }
@@ -2955,7 +2931,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:35:37",
+    "crawlTimestamp": "2016-12-24 14:14:45",
     "title": ""
   },
   "routines": [

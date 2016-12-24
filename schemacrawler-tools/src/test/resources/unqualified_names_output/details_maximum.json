@@ -6,7 +6,6 @@
   },
   "tables": [
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -325,7 +324,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -422,7 +420,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -639,16 +636,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [
-        {"columnReferences": [{
-          "pkColumn": "BOOKS.ID",
-          "fkColumn": "SALES.BOOKID"
-        }]},
-        {"columnReferences": [{
-          "pkColumn": "PUBLISHERS.ID",
-          "fkColumn": "BOOKS.PUBLISHERID"
-        }]}
-      ],
       "privileges": [
         {
           "grants": {
@@ -926,7 +913,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -999,10 +985,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLISHERS.ID",
-        "fkColumn": "BOOKS.PUBLISHERID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -1120,7 +1102,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -1363,10 +1344,6 @@
       }
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "BOOKS.ID",
-        "fkColumn": "SALES.BOOKID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -1624,7 +1601,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -2946,7 +2922,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:35:35",
+    "crawlTimestamp": "2016-12-24 14:14:43",
     "title": ""
   },
   "routines": [

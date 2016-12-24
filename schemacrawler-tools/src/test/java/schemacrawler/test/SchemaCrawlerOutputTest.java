@@ -229,7 +229,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
-    textOptions.setHideWeakAssociations(true);
+    textOptions.setShowWeakAssociations(false);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {

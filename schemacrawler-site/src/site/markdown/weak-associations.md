@@ -8,5 +8,5 @@ output in the graphs as a dotted line, and are also output in the text formats.
 
 You can use the `-weakassociations=true` or `-weakassociations=false` to control the 
 display of weak associations on graphs and text output. You can also use the 
-`schemacrawler.format.hide_weak_associations=true` option in the 
-`schemacrawler.config.properties` file.
+`schemacrawler.format.show_weak_associations=true` option in the 
+`schemacrawler.config.properties` file to show weak associations.

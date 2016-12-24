@@ -6,7 +6,6 @@
   },
   "tables": [
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -244,7 +243,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -343,7 +341,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -501,16 +498,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        }]},
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-        }]}
-      ],
       "privileges": [
         {
           "grants": {
@@ -714,7 +701,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -789,10 +775,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -898,7 +880,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -1055,10 +1036,6 @@
       }
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-      }]}],
       "privileges": [
         {
           "grants": {
@@ -1245,7 +1222,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "privileges": [
         {
           "grants": {
@@ -2555,7 +2531,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:35:34",
+    "crawlTimestamp": "2016-12-24 14:14:42",
     "title": ""
   },
   "routines": [

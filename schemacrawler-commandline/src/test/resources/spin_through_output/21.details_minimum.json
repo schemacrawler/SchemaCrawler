@@ -6,7 +6,6 @@
   },
   "tables": [
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -20,7 +19,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -34,7 +32,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -48,7 +45,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -62,7 +58,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -76,7 +71,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -90,7 +84,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -104,7 +97,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -118,7 +110,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -132,7 +123,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -146,7 +136,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -160,7 +149,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -174,7 +162,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -188,7 +175,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -202,7 +188,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -216,7 +201,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
@@ -236,7 +220,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-08-28 16:49:56",
+    "crawlTimestamp": "2016-12-24 14:20:32",
     "title": ""
   },
   "routines": [

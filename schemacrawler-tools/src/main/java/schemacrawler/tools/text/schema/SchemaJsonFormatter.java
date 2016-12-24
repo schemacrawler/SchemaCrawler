@@ -347,7 +347,7 @@ final class SchemaJsonFormatter
           final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
           Collections.sort(weakAssociations);
 
-          if (!options.isHideWeakAssociations())
+          if (options.isShowWeakAssociations())
           {
             jsonTable.put("weakAssociations",
                           handleWeakAssociations(weakAssociations));

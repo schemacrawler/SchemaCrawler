@@ -236,7 +236,6 @@ digraph "SchemaCrawler_Diagram" {
     >
   ];
 
-  "books_afd2ba21":"publisherid_3413fbaa.start":w -> "publishers_b8da20c0":"id_6fc9dd09.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
 }

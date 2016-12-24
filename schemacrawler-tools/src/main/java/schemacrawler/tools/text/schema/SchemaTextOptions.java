@@ -46,7 +46,7 @@ public class SchemaTextOptions
   private boolean isHideRoutineSpecificNames;
   private boolean isHideTableConstraintNames;
   private boolean isHideTriggerNames;
-  private boolean isHideWeakAssociations;
+  private boolean isShowWeakAssociations;
   private boolean isShowOrdinalNumbers;
   private boolean isShowStandardColumnTypeNames;
   private boolean isShowRowCounts;
@@ -96,9 +96,9 @@ public class SchemaTextOptions
     return isHideTriggerNames;
   }
 
-  public boolean isHideWeakAssociations()
+  public boolean isShowWeakAssociations()
   {
-    return isHideWeakAssociations;
+    return isShowWeakAssociations;
   }
 
   public boolean isShowOrdinalNumbers()
@@ -166,9 +166,9 @@ public class SchemaTextOptions
     this.isHideTriggerNames = isHideTriggerNames;
   }
 
-  public void setHideWeakAssociations(final boolean isHideWeakAssociations)
+  public void setShowWeakAssociations(final boolean isShowWeakAssociations)
   {
-    this.isHideWeakAssociations = isHideWeakAssociations;
+    this.isShowWeakAssociations = isShowWeakAssociations;
   }
 
   public void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)

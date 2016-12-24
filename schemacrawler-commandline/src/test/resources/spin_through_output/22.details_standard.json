@@ -6,7 +6,6 @@
   },
   "tables": [
     {
-      "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_Z_AUTHOR",
         "definition": "",
@@ -193,7 +192,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [
@@ -241,7 +239,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [
         {
           "name": "FK_Z_AUTHOR",
@@ -348,16 +345,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-          "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-        }]},
-        {"columnReferences": [{
-          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-        }]}
-      ],
       "foreignKeys": [
         {
           "name": "FK_Y_BOOK",
@@ -510,7 +497,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [{
@@ -534,10 +520,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-        "fkColumn": "PUBLIC.BOOKS.BOOKS.PUBLISHERID"
-      }]}],
       "foreignKeys": [],
       "indexes": [{
         "columns": {
@@ -592,7 +574,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION_JOIN",
@@ -701,7 +682,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [],
       "indexes": [],
       "columns": [{
@@ -725,7 +705,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION_JOIN",
@@ -899,7 +878,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION",
@@ -978,7 +956,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_SELFREFERENCE",
         "definition": "",
@@ -1054,7 +1031,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [
         {
           "name": "FK_WRITERS_PUBLICATION",
@@ -1426,7 +1402,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
         "definition": "",
@@ -1513,7 +1488,6 @@
       }
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_SALES_REGIONS",
         "definition": "",
@@ -1619,10 +1593,6 @@
       }
     },
     {
-      "weakAssociations": [{"columnReferences": [{
-        "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
-        "fkColumn": "PUBLIC.\"PUBLISHER SALES\".SALES.BOOKID"
-      }]}],
       "foreignKeys": [
         {
           "name": "FK_SALES_SALESDATA",
@@ -1758,7 +1728,6 @@
       "primaryKey": {}
     },
     {
-      "weakAssociations": [],
       "foreignKeys": [{
         "name": "FK_SALES_SALESDATA",
         "definition": "",
@@ -2033,7 +2002,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-12-20 23:50:34",
+    "crawlTimestamp": "2016-12-24 14:20:35",
     "title": ""
   },
   "routines": [

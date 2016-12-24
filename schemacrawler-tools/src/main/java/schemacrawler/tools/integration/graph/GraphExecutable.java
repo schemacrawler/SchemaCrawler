@@ -79,7 +79,7 @@ public final class GraphExecutable
 
     // Determine what decorators to apply to the database
     Catalog catalog = db;
-    if (!graphOptions.isHideWeakAssociations())
+    if (graphOptions.isShowWeakAssociations())
     {
       catalog = new CatalogWithAssociations(catalog);
     }
