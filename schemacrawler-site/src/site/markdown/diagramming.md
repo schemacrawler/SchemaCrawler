@@ -34,13 +34,13 @@ by setting the following properties in the SchemaCrawler configuration file,
 schemacrawler.format.show_row_counts=true
 ```
 
-You can provide additional GraphViz command-line options in one of three ways:
+You can provide additional Graphviz command-line options in one of three ways:
 
 * using the `schemacrawler.graph.graphviz_opts` property in the SchemaCrawler configuration file,
 * by passing in the additional arguments using the `SC_GRAPHVIZ_OPTS` Java system property, 
 * or by setting the `SC_GRAPHVIZ_OPTS` environmental variable.
 
-SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful GraphViz command-line 
+SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful Graphviz command-line 
 option to set is `-Gdpi=300`. In the SchemaCrawler configuration file, 
 `schemacrawler.config.properties`, this would look like: 
     

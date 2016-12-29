@@ -1,7 +1,7 @@
 # SchemaCrawler - Diagram Example
 
 ## Description
-The diagram example demonstrates the integration of SchemaCrawler with GraphViz.
+The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 
 ## How to Run
 1. Make sure that java is on your PATH
@@ -20,7 +20,7 @@ schemacrawler.format.hide_foreignkey_names=true
 schemacrawler.format.show_unqualified_names=true
 ```    
 
-3. Try using GraphViz command-line options by setting the following property in the SchemaCrawler configuration file, 
+3. Try using Graphviz command-line options by setting the following property in the SchemaCrawler configuration file, 
    `config/schemacrawler.config.properties`. 
     
 ```        
