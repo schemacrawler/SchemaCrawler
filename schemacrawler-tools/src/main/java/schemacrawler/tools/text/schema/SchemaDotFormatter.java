@@ -61,7 +61,7 @@ import schemacrawler.utility.NamedObjectSort;
 import sf.util.Color;
 
 /**
- * GraphViz DOT formatting of schema.
+ * Graphviz DOT formatting of schema.
  *
  * @author Sualeh Fatehi
  */

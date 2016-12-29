@@ -40,7 +40,7 @@ SchemaCrawler has [grep](schemacrawler_grep.html) functionality that allows
 you to search for table and column names using regular expressions.
 SchemaCrawler is capable of creating entity-relationship diagrams in 
 [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
-[GraphViz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) 
+[Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html) 
 SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.

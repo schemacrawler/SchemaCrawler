@@ -85,7 +85,7 @@ public class GraphOptionsBuilder
     options.setSchemaTextDetailType(config
       .getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details));
 
-    options.setGraphVizOpts(listGraphVizOpts(readGraphVizOpts(config)));
+    options.setGraphvizOpts(listGraphvizOpts(readGraphvizOpts(config)));
 
     return this;
   }
@@ -105,7 +105,7 @@ public class GraphOptionsBuilder
     config.setEnumValue(GRAPH_DETAILS, options.getSchemaTextDetailType());
 
     config.setStringValue(GRAPH_GRAPHVIZ_OPTS,
-                          join(options.getGraphVizOpts(), " "));
+                          join(options.getGraphvizOpts(), " "));
 
     return config;
   }
@@ -116,41 +116,41 @@ public class GraphOptionsBuilder
     return (GraphOptions) super.toOptions();
   }
 
-  private List<String> listGraphVizOpts(final String graphVizOptions)
+  private List<String> listGraphvizOpts(final String graphVizOptions)
   {
     final List<String> graphVizOptionsList = Arrays
       .asList(graphVizOptions.split("\\s+"));
     return graphVizOptionsList;
   }
 
-  private String readGraphVizOpts(final Config config)
+  private String readGraphvizOpts(final Config config)
   {
-    final String scGraphVizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS,
+    final String scGraphvizOptsCfg = config.getStringValue(GRAPH_GRAPHVIZ_OPTS,
                                                            "");
-    if (!isBlank(scGraphVizOptsCfg))
+    if (!isBlank(scGraphvizOptsCfg))
     {
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional GraphViz command-line options from config, %s",
-                                  scGraphVizOptsCfg));
-      return scGraphVizOptsCfg;
+                 new StringFormat("Using additional Graphviz command-line options from config, %s",
+                                  scGraphvizOptsCfg));
+      return scGraphvizOptsCfg;
     }
 
-    final String scGraphVizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
-    if (!isBlank(scGraphVizOptsProp))
+    final String scGraphvizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
+    if (!isBlank(scGraphvizOptsProp))
     {
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS system property, %s",
-                                  scGraphVizOptsProp));
-      return scGraphVizOptsProp;
+                 new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property, %s",
+                                  scGraphvizOptsProp));
+      return scGraphvizOptsProp;
     }
 
-    final String scGraphVizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
-    if (!isBlank(scGraphVizOptsEnv))
+    final String scGraphvizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
+    if (!isBlank(scGraphvizOptsEnv))
     {
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional GraphViz command-line options from SC_GRAPHVIZ_OPTS environmental variable, %s",
-                                  scGraphVizOptsEnv));
-      return scGraphVizOptsEnv;
+                 new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable, %s",
+                                  scGraphvizOptsEnv));
+      return scGraphvizOptsEnv;
     }
 
     return "";
