@@ -424,7 +424,7 @@ schemacrawler.format.hide_constraint_names=false
     </faq>
     <faq id="graphviz_opts">
       <question>
-        How to provide additional GraphViz command-line options
+        How to provide additional Graphviz command-line options
       </question>
       <answer>
         <p>
@@ -434,7 +434,7 @@ schemacrawler.format.hide_constraint_names=false
           details.
         </p>
         <p>
-          You can provide additional GraphViz command-line options using
+          You can provide additional Graphviz command-line options using
           the SC_GRAPHVIZ_OPTS environmental variable, or pass in
           the additional arguments using the SC_GRAPHVIZ_OPTS Java
           system property.

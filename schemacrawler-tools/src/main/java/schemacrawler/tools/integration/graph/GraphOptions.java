@@ -40,22 +40,22 @@ public class GraphOptions
 
   private static final long serialVersionUID = -5850945398335496207L;
 
-  private List<String> graphVizOpts;
+  private List<String> graphvizOpts;
   private SchemaTextDetailType schemaTextDetailType;
   private boolean isShowForeignKeyCardinality;
   private boolean isShowPrimaryKeyCardinality;
 
   public GraphOptions()
   {
-    graphVizOpts = new ArrayList<>();
+    graphvizOpts = new ArrayList<>();
     schemaTextDetailType = SchemaTextDetailType.details;
     isShowForeignKeyCardinality = true;
     isShowPrimaryKeyCardinality = true;
   }
 
-  public List<String> getGraphVizOpts()
+  public List<String> getGraphvizOpts()
   {
-    return graphVizOpts;
+    return graphvizOpts;
   }
 
   public SchemaTextDetailType getSchemaTextDetailType()
@@ -73,15 +73,15 @@ public class GraphOptions
     return isShowPrimaryKeyCardinality;
   }
 
-  public void setGraphVizOpts(final List<String> graphVizOpts)
+  public void setGraphvizOpts(final List<String> graphVizOpts)
   {
     if (graphVizOpts == null)
     {
-      this.graphVizOpts = new ArrayList<>();
+      this.graphvizOpts = new ArrayList<>();
     }
     else
     {
-      this.graphVizOpts = graphVizOpts;
+      this.graphvizOpts = graphVizOpts;
     }
   }
 

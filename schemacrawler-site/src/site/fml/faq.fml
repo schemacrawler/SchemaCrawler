@@ -35,7 +35,7 @@
           can be viewed in a browser. SchemaCrawler can produce output in the
           <a href="http://www.graphviz.org/doc/info/lang.html ">DOT format,</a>
           which
-          <a href="http://www.graphviz.org/">GraphViz</a>
+          <a href="http://www.graphviz.org/">Graphviz</a>
           can convert into <a href="diagramming.html">schema diagrams.</a>
         </p>
       </answer>

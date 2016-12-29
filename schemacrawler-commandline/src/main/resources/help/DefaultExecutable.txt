@@ -93,7 +93,7 @@
     json
       For JavaScript Object Notation output 
     scdot
-      For GraphViz DOT output, for schema only           
+      For Graphviz DOT output, for schema only           
   Optional, defaults to text  
   Additional output formats are available with the graph command.
   For help on the graph command, re-run SchemaCrawler with:

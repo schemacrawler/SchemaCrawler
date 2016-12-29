@@ -89,7 +89,7 @@ public class GraphProcessExecutor
     createDiagramCommand(dotFile, outputFile, graphOptions, graphOutputFormat);
     LOGGER
       .log(Level.INFO,
-           "Generating diagram using GraphViz:\n" + getCommand().toString());
+           "Generating diagram using Graphviz:\n" + getCommand().toString());
 
   }
 
@@ -147,7 +147,7 @@ public class GraphProcessExecutor
     final List<String> command = new ArrayList<>();
     command.add("dot");
 
-    command.addAll(graphOptions.getGraphVizOpts());
+    command.addAll(graphOptions.getGraphvizOpts());
     command.add("-T");
     command.add(graphOutputFormat.getFormat());
     command.add("-o");
