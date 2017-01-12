@@ -290,7 +290,7 @@ public class GraphExecutableOptionsTest
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     }
 
-    final GraphExecutable executable = new GraphExecutable();
+    final GraphExecutable executable = new GraphExecutable("use options");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);

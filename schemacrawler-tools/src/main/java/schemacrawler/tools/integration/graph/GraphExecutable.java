@@ -54,13 +54,12 @@ public final class GraphExecutable
   extends BaseStagedExecutable
 {
 
-  static final String COMMAND = "graph";
-
   private GraphOptions graphOptions;
 
   public GraphExecutable()
   {
-    super(COMMAND);
+    // Use the command specified in the graph options
+    super("graph");
   }
 
   public GraphExecutable(final String command)
