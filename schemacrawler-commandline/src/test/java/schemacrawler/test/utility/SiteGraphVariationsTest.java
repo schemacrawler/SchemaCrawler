@@ -242,7 +242,7 @@ public class SiteGraphVariationsTest
     argsMap.put("routines", "");
     if (!argsMap.containsKey("command"))
     {
-      argsMap.put("command", "graph");
+      argsMap.put("command", "schema");
     }
     argsMap.put("outputformat", "png");
     argsMap.put("outputfile", outputFile.toString());
