@@ -28,11 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
 
+@Deprecated
 public class GraphCommandProvider
   implements CommandProvider
 {
@@ -40,23 +43,21 @@ public class GraphCommandProvider
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
+    throws SchemaCrawlerException
   {
-    final GraphExecutable executable = new GraphExecutable();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    return executable;
+    throw new SchemaCrawlerCommandLineException("Specify a graphical output format to generate a diagram");
   }
 
   @Override
   public String getCommand()
   {
-    return GraphExecutable.COMMAND;
+    return "graph";
   }
 
   @Override
   public String getHelpResource()
   {
-    return "/help/GraphExecutable.txt";
+    return null;
   }
 
 }

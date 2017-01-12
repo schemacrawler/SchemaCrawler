@@ -25,7 +25,9 @@
   -tables=.*\.C.*|.*\.P.*
   matches any tables whose names start with C or P
   Tables that do not match the pattern are not displayed
-  Use -tables= to omit tables
+  Use with care, since -tables= actually takes tables out of
+  consideration from the perspective of SchemaCrawler
+  To filter tables, look into the grep options
   Optional, defaults to showing all tables
     
 -excludecolumns=<regular-expression>
@@ -110,8 +112,8 @@
   Optional, default is false
 
 -hideemptytables
-  Shows only tables that have rows of data. Will work only if infolevel
-  is maximum.
+  Shows only tables that have rows of data
+  Will work only if infolevel is maximum
   Optional, default is false
     
 -parents=<depth of parent tables>
