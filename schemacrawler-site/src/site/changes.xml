@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.14.01" date="2017-01-11" description="Deprecating the graph command">
+     <release version="14.14.01" date="2017-01-11" description="Removing the graph command">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         The graph command is removed. Graphs are generated based on the output format. 
       ]]></action>                         
