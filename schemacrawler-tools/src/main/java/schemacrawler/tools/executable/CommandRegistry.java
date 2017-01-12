@@ -30,7 +30,6 @@ package schemacrawler.tools.executable;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -43,7 +42,6 @@ import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.integration.graph.GraphCommandProvider;
 import schemacrawler.tools.integration.scripting.ScriptCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
@@ -80,8 +78,7 @@ public final class CommandRegistry
       commandProviders.add(new OperationExecutableCommandProvider(operation));
     }
 
-    commandProviders.addAll(Arrays.asList(new ScriptCommandProvider(),
-                                          new GraphCommandProvider()));
+    commandProviders.add(new ScriptCommandProvider());
 
     try
     {

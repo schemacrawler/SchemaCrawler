@@ -1,23 +1,25 @@
 # SchemaCrawler Database Diagramming
 
-SchemaCrawler generates database diagrams, using [Graphviz](http://www.graphviz.org/).
-You can filter out tables, views, columns, stored procedure and functions based on regular expressions,
-using the [grep](faq.html#whats-schemacrawler-grep) functionality.
+SchemaCrawler generates database diagrams using [Graphviz](http://www.graphviz.org/).
+SchemaCrawler is unique among database diagramming tools in that you do not need to know the 
+table names or column names that you are interested in. All you need is a search expression, 
+in the form of a regular expression. You can filter out tables, views, columns, stored 
+procedure and functions based on regular expressions, using 
+[grep](faq.html#whats-schemacrawler-grep) functionality. SchemaCrawler has powerful 
+command-line options to match tables, and then find other related tables, whether they are 
+parent or child tables. If your schema changes, you can simply regenerate the diagram, 
+without having to know the exact changes that were made to the schema.
 
-SchemaCrawler is unique among database diagramming tools in that you do not need to know the
-table names or column names that you are interested in. All you need is a search expression,
-in the form of a regular expression. SchemaCrawler has powerful command-line options to match tables,
-and then find other related tables, whether they are parent or child tables. If your schema changes,
-you can simply regenerate the diagram, without having to know the exact changes that were made.
-
-To use generate SchemaCrawler diagrams, for install [Graphviz](http://www.graphviz.org/).
-Then you can run SchemaCrawler with the correct command-line options - for example,
-`-command graph -outputformat png -outputfile=graph.png` See the diagram example
-in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
+To use generate SchemaCrawler diagrams, install [Graphviz](http://www.graphviz.org/). 
+Ensure that [Graphviz](http://www.graphviz.org/) is on the system PATH. Then you can run 
+SchemaCrawler with the correct command-line options - for example, 
+`-command=schema -outputformat=png -outputfile=graph.png` 
+See the diagram example in the 
+[SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) 
 download. An example of a SchemaCrawler database diagram is below.
 
-You can decide whether foreign-key names, column ordinal numbers, and schema names are displayed
-by setting the following properties in the SchemaCrawler configuration file,
+You can decide whether foreign-key names, column ordinal numbers, and schema names are 
+displayed by setting the following properties in the SchemaCrawler configuration file, 
 `schemacrawler.config.properties`.
 
 ```
