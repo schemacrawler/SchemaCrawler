@@ -23,14 +23,13 @@
       Shows results of query <query_name>, as specified in the configuration 
       properties file
     <query>
-      Shows results of <query>      
+      Shows results of SQL <query>      
       The query itself can contain the variables ${table}, ${columns} 
       and ${tabletype},  or system properties referenced as 
       ${<system-property-name>}
       Queries without any variables are executed exactly once; queries
       with variables are executed once for each table, with the variables
       substituted      
-  Optional, default is schema
   <command> may also be a comma-separated list of commands.
   
 --- Sort Options ---
@@ -94,12 +93,19 @@
       For JavaScript Object Notation output 
     scdot
       For Graphviz DOT output, for schema only           
+
+  You can generate a database diagram using Graphviz
+  For a diagram <outputformat> is one of dot, eps, gif, jpg, or png
+  For a complete list Graphviz output formats, see http://www.graphviz.org/
+  You can generate HTML output format with an embedded SVG diagram with
+  -outputformat=htmlx  
+  IMPORTANT: Graphviz needs to be installed, and available on the system PATH
+  http://www.graphviz.org/
+  If Graphviz is not installed, a DOT file is produced.
+    
   Optional, defaults to text  
-  Additional output formats are available with the graph command.
-  For help on the graph command, re-run SchemaCrawler with:
-  -help -c=graph  
-      
+        
 -o=<outputfile> (short for -outputfile=<outputfile>)
   <outputfile> is the path to the output file
   Optional, defaults to the console (stdout)
-  
+ 
