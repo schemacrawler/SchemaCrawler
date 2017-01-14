@@ -31,7 +31,6 @@ package schemacrawler.tools.integration.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 
 public class GraphOptions
@@ -41,14 +40,12 @@ public class GraphOptions
   private static final long serialVersionUID = -5850945398335496207L;
 
   private List<String> graphvizOpts;
-  private SchemaTextDetailType schemaTextDetailType;
   private boolean isShowForeignKeyCardinality;
   private boolean isShowPrimaryKeyCardinality;
 
   public GraphOptions()
   {
     graphvizOpts = new ArrayList<>();
-    schemaTextDetailType = SchemaTextDetailType.details;
     isShowForeignKeyCardinality = true;
     isShowPrimaryKeyCardinality = true;
   }
@@ -56,11 +53,6 @@ public class GraphOptions
   public List<String> getGraphvizOpts()
   {
     return graphvizOpts;
-  }
-
-  public SchemaTextDetailType getSchemaTextDetailType()
-  {
-    return schemaTextDetailType;
   }
 
   public boolean isShowForeignKeyCardinality()
@@ -83,15 +75,6 @@ public class GraphOptions
     {
       this.graphvizOpts = graphVizOpts;
     }
-  }
-
-  public void setSchemaTextDetailType(final SchemaTextDetailType schemaTextDetailType)
-  {
-    if (schemaTextDetailType == null)
-    {
-      return;
-    }
-    this.schemaTextDetailType = schemaTextDetailType;
   }
 
   public void setShowForeignKeyCardinality(final boolean isShowForeignKeyCardinality)

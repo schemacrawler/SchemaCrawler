@@ -37,7 +37,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.StringFormat;
 
@@ -47,7 +46,6 @@ public class GraphOptionsBuilder
 
   private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = "schemacrawler.graph.show.primarykey.cardinality";
   private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = "schemacrawler.graph.show.foreignkey.cardinality";
-  private static final String GRAPH_DETAILS = "schemacrawler.graph.details";
   private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
 
@@ -82,9 +80,6 @@ public class GraphOptionsBuilder
     options.setShowForeignKeyCardinality(config
       .getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true));
 
-    options.setSchemaTextDetailType(config
-      .getEnumValue(GRAPH_DETAILS, SchemaTextDetailType.details));
-
     options.setGraphvizOpts(listGraphvizOpts(readGraphvizOpts(config)));
 
     return this;
@@ -101,8 +96,6 @@ public class GraphOptionsBuilder
                            options.isShowPrimaryKeyCardinality());
     config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
                            options.isShowForeignKeyCardinality());
-
-    config.setEnumValue(GRAPH_DETAILS, options.getSchemaTextDetailType());
 
     config.setStringValue(GRAPH_GRAPHVIZ_OPTS,
                           join(options.getGraphvizOpts(), " "));
