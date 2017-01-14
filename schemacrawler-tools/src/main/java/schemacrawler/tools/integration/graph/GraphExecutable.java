@@ -56,12 +56,6 @@ public final class GraphExecutable
 
   private GraphOptions graphOptions;
 
-  public GraphExecutable()
-  {
-    // Use the command specified in the graph options
-    super("graph");
-  }
-
   public GraphExecutable(final String command)
   {
     super(command);
@@ -167,12 +161,7 @@ public final class GraphExecutable
   {
     final SchemaTraversalHandler formatter;
     final GraphOptions graphOptions = getGraphOptions();
-
-    SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
-    if (schemaTextDetailType == null)
-    {
-      schemaTextDetailType = graphOptions.getSchemaTextDetailType();
-    }
+    final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
