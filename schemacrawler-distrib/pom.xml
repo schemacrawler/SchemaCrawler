@@ -164,7 +164,7 @@
                 <artifactItem>
                   <groupId>com.h2database</groupId>
                   <artifactId>h2</artifactId>
-                  <version>1.4.192</version>
+                  <version>1.4.193</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
@@ -180,7 +180,7 @@
                 <artifactItem>
                   <groupId>org.apache.derby</groupId>
                   <artifactId>derby</artifactId>
-                  <version>10.12.1.1</version>
+                  <version>10.13.1.1</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
