@@ -108,6 +108,13 @@ SchemaCrawler offers several options to change what you see on the database diag
 <img src="images/diagram_10_no_schema_colors.png" width="200" />
 </a>
 
+## Embedded Diagrams
+
+SchemaCrawler can generate [SVG diagrams embedded in HTML output,](snapshot-examples/snapshot.svg.html). To generate this
+format, run SchemaCrawler with an `-outputformat=htmlx` command-line argument. Please edit the SchemaCrawler 
+configuration file, `schemacrawler.config.properties`, and comment out or delete the line 
+`schemacrawler.graph.graphviz_opts=-Gdpi=300`.
+
 ## SchemaCrawler Diagrams in Use
 
 Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). Photograph courtesy of Adrien Sales.
