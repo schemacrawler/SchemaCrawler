@@ -52,7 +52,7 @@
       <item name="Download" href="http://github.com/sualeh/SchemaCrawler/releases/" />
       <item name="Change History" href="changes-report.html" />
       <item name="License" href="license.html" />
-      <item name="Consulting" href="consulting.html" />
+      <item name="Suport and Consulting" href="consulting.html" />
     </menu>
     <menu name="Features">
       <item name="Text Output" href="output.html" />
@@ -73,8 +73,7 @@
       <item name="Code Examples" href="code-examples.html" />
       <item name="FAQS" href="faq.html" />
       <item name="How-tos" href="how-to.html" />      
-      <item name="Get Help"
-        href="https://sourceforge.net/p/schemacrawler/discussion/495990/" />
+      <item name="Get Help" href="consulting.html" />
       <item name="Javadocs" href="apidocs/index.html" />
       <item name="Project Page on GitHub" href="http://github.com/sualeh/SchemaCrawler" />
     </menu>

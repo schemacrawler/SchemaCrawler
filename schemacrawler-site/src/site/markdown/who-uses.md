@@ -47,7 +47,7 @@ SchemaCrawler in open source projects.
 
 SchemaCrawler in the press, and in online articles and blogs.
 
--  Tweeted testimonials from [Claudio Bastos Iorio](https://twitter.com/selecters75/status/218357126823817218) , [ William Chinelato ](http://twitter.com/willchinelato/status/12117092941) , [ Stig Kleppe Jørgensen ](http://twitter.com/#!/stigkj/statuses/70973992479109121) , [ sourceforge ](http://twitter.com/#!/sourceforge/statuses/75995352091729921) , [ Marek Tomaš ](https://twitter.com/marektomas/status/240462380365119489)
+-  Tweeted testimonials from [Claudio Bastos Iorio](https://twitter.com/selecters75/status/218357126823817218) , [ William Chinelato ](http://twitter.com/willchinelato/status/12117092941) , [ Stig Kleppe Jørgensen ](http://twitter.com/#!/stigkj/statuses/70973992479109121) , [ Marek Tomaš ](https://twitter.com/marektomas/status/240462380365119489)
 -  Buffer of My Mind on [ SchemaCrawler ](http://mindbuffer.wordpress.com/2010/10/14/schema-crawler/)
 -  Gary Kelleher's blog post on [SchemaCrawler.](http://www.garykelleher.net/wp/?p=4)
 -  Maxime Werlen's blog post on [Analyse BDD avec SchemaCrawler](http://maxime.werlen.fr/blog/archives/2011/04/22/schemacrawler-pour-extraire-la-structure-d-une-base-de-donn-e.html) 
