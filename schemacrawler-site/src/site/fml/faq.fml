@@ -126,7 +126,7 @@
         </p>
         <p>
           Using the
-          <a href="https://sourceforge.net/projects/mvn-schemacrwlr/">SchemaCrawler Maven Plugin</a>
+          <a href="https://github.com/sualeh/SchemaCrawler-Report-Maven-Plugin">SchemaCrawler Report Maven Plugin</a>
           , you can generate a SchemaCrawler report along with other
           reports for
           your Maven generated site.
@@ -315,7 +315,7 @@
       <answer>
         <p>
           SchemaCrawler is available as a download from
-          <a href="https://sourceforge.net/project/showfiles.php?group_id=148383"> SourceForge </a>
+          <a href="https://github.com/sualeh/SchemaCrawler/releases">GitHub</a>
           .
         </p>
       </answer>
@@ -324,8 +324,7 @@
       <question> Is technical support available? </question>
       <answer>
         <p>
-          Technical support is not available for SchemaCrawler. Please post questions on the
-          <a href="http://sourceforge.net/forum/?group_id=148383">forums.</a>
+          Yes. Please see <a href="consulting.html">Support and Consulting</a> for details.</a>
         </p>
       </answer>
     </faq>
