@@ -129,9 +129,9 @@ source directory, and install them locally.
 [SchemaCrawler Docker image]: https://hub.docker.com/r/sualeh/schemacrawler/
 [Apache ant]: http://ant.apache.org/
 [Gradle]: https://gradle.org/
-[Groovy]: http://groovy.codehaus.org/
+[Groovy]: http://www.groovy-lang.org/
 [Ruby]: http://www.ruby-lang.org/en/
-[Python]: http://www.python.org/
+[Python]: https://www.python.org/
 [Graphviz]: http://www.graphviz.org/
 [Spring Framework]: http://www.springsource.org/spring-framework
 [Apache Velocity]: http://velocity.apache.org/

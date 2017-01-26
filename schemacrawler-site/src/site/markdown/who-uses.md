@@ -15,7 +15,7 @@ SchemaCrawler questions from users.
 
 ## Companies
 
-- [SchemaCrawler experts on LinkedIn](https://www.linkedin.com/topic/schemacrawler)
+- [SchemaCrawler experts on LinkedIn](https://www.linkedin.com/search/results/people/?keywords=%22schemacrawler%22)
 - [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
 - Architect at Nestlé Nespresso SA: 
 "I run a daily cron to export the content (metadata and data) of a 

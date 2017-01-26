@@ -26,7 +26,7 @@
       <answer>
         <p>
           SchemaCrawler can produce
-          <a href="snapshot-examples/snapshot.txt">plain text,</a>
+          <a href="snapshot-examples/snapshot.text">plain text,</a>
           <a href="snapshot-examples/snapshot.csv">comma-separated text (CSV),</a>
           <a href="snapshot-examples/snapshot.html">HTML5,</a>
           or
@@ -289,7 +289,7 @@
         <p>
           SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is
           designed to be used programmatically with the
-          <a href="http://www.springframework.org/">Spring Framework</a>
+          <a href="https://spring.io/">Spring Framework</a>
           . For more details, see scripting example in the
           <a href="http://github.com/sualeh/SchemaCrawler/releases/">SchemaCrawler examples</a>
           download, in the
