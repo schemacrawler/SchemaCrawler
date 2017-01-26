@@ -119,7 +119,7 @@ source directory, and install them locally.
 
 # Acknowledgements
 
-- SchemaCrawler is grateful to Adrien Sales for developing the [Debian schemacrawler package].
+- SchemaCrawler is grateful to Adrien Sales for developing the [Debian SchemaCrawler package].
 - SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
 
 [FAQs]: faq.html
@@ -142,3 +142,4 @@ source directory, and install them locally.
 [Oracle JDBC drivers]: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
 [Clover]: http://www.atlassian.com/software/clover/
 [how-tos]: how-to.html
+[Debian SchemaCrawler package]: https://github.com/adriens/schemacrawler-deb
