@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import sf.util.ObjectToString;
 
 /**
  * SchemaCrawler utility methods.
@@ -61,6 +62,10 @@ public final class SchemaCrawlerUtility
     throws SchemaCrawlerException
   {
     checkConnection(connection);
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+    }
 
     final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = matchDatabaseSpecificOverrideOptions(connection);
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,

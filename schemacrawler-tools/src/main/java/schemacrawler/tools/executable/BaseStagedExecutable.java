@@ -76,6 +76,8 @@ public abstract class BaseStagedExecutable
                                 getCommand()));
     if (LOGGER.isLoggable(Level.CONFIG))
     {
+      LOGGER.log(Level.CONFIG,
+                 String.format("Executable: %s", this.getClass().getName()));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
     }
