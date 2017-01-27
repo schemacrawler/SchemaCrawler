@@ -195,16 +195,9 @@ final class IndexRetriever
                              final MetadataResultSet results)
     throws SQLException
   {
-    try
+    while (results.next())
     {
-      while (results.next())
-      {
-        createIndexForTable(table, results);
-      }
-    }
-    finally
-    {
-      results.close();
+      createIndexForTable(table, results);
     }
   }
 
