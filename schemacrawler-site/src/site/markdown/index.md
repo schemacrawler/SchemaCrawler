@@ -49,7 +49,7 @@ Examples are provided for all of these with the
 
 SchemaCrawler is integrated with, and allows you to write templates to
 generate SQL scripts or any other text output, using templating engines, such
-as [Apache Velocity](http://velocity.apache.org/) or
+as [Apache Velocity](http://velocity.apache.org/), [Thymeleaf](http://www.thymeleaf.org/) or
 [&lt;FreeMarker&gt;](http://freemarker.org/) . However, you will need to download
 Apache Velocity or &lt;FreeMarker&gt; separately, since these are not part of the
 SchemaCrawler download.
