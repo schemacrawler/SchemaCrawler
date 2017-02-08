@@ -182,11 +182,16 @@ final class TableColumnRetriever
                                 tableName,
                                 columnName));
 
-    final Optional<MutableTable> optionalTable = allTables
+    Optional<MutableTable> optionalTable = allTables
       .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
     if (!optionalTable.isPresent())
     {
-      return null;
+      // try to lookup a table without columnCatalogName
+      optionalTable = allTables
+              .lookup(new SchemaReference(null, schemaName), tableName);
+      if(!optionalTable.isPresent()){
+        return null;
+      }
     }
 
     final MutableTable table = optionalTable.get();
