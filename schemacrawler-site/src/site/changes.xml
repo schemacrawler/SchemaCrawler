@@ -5,6 +5,15 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.14.02" date="2017-02-08" description="Adding MySQL enum suport">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        To get the enum values from column.getAttribute("COLUMN_TYPE"), run SchemaCrawler 
+        for MySQL with -infolevel=maximum.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        New SchemaCrawler for SQLite utility, schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility.
+      ]]></action>                               
+     </release>    
      <release version="14.14.01" date="2017-01-11" description="Removing the graph command">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         The graph command is removed. Graphs are generated based on the output format. 
