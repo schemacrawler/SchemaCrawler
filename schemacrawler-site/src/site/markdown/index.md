@@ -22,6 +22,8 @@ Java SE 8, Compact Profile 2 or better.
 [![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/sualeh/SchemaCrawler/releases/latest)
 [![Join the chat at https://gitter.im/sualeh/SchemaCrawler](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sualeh/SchemaCrawler?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+-----
+
 ## SchemaCrawler Command-line
 
 SchemaCrawler comes with a set of command-line tools that allow database
@@ -56,6 +58,8 @@ SchemaCrawler download.
 
 Complete SchemaCrawler command-line help is available with the -h or -help command-line
 options.
+
+-----
 
 ## SchemaCrawler API
 
