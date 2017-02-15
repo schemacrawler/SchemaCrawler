@@ -79,7 +79,10 @@ public final class OperationExecutable
 
     if (!isOutputFormatSupported())
     {
-      return;
+      throw new SchemaCrawlerException(String
+        .format("Output format \"%s\" not supported for command \"%s\"",
+                outputOptions.getOutputFormatValue(),
+                getCommand()));
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
