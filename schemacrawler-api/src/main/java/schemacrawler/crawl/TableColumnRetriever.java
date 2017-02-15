@@ -308,8 +308,10 @@ final class TableColumnRetriever
       }
       catch (final SQLException e)
       {
-        throw new SchemaCrawlerSQLException("Could not retrieve columns for table "
-                                            + table, e);
+        throw new SchemaCrawlerSQLException(String
+          .format("Could not retrieve columns for %s \"%s\"",
+                  table.getTableType(),
+                  table), e);
       }
     }
   }
