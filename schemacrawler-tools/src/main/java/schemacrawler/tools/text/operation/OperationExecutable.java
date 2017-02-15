@@ -129,7 +129,8 @@ public final class OperationExecutable
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Cannot perform operation", e);
+      throw new SchemaCrawlerException(String
+        .format("Could not execute query \"%s\"", query.getQuery()), e);
     }
   }
 
