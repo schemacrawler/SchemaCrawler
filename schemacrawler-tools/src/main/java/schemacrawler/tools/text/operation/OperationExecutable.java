@@ -2,7 +2,7 @@
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
-Copyright (c) 2000-2017, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2016, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
@@ -79,10 +79,11 @@ public final class OperationExecutable
 
     if (!isOutputFormatSupported())
     {
-      throw new SchemaCrawlerException(String
-        .format("Output format \"%s\" not supported for command \"%s\"",
-                outputOptions.getOutputFormatValue(),
-                getCommand()));
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Output format \"%s\" not supported for command \"%s\"",
+                                  outputOptions.getOutputFormatValue(),
+                                  getCommand()));
+      return;
     }
 
     final DataTraversalHandler handler = getDataTraversalHandler();
@@ -129,8 +130,7 @@ public final class OperationExecutable
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException(String
-        .format("Could not execute query \"%s\"", query.getQuery()), e);
+      throw new SchemaCrawlerException("Cannot perform operation", e);
     }
   }
 
@@ -145,12 +145,6 @@ public final class OperationExecutable
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isOutputFormatSupported = TextOutputFormat
       .isTextOutputFormat(outputFormatValue);
-    if (!isOutputFormatSupported)
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Operations cannot support output to %s",
-                                  outputFormatValue));
-    }
     return isOutputFormatSupported;
   }
 
