@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.14.03" date="2017-02-23" description="Utility for MySQL enum suport">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Java utility class to parse enum values from column.getAttribute("COLUMN_TYPE"), for MySQL.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better error message for bad commands.
+      ]]></action>                               
+     </release>     
      <release version="14.14.02" date="2017-02-08" description="Adding MySQL enum suport">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         To get the enum values from column.getAttribute("COLUMN_TYPE"), run SchemaCrawler 
