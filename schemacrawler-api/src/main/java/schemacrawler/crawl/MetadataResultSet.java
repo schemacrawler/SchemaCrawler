@@ -180,7 +180,7 @@ final class MetadataResultSet
            */
           LOGGER.log(Level.WARNING,
                      e,
-                     new StringFormat("Could not read value for column, %s",
+                     new StringFormat("Could not read value for column <%s>",
                                       columnName));
         }
       }
@@ -255,7 +255,7 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not read boolean value for column, %s",
+                   new StringFormat("Could not read boolean value for column <%s>",
                                     columnName));
       }
     }
@@ -345,7 +345,7 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not read integer value for column, %s",
+                   new StringFormat("Could not read integer value for column <%s>",
                                     columnName));
       }
     }
@@ -383,7 +383,7 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not read long value for column, %s",
+                   new StringFormat("Could not read long value for column <%s>",
                                     columnName));
       }
     }
@@ -421,7 +421,7 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not read short value for column, %s",
+                   new StringFormat("Could not read short value for column <%s>",
                                     columnName));
       }
     }
@@ -457,7 +457,7 @@ final class MetadataResultSet
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not read string value for column, %s",
+                   new StringFormat("Could not read string value for column <%s>",
                                     columnName));
       }
     }

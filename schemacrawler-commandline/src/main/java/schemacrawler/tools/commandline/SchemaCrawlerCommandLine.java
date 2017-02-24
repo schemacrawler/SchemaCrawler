@@ -77,7 +77,7 @@ public final class SchemaCrawlerCommandLine
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
     dbConnector = dbServerTypeParser.getOptions();
     LOGGER.log(Level.INFO,
-               new StringFormat("Using database plugin, %s",
+               new StringFormat("Using database plugin <%s>",
                                 dbConnector.getDatabaseServerType()));
 
     config = loadConfig(argsMap);

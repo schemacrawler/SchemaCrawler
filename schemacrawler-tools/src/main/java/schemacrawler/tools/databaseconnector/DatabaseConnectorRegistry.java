@@ -200,7 +200,7 @@ public final class DatabaseConnectorRegistry
       }
       Collections.sort(drivers);
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Registered JDBC drivers, %s", drivers));
+                 new StringFormat("Registered JDBC drivers <%s>", drivers));
     }
     catch (final Exception e)
     {

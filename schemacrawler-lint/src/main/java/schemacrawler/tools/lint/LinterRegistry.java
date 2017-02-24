@@ -119,7 +119,7 @@ public final class LinterRegistry
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not instantiate linter, %s",
+                   new StringFormat("Could not instantiate linter <%s>",
                                     linterClass.getName()));
         return null;
       }

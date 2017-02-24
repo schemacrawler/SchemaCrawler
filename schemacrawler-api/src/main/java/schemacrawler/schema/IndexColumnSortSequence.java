@@ -72,7 +72,7 @@ public enum IndexColumnSortSequence
         return type;
       }
     }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown code, %s", code));
+    LOGGER.log(Level.FINE, new StringFormat("Unknown code <%s>", code));
     return unknown;
   }
 

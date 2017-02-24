@@ -124,7 +124,7 @@ public class GraphProcessExecutor
     }
 
     LOGGER.log(Level.INFO,
-               new StringFormat("Generated diagram, %s", outputFile));
+               new StringFormat("Generated diagram <%s>", outputFile));
 
     return exitCode;
   }

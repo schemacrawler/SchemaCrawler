@@ -131,7 +131,7 @@ final class TableRetriever
         if (tableType.equals(TableType.UNKNOWN))
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Unknown table type, %s, for %s.%s",
+                     new StringFormat("Unknown table type <%s> for <%s.%s>",
                                       tableTypeString,
                                       schema,
                                       tableName));

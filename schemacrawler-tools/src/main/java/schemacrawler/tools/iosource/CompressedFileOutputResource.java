@@ -104,7 +104,7 @@ public class CompressedFileOutputResource
 
     final Writer writer = new OutputStreamWriter(zipOutputStream, charset);
     LOGGER.log(Level.INFO,
-               new StringFormat("Opened output writer to compressed file, %s",
+               new StringFormat("Opened output writer to compressed file <%s>",
                                 outputFile));
     return new OutputWriter(getDescription(), writer, true);
   }
