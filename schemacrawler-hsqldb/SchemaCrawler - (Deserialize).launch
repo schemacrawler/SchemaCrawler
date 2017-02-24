@@ -12,6 +12,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="schemacrawler.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-server=offline&#13;&#10;-host=localhost&#13;&#10;-database=sc_offline.zip&#13;&#10;-schemas=PUBLIC.BOOK.*&#13;&#10;-infolevel=standard&#13;&#10;-command=schema &#13;&#10;-loglevel=ALL"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler for Offline Snapshots"/>
-<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:SchemaCrawler - 2 - Tools/target}"/>
 </launchConfiguration>
