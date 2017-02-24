@@ -21,6 +21,7 @@ Please do not ask questions on the issues page - instead, ask questions on
 ## Guidelines for Support
 
 Some guidelines for a quick response on [StackOverflow] and the [SchemaCrawler issues page]:
+
 - Please explain the issue briefly, and specify the versions of SchemaCrawler, Java, 
     operating system, database, and JDBC driver that you are using
 - Provide the steps that you took to reproduce the issue, and any steps that you took to 
