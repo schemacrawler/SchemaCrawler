@@ -73,7 +73,7 @@ public final class JavaSqlTypes
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not access java.sql.Types, field, %s",
+                   new StringFormat("Could not access java.sql.Types, field <%s>",
                                     field));
         // continue
       }

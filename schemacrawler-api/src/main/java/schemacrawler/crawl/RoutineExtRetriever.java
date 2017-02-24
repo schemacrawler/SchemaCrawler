@@ -112,7 +112,7 @@ final class RoutineExtRetriever
         {
           final MutableRoutine routine = routineOptional.get();
           LOGGER.log(Level.FINER,
-                     new StringFormat("Retrieving routine information, %s",
+                     new StringFormat("Retrieving routine information <%s>",
                                       routineName));
           final RoutineBodyType routineBodyType = results
             .getEnum("ROUTINE_BODY", RoutineBodyType.unknown);

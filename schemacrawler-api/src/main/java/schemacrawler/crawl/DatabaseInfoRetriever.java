@@ -196,7 +196,7 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method, %s",
+                       new StringFormat("Retrieving database property using method <%s>",
                                         method));
           }
           final String value = (String) method.invoke(dbMetaData);
@@ -209,7 +209,7 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method, %s",
+                       new StringFormat("Retrieving database property using method <%s>",
                                         method));
           }
           final Object value = method.invoke(dbMetaData);
@@ -221,7 +221,7 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method, %s",
+                       new StringFormat("Retrieving database property using method <%s>",
                                         method));
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
@@ -237,7 +237,7 @@ final class DatabaseInfoRetriever
           if (LOGGER.isLoggable(Level.FINE))
           {
             LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method, %s",
+                       new StringFormat("Retrieving database property using method <%s>",
                                         method));
           }
           dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
@@ -258,7 +258,7 @@ final class DatabaseInfoRetriever
       {
         LOGGER.log(Level.FINE,
                    e.getCause(),
-                   new StringFormat("Could not execute method, %s", method));
+                   new StringFormat("Could not execute method <%s>", method));
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
@@ -512,7 +512,7 @@ final class DatabaseInfoRetriever
         // "TYPE_CAT", "TYPE_SCHEM"
         final String typeName = results.getString("TYPE_NAME");
         LOGGER.log(Level.FINE,
-                   new StringFormat("Retrieving data type, %s.%s",
+                   new StringFormat("Retrieving data type <%s.%s>",
                                     schema,
                                     typeName));
         final int dataType = results.getInt("DATA_TYPE", 0);

@@ -42,7 +42,7 @@ public class AdditionalExecutable
         // SchemaCrawler will control output of log messages if you use
         // JDK logging
         LOGGER.log(Level.INFO,
-                   new StringFormat("Processing, %s", schema));
+                   new StringFormat("Processing <%s>", schema));
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);

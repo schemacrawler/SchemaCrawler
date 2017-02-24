@@ -114,7 +114,7 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -127,7 +127,7 @@ final class TableExtRetriever
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find column, %s.%s.%s.%s",
+                     new StringFormat("Cannot find column <%s.%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName,
@@ -195,7 +195,7 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -263,23 +263,23 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       indexName));
           continue;
         }
 
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving index information, %s", indexName));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving index information <%s>",
+                                    indexName));
         final MutableTable table = tableOptional.get();
         final Optional<MutableIndex> indexOptional = table
           .lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find index, %s.%s.%s.%s",
+                     new StringFormat("Cannot find index <%s.%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName,
@@ -297,7 +297,7 @@ final class TableExtRetriever
         {
           LOGGER
             .log(Level.FINE,
-                 new StringFormat("Cannot find index column, %s.%s.%s.%s.%s",
+                 new StringFormat("Cannot find index column <%s.%s.%s.%s.%s>",
                                   catalogName,
                                   schemaName,
                                   tableName,
@@ -370,23 +370,23 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       indexName));
           continue;
         }
 
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving index information, %s", indexName));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving index information <%s>",
+                                    indexName));
         final MutableTable table = tableOptional.get();
         final Optional<MutableIndex> indexOptional = table
           .lookupIndex(indexName);
         if (!indexOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find index, %s.%s.%s.%s",
+                     new StringFormat("Cannot find index <%s.%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName,
@@ -476,7 +476,7 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -485,9 +485,9 @@ final class TableExtRetriever
 
         final MutableTable table = tableOptional.get();
 
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving table information, %s", tableName));
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving table information <%s>",
+                                    tableName));
         final String definition = results.getString("TABLE_DEFINITION");
 
         table.appendDefinition(definition);
@@ -559,7 +559,7 @@ final class TableExtRetriever
         final String triggerName = quotedName(results
           .getString("TRIGGER_NAME"));
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving trigger, %s", triggerName));
+                   new StringFormat("Retrieving trigger <%s>", triggerName));
 
         // "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA"
         final String tableName = results.getString("EVENT_OBJECT_TABLE");
@@ -570,7 +570,7 @@ final class TableExtRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -661,7 +661,7 @@ final class TableExtRetriever
         if (!viewOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       viewName));
@@ -671,7 +671,7 @@ final class TableExtRetriever
         final MutableView view = (MutableView) viewOptional.get();
         LOGGER
           .log(Level.FINER,
-               new StringFormat("Retrieving view information, %s", viewName));
+               new StringFormat("Retrieving view information <%s>", viewName));
         final String definition = results.getString("VIEW_DEFINITION");
         final CheckOptionType checkOption = results
           .getEnum("CHECK_OPTION", CheckOptionType.unknown);

@@ -56,7 +56,7 @@ public enum InfoLevel
     catch (final IllegalArgumentException | NullPointerException e)
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat("Unknown infolevel, %s", infoLevelValue));
+                 new StringFormat("Unknown infolevel <%s>", infoLevelValue));
       return unknown;
     }
   }

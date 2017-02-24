@@ -68,13 +68,13 @@ public class PropertiesUtility
         || !isReadable(propertiesFile))
     {
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Cannot load properties from file, %s",
+                 new StringFormat("Cannot load properties from file <%s>",
                                   propertiesFile));
       return new Properties();
     }
 
     LOGGER.log(Level.INFO,
-               new StringFormat("Loading properties from file, %s",
+               new StringFormat("Loading properties from file <%s>",
                                 propertiesFile));
     BufferedReader reader;
     try
@@ -87,7 +87,7 @@ public class PropertiesUtility
     {
       LOGGER.log(Level.WARNING,
                  e,
-                 new StringFormat("Cannot load properties from file, %s",
+                 new StringFormat("Cannot load properties from file <%s>",
                                   propertiesFile));
       return new Properties();
     }
@@ -106,7 +106,7 @@ public class PropertiesUtility
     if (isBlank(resource))
     {
       LOGGER.log(Level.CONFIG,
-                 new StringFormat("Cannot load properties from resource, %s",
+                 new StringFormat("Cannot load properties from resource <%s>",
                                   resource));
       return new Properties();
     }

@@ -79,7 +79,7 @@ public final class Linters
       if (!linterConfig.isRunLinter())
       {
         LOGGER.log(Level.FINE,
-                   new StringFormat("Not running configured linter, %s",
+                   new StringFormat("Not running configured linter <%s>",
                                     linterConfig));
         continue;
       }
@@ -180,7 +180,7 @@ public final class Linters
     for (final Linter linter: linters)
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Linting with, %s",
+                 new StringFormat("Linting with <%s>",
                                   linter.getLinterInstanceId()));
       linter.lint(catalog, connection);
     }
@@ -202,7 +202,7 @@ public final class Linters
     else
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Cannot find linter, %s", linterId));
+                 new StringFormat("Cannot find linter <%s>", linterId));
     }
     return linter;
   }
