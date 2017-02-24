@@ -163,7 +163,7 @@ abstract class BaseDatabaseConnectionOptions
 
       LOGGER
         .log(Level.INFO,
-             new StringFormat("Opened database connection, %s", connection));
+             new StringFormat("Opened database connection <%s>", connection));
       logConnection(connection);
 
       return connection;

@@ -76,7 +76,7 @@ public class FileInputResource
     requireNonNull(charset, "No input charset provided");
     final Reader reader = newBufferedReader(inputFile, charset);
     LOGGER.log(Level.INFO,
-               new StringFormat("Opened input reader to file, %s", inputFile));
+               new StringFormat("Opened input reader to file <%s>", inputFile));
 
     return new InputReader(getDescription(), reader, true);
   }

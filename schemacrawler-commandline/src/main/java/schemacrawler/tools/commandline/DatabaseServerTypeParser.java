@@ -63,7 +63,7 @@ public final class DatabaseServerTypeParser
         && !registry.hasDatabaseSystemIdentifier(serverType))
     {
       throw new SchemaCrawlerCommandLineException(String.format(
-                                                                "Unsupported server, %s %n"
+                                                                "Unsupported server <%s> %n"
                                                                 + "Please provide a database connection URL on the command-line, %n"
                                                                 + "and re-run SchemaCrawler without the -server argument",
                                                                 serverType));

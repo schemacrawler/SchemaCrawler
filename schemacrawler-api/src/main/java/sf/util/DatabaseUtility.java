@@ -100,7 +100,7 @@ public final class DatabaseUtility
           {
             LOGGER
               .log(Level.WARNING,
-                   new StringFormat("Ignoring results from query, %s", sql));
+                   new StringFormat("Ignoring results from query <%s>", sql));
             resultSet.close();
           }
         }
@@ -164,7 +164,7 @@ public final class DatabaseUtility
     {
       LOGGER.log(Level.WARNING,
                  e,
-                 new StringFormat("Error executing SQL, %s", sql));
+                 new StringFormat("Error executing SQL <%s>", sql));
       if (throwSQLException)
       {
         throw e;
@@ -214,7 +214,7 @@ public final class DatabaseUtility
       {
         LOGGER
           .log(Level.WARNING,
-               new StringFormat("No rows of data returned for query, %s", sql));
+               new StringFormat("No rows of data returned for query <%s>", sql));
         scalar = null;
       }
 

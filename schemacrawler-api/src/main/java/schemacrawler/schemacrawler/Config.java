@@ -224,7 +224,7 @@ public final class Config
     {
       LOGGER.log(Level.FINEST,
                  e,
-                 new StringFormat("Could not parse double value for property, %s",
+                 new StringFormat("Could not parse double value for property <%s>",
                                   propertyName));
       return defaultValue;
     }
@@ -331,7 +331,7 @@ public final class Config
     {
       LOGGER.log(Level.FINEST,
                  e,
-                 new StringFormat("Could not parse integer value for property, %s",
+                 new StringFormat("Could not parse integer value for property <%s>",
                                   propertyName));
       return defaultValue;
     }
@@ -355,7 +355,7 @@ public final class Config
     {
       LOGGER.log(Level.FINEST,
                  e,
-                 new StringFormat("Could not parse long value for property, %s",
+                 new StringFormat("Could not parse long value for property <%s>",
                                   propertyName));
       return defaultValue;
     }

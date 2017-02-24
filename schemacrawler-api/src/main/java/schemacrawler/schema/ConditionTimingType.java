@@ -76,7 +76,7 @@ public enum ConditionTimingType
         return type;
       }
     }
-    LOGGER.log(Level.FINE, new StringFormat("Unknown value, %s", value));
+    LOGGER.log(Level.FINE, new StringFormat("Unknown value <%s>", value));
     return unknown;
   }
 

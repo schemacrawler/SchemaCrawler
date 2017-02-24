@@ -83,7 +83,7 @@ public final class SchemaCrawlerExecutable
       if (!isCommand && !isConfiguredQuery)
       {
         LOGGER.log(Level.INFO,
-                   new StringFormat("Executing as a query, %s", getCommand()));
+                   new StringFormat("Executing as a query <%s>", getCommand()));
         executable = new OperationExecutable(getCommand());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);

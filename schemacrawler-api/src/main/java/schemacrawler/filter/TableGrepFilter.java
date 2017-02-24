@@ -132,7 +132,7 @@ class TableGrepFilter
     if (!include)
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Removing table since it does not match the grep pattern, %s",
+                 new StringFormat("Removing table since it does not match the grep pattern <%s>",
                                   table));
     }
 

@@ -96,7 +96,7 @@ public final class CatalogWithCounts
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not get count for, %s", table));
+                   new StringFormat("Could not get count for <%s>", table));
       }
     }
 

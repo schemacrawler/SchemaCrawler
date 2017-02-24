@@ -91,7 +91,7 @@ public class CompressedFileInputResource
 
     final Reader reader = new InputStreamReader(zipInputStream, charset);
     LOGGER.log(Level.INFO,
-               new StringFormat("Opened input reader to compressed file, %s",
+               new StringFormat("Opened input reader to compressed file <%s>",
                                 inputFile));
 
     return new InputReader(getDescription(), reader, true);

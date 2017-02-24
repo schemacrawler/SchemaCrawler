@@ -106,7 +106,7 @@ final class TableConstraintRetriever
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving constraint definition, %s",
+                   new StringFormat("Retrieving constraint definition <%s>",
                                     constraintName));
         final String definition = results.getString("CHECK_CLAUSE");
 
@@ -118,7 +118,7 @@ final class TableConstraintRetriever
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
-                     new StringFormat("Could not add constraint definition to table, %s",
+                     new StringFormat("Could not add constraint definition to table <%s>",
                                       constraintName));
           continue;
         }
@@ -191,7 +191,7 @@ final class TableConstraintRetriever
           .getString("CONSTRAINT_NAME"));
         LOGGER
           .log(Level.FINER,
-               new StringFormat("Retrieving constraint, %s", constraintName));
+               new StringFormat("Retrieving constraint <%s>", constraintName));
         // "TABLE_CATALOG", "TABLE_SCHEMA"
         final String tableName = quotedName(results.getString("TABLE_NAME"));
 
@@ -201,7 +201,7 @@ final class TableConstraintRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -269,7 +269,7 @@ final class TableConstraintRetriever
         final String constraintName = quotedName(results
           .getString("CONSTRAINT_NAME"));
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving constraint definition, %s",
+                   new StringFormat("Retrieving constraint definition <%s>",
                                     constraintName));
 
         final String constraintKey = new SchemaReference(catalogName,
@@ -280,7 +280,7 @@ final class TableConstraintRetriever
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
-                     new StringFormat("Could not add column for constraint to table, %s",
+                     new StringFormat("Could not add column for constraint to table <%s>",
                                       constraintName));
           continue;
         }
@@ -294,7 +294,7 @@ final class TableConstraintRetriever
         if (!tableOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find table, %s.%s.%s",
+                     new StringFormat("Cannot find table <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName));
@@ -308,7 +308,7 @@ final class TableConstraintRetriever
         if (!columnOptional.isPresent())
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("Cannot find column, %s.%s.%s.%s",
+                     new StringFormat("Cannot find column <%s.%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       tableName,

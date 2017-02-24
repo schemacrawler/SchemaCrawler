@@ -129,7 +129,7 @@ final class SynonymRetriever
         if (isBlank(referencedObjectName))
         {
           LOGGER.log(Level.FINE,
-                     new StringFormat("No reference for synonym, %s.%s.%s",
+                     new StringFormat("No reference for synonym <%s.%s.%s>",
                                       catalogName,
                                       schemaName,
                                       synonymName));

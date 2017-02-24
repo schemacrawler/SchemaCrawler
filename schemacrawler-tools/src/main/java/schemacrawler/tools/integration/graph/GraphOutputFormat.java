@@ -108,7 +108,7 @@ public enum GraphOutputFormat
     final GraphOutputFormat graphFormat = fromFormatOrNull(format);
     if (graphFormat == null)
     {
-      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format, %s", format));
+      LOGGER.log(Level.CONFIG, new StringFormat("Unknown format <%s>", format));
       return png;
     }
     else

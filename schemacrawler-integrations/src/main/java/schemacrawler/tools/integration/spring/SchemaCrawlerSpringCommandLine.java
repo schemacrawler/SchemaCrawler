@@ -80,14 +80,14 @@ public class SchemaCrawlerSpringCommandLine
     {
       final String contextFilePath = contextFile.toUri().toString();
       LOGGER.log(Level.INFO,
-                 new StringFormat("Loading context from file, %s",
+                 new StringFormat("Loading context from file <%s>",
                                   contextFilePath));
       appContext = new FileSystemXmlApplicationContext(contextFilePath);
     }
     else
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat("Loading context from classpath, %s",
+                 new StringFormat("Loading context from classpath <%s>",
                                   springOptions.getContextFileName()));
       appContext = new ClassPathXmlApplicationContext(springOptions
         .getContextFileName());

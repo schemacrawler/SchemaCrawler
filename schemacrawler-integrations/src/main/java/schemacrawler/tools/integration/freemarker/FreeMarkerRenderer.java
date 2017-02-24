@@ -109,7 +109,7 @@ public final class FreeMarkerRenderer
 
     LOGGER
       .log(Level.CONFIG,
-           new StringFormat("FreeMarker configuration properties, %s", cfg));
+           new StringFormat("FreeMarker configuration properties <%s>", cfg));
 
     // Create the root hash
     final Map<String, Object> objectMap = new HashMap<>();

@@ -127,7 +127,7 @@ public final class CommandDaisyChainExecutable
     catch (final Exception e)
     {
       throw new SchemaCrawlerException(String
-        .format("Cannot chain executable, unknown command, %s", command));
+        .format("Cannot chain executable, unknown command <%s>", command));
     }
   }
 

@@ -203,7 +203,7 @@ public final class TypeMap
       {
         LOGGER.log(Level.WARNING,
                    e,
-                   new StringFormat("Could not obtain class mapping for data type, %s",
+                   new StringFormat("Could not obtain class mapping for data type <%s>",
                                     typeName));
         return null;
       }

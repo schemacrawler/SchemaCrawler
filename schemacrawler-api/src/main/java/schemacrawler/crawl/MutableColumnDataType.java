@@ -397,7 +397,7 @@ final class MutableColumnDataType
       {
         LOGGER.log(Level.FINE,
                    e,
-                   new StringFormat("Could not load mapped class, %s",
+                   new StringFormat("Could not load mapped class <%s>",
                                     mappedClassName));
         javaSqlTypeMappedClass = Object.class;
       }

@@ -113,7 +113,7 @@ final class ForeignKeyRetriever
         // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
         final String fkName = quotedName(results.getString("FOREIGN_KEY_NAME"));
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving foreign key definition, %s",
+                   new StringFormat("Retrieving foreign key definition <%s>",
                                     fkName));
         final String definition = results.getString("FOREIGN_KEY_DEFINITION");
 
@@ -128,7 +128,7 @@ final class ForeignKeyRetriever
         {
           LOGGER
             .log(Level.FINER,
-                 new StringFormat("Could not find foreign key, %s", fkName));
+                 new StringFormat("Could not find foreign key <%s>", fkName));
         }
       }
     }
@@ -293,7 +293,7 @@ final class ForeignKeyRetriever
       ((TablePartial) table).addColumn(column);
 
       LOGGER.log(Level.FINER,
-                 new StringFormat("Creating column reference for a column that is referenced by a foreign key, %s",
+                 new StringFormat("Creating column reference for a column that is referenced by a foreign key <%s>",
                                   column.getFullName()));
     }
     return column;

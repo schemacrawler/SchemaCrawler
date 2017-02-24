@@ -106,7 +106,7 @@ final class SchemaRetriever
       if (!schemaFilter.test(schemaRef))
       {
         LOGGER.log(Level.FINER,
-                   new StringFormat("Dropping schema, since schema is excluded, %s",
+                   new StringFormat("Dropping schema, since schema is excluded <%s>",
                                     schemaRef.getFullName()));
         iterator.remove();
         // continue
@@ -156,7 +156,7 @@ final class SchemaRetriever
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
       LOGGER.log(Level.FINER,
-                 new StringFormat("Retrieved catalogs, %s", catalogNames));
+                 new StringFormat("Retrieved catalogs <%s>", catalogNames));
     }
 
     return catalogNames;

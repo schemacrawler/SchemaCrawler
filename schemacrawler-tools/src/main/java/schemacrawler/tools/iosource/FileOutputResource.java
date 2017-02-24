@@ -83,7 +83,7 @@ public class FileOutputResource
     final Writer writer = newBufferedWriter(outputFile, charset, openOptions);
     LOGGER
       .log(Level.INFO,
-           new StringFormat("Opened output writer to file, %s", outputFile));
+           new StringFormat("Opened output writer to file <%s>", outputFile));
     return new OutputWriter(getDescription(), writer, true);
   }
 
