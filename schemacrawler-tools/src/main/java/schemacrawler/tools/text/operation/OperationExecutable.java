@@ -130,7 +130,9 @@ public final class OperationExecutable
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Cannot perform operation", e);
+      throw new SchemaCrawlerException(String.format("Unknown command \"%s\"",
+                                                     getCommand()),
+                                       e);
     }
   }
 

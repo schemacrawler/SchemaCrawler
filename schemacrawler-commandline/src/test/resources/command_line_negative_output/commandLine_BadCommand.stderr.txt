@@ -1,6 +1,6 @@
 SchemaCrawler 14.14.02
 
-Error: Cannot perform operation: unexpected token: BADCOMMAND
+Error: Unknown command "badcommand": unexpected token: BADCOMMAND
 
 Re-run SchemaCrawler with just the
 -?
