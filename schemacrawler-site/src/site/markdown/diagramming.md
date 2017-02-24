@@ -35,7 +35,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="images/diagram_2_portablenames.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_2_portablenames.png" width="200" />
 </a>
-- Show significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `-infolevel=standard -command=brief `command-line option.
+- Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `-infolevel=standard -command=brief `command-line option.
 <br />
 <a href="images/diagram_3_important_columns.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_3_important_columns.png" width="200" />
@@ -55,7 +55,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="images/diagram_6_grep.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_6_grep.png" width="200" />
 </a>
-- Grep for columns, but only show matching tables, using -grepcolumns=.*\\.BOOKS\\..*\\.ID and -only-matching as command-line options.
+- Grep for columns, but only show matching tables, using `-grepcolumns=.*\\.BOOKS\\..*\\.ID -only-matching` as command-line options.
 <br />
 <a href="images/diagram_7_grep_onlymatching.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_7_grep_onlymatching.png" width="200" />
@@ -65,7 +65,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="images/diagram_8_no_cardinality.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_8_no_cardinality.png" width="200" />
 </a>
-- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` and `-infolevel=maximum` on the command-line.
+- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true -infolevel=maximum` on the command-line.
 <br />
 <a href="images/diagram_9_row_counts.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_9_row_counts.png" width="200" />
@@ -119,7 +119,7 @@ schemacrawler.graph.graphviz_opts=-Gdpi=300
 
 ### Embedded Diagrams
 
-SchemaCrawler can generate [SVG diagrams embedded in HTML output,](snapshot-examples/snapshot.svg.html). To generate this
+SchemaCrawler can generate [SVG diagrams embedded in HTML output](snapshot-examples/snapshot.svg.html). To generate this
 format, run SchemaCrawler with an `-outputformat=htmlx` command-line argument. Please edit the SchemaCrawler 
 configuration file, `schemacrawler.config.properties`, and comment out or delete the line 
 `schemacrawler.graph.graphviz_opts=-Gdpi=300`.
@@ -139,5 +139,5 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). Photograph courtesy of Adrien Sales.
 
 <a href="images/SchemaCrawler_Noumea.jpg" data-toggle="lightbox" title="Schemacrawler database diagrams in use">
-<img src="images/SchemaCrawler_Noumea.jpg" width="200" />
+<img src="images/SchemaCrawler_Noumea.jpg" />
 </a>
