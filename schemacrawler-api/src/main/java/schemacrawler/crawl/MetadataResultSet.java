@@ -144,9 +144,7 @@ final class MetadataResultSet
     if (LOGGER.isLoggable(Level.INFO) && !isBlank(description))
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat("\"%s\" results had %d rows",
-                                  description,
-                                  rowCount));
+                 new StringFormat("Rows for <%s> - %d", description, rowCount));
     }
   }
 

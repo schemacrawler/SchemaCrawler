@@ -66,7 +66,7 @@ public final class StopWatch
     public String toString()
     {
       final LocalTime durationLocal = LocalTime.ofNanoOfDay(duration.toNanos());
-      return String.format("%s - \"%s\"", durationLocal.format(df), taskName);
+      return String.format("%s - <%s>", durationLocal.format(df), taskName);
     }
 
   }
@@ -120,7 +120,7 @@ public final class StopWatch
     if (running)
     {
       throw new IllegalStateException(String
-        .format("Cannot stop \"%s\", since it is already running", id));
+        .format("Cannot stop <%s>, since it is already running", id));
     }
 
     running = true;
@@ -133,7 +133,7 @@ public final class StopWatch
     if (!running)
     {
       throw new IllegalStateException(String
-        .format("Cannot stop \"%s\", since it is not running", id));
+        .format("Cannot stop <%s>, since it is not running", id));
     }
 
     final Instant stop = Instant.now();
@@ -165,7 +165,7 @@ public final class StopWatch
 
     final LocalTime totalDurationLocal = LocalTime
       .ofNanoOfDay(totalDuration.toNanos());
-    buffer.append(String.format("Total time taken for \"%s\" - %s hours%n",
+    buffer.append(String.format("Total time taken for <%s> - %s hours%n",
                                 id,
                                 totalDurationLocal.format(df)));
 
