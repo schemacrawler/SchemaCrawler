@@ -170,14 +170,14 @@ final class RetrieverConnection
     final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                                      metaData);
     LOGGER.log(Level.CONFIG,
-               new StringFormat("Database identifier quote string is \"%s\"",
+               new StringFormat("Database identifier quote string is <%s>",
                                 identifierQuoteString));
     identifiers = Identifiers.identifiers().withConnection(connection)
       .withIdentifierQuoteString(identifierQuoteString).build();
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
-               new StringFormat("Supported table types are %s", tableTypes));
+               new StringFormat("Supported table types are <%s>", tableTypes));
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();

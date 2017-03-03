@@ -159,7 +159,7 @@ public class InputReader
     if (!isClosed)
     {
       throw new IllegalStateException(String
-        .format("Input reader \"%s\" was not closed", description));
+        .format("Input reader was not closed <%s>", description));
     }
     super.finalize();
   }
@@ -172,7 +172,7 @@ public class InputReader
   {
     if (isClosed)
     {
-      throw new IOException(String.format("Input reader \"%s\" is not open",
+      throw new IOException(String.format("Input reader <%s> is not open",
                                           description));
     }
   }
