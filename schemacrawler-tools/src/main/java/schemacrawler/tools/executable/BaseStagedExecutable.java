@@ -72,7 +72,7 @@ public abstract class BaseStagedExecutable
                    "No database specific overrides provided");
 
     LOGGER.log(Level.INFO,
-               new StringFormat("Executing SchemaCrawler command, \"%s\"",
+               new StringFormat("Executing SchemaCrawler command <%s>",
                                 getCommand()));
     if (LOGGER.isLoggable(Level.CONFIG))
     {

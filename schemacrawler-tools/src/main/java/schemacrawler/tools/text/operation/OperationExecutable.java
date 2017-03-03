@@ -80,9 +80,9 @@ public final class OperationExecutable
     if (!isOutputFormatSupported())
     {
       LOGGER.log(Level.INFO,
-                 new StringFormat("Output format \"%s\" not supported for command \"%s\"",
-                                  outputOptions.getOutputFormatValue(),
-                                  getCommand()));
+                 new StringFormat("Output format not supported for command <%s> - <%s>",
+                                  getCommand(),
+                                  outputOptions.getOutputFormatValue()));
       return;
     }
 
@@ -130,7 +130,7 @@ public final class OperationExecutable
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException(String.format("Unknown command \"%s\"",
+      throw new SchemaCrawlerException(String.format("Unknown command <%s>",
                                                      getCommand()),
                                        e);
     }
