@@ -55,9 +55,15 @@ using `schemacrawler.cmd` (or `schemacrawler.sh` on Unix).
 SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
-### SchemaCrawler Docker Image
+## SchemaCrawler Docker Image
 The official [SchemaCrawler Docker image](https://hub.docker.com/r/sualeh/schemacrawler/) is available on Docker Hub, 
 and using this will reduce some of your installation steps.
+
+## Tweaking Your Installation
+
+- If you install SchemaCrawler to some other location, you can use 
+  [David Guillot's shell script](https://gist.github.com/David-Guillot/dd53227141fd62ff5db6ef23c929f7b1)
+  to launch SchemaCrawler
 
 # Using SchemaCrawler in Your Projects
 
