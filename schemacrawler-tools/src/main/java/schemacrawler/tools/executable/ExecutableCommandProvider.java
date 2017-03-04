@@ -80,7 +80,7 @@ abstract class ExecutableCommandProvider
     catch (final Exception e)
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Could not instantiate using the default constructor <%s>",
+                 new StringFormat("Could not instantiate using default constructor for class <%s>",
                                   executableClassName));
       try
       {

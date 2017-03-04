@@ -162,7 +162,7 @@ public final class OutputWriter
     if (!isClosed)
     {
       throw new IllegalStateException(String
-        .format("Output writer was not closed <%s>", description));
+        .format("Could not close output writer <%s>", description));
     }
     super.finalize();
   }

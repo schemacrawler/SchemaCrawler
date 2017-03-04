@@ -141,7 +141,7 @@ final class IndexRetriever
                                                          schemaName)
                                      + "." + tableName + "." + pkName;
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving primary key definition <%s>",
+                   new StringFormat("Retrieving definition of primary key <%s>",
                                     constraintKey));
         final String definition = results.getString("PRIMARY_KEY_DEFINITION");
 
