@@ -189,7 +189,9 @@ public final class RegularExpressionRule
       }
       else
       {
-        actionMessage = new StringFormat("Including <%s>", text);
+        actionMessage = new StringFormat("Including <%s> since it matches /%s/",
+                                         text,
+                                         patternInclude.pattern());
         include = true;
       }
     }
