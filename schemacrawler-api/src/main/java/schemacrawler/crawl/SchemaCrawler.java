@@ -56,6 +56,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.StopWatch;
+import sf.util.StringFormat;
 
 /**
  * SchemaCrawler uses database meta-data to get the details about the
@@ -281,7 +282,12 @@ public final class SchemaCrawler
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
-        for (final Schema schema: retriever.getSchemas())
+        final Collection<Schema> schemas = retriever.getSchemas();
+        if (schemas.isEmpty())
+        {
+          return null;
+        }
+        for (final Schema schema: schemas)
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
@@ -299,6 +305,12 @@ public final class SchemaCrawler
 
       final NamedObjectList<MutableRoutine> allRoutines = catalog
         .getAllRoutines();
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Retrieved %d routines", allRoutines.size()));
+      if (allRoutines.isEmpty())
+      {
+        return;
+      }
 
       stopWatch.time("retrieveRoutineColumns", () -> {
         LOGGER.log(Level.INFO, "Retrieving routine columns");
@@ -565,7 +577,12 @@ public final class SchemaCrawler
                                                                      options);
 
       stopWatch.time("retrieveTables", () -> {
-        for (final Schema schema: retriever.getSchemas())
+        final Collection<Schema> schemas = retriever.getSchemas();
+        if (schemas.isEmpty())
+        {
+          return null;
+        }
+        for (final Schema schema: schemas)
         {
           retriever.retrieveTables(schema,
                                    options.getTableNamePattern(),
@@ -576,6 +593,12 @@ public final class SchemaCrawler
       });
 
       final NamedObjectList<MutableTable> allTables = catalog.getAllTables();
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Retrieved %d tables", allTables.size()));
+      if (allTables.isEmpty())
+      {
+        return;
+      }
 
       stopWatch.time("retrieveColumns", () -> {
         if (infoLevel.isRetrieveTableColumns())
