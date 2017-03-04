@@ -282,12 +282,7 @@ public final class SchemaCrawler
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
-        final Collection<Schema> schemas = retriever.getSchemas();
-        if (schemas.isEmpty())
-        {
-          return null;
-        }
-        for (final Schema schema: schemas)
+        for (final Schema schema: retriever.getSchemas())
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
@@ -402,6 +397,12 @@ public final class SchemaCrawler
       });
 
       LOGGER.log(Level.INFO, stopWatch.toString());
+
+      final Collection<Schema> schemas = retriever.getSchemas();
+      if (schemas.isEmpty())
+      {
+        throw new SchemaCrawlerException("No matching schemas found");
+      }
     }
     catch (final Exception e)
     {
@@ -577,12 +578,7 @@ public final class SchemaCrawler
                                                                      options);
 
       stopWatch.time("retrieveTables", () -> {
-        final Collection<Schema> schemas = retriever.getSchemas();
-        if (schemas.isEmpty())
-        {
-          return null;
-        }
-        for (final Schema schema: schemas)
+        for (final Schema schema: retriever.getSchemas())
         {
           retriever.retrieveTables(schema,
                                    options.getTableNamePattern(),

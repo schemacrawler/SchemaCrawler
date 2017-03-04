@@ -35,6 +35,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import sf.util.StringFormat;
+
 /**
  * Specifies inclusion and exclusion patterns that can be applied to the
  * names, definitions, and other attributes of named objects.
@@ -169,29 +171,31 @@ public final class RegularExpressionRule
   public boolean test(final String text)
   {
 
-    final String actionMessage;
+    final StringFormat actionMessage;
     boolean include = false;
     if (!isBlank(text))
     {
       if (!patternInclude.matcher(text).matches())
       {
-        actionMessage = "Excluding \"" + text
-                        + "\" since it does not match the include pattern";
+        actionMessage = new StringFormat("Excluding <%s> since it does not match /%s/",
+                                         text,
+                                         patternInclude.pattern());
       }
       else if (patternExclude.matcher(text).matches())
       {
-        actionMessage = "Excluding \"" + text
-                        + "\" since it matches the exclude pattern";
+        actionMessage = new StringFormat("Excluding <%s> since it matches /%s/",
+                                         text,
+                                         patternExclude.pattern());
       }
       else
       {
-        actionMessage = "Including \"" + text + "\"";
+        actionMessage = new StringFormat("Including <%s>", text);
         include = true;
       }
     }
     else
     {
-      actionMessage = "Excluding, since text is bank";
+      actionMessage = new StringFormat("Excluding, since text is bank");
     }
 
     if (LOGGER.isLoggable(Level.FINE))
@@ -214,7 +218,7 @@ public final class RegularExpressionRule
   @Override
   public String toString()
   {
-    return String.format("%s@%h-include/%s/-exclude/%s/]",
+    return String.format("%s@%h {+/%s/ -/%s/}",
                          getClass().getSimpleName(),
                          System.identityHashCode(this),
                          patternInclude.pattern(),

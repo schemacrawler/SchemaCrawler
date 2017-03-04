@@ -228,7 +228,7 @@ final class MetadataResultSet
         if (results.wasNull() || booleanValue == null)
         {
           LOGGER.log(Level.FINER,
-                     new StringFormat("NULL value for column %s, so evaluating to 'false'",
+                     new StringFormat("NULL value for column <%s>, so evaluating to 'false'",
                                       columnName));
           return false;
         }
@@ -335,7 +335,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINER,
-                     new StringFormat("NULL int value for column %s, so using default %d",
+                     new StringFormat("NULL int value for column <%s>, so using default %d",
                                       columnName,
                                       defaultValue));
           value = defaultValue;
@@ -373,7 +373,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINER,
-                     new StringFormat("NULL long value for column %s, so using default %d",
+                     new StringFormat("NULL long value for column <%s>, so using default %d",
                                       columnName,
                                       defaultValue));
           value = defaultValue;
@@ -411,7 +411,7 @@ final class MetadataResultSet
         if (results.wasNull())
         {
           LOGGER.log(Level.FINER,
-                     new StringFormat("NULL short value for column %s, so using default %d",
+                     new StringFormat("NULL short value for column <%s>, so using default %d",
                                       columnName,
                                       defaultValue));
           value = defaultValue;
