@@ -159,7 +159,7 @@ public class InputReader
     if (!isClosed)
     {
       throw new IllegalStateException(String
-        .format("Input reader was not closed <%s>", description));
+        .format("Could not close input reader <%s>", description));
     }
     super.finalize();
   }

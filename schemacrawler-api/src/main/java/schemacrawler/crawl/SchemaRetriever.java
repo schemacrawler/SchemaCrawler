@@ -106,7 +106,7 @@ final class SchemaRetriever
       if (!schemaFilter.test(schemaRef))
       {
         LOGGER.log(Level.FINER,
-                   new StringFormat("Dropping schema, since schema is excluded <%s>",
+                   new StringFormat("Excluding schema <%s>",
                                     schemaRef.getFullName()));
         iterator.remove();
         // continue

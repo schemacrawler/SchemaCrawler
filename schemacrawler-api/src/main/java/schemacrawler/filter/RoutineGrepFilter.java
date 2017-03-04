@@ -123,8 +123,7 @@ class RoutineGrepFilter
     if (!include)
     {
       LOGGER.log(Level.FINE,
-                 new StringFormat("Removing routine since it does not match the grep pattern <%s>",
-                                  routine));
+                 new StringFormat("Excluding routine <%s>", routine));
     }
 
     return include;

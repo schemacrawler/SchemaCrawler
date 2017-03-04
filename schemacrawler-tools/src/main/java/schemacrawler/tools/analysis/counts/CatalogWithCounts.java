@@ -94,9 +94,10 @@ public final class CatalogWithCounts
       }
       catch (final SchemaCrawlerException e)
       {
-        LOGGER.log(Level.WARNING,
-                   e,
-                   new StringFormat("Could not get count for <%s>", table));
+        LOGGER
+          .log(Level.WARNING,
+               e,
+               new StringFormat("Could not get count for table <%s>", table));
       }
     }
 
