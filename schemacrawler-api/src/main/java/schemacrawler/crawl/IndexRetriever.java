@@ -207,7 +207,7 @@ final class IndexRetriever
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
     String indexName = quotedName(results.getString("INDEX_NAME"));
     LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving index: %s.%s",
+               new StringFormat("Retrieving index <%s.%s>",
                                 table.getFullName(),
                                 indexName));
 
@@ -331,7 +331,7 @@ final class IndexRetriever
     {
       LOGGER.log(Level.WARNING,
                  e.getCause(),
-                 new StringFormat("Could not retrieve %sindexes for table %s, trying again",
+                 new StringFormat("Could not retrieve %sindexes for table <%s>, trying again",
                                   unique? "unique ": "",
                                   table));
       sqlEx = e;

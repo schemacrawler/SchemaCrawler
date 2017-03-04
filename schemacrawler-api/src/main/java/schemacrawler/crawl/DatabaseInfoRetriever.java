@@ -419,7 +419,7 @@ final class DatabaseInfoRetriever
         final String typeName = results.getString("TYPE_NAME");
         final int dataType = results.getInt("DATA_TYPE", 0);
         LOGGER.log(Level.FINER,
-                   new StringFormat("Retrieving data type: %s (with type id %d)",
+                   new StringFormat("Retrieving data type <%s> with type id %d",
                                     typeName,
                                     dataType));
         final long precision = results.getLong("PRECISION", 0L);
@@ -496,7 +496,7 @@ final class DatabaseInfoRetriever
 
     LOGGER
       .log(Level.INFO,
-           new StringFormat("Retrieving data types for schema: %s", schema));
+           new StringFormat("Retrieving data types for schema <%s>", schema));
 
     final String catalogName = schema.getCatalogName();
     final String schemaName = schema.getName();
