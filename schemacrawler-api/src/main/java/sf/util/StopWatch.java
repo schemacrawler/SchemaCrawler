@@ -184,9 +184,10 @@ public final class StopWatch
                                      final Duration totalDuration)
   {
     final long totalSeconds = totalDuration.getSeconds();
+    final long totalNanos = totalDuration.getNano();
     if (totalSeconds == 0)
     {
-      return 0;
+      return duration.getNano() * 100D / totalNanos;
     }
     else
     {
