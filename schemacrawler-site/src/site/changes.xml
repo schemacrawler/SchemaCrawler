@@ -5,7 +5,12 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.14.04" date="2017-02-23" description="Utility for MySQL enum suport">
+     <release version="14.14.04" date="2017-03-04" description="Better logging and error messages">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better logging and error messages.
+      ]]></action>                               
+     </release>   
+     <release version="14.14.03" date="2017-02-23" description="Utility for MySQL enum suport">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Java utility class to parse enum values from column.getAttribute("COLUMN_TYPE"), for MySQL.
       ]]></action>  
