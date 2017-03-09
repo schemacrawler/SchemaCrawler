@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static sf.util.Utility.readResourceFully;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -115,20 +113,12 @@ public final class GraphExecutable
 
     // Create graph image
     final GraphOptions graphOptions = getGraphOptions();
-    try
-    {
-      final GraphProcessExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
-                                                                                 outputOptions
-                                                                                   .getOutputFile(),
-                                                                                 graphOptions,
-                                                                                 graphOutputFormat);
-      graphProcessExecutor.call();
-    }
-    catch (final Exception e)
-    {
-      System.err.println(readResourceFully("/dot.error.txt"));
-      throw e;
-    }
+    final GraphProcessExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
+                                                                               outputOptions
+                                                                                 .getOutputFile(),
+                                                                               graphOptions,
+                                                                               graphOutputFormat);
+    graphProcessExecutor.call();
   }
 
   public final GraphOptions getGraphOptions()

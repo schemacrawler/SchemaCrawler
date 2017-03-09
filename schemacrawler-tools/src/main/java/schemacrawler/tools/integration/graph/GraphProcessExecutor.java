@@ -34,6 +34,7 @@ import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.readResourceFully;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -154,9 +155,10 @@ public class GraphProcessExecutor
     command.add(outputFile.toString());
     command.add(movedDotFile.toString());
 
-    final String message = String.format(
-                                         "Generate diagram manually, using Graphviz:\n%s",
-                                         String.join(" ", command));
+    final String message = String
+      .format("%s%nGenerate diagram manually, using Graphviz:%n%s",
+              readResourceFully("/dot.error.txt"),
+              String.join(" ", command));
 
     try
     {
@@ -170,7 +172,7 @@ public class GraphProcessExecutor
                                        e);
     }
 
-    LOGGER.log(Level.INFO, message);
+    LOGGER.log(Level.SEVERE, message);
     throw new SchemaCrawlerException(message);
   }
 
