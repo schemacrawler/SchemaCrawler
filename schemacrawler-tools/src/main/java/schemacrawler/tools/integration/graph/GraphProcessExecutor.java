@@ -32,17 +32,20 @@ import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
+import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.ProcessExecutor;
+import sf.util.FileContents;
 import sf.util.StringFormat;
 
 public class GraphProcessExecutor
@@ -95,7 +98,7 @@ public class GraphProcessExecutor
 
   @Override
   public Integer call()
-    throws IOException
+    throws Exception
   {
     // For scdot, we may not need to run the process
     final List<String> command = getCommand();
@@ -105,26 +108,24 @@ public class GraphProcessExecutor
     }
 
     final Integer exitCode = super.call();
+    final boolean isProcessInError = exitCode == null || exitCode != 0;
 
-    final String processOutput = getProcessOutput();
-    if (!isBlank(processOutput))
+    LOGGER.log(Level.INFO, new FileContents(getProcessOutput()));
+    final Supplier<String> processError = new FileContents(getProcessOutput());
+    if (isProcessInError)
     {
-      LOGGER.log(Level.INFO, processOutput);
+      LOGGER.log(Level.SEVERE,
+                 new StringFormat("Process returned exit code %d%n%s",
+                                  exitCode,
+                                  processError));
+      captureRecovery();
     }
-    final String processError = getProcessError();
-    if (exitCode != null && exitCode != 0)
-    {
-      throw new IOException(String.format("Process returned exit code %d%n%s",
-                                          exitCode,
-                                          processError));
-    }
-    if (!isBlank(processError))
+    else
     {
       LOGGER.log(Level.WARNING, processError);
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Generated diagram <%s>", outputFile));
     }
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Generated diagram <%s>", outputFile));
 
     return exitCode;
   }
@@ -139,6 +140,40 @@ public class GraphProcessExecutor
     return outputFile;
   }
 
+  private void captureRecovery()
+    throws SchemaCrawlerException
+  {
+    // Move DOT file to current directory
+    final Path movedDotFile = outputFile.normalize().getParent()
+      .resolve(dotFile.getFileName());
+
+    // Print command to run
+    final List<String> command = getCommand();
+    command.remove(command.size() - 1);
+    command.remove(command.size() - 1);
+    command.add(outputFile.toString());
+    command.add(movedDotFile.toString());
+
+    final String message = String.format(
+                                         "Generate diagram manually, using Graphviz:\n%s",
+                                         String.join(" ", command));
+
+    try
+    {
+      move(dotFile, movedDotFile);
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerException(String.format("Could not move %s to %s",
+                                                     dotFile,
+                                                     movedDotFile),
+                                       e);
+    }
+
+    LOGGER.log(Level.INFO, message);
+    throw new SchemaCrawlerException(message);
+  }
+
   private void createDiagramCommand(final Path dotFile,
                                     final Path outputFile,
                                     final GraphOptions graphOptions,
@@ -147,7 +182,10 @@ public class GraphProcessExecutor
     final List<String> command = new ArrayList<>();
     command.add("dot");
 
-    command.addAll(graphOptions.getGraphvizOpts());
+    if (graphOptions != null)
+    {
+      command.addAll(graphOptions.getGraphvizOpts());
+    }
     command.add("-T");
     command.add(graphOutputFormat.getFormat());
     command.add("-o");
