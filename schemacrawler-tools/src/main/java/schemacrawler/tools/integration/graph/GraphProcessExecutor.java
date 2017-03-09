@@ -156,7 +156,7 @@ public class GraphProcessExecutor
     command.add(movedDotFile.toString());
 
     final String message = String
-      .format("%s%nGenerate diagram manually, using Graphviz:%n%s",
+      .format("%s%nGenerate your diagram manually, using:%n%s",
               readResourceFully("/dot.error.txt"),
               String.join(" ", command));
 
