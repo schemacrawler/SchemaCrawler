@@ -158,7 +158,7 @@ public class GraphProcessExecutor
     final String message = String
       .format("%s%nGenerate your diagram manually, using:%n%s",
               readResourceFully("/dot.error.txt"),
-              String.join(" ", command));
+              String.join(" ", quoteCommandLine(command)));
 
     try
     {

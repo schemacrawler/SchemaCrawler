@@ -114,13 +114,26 @@ public class ProcessExecutor
 
   public void setCommandLine(final List<String> args)
   {
+    command = quoteCommandLine(args);
+  }
+
+  /**
+   * Quotes command-line arguments that have spaces, and removes blank
+   * items.
+   *
+   * @param args
+   *        Command-line arguments
+   * @return Quoted command-line arguments
+   */
+  protected List<String> quoteCommandLine(final List<String> args)
+  {
     requireNonNull(args, "No command provided");
     if (args.isEmpty())
     {
       throw new IllegalArgumentException("No command provided");
     }
 
-    command = new ArrayList<>();
+    final List<String> command = new ArrayList<>();
     for (final String arg: args)
     {
       if (isBlank(arg))
@@ -136,6 +149,8 @@ public class ProcessExecutor
         command.add(arg);
       }
     }
+
+    return command;
   }
 
 }
