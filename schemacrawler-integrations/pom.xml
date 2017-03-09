@@ -11,7 +11,7 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <properties>
-    <springframework.version>4.3.5.RELEASE</springframework.version>
+    <springframework.version>4.3.7.RELEASE</springframework.version>
   </properties>  
   <dependencies>
     <dependency>
@@ -48,7 +48,7 @@
     <dependency>
       <groupId>org.thymeleaf</groupId>
       <artifactId>thymeleaf</artifactId>
-      <version>3.0.1.RELEASE</version>
+      <version>3.0.3.RELEASE</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -78,13 +78,13 @@
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy-all</artifactId>
-      <version>2.4.7</version>
+      <version>2.4.9</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.1.7.0</version>
+      <version>9.1.8.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-jdk14</artifactId>
-      <version>1.7.22</version>
+      <version>1.7.24</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
