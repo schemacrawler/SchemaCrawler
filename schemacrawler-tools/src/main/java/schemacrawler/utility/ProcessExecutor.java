@@ -28,23 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
+import static java.nio.file.Files.createTempFile;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readFully;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.lang.ProcessBuilder.Redirect;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,86 +47,49 @@ public class ProcessExecutor
   implements Callable<Integer>
 {
 
-  final class StreamReader
-    implements Callable<String>
-  {
-
-    private final InputStream in;
-
-    private StreamReader(final InputStream in)
-    {
-      if (in == null)
-      {
-        throw new RuntimeException("No input stream provided");
-      }
-      this.in = in;
-    }
-
-    @Override
-    public String call()
-      throws Exception
-    {
-      final Reader reader = new BufferedReader(new InputStreamReader(in));
-      return readFully(reader);
-    }
-
-  }
-
   private static final Logger LOGGER = Logger
     .getLogger(ProcessExecutor.class.getName());
 
   private List<String> command;
-  private String processOutput;
-  private String processError;
+  private Path processOutput;
+  private Path processError;
   private int exitCode;
 
   @Override
   public Integer call()
-    throws IOException
+    throws Exception
   {
     requireNonNull(command, "No command provided");
-    if (command.isEmpty())
-    {
-      throw new IOException("No command provided");
-    }
 
-    LOGGER.log(Level.CONFIG, new StringFormat("Executing:%n%s", command));
-
-    final ExecutorService threadPool = Executors.newFixedThreadPool(2);
     try
     {
+      processOutput = createTempFile("scdot", "stdout");
+      processError = createTempFile("scdot", "stderr");
+
+      if (command.isEmpty())
+      {
+        return null;
+      }
+
+      LOGGER.log(Level.CONFIG, new StringFormat("Executing:%n%s", command));
 
       final ProcessBuilder processBuilder = new ProcessBuilder(command);
+      processBuilder.redirectOutput(Redirect.appendTo(processOutput.toFile()));
+      processBuilder.redirectOutput(Redirect.appendTo(processError.toFile()));
+
       final Process process = processBuilder.start();
-
-      final FutureTask<String> inReaderTask = new FutureTask<>(new StreamReader(process
-        .getInputStream()));
-      threadPool.execute(inReaderTask);
-      final FutureTask<String> errReaderTask = new FutureTask<>(new StreamReader(process
-        .getErrorStream()));
-      threadPool.execute(errReaderTask);
-
       exitCode = process.waitFor();
-
-      processOutput = inReaderTask.get();
-      processError = errReaderTask.get();
-
-      return exitCode;
-    }
-    catch (final SecurityException | ExecutionException
-        | InterruptedException e)
-    {
-      throw new IOException(e.getMessage(), e);
     }
     catch (final Throwable t)
     {
+      if (exitCode == 0)
+      {
+        exitCode = Integer.MIN_VALUE;
+      }
       LOGGER.log(Level.SEVERE, t.getMessage(), t);
-      throw new IOException(t.getMessage(), t);
     }
-    finally
-    {
-      threadPool.shutdown();
-    }
+
+    return exitCode;
   }
 
   public List<String> getCommand()
@@ -146,12 +102,12 @@ public class ProcessExecutor
     return exitCode;
   }
 
-  public String getProcessError()
+  public Path getProcessError()
   {
     return processError;
   }
 
-  public String getProcessOutput()
+  public Path getProcessOutput()
   {
     return processOutput;
   }
