@@ -5,9 +5,9 @@
   <info organisation="schemacrawler" module="schemacrawler-spring" />
   <dependencies>
     <dependency org="org.springframework" name="spring-context"
-      rev="4.3.5.RELEASE" />
+      rev="4.3.7.RELEASE" />
     <dependency org="org.springframework" name="spring-jdbc"
-      rev="4.3.5.RELEASE" />
+      rev="4.3.7.RELEASE" />
       
     <exclude org="javax.ejb" />
     <exclude org="javax.jms" />
