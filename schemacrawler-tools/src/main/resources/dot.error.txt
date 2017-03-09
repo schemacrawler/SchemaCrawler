@@ -1,3 +1,5 @@
-Graphviz was not available to create the requested graph. Please reinstall 
-Graphviz, and make it available on the system PATH. Meanwhile, a Graphviz 
-.dot file has been created instead. 
+Graphviz was not available to create the requested graph.
+ 
+Please reinstall Graphviz, and make it available on the 
+system PATH. Meanwhile, a Graphviz .dot file has been 
+created instead. 
