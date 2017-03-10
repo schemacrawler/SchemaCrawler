@@ -45,12 +45,10 @@ import java.util.Properties;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.CompleteBuildRule;
 import schemacrawler.test.utility.ProjectRoot;
 import schemacrawler.test.utility.TestName;
 
@@ -62,9 +60,6 @@ public class SiteHTMLVariationsTest
 
   @Rule
   public ProjectRoot projectRoot = new ProjectRoot();
-
-  @Rule
-  public TestRule rule = new CompleteBuildRule();
 
   @Rule
   public TestName testName = new TestName();
