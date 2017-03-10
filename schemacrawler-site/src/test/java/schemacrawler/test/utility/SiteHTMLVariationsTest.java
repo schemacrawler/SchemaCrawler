@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
@@ -37,12 +38,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -54,25 +54,31 @@ public class SiteHTMLVariationsTest
   extends BaseDatabaseTest
 {
 
-  private static Path directory;
+  private Path directory;
 
-  @BeforeClass
-  public static void setupDirectory()
-    throws IOException, URISyntaxException
-  {
-    final Path codePath = Paths.get(SiteHTMLVariationsTest.class
-      .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
-      .toAbsolutePath();
-    directory = codePath
-      .resolve("../../../schemacrawler-site/src/site/resources/html-examples")
-      .normalize().toAbsolutePath();
-  }
+  @Rule
+  public ProjectRoot projectRoot = new ProjectRoot();
 
   @Rule
   public TestRule rule = new CompleteBuildRule();
 
   @Rule
   public TestName testName = new TestName();
+
+  @Before
+  public void _setupDirectory()
+    throws IOException, URISyntaxException
+  {
+    if (directory != null)
+    {
+      return;
+    }
+    final Path projectRootPath = projectRoot.getProjectRootPath();
+    directory = projectRootPath
+      .resolve("schemacrawler-site/target/site/html-examples").normalize()
+      .toAbsolutePath();
+    createDirectories(directory);
+  }
 
   @Test
   public void html()
