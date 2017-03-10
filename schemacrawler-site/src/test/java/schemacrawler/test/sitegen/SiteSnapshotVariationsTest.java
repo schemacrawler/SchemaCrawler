@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.utility;
+package schemacrawler.test.sitegen;
 
 
 import static java.nio.file.Files.createDirectories;
@@ -49,6 +49,9 @@ import org.junit.rules.TestRule;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.CompleteBuildRule;
+import schemacrawler.test.utility.ProjectRoot;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
