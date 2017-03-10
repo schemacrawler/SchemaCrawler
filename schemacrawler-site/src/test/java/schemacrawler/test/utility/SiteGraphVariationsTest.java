@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
@@ -37,12 +38,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -54,25 +54,30 @@ public class SiteGraphVariationsTest
   extends BaseDatabaseTest
 {
 
-  private static Path directory;
-
-  @BeforeClass
-  public static void setupDirectory()
-    throws IOException, URISyntaxException
-  {
-    final Path codePath = Paths.get(SiteGraphVariationsTest.class
-      .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
-      .toAbsolutePath();
-    directory = codePath
-      .resolve("../../../schemacrawler-site/src/site/resources/images")
-      .normalize().toAbsolutePath();
-  }
+  private Path directory;
 
   @Rule
-  public TestRule rule = new CompleteBuildRule();
+  public TestRule buildRule = new CompleteBuildRule();
 
   @Rule
   public TestName testName = new TestName();
+
+  @Rule
+  public ProjectRoot projectRoot = new ProjectRoot();
+
+  @Before
+  public void _setupDirectory()
+    throws IOException, URISyntaxException
+  {
+    if (directory != null)
+    {
+      return;
+    }
+    final Path projectRootPath = projectRoot.getProjectRootPath();
+    directory = projectRootPath.resolve("schemacrawler-site/target/site/images")
+      .normalize().toAbsolutePath();
+    createDirectories(directory);
+  }
 
   @Test
   public void diagram()
@@ -96,6 +101,19 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
+
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+  }
+
+  @Test
+  public void diagram_11_title()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("infolevel", "standard");
+    args.put("title", "Books and Publishers Schema");
+
+    final Map<String, String> config = new HashMap<>();
 
     run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
   }

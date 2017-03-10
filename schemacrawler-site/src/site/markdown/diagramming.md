@@ -75,6 +75,11 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="images/diagram_10_no_schema_colors.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
 <img src="images/diagram_10_no_schema_colors.png" width="200" />
 </a>
+- Show a title on the diagram, use `-title "Books and Publishers Schema"` on the command-line.
+<br />
+<a href="images/diagram_11_title.png" data-toggle="lightbox" title="SchemaCrawler database diagram">
+<img src="images/diagram_11_title.png" width="200" />
+</a>
 
 
 ## Additional Configuration
