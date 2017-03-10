@@ -8,7 +8,14 @@
      <release version="14.14.04" date="2017-03-04" description="Better logging and error messages">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better logging and error messages.
-      ]]></action>                               
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added short form, -fmt for -outputformat command-line option.
+      ]]></action>     
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Made the output format command-line option optional. The output format
+        is derived from the output file extension if it is not explicitly provided.
+      ]]></action>                                        
      </release>   
      <release version="14.14.03" date="2017-02-23" description="Utility for MySQL enum suport">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
