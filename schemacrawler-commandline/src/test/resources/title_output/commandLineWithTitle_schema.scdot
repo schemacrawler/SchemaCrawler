@@ -21,9 +21,9 @@ digraph "SchemaCrawler_Diagram" {
   ];
 
 
-  graph [fontcolor="#999999", 
+  graph [fontcolor="#888888", 
     label=<
-<table color="#999999" border="1" cellborder="0" cellspacing="0">
+<table color="#888888" border="1" cellborder="0" cellspacing="0">
 	<tr>
 		<td colspan='2' align='left'><b><i>Database Design for Books and Publishers</i></b></td>
 	</tr>
@@ -33,15 +33,11 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2016-12-24 14:20:46</td>
+		<td align='left'>2017-03-09 22:27:31</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
 		<td align='left'>HSQL Database Engine 2.3.4</td>
-	</tr>
-	<tr>
-		<td align='right'>driver version</td>
-		<td align='left'>HSQL Database Engine Driver 2.3.4</td>
 	</tr>
       </table>    >
     labeljust=r
