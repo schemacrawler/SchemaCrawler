@@ -8,3 +8,26 @@
 -linterconfigs=<path>
   Where <path> is the full path to the SchemaCrawler lint
   XML configuration file
+
+--- Output Options ---
+
+-fmt=<outputformat> (short for -outputformat=<outputformat>)
+  Format of the SchemaCrawler output, where <outputformat> is one of:
+    text
+      For text output (default)
+    html
+      For HTML5 output
+    csv
+      For comma-separated values output
+    tsv
+      For tab-separated values output
+    json
+      For JavaScript Object Notation output 
+    
+  Optional, defaults to the format specified by the output file,
+  otherwise, text  
+        
+-o=<outputfile> (short for -outputfile=<outputfile>)
+  <outputfile> is the path to the output file
+  Optional, defaults to the console (stdout)
+ 
