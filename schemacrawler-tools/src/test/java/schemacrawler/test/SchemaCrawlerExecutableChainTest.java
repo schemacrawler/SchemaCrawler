@@ -34,7 +34,7 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
-import static sf.util.Utility.readFully;
+import static sf.util.IOUtility.readFully;
 
 import java.io.FileReader;
 import java.nio.file.Files;

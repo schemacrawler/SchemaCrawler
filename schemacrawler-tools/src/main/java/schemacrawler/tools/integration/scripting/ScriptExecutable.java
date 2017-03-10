@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
 import java.io.Reader;
@@ -65,22 +66,6 @@ public final class ScriptExecutable
     .getLogger(ScriptExecutable.class.getName());
 
   static final String COMMAND = "script";
-
-  public static String getFileExtension(final String scriptFileName)
-  {
-    final String ext;
-    if (scriptFileName != null)
-    {
-      ext = scriptFileName.lastIndexOf('.') == -1? "": scriptFileName
-        .substring(scriptFileName.lastIndexOf('.') + 1,
-                   scriptFileName.length());
-    }
-    else
-    {
-      ext = "";
-    }
-    return ext;
-  }
 
   public ScriptExecutable()
   {

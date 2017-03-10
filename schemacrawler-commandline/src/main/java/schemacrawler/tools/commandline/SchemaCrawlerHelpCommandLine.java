@@ -29,8 +29,8 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

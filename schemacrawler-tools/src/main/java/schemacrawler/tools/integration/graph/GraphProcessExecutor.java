@@ -34,7 +34,7 @@ import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.readResourceFully;
+import static sf.util.IOUtility.readResourceFully;
 
 import java.io.IOException;
 import java.nio.file.Path;

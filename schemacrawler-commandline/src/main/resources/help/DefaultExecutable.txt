@@ -79,7 +79,7 @@
   <boolean> can be true or false
   Optional, defaults to false
     
--outputformat=<outputformat>
+-fmt=<outputformat> (short for -outputformat=<outputformat>)
   Format of the SchemaCrawler output, where <outputformat> is one of:
     text
       For text output (default)
@@ -98,12 +98,13 @@
   For a diagram <outputformat> is one of dot, eps, gif, jpg, or png
   For a complete list Graphviz output formats, see http://www.graphviz.org/
   You can generate HTML output format with an embedded SVG diagram with
-  -outputformat=htmlx  
+  -fmt=htmlx  
   IMPORTANT: Graphviz needs to be installed, and available on the system PATH
   http://www.graphviz.org/
   If Graphviz is not installed, a DOT file is produced.
     
-  Optional, defaults to text  
+  Optional, defaults to the format specified by the output file,
+  otherwise, text  
         
 -o=<outputfile> (short for -outputfile=<outputfile>)
   <outputfile> is the path to the output file
