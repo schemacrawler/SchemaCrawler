@@ -48,7 +48,9 @@ import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
+import sf.util.UtilityMarker;
 
+@UtilityMarker
 public final class CommandLineUtility
 {
 
@@ -204,4 +206,5 @@ public final class CommandLineUtility
   {
     // Prevent instantiation
   }
+
 }

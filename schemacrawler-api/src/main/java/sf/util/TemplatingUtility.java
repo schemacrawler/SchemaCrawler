@@ -43,6 +43,7 @@ import java.util.Set;
  *
  * @author Sualeh Fatehi
  */
+@UtilityMarker
 public final class TemplatingUtility
 {
 

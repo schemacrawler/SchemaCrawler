@@ -52,7 +52,9 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
+import sf.util.UtilityMarker;
 
+@UtilityMarker
 public final class QueryUtility
 {
 

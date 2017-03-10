@@ -5,7 +5,7 @@
   
 --- Output Options ---
 
--outputformat=<outputformat>
+-fmt=<outputformat> (short for -outputformat=<outputformat>)
 	Where <outputformat> is the file path or class path to the Thymeleaf 
 	template
 

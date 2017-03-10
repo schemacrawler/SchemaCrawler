@@ -29,8 +29,8 @@ package sf.util;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
  *
  * @author Sualeh Fatehi
  */
+@UtilityMarker
 public final class DatabaseUtility
 {
 
@@ -212,9 +213,9 @@ public final class DatabaseUtility
       }
       else
       {
-        LOGGER
-          .log(Level.WARNING,
-               new StringFormat("No rows of data returned for query <%s>", sql));
+        LOGGER.log(Level.WARNING,
+                   new StringFormat("No rows of data returned for query <%s>",
+                                    sql));
         scalar = null;
       }
 

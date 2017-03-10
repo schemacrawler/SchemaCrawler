@@ -49,8 +49,8 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
+import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
 
 import java.sql.DatabaseMetaData;
 import java.util.HashMap;

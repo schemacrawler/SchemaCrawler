@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
-import static sf.util.Utility.readResourceFully;
+import static sf.util.IOUtility.readResourceFully;
 
 import java.io.Serializable;
 import java.sql.Connection;

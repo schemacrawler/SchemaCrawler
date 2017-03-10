@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler;
 
 
+import static sf.util.IOUtility.readResourceFully;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-
-import sf.util.Utility;
 
 /**
  * Version information for this product. Has methods to obtain
@@ -51,7 +51,7 @@ public final class Version
 
   static
   {
-    ABOUT = Utility.readResourceFully("/help/SchemaCrawler.txt");
+    ABOUT = readResourceFully("/help/SchemaCrawler.txt");
 
     String[] productLine;
     try
