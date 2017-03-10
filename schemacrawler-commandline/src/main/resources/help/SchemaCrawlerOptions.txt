@@ -1,6 +1,6 @@
 --- Filtering Options ---
      
--infolevel=<infolevel>
+-i=<infolevel> (short for -infolevel=<infolevel>)
   <infolevel> is one of minimum, standard, detailed, or maximum
   The info level determines the amount of database metadata retrieved,
   and also determines the time taken to crawl the schema

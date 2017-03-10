@@ -65,7 +65,7 @@ public final class SchemaCrawlerOptionsParser
   {
     super(config);
     normalizeOptionName("title");
-    normalizeOptionName("infolevel");
+    normalizeOptionName("infolevel", "i");
     normalizeOptionName("schemas");
     normalizeOptionName("tabletypes");
     normalizeOptionName("tables");

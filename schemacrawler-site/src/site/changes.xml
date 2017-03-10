@@ -10,7 +10,7 @@
         Better logging and error messages.
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Added short form, -fmt for -outputformat command-line option.
+        Added short forms, -fmt for -outputformat command-line option, and -i for -infolevel.
       ]]></action>     
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Made the output format command-line option optional. The output format
