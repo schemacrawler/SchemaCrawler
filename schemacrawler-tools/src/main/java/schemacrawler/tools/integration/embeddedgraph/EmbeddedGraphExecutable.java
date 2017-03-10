@@ -34,7 +34,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static sf.util.Utility.copy;
+import static sf.util.IOUtility.copy;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

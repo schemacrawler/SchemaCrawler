@@ -31,7 +31,9 @@ package schemacrawler.tools.analysis.counts;
 import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Table;
+import sf.util.UtilityMarker;
 
+@UtilityMarker
 public final class CountsUtility
 {
 

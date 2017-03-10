@@ -45,12 +45,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import sf.util.ObjectToString;
+import sf.util.UtilityMarker;
 
 /**
  * SchemaCrawler utility methods.
  *
  * @author sfatehi
  */
+@UtilityMarker
 public final class SchemaCrawlerUtility
 {
 

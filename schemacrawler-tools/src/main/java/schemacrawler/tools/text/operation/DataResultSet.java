@@ -30,7 +30,7 @@ package schemacrawler.tools.text.operation;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.readFully;
+import static sf.util.IOUtility.readFully;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;

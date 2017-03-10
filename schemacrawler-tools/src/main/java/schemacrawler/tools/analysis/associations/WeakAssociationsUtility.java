@@ -36,7 +36,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import schemacrawler.schema.Table;
+import sf.util.UtilityMarker;
 
+@UtilityMarker
 public final class WeakAssociationsUtility
 {
 

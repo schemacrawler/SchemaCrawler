@@ -43,12 +43,14 @@ import schemacrawler.schema.Index;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import sf.util.UtilityMarker;
 
 /**
  * SchemaCrawler utility methods.
  *
  * @author sfatehi
  */
+@UtilityMarker
 public final class MetaDataUtility
 {
 

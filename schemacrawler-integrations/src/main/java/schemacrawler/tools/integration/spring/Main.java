@@ -30,6 +30,7 @@ package schemacrawler.tools.integration.spring;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.readResourceFully;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
@@ -37,7 +38,6 @@ import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.options.ApplicationOptions;
-import sf.util.Utility;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
@@ -67,8 +67,7 @@ public final class Main
 
     if (applicationOptions.isShowHelp())
     {
-      final String text = Utility
-        .readResourceFully("/help/SchemaCrawler.spring.txt");
+      final String text = readResourceFully("/help/SchemaCrawler.spring.txt");
       System.out.println(text);
       return;
     }

@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
+import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
-import static sf.util.Utility.readResourceFully;
 
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;

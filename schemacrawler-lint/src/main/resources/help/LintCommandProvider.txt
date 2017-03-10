@@ -8,12 +8,3 @@
 -linterconfigs=<path>
   Where <path> is the full path to the SchemaCrawler lint
   XML configuration file
-
---- Output Options ---
-
--outputformat=<outputformat>
-  Where <outputformat> is the output format
-
--outputfile=<outputfile>
-  Optional 
-  <outputfile> is the path to the output file
