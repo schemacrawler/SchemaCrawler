@@ -137,20 +137,6 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          1));
 
     formattingHelper.append(row.toString()).println();
-
-    row = new TableRow(TextOutputFormat.html);
-    row.add(newTableCell("driver version",
-                         Alignment.right,
-                         false,
-                         Color.white,
-                         1));
-    row.add(newTableCell(crawlInfo.getJdbcDriverInfo(),
-                         Alignment.left,
-                         false,
-                         Color.white,
-                         1));
-
-    formattingHelper.append(row.toString()).println();
   }
 
   @Override
@@ -195,10 +181,10 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     {
       return;
     }
-    formattingHelper.append("  graph [fontcolor=\"#999999\", ").println();
+    formattingHelper.append("  graph [fontcolor=\"#888888\", ").println();
     formattingHelper.append("    label=<").println();
     formattingHelper
-      .append("<table color=\"#999999\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
+      .append("<table color=\"#888888\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
       .println();
   }
 
