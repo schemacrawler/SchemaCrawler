@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.utility;
+package schemacrawler.test.sitegen;
 
 
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class ProjectRoot
         final Class<?> testClass = description.getTestClass();
         final Path codePath = Paths.get(testClass.getProtectionDomain()
           .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-        final Path projectRoot = codePath.resolve("../../..").normalize()
+        final Path projectRoot = codePath.resolve("../..").normalize()
           .toAbsolutePath();
         Files.createDirectories(projectRoot);
         return projectRoot;
