@@ -49,7 +49,6 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.ProjectRoot;
 import schemacrawler.test.utility.TestName;
 
 public class SiteGraphVariationsTest
@@ -73,7 +72,7 @@ public class SiteGraphVariationsTest
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("schemacrawler-site/target/site/images")
+    directory = projectRootPath.resolve("target/site/images")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }

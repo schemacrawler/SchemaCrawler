@@ -49,7 +49,6 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.ProjectRoot;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -73,7 +72,7 @@ public class SiteSnapshotVariationsTest
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
     directory = projectRootPath
-      .resolve("schemacrawler-site/src/site/resources/snapshot-examples")
+      .resolve("target/site/resources/snapshot-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }
