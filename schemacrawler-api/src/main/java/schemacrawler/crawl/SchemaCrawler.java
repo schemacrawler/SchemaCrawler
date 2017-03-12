@@ -142,7 +142,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
@@ -232,7 +232,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
@@ -351,7 +351,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
@@ -396,7 +396,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
 
       final Collection<Schema> schemas = retriever.getSchemas();
       if (schemas.isEmpty())
@@ -460,7 +460,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
@@ -517,7 +517,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
@@ -741,7 +741,7 @@ public final class SchemaCrawler
         return null;
       });
 
-      LOGGER.log(Level.INFO, stopWatch.toString());
+      LOGGER.log(Level.INFO, stopWatch.stringify());
     }
     catch (final Exception e)
     {
