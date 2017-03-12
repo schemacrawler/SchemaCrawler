@@ -5,9 +5,9 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.14.04" date="2017-03-04" description="Better logging and error messages">
+     <release version="14.14.04" date="2017-03-11" description="Better logging and error messages">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
-        Better logging and error messages.
+        Better and more efficient logging and error messages.
       ]]></action>  
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added short forms, -fmt for -outputformat command-line option, and -i for -infolevel.
