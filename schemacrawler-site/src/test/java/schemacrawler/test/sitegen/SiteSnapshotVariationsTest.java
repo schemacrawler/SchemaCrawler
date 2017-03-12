@@ -72,7 +72,7 @@ public class SiteSnapshotVariationsTest
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
     directory = projectRootPath
-      .resolve("target/site/resources/snapshot-examples")
+      .resolve("target/site/snapshot-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }
