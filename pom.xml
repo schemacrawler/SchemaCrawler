@@ -102,6 +102,7 @@
         <module>schemacrawler-docs</module>
         <module>schemacrawler-site</module>
         <module>schemacrawler-distrib</module>
+				<module>schemacrawler-docker</module>
       </modules>
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>

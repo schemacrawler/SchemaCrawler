@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project
   xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,9 +9,9 @@
     <artifactId>schemacrawler-parent</artifactId>
     <version>14.14.04</version>
   </parent>
-  <artifactId>schemacrawler-docs</artifactId>
+  <artifactId>schemacrawler-docker</artifactId>
   <packaging>pom</packaging>
-  <name>SchemaCrawler - Documentation</name>
+  <name>SchemaCrawler - Docker Image</name>
   <build>
     <plugins>
       <plugin>
@@ -28,6 +28,7 @@
           <skip>true</skip>
         </configuration>
       </plugin>
+      <!-- Perhaps a Maven Docker plug-in here? -->
     </plugins>
-  </build>  
+  </build>
 </project>
