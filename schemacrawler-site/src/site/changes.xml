@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.15.01" date="2017-03-16" description="Output">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Cleaner description of column data types. 
+      ]]></action>                                 
+     </release>  
      <release version="14.14.04" date="2017-03-11" description="Better logging and error messages">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better and more efficient logging and error messages. 
@@ -25,7 +30,7 @@
         Better error message for bad commands.
       ]]></action>                               
      </release>     
-     <release version="14.14.04" date="2017-02-08" description="Adding MySQL enum suport">
+     <release version="14.14.02" date="2017-02-08" description="Adding MySQL enum suport">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         To get the enum values from column.getAttribute("COLUMN_TYPE"), run SchemaCrawler 
         for MySQL with -infolevel=maximum.
