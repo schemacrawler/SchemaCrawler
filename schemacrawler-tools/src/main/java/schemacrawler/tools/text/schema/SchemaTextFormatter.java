@@ -459,6 +459,11 @@ final class SchemaTextFormatter
 
   private void printColumnDataType(final ColumnDataType columnDataType)
   {
+
+    final boolean isUserDefined = columnDataType.isUserDefined();
+    final String dataType = String.format("[%sdata type]",
+                                          isUserDefined? "user defined ": "");
+
     final String typeName;
     if (options.isShowUnqualifiedNames())
     {
@@ -469,29 +474,11 @@ final class SchemaTextFormatter
       typeName = columnDataType.getFullName();
     }
 
-    final String baseTypeName;
-    final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
-    if (baseColumnDataType == null)
-    {
-      baseTypeName = "";
-    }
-    else
-    {
-      if (options.isShowUnqualifiedNames())
-      {
-        baseTypeName = baseColumnDataType.getName();
-      }
-      else
-      {
-        baseTypeName = baseColumnDataType.getFullName();
-      }
-    }
-
-    final String userDefined = negate(columnDataType.isUserDefined(),
-                                      "user defined");
     final String nullable = negate(columnDataType.isNullable(), "nullable");
+
     final String autoIncrementable = negate(columnDataType
       .isAutoIncrementable(), "auto-incrementable");
+
     String definedWith = "defined with ";
     if (columnDataType.getCreateParameters() == null)
     {
@@ -501,14 +488,39 @@ final class SchemaTextFormatter
     {
       definedWith = definedWith + columnDataType.getCreateParameters();
     }
-    formattingHelper.writeNameRow(typeName, "[data type]");
-    formattingHelper.writeDetailRow("", "based on", baseTypeName);
-    formattingHelper.writeDescriptionRow(userDefined);
+    formattingHelper.writeNameRow(typeName, dataType);
     formattingHelper.writeDescriptionRow(definedWith);
     formattingHelper.writeDescriptionRow(nullable);
     formattingHelper.writeDescriptionRow(autoIncrementable);
     formattingHelper
       .writeDescriptionRow(columnDataType.getSearchable().toString());
+    if (isUserDefined)
+    {
+      final String baseTypeName;
+      final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
+      if (baseColumnDataType == null)
+      {
+        baseTypeName = "";
+      }
+      else
+      {
+        if (options.isShowUnqualifiedNames())
+        {
+          baseTypeName = baseColumnDataType.getName();
+        }
+        else
+        {
+          baseTypeName = baseColumnDataType.getFullName();
+        }
+      }
+      formattingHelper.writeDetailRow("", "based on", baseTypeName);
+
+      final String remarks = columnDataType.getRemarks();
+      if (!isBlank(remarks))
+      {
+        formattingHelper.writeDetailRow("", "remarks", remarks);
+      }
+    }
   }
 
   private void printColumnReferences(final boolean isForeignKey,
