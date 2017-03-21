@@ -11,7 +11,6 @@ such as [Apache Maven], [Gradle], and Ivy.
 
 ### SchemaCrawler Docker Image
 The official [SchemaCrawler Docker image] is available on Docker Hub.
-The [Dockerfile is on GitHub](https://github.com/sualeh/SchemaCrawler-Docker).
 
 ## FAQs
 Before downloading SchemaCrawler, be sure to read the [FAQs] and take a look at the [resources].
@@ -56,8 +55,8 @@ SchemaCrawler gets installed in `/opt/schemacrawler`.
 You can run SchemaCrawler using the `schemacrawler` command, which will be on the PATH.
 
 ## SchemaCrawler Docker Image
-The official [SchemaCrawler Docker image](https://hub.docker.com/r/sualeh/schemacrawler/) is available on Docker Hub, 
-and using this will reduce some of your installation steps.
+You can use the official [SchemaCrawler Docker image] from Docker Hub to reduce some of your installation steps.
+It comes with [Graphviz] pre-installed, so you can generate diagrams.
 
 ## Tweaking Your Installation
 
