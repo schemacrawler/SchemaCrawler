@@ -24,10 +24,6 @@ Michèle Barré <Michele.Barre at GMail> and  Adrien Sales <Adrien.Sales at GMai
 
 ## Installation Packages
 
-## SchemaCrawler Docker image
-The official [SchemaCrawler Docker image](https://hub.docker.com/r/sualeh/schemacrawler/) is avaialble on Docker Hub.
-The [Dockerfile is on GitHub](https://github.com/sualeh/SchemaCrawler-Docker).
-
 ### Debian SchemaCrawler package
 The [Debian SchemaCrawler package](http://github.com/adriens/schemacrawler-deb) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
