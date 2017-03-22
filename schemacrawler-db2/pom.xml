@@ -12,12 +12,6 @@
   <artifactId>schemacrawler-db2</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler for IBM DB2</name>
-  <licenses>
-    <license>
-      <name>GNU General Public License</name>
-      <url>http://www.gnu.org/copyleft/gpl.html</url>
-    </license>
-  </licenses>
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
