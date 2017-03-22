@@ -41,10 +41,10 @@
   <organization>
     <name>Sualeh Fatehi</name>
   </organization>
-	<scm>
-	  <url>https://github.com/sualeh/SchemaCrawler</url>
-	  <connection>scm:git:git://github.com/sualeh/SchemaCrawler.git</connection>
-	</scm>
+  <scm>
+    <url>https://github.com/sualeh/SchemaCrawler</url>
+    <connection>scm:git:git://github.com/sualeh/SchemaCrawler.git</connection>
+  </scm>
   <distributionManagement>
     <snapshotRepository>
       <id>sonatype-nexus-snapshots</id>
@@ -58,9 +58,9 @@
     </repository>
   </distributionManagement>
   <modules>
-		
+
     <module>schemacrawler-testdb</module>
-		
+
     <module>schemacrawler-api</module>
     <module>schemacrawler-tools</module>
     <module>schemacrawler-commandline</module>
@@ -69,7 +69,7 @@
 
     <module>schemacrawler-lint</module>
 
-    <module>schemacrawler-examplecode</module>		
+    <module>schemacrawler-examplecode</module>
     <module>schemacrawler-dbtest</module>
 
     <module>schemacrawler-db2</module>
@@ -81,7 +81,7 @@
     <module>schemacrawler-sqlserver</module>
     <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-offline</module>
-		
+
   </modules>
   <profiles>
     <profile>
@@ -102,7 +102,7 @@
         <module>schemacrawler-docs</module>
         <module>schemacrawler-site</module>
         <module>schemacrawler-distrib</module>
-				<module>schemacrawler-docker</module>
+        <module>schemacrawler-docker</module>
       </modules>
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
@@ -212,33 +212,57 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>2.6.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
+          <version>3.0.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>2.7</version>
+          <version>3.0.2</version>
+        </plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+				</plugin>				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.6.1</version>
+				</plugin>	
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+				</plugin>				
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>3.0.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.4</version>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.4</version>
+        </plugin>	
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>				
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.6</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
-        </plugin>
+        </plugin>	
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.6</version>
-        </plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.6</version>
+        </plugin>				
       </plugins>
     </pluginManagement>
     <plugins>
@@ -246,7 +270,6 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
         <configuration>
           <compilerArguments>
             <profile>compact2</profile>
@@ -263,7 +286,6 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-        <version>2.4</version>
         <executions>
           <execution>
             <goals>
@@ -276,13 +298,11 @@
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18.1</version>
       </plugin>
       <plugin>
         <inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.3</version>
         <executions>
           <execution>
             <id>attach-javadocs</id>
@@ -294,16 +314,16 @@
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
               <additionalparam>-Xdoclint:html,syntax,reference,missing</additionalparam>
-              <bottom>Copyright © 2000-2015 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2017 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
+				<inherited>true</inherited>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>1.6</version>
         <configuration>
           <useAgent>true</useAgent>
           <skip>${skip.signing.artifacts}</skip>

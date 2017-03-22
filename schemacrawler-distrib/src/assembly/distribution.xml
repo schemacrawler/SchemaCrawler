@@ -62,13 +62,22 @@
         <attribute name="Version" value="${SchemaCrawler.version}" />
         <attribute name="Author" value="Sualeh Fatehi sualeh@hotmail.com" />
         <attribute name="Copyright" value="Copyright (c) 2000-2017, Sualeh Fatehi" />
+      	<attribute name="Website" value="http://www.SchemaCrawler.com" />
         <attribute name="Main-Class" value="schemacrawler.Main" />
         <section name="schemacrawler/crawl/">
           <attribute name="Sealed" value="true"/>
         </section>
       </manifest>
     </jar>
-
+  	
+    <zip destfile="${schemacrawler.distribution.jar}.work">
+      <zipfileset src="${schemacrawler.distribution.jar}">
+        <exclude name="META-INF/maven/" />
+      </zipfileset>
+    </zip>  	
+    <move file="${schemacrawler.distribution.jar}.work"
+          tofile="${schemacrawler.distribution.jar}" />
+  	
     <taskdef
     resource="aQute/bnd/ant/taskdef.properties"
     classpath="bnd-1.50.0.jar"/>

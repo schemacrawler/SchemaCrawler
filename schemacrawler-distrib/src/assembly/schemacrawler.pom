@@ -3,36 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>us.fatehi</groupId>
+  <parent>
+    <artifactId>schemacrawler-parent</artifactId>
+    <groupId>us.fatehi</groupId>
+    <version>14.14.04</version>
+  </parent>	
   <artifactId>schemacrawler</artifactId>
   <packaging>jar</packaging>
-  <version>14.14.04</version>
   <name>SchemaCrawler</name>
-  <description>SchemaCrawler is an open-source Java API that makes working with database metadata as easy as working with plain old Java objects.  SchemaCrawler is also a database schema discovery and comprehension, and schema documentation tool. You can search for database schema objects using regular expressions, and output the schema and data in a readable text format. The output is designed to be diff-ed against other database schemas.</description>
-  <url>http://www.schemacrawler.com</url>
-  <inceptionYear>2003</inceptionYear>
-  <licenses>
-    <license>
-      <name>GNU Lesser General Public License</name>
-      <url>http://www.gnu.org/copyleft/lesser.txt</url>
-    </license>
-  </licenses>
-  <scm>
-    <url>https://github.com/sualeh/SchemaCrawler.git</url>
-  </scm>
-  <developers>
-    <developer>
-      <name>Sualeh Fatehi</name>
-      <id>sfatehi</id>
-      <email>sualeh@hotmail.com</email>
-      <organization>Sualeh Fatehi</organization>
-      <roles>
-        <role>All</role>
-      </roles>
-      <timezone>-5</timezone>
-    </developer>
-  </developers>
-  <organization>
-    <name>Sualeh Fatehi</name>
-  </organization>
 </project>
