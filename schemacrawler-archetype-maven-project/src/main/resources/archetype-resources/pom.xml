@@ -26,7 +26,7 @@
   </dependencies>  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <schemacrawler.version>14.14.04</schemacrawler.version>
+    <schemacrawler.version>14.15.01</schemacrawler.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
   <build>

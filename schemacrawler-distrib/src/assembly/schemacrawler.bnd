@@ -1,5 +1,5 @@
 Bundle-ManifestVersion=1
-version=14.14.04
+version=14.15.01
 Bundle-Version=${version}
 Bundle-Name=SchemaCrawler
 Bundle-SymbolicName=us.fatehi

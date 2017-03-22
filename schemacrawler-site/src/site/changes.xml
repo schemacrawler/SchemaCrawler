@@ -5,7 +5,10 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.15.01" date="2017-03-16" description="Output">
+     <release version="14.15.01" date="2017-03-21" description="Licenses">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Fixed licenses published in jar files and on Maven Central. 
+      ]]></action>     
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Cleaner description of column data types. 
       ]]></action>                                 
