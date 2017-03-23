@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.15.02" date="2017-03-23" description="Licenses">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Clarified licensing terms. 
+      ]]></action>                                 
+     </release>   
      <release version="14.15.01" date="2017-03-21" description="Licenses">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Fixed licenses published in jar files and on Maven Central. 

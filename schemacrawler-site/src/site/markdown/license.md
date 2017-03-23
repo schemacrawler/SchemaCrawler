@@ -1,6 +1,7 @@
 # SchemaCrawler License
 
-> SchemaCrawler is free and open-source software. [Donations are appreciated.](https://www.paypal.me/sualeh)
+> SchemaCrawler is free and open-source software. 
+> [Donations are appreciated.](https://www.paypal.me/sualeh)  
 
 SchemaCrawler is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
