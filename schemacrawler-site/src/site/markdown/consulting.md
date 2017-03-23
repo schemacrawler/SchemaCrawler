@@ -1,5 +1,7 @@
 # SchemaCrawler Support and Consulting
 
+> SchemaCrawler is free and open-source software. [Donations are appreciated.](https://www.paypal.me/sualeh)
+
 There are various support channels available if you are having trouble using SchemaCrawler, 
 think you may have found a bug, or want advice with using SchemaCrawler in your project.
 
