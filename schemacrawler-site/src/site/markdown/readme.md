@@ -80,7 +80,7 @@ In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency 
   &lt;dependency&gt;
     &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
     &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
-    &lt;version&gt;14.15.01&lt;/version&gt;
+    &lt;version&gt;14.15.02&lt;/version&gt;
   &lt;/dependency&gt;
 &lt;/dependencies&gt;
 </pre></div>
@@ -90,7 +90,7 @@ In order to use SchemaCrawler in your [Gradle] projects, add a dependency to Sch
 
 <div class="source"><pre>
 dependencies {
-  compile group: 'us.fatehi', name: 'schemacrawler', version: '14.15.01'
+  compile group: 'us.fatehi', name: 'schemacrawler', version: '14.15.02'
 }
 </pre></div>
 
