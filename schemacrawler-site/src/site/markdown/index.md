@@ -1,5 +1,8 @@
 # SchemaCrawler
 
+> SchemaCrawler is free and open-source software. 
+> [Donations are appreciated.](https://www.paypal.me/sualeh)  
+
 SchemaCrawler is a free database schema discovery and comprehension tool.
 SchemaCrawler has a good mix of useful features for data governance. You can
 [search for database schema objects](schemacrawler_grep.html) using regular
