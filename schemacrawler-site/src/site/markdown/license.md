@@ -19,8 +19,8 @@ of these licenses, as long as you have downloaded SchemaCrawler that is not bund
  [GNU Lesser General Public License v3](http://www.gnu.org/licenses/lgpl-3.0.en.html).
 
 In order to download and use SchemaCrawler under one of the licenses above, you should
-have obtained the SchemaCrawler jar files from 
-[Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler), 
+have obtained the SchemaCrawler jar files from the 
+[The Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler), 
 or built them yourself from the source code.
 
 ## License With JDBC Drivers

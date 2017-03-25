@@ -5,8 +5,9 @@
 ### Complete SchemaCrawler Distribution
 The complete [SchemaCrawler examples] distribution in a zip file is available on the SchemaCrawler GitHub page.
 
-### SchemaCrawler Jars from the Central Repository
-[SchemaCrawler jars] are available from the Maven Central Repository, for use with build tools
+### SchemaCrawler Jars from The Central Repository
+[SchemaCrawler jars] are available from 
+[The Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler), for use with build tools
 such as [Apache Maven], [Gradle], and Ivy.
 
 ### SchemaCrawler Docker Image
@@ -67,7 +68,7 @@ It comes with [Graphviz] pre-installed, so you can generate diagrams.
 # Using SchemaCrawler in Your Projects
 
 ## Jars from the Central Repository
-All of the [SchemaCrawler jars] are available on the Maven Central Repository. 
+All of the [SchemaCrawler jars] are available on The Central Repository. 
 They can be used as dependencies in [Gradle] or [Apache Maven] projects, or with any other
 build system that supports the Central Repository.
 
