@@ -119,41 +119,49 @@ final class TableRetriever
       results.setDescription("retrieveTables");
       while (results.next())
       {
-        // "TABLE_CAT", "TABLE_SCHEM"
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        LOGGER.log(Level.FINE,
-                   String.format("Retrieving table: %s.%s", schema, tableName));
-        final String tableTypeString = results.getString("TABLE_TYPE");
-        final String remarks = results.getString("REMARKS");
-
-        final TableType tableType = supportedTableTypes
-          .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
-        if (tableType.equals(TableType.UNKNOWN))
-        {
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Unknown table type <%s> for <%s.%s>",
-                                      tableTypeString,
-                                      schema,
-                                      tableName));
-        }
-
-        final MutableTable table;
-        if (tableType.isView())
-        {
-          table = new MutableView(schema, tableName);
-        }
-        else
-        {
-          table = new MutableTable(schema, tableName);
-        }
-        if (tableFilter.test(table))
-        {
-          table.setTableType(tableType);
-          table.setRemarks(remarks);
-
-          catalog.addTable(table);
-        }
+        createTable(results, schema, tableFilter, supportedTableTypes);
       }
+    }
+  }
+
+  private void createTable(final MetadataResultSet results,
+                           final Schema schema,
+                           final InclusionRuleFilter<Table> tableFilter,
+                           final TableTypes supportedTableTypes)
+  {
+    // "TABLE_CAT", "TABLE_SCHEM"
+    final String tableName = quotedName(results.getString("TABLE_NAME"));
+    LOGGER.log(Level.FINE,
+               String.format("Retrieving table: %s.%s", schema, tableName));
+    final String tableTypeString = results.getString("TABLE_TYPE");
+    final String remarks = results.getString("REMARKS");
+
+    final TableType tableType = supportedTableTypes
+      .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
+    if (tableType.equals(TableType.UNKNOWN))
+    {
+      LOGGER.log(Level.FINE,
+                 new StringFormat("Unknown table type <%s> for <%s.%s>",
+                                  tableTypeString,
+                                  schema,
+                                  tableName));
+    }
+
+    final MutableTable table;
+    if (tableType.isView())
+    {
+      table = new MutableView(schema, tableName);
+    }
+    else
+    {
+      table = new MutableTable(schema, tableName);
+    }
+    if (tableFilter.test(table))
+    {
+      table.setTableType(tableType);
+      table.setRemarks(remarks);
+
+      catalog.addTable(table);
     }
   }
 
