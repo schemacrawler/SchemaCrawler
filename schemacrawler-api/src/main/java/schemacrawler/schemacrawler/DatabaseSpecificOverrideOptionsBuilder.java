@@ -38,6 +38,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
+  private MetadataRetrievalStrategy tableRetrievalStrategy;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
@@ -48,6 +49,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     supportsSchemas = Optional.empty();
     supportsCatalogs = Optional.empty();
     identifierQuoteString = "";
+    tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
 
@@ -107,6 +109,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getTableRetrievalStrategy()
+  {
+    return tableRetrievalStrategy;
   }
 
   /**
@@ -186,6 +193,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     else
     {
       this.tableColumnRetrievalStrategy = tableColumnRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy tableRetrievalStrategy)
+  {
+    if (tableRetrievalStrategy == null)
+    {
+      this.tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.tableRetrievalStrategy = tableRetrievalStrategy;
     }
     return this;
   }
