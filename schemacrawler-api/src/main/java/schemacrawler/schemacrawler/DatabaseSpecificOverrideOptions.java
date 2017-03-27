@@ -42,6 +42,7 @@ public final class DatabaseSpecificOverrideOptions
 
   private final Optional<Boolean> supportsSchemas;
   private final Optional<Boolean> supportsCatalogs;
+  private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
@@ -57,6 +58,7 @@ public final class DatabaseSpecificOverrideOptions
     {
       supportsSchemas = Optional.empty();
       supportsCatalogs = Optional.empty();
+      tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
       tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
       identifierQuoteString = "";
       informationSchemaViews = new InformationSchemaViews();
@@ -65,6 +67,7 @@ public final class DatabaseSpecificOverrideOptions
     {
       supportsSchemas = builder.getSupportsSchemas();
       supportsCatalogs = builder.getSupportsCatalogs();
+      tableRetrievalStrategy = builder.getTableRetrievalStrategy();
       tableColumnRetrievalStrategy = builder.getTableColumnRetrievalStrategy();
       identifierQuoteString = builder.getIdentifierQuoteString();
       informationSchemaViews = builder.getInformationSchemaViewsBuilder()
@@ -90,6 +93,11 @@ public final class DatabaseSpecificOverrideOptions
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getTableRetrievalStrategy()
+  {
+    return tableRetrievalStrategy;
   }
 
   public boolean hasOverrideForIdentifierQuoteString()
