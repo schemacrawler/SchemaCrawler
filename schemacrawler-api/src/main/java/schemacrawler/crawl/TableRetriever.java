@@ -34,7 +34,6 @@ import static java.util.Objects.requireNonNull;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,13 +67,13 @@ final class TableRetriever
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveTables(final Schema schema,
+  void retrieveTables(final Collection<Schema> schemas,
                       final String tableNamePattern,
                       final Collection<String> tableTypes,
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    requireNonNull(schema, "No schema provided");
+    requireNonNull(schemas);
 
     final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
                                                                              false);
@@ -85,43 +84,10 @@ final class TableRetriever
       return;
     }
 
-    final Optional<Schema> schemaOptional = catalog
-      .lookupSchema(schema.getFullName());
-    if (!schemaOptional.isPresent())
-    {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Cannot locate schema, so not retrieving tables for schema: %s",
-                                  schema));
-      return;
-    }
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Retrieving tables for schema: %s", schema));
-
-    final TableTypes supportedTableTypes = getRetrieverConnection()
-      .getTableTypes();
-    final String[] filteredTableTypes = supportedTableTypes
-      .filterUnknown(tableTypes);
-    LOGGER.log(Level.FINER,
-               new StringFormat("Retrieving table types: %s",
-                                filteredTableTypes == null? "<<all>>": Arrays
-                                  .asList(filteredTableTypes)));
-
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
-
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTables(unquotedName(catalogName),
-                 unquotedName(schemaName),
-                 tableNamePattern,
-                 filteredTableTypes));)
-    {
-      results.setDescription("retrieveTables");
-      while (results.next())
-      {
-        createTable(results, schema, tableFilter, supportedTableTypes);
-      }
-    }
+    retrieveTablesFromMetadata(schemas,
+                               tableNamePattern,
+                               tableTypes,
+                               tableFilter);
   }
 
   private void createTable(final MetadataResultSet results,
@@ -162,6 +128,44 @@ final class TableRetriever
       table.setRemarks(remarks);
 
       catalog.addTable(table);
+    }
+  }
+
+  private void retrieveTablesFromMetadata(final Collection<Schema> schemas,
+                                          final String tableNamePattern,
+                                          final Collection<String> tableTypes,
+                                          final InclusionRuleFilter<Table> tableFilter)
+    throws SQLException
+  {
+    for (final Schema schema: schemas)
+    {
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Retrieving tables for schema: %s", schema));
+
+      final TableTypes supportedTableTypes = getRetrieverConnection()
+        .getTableTypes();
+      final String[] filteredTableTypes = supportedTableTypes
+        .filterUnknown(tableTypes);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Retrieving table types: %s",
+                                  filteredTableTypes == null? "<<all>>": Arrays
+                                    .asList(filteredTableTypes)));
+
+      final String catalogName = schema.getCatalogName();
+      final String schemaName = schema.getName();
+
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getTables(unquotedName(catalogName),
+                   unquotedName(schemaName),
+                   tableNamePattern,
+                   filteredTableTypes));)
+      {
+        results.setDescription("retrieveTables");
+        while (results.next())
+        {
+          createTable(results, schema, tableFilter, supportedTableTypes);
+        }
+      }
     }
   }
 
