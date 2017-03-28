@@ -31,7 +31,9 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -44,7 +46,10 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.Query;
 import schemacrawler.utility.TableTypes;
 import sf.util.StringFormat;
 
@@ -130,10 +135,10 @@ final class TableRetriever
     final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
     final String tableName = quotedName(results.getString("TABLE_NAME"));
     LOGGER.log(Level.FINE,
-               String.format("Retrieving table <%s.%s.%s>",
-                             columnCatalogName,
-                             schemaName,
-                             tableName));
+               new StringFormat("Retrieving table <%s.%s.%s>",
+                                columnCatalogName,
+                                schemaName,
+                                tableName));
     final String tableTypeString = results.getString("TABLE_TYPE");
     final String remarks = results.getString("REMARKS");
 
@@ -179,9 +184,29 @@ final class TableRetriever
                                                 final String tableNamePattern,
                                                 final Collection<String> tableTypes,
                                                 final InclusionRuleFilter<Table> tableFilter)
+    throws SchemaCrawlerSQLException, SQLException
   {
-    // TODO Auto-generated method stub
-
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasTablesSql())
+    {
+      throw new SchemaCrawlerSQLException("No tables SQL provided", null);
+    }
+    final Query tablesSql = informationSchemaViews.getTablesSql();
+    final Connection connection = getDatabaseConnection();
+    final TableTypes supportedTableTypes = getRetrieverConnection()
+      .getTableTypes();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(tablesSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrieveTablesFromDataDictionary");
+      while (results.next())
+      {
+        createTable(results, schemas, tableFilter, supportedTableTypes);
+      }
+    }
   }
 
   private void retrieveTablesFromMetadata(final NamedObjectList<SchemaReference> schemas,
