@@ -95,9 +95,13 @@ class NamedObjectList<N extends NamedObject>
   private static String makeLookupKey(final String fullName)
   {
     final String key;
-    if (isBlank(fullName))
+    if (fullName == null)
     {
       key = null;
+    }
+    else if (isBlank(fullName))
+    {
+      key = "";
     }
     else
     {

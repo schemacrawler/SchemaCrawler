@@ -34,10 +34,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -91,7 +89,7 @@ final class MutableCatalog
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
   private ImmutableCrawlInfo crawlInfo;
-  private final Set<Schema> schemas;
+  private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
   private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
@@ -105,7 +103,6 @@ final class MutableCatalog
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new ImmutableSchemaCrawlerInfo();
-    schemas = new HashSet<>();
   }
 
   /**
@@ -315,10 +312,9 @@ final class MutableCatalog
    * @see schemacrawler.schema.Catalog#lookupSchema(java.lang.String)
    */
   @Override
-  public Optional<Schema> lookupSchema(final String name)
+  public Optional<SchemaReference> lookupSchema(final String name)
   {
-    return schemas.stream().filter(schema -> schema.getFullName().equals(name))
-      .findFirst();
+    return schemas.lookup(name);
   }
 
   /**
@@ -416,7 +412,7 @@ final class MutableCatalog
     routines.add(routine);
   }
 
-  Schema addSchema(final Schema schema)
+  Schema addSchema(final SchemaReference schema)
   {
     schemas.add(schema);
     return schema;
@@ -447,14 +443,14 @@ final class MutableCatalog
     return routines;
   }
 
+  NamedObjectList<SchemaReference> getAllSchemas()
+  {
+    return schemas;
+  }
+
   NamedObjectList<MutableTable> getAllTables()
   {
     return tables;
-  }
-
-  Collection<Schema> getSchemaNames()
-  {
-    return schemas;
   }
 
   MutableColumnDataType lookupColumnDataTypeByType(final int type)

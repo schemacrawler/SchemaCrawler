@@ -49,6 +49,7 @@ import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -179,7 +180,7 @@ final class RoutineRetriever
       return;
     }
 
-    final Optional<Schema> schemaOptional = catalog
+    final Optional<SchemaReference> schemaOptional = catalog
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {
@@ -340,7 +341,7 @@ final class RoutineRetriever
       return;
     }
 
-    final Optional<Schema> schemaOptional = catalog
+    final Optional<SchemaReference> schemaOptional = catalog
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {
