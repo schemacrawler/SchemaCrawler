@@ -176,7 +176,7 @@ final class TableColumnRetriever
     final String tableName = quotedName(results.getString("TABLE_NAME"));
     final String columnName = quotedName(results.getString("COLUMN_NAME"));
     LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving column: %s.%s.%s.%s",
+               new StringFormat("Retrieving column <%s.%s.%s.%s>",
                                 columnCatalogName,
                                 schemaName,
                                 tableName,
@@ -229,7 +229,7 @@ final class TableColumnRetriever
       column.addAttributes(results.getAttributes());
 
       LOGGER.log(Level.FINER,
-                 new StringFormat("Adding %scolumn to table: %s",
+                 new StringFormat("Adding %scolumn to table <%s>",
                                   isHidden? "hidden ": "",
                                   column.getFullName()));
       if (isHidden)

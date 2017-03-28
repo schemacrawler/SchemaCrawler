@@ -33,7 +33,6 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,7 +97,7 @@ final class SequenceRetriever
       return;
     }
 
-    final Collection<Schema> schemas = catalog.getSchemaNames();
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query sequencesDefinitionSql = informationSchemaViews
       .getSequencesSql();

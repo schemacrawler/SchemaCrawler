@@ -484,7 +484,7 @@ final class DatabaseInfoRetriever
   {
     requireNonNull(schema, "No schema provided");
 
-    final Optional<Schema> schemaOptional = catalog
+    final Optional<SchemaReference> schemaOptional = catalog
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {

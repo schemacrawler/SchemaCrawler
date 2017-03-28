@@ -34,7 +34,6 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -102,7 +101,7 @@ final class SynonymRetriever
       return;
     }
 
-    final Collection<Schema> schemas = catalog.getSchemaNames();
+    final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query synonymsDefinitionSql = informationSchemaViews.getSynonymsSql();
     final Connection connection = getDatabaseConnection();
