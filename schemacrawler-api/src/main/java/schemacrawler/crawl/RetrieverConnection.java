@@ -122,6 +122,7 @@ final class RetrieverConnection
   private final DatabaseMetaData metaData;
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
+  private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
@@ -164,6 +165,8 @@ final class RetrieverConnection
            new StringFormat("Database %s schemas",
                             supportsSchemas? "supports": "does not support"));
 
+    tableRetrievalStrategy = databaseSpecificOverrideOptions
+      .getTableRetrievalStrategy();
     tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
       .getTableColumnRetrievalStrategy();
 
@@ -181,6 +184,11 @@ final class RetrieverConnection
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();
+  }
+
+  public MetadataRetrievalStrategy getTableRetrievalStrategy()
+  {
+    return tableRetrievalStrategy;
   }
 
   Connection getConnection()
