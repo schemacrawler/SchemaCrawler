@@ -418,4 +418,10 @@ final class MutableColumnDataType
     this.userDefined = userDefined;
   }
 
+  @Override
+  public String getLookupKey() {
+    // Change the lookup key so that it includes the java sql type. This allows for the same database specific type name to be mapped to multiple
+    // ColumnDataTypes. This is required for Oracle NUMBER, which can be mapped to multiple types, ranging from BIT/Boolean to BigDecimal
+    return super.getLookupKey() + "." + this.getJavaSqlType().getJavaSqlType();
+  }
 }

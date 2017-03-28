@@ -223,9 +223,10 @@ public abstract class BaseCatalogDecorator
 
   @Override
   public Optional<? extends ColumnDataType> lookupColumnDataType(final Schema schema,
+                                                                 final int sqlTypeInt,
                                                                  final String name)
   {
-    return catalog.lookupColumnDataType(schema, name);
+    return catalog.lookupColumnDataType(schema, sqlTypeInt, name);
   }
 
   @Override
@@ -263,9 +264,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public Optional<? extends ColumnDataType> lookupSystemColumnDataType(final String name)
+  public Optional<? extends ColumnDataType> lookupSystemColumnDataType(final int sqlTypeInt, final String name)
   {
-    return catalog.lookupSystemColumnDataType(name);
+    return catalog.lookupSystemColumnDataType(sqlTypeInt, name);
   }
 
   @Override

@@ -134,13 +134,16 @@ public interface Catalog
   Collection<Table> getTables(Schema schema);
 
   /**
-   * Gets the column data types defined in the schema, by name.
+   * Gets the column data types defined in the schema, by name and sql type number.
    *
    * @param name
    *        Name
+   * @param sqlTypeInt
+   *        The sql type int from the RDBMS
    * @return Column data types
    */
   Optional<? extends ColumnDataType> lookupColumnDataType(Schema schema,
+                                                          int sqlTypeInt,
                                                           String name);
 
   /**
@@ -180,13 +183,15 @@ public interface Catalog
   Optional<? extends Synonym> lookupSynonym(Schema schema, String name);
 
   /**
-   * Gets the column data types defined by the RDBMS system, by name.
+   * Gets the column data types defined by the RDBMS system, by name and sql type number.
    *
    * @param name
    *        Column data type name
+   * @param sqlTypeInt
+   *        Column data type sql type number
    * @return Column data type
    */
-  Optional<? extends ColumnDataType> lookupSystemColumnDataType(String name);
+  Optional<? extends ColumnDataType> lookupSystemColumnDataType(int sqlTypeInt, String name);
 
   /**
    * Gets a table by unqualified name.
