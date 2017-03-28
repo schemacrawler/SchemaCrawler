@@ -95,9 +95,9 @@ public final class SchemaCrawlerExecutable
     {
       if (commands.hasMultipleCommands())
       {
-        LOGGER
-          .log(Level.INFO,
-               String.format("Executing commands [%s] in sequence", commands));
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Executing commands <%s> in sequence",
+                                    commands));
         executable = new CommandDaisyChainExecutable(getCommand());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
