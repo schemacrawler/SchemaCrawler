@@ -578,13 +578,11 @@ public final class SchemaCrawler
                                                                      options);
 
       stopWatch.time("retrieveTables", () -> {
-        for (final Schema schema: retriever.getSchemas())
-        {
-          retriever.retrieveTables(schema,
-                                   options.getTableNamePattern(),
-                                   options.getTableTypes(),
-                                   options.getTableInclusionRule());
-        }
+        final Collection<Schema> schemas = retriever.getSchemas();
+        retriever.retrieveTables(schemas,
+                                 options.getTableNamePattern(),
+                                 options.getTableTypes(),
+                                 options.getTableInclusionRule());
         return null;
       });
 
