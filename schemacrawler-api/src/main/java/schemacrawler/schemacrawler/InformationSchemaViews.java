@@ -47,6 +47,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.PRIMARY_KEYS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
 import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
+import static schemacrawler.schemacrawler.InformationSchemaKey.TABLES;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_COLUMNS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
@@ -327,6 +328,16 @@ public final class InformationSchemaViews
   }
 
   /**
+   * Gets the tables SQL from the additional configuration.
+   *
+   * @return Tables SQL.
+   */
+  public Query getTablesSql()
+  {
+    return new Query(TABLES.name(), informationSchemaQueries.get(TABLES), true);
+  }
+
+  /**
    * Gets the trigger definitions SQL from the additional configuration.
    *
    * @return Trigger definitions SQL.
@@ -444,6 +455,11 @@ public final class InformationSchemaViews
   public boolean hasTableConstraintsSql()
   {
     return informationSchemaQueries.containsKey(TABLE_CONSTRAINTS);
+  }
+
+  public boolean hasTablesSql()
+  {
+    return informationSchemaQueries.containsKey(TABLES);
   }
 
   public boolean hasTriggerSql()
