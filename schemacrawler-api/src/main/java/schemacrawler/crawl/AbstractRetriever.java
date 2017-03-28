@@ -35,7 +35,6 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,6 +119,11 @@ abstract class AbstractRetriever
     return belongsToCatalog && belongsToSchema;
   }
 
+  NamedObjectList<SchemaReference> getAllSchemas()
+  {
+    return catalog.getAllSchemas();
+  }
+
   Connection getDatabaseConnection()
   {
     return retrieverConnection.getConnection();
@@ -140,17 +144,6 @@ abstract class AbstractRetriever
     return options.getSchemaInclusionRule();
   }
 
-  Collection<Schema> getSchemas()
-  {
-    return catalog.getSchemas();
-  }
-
-  void logSQLFeatureNotSupported(final StringFormat message, final Throwable e)
-  {
-    LOGGER.log(Level.WARNING, message);
-    LOGGER.log(Level.FINE, e, message);
-  }
-
   void logPossiblyUnsupportedSQLFeature(final StringFormat message,
                                         final SQLException e)
   {
@@ -167,6 +160,12 @@ abstract class AbstractRetriever
     {
       LOGGER.log(Level.WARNING, e, message);
     }
+  }
+
+  void logSQLFeatureNotSupported(final StringFormat message, final Throwable e)
+  {
+    LOGGER.log(Level.WARNING, message);
+    LOGGER.log(Level.FINE, e, message);
   }
 
   /**

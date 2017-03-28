@@ -47,6 +47,7 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -128,7 +129,7 @@ public final class SchemaCrawler
         if (infoLevel.isRetrieveUserDefinedColumnDataTypes())
         {
           LOGGER.log(Level.INFO, "Retrieving user column data types");
-          for (final Schema schema: retriever.getSchemas())
+          for (final Schema schema: retriever.getAllSchemas())
           {
             retriever.retrieveUserDefinedColumnDataTypes(schema);
           }
@@ -282,7 +283,7 @@ public final class SchemaCrawler
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
-        for (final Schema schema: retriever.getSchemas())
+        for (final Schema schema: retriever.getAllSchemas())
         {
           if (routineTypes.contains(RoutineType.procedure))
           {
@@ -398,7 +399,8 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
-      final Collection<Schema> schemas = retriever.getSchemas();
+      final NamedObjectList<SchemaReference> schemas = retriever
+        .getAllSchemas();
       if (schemas.isEmpty())
       {
         throw new SchemaCrawlerException("No matching schemas found");
@@ -578,7 +580,8 @@ public final class SchemaCrawler
                                                                      options);
 
       stopWatch.time("retrieveTables", () -> {
-        final Collection<Schema> schemas = retriever.getSchemas();
+        final NamedObjectList<SchemaReference> schemas = retriever
+          .getAllSchemas();
         retriever.retrieveTables(schemas,
                                  options.getTableNamePattern(),
                                  options.getTableTypes(),
