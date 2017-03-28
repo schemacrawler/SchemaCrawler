@@ -47,6 +47,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.StringFormat;
 
 /**
  * Evaluates a catalog and creates lints. This base class has core for
@@ -190,9 +191,9 @@ public abstract class BaseLinter
       else
       {
         LOGGER.log(Level.FINE,
-                   String.format("Excluding table %s for lint %s",
-                                 table,
-                                 getLinterId()));
+                   new StringFormat("Excluding table %s for lint %s",
+                                    table,
+                                    getLinterId()));
       }
     }
     end(connection);
