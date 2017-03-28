@@ -36,6 +36,9 @@ public class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
+  private static final String SC_RETRIEVAL_TABLES = "schemacrawler.schema.retrieval.strategy.tables";
+  private static final String SC_RETRIEVAL_TABLE_COLUMNS = "schemacrawler.schema.retrieval.strategy.tablecolumns";
+
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
@@ -80,9 +83,25 @@ public class DatabaseSpecificOverrideOptionsBuilder
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Config map)
+  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Config config)
   {
-    informationSchemaViewsBuilder.fromConfig(map);
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    }
+    else
+    {
+      configProperties = new Config(config);
+    }
+
+    informationSchemaViewsBuilder.fromConfig(configProperties);
+
+    tableRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
+    tableColumnRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
+
     return this;
   }
 
