@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.15.03" date="2017-03-28" description="Table retrieval strategies">
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Added table retrieval strategies, and exposed overrides in configuration properties. 
+      ]]></action>                                 
+     </release>  	
      <release version="14.15.02" date="2017-03-23" description="Licenses">
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Clarified licensing terms. 
