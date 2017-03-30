@@ -44,6 +44,7 @@ public final class DatabaseSpecificOverrideOptions
   private final Optional<Boolean> supportsCatalogs;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
 
@@ -54,26 +55,21 @@ public final class DatabaseSpecificOverrideOptions
 
   protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
   {
-    if (builder == null)
-    {
-      supportsSchemas = Optional.empty();
-      supportsCatalogs = Optional.empty();
-      tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-      tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-      identifierQuoteString = "";
-      informationSchemaViews = new InformationSchemaViews();
-    }
-    else
-    {
-      supportsSchemas = builder.getSupportsSchemas();
-      supportsCatalogs = builder.getSupportsCatalogs();
-      tableRetrievalStrategy = builder.getTableRetrievalStrategy();
-      tableColumnRetrievalStrategy = builder.getTableColumnRetrievalStrategy();
-      identifierQuoteString = builder.getIdentifierQuoteString();
-      informationSchemaViews = builder.getInformationSchemaViewsBuilder()
-        .toOptions();
-    }
+    final DatabaseSpecificOverrideOptionsBuilder bldr = builder == null? new DatabaseSpecificOverrideOptionsBuilder()
+                                                                       : builder;
+    supportsSchemas = bldr.getSupportsSchemas();
+    supportsCatalogs = bldr.getSupportsCatalogs();
+    tableRetrievalStrategy = bldr.getTableRetrievalStrategy();
+    tableColumnRetrievalStrategy = bldr.getTableColumnRetrievalStrategy();
+    fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
+    identifierQuoteString = bldr.getIdentifierQuoteString();
+    informationSchemaViews = bldr.getInformationSchemaViewsBuilder()
+      .toOptions();
+  }
 
+  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
   }
 
   public String getIdentifierQuoteString()
