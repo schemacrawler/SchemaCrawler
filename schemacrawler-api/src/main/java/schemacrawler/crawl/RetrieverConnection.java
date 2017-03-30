@@ -124,6 +124,7 @@ final class RetrieverConnection
   private final boolean supportsSchemas;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
@@ -169,6 +170,8 @@ final class RetrieverConnection
       .getTableRetrievalStrategy();
     tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
       .getTableColumnRetrievalStrategy();
+    fkRetrievalStrategy = databaseSpecificOverrideOptions
+      .getForeignKeyRetrievalStrategy();
 
     final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
                                                                      metaData);
@@ -184,6 +187,11 @@ final class RetrieverConnection
 
     typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();
+  }
+
+  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()

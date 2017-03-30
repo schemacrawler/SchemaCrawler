@@ -38,11 +38,13 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private static final String SC_RETRIEVAL_TABLES = "schemacrawler.schema.retrieval.strategy.tables";
   private static final String SC_RETRIEVAL_TABLE_COLUMNS = "schemacrawler.schema.retrieval.strategy.tablecolumns";
+  private static final String SC_RETRIEVAL_FOREIGN_KEYS = "schemacrawler.schema.retrieval.strategy.foreignkeys";
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private MetadataRetrievalStrategy fkRetrievalStrategy;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
@@ -54,6 +56,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     identifierQuoteString = "";
     tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder(final Config map)
@@ -101,8 +104,15 @@ public class DatabaseSpecificOverrideOptionsBuilder
       .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
     tableColumnRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
+    fkRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
 
     return this;
+  }
+
+  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
   }
 
   public String getIdentifierQuoteString()
@@ -178,6 +188,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptions toOptions()
   {
     return new DatabaseSpecificOverrideOptions(this);
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy fkRetrievalStrategy)
+  {
+    if (fkRetrievalStrategy == null)
+    {
+      this.fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.fkRetrievalStrategy = fkRetrievalStrategy;
+    }
+    return this;
   }
 
   public InformationSchemaViewsBuilder withInformationSchemaViews()
