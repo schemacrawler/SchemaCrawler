@@ -140,24 +140,36 @@ final class ForeignKeyRetriever
   }
 
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)
-    throws SchemaCrawlerSQLException
+    throws SQLException
   {
     requireNonNull(allTables);
 
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
+    final MetadataRetrievalStrategy fkRetrievalStrategy = getRetrieverConnection()
+      .getForeignKeyRetrievalStrategy();
+    switch (fkRetrievalStrategy)
+    {
+      case data_dictionary_all:
+        LOGGER
+          .log(Level.INFO,
+               "Retrieving foreign keys, using fast data dictionary retrieval");
+        retrieveForeignKeysFromDataDictionary();
+        break;
 
-    if (!informationSchemaViews.hasForeignKeysSql())
-    {
-      LOGGER.log(Level.INFO,
-                 "Retrieving foreign keys, using database metadata");
-      retrieveForeignKeysUsingDatabaseMetadata(allTables);
+      case metadata_all:
+        LOGGER.log(Level.INFO,
+                   "Retrieving foreign keys, using fast meta-data retrieval");
+        retrieveForeignKeysFromMetadataForAllTables();
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving foreign keys");
+        retrieveForeignKeysFromMetadata(allTables);
+        break;
+
+      default:
+        break;
     }
-    else
-    {
-      LOGGER.log(Level.INFO, "Retrieving foreign keys, using SQL");
-      retrieveForeignKeysUsingSql(informationSchemaViews);
-    }
+
   }
 
   private void createForeignKeys(final MetadataResultSet results,
@@ -299,54 +311,19 @@ final class ForeignKeyRetriever
     return column;
   }
 
-  private void retrieveForeignKeysUsingDatabaseMetadata(final NamedObjectList<MutableTable> allTables)
+  private void retrieveForeignKeysFromDataDictionary()
     throws SchemaCrawlerSQLException
   {
-    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-    for (final MutableTable table: allTables)
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    if (!informationSchemaViews.hasForeignKeysSql())
     {
-      if (table instanceof View)
-      {
-        continue;
-      }
-
-      final DatabaseMetaData metaData = getMetaData();
-      try (final MetadataResultSet results = new MetadataResultSet(metaData
-        .getImportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));)
-      {
-        createForeignKeys(results, foreignKeys);
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
-                                            + table, e);
-      }
-
-      // We need to get exported keys as well, since if only a single
-      // table is
-      // selected, we have not retrieved it's keys that are imported by
-      // other
-      // tables.
-      try (final MetadataResultSet results = new MetadataResultSet(metaData
-        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));)
-      {
-        createForeignKeys(results, foreignKeys);
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
-                                            + table, e);
-      }
+      LOGGER.log(Level.FINE,
+                 "Extended foreign keys SQL statement was not provided");
+      return;
     }
-  }
 
-  private void retrieveForeignKeysUsingSql(final InformationSchemaViews informationSchemaViews)
-    throws SchemaCrawlerSQLException
-  {
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
     final Query fkSql = informationSchemaViews.getForeignKeysSql();
     final Connection connection = getDatabaseConnection();
@@ -362,6 +339,78 @@ final class ForeignKeyRetriever
     {
       throw new SchemaCrawlerSQLException("Could not retrieve foreign keys from SQL:\n"
                                           + fkSql, e);
+    }
+  }
+
+  private void retrieveForeignKeysFromMetadata(final NamedObjectList<MutableTable> allTables)
+    throws SchemaCrawlerSQLException
+  {
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    for (final MutableTable table: allTables)
+    {
+      if (table instanceof View)
+      {
+        continue;
+      }
+
+      final DatabaseMetaData metaData = getMetaData();
+
+      // Get imported foreign keys
+      try (final MetadataResultSet results = new MetadataResultSet(metaData
+        .getImportedKeys(unquotedName(table.getSchema().getCatalogName()),
+                         unquotedName(table.getSchema().getName()),
+                         unquotedName(table.getName())));)
+      {
+        createForeignKeys(results, foreignKeys);
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
+                                            + table, e);
+      }
+
+      // We need to get exported keys as well, since if only a single
+      // table is selected, we have not retrieved it's keys that are
+      // imported by other tables.
+      try (final MetadataResultSet results = new MetadataResultSet(metaData
+        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
+                         unquotedName(table.getSchema().getName()),
+                         unquotedName(table.getName())));)
+      {
+        createForeignKeys(results, foreignKeys);
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
+                                            + table, e);
+      }
+    }
+  }
+
+  private void retrieveForeignKeysFromMetadataForAllTables()
+    throws SQLException
+  {
+    final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
+    final DatabaseMetaData metaData = getMetaData();
+
+    // Get imported foreign keys
+    try (final MetadataResultSet results = new MetadataResultSet(metaData
+      .getImportedKeys(null,
+                       null,
+                       "%"));)
+    {
+      createForeignKeys(results, foreignKeys);
+    }
+
+    // We need to get exported keys as well, since if only a single
+    // table is selected, we have not retrieved it's keys that are
+    // imported by other tables.
+    try (final MetadataResultSet results = new MetadataResultSet(metaData
+      .getExportedKeys(null,
+                       null,
+                       "%"));)
+    {
+      createForeignKeys(results, foreignKeys);
     }
   }
 
