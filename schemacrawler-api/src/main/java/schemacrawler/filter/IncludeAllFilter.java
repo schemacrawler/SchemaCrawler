@@ -25,23 +25,21 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.crawl;
+package schemacrawler.filter;
 
 
-import schemacrawler.filter.IncludeAllFilter;
-import schemacrawler.filter.InclusionRuleFilter;
-import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import java.util.function.Predicate;
 
-public final class SchemasReducer
-  extends BaseReducer<Schema>
+import schemacrawler.schema.NamedObject;
+
+public class IncludeAllFilter<N extends NamedObject>
+  implements Predicate<N>
 {
 
-  public SchemasReducer(final SchemaCrawlerOptions options)
+  @Override
+  public boolean test(final N namedObject)
   {
-    super(options == null? new IncludeAllFilter<>()
-                         : new InclusionRuleFilter<>(options
-                           .getSchemaInclusionRule(), true));
+    return true;
   }
 
 }

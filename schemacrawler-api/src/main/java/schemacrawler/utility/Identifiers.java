@@ -30,23 +30,21 @@ package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.containsWhitespace;
-import static sf.util.Utility.filterOutBlank;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Allows working with database object identifiers. All SQL 2003
@@ -67,17 +65,32 @@ public final class Identifiers
      */
     private static Collection<String> loadSql2003ReservedWords()
     {
-      final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
-        .getResourceAsStream("/sql2003_reserved_words.txt")));
-
       final Set<String> reservedWords = new HashSet<>();
-      reader.lines().filter(filterOutBlank).map(toUpperCase)
-        .forEach(reservedWord -> reservedWords.add(reservedWord));
+      try (
+          final BufferedReader reader = new BufferedReader(new InputStreamReader(Identifiers.class
+            .getResourceAsStream("/sql2003_reserved_words.txt")));)
+      {
+        String line;
+        while ((line = reader.readLine()) != null)
+        {
+          if (!isBlank(line))
+          {
+            reservedWords.add(line);
+          }
+        }
+      }
+      catch (final IOException e)
+      {
+        LOGGER.log(Level.WARNING,
+                   "Could not read list of SQL 2003 reserved words",
+                   e);
+      }
       if (reservedWords.isEmpty())
       {
         throw new RuntimeException("No SQL 2003 reserved words found");
       }
-      return reservedWords;
+
+      return toUpperCase(reservedWords);
     }
 
     /**
@@ -98,8 +111,23 @@ public final class Identifiers
                    e);
       }
 
-      return Stream.of(sqlKeywords.split(",")).filter(filterOutBlank)
-        .map(toUpperCase).collect(Collectors.toSet());
+      return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
+    }
+
+    private static Collection<String> toUpperCase(final Iterable<String> words)
+    {
+      final Collection<String> upperCaseWords = new HashSet<>();
+      if (words != null)
+      {
+        for (final String word: words)
+        {
+          if (!isBlank(word))
+          {
+            upperCaseWords.add(word.toUpperCase());
+          }
+        }
+      }
+      return upperCaseWords;
     }
 
     private String identifierQuoteString;
@@ -172,9 +200,6 @@ public final class Identifiers
 
   private static final Logger LOGGER = Logger
     .getLogger(Identifiers.class.getName());
-
-  private static final Function<String, String> toUpperCase = word -> word
-    .trim().toUpperCase();
 
   private static final Pattern isIdentifierPattern = Pattern
     .compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
@@ -283,8 +308,7 @@ public final class Identifiers
    */
   public boolean isReservedWord(final String word)
   {
-    return filterOutBlank.test(word)
-           && reservedWords.contains(toUpperCase.apply(word));
+    return !isBlank(word) && reservedWords.contains(word.trim().toUpperCase());
   }
 
   /**

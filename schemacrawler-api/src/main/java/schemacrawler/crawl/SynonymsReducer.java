@@ -29,6 +29,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.filter.DatabaseObjectFilter;
+import schemacrawler.filter.IncludeAllFilter;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -38,10 +39,10 @@ public final class SynonymsReducer
 
   public SynonymsReducer(final SchemaCrawlerOptions options)
   {
-    super(options == null? synonym -> true
-                         : new DatabaseObjectFilter<Synonym>(options,
-                                                             options
-                                                               .getSynonymInclusionRule()));
+    super(options == null? new IncludeAllFilter<>()
+                         : new DatabaseObjectFilter<>(options,
+                                                      options
+                                                        .getSynonymInclusionRule()));
   }
 
 }

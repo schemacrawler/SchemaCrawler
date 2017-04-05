@@ -30,7 +30,7 @@ package schemacrawler.utility;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.readResultsVector;
-import static sf.util.Utility.filterOutBlank;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -71,9 +71,14 @@ public final class TableTypes
     try (final ResultSet tableTypesResults = connection.getMetaData()
       .getTableTypes();)
     {
-      readResultsVector(tableTypesResults).stream().filter(filterOutBlank)
-        .forEach(tableTypeString -> tableTypes
-          .add(new TableType(tableTypeString)));
+      final List<String> tableTypeStrings = readResultsVector(tableTypesResults);
+      for (final String tableTypeString: tableTypeStrings)
+      {
+        if (!isBlank(tableTypeString))
+        {
+          tableTypes.add(new TableType(tableTypeString));
+        }
+      }
     }
     catch (final Exception e)
     {
@@ -128,8 +133,14 @@ public final class TableTypes
    */
   public Optional<TableType> lookupTableType(final String tableTypeString)
   {
-    return tableTypes.stream()
-      .filter(tableType -> tableType.isEqualTo(tableTypeString)).findAny();
+    for (final TableType tableType: tableTypes)
+    {
+      if (tableType.isEqualTo(tableTypeString))
+      {
+        return Optional.of(tableType);
+      }
+    }
+    return Optional.empty();
   }
 
   /**

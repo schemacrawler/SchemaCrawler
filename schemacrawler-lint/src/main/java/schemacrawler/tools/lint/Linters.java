@@ -102,6 +102,18 @@ public final class Linters
     }
   }
 
+  public final boolean exceedsThreshold()
+  {
+    for (final Linter linter: linters)
+    {
+      if (linter.exceedsThreshold())
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public LintCollector getCollector()
   {
     return collector;
@@ -150,16 +162,19 @@ public final class Linters
     Collections.sort(linters, new LinterComparator());
 
     final StringBuilder buffer = new StringBuilder(1024);
+    for (final Linter linter: linters)
+    {
+      if (linter.getLintCount() > 0)
+      {
+        buffer
+          .append(String.format("%8s%s %5d- %s%n",
+                                "[" + linter.getSeverity() + "]",
+                                linter.exceedsThreshold()? "*": " ",
+                                linter.getLintCount(),
+                                linter.getSummary()));
+      }
+    }
 
-    linters.stream().filter(linter -> linter.getLintCount() > 0)
-      .forEach(linter -> buffer.append(String.format("%8s%s %5d- %s%n",
-                                                     "[" + linter.getSeverity()
-                                                                        + "]",
-                                                     linter
-                                                       .exceedsThreshold()? "*"
-                                                                          : " ",
-                                                     linter.getLintCount(),
-                                                     linter.getSummary())));
     if (buffer.length() > 0)
     {
       buffer.insert(0, "Summary of schema lints:\n");

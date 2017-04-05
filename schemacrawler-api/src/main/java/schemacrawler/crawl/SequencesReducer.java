@@ -29,6 +29,7 @@ package schemacrawler.crawl;
 
 
 import schemacrawler.filter.DatabaseObjectFilter;
+import schemacrawler.filter.IncludeAllFilter;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -38,10 +39,10 @@ public final class SequencesReducer
 
   public SequencesReducer(final SchemaCrawlerOptions options)
   {
-    super(options == null? sequence -> true
-                         : new DatabaseObjectFilter<Sequence>(options,
-                                                              options
-                                                                .getSequenceInclusionRule()));
+    super(options == null? new IncludeAllFilter<>()
+                         : new DatabaseObjectFilter<>(options,
+                                                      options
+                                                        .getSequenceInclusionRule()));
   }
 
 }
