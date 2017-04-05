@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -53,8 +52,6 @@ import java.util.logging.Logger;
 @UtilityMarker
 public final class Utility
 {
-
-  public static final Predicate<String> filterOutBlank = word -> !isBlank(word);
 
   public static String commonPrefix(final String string1, final String string2)
   {

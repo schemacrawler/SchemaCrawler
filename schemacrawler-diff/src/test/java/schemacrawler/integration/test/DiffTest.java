@@ -39,6 +39,7 @@ import org.junit.Test;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.DiffNode.State;
+import de.danielbechler.diff.node.Visit;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -79,24 +80,28 @@ public class DiffTest
     {
       final DiffNode diff = objectDifferBuilder.build().compare(catalog1,
                                                                 catalog2);
-      diff.visit((node, visit) -> {
-        final State nodeState = node.getState();
-        final boolean print = DatabaseObject.class
-          .isAssignableFrom(node.getValueType());
+      diff.visit(new DiffNode.Visitor()
+      {
+        public void node(DiffNode node, Visit visit)
+        {
+          final State nodeState = node.getState();
+          final boolean print = DatabaseObject.class
+            .isAssignableFrom(node.getValueType());
 
-        if (print)
-        {
-          out.println(node.getPath() + " (" + nodeState + ")");
-        }
+          if (print)
+          {
+            out.println(node.getPath() + " (" + nodeState + ")");
+          }
 
-        if (Table.class.isAssignableFrom(node.getValueType())
-            && nodeState != State.CHANGED)
-        {
-          visit.dontGoDeeper();
-        }
-        if (Column.class.isAssignableFrom(node.getValueType()))
-        {
-          visit.dontGoDeeper();
+          if (Table.class.isAssignableFrom(node.getValueType())
+              && nodeState != State.CHANGED)
+          {
+            visit.dontGoDeeper();
+          }
+          if (Column.class.isAssignableFrom(node.getValueType()))
+          {
+            visit.dontGoDeeper();
+          }
         }
       });
 
