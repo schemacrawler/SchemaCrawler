@@ -971,7 +971,7 @@ final class SchemaTextFormatter
       .of(TableConstraintType.check, TableConstraintType.unique);
 
     final List<TableConstraint> constraints = new ArrayList<>();
-    for (TableConstraint constraint: constraintsCollection)
+    for (final TableConstraint constraint: constraintsCollection)
     {
       if (printableConstraints.contains(constraint.getConstraintType()))
       {

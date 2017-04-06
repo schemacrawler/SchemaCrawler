@@ -31,6 +31,7 @@ package schemacrawler.tools.analysis.associations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
@@ -53,9 +54,27 @@ public final class CatalogWithAssociations
     weakAssociations = weakAssociationsAnalyzer.analyzeTables();
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
+  }
+
   public Collection<WeakAssociationForeignKey> getWeakAssociations()
   {
     return weakAssociations;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
   }
 
 }

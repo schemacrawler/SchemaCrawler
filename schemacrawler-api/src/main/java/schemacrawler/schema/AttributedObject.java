@@ -42,10 +42,7 @@ public interface AttributedObject
    *        Attribute name.
    * @return Attribute value.
    */
-  default <T> T getAttribute(final String name)
-  {
-    return getAttribute(name, (T) null);
-  }
+  <T> T getAttribute(final String name);
 
   /**
    * Gets an attribute.
@@ -79,10 +76,7 @@ public interface AttributedObject
    *        Attribute name.
    * @return Attribute value.
    */
-  default <T> Optional<T> lookupAttribute(final String name)
-  {
-    return Optional.of(getAttribute(name));
-  }
+  <T> Optional<T> lookupAttribute(final String name);
 
   /**
    * Removes an attribute.

@@ -139,10 +139,7 @@ public interface Table
    *
    * @return True if the table has a primary key.
    */
-  default boolean hasPrimaryKey()
-  {
-    return getPrimaryKey() != null;
-  }
+  boolean hasPrimaryKey();
 
   /**
    * Gets a column by unqualified name.

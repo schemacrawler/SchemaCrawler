@@ -69,17 +69,6 @@ public interface BaseColumn<D extends DatabaseObject>
   int getSize();
 
   /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
-   */
-  @Override
-  default ColumnDataType getType()
-  {
-    return getColumnDataType();
-  }
-
-  /**
    * Gets the width of the column, if the column width is required.
    * (Column width is not significant for column types such as TIME and
    * DATE.)

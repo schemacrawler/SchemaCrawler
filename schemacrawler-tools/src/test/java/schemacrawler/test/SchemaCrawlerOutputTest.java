@@ -218,59 +218,6 @@ public class SchemaCrawlerOutputTest
   }
 
   @Test
-  public void compareShowWeakAssociationsOutput()
-    throws Exception
-  {
-    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
-
-    final List<String> failures = new ArrayList<>();
-
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
-    textOptions.setShowWeakAssociations(true);
-
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
-      final String referenceFile = "schema_standard."
-                                   + outputFormat.getFormat();
-
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
-
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
-
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions
-        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
-      schemaTextOptionsBuilder.sortTables(true);
-
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
-        .name());
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection());
-
-      failures
-        .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
-                              testOutputFile,
-                              outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
-
-  @Test
   public void compareJsonOutput()
     throws Exception
   {
@@ -533,6 +480,59 @@ public class SchemaCrawlerOutputTest
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
                                     testOutputFile,
                                     outputFormat.getFormat()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareShowWeakAssociationsOutput()
+    throws Exception
+  {
+    clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoInfo(false);
+    textOptions.setNoHeader(false);
+    textOptions.setNoFooter(false);
+    textOptions.setShowWeakAssociations(true);
+
+    for (final OutputFormat outputFormat: getOutputFormats())
+    {
+      final String referenceFile = "schema_standard."
+                                   + outputFormat.getFormat();
+
+      final Path testOutputFile = createTempFile(referenceFile,
+                                                 outputFormat.getFormat());
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            testOutputFile);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+      schemaTextOptionsBuilder.sortTables(true);
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+      executable.execute(getConnection());
+
+      failures
+        .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
+                              testOutputFile,
+                              outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {
