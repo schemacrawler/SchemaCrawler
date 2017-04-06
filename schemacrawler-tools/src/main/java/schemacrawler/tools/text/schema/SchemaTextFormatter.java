@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.ActionOrientationType;
@@ -968,20 +967,26 @@ final class SchemaTextFormatter
   private void printTableConstraints(final Collection<TableConstraint> constraintsCollection)
   {
 
-    final List<TableConstraint> constraints = constraintsCollection.stream()
-      .filter(constraint -> EnumSet
-        .of(TableConstraintType.check, TableConstraintType.unique)
-        .contains(constraint.getConstraintType()))
-      .collect(Collectors.toList());
-    Collections
-      .sort(constraints,
-            NamedObjectSort
-              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
+    final EnumSet<TableConstraintType> printableConstraints = EnumSet
+      .of(TableConstraintType.check, TableConstraintType.unique);
 
+    final List<TableConstraint> constraints = new ArrayList<>();
+    for (TableConstraint constraint: constraintsCollection)
+    {
+      if (printableConstraints.contains(constraint.getConstraintType()))
+      {
+        constraints.add(constraint);
+      }
+    }
     if (constraints.isEmpty())
     {
       return;
     }
+
+    Collections
+      .sort(constraints,
+            NamedObjectSort
+              .getNamedObjectSort(options.isAlphabeticalSortForIndexes()));
 
     formattingHelper.writeEmptyRow();
     formattingHelper.writeWideRow("Table Constraints", "section");
