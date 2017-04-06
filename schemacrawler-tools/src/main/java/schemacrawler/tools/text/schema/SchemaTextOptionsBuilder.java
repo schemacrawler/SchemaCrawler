@@ -119,12 +119,6 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public SchemaTextOptionsBuilder weakAssociations(final boolean value)
-  {
-    options.setShowWeakAssociations(value);
-    return this;
-  }
-
   public SchemaTextOptionsBuilder portableNames(final boolean value)
   {
     options.setHideConstraintNames(value);
@@ -175,6 +169,12 @@ public class SchemaTextOptionsBuilder
                            options.isAlphabeticalSortForIndexes());
 
     return config;
+  }
+
+  public SchemaTextOptionsBuilder weakAssociations(final boolean value)
+  {
+    options.setShowWeakAssociations(value);
+    return this;
   }
 
 }

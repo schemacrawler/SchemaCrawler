@@ -59,6 +59,15 @@ public class ThymeleafCommandProvider
     return ThymeleafRenderer.COMMAND;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getHelpAdditionalText()
+  {
+    return "";
+  }
+
   @Override
   public String getHelpResource()
   {

@@ -59,6 +59,15 @@ public class FreeMarkerCommandProvider
     return FreeMarkerRenderer.COMMAND;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getHelpAdditionalText()
+  {
+    return "";
+  }
+
   @Override
   public String getHelpResource()
   {

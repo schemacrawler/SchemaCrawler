@@ -34,6 +34,7 @@ import static sf.util.Utility.isBlank;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.DescribedObject;
@@ -61,9 +62,15 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.AttributedObject#getAttribute(java.lang.String,
-   *      java.lang.Object)
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
+  }
+
+  /**
+   * {@inheritDoc}
    */
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
@@ -128,6 +135,15 @@ abstract class AbstractNamedObjectWithAttributes
   public final boolean hasRemarks()
   {
     return remarks != null && !remarks.isEmpty();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
   }
 
   /**

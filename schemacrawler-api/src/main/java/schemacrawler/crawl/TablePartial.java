@@ -160,6 +160,15 @@ final class TablePartial
     throw new NotLoadedException(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final boolean hasPrimaryKey()
+  {
+    return getPrimaryKey() != null;
+  }
+
   @Override
   public Optional<Column> lookupColumn(final String name)
   {

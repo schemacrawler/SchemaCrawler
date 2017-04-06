@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -73,9 +74,27 @@ public final class LintedCatalog
     collector = linters.getCollector();
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
+  }
+
   public LintCollector getCollector()
   {
     return collector;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
   }
 
 }

@@ -75,17 +75,6 @@ public interface Index
   int getPages();
 
   /**
-   * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
-   */
-  @Override
-  default IndexType getType()
-  {
-    return getIndexType();
-  }
-
-  /**
    * If the index is unique.
    *
    * @return If the index is unique

@@ -150,18 +150,9 @@ public final class StopWatch
     start = null;
   }
 
-  public <V> V time(final String taskName, final Callable<V> callable)
-    throws Exception
-  {
-    start(taskName);
-    final V returnValue = callable.call();
-    stop();
-    return returnValue;
-  }
-
   /**
    * Allows for a deferred conversion to a string. Useful in logging.
-   * 
+   *
    * @return String supplier.
    */
   public Supplier<String> stringify()
@@ -185,6 +176,15 @@ public final class StopWatch
 
       return buffer.toString();
     };
+  }
+
+  public <V> V time(final String taskName, final Callable<V> callable)
+    throws Exception
+  {
+    start(taskName);
+    final V returnValue = callable.call();
+    stop();
+    return returnValue;
   }
 
   private double calculatePercentage(final Duration duration,

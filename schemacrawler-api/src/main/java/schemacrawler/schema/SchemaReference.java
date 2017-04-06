@@ -34,6 +34,7 @@ import static sf.util.Utility.isBlank;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public final class SchemaReference
   implements Schema
@@ -120,6 +121,15 @@ public final class SchemaReference
       return false;
     }
     return true;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
   }
 
   /**
@@ -240,6 +250,15 @@ public final class SchemaReference
   public boolean hasRemarks()
   {
     return false;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
   }
 
   /**

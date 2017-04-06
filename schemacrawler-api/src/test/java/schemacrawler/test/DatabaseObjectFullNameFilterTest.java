@@ -106,7 +106,7 @@ public class DatabaseObjectFullNameFilterTest
     final DatabaseObjectFullNameFilter<Table> filter = tableFilterBuilder
       .build();
     final Collection<Table> filteredTables = new HashSet<>();
-    for (Table table: catalog.getTables())
+    for (final Table table: catalog.getTables())
     {
       if (filter.test(table))
       {

@@ -53,6 +53,15 @@ public class ScriptCommandProvider
     return ScriptExecutable.COMMAND;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getHelpAdditionalText()
+  {
+    return "";
+  }
+
   @Override
   public String getHelpResource()
   {

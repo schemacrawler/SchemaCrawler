@@ -309,6 +309,15 @@ class MutableTable
 
   /**
    * {@inheritDoc}
+   */
+  @Override
+  public final boolean hasPrimaryKey()
+  {
+    return getPrimaryKey() != null;
+  }
+
+  /**
+   * {@inheritDoc}
    *
    * @see schemacrawler.schema.Table#lookupColumn(java.lang.String)
    */
