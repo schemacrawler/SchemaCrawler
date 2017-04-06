@@ -59,6 +59,15 @@ public class VelocityCommandProvider
     return VelocityRenderer.COMMAND;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getHelpAdditionalText()
+  {
+    return "";
+  }
+
   @Override
   public String getHelpResource()
   {

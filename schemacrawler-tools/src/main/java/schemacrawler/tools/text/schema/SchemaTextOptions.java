@@ -96,11 +96,6 @@ public class SchemaTextOptions
     return isHideTriggerNames;
   }
 
-  public boolean isShowWeakAssociations()
-  {
-    return isShowWeakAssociations;
-  }
-
   public boolean isShowOrdinalNumbers()
   {
     return isShowOrdinalNumbers;
@@ -114,6 +109,11 @@ public class SchemaTextOptions
   public boolean isShowStandardColumnTypeNames()
   {
     return isShowStandardColumnTypeNames;
+  }
+
+  public boolean isShowWeakAssociations()
+  {
+    return isShowWeakAssociations;
   }
 
   public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
@@ -166,11 +166,6 @@ public class SchemaTextOptions
     this.isHideTriggerNames = isHideTriggerNames;
   }
 
-  public void setShowWeakAssociations(final boolean isShowWeakAssociations)
-  {
-    this.isShowWeakAssociations = isShowWeakAssociations;
-  }
-
   public void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)
   {
     this.isShowOrdinalNumbers = isShowOrdinalNumbers;
@@ -184,6 +179,11 @@ public class SchemaTextOptions
   public void setShowStandardColumnTypeNames(final boolean isShowStandardColumnTypeNames)
   {
     this.isShowStandardColumnTypeNames = isShowStandardColumnTypeNames;
+  }
+
+  public void setShowWeakAssociations(final boolean isShowWeakAssociations)
+  {
+    this.isShowWeakAssociations = isShowWeakAssociations;
   }
 
 }

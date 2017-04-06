@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -105,9 +106,27 @@ public final class CatalogWithCounts
            new TablesReducer(options, new TableCountFilter(options)));
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return getAttribute(name, (T) null);
+  }
+
   public Map<Table, Long> getCounts()
   {
     return counts;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> Optional<T> lookupAttribute(final String name)
+  {
+    return Optional.of(getAttribute(name));
   }
 
 }

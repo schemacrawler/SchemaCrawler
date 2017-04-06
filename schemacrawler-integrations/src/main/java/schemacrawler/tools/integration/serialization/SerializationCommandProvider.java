@@ -59,6 +59,15 @@ public class SerializationCommandProvider
     return SerializationExecutable.COMMAND;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getHelpAdditionalText()
+  {
+    return "";
+  }
+
   @Override
   public String getHelpResource()
   {

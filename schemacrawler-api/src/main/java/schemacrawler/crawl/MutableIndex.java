@@ -174,6 +174,15 @@ class MutableIndex
     return pages;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final IndexType getType()
+  {
+    return getIndexType();
+  }
+
   @Override
   public boolean hasDefinition()
   {

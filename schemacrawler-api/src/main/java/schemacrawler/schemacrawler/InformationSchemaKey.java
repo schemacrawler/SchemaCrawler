@@ -60,21 +60,14 @@ public enum InformationSchemaKey
  TRIGGERS(INFORMATION_SCHEMA),
  VIEWS(INFORMATION_SCHEMA),;
 
-  /**
-   * @return the type
-   */
-  public InformationSchemaKeyType getType()
-  {
-    return type;
-  }
-
   private final String lookupKey;
+
   private final InformationSchemaKeyType type;
 
   private InformationSchemaKey(final InformationSchemaKeyType type)
   {
     this.type = type;
-    this.lookupKey = String.format("select.%s.%s", type.name(), name());
+    lookupKey = String.format("select.%s.%s", type.name(), name());
   }
 
   public String getLookupKey()
@@ -85,6 +78,14 @@ public enum InformationSchemaKey
   public String getResource()
   {
     return name() + ".sql";
+  }
+
+  /**
+   * @return the type
+   */
+  public InformationSchemaKeyType getType()
+  {
+    return type;
   }
 
 }

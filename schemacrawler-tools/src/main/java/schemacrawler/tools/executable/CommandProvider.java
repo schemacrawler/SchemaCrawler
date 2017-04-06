@@ -41,10 +41,7 @@ public interface CommandProvider
 
   String getCommand();
 
-  default String getHelpAdditionalText()
-  {
-    return "";
-  }
+  String getHelpAdditionalText();
 
   String getHelpResource();
 

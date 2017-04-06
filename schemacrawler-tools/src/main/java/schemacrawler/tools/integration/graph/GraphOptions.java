@@ -65,15 +65,15 @@ public class GraphOptions
     return isShowPrimaryKeyCardinality;
   }
 
-  public void setGraphvizOpts(final List<String> graphVizOpts)
+  public void setGraphvizOpts(final List<String> graphvizOpts)
   {
-    if (graphVizOpts == null)
+    if (graphvizOpts == null)
     {
       this.graphvizOpts = new ArrayList<>();
     }
     else
     {
-      this.graphvizOpts = graphVizOpts;
+      this.graphvizOpts = graphvizOpts;
     }
   }
 

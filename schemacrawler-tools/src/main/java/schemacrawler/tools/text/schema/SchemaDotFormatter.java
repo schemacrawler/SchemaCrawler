@@ -70,7 +70,6 @@ public final class SchemaDotFormatter
   implements SchemaTraversalHandler
 {
 
-  private final boolean isVerbose;
   private final boolean isBrief;
 
   /**
@@ -93,7 +92,6 @@ public final class SchemaDotFormatter
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions);
-    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
