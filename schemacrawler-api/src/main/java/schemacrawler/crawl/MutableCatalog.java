@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
@@ -125,8 +124,15 @@ final class MutableCatalog
   public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)
   {
     final FilterBySchema filter = new FilterBySchema(schema);
-    return columnDataTypes.values().stream().filter(filter)
-      .collect(Collectors.toList());
+    final Collection<ColumnDataType> columnDataTypes = new ArrayList<>();
+    for (final ColumnDataType columnDataType: this.columnDataTypes)
+    {
+      if (filter.test(columnDataType))
+      {
+        columnDataTypes.add(columnDataType);
+      }
+    }
+    return columnDataTypes;
   }
 
   @Override
@@ -143,8 +149,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getJdbcDriverInfo()
    */
   @Override
   public MutableJdbcDriverInfo getJdbcDriverInfo()
@@ -154,8 +158,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
   public Collection<Routine> getRoutines()
@@ -166,21 +168,24 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
   public Collection<Routine> getRoutines(final Schema schema)
   {
     final FilterBySchema filter = new FilterBySchema(schema);
-    return routines.values().stream().filter(filter)
-      .collect(Collectors.toList());
+    final Collection<Routine> routines = new ArrayList<>();
+    for (final Routine routine: this.routines)
+    {
+      if (filter.test(routine))
+      {
+        routines.add(routine);
+      }
+    }
+    return routines;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSchemaCrawlerInfo()
    */
   @Override
   public ImmutableSchemaCrawlerInfo getSchemaCrawlerInfo()
@@ -190,8 +195,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSchemas()
    */
   @Override
   public Collection<Schema> getSchemas()
@@ -203,8 +206,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getSequences()
    */
   @Override
   public Collection<Sequence> getSequences()
@@ -214,21 +215,24 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSequences(schemacrawler.schema.Schema)
    */
   @Override
   public Collection<Sequence> getSequences(final Schema schema)
   {
     final FilterBySchema filter = new FilterBySchema(schema);
-    return sequences.values().stream().filter(filter)
-      .collect(Collectors.toList());
+    final Collection<Sequence> sequences = new ArrayList<>();
+    for (final Sequence sequence: this.sequences)
+    {
+      if (filter.test(sequence))
+      {
+        sequences.add(sequence);
+      }
+    }
+    return sequences;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSynonyms()
    */
   @Override
   public Collection<Synonym> getSynonyms()
@@ -238,21 +242,24 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getRoutines()
    */
   @Override
   public Collection<Synonym> getSynonyms(final Schema schema)
   {
     final FilterBySchema filter = new FilterBySchema(schema);
-    return synonyms.values().stream().filter(filter)
-      .collect(Collectors.toList());
+    final Collection<Synonym> synonyms = new ArrayList<>();
+    for (final Synonym synonym: this.synonyms)
+    {
+      if (filter.test(synonym))
+      {
+        synonyms.add(synonym);
+      }
+    }
+    return synonyms;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getSystemColumnDataTypes()
@@ -262,8 +269,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getTables()
    */
   @Override
   public Collection<Table> getTables()
@@ -274,20 +279,24 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getTables()
    */
   @Override
   public Collection<Table> getTables(final Schema schema)
   {
     final FilterBySchema filter = new FilterBySchema(schema);
-    return tables.values().stream().filter(filter).collect(Collectors.toList());
+    final Collection<Table> tables = new ArrayList<>();
+    for (final Table table: this.tables)
+    {
+      if (filter.test(table))
+      {
+        tables.add(table);
+      }
+    }
+    return tables;
   }
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getColumnDataType(java.lang.String)
    */
   @Override
   public Optional<MutableColumnDataType> lookupColumnDataType(final Schema schema,
@@ -308,8 +317,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#lookupSchema(java.lang.String)
    */
   @Override
   public Optional<SchemaReference> lookupSchema(final String name)
@@ -319,9 +326,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#lookupSequence(schemacrawler.schema.Schema,
-   *      java.lang.String)
    */
   @Override
   public Optional<MutableSequence> lookupSequence(final Schema schemaRef,
@@ -332,9 +336,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#lookupSynonym(schemacrawler.schema.Schema,
-   *      java.lang.String)
    */
   @Override
   public Optional<MutableSynonym> lookupSynonym(final Schema schemaRef,
@@ -345,8 +346,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#lookupSystemColumnDataType(java.lang.String)
    */
   @Override
   public Optional<MutableColumnDataType> lookupSystemColumnDataType(final String name)
@@ -356,8 +355,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Schema#getTable(java.lang.String)
    */
   @Override
   public Optional<MutableTable> lookupTable(final Schema schemaRef,
