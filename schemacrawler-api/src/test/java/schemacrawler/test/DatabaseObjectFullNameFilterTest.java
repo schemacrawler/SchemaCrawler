@@ -32,7 +32,7 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.HashSet;
 
 import org.junit.Test;
 
@@ -103,8 +103,16 @@ public class DatabaseObjectFullNameFilterTest
 
     tableFilterBuilder.withInclusionRule(new TableNameFilter(tableName));
 
-    final Collection<Table> filteredTables = catalog.getTables().stream()
-      .filter(tableFilterBuilder.build()).collect(Collectors.toSet());
+    final DatabaseObjectFullNameFilter<Table> filter = tableFilterBuilder
+      .build();
+    final Collection<Table> filteredTables = new HashSet<>();
+    for (Table table: catalog.getTables())
+    {
+      if (filter.test(table))
+      {
+        filteredTables.add(table);
+      }
+    }
     return filteredTables;
   }
 

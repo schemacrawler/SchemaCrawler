@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.16.01" date="2017-04-10" description="Java 8 dial down">
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Organize metadata views for extensibility. Please refer to http://sualeh.github.io/SchemaCrawler/INFORMATION_SCHEMA.html
+      ]]></action>      
+      <action dev="Sualeh Fatehi" type="fix"><![CDATA[
+        Remove reliance on Java 8 features where they add an overhaead. 
+      ]]></action>                                 
+     </release>   
      <release version="14.15.04" date="2017-04-02" description="Foreign key retrieval strategies">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Added foreign key retrieval strategies, and exposed overrides in configuration properties. 

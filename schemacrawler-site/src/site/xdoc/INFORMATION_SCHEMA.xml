@@ -69,7 +69,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
                     </tbody>
                 </table>
             </subsection>
-			<subsection name="INFORMATION_SCHEMA.EXT_TABLES">
+			<subsection name="METADATA_EXTENSION.EXT_TABLES">
 				<table>
 					<thead>
 						<tr>
@@ -460,7 +460,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
                     </tbody>
                 </table>
             </subsection>			
-			<subsection name="INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
+			<subsection name="METADATA_EXTENSION.EXT_TABLE_CONSTRAINTS">
 				<table>
 					<thead>
 						<tr>
@@ -496,7 +496,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
 					</tbody>
 				</table>
 			</subsection>
-            <subsection name="INFORMATION_SCHEMA.EXT_SYNONYMS">
+            <subsection name="METADATA_EXTENSION.EXT_SYNONYMS">
                 <table>
                     <thead>
                         <tr>
@@ -540,7 +540,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
                     </tbody>
                 </table>
             </subsection>		
-            <subsection name="INFORMATION_SCHEMA.EXT_INDEXES">
+            <subsection name="METADATA_EXTENSION.EXT_INDEXES">
                 <table>
                     <thead>
                         <tr>
@@ -590,7 +590,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
 				<p>
 					If you create a query definition in the configuration properties,
 					called
-					<code>select.ADDITIONAL_TABLE_ATTRIBUTES</code>
+					<code>select.ADDITIONAL_INFO.ADDITIONAL_TABLE_ATTRIBUTES</code>
 					, they will be automatically added to the table metadata. The query
 					should return the following columns:
 				</p>
@@ -629,7 +629,7 @@ select.INFORMATION_SCHEMA.VIEWS=\
 				<p>
 					If you create a query definition in the configuration properties,
 					called
-					<code>select.ADDITIONAL_COLUMN_ATTRIBUTES</code>
+					<code>select.ADDITIONAL_INFO.ADDITIONAL_COLUMN_ATTRIBUTES</code>
 					, they will be automatically added to the column metadata. The
 					query
 					should return the following columns:
