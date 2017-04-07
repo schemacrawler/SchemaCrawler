@@ -38,15 +38,15 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class FileInputResource
   implements InputResource
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(FileInputResource.class.getName());
 
   private final Path inputFile;

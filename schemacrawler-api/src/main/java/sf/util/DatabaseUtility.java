@@ -40,7 +40,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -53,7 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public final class DatabaseUtility
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseUtility.class.getName());
 
   public static void checkConnection(final Connection connection)
@@ -164,8 +163,8 @@ public final class DatabaseUtility
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING,
-                 e,
-                 new StringFormat("Error executing SQL <%s>", sql));
+                 new StringFormat("Error executing SQL <%s>", sql),
+                 e);
       if (throwSQLException)
       {
         throw e;

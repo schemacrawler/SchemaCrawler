@@ -43,8 +43,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Allows working with database object identifiers. All SQL 2003
@@ -198,7 +199,7 @@ public final class Identifiers
 
   }
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Identifiers.class.getName());
 
   private static final Pattern isIdentifierPattern = Pattern

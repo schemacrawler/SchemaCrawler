@@ -42,18 +42,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.ProcessExecutor;
 import sf.util.FileContents;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class GraphProcessExecutor
   extends ProcessExecutor
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphProcessExecutor.class.getName());
 
   private final Path outputFile;

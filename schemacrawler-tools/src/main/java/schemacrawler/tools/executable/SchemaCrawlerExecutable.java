@@ -30,11 +30,11 @@ package schemacrawler.tools.executable;
 
 import java.sql.Connection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.operation.OperationExecutable;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -51,7 +51,7 @@ public final class SchemaCrawlerExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String command)

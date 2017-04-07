@@ -33,12 +33,12 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -51,7 +51,7 @@ public abstract class BaseStagedExecutable
   implements StagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseStagedExecutable.class.getName());
 
   protected BaseStagedExecutable(final String command)

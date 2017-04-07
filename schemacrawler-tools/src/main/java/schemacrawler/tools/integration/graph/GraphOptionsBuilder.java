@@ -34,10 +34,10 @@ import static sf.util.Utility.join;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class GraphOptionsBuilder
@@ -49,7 +49,7 @@ public class GraphOptionsBuilder
   private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOptions.class.getName());
 
   public GraphOptionsBuilder()

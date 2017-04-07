@@ -37,16 +37,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.executable.LintOptions;
+import sf.util.SchemaCrawlerLogger;
 
 public final class LintUtility
 {
 
-  public static final Logger LOGGER = Logger
+  public static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LintUtility.class.getName());
 
   public static final <E> boolean listStartsWith(final List<E> main,

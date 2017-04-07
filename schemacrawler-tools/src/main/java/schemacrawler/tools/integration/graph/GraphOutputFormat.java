@@ -29,9 +29,9 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.tools.options.OutputFormat;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public enum GraphOutputFormat
@@ -93,7 +93,7 @@ public enum GraphOutputFormat
  xlib("xlib", "Xlib canvas"),
  x11("x11", "Xlib canvas"),;
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOutputFormat.class.getName());
 
   /**

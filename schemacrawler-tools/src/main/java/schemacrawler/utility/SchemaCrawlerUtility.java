@@ -34,7 +34,6 @@ import static sf.util.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -45,6 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.UtilityMarker;
 
 /**
@@ -56,7 +56,7 @@ import sf.util.UtilityMarker;
 public final class SchemaCrawlerUtility
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerUtility.class.getName());
 
   public static Catalog getCatalog(final Connection connection,

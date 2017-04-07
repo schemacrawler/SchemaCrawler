@@ -30,19 +30,19 @@ package schemacrawler.filter;
 
 import java.util.function.Predicate;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 class RoutineGrepFilter
   implements Predicate<Routine>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RoutineGrepFilter.class.getName());
 
   private final boolean invertMatch;

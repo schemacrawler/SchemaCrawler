@@ -30,8 +30,8 @@ package schemacrawler.schema;
 
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -57,7 +57,7 @@ public enum ConditionTimingType
   */
  after("AFTER");
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConditionTimingType.class.getName());
 
   /**

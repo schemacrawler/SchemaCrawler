@@ -37,7 +37,6 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.script.Compilable;
 import javax.script.CompiledScript;
@@ -51,6 +50,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -62,7 +62,7 @@ public final class ScriptExecutable
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ScriptExecutable.class.getName());
 
   static final String COMMAND = "script";

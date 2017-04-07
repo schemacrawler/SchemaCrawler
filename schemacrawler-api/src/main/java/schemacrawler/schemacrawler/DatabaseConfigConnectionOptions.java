@@ -33,8 +33,8 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class DatabaseConfigConnectionOptions
@@ -43,7 +43,7 @@ public final class DatabaseConfigConnectionOptions
 
   private static final long serialVersionUID = -8141436553988174836L;
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseConfigConnectionOptions.class.getName());
 
   private static final String HOST = "host";

@@ -34,17 +34,17 @@ import static sf.util.DatabaseUtility.checkConnection;
 import java.sql.Connection;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 
 public final class LintedCatalog
   extends BaseCatalogDecorator
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LintedCatalog.class.getName());
 
   private static final long serialVersionUID = -3953296149824921463L;

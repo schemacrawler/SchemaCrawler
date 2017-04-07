@@ -29,10 +29,10 @@ package schemacrawler.tools.options;
 
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public enum InfoLevel
@@ -44,7 +44,7 @@ public enum InfoLevel
  detailed,
  maximum,;
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(InfoLevel.class.getName());
 
   public static InfoLevel valueOfFromString(final String infoLevelValue)

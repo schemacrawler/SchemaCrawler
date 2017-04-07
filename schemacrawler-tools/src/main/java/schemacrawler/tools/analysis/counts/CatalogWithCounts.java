@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.TablesReducer;
 import schemacrawler.schema.Catalog;
@@ -49,13 +48,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.utility.Query;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class CatalogWithCounts
   extends BaseCatalogDecorator
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CatalogWithCounts.class.getName());
 
   private static final long serialVersionUID = -3953296149824921463L;
@@ -97,8 +97,8 @@ public final class CatalogWithCounts
       {
         LOGGER
           .log(Level.WARNING,
-               e,
-               new StringFormat("Could not get count for table <%s>", table));
+               new StringFormat("Could not get count for table <%s>", table),
+               e);
       }
     }
 
