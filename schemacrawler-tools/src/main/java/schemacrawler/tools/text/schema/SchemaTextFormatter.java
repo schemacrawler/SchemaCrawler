@@ -712,6 +712,8 @@ final class SchemaTextFormatter
                                     + "unique " + indexTypeString + "index]";
         formattingHelper.writeNameRow(indexName, indexDetails);
 
+        printRemarks(index);
+
         if (!isBrief)
         {
           printTableColumns(index.getColumns(), true);
@@ -741,6 +743,7 @@ final class SchemaTextFormatter
         pkName = "";
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
+      printRemarks(primaryKey);
       printTableColumns(primaryKey.getColumns(), false);
       printDependantObjectDefinition(primaryKey);
     }

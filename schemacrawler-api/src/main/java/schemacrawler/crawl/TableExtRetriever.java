@@ -401,8 +401,10 @@ final class TableExtRetriever
         final MutableIndex index = indexOptional.get();
 
         final String definition = results.getString("INDEX_DEFINITION");
+        final String remarks = results.getString("REMARKS");
 
         index.appendDefinition(definition);
+        index.setRemarks(remarks);
 
         index.addAttributes(results.getAttributes());
       }
