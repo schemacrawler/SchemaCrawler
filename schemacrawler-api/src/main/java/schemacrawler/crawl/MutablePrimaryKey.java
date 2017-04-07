@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import schemacrawler.schema.Index;
 import schemacrawler.schema.IndexColumn;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
@@ -104,8 +103,6 @@ final class MutablePrimaryKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#isUnique()
    */
   @Override
   public final boolean isUnique()

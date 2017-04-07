@@ -106,8 +106,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getColumnDataTypes()
@@ -117,8 +115,6 @@ final class MutableCatalog
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Catalog#getSystemColumnDataTypes()
    */
   @Override
   public Collection<ColumnDataType> getColumnDataTypes(final Schema schema)

@@ -107,8 +107,6 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#writeDescriptionRow(java.lang.String)
    */
   @Override
   public void writeDescriptionRow(final String description)
@@ -129,9 +127,6 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see TextFormattingHelper#writeDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String)
    */
   @Override
   public void writeDetailRow(final String text1,
@@ -143,9 +138,6 @@ abstract class BaseTextFormattingHelper
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.text.utility.TextFormattingHelper#writeDetailRow(java.lang.String,
-   *      java.lang.String, java.lang.String, boolean, boolean, String)
    */
   @Override
   public void writeDetailRow(final String text1,

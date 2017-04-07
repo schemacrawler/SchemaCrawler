@@ -73,8 +73,6 @@ public enum ProcedureReturnType
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

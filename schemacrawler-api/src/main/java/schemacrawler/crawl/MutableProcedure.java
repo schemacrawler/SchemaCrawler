@@ -66,8 +66,6 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
-   * @see Procedure#getColumns()
    */
   @Override
   public List<ProcedureColumn> getColumns()
@@ -77,8 +75,6 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
-   * @see Procedure#getReturnType()
    */
   @Override
   public ProcedureReturnType getReturnType()
@@ -94,8 +90,6 @@ final class MutableProcedure
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Procedure#lookupColumn(java.lang.String)
    */
   @Override
   public Optional<MutableProcedureColumn> lookupColumn(final String name)

@@ -558,8 +558,6 @@ public final class SchemaCrawlerOptions
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
    */
   @Override
   public String toString()

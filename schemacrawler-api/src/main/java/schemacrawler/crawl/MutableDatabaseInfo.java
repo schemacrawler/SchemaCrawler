@@ -96,8 +96,6 @@ final class MutableDatabaseInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

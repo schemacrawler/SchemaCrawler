@@ -79,8 +79,6 @@ final class MutableForeignKeyColumnReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getKeySequence()
    */
   @Override
   public int getKeySequence()

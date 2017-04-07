@@ -55,8 +55,6 @@ final class MutableFunctionColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see FunctionColumn#getColumnType()
    */
   @Override
   public FunctionColumnType getColumnType()

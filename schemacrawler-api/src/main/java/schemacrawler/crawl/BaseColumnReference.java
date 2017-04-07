@@ -116,8 +116,6 @@ public abstract class BaseColumnReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getForeignKeyColumn()
    */
   @Override
   public Column getForeignKeyColumn()
@@ -127,8 +125,6 @@ public abstract class BaseColumnReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ForeignKeyColumnReference#getPrimaryKeyColumn()
    */
   @Override
   public Column getPrimaryKeyColumn()

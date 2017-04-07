@@ -52,8 +52,6 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   @Override
   public int compareTo(final NamedObject obj)
@@ -98,8 +96,6 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getFullName()
    */
   @Override
   public String getFullName()
@@ -115,8 +111,6 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getName()
    */
   @Override
   public final String getName()
@@ -135,8 +129,6 @@ abstract class AbstractNamedObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public final String toString()

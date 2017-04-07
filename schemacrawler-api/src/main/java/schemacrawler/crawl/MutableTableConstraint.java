@@ -32,7 +32,6 @@ package schemacrawler.crawl;
 import java.util.ArrayList;
 import java.util.List;
 
-import schemacrawler.schema.Constraint;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableConstraint;
 import schemacrawler.schema.TableConstraintColumn;
@@ -62,8 +61,6 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   *
-   * @see Constraint#getColumns()
    */
   @Override
   public List<TableConstraintColumn> getColumns()
@@ -73,8 +70,6 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Constraint#getConstraintType()
    */
   @Override
   public TableConstraintType getConstraintType()
@@ -84,8 +79,6 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Constraint#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -107,8 +100,6 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Constraint#isDeferrable()
    */
   @Override
   public boolean isDeferrable()
@@ -118,8 +109,6 @@ class MutableTableConstraint
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Constraint#isInitiallyDeferred()
    */
   @Override
   public boolean isInitiallyDeferred()

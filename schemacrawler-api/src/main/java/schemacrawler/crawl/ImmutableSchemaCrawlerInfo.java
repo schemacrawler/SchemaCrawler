@@ -74,8 +74,6 @@ final class ImmutableSchemaCrawlerInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

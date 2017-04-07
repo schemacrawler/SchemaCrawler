@@ -80,9 +80,6 @@ public enum NamedObjectSort
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.util.Comparator#compare(java.lang.Object,
-   *      java.lang.Object)
    */
   @Override
   public abstract int compare(final NamedObject namedObject1,

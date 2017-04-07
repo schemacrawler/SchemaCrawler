@@ -91,8 +91,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#getCommand()
    */
   @Override
   public final String getCommand()
@@ -102,8 +100,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#getOutputOptions()
    */
   @Override
   public final OutputOptions getOutputOptions()
@@ -113,8 +109,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#getSchemaCrawlerOptions()
    */
   @Override
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
@@ -137,8 +131,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#setOutputOptions(schemacrawler.tools.options.OutputOptions)
    */
   @Override
   public final void setOutputOptions(final OutputOptions outputOptions)
@@ -151,8 +143,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.executable.Executable#setSchemaCrawlerOptions(schemacrawler.schemacrawler.SchemaCrawlerOptions)
    */
   @Override
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -165,8 +155,6 @@ public abstract class BaseExecutable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public final String toString()

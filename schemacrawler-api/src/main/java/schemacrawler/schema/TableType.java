@@ -62,8 +62,6 @@ public final class TableType
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
    */
   @Override
   public int compareTo(final TableType other)
@@ -86,8 +84,6 @@ public final class TableType
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
   public boolean equals(final Object obj)
@@ -131,8 +127,6 @@ public final class TableType
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()
@@ -168,8 +162,6 @@ public final class TableType
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
    */
   @Override
   public String toString()

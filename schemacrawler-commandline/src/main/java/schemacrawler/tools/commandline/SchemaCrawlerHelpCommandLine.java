@@ -107,8 +107,6 @@ public final class SchemaCrawlerHelpCommandLine
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.commandline.CommandLine#execute()
    */
   @Override
   public void execute()

@@ -121,8 +121,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#getCardinality()
    */
   @Override
   public final int getCardinality()
@@ -132,8 +130,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#getColumns()
    */
   @Override
   public List<IndexColumn> getColumns()
@@ -143,8 +139,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Index#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -154,8 +148,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#getIndexType()
    */
   @Override
   public final IndexType getIndexType()
@@ -165,8 +157,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#getPages()
    */
   @Override
   public final int getPages()
@@ -191,8 +181,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see Index#isUnique()
    */
   @Override
   public boolean isUnique()
@@ -208,8 +196,6 @@ class MutableIndex
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Index#lookupColumn(java.lang.String)
    */
   @Override
   public Optional<MutableIndexColumn> lookupColumn(final String name)

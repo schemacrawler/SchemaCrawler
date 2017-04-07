@@ -64,8 +64,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#begin()
    */
   @Override
   public void begin()
@@ -78,8 +76,6 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#end()
    */
   @Override
   public void end()

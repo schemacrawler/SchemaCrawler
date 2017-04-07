@@ -73,8 +73,6 @@ public enum FunctionReturnType
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()
