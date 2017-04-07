@@ -33,8 +33,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -110,7 +108,7 @@ final class MutableCatalog
   @Override
   public Collection<ColumnDataType> getColumnDataTypes()
   {
-    return new ArrayList<>(columnDataTypes.values());
+    return new ArrayList<ColumnDataType>(columnDataTypes.values());
   }
 
   /**
@@ -158,8 +156,7 @@ final class MutableCatalog
   @Override
   public Collection<Routine> getRoutines()
   {
-    final List<MutableRoutine> values = routines.values();
-    return new ArrayList<>(values);
+    return new ArrayList<Routine>(routines.values());
   }
 
   /**
@@ -195,9 +192,7 @@ final class MutableCatalog
   @Override
   public Collection<Schema> getSchemas()
   {
-    final List<Schema> schemas = new ArrayList<>(this.schemas);
-    Collections.sort(schemas);
-    return schemas;
+    return new ArrayList<Schema>(schemas.values());
   }
 
   /**
@@ -206,7 +201,7 @@ final class MutableCatalog
   @Override
   public Collection<Sequence> getSequences()
   {
-    return new ArrayList<>(sequences.values());
+    return new ArrayList<Sequence>(sequences.values());
   }
 
   /**
@@ -233,7 +228,7 @@ final class MutableCatalog
   @Override
   public Collection<Synonym> getSynonyms()
   {
-    return new ArrayList<>(synonyms.values());
+    return new ArrayList<Synonym>(synonyms.values());
   }
 
   /**
@@ -269,8 +264,7 @@ final class MutableCatalog
   @Override
   public Collection<Table> getTables()
   {
-    final List<Table> values = new ArrayList<>(tables.values());
-    return values;
+    return new ArrayList<Table>(tables.values());
   }
 
   /**

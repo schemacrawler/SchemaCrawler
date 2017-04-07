@@ -62,7 +62,7 @@ class MutableResultsColumns
   @Override
   public List<ResultsColumn> getColumns()
   {
-    return new ArrayList<>(columns.values());
+    return new ArrayList<ResultsColumn>(columns.values());
   }
 
   /**

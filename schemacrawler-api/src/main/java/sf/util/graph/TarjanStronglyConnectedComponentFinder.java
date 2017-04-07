@@ -92,15 +92,17 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
         // Successor vertex has not yet been visited; recurse on it
         strongConnect(vertexTo, index + 1);
         vertexFrom.putAttribute("lowlink",
-                                Math.min(vertexFrom.getAttribute("lowlink"),
-                                         vertexTo.getAttribute("lowlink")));
+                                Math
+                                  .min((int) vertexFrom.getAttribute("lowlink"),
+                                       (int) vertexTo.getAttribute("lowlink")));
       }
       else if (stack.contains(vertexTo))
       {
         // Successor vertex is on stack, hence in the current SCC
         vertexFrom.putAttribute("lowlink",
-                                Math.min(vertexFrom.getAttribute("lowlink"),
-                                         vertexTo.getAttribute("index")));
+                                Math
+                                  .min((int) vertexFrom.getAttribute("lowlink"),
+                                       (int) vertexTo.getAttribute("index")));
       }
     }
 
