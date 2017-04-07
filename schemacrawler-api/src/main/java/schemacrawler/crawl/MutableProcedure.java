@@ -70,7 +70,7 @@ final class MutableProcedure
   @Override
   public List<ProcedureColumn> getColumns()
   {
-    return new ArrayList<>(columns.values());
+    return new ArrayList<ProcedureColumn>(columns.values());
   }
 
   /**

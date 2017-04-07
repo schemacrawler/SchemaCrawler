@@ -73,7 +73,7 @@ final class MutableFunction
   @Override
   public List<FunctionColumn> getColumns()
   {
-    return new ArrayList<>(columns.values());
+    return new ArrayList<FunctionColumn>(columns.values());
   }
 
   /**
