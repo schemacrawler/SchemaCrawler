@@ -85,8 +85,6 @@ public enum ProcedureColumnType
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

@@ -85,8 +85,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#begin()
    */
   @Override
   public void begin()
@@ -99,8 +97,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#end()
    */
   @Override
   public void end()
@@ -116,8 +112,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.ColumnDataType)
    */
   @Override
   public void handle(final ColumnDataType columnDataType)
@@ -189,8 +183,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(Routine)
    */
   @Override
   public void handle(final Routine routine)
@@ -219,8 +211,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Sequence)
    */
   @Override
   public void handle(final Sequence sequence)
@@ -243,8 +233,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handle(schemacrawler.schema.Synonym)
    */
   @Override
   public void handle(final Synonym synonym)
@@ -284,8 +272,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesEnd()
    */
   @Override
   public void handleColumnDataTypesEnd()
@@ -298,8 +284,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleColumnDataTypesStart()
    */
   @Override
   public void handleColumnDataTypesStart()
@@ -340,8 +324,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesEnd()
    */
   @Override
   public void handleRoutinesEnd()
@@ -352,8 +334,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleRoutinesStart()
    */
   @Override
   public void handleRoutinesStart()
@@ -366,8 +346,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSequencesEnd()
    */
   @Override
   public void handleSequencesEnd()
@@ -378,8 +356,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSequencesStart()
    */
   @Override
   public void handleSequencesStart()
@@ -392,8 +368,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsEnd()
    */
   @Override
   public void handleSynonymsEnd()
@@ -404,8 +378,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleSynonymsStart()
    */
   @Override
   public void handleSynonymsStart()
@@ -418,8 +390,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
   public void handleTablesEnd()
@@ -430,8 +400,6 @@ final class SchemaListFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override
   public void handleTablesStart()

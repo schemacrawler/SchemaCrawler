@@ -89,8 +89,6 @@ final class ImmutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverProperty#getChoices()
    */
   @Override
   public Collection<String> getChoices()
@@ -100,8 +98,6 @@ final class ImmutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverProperty#getDescription()
    */
   @Override
   public String getDescription()
@@ -127,8 +123,6 @@ final class ImmutableJdbcDriverProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverProperty#isRequired()
    */
   @Override
   public boolean isRequired()

@@ -67,8 +67,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
   public String getDefaultValue()
@@ -78,8 +76,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see Column#getPrivileges()
    */
   @Override
   public Collection<Privilege<Column>> getPrivileges()
@@ -89,8 +85,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
   public Column getReferencedColumn()
@@ -100,8 +94,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
   public boolean isAutoIncremented()
@@ -111,8 +103,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
@@ -122,8 +112,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isHidden()
    */
   @Override
   public boolean isHidden()
@@ -133,8 +121,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
   public boolean isPartOfForeignKey()
@@ -144,8 +130,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfIndex()
    */
   @Override
   public boolean isPartOfIndex()
@@ -155,8 +139,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
   public boolean isPartOfPrimaryKey()
@@ -166,8 +148,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override
   public boolean isPartOfUniqueIndex()
@@ -177,8 +157,6 @@ class MutableColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
    */
   @Override
   public Optional<MutablePrivilege<Column>> lookupPrivilege(final String name)

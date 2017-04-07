@@ -60,8 +60,6 @@ public final class SQLiteDatabaseConnector
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.databaseconnector.DatabaseSystemConnector#newDatabaseConnectionOptions(schemacrawler.schemacrawler.Config)
    */
   @Override
   public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)

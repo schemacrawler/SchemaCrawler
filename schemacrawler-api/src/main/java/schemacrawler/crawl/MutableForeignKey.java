@@ -106,8 +106,6 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see ForeignKey#getColumnReferences()
    */
   @Override
   public List<ForeignKeyColumnReference> getColumnReferences()
@@ -123,8 +121,6 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see ForeignKey#getDeferrability()
    */
   @Override
   public final ForeignKeyDeferrability getDeferrability()
@@ -134,8 +130,6 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see ForeignKey#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -145,8 +139,6 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see ForeignKey#getDeleteRule()
    */
   @Override
   public final ForeignKeyUpdateRule getDeleteRule()
@@ -156,8 +148,6 @@ final class MutableForeignKey
 
   /**
    * {@inheritDoc}
-   *
-   * @see ForeignKey#getUpdateRule()
    */
   @Override
   public final ForeignKeyUpdateRule getUpdateRule()

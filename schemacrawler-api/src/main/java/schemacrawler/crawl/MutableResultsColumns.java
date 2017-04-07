@@ -58,8 +58,6 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ResultsColumns#getColumns()
    */
   @Override
   public List<ResultsColumn> getColumns()
@@ -69,8 +67,6 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ResultsColumns#getColumnsListAsString()
    */
   @Override
   public String getColumnsListAsString()
@@ -102,8 +98,6 @@ class MutableResultsColumns
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.ResultsColumns#lookupColumn(java.lang.String)
    */
   @Override
   public Optional<MutableResultsColumn> lookupColumn(final String name)

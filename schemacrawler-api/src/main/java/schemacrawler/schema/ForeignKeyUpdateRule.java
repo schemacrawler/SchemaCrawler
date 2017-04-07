@@ -87,8 +87,6 @@ public enum ForeignKeyUpdateRule
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

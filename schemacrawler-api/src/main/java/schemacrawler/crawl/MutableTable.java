@@ -117,8 +117,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getColumns()
    */
   @Override
   public List<Column> getColumns()
@@ -128,8 +126,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.View#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -139,8 +135,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#getExportedForeignKeys()
    */
   @Override
   public Collection<ForeignKey> getExportedForeignKeys()
@@ -150,8 +144,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#getForeignKeys()
    */
   @Override
   public Collection<ForeignKey> getForeignKeys()
@@ -161,8 +153,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getColumns()
    */
   @Override
   public Collection<Column> getHiddenColumns()
@@ -178,8 +168,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getIndexes()
    */
   @Override
   public Collection<Index> getIndexes()
@@ -189,8 +177,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getPrimaryKey()
    */
   @Override
   public MutablePrimaryKey getPrimaryKey()
@@ -200,8 +186,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getPrivileges()
    */
   @Override
   public Collection<Privilege<Table>> getPrivileges()
@@ -211,8 +195,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#getRelatedTables(schemacrawler.schema.TableRelationshipType)
    */
   @Override
   public Collection<Table> getRelatedTables(final TableRelationshipType tableRelationshipType)
@@ -259,8 +241,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getTableConstraints()
    */
   @Override
   public Collection<TableConstraint> getTableConstraints()
@@ -270,8 +250,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getTableType()
    */
   @Override
   public TableType getTableType()
@@ -281,8 +259,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see Table#getTriggers()
    */
   @Override
   public Collection<Trigger> getTriggers()
@@ -292,8 +268,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
   public final TableType getType()
@@ -318,8 +292,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#lookupColumn(java.lang.String)
    */
   @Override
   public Optional<MutableColumn> lookupColumn(final String name)
@@ -334,8 +306,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#lookupForeignKey(java.lang.String)
    */
   @Override
   public Optional<MutableForeignKey> lookupForeignKey(final String name)
@@ -345,8 +315,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#lookupIndex(java.lang.String)
    */
   @Override
   public Optional<MutableIndex> lookupIndex(final String name)
@@ -356,8 +324,6 @@ class MutableTable
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Table#lookupPrivilege(java.lang.String)
    */
   @Override
   public Optional<MutablePrivilege<Table>> lookupPrivilege(final String name)

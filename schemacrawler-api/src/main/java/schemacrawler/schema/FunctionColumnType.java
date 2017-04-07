@@ -85,8 +85,6 @@ public enum FunctionColumnType
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()
