@@ -37,7 +37,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
@@ -47,13 +46,14 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
 import sf.util.DatabaseUtility;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 final class SchemaRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaRetriever.class.getName());
 
   private final boolean supportsCatalogs;

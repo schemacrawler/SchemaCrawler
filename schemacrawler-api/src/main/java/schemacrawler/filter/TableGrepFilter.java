@@ -30,20 +30,20 @@ package schemacrawler.filter;
 
 import java.util.function.Predicate;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 class TableGrepFilter
   implements Predicate<Table>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableGrepFilter.class.getName());
 
   private final boolean invertMatch;

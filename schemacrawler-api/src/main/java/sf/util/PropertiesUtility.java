@@ -43,13 +43,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.Config;
 
 public class PropertiesUtility
 {
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(PropertiesUtility.class.getName());
 
   /**
@@ -86,9 +85,9 @@ public class PropertiesUtility
     catch (final IOException e)
     {
       LOGGER.log(Level.WARNING,
-                 e,
                  new StringFormat("Cannot load properties from file <%s>",
-                                  propertiesFile));
+                                  propertiesFile),
+                 e);
       return new Properties();
     }
   }

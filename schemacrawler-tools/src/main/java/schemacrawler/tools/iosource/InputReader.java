@@ -34,13 +34,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import sf.util.SchemaCrawlerLogger;
 
 public class InputReader
   extends Reader
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(InputReader.class.getName());
 
   private final String description;

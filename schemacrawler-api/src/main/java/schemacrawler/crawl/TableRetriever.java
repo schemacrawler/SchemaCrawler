@@ -38,7 +38,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
@@ -51,6 +50,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.utility.Query;
 import schemacrawler.utility.TableTypes;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -63,7 +63,7 @@ final class TableRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableRetriever.class.getName());
 
   TableRetriever(final RetrieverConnection retrieverConnection,

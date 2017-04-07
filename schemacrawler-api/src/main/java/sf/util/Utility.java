@@ -276,11 +276,21 @@ public final class Utility
   /**
    * Sets the application-wide log level.
    *
-   * @param logLevel
+   * @param applicationLogLevel
    *        Log level to set
    */
-  public static void setApplicationLogLevel(final Level logLevel)
+  public static void applyApplicationLogLevel(final Level applicationLogLevel)
   {
+    final Level logLevel;
+    if (applicationLogLevel == null)
+    {
+      logLevel = Level.OFF;
+    }
+    else
+    {
+      logLevel = applicationLogLevel;
+    }
+
     final LogManager logManager = LogManager.getLogManager();
     final List<String> loggerNames = Collections
       .list(logManager.getLoggerNames());

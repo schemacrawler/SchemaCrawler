@@ -41,9 +41,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.TableType;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Represents a collection of tables types for a database system, as
@@ -54,7 +54,7 @@ import schemacrawler.schema.TableType;
 public final class TableTypes
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableTypes.class.getName());
 
   private final Collection<TableType> tableTypes;

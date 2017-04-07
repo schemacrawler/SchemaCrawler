@@ -49,7 +49,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
@@ -59,13 +58,14 @@ import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
 import sf.util.DatabaseUtility;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 final class DatabaseInfoRetriever
   extends AbstractRetriever
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseInfoRetriever.class.getName());
 
   private static final List<String> ignoreMethods = Arrays
@@ -257,8 +257,8 @@ final class DatabaseInfoRetriever
       catch (final IllegalAccessException | InvocationTargetException e)
       {
         LOGGER.log(Level.FINE,
-                   e.getCause(),
-                   new StringFormat("Could not execute method <%s>", method));
+                   new StringFormat("Could not execute method <%s>", method),
+                   e.getCause());
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {

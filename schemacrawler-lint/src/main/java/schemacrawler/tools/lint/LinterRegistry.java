@@ -36,9 +36,9 @@ import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -50,7 +50,7 @@ public final class LinterRegistry
   implements Iterable<String>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LinterRegistry.class.getName());
 
   private static Map<String, Class<Linter>> loadLinterRegistry()
@@ -118,9 +118,9 @@ public final class LinterRegistry
       catch (final Exception e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not instantiate linter <%s>",
-                                    linterClass.getName()));
+                                    linterClass.getName()),
+                   e);
         return null;
       }
     }

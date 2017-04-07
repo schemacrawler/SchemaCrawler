@@ -32,12 +32,12 @@ package schemacrawler.crawl;
 import static sf.util.Utility.isBlank;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -53,7 +53,7 @@ final class MutableColumnDataType
 
   private static final long serialVersionUID = 3688503281676530744L;
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawler.class.getName());
 
   private JavaSqlType javaSqlType;
@@ -360,9 +360,9 @@ final class MutableColumnDataType
       catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.FINE,
-                   e,
                    new StringFormat("Could not load mapped class <%s>",
-                                    mappedClassName));
+                                    mappedClassName),
+                   e);
         javaSqlTypeMappedClass = Object.class;
       }
     }

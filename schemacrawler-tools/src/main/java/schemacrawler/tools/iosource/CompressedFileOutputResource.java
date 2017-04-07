@@ -45,17 +45,17 @@ import java.nio.charset.Charset;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class CompressedFileOutputResource
   implements OutputResource
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CompressedFileOutputResource.class.getName());
 
   private final Path outputFile;

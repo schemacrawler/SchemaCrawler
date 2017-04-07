@@ -43,9 +43,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -59,7 +59,8 @@ public final class Config
 
   private static final long serialVersionUID = 8720699738076915453L;
 
-  private static final Logger LOGGER = Logger.getLogger(Config.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(Config.class.getName());
 
   /**
    * Loads the SchemaCrawler configuration from properties file.
@@ -223,9 +224,9 @@ public final class Config
     catch (final NumberFormatException e)
     {
       LOGGER.log(Level.FINEST,
-                 e,
                  new StringFormat("Could not parse double value for property <%s>",
-                                  propertyName));
+                                  propertyName),
+                 e);
       return defaultValue;
     }
   }
@@ -330,9 +331,9 @@ public final class Config
     catch (final NumberFormatException e)
     {
       LOGGER.log(Level.FINEST,
-                 e,
                  new StringFormat("Could not parse integer value for property <%s>",
-                                  propertyName));
+                                  propertyName),
+                 e);
       return defaultValue;
     }
   }
@@ -354,9 +355,9 @@ public final class Config
     catch (final NumberFormatException e)
     {
       LOGGER.log(Level.FINEST,
-                 e,
                  new StringFormat("Could not parse long value for property <%s>",
-                                  propertyName));
+                                  propertyName),
+                 e);
       return defaultValue;
     }
   }

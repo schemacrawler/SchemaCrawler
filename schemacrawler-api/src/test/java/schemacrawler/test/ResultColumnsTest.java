@@ -35,7 +35,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,12 +45,13 @@ import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
+import sf.util.SchemaCrawlerLogger;
 
 public class ResultColumnsTest
   extends BaseDatabaseTest
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ResultColumnsTest.class.getName());
 
   @Rule

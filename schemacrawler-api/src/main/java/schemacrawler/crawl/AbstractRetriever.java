@@ -37,7 +37,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JavaSqlType;
@@ -46,6 +45,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TypeMap;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -58,7 +58,7 @@ abstract class AbstractRetriever
   implements Retriever
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(AbstractRetriever.class.getName());
 
   private final RetrieverConnection retrieverConnection;
@@ -158,14 +158,14 @@ abstract class AbstractRetriever
     }
     else
     {
-      LOGGER.log(Level.WARNING, e, message);
+      LOGGER.log(Level.WARNING, message, e);
     }
   }
 
   void logSQLFeatureNotSupported(final StringFormat message, final Throwable e)
   {
     LOGGER.log(Level.WARNING, message);
-    LOGGER.log(Level.FINE, e, message);
+    LOGGER.log(Level.FINE, message, e);
   }
 
   /**

@@ -37,7 +37,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
@@ -46,6 +45,7 @@ import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -56,7 +56,7 @@ import sf.util.StringFormat;
 final class RetrieverConnection
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RetrieverConnection.class.getName());
 
   private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,

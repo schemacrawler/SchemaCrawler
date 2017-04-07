@@ -38,17 +38,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class Linters
   implements Iterable<Linter>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Linters.class.getName());
 
   private final List<Linter> linters = new ArrayList<>();

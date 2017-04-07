@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -46,6 +45,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseStagedExecutable;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -57,7 +57,7 @@ public final class FreeMarkerRenderer
   extends BaseStagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(FreeMarkerRenderer.class.getName());
   static final String COMMAND = "freemarker";
 

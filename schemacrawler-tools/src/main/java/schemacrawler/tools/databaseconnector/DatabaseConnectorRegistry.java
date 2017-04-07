@@ -45,10 +45,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -61,7 +61,7 @@ public final class DatabaseConnectorRegistry
   implements Iterable<String>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseConnectorRegistry.class.getName());
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
@@ -93,10 +93,10 @@ public final class DatabaseConnectorRegistry
         catch (final Exception e)
         {
           LOGGER.log(Level.CONFIG,
-                     e,
                      new StringFormat("Could not load database connector, %s=%s",
                                       databaseSystemIdentifier,
-                                      databaseConnector.getClass().getName()));
+                                      databaseConnector.getClass().getName()),
+                     e);
         }
       }
     }

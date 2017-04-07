@@ -37,13 +37,12 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class RegularExpressionColorMap
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RegularExpressionColorMap.class.getName());
 
   private final Map<Pattern, Color> colorMap;
@@ -120,10 +119,10 @@ public class RegularExpressionColorMap
     catch (final Exception e)
     {
       LOGGER.log(Level.CONFIG,
-                 e,
                  new StringFormat("Could not add color mapping for %s = %s",
                                   regExpPattern,
-                                  htmlColor));
+                                  htmlColor),
+                 e);
     }
   }
 
@@ -142,10 +141,10 @@ public class RegularExpressionColorMap
     catch (final Exception e)
     {
       LOGGER.log(Level.CONFIG,
-                 e,
                  new StringFormat("Could not add literal color mapping for %s = %s",
                                   literal,
-                                  color));
+                                  color),
+                 e);
     }
   }
 

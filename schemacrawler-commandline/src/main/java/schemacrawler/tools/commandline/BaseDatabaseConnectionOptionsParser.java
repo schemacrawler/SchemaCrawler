@@ -31,11 +31,11 @@ package schemacrawler.tools.commandline;
 
 import java.io.Console;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Options for the command-line.
@@ -46,7 +46,7 @@ abstract class BaseDatabaseConnectionOptionsParser
   extends BaseConfigOptionsParser
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseDatabaseConnectionOptionsParser.class.getName());
 
   private static final String USER = "user";
