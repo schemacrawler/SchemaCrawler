@@ -124,6 +124,7 @@ final class RetrieverConnection
   private final boolean supportsSchemas;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy pkRetrievalStrategy;
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final Identifiers identifiers;
@@ -171,6 +172,8 @@ final class RetrieverConnection
       .getTableRetrievalStrategy();
     tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
       .getTableColumnRetrievalStrategy();
+    pkRetrievalStrategy = databaseSpecificOverrideOptions
+      .getPrimaryKeyRetrievalStrategy();
     indexRetrievalStrategy = databaseSpecificOverrideOptions
       .getIndexRetrievalStrategy();
     fkRetrievalStrategy = databaseSpecificOverrideOptions
@@ -200,6 +203,11 @@ final class RetrieverConnection
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
     return indexRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
