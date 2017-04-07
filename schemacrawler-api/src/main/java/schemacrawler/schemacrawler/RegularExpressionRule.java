@@ -44,7 +44,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class RegularExpressionRule
-  implements InclusionRule
+  implements InclusionRuleWithRegularExpression
 {
 
   private static final Logger LOGGER = Logger

@@ -50,6 +50,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InclusionRuleWithRegularExpression;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.StringFormat;
 import sf.util.UtilityMarker;
@@ -161,9 +162,12 @@ public final class QueryUtility
                                  final InclusionRule schemaInclusionRule)
   {
     final Map<String, String> properties = new HashMap<>();
-    if (schemaInclusionRule != null)
+
+    properties.put("schemas", ".*");
+    if (schemaInclusionRule != null
+        && schemaInclusionRule instanceof InclusionRuleWithRegularExpression)
     {
-      final String schemaInclusionPattern = schemaInclusionRule
+      final String schemaInclusionPattern = ((InclusionRuleWithRegularExpression) schemaInclusionRule)
         .getInclusionPattern().pattern();
       if (!isBlank(schemaInclusionPattern))
       {
