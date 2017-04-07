@@ -30,18 +30,18 @@ package schemacrawler.tools.executable;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 abstract class ExecutableCommandProvider
   implements CommandProvider
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ExecutableCommandProvider.class.getName());
 
   private final String command;

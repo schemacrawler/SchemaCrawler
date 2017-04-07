@@ -46,12 +46,12 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.utility.BinaryData;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Text formatting of data.
@@ -61,7 +61,7 @@ import schemacrawler.tools.text.utility.BinaryData;
 final class DataResultSet
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DataResultSet.class.getName());
 
   private final ResultSet rows;

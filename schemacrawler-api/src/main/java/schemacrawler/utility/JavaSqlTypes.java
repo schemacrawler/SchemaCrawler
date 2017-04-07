@@ -40,10 +40,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -55,7 +55,7 @@ public final class JavaSqlTypes
   implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(JavaSqlTypes.class.getName());
 
   private static Map<String, Integer> createJavaSqlTypesMap()
@@ -72,9 +72,9 @@ public final class JavaSqlTypes
       catch (final SecurityException | IllegalAccessException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not access java.sql.Types field <%s>",
-                                    field));
+                                    field),
+                   e);
         // continue
       }
     }

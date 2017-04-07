@@ -39,7 +39,6 @@ import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Utility methods.
@@ -50,7 +49,7 @@ import java.util.logging.Logger;
 public final class IOUtility
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(IOUtility.class.getName());
 
   /**

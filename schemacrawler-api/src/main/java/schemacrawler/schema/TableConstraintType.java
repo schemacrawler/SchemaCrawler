@@ -30,8 +30,8 @@ package schemacrawler.schema;
 
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -47,7 +47,7 @@ public enum TableConstraintType
  unique("UNIQUE"),
  check("CHECK"),;
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableConstraintType.class.getName());
 
   /**

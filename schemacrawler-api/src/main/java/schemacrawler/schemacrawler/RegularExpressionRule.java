@@ -32,9 +32,9 @@ package schemacrawler.schemacrawler;
 import static sf.util.Utility.isBlank;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -47,7 +47,7 @@ public final class RegularExpressionRule
   implements InclusionRuleWithRegularExpression
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RegularExpressionRule.class.getName());
 
   private static final long serialVersionUID = 3443758881974362293L;
@@ -201,10 +201,10 @@ public final class RegularExpressionRule
     if (LOGGER.isLoggable(Level.FINE))
     {
       final StackTraceElement caller = new Exception().getStackTrace()[1];
-      LOGGER.logp(Level.FINE,
-                  caller.getClassName(),
-                  caller.getMethodName(),
-                  actionMessage);
+      LOGGER.log(Level.FINE,
+                 caller.getClassName(),
+                 caller.getMethodName(),
+                 actionMessage);
     }
 
     return include;

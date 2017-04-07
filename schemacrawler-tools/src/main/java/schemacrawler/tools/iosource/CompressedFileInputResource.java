@@ -40,17 +40,17 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class CompressedFileInputResource
   implements InputResource
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CompressedFileInputResource.class.getName());
 
   private final Path inputFile;

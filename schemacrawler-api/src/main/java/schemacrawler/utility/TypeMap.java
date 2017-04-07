@@ -37,8 +37,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -50,7 +50,7 @@ public final class TypeMap
   implements Map<String, Class<?>>
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TypeMap.class.getName());
 
   private static Map<String, Class<?>> createDefaultTypeMap()
@@ -202,9 +202,9 @@ public final class TypeMap
       catch (final ClassNotFoundException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not obtain class mapping for data type <%s>",
-                                    typeName));
+                                    typeName),
+                   e);
         return null;
       }
     }

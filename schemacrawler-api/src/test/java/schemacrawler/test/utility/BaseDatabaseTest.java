@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static sf.util.Utility.applyApplicationLogLevel;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,7 +45,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.testdb.TestDatabase;
-import sf.util.Utility;
 
 public abstract class BaseDatabaseTest
 {
@@ -60,7 +61,7 @@ public abstract class BaseDatabaseTest
   public static void setApplicationLogLevel()
     throws Exception
   {
-    Utility.setApplicationLogLevel(Level.OFF);
+    applyApplicationLogLevel(Level.OFF);
   }
 
   @BeforeClass

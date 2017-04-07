@@ -33,28 +33,26 @@ import static sf.util.Utility.join;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+import sf.util.Utility;
 import sf.util.UtilityMarker;
 
 @UtilityMarker
 public final class CommandLineUtility
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CommandLineUtility.class.getName());
 
   /**
@@ -62,34 +60,7 @@ public final class CommandLineUtility
    */
   public static void applyApplicationLogLevel(final Level applicationLogLevel)
   {
-    final Level logLevel;
-    if (applicationLogLevel == null)
-    {
-      logLevel = Level.OFF;
-    }
-    else
-    {
-      logLevel = applicationLogLevel;
-    }
-
-    final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections
-      .list(logManager.getLoggerNames());
-    for (final String loggerName: loggerNames)
-    {
-      final Logger logger = logManager.getLogger(loggerName);
-      if (logger != null)
-      {
-        logger.setLevel(null);
-        for (final Handler handler: logger.getHandlers())
-        {
-          handler.setLevel(logLevel);
-        }
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
+    Utility.applyApplicationLogLevel(applicationLogLevel);
   }
 
   public static void logFullStackTrace(final Level level, final Throwable t)

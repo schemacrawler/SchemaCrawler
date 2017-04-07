@@ -34,7 +34,6 @@ import java.io.Writer;
 import java.sql.Connection;
 import java.util.Properties;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -49,6 +48,7 @@ import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -62,7 +62,7 @@ public final class VelocityRenderer
 
   static final String COMMAND = "velocity";
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(VelocityRenderer.class.getName());
 
   private static void setVelocityResourceLoaderProperty(final Properties p,

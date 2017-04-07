@@ -74,8 +74,8 @@ final class LintJsonFormatter
       {
         LOGGER
           .log(Level.FINER,
-               e,
-               new StringFormat("Error outputting table: %s", e.getMessage()));
+               new StringFormat("Error outputting table: %s", e.getMessage()),
+               e);
       }
     }
   }
@@ -102,8 +102,8 @@ final class LintJsonFormatter
       {
         LOGGER
           .log(Level.FINER,
-               e,
-               new StringFormat("Error outputting table: %s", e.getMessage()));
+               new StringFormat("Error outputting table: %s", e.getMessage()),
+               e);
       }
     }
   }
@@ -138,8 +138,8 @@ final class LintJsonFormatter
         {
           LOGGER
             .log(Level.FINER,
-                 e,
-                 new StringFormat("Error outputting lint: %s", e.getMessage()));
+                 new StringFormat("Error outputting lint: %s", e.getMessage()),
+                 e);
         }
       }
     }

@@ -51,11 +51,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.utility.Query;
 import sf.util.IdentifiedEnum;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -70,7 +70,7 @@ final class MetadataResultSet
   implements AutoCloseable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(MetadataResultSet.class.getName());
 
   private static final int FETCHSIZE = 20;
@@ -179,9 +179,9 @@ final class MetadataResultSet
            * database.
            */
           LOGGER.log(Level.WARNING,
-                     e,
                      new StringFormat("Could not read value for column <%s>",
-                                      columnName));
+                                      columnName),
+                     e);
         }
       }
     }
@@ -254,9 +254,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not read boolean value for column <%s>",
-                                    columnName));
+                                    columnName),
+                   e);
       }
     }
     return false;
@@ -344,9 +344,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not read integer value for column <%s>",
-                                    columnName));
+                                    columnName),
+                   e);
       }
     }
     return value;
@@ -382,9 +382,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not read long value for column <%s>",
-                                    columnName));
+                                    columnName),
+                   e);
       }
     }
     return value;
@@ -420,9 +420,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not read short value for column <%s>",
-                                    columnName));
+                                    columnName),
+                   e);
       }
     }
     return value;
@@ -456,9 +456,9 @@ final class MetadataResultSet
       catch (final SQLException e)
       {
         LOGGER.log(Level.WARNING,
-                   e,
                    new StringFormat("Could not read string value for column <%s>",
-                                    columnName));
+                                    columnName),
+                   e);
       }
     }
     return value;

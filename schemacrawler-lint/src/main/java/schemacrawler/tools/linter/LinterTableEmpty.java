@@ -33,7 +33,6 @@ import static schemacrawler.utility.QueryUtility.executeForLong;
 
 import java.sql.Connection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.filter.TableTypesFilter;
 import schemacrawler.schema.Table;
@@ -41,13 +40,14 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.utility.Query;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public class LinterTableEmpty
   extends BaseLinter
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LinterTableEmpty.class.getName());
 
   public LinterTableEmpty()
@@ -80,8 +80,8 @@ public class LinterTableEmpty
     catch (final SchemaCrawlerException e)
     {
       LOGGER.log(Level.WARNING,
-                 e,
-                 new StringFormat("Could not get count for table, ", table));
+                 new StringFormat("Could not get count for table, ", table),
+                 e);
     }
   }
 

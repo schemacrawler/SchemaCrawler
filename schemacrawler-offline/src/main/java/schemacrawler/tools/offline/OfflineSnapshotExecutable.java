@@ -38,7 +38,6 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.crawl.RoutinesReducer;
 import schemacrawler.crawl.SchemasReducer;
@@ -60,6 +59,7 @@ import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -71,7 +71,7 @@ public class OfflineSnapshotExecutable
   implements StagedExecutable
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(OfflineSnapshotExecutable.class.getName());
 
   private OutputOptions inputOptions;

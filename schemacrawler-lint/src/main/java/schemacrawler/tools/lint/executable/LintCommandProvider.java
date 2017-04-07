@@ -29,19 +29,19 @@ package schemacrawler.tools.lint.executable;
 
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
 
 public class LintCommandProvider
   implements CommandProvider
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LintCommandProvider.class.getName());
 
   @Override

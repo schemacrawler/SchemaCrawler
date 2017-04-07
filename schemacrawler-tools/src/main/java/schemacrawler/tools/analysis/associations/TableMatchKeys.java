@@ -41,18 +41,18 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.Table;
 import sf.util.Multimap;
 import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;
 
 final class TableMatchKeys
 {
 
-  private static final Logger LOGGER = Logger
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableMatchKeys.class.getName());
 
   private final List<Table> tables;

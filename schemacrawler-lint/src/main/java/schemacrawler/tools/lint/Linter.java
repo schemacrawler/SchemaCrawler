@@ -33,13 +33,13 @@ import static sf.util.IOUtility.readResourceFully;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import schemacrawler.schema.AttributedObject;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
@@ -52,7 +52,8 @@ import sf.util.StringFormat;
 public abstract class Linter
 {
 
-  private static final Logger LOGGER = Logger.getLogger(Linter.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(Linter.class.getName());
 
   private LintCollector collector;
   private LintSeverity severity;
