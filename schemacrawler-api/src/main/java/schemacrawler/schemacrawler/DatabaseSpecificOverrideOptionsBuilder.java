@@ -38,6 +38,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private static final String SC_RETRIEVAL_TABLES = "schemacrawler.schema.retrieval.strategy.tables";
   private static final String SC_RETRIEVAL_TABLE_COLUMNS = "schemacrawler.schema.retrieval.strategy.tablecolumns";
+  private static final String SC_RETRIEVAL_PRIMARY_KEYS = "schemacrawler.schema.retrieval.strategy.primarykeys";
   private static final String SC_RETRIEVAL_INDEXES = "schemacrawler.schema.retrieval.strategy.indexes";
   private static final String SC_RETRIEVAL_FOREIGN_KEYS = "schemacrawler.schema.retrieval.strategy.foreignkeys";
 
@@ -45,6 +46,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   private Optional<Boolean> supportsCatalogs;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private MetadataRetrievalStrategy pkRetrievalStrategy;
   private MetadataRetrievalStrategy indexRetrievalStrategy;
   private MetadataRetrievalStrategy fkRetrievalStrategy;
   private String identifierQuoteString;
@@ -58,6 +60,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     identifierQuoteString = "";
     tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
@@ -107,6 +110,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
       .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
     tableColumnRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
+    pkRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_PRIMARY_KEYS, pkRetrievalStrategy);
     indexRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_INDEXES, indexRetrievalStrategy);
     fkRetrievalStrategy = configProperties
@@ -133,6 +138,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
   {
     return informationSchemaViewsBuilder;
+  }
+
+  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
   }
 
   public Optional<Boolean> getSupportsCatalogs()
@@ -246,6 +256,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
   {
     supportsSchemas = Optional.empty();
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy pkRetrievalStrategy)
+  {
+    if (pkRetrievalStrategy == null)
+    {
+      this.pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.pkRetrievalStrategy = pkRetrievalStrategy;
+    }
     return this;
   }
 

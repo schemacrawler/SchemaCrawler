@@ -44,6 +44,7 @@ public final class DatabaseSpecificOverrideOptions
   private final Optional<Boolean> supportsCatalogs;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private final MetadataRetrievalStrategy pkRetrievalStrategy;
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final String identifierQuoteString;
@@ -62,6 +63,7 @@ public final class DatabaseSpecificOverrideOptions
     supportsCatalogs = bldr.getSupportsCatalogs();
     tableRetrievalStrategy = bldr.getTableRetrievalStrategy();
     tableColumnRetrievalStrategy = bldr.getTableColumnRetrievalStrategy();
+    pkRetrievalStrategy = bldr.getPrimaryKeyRetrievalStrategy();
     indexRetrievalStrategy = bldr.getIndexRetrievalStrategy();
     fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();
@@ -74,11 +76,6 @@ public final class DatabaseSpecificOverrideOptions
     return fkRetrievalStrategy;
   }
 
-  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
-  {
-    return indexRetrievalStrategy;
-  }
-
   public String getIdentifierQuoteString()
   {
     if (!hasOverrideForIdentifierQuoteString())
@@ -88,9 +85,19 @@ public final class DatabaseSpecificOverrideOptions
     return identifierQuoteString;
   }
 
+  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
+  {
+    return indexRetrievalStrategy;
+  }
+
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
+  }
+
+  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
