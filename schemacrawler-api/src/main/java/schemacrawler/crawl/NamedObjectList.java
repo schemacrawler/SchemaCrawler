@@ -166,8 +166,6 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Iterable#iterator()
    */
   @Override
   public Iterator<N> iterator()
@@ -253,8 +251,6 @@ class NamedObjectList<N extends NamedObject>
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
    */
   @Override
   public String toString()

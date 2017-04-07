@@ -95,8 +95,6 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttributes()
    */
   @Override
   public final Map<String, Object> getAttributes()
@@ -106,8 +104,6 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.DatabaseObject#getRemarks()
    */
   @Override
   public final String getRemarks()
@@ -117,8 +113,6 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.AttributedObject#hasAttribute(java.lang.String)
    */
   @Override
   public boolean hasAttribute(final String name)
@@ -128,8 +122,6 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#hasRemarks()
    */
   @Override
   public final boolean hasRemarks()
@@ -160,8 +152,6 @@ abstract class AbstractNamedObjectWithAttributes
 
   /**
    * {@inheritDoc}
-   *
-   * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
   @Override
   public final void setAttribute(final String name, final Object value)

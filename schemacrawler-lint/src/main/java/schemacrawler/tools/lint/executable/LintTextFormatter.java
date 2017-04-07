@@ -98,8 +98,6 @@ final class LintTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesEnd()
    */
   @Override
   public void handleEnd()
@@ -108,8 +106,6 @@ final class LintTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.SchemaTraversalHandler#handleTablesStart()
    */
   @Override
   public void handleStart()

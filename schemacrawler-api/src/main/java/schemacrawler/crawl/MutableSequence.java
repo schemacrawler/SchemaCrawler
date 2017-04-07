@@ -59,8 +59,6 @@ final class MutableSequence
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Sequence#getIncrement()
    */
   @Override
   public long getIncrement()
@@ -70,8 +68,6 @@ final class MutableSequence
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Sequence#getMaximumValue()
    */
   @Override
   public BigInteger getMaximumValue()
@@ -81,8 +77,6 @@ final class MutableSequence
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Sequence#getMinimumValue()
    */
   @Override
   public BigInteger getMinimumValue()
@@ -92,8 +86,6 @@ final class MutableSequence
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Sequence#isCycle()
    */
   @Override
   public boolean isCycle()

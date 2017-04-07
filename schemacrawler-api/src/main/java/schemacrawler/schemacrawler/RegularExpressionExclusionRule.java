@@ -116,8 +116,6 @@ public final class RegularExpressionExclusionRule
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schemacrawler.InclusionRule#test(java.lang.String)
    */
   @Override
   public boolean test(final String text)
@@ -127,8 +125,6 @@ public final class RegularExpressionExclusionRule
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
    */
   @Override
   public String toString()

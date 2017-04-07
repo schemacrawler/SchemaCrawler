@@ -79,8 +79,6 @@ public enum ForeignKeyDeferrability
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

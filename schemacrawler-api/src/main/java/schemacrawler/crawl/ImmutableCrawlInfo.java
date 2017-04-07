@@ -113,8 +113,6 @@ final class ImmutableCrawlInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

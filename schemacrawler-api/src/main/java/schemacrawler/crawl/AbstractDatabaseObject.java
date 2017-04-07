@@ -98,8 +98,6 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
   public boolean equals(final Object obj)
@@ -133,8 +131,6 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String getFullName()
@@ -164,8 +160,6 @@ abstract class AbstractDatabaseObject
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#hashCode()
    */
   @Override
   public int hashCode()

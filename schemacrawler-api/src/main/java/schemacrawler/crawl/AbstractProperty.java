@@ -63,8 +63,6 @@ abstract class AbstractProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
   public final boolean equals(final Object obj)
@@ -127,8 +125,6 @@ abstract class AbstractProperty
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#hashCode()
    */
   @Override
   public final int hashCode()

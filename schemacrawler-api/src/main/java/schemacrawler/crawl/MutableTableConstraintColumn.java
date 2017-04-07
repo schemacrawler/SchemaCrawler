@@ -88,8 +88,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override
   public ColumnDataType getColumnDataType()
@@ -99,8 +97,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
   public int getDecimalDigits()
@@ -110,8 +106,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
   public String getDefaultValue()
@@ -121,8 +115,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   @Override
   public int getOrdinalPosition()
@@ -132,8 +124,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
   public Collection<Privilege<Column>> getPrivileges()
@@ -143,8 +133,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
   public Column getReferencedColumn()
@@ -154,8 +142,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getSize()
    */
   @Override
   public int getSize()
@@ -165,8 +151,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TableConstraintColumn#getTableConstraint()
    */
   @Override
   public TableConstraint getTableConstraint()
@@ -176,8 +160,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TableConstraintColumn#getTableConstraintOrdinalPosition()
    */
   @Override
   public int getTableConstraintOrdinalPosition()
@@ -187,8 +169,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
   public ColumnDataType getType()
@@ -198,8 +178,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
   public String getWidth()
@@ -209,8 +187,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
   public boolean isAutoIncremented()
@@ -220,8 +196,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
@@ -231,8 +205,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isHidden()
    */
   @Override
   public boolean isHidden()
@@ -242,8 +214,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   @Override
   public boolean isNullable()
@@ -253,8 +223,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
   public boolean isPartOfForeignKey()
@@ -264,8 +232,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()()
    */
   @Override
   public boolean isPartOfIndex()
@@ -275,8 +241,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
   public boolean isPartOfPrimaryKey()
@@ -286,8 +250,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override
   public boolean isPartOfUniqueIndex()
@@ -297,8 +259,6 @@ final class MutableTableConstraintColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
    */
   @Override
   public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)

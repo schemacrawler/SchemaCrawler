@@ -134,9 +134,6 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.AttributedObject#getAttribute(java.lang.String,
-   *      java.lang.Object)
    */
   @Override
   public final <T> T getAttribute(final String name, final T defaultValue)
@@ -161,8 +158,6 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#getAttributes()
    */
   @Override
   public final Map<String, Object> getAttributes()
@@ -220,8 +215,6 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.AttributedObject#hasAttribute(java.lang.String)
    */
   @Override
   public boolean hasAttribute(final String name)
@@ -243,8 +236,6 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.NamedObjectWithAttributes#hasRemarks()
    */
   @Override
   public boolean hasRemarks()
@@ -275,8 +266,6 @@ public final class SchemaReference
 
   /**
    * {@inheritDoc}
-   *
-   * @see NamedObjectWithAttributes#setAttribute(String, Object)
    */
   @Override
   public final void setAttribute(final String name, final Object value)

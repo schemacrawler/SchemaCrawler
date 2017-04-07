@@ -90,8 +90,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getColumnDataType()
    */
   @Override
   public ColumnDataType getColumnDataType()
@@ -101,8 +99,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getDecimalDigits()
    */
   @Override
   public int getDecimalDigits()
@@ -112,8 +108,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getDefaultValue()
    */
   @Override
   public String getDefaultValue()
@@ -132,8 +126,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.IndexColumn#getIndex()
    */
   @Override
   public Index getIndex()
@@ -143,8 +135,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.IndexColumn#getIndexOrdinalPosition()
    */
   @Override
   public int getIndexOrdinalPosition()
@@ -154,8 +144,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getOrdinalPosition()
    */
   @Override
   public int getOrdinalPosition()
@@ -165,8 +153,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getPrivileges()
    */
   @Override
   public Collection<Privilege<Column>> getPrivileges()
@@ -176,8 +162,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#getReferencedColumn()
    */
   @Override
   public Column getReferencedColumn()
@@ -187,8 +171,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getSize()
    */
   @Override
   public int getSize()
@@ -198,8 +180,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.IndexColumn#getSortSequence()
    */
   @Override
   public IndexColumnSortSequence getSortSequence()
@@ -209,8 +189,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
   public ColumnDataType getType()
@@ -220,8 +198,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#getWidth()
    */
   @Override
   public String getWidth()
@@ -237,8 +213,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isAutoIncremented()
    */
   @Override
   public boolean isAutoIncremented()
@@ -248,8 +222,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isGenerated()
    */
   @Override
   public boolean isGenerated()
@@ -259,8 +231,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isHidden()
    */
   @Override
   public boolean isHidden()
@@ -270,8 +240,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.BaseColumn#isNullable()
    */
   @Override
   public boolean isNullable()
@@ -281,8 +249,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfForeignKey()
    */
   @Override
   public boolean isPartOfForeignKey()
@@ -292,8 +258,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfIndex()
    */
   @Override
   public boolean isPartOfIndex()
@@ -303,8 +267,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfPrimaryKey()
    */
   @Override
   public boolean isPartOfPrimaryKey()
@@ -314,8 +276,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#isPartOfUniqueIndex()
    */
   @Override
   public boolean isPartOfUniqueIndex()
@@ -325,8 +285,6 @@ final class MutableIndexColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.Column#lookupPrivilege(java.lang.String)
    */
   @Override
   public Optional<? extends Privilege<Column>> lookupPrivilege(final String name)

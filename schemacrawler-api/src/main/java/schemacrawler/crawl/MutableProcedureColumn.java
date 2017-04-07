@@ -55,8 +55,6 @@ final class MutableProcedureColumn
 
   /**
    * {@inheritDoc}
-   *
-   * @see ProcedureColumn#getColumnType()
    */
   @Override
   public ProcedureColumnType getColumnType()

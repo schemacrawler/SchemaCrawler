@@ -164,8 +164,6 @@ public final class RegularExpressionRule
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schemacrawler.InclusionRule#test(java.lang.String)
    */
   @Override
   public boolean test(final String text)
@@ -214,8 +212,6 @@ public final class RegularExpressionRule
 
   /**
    * {@inheritDoc}
-   *
-   * @see java.lang.Object#toString()
    */
   @Override
   public String toString()

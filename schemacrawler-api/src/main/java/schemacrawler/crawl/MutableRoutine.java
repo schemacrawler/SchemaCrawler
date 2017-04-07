@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 
 import static sf.util.Utility.isBlank;
 
-import schemacrawler.schema.Procedure;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
@@ -63,8 +62,6 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   *
-   * @see Procedure#getDefinition()
    */
   @Override
   public String getDefinition()
@@ -88,8 +85,6 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   *
-   * @see Procedure#getRoutineBodyType()
    */
   @Override
   public RoutineBodyType getRoutineBodyType()
@@ -105,8 +100,6 @@ abstract class MutableRoutine
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.TypedObject#getType()
    */
   @Override
   public final RoutineType getType()

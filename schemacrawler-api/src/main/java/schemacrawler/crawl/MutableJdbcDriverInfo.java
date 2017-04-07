@@ -60,8 +60,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#getConnectionUrl()
    */
   @Override
   public String getConnectionUrl()
@@ -71,8 +69,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#getDriverClassName()
    */
   @Override
   public String getDriverClassName()
@@ -82,8 +78,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#getDriverName()
    */
   @Override
   public String getDriverName()
@@ -93,8 +87,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#getDriverProperties()
    */
   @Override
   public Collection<JdbcDriverProperty> getDriverProperties()
@@ -106,8 +98,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#getDriverVersion()
    */
   @Override
   public String getDriverVersion()
@@ -117,8 +107,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.schema.JdbcDriverInfo#isJdbcCompliant()
    */
   @Override
   public boolean isJdbcCompliant()
@@ -128,8 +116,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()

@@ -79,9 +79,6 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @throws SchemaCrawlerException
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#end()
    */
   @Override
   public void end()
@@ -97,9 +94,6 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.utility.Query,
-   *      java.sql.ResultSet)
    */
   @Override
   public void handleData(final Query query, final ResultSet rows)
@@ -120,9 +114,6 @@ final class DataTextFormatter
 
   /**
    * {@inheritDoc}
-   *
-   * @see schemacrawler.tools.traversal.DataTraversalHandler#handleData(schemacrawler.schema.Table,
-   *      java.sql.ResultSet)
    */
   @Override
   public void handleData(final Table table, final ResultSet rows)

@@ -83,8 +83,6 @@ public enum SearchableType
 
   /**
    * {@inheritDoc}
-   *
-   * @see Object#toString()
    */
   @Override
   public String toString()
