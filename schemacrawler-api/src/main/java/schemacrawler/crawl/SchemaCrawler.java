@@ -659,7 +659,7 @@ public final class SchemaCrawler
           indexRetriever.retrievePrimaryKeys(allTables);
           if (infoLevel.isRetrievePrimaryKeyDefinitions())
           {
-            indexRetriever.retrievePrimaryKeyDefinitions(allTables);
+            retrieverExtra.retrievePrimaryKeyDefinitions(allTables);
           }
         }
         return null;

@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,6 +42,8 @@ import schemacrawler.schema.CheckOptionType;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.PrimaryKey;
+import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -406,6 +410,82 @@ final class TableExtRetriever
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not retrieve index information", e);
+    }
+
+  }
+
+  void retrievePrimaryKeyDefinitions(final NamedObjectList<MutableTable> allTables)
+  {
+    requireNonNull(allTables);
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+
+    final Connection connection = getDatabaseConnection();
+
+    if (!informationSchemaViews.hasExtPrimaryKeysSql())
+    {
+      LOGGER.log(Level.FINE,
+                 "Extended primary keys SQL statement was not provided");
+      return;
+    }
+
+    final NamedObjectList<MutablePrimaryKey> allPks = new NamedObjectList<>();
+    for (final MutableTable table: allTables)
+    {
+      if (table.hasPrimaryKey())
+      {
+        final PrimaryKey primaryKey = table.getPrimaryKey();
+        allPks.add((MutablePrimaryKey) primaryKey);
+      }
+    }
+
+    final Query extPrimaryKeysSql = informationSchemaViews
+      .getExtPrimaryKeysSql();
+
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      while (results.next())
+      {
+        final String catalogName = quotedName(results
+          .getString("PRIMARY_KEY_CATALOG"));
+        final String schemaName = quotedName(results
+          .getString("PRIMARY_KEY_SCHEMA"));
+        final String tableName = quotedName(results
+          .getString("PRIMARY_KEY_TABLE_NAME"));
+        final String pkName = quotedName(results.getString("PRIMARY_KEY_NAME"));
+
+        final String constraintKey = new SchemaReference(catalogName,
+                                                         schemaName)
+                                     + "." + tableName + "." + pkName;
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Retrieving definition of primary key <%s>",
+                                    constraintKey));
+        final String definition = results.getString("PRIMARY_KEY_DEFINITION");
+
+        final Optional<MutablePrimaryKey> optionalPk = allPks
+          .lookup(constraintKey);
+        if (optionalPk.isPresent())
+        {
+          final MutablePrimaryKey pkConstraint = optionalPk.get();
+          pkConstraint.appendDefinition(definition);
+          pkConstraint.addAttributes(results.getAttributes());
+        }
+        else
+        {
+          LOGGER.log(Level.FINER,
+                     new StringFormat("Could not find primary key <%s>",
+                                      constraintKey));
+        }
+
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING, "Could not retrieve check constraints", e);
     }
 
   }

@@ -38,12 +38,14 @@ public class DatabaseSpecificOverrideOptionsBuilder
 
   private static final String SC_RETRIEVAL_TABLES = "schemacrawler.schema.retrieval.strategy.tables";
   private static final String SC_RETRIEVAL_TABLE_COLUMNS = "schemacrawler.schema.retrieval.strategy.tablecolumns";
+  private static final String SC_RETRIEVAL_INDEXES = "schemacrawler.schema.retrieval.strategy.indexes";
   private static final String SC_RETRIEVAL_FOREIGN_KEYS = "schemacrawler.schema.retrieval.strategy.foreignkeys";
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
+  private MetadataRetrievalStrategy indexRetrievalStrategy;
   private MetadataRetrievalStrategy fkRetrievalStrategy;
   private String identifierQuoteString;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
@@ -56,6 +58,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
     identifierQuoteString = "";
     tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
   }
 
@@ -104,6 +107,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
       .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
     tableColumnRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
+    indexRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_INDEXES, indexRetrievalStrategy);
     fkRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
 
@@ -118,6 +123,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public String getIdentifierQuoteString()
   {
     return identifierQuoteString;
+  }
+
+  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
+  {
+    return indexRetrievalStrategy;
   }
 
   public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
@@ -199,6 +209,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     else
     {
       this.fkRetrievalStrategy = fkRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
+  {
+    if (indexRetrievalStrategy == null)
+    {
+      this.indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.indexRetrievalStrategy = indexRetrievalStrategy;
     }
     return this;
   }
