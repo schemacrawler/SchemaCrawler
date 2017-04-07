@@ -601,6 +601,8 @@ final class SchemaJsonFormatter
         jsonIndex.put("name", index.getName());
       }
 
+      printRemarks(index, jsonIndex);
+
       final IndexType indexType = index.getIndexType();
       if (indexType != IndexType.unknown && indexType != IndexType.other)
       {
