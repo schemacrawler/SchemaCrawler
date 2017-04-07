@@ -65,7 +65,7 @@ class MutableTableConstraint
   @Override
   public List<TableConstraintColumn> getColumns()
   {
-    return new ArrayList<>(columns.values());
+    return new ArrayList<TableConstraintColumn>(columns.values());
   }
 
   /**
