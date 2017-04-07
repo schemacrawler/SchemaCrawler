@@ -29,22 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import java.io.Serializable;
-import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
-/**
- * Specifies inclusion and exclusion patterns that can be applied to the
- * names, definitions, and other attributes of named objects.
- * <p>
- * The text to check, which could be the fully qualified name of the
- * named object, the definition, or some other attribute of the named
- * object.
- *
- * @author Sualeh Fatehi
- */
-@FunctionalInterface
-public interface InclusionRule
-  extends Serializable, Predicate<String>
+public interface InclusionRuleWithRegularExpression
+  extends InclusionRule
 {
+
+  /**
+   * Returns the regular expression for the inclusion rule. Not all
+   * inclusion rules are based on regular expressions, so this method
+   * indicates that all strings should be considered for inclusion by
+   * default.
+   *
+   * @return Regular expression for the inclusion rule
+   */
+  Pattern getInclusionPattern();
 
 }
