@@ -57,7 +57,9 @@ public final class OracleDatabaseConnector
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder
-      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
+      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return databaseSpecificOverrideOptionsBuilder;
   }
 
