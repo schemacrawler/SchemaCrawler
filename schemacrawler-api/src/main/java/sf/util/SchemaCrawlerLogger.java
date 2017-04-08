@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -36,9 +38,35 @@ import java.util.logging.Logger;
 public class SchemaCrawlerLogger
 {
 
+  private static String loggerClass = SchemaCrawlerLogger.class.getName();
+
   public static SchemaCrawlerLogger getLogger(final String name)
   {
     return new SchemaCrawlerLogger(Logger.getLogger(name));
+  }
+
+  private static void updateSource(final LogRecord lr, final int depth)
+  {
+    final StackTraceElement[] steArray = Thread.currentThread().getStackTrace();
+    if (steArray == null)
+    {
+      return;
+    }
+    for (int i = 1; i < steArray.length; i++)
+    {
+      final StackTraceElement ste = steArray[i];
+      if (!loggerClass.equals(ste.getClassName()))
+      {
+        final int index = i + depth;
+        if (index >= 0 && index < steArray.length)
+        {
+          final StackTraceElement ste_i = steArray[index];
+          lr.setSourceMethodName(ste_i.getMethodName());
+          lr.setSourceClassName(ste_i.getClassName());
+          break;
+        }
+      }
+    }
   }
 
   private final Logger logger;
@@ -53,29 +81,37 @@ public class SchemaCrawlerLogger
     return logger.isLoggable(level);
   }
 
-  public void log(final Level level, final String msg)
-  {
-    logger.log(level, msg);
-  }
-
   public void log(final Level level,
-                  final String sourceClass,
-                  final String sourceMethod,
-                  final Supplier<String> msg)
+                  final int depth,
+                  final String msg,
+                  final Throwable thrown)
   {
-    if (!isLoggable(level))
+    requireNonNull(level);
+    requireNonNull(msg);
+
+    if (!logger.isLoggable(level))
     {
       return;
     }
-    final LogRecord lr = new LogRecord(level, msg.get());
-    lr.setSourceClassName(sourceClass);
-    lr.setSourceMethodName(sourceMethod);
+
+    final LogRecord lr = new LogRecord(level, msg);
+    updateSource(lr, depth);
+    if (thrown != null)
+    {
+      lr.setThrown(thrown);
+    }
+
     logger.log(lr);
+  }
+
+  public void log(final Level level, final String msg)
+  {
+    log(level, msg, null);
   }
 
   public void log(final Level level, final String msg, final Throwable thrown)
   {
-    logger.log(level, msg, thrown);
+    log(level, 0, msg, thrown);
   }
 
   public void log(final Level level, final Supplier<String> msgSupplier)
@@ -84,8 +120,7 @@ public class SchemaCrawlerLogger
     {
       return;
     }
-
-    logger.log(level, msgSupplier.get());
+    log(level, msgSupplier.get());
   }
 
   public void log(final Level level,
@@ -96,8 +131,7 @@ public class SchemaCrawlerLogger
     {
       return;
     }
-
-    logger.log(level, msgSupplier.get(), thrown);
+    log(level, msgSupplier.get(), thrown);
   }
 
 }
