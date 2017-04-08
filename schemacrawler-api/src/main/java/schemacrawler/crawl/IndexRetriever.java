@@ -299,7 +299,7 @@ final class IndexRetriever
       {
         final Optional<MutableTable> optionalTable = lookupTable(allTables,
                                                                  results);
-        if (optionalTable.isPresent())
+        if (!optionalTable.isPresent())
         {
           continue;
         }
