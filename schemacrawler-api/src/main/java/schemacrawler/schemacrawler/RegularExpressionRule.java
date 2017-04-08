@@ -198,13 +198,10 @@ public final class RegularExpressionRule
       actionMessage = new StringFormat("Excluding, since text is bank");
     }
 
+    // Log caller
     if (LOGGER.isLoggable(Level.FINE))
     {
-      final StackTraceElement caller = new Exception().getStackTrace()[1];
-      LOGGER.log(Level.FINE,
-                 caller.getClassName(),
-                 caller.getMethodName(),
-                 actionMessage);
+      LOGGER.log(Level.FINE, 5, actionMessage.get(), null);
     }
 
     return include;
