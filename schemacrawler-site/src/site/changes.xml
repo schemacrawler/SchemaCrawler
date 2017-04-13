@@ -7,10 +7,13 @@
   <body>
      <release version="14.16.01" date="2017-04-10" description="Java 8 dial down">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
+        Better protection of user credentials in memory.
+      ]]></action>        
+      <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Support for index remarks.
       ]]></action>      
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
-        Organize metadata views for extensibility. Please refer to http://sualeh.github.io/SchemaCrawler/INFORMATION_SCHEMA.html
+        Organize metadata views for extensibility. Please refer to http://sualeh.github.io/SchemaCrawler/data-dictionary-extensions.html
       ]]></action>      
       <action dev="Sualeh Fatehi" type="fix"><![CDATA[
         Remove reliance on Java 8 features where they add an overhaead. 
