@@ -62,8 +62,6 @@ abstract class BaseDatabaseConnectionOptions
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
   private static final String URL = "url";
-  private static final String USER = "user";
-  private static final String PASSWORD = "password";
 
   protected static final Map<String, String> toMap(final String connectionUrl)
   {
@@ -78,19 +76,22 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   protected final Map<String, String> connectionProperties;
-  private String user;
-  private String password;
+  private final UserCredentials userCredentials;
 
-  protected BaseDatabaseConnectionOptions(final Map<String, String> properties)
+  protected BaseDatabaseConnectionOptions(final UserCredentials userCredentials,
+                                          final Map<String, String> properties)
     throws SchemaCrawlerException
   {
+    if (userCredentials == null)
+    {
+      throw new IllegalArgumentException("No user credentials provided");
+    }
+    this.userCredentials = userCredentials;
+
     if (properties == null || properties.isEmpty())
     {
       throw new IllegalArgumentException("No connection properties provided");
     }
-
-    setUser(properties.get(USER));
-    setPassword(properties.get(PASSWORD));
 
     connectionProperties = new HashMap<>(properties);
     TemplatingUtility.substituteVariables(connectionProperties);
@@ -100,6 +101,8 @@ abstract class BaseDatabaseConnectionOptions
   public final Connection getConnection()
     throws SQLException
   {
+    final String user = userCredentials.getUser();
+    final String password = userCredentials.getPassword();
     return getConnection(user, password);
   }
 
@@ -166,6 +169,9 @@ abstract class BaseDatabaseConnectionOptions
         .log(Level.INFO,
              new StringFormat("Opened database connection <%s>", connection));
       logConnection(connection);
+
+      // Clear password
+      jdbcConnectionProperties.remove("password");
 
       return connection;
     }
@@ -235,9 +241,9 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   @Override
-  public final String getUser()
+  public UserCredentials getUserCredentials()
   {
-    return user;
+    return userCredentials;
   }
 
   @Override
@@ -265,18 +271,6 @@ abstract class BaseDatabaseConnectionOptions
   }
 
   @Override
-  public final void setPassword(final String password)
-  {
-    this.password = password;
-  }
-
-  @Override
-  public final void setUser(final String user)
-  {
-    this.user = user;
-  }
-
-  @Override
   public final String toString()
   {
     String jdbcDriverClass = "<unknown>";
@@ -295,7 +289,7 @@ abstract class BaseDatabaseConnectionOptions
       .append(System.lineSeparator());
     builder.append("url=").append(getConnectionUrl())
       .append(System.lineSeparator());
-    builder.append("user=").append(getUser()).append(System.lineSeparator());
+    builder.append(userCredentials).append(System.lineSeparator());
     return builder.toString();
   }
 

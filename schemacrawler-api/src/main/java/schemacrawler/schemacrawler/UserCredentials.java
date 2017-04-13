@@ -25,29 +25,20 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.schemacrawler;
 
 
-import java.util.Map;
-
-public final class DatabaseConnectionOptions
-  extends BaseDatabaseConnectionOptions
+public interface UserCredentials
 {
 
-  private static final long serialVersionUID = -8141436553988174836L;
+  void clearPassword();
 
-  public DatabaseConnectionOptions(final String connectionUrl)
-    throws SchemaCrawlerException
-  {
-    super(new SingleUseUserCredentials(), toMap(connectionUrl));
-  }
+  String getPassword();
 
-  public DatabaseConnectionOptions(final UserCredentials userCredentials,
-                                   final Map<String, String> properties)
-    throws SchemaCrawlerException
-  {
-    super(userCredentials, properties);
-  }
+  String getUser();
+
+  boolean hasPassword();
+
+  boolean hasUser();
 
 }

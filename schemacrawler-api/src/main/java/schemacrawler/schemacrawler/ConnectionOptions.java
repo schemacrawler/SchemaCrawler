@@ -42,10 +42,6 @@ public interface ConnectionOptions
   Driver getJdbcDriver()
     throws SQLException;
 
-  String getUser();
-
-  void setPassword(final String password);
-
-  void setUser(final String user);
+  UserCredentials getUserCredentials();
 
 }
