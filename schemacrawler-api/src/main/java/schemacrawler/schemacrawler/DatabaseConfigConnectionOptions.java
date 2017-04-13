@@ -51,10 +51,11 @@ public final class DatabaseConfigConnectionOptions
   private static final String DATABASE = "database";
   private static final String URLX = "urlx";
 
-  public DatabaseConfigConnectionOptions(final Map<String, String> properties)
+  public DatabaseConfigConnectionOptions(final UserCredentials userCredentials,
+                                         final Map<String, String> properties)
     throws SchemaCrawlerException
   {
-    super(properties);
+    super(userCredentials, properties);
   }
 
   public String getDatabase()
