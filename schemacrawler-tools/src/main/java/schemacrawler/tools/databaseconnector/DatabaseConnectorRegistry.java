@@ -190,17 +190,16 @@ public final class DatabaseConnectorRegistry
 
     try
     {
-      final List<String> drivers = new ArrayList<>();
+      final StringBuilder buffer = new StringBuilder(1024);
+      buffer.append("Registered JDBC drivers:");
       for (final Driver driver: Collections.list(DriverManager.getDrivers()))
       {
-        drivers.add(String.format("%s %d.%d",
-                                  driver.getClass().getName(),
-                                  driver.getMajorVersion(),
-                                  driver.getMinorVersion()));
+        buffer.append(String.format("%n%s %d.%d",
+                                    driver.getClass().getName(),
+                                    driver.getMajorVersion(),
+                                    driver.getMinorVersion()));
       }
-      Collections.sort(drivers);
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Registered JDBC drivers <%s>", drivers));
+      LOGGER.log(Level.CONFIG, buffer.toString());
     }
     catch (final Exception e)
     {

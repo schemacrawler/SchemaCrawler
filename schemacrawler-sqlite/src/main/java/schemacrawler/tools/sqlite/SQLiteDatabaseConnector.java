@@ -32,6 +32,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -62,7 +63,8 @@ public final class SQLiteDatabaseConnector
    * {@inheritDoc}
    */
   @Override
-  public ConnectionOptions newDatabaseConnectionOptions(final Config additionalConfig)
+  public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
+                                                        final Config additionalConfig)
     throws SchemaCrawlerException
   {
     try
@@ -74,7 +76,8 @@ public final class SQLiteDatabaseConnector
       throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
     }
 
-    return super.newDatabaseConnectionOptions(additionalConfig);
+    return super.newDatabaseConnectionOptions(userCredentials,
+                                              additionalConfig);
   }
 
 }
