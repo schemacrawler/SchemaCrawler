@@ -38,8 +38,10 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
@@ -175,14 +177,17 @@ public abstract class DatabaseConnector
     final Config config = getConfig();
     config.putAll(additionalConfig);
 
+    final UserCredentials userCredentials = new SingleUseUserCredentials(config);
     final ConnectionOptions connectionOptions;
     if (dbServerType.isUnknownDatabaseSystem() || config.hasValue("url"))
     {
-      connectionOptions = new DatabaseConnectionOptions(config);
+      connectionOptions = new DatabaseConnectionOptions(userCredentials,
+                                                        config);
     }
     else
     {
-      connectionOptions = new DatabaseConfigConnectionOptions(config);
+      connectionOptions = new DatabaseConfigConnectionOptions(userCredentials,
+                                                              config);
     }
 
     // Remove sensitive properties from the original configuration
