@@ -38,6 +38,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
@@ -94,10 +95,11 @@ public final class SchemaCrawlerCommandLine
     final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
     additionalConfigOptionsParser.loadConfig();
 
-    parseConnectionOptions();
+    final UserCredentials userCredentials = parseConnectionOptions();
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    connectionOptions = dbConnector.newDatabaseConnectionOptions(config);
+    connectionOptions = dbConnector
+      .newDatabaseConnectionOptions(userCredentials, config);
 
     // Get partially built database specific options, built from the
     // classpath resources, and then override from config loaded in from
@@ -187,7 +189,7 @@ public final class SchemaCrawlerCommandLine
    * @param dbServerType
    *        Database server type
    */
-  private void parseConnectionOptions()
+  private UserCredentials parseConnectionOptions()
     throws SchemaCrawlerException
   {
     final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
@@ -201,6 +203,9 @@ public final class SchemaCrawlerCommandLine
     }
     dbConnectionOptionsParser.loadConfig();
     config.putAll(dbConnectionOptionsParser.getOptions());
+    final UserCredentials userCredentials = dbConnectionOptionsParser
+      .getUserCredentials();
+    return userCredentials;
   }
 
 }
