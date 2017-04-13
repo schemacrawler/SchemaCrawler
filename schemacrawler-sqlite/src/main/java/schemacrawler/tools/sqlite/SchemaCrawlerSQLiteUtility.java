@@ -45,6 +45,7 @@ import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.graph.GraphExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -65,7 +66,7 @@ public class SchemaCrawlerSQLiteUtility
     config.put("server", "sqlite");
     config.put("database", dbFile.toString());
     final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
-      .newDatabaseConnectionOptions(config);
+      .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
     final Connection connection;
     try
     {

@@ -30,48 +30,23 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.Map;
-
 public final class SingleUseUserCredentials
   implements UserCredentials
 {
 
-  private final String username;
+  private final String user;
   private final char[] password;
   private boolean isCleared;
 
-  private final String USER = "user";
-  private final String PASSWORD = "password";
-
   public SingleUseUserCredentials()
   {
-    username = null;
+    user = null;
     password = null;
-    isCleared = true;
   }
 
-  public SingleUseUserCredentials(final Map<String, String> properties)
+  public SingleUseUserCredentials(final String user, final String password)
   {
-    if (properties == null || properties.isEmpty())
-    {
-      throw new IllegalArgumentException("No properties provided");
-    }
-
-    username = properties.remove(USER);
-    final String password = properties.remove(PASSWORD);
-    if (password == null)
-    {
-      this.password = null;
-    }
-    else
-    {
-      this.password = password.toCharArray();
-    }
-  }
-
-  public SingleUseUserCredentials(final String username, final String password)
-  {
-    this.username = username;
+    this.user = user;
     if (password == null)
     {
       this.password = null;
@@ -121,7 +96,7 @@ public final class SingleUseUserCredentials
   @Override
   public String getUser()
   {
-    return username;
+    return user;
   }
 
   @Override
@@ -133,14 +108,13 @@ public final class SingleUseUserCredentials
   @Override
   public boolean hasUser()
   {
-    return !isBlank(username);
+    return !isBlank(user);
   }
 
   @Override
   public String toString()
   {
-    return "UserCredentials [username=\"" + username
-           + "\", password=\"*****\"]";
+    return "UserCredentials [user=\"" + user + "\", password=\"*****\"]";
   }
 
 }
