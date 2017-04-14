@@ -6,6 +6,7 @@
 [![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/schemacrawler.svg)](http://stackoverflow.com/search?tab=newest&q=schemacrawler)
 
 
+
 # ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/blob/master/schemacrawler-site/src/site/resources/images/schemacrawler_logo.png?raw=true) SchemaCrawler
 
 > Please see the [SchemaCrawler website](http://www.schemacrawler.com/) for more details.
