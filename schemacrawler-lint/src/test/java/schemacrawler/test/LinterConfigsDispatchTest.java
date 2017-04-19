@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -36,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -76,7 +76,7 @@ public class LinterConfigsDispatchTest
     try
     {
       final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
-                                              StandardCharsets.UTF_8);
+                                              UTF_8);
       linterConfigs = new LinterConfigs(new Config());
       linterConfigs.parse(reader);
     }

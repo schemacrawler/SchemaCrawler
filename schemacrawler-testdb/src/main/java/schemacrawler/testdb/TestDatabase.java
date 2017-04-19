@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
 
@@ -37,7 +38,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -266,7 +266,7 @@ public class TestDatabase
                                                       schema,
                                                       scriptType);
           final Reader reader = new InputStreamReader(TestDatabase.class
-            .getResourceAsStream(scriptResource), StandardCharsets.UTF_8);
+            .getResourceAsStream(scriptResource), UTF_8);
 
           final SqlScript sqlScript = new SqlScript(connection);
           sqlScript.run(reader);

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.size;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -38,7 +39,6 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -188,7 +188,7 @@ public class OfflineSnapshotTest
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
     final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
                                                            "schemacrawler.data")
-                                                             .openNewOutputWriter(StandardCharsets.UTF_8,
+                                                             .openNewOutputWriter(UTF_8,
                                                                                   false);
     xmlDatabase.save(writer);
     writer.close();

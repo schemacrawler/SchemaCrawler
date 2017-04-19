@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -37,7 +38,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -111,11 +111,9 @@ public class SchemaSerializationTest
     if (!xmlDiff.similar())
     {
       IOUtils.write(xmlSerializedCatalog1,
-                    new PrintWriter("serialized-schema-1.xml",
-                                    StandardCharsets.UTF_8.name()));
+                    new PrintWriter("serialized-schema-1.xml", UTF_8.name()));
       IOUtils.write(xmlSerializedCatalog2,
-                    new PrintWriter("serialized-schema-2.xml",
-                                    StandardCharsets.UTF_8.name()));
+                    new PrintWriter("serialized-schema-2.xml", UTF_8.name()));
     }
     assertEquals(xmlDiff.toString(), 0, allDifferences.size());
   }

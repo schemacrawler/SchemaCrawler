@@ -39,8 +39,8 @@ public final class SchemasReducer
 
   public SchemasReducer(final SchemaCrawlerOptions options)
   {
-    super(options == null? new IncludeAllFilter<>()
-                         : new InclusionRuleFilter<>(options
+    super(options == null? new IncludeAllFilter<Schema>()
+                         : new InclusionRuleFilter<Schema>(options
                            .getSchemaInclusionRule(), true));
   }
 

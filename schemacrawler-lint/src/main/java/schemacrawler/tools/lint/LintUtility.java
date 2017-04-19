@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
@@ -73,7 +74,7 @@ public final class LintUtility
    * Obtain linter configuration from a system property
    *
    * @param config
-   *        TODO
+   *        SchemaCrawler configuration
    * @return LinterConfigs
    * @throws SchemaCrawlerException
    */
@@ -92,7 +93,7 @@ public final class LintUtility
         if (isRegularFile(linterConfigsFilePath)
             && isReadable(linterConfigsFilePath))
         {
-          linterConfigs.parse(newBufferedReader(linterConfigsFilePath));
+          linterConfigs.parse(newBufferedReader(linterConfigsFilePath, UTF_8));
         }
         else
         {
