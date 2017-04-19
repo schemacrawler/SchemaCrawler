@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -38,7 +39,6 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +97,7 @@ public class GrepCommandLineTest
       final Path additionalProperties = createTempFile("hsqldb.INFORMATION_SCHEMA.config",
                                                        "properties");
       final Writer writer = newBufferedWriter(additionalProperties,
-                                              StandardCharsets.UTF_8,
+                                              UTF_8,
                                               WRITE,
                                               CREATE,
                                               TRUNCATE_EXISTING);

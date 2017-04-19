@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
@@ -39,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -78,7 +78,7 @@ public class PropertiesUtility
     BufferedReader reader;
     try
     {
-      reader = newBufferedReader(propertiesFile, StandardCharsets.UTF_8);
+      reader = newBufferedReader(propertiesFile, UTF_8);
       final Properties properties = loadProperties(reader);
       return properties;
     }
@@ -114,8 +114,7 @@ public class PropertiesUtility
     final Properties properties;
     if (stream != null)
     {
-      properties = loadProperties(new InputStreamReader(stream,
-                                                        StandardCharsets.UTF_8));
+      properties = loadProperties(new InputStreamReader(stream, UTF_8));
     }
     else
     {

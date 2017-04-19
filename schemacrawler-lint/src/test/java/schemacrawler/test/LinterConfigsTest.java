@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
@@ -35,7 +36,6 @@ import static schemacrawler.test.utility.TestUtility.readerForResource;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
@@ -53,7 +53,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-a.xml",
-                                            StandardCharsets.UTF_8);
+                                            UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
     assertEquals(3, linterConfigs.size());
@@ -102,7 +102,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("bad-schemacrawler-linter-configs-2.xml",
-                                            StandardCharsets.UTF_8);
+                                            UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
   }
@@ -112,7 +112,7 @@ public class LinterConfigsTest
     throws SchemaCrawlerException, IOException
   {
     final Reader reader = readerForResource("schemacrawler-linter-configs-1.xml",
-                                            StandardCharsets.UTF_8);
+                                            UTF_8);
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     linterConfigs.parse(reader);
 

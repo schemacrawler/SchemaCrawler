@@ -62,8 +62,6 @@ class RoutineGrepFilter
    * column inclusion rule is found, and at least one column matches the
    * rule.
    *
-   * @param options
-   *        Options
    * @param routine
    *        Table to check
    * @return Whether the column should be included

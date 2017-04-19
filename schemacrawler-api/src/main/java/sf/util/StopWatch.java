@@ -101,7 +101,7 @@ public final class StopWatch
   /**
    * Return whether the stop watch is currently running.
    *
-   * @see #currentTaskName()
+   * @see #currentTaskName
    */
   public boolean isRunning()
   {

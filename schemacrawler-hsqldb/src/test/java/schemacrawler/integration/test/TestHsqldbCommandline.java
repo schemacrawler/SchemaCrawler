@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -41,7 +42,6 @@ import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
@@ -76,7 +76,7 @@ public class TestHsqldbCommandline
 
     final Path testConfigFile = createTempFile("test", "properties");
     try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
-                                                                 StandardCharsets.UTF_8,
+                                                                 UTF_8,
                                                                  WRITE,
                                                                  TRUNCATE_EXISTING,
                                                                  CREATE));)

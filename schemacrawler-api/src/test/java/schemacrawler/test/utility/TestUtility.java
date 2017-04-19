@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.deleteIfExists;
@@ -59,7 +60,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -174,7 +174,7 @@ public final class TestUtility
 
     final boolean contentEquals;
     final Reader referenceReader = readerForResource(referenceFile,
-                                                     StandardCharsets.UTF_8,
+                                                     UTF_8,
                                                      isCompressed);
     if (referenceReader == null)
 
@@ -439,12 +439,11 @@ public final class TestUtility
       inputStream.getNextEntry();
 
       bufferedReader = new BufferedReader(new InputStreamReader(inputStream,
-                                                                StandardCharsets.UTF_8));
+                                                                UTF_8));
     }
     else
     {
-      bufferedReader = newBufferedReader(testOutputTempFile,
-                                         StandardCharsets.UTF_8);
+      bufferedReader = newBufferedReader(testOutputTempFile, UTF_8);
     }
     return bufferedReader;
   }
@@ -462,7 +461,7 @@ public final class TestUtility
       final Charset charset;
       if (encoding == null)
       {
-        charset = StandardCharsets.UTF_8;
+        charset = UTF_8;
       }
       else
       {

@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.options;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
@@ -37,7 +38,6 @@ import java.io.Reader;
 import java.io.Writer;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
@@ -100,10 +100,10 @@ public class OutputOptions
       configProperties = config;
     }
 
-    setInputEncoding(configProperties
-      .getStringValue(SC_INPUT_ENCODING, StandardCharsets.UTF_8.name()));
-    setOutputEncoding(configProperties
-      .getStringValue(SC_OUTPUT_ENCODING, StandardCharsets.UTF_8.name()));
+    setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
+                                                     UTF_8.name()));
+    setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
+                                                      UTF_8.name()));
   }
 
   /**
@@ -204,7 +204,7 @@ public class OutputOptions
   {
     if (inputEncodingCharset == null)
     {
-      return StandardCharsets.UTF_8;
+      return UTF_8;
     }
     else
     {
@@ -219,7 +219,7 @@ public class OutputOptions
   {
     if (outputEncodingCharset == null)
     {
-      return StandardCharsets.UTF_8;
+      return UTF_8;
     }
     else
     {
@@ -355,7 +355,7 @@ public class OutputOptions
   {
     if (inputCharset == null)
     {
-      inputEncodingCharset = StandardCharsets.UTF_8;
+      inputEncodingCharset = UTF_8;
     }
     else
     {
@@ -374,7 +374,7 @@ public class OutputOptions
   {
     if (isBlank(inputEncoding))
     {
-      inputEncodingCharset = StandardCharsets.UTF_8;
+      inputEncodingCharset = UTF_8;
     }
     else
     {
@@ -433,7 +433,7 @@ public class OutputOptions
   {
     if (outputCharset == null)
     {
-      outputEncodingCharset = StandardCharsets.UTF_8;
+      outputEncodingCharset = UTF_8;
     }
     else
     {
@@ -451,7 +451,7 @@ public class OutputOptions
   {
     if (isBlank(outputEncoding))
     {
-      outputEncodingCharset = StandardCharsets.UTF_8;
+      outputEncodingCharset = UTF_8;
     }
     else
     {
