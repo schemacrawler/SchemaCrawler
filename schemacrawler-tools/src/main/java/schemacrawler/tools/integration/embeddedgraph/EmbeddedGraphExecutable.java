@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.embeddedgraph;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
@@ -40,7 +41,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.regex.Pattern;
@@ -84,14 +84,14 @@ public class EmbeddedGraphExecutable
     // Interleave HTML and SVG
     try (
         final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
-                                                                     StandardCharsets.UTF_8,
+                                                                     UTF_8,
                                                                      WRITE,
                                                                      CREATE,
                                                                      TRUNCATE_EXISTING);
         final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
-                                                                    StandardCharsets.UTF_8);
+                                                                    UTF_8);
         final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                   StandardCharsets.UTF_8);)
+                                                                   UTF_8);)
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
@@ -106,7 +106,7 @@ public class EmbeddedGraphExecutable
 
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
-      copy(newBufferedReader(finalHtmlFile, StandardCharsets.UTF_8), writer);
+      copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
     }
   }
 

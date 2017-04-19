@@ -39,10 +39,10 @@ public final class SynonymsReducer
 
   public SynonymsReducer(final SchemaCrawlerOptions options)
   {
-    super(options == null? new IncludeAllFilter<>()
-                         : new DatabaseObjectFilter<>(options,
-                                                      options
-                                                        .getSynonymInclusionRule()));
+    super(options == null? new IncludeAllFilter<Synonym>()
+                         : new DatabaseObjectFilter<Synonym>(options,
+                                                             options
+                                                               .getSynonymInclusionRule()));
   }
 
 }

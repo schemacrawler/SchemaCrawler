@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.deleteIfExists;
@@ -36,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,8 +72,8 @@ public class SiteGraphVariationsTest
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/site/images")
-      .normalize().toAbsolutePath();
+    directory = projectRootPath.resolve("target/site/images").normalize()
+      .toAbsolutePath();
     createDirectories(directory);
   }
 
@@ -238,8 +238,7 @@ public class SiteGraphVariationsTest
     final Path configFile = createTempFile(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
-    configProperties
-      .store(newBufferedWriter(configFile, StandardCharsets.UTF_8), prefix);
+    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
     return configFile;
   }
 

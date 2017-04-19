@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -36,7 +38,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
@@ -134,7 +135,7 @@ public final class IOUtility
     {
       return null;
     }
-    final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+    final Reader reader = new InputStreamReader(stream, UTF_8);
     return readFully(reader);
   }
 
