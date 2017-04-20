@@ -31,8 +31,10 @@ package sf.util;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.readAllBytes;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.function.Supplier;
 
@@ -41,10 +43,17 @@ public final class FileContents
 {
 
   private final Path file;
+  private final Charset charset;
 
   public FileContents(final Path file)
   {
-    this.file = file;
+    this(file, Charset.defaultCharset());
+  }
+
+  public FileContents(final Path file, final Charset charset)
+  {
+    this.file = requireNonNull(file, "No file path provided");
+    this.charset = requireNonNull(charset, "No charset provided");
   }
 
   @Override
@@ -59,7 +68,7 @@ public final class FileContents
       }
       else
       {
-        output = new String(readAllBytes(file));
+        output = new String(readAllBytes(file), charset);
       }
     }
     catch (final IOException e)
