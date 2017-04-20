@@ -29,11 +29,11 @@ package schemacrawler.tools.integration.graph;
 
 
 import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isDirectory;
 import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileWritable;
 import static sf.util.IOUtility.readResourceFully;
 
 import java.io.IOException;
@@ -76,14 +76,11 @@ public class GraphProcessExecutor
     }
     this.dotFile = dotFile;
 
-    final Path outputDir = requireNonNull(outputFile.getParent(),
-                                          "Invalid output directory");
-    if (isDirectory(outputFile) || !exists(outputDir)
-        || !isDirectory(outputDir))
+    this.outputFile = outputFile.normalize().toAbsolutePath();
+    if (!isFileWritable(this.outputFile))
     {
-      throw new IOException("Cannot write graph file, " + dotFile);
+      throw new IOException("Cannot write output file, " + this.outputFile);
     }
-    this.outputFile = outputFile;
 
     if (graphOutputFormat == GraphOutputFormat.scdot)
     {

@@ -53,6 +53,44 @@ import java.util.logging.Logger;
 public final class Utility
 {
 
+  /**
+   * Sets the application-wide log level.
+   *
+   * @param applicationLogLevel
+   *        Log level to set
+   */
+  public static void applyApplicationLogLevel(final Level applicationLogLevel)
+  {
+    final Level logLevel;
+    if (applicationLogLevel == null)
+    {
+      logLevel = Level.OFF;
+    }
+    else
+    {
+      logLevel = applicationLogLevel;
+    }
+
+    final LogManager logManager = LogManager.getLogManager();
+    final List<String> loggerNames = Collections
+      .list(logManager.getLoggerNames());
+    for (final String loggerName: loggerNames)
+    {
+      final Logger logger = logManager.getLogger(loggerName);
+      if (logger != null)
+      {
+        logger.setLevel(null);
+        for (final Handler handler: logger.getHandlers())
+        {
+          handler.setLevel(logLevel);
+        }
+      }
+    }
+
+    final Logger rootLogger = Logger.getLogger("");
+    rootLogger.setLevel(logLevel);
+  }
+
   public static String commonPrefix(final String string1, final String string2)
   {
     final int index = indexOfDifference(string1, string2);
@@ -271,44 +309,6 @@ public final class Utility
   public static String join(final String[] collection, final String separator)
   {
     return join(Arrays.asList(collection), separator);
-  }
-
-  /**
-   * Sets the application-wide log level.
-   *
-   * @param applicationLogLevel
-   *        Log level to set
-   */
-  public static void applyApplicationLogLevel(final Level applicationLogLevel)
-  {
-    final Level logLevel;
-    if (applicationLogLevel == null)
-    {
-      logLevel = Level.OFF;
-    }
-    else
-    {
-      logLevel = applicationLogLevel;
-    }
-
-    final LogManager logManager = LogManager.getLogManager();
-    final List<String> loggerNames = Collections
-      .list(logManager.getLoggerNames());
-    for (final String loggerName: loggerNames)
-    {
-      final Logger logger = logManager.getLogger(loggerName);
-      if (logger != null)
-      {
-        logger.setLevel(null);
-        for (final Handler handler: logger.getHandlers())
-        {
-          handler.setLevel(logLevel);
-        }
-      }
-    }
-
-    final Logger rootLogger = Logger.getLogger("");
-    rootLogger.setLevel(logLevel);
   }
 
   private static int indexOfDifference(final String string1,
