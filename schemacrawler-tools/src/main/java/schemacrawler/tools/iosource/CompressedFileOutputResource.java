@@ -28,14 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.iosource;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isDirectory;
-import static java.nio.file.Files.isWritable;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileWritable;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -61,18 +59,16 @@ public class CompressedFileOutputResource
   private final Path outputFile;
   private final String internalPath;
 
-  public CompressedFileOutputResource(final Path filePath,
+  public CompressedFileOutputResource(final Path outputFile,
                                       final String internalPath)
     throws IOException
   {
-    outputFile = requireNonNull(filePath, "No file path provided").normalize()
-      .toAbsolutePath();
-    final Path parentPath = requireNonNull(filePath.getParent(),
-                                           "Invalid output directory");
-    if (!exists(parentPath) || !isWritable(parentPath)
-        || !isDirectory(parentPath))
+    requireNonNull(outputFile, "No output file provided");
+
+    this.outputFile = outputFile.normalize().toAbsolutePath();
+    if (!isFileWritable(this.outputFile))
     {
-      throw new IOException("Cannot write file, " + filePath);
+      throw new IOException("Cannot write output file, " + this.outputFile);
     }
 
     this.internalPath = requireNonNull(internalPath,

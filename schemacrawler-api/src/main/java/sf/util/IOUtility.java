@@ -29,6 +29,9 @@ package sf.util;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.exists;
+import static java.nio.file.Files.isDirectory;
+import static java.nio.file.Files.isWritable;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -52,6 +55,33 @@ public final class IOUtility
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(IOUtility.class.getName());
+
+  /**
+   * Checks if an output file can be written. The file does not need to
+   * exist.
+   * 
+   * @param file
+   *        Output file to write
+   * @return True if the file can be written, false otherwise.
+   */
+  public static boolean isFileWritable(final Path file)
+  {
+    if (file == null)
+    {
+      return false;
+    }
+    if (isDirectory(file))
+    {
+      return false;
+    }
+    final Path parentPath = file.getParent();
+    if (parentPath == null || !exists(parentPath) || !isDirectory(parentPath)
+        || !isWritable(parentPath))
+    {
+      return false;
+    }
+    return true;
+  }
 
   /**
    * Reads the stream fully, and writes to the writer.
