@@ -28,10 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.iosource;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isReadable;
 import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -56,9 +55,9 @@ public class FileInputResource
   {
     inputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
-    if (!exists(filePath) || !isReadable(filePath))
+    if (!isFileReadable(inputFile))
     {
-      final IOException e = new IOException("Cannot read file, " + filePath);
+      final IOException e = new IOException("Cannot read file, " + inputFile);
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
       throw e;
     }

@@ -29,9 +29,8 @@ package schemacrawler.tools.lint;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
+import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
@@ -90,8 +89,7 @@ public final class LintUtility
       {
         final Path linterConfigsFilePath = Paths.get(linterConfigsFile)
           .toAbsolutePath();
-        if (isRegularFile(linterConfigsFilePath)
-            && isReadable(linterConfigsFilePath))
+        if (isFileReadable(linterConfigsFilePath))
         {
           linterConfigs.parse(newBufferedReader(linterConfigsFilePath, UTF_8));
         }
@@ -99,7 +97,7 @@ public final class LintUtility
         {
           LOGGER
             .log(Level.WARNING,
-                 "Could not find linter configs file, " + linterConfigsFile);
+                 "Could not read linter configs file, " + linterConfigsFile);
         }
       }
       else

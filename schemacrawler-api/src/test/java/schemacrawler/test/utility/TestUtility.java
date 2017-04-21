@@ -33,8 +33,6 @@ import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newInputStream;
@@ -47,6 +45,7 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertTrue;
+import static sf.util.IOUtility.isFileReadable;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -61,7 +60,6 @@ import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -162,9 +160,7 @@ public final class TestUtility
     requireNonNull(testOutputTempFile, "Output file is not defined");
     requireNonNull(outputFormat, "Output format is not defined");
 
-    if (!exists(testOutputTempFile)
-        || !isRegularFile(testOutputTempFile, LinkOption.NOFOLLOW_LINKS)
-        || !isReadable(testOutputTempFile) || size(testOutputTempFile) == 0)
+    if (!isFileReadable(testOutputTempFile))
     {
       return Collections
         .singletonList("Output file not created - " + testOutputTempFile);
