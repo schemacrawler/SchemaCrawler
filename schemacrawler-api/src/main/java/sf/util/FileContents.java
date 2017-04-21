@@ -28,10 +28,9 @@ http://www.gnu.org/licenses/
 package sf.util;
 
 
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.readAllBytes;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -62,7 +61,7 @@ public final class FileContents
     final String output;
     try
     {
-      if (file == null || !isReadable(file) || !isRegularFile(file))
+      if (!isFileReadable(file))
       {
         output = "";
       }

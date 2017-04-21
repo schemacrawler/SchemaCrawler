@@ -29,10 +29,9 @@ package sf.util;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -63,8 +62,7 @@ public class PropertiesUtility
    */
   public static Properties loadProperties(final Path propertiesFile)
   {
-    if (propertiesFile == null || !isRegularFile(propertiesFile)
-        || !isReadable(propertiesFile))
+    if (!isFileReadable(propertiesFile))
     {
       LOGGER.log(Level.CONFIG,
                  new StringFormat("Cannot load properties from file <%s>",
