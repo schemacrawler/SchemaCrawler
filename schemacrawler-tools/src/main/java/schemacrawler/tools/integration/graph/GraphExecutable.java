@@ -29,7 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import java.nio.file.Files;
+import static sf.util.IOUtility.createTempFile;
+
 import java.nio.file.Path;
 import java.sql.Connection;
 
@@ -88,8 +89,7 @@ public final class GraphExecutable
     outputOptions.setOutputFormatValue(graphOutputFormat.getFormat());
 
     // Create dot file
-    final Path dotFile = Files.createTempFile("schemacrawler.", ".dot")
-      .normalize().toAbsolutePath();
+    final Path dotFile = createTempFile("schemacrawler.", "dot");
     final OutputOptions dotFileOutputOptions;
     if (graphOutputFormat == GraphOutputFormat.scdot)
     {

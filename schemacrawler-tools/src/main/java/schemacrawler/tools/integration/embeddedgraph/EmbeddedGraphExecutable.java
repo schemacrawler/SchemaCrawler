@@ -29,13 +29,13 @@ package schemacrawler.tools.integration.embeddedgraph;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static sf.util.IOUtility.copy;
+import static sf.util.IOUtility.createTempFile;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -68,9 +68,9 @@ public class EmbeddedGraphExecutable
   public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
-    final Path finalHtmlFile = createTempFile("schemacrawler", ".html");
-    final Path baseHtmlFile = createTempFile("schemacrawler", ".html");
-    final Path baseSvgFile = createTempFile("schemacrawler", ".svg");
+    final Path finalHtmlFile = createTempFile("schemacrawler", "html");
+    final Path baseHtmlFile = createTempFile("schemacrawler", "html");
+    final Path baseSvgFile = createTempFile("schemacrawler", "svg");
 
     final CommandChainExecutable chain = new CommandChainExecutable();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
