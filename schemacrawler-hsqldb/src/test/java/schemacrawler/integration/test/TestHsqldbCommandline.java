@@ -36,7 +36,6 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.DatabaseUtility.checkConnection;
 
@@ -64,6 +63,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.IOUtility;
 
 public class TestHsqldbCommandline
   extends BaseDatabaseTest
@@ -74,7 +74,8 @@ public class TestHsqldbCommandline
     throws Exception
   {
 
-    final Path testConfigFile = createTempFile("test", "properties");
+    final Path testConfigFile = IOUtility.createTempFilePath("test",
+                                                             "properties");
     try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
                                                                  UTF_8,
                                                                  WRITE,

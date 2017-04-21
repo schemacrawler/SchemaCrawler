@@ -30,7 +30,6 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -47,6 +46,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
+import sf.util.IOUtility;
 
 public class CommandLineTest
   extends BaseDatabaseTest
@@ -235,7 +235,7 @@ public class CommandLineTest
     throws IOException
   {
     final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final Path configFile = createTempFile(prefix, "properties");
+    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
     configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);

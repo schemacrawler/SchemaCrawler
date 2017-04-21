@@ -36,7 +36,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.IOException;
@@ -58,6 +57,7 @@ import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.IOUtility;
 
 public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
@@ -168,7 +168,7 @@ public class LinterConfigsDispatchTest
   {
     try
     {
-      final Path tempFile = createTempFile("lintertest", "log");
+      final Path tempFile = IOUtility.createTempFilePath("lintertest", "log");
       write(tempFile,
             Arrays.asList(sysErrLog.getLogWithNormalizedLineSeparator()),
             CREATE_NEW,

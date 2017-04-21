@@ -32,7 +32,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -50,6 +49,7 @@ import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
+import sf.util.IOUtility;
 
 public class SiteGraphVariationsTest
   extends BaseDatabaseTest
@@ -235,7 +235,7 @@ public class SiteGraphVariationsTest
     throws IOException
   {
     final String prefix = SiteGraphVariationsTest.class.getName();
-    final Path configFile = createTempFile(prefix, "properties");
+    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
     final Properties configProperties = new Properties();
     configProperties.putAll(config);
     configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
