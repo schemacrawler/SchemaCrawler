@@ -36,11 +36,10 @@ import static sf.util.Utility.isBlank;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.SecureRandom;
+import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
@@ -72,7 +71,6 @@ public class OutputOptions
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
-  private static final SecureRandom random = new SecureRandom();
   private OutputResource outputResource;
   private InputResource inputResource;
   private String outputFormatValue;
@@ -253,7 +251,8 @@ public class OutputOptions
       }
       // Create output file path
       outputFile = Paths
-        .get(".", String.format("sc.%s.%s", nextRandomString(), extension))
+        .get(".",
+             String.format("schemacrawler-%s.%s", UUID.randomUUID(), extension))
         .normalize().toAbsolutePath();
     }
     return outputFile;
@@ -494,12 +493,6 @@ public class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  private String nextRandomString()
-  {
-    final int length = 8;
-    return new BigInteger(length * 5, random).toString(32);
   }
 
   /**
