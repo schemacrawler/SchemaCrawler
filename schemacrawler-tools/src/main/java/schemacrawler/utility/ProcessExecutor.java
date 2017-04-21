@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
-import static java.nio.file.Files.createTempFile;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.createTempFile;
 import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
 
