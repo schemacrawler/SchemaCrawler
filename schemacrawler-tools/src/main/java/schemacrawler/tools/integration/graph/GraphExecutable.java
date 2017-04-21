@@ -99,6 +99,7 @@ public final class GraphExecutable
     {
       dotFileOutputOptions = new OutputOptions(GraphOutputFormat.dot, dotFile);
     }
+
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();

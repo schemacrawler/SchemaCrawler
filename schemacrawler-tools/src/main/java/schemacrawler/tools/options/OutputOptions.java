@@ -75,7 +75,6 @@ public class OutputOptions
   private InputResource inputResource;
   private String outputFormatValue;
   private Charset inputEncodingCharset;
-
   private Charset outputEncodingCharset;
 
   /**
