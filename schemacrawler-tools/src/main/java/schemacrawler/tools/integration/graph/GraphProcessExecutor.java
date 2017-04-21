@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static java.nio.file.Files.exists;
-import static java.nio.file.Files.isReadable;
-import static java.nio.file.Files.isRegularFile;
 import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 import static sf.util.IOUtility.isFileWritable;
 import static sf.util.IOUtility.readResourceFully;
 
@@ -70,7 +68,7 @@ public class GraphProcessExecutor
     requireNonNull(graphOptions, "No graph options provided");
     requireNonNull(graphOutputFormat, "No graph output format provided");
 
-    if (!(exists(dotFile) && isRegularFile(dotFile) && isReadable(dotFile)))
+    if (!isFileReadable(dotFile))
     {
       throw new IOException("Cannot read DOT file, " + dotFile);
     }
@@ -80,11 +78,6 @@ public class GraphProcessExecutor
     if (!isFileWritable(this.outputFile))
     {
       throw new IOException("Cannot write output file, " + this.outputFile);
-    }
-
-    if (graphOutputFormat == GraphOutputFormat.scdot)
-    {
-      return;
     }
 
     createDiagramCommand(dotFile, outputFile, graphOptions, graphOutputFormat);
@@ -98,13 +91,6 @@ public class GraphProcessExecutor
   public Integer call()
     throws Exception
   {
-    // For scdot, we may not need to run the process
-    final List<String> command = getCommand();
-    if (command == null || command.isEmpty())
-    {
-      return 0;
-    }
-
     final Integer exitCode = super.call();
     final boolean isProcessInError = exitCode == null || exitCode != 0;
 

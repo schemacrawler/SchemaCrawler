@@ -111,14 +111,17 @@ public final class GraphExecutable
 
     traverser.traverse();
 
-    // Create graph image
-    final GraphOptions graphOptions = getGraphOptions();
-    final GraphProcessExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
-                                                                               outputOptions
-                                                                                 .getOutputFile(),
-                                                                               graphOptions,
-                                                                               graphOutputFormat);
-    graphProcessExecutor.call();
+    if (graphOutputFormat != GraphOutputFormat.scdot)
+    {
+      // Create graph image
+      final GraphOptions graphOptions = getGraphOptions();
+      final GraphProcessExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
+                                                                                 outputOptions
+                                                                                   .getOutputFile(),
+                                                                                 graphOptions,
+                                                                                 graphOutputFormat);
+      graphProcessExecutor.call();
+    }
   }
 
   public final GraphOptions getGraphOptions()
