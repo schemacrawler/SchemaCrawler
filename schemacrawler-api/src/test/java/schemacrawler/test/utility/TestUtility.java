@@ -235,13 +235,6 @@ public final class TestUtility
     }
   }
 
-  public static Path createTempFile(final String stem,
-                                    final String outputFormatValue)
-    throws IOException
-  {
-    return IOUtility.createTempFile(stem, outputFormatValue);
-  }
-
   public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
   {
     final List<String> argsList = new ArrayList<>();
@@ -554,7 +547,7 @@ public final class TestUtility
   private static Path writeToTempFile(final InputStream resourceStream)
     throws IOException, FileNotFoundException
   {
-    final Path tempFile = createTempFile("resource", "data").normalize()
+    final Path tempFile = IOUtility.createTempFilePath("resource", "data").normalize()
       .toAbsolutePath();
 
     try (final OutputStream tempFileStream = newOutputStream(tempFile,

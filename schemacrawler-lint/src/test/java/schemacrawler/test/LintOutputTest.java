@@ -32,7 +32,6 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -55,6 +54,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import sf.util.IOUtility;
 
 public class LintOutputTest
   extends BaseDatabaseTest
@@ -92,8 +92,8 @@ public class LintOutputTest
       {
         final String referenceFile = command + "." + outputFormat.getFormat();
 
-        final Path testOutputFile = createTempFile(referenceFile,
-                                                   outputFormat.getFormat());
+        final Path testOutputFile = IOUtility
+          .createTempFilePath(referenceFile, outputFormat.getFormat());
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                               testOutputFile);

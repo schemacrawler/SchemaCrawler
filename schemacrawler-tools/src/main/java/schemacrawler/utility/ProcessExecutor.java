@@ -29,7 +29,7 @@ package schemacrawler.utility;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.createTempFile;
+import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
 
@@ -63,8 +63,8 @@ public class ProcessExecutor
 
     try
     {
-      processOutput = createTempFile("scdot", "stdout");
-      processError = createTempFile("scdot", "stderr");
+      processOutput = createTempFilePath("scdot", "stdout");
+      processError = createTempFilePath("scdot", "stderr");
 
       if (command.isEmpty())
       {

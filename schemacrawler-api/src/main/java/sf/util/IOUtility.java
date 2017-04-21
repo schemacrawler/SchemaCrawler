@@ -108,7 +108,7 @@ public final class IOUtility
     }
   }
 
-  public static Path createTempFile(final String stem, final String extension)
+  public static Path createTempFilePath(final String stem, final String extension)
     throws IOException
   {
     final Path tempFilePath = Files

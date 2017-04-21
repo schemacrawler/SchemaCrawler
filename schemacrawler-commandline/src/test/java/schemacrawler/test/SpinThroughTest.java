@@ -59,6 +59,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import sf.util.IOUtility;
 
 public class SpinThroughTest
   extends BaseDatabaseTest
@@ -205,9 +206,9 @@ public class SpinThroughTest
                               final OutputFormat outputFormat)
     throws IOException
   {
-    return TestUtility
-      .createTempFile(String.format("%s.%s", schemaTextDetailType, infoLevel),
-                      outputFormat.getFormat());
+    return IOUtility.createTempFilePath(String
+      .format("%s.%s", schemaTextDetailType, infoLevel),
+                                        outputFormat.getFormat());
   }
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,

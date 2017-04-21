@@ -32,7 +32,6 @@ package schemacrawler.test;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -63,6 +62,7 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import sf.util.IOUtility;
 
 public class SchemaCrawlerOutputTest
   extends BaseDatabaseTest
@@ -113,8 +113,8 @@ public class SchemaCrawlerOutputTest
       {
         final String referenceFile = command + "." + outputFormat.getFormat();
 
-        final Path testOutputFile = createTempFile(referenceFile,
-                                                   outputFormat.getFormat());
+        final Path testOutputFile = IOUtility
+          .createTempFilePath(referenceFile, outputFormat.getFormat());
 
         final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                               testOutputFile);
@@ -173,8 +173,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -231,9 +231,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = schemaTextDetailType + "_" + infoLevel
                                    + ".json";
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 TextOutputFormat.json
-                                                   .getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
                                                             testOutputFile);
@@ -284,8 +283,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -333,8 +332,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -383,8 +382,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -444,8 +443,8 @@ public class SchemaCrawlerOutputTest
     {
       final String referenceFile = "routines." + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -506,8 +505,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "schema_standard."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -559,8 +558,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);
@@ -610,8 +609,8 @@ public class SchemaCrawlerOutputTest
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
 
-      final Path testOutputFile = createTempFile(referenceFile,
-                                                 outputFormat.getFormat());
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
 
       final OutputOptions outputOptions = new OutputOptions(outputFormat,
                                                             testOutputFile);

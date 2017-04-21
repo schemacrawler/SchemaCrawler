@@ -32,7 +32,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.IOUtility;
 
 public class SpringIntegrationTest
   extends BaseDatabaseTest
@@ -134,7 +134,8 @@ public class SpringIntegrationTest
                                             final boolean isCompressedOutput)
     throws Exception
   {
-    final Path testOutputFile = createTempFile(executableName, "data");
+    final Path testOutputFile = IOUtility.createTempFilePath(executableName,
+                                                             "data");
 
     executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection(), databaseSpecificOverrideOptions);
