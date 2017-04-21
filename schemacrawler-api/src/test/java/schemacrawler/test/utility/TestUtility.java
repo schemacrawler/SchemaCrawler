@@ -59,7 +59,6 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -85,6 +84,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
+
+import sf.util.IOUtility;
 
 public final class TestUtility
 {
@@ -238,13 +239,7 @@ public final class TestUtility
                                     final String outputFormatValue)
     throws IOException
   {
-    final Path testOutputTempFilePath = Files
-      .createTempFile(String.format("schemacrawler.%s.", stem),
-                      String.format(".%s", outputFormatValue))
-      .normalize().toAbsolutePath();
-    delete(testOutputTempFilePath);
-    testOutputTempFilePath.toFile().deleteOnExit();
-    return testOutputTempFilePath;
+    return IOUtility.createTempFile(stem, outputFormatValue);
   }
 
   public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
