@@ -29,6 +29,7 @@ package sf.util;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.createTempFile;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.isDirectory;
@@ -45,7 +46,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
@@ -108,13 +108,13 @@ public final class IOUtility
     }
   }
 
-  public static Path createTempFilePath(final String stem, final String extension)
+  public static Path createTempFilePath(final String stem,
+                                        final String extension)
     throws IOException
   {
-    final Path tempFilePath = Files
-      .createTempFile(String.format("schemacrawler.%s.", stem),
-                      String.format(".%s", extension))
-      .normalize().toAbsolutePath();
+    final Path tempFilePath = createTempFile("schemacrawler." + stem + ".",
+                                             "." + extension).normalize()
+                                               .toAbsolutePath();
     delete(tempFilePath);
     tempFilePath.toFile().deleteOnExit();
     return tempFilePath;
