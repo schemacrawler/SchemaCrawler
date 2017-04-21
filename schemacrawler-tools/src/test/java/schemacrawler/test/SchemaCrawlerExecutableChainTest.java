@@ -32,7 +32,6 @@ package schemacrawler.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 import static sf.util.IOUtility.readFully;
 
@@ -49,6 +48,7 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.IOUtility;
 
 public class SchemaCrawlerExecutableChainTest
   extends BaseDatabaseTest
@@ -59,7 +59,8 @@ public class SchemaCrawlerExecutableChainTest
     throws Exception
   {
     final Executable executable = new ScriptExecutable();
-    final Path testOutputFile = createTempFile(executable.getCommand(), "data");
+    final Path testOutputFile = IOUtility
+      .createTempFilePath(executable.getCommand(), "data");
 
     final OutputOptions outputOptions = new OutputOptions("/chain.js",
                                                           testOutputFile);

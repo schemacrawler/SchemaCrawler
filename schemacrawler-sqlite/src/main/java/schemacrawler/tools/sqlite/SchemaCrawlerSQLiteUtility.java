@@ -30,7 +30,7 @@ package schemacrawler.tools.sqlite;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.IOUtility.createTempFile;
+import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.isFileReadable;
 
 import java.nio.file.Path;
@@ -98,7 +98,7 @@ public class SchemaCrawlerSQLiteUtility
     options.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
     options.setRoutineInclusionRule(new ExcludeAll());
 
-    final Path diagramFile = createTempFile("schemacrawler", extension);
+    final Path diagramFile = createTempFilePath("schemacrawler", extension);
     final OutputOptions outputOptions = new OutputOptions(extension,
                                                           diagramFile);
 

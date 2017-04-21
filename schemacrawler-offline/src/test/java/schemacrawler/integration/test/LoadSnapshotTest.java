@@ -34,7 +34,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -53,6 +52,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import sf.util.IOUtility;
 
 public class LoadSnapshotTest
   extends BaseDatabaseTest
@@ -95,7 +95,8 @@ public class LoadSnapshotTest
                  6,
                  catalog.getTables(schema).size());
 
-    serializedDatabaseFile = createTempFile("schemacrawler", "ser");
+    serializedDatabaseFile = IOUtility.createTempFilePath("schemacrawler",
+                                                          "ser");
 
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
     final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,

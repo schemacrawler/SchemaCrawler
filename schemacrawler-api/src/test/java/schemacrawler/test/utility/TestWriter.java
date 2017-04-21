@@ -39,7 +39,6 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.createTempFile;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -52,6 +51,8 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.GZIPOutputStream;
+
+import sf.util.IOUtility;
 
 public class TestWriter
   extends Writer
@@ -72,8 +73,9 @@ public class TestWriter
     throws IOException
   {
     this.outputformat = requireNonNull(outputformat);
-    tempFile = createTempFile("schemacrawler",
-                              outputformat.replaceAll("[/\\\\]", ""));
+    tempFile = IOUtility
+      .createTempFilePath("schemacrawler",
+                          outputformat.replaceAll("[/\\\\]", ""));
     out = openOutputWriter(tempFile, UTF_8, isCompressed);
     this.isCompressed = isCompressed;
   }

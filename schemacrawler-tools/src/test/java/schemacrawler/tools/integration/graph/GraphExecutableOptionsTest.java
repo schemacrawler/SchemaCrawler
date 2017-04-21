@@ -50,9 +50,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
-import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import sf.util.IOUtility;
 
 public class GraphExecutableOptionsTest
   extends BaseExecutableTest
@@ -333,8 +333,8 @@ public class GraphExecutableOptionsTest
   {
     final String outputFormatValue = GraphOutputFormat.png.getFormat();
 
-    final Path testOutputFile = TestUtility
-      .createTempFile(executable.getCommand(), outputFormatValue);
+    final Path testOutputFile = IOUtility
+      .createTempFilePath(executable.getCommand(), outputFormatValue);
 
     final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                           testOutputFile);
