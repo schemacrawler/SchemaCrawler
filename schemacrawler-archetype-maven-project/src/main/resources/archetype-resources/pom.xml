@@ -23,7 +23,7 @@
       <artifactId>schemacrawler</artifactId>
       <version>${schemacrawler.version}</version>
     </dependency>
-  </dependencies>  
+  </dependencies>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <schemacrawler.version>14.16.01</schemacrawler.version>
