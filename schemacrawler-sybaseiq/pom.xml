@@ -2,31 +2,31 @@
 <project
   xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>us.fatehi</groupId>
-		<artifactId>schemacrawler-parent</artifactId>
-		<version>14.16.01</version>
-	</parent>
-	<artifactId>schemacrawler-sybaseiq</artifactId>
-	<packaging>jar</packaging>
-	<name>SchemaCrawler for Sybase IQ</name>
-	<dependencies>
-		<dependency>
-			<groupId>us.fatehi</groupId>
-			<artifactId>schemacrawler</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>us.fatehi</groupId>
+    <artifactId>schemacrawler-parent</artifactId>
+    <version>14.16.01</version>
+  </parent>
+  <artifactId>schemacrawler-sybaseiq</artifactId>
+  <packaging>jar</packaging>
+  <name>SchemaCrawler for Sybase IQ</name>
+  <dependencies>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!--
-		<dependency>
-			<groupId>com.sybase.jdbcx</groupId>
-			<artifactId>jconn4</artifactId>
-			<version>7.07</version>
-			<scope>provided</scope>
-		</dependency>
+    <dependency>
+      <groupId>com.sybase.jdbcx</groupId>
+      <artifactId>jconn4</artifactId>
+      <version>7.07</version>
+      <scope>provided</scope>
+    </dependency>
     -->
-	</dependencies>
+  </dependencies>
   <build>
     <plugins>
       <plugin>
