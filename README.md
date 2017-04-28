@@ -7,6 +7,12 @@
 
 
 
+<a href="https://github.com/sualeh/SchemaCrawler/releases/latest">
+<img src="https://img.shields.io/badge/download-zip-brightgreen.svg" /></a><a href="https://github.com/adriens/schemacrawler-deb/releases/latest">
+<img src="https://img.shields.io/badge/download-deb-7B2A90.svg" /></a><a href="https://github.com/adriens/schemacrawler-rpm/releases/latest">
+<img src="https://img.shields.io/badge/download-rpm-7B2A90.svg" /></a>
+
+
 # ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/blob/master/schemacrawler-site/src/site/resources/images/schemacrawler_logo.png?raw=true) SchemaCrawler
 
 > Please see the [SchemaCrawler website](http://www.schemacrawler.com/) for more details.
