@@ -27,7 +27,7 @@ Then, run SchemaCrawler from the command-line within the container, like this
 ```
 ./schemacrawler.sh \
 -server=sqlite -user= -password= -database=sc.db \
--infolevel=maximum -routines= -command=graph \
+-infolevel=maximum -routines= -command=schema \
 -outputfile=/share/sc_db.png
 ```
 The image exports a volume called `/share`, and you can map it to your local directory. 
