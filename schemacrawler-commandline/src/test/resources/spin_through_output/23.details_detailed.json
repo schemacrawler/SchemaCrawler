@@ -352,7 +352,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10118",
+          "name": "SYS_IDX_FK_Z_AUTHOR_10118",
           "definition": ""
         },
         {
@@ -362,7 +362,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10116",
+          "name": "SYS_IDX_FK_Y_BOOK_10116",
           "definition": ""
         },
         {
@@ -539,7 +539,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10109",
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109",
           "definition": ""
         }
       ],
@@ -838,7 +838,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10198",
+          "name": "SYS_IDX_FK_WRITER_JOIN_10198",
           "definition": ""
         },
         {
@@ -858,7 +858,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10200",
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10200",
           "definition": ""
         }
       ],
@@ -1080,7 +1080,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10179",
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10179",
           "definition": ""
         },
         {
@@ -1309,7 +1309,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10186",
+          "name": "SYS_IDX_FK_WRITER_10186",
           "definition": ""
         },
         {
@@ -1319,7 +1319,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10188",
+          "name": "SYS_IDX_FK_PUBLICATION_10188",
           "definition": ""
         }
       ],
@@ -1446,7 +1446,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10212",
+          "name": "SYS_IDX_FK_SELFREFERENCE_10212",
           "definition": ""
         }
       ],
@@ -1624,7 +1624,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10215",
+          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10215",
           "definition": ""
         },
         {
@@ -2074,7 +2074,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10205",
+          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10205",
           "definition": ""
         }
       ],
@@ -2407,7 +2407,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10158",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10158",
           "definition": ""
         },
         {
@@ -2424,7 +2424,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_10156",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10156",
           "definition": ""
         }
       ],
@@ -2880,12 +2880,12 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.3.4",
+    "databaseProductVersion": "2.4.0",
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-12-24 14:20:39",
+    "crawlTimestamp": "2017-05-31 00:47:16",
     "title": ""
   },
   "routines": [
@@ -3241,7 +3241,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.3.4",
+    "driverVersion": "2.4.0",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",

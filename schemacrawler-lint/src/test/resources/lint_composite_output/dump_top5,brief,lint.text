@@ -261,7 +261,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	SYS_IDX_10212
+	redundant index	SYS_IDX_FK_SELFREFERENCE_10212
 	redundant index	SYS_IDX_PK_SELFREFERENCE_10209
                                                              [lint, low]
 	empty table	

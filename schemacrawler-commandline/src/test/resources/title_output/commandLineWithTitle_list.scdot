@@ -37,7 +37,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
-		<td align='left'>HSQL Database Engine 2.3.4</td>
+		<td align='left'>HSQL Database Engine 2.4.0</td>
 	</tr>
       </table>    >
     labeljust=r
