@@ -35,7 +35,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	SYS_IDX_10116
+	redundant index	SYS_IDX_FK_Y_BOOK_10116
 	no primary key	
 	primary key may not be a surrogate	
                                                           [lint, medium]
@@ -49,8 +49,8 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
+	redundant index	SYS_IDX_FK_PREVIOUSEDITION_10109
 	redundant index	UIDX_PREVIOUSEDITION
-	redundant index	SYS_IDX_10109
                                                           [lint, medium]
 	unique index with nullable columns	UIDX_PREVIOUSEDITION
                                                              [lint, low]
@@ -147,7 +147,7 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	SYS_IDX_10212
+	redundant index	SYS_IDX_FK_SELFREFERENCE_10212
 	redundant index	SYS_IDX_PK_SELFREFERENCE_10209
                                                              [lint, low]
 	empty table	

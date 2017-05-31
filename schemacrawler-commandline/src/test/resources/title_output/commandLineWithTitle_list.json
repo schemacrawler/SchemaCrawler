@@ -325,7 +325,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_10118"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10118"
         },
         {
           "columns": {
@@ -333,7 +333,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_10116"
+          "name": "SYS_IDX_FK_Y_BOOK_10116"
         },
         {
           "columns": [
@@ -494,7 +494,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10109"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109"
         }
       ],
       "columns": [
@@ -960,7 +960,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_10158"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10158"
         },
         {
           "columns": [
@@ -974,7 +974,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_10156"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10156"
         }
       ],
       "columns": [
@@ -1187,7 +1187,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:46:15",
+    "crawlTimestamp": "2017-05-31 00:47:24",
     "title": "Database Design for Books and Publishers"
   }
 }]

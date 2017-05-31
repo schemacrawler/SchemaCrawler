@@ -325,7 +325,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_10118"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10118"
         },
         {
           "columns": {
@@ -333,7 +333,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_10116"
+          "name": "SYS_IDX_FK_Y_BOOK_10116"
         },
         {
           "columns": [
@@ -494,7 +494,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10109"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109"
         }
       ],
       "columns": [
@@ -774,7 +774,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_10198"
+          "name": "SYS_IDX_FK_WRITER_JOIN_10198"
         },
         {
           "columns": {
@@ -790,7 +790,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10200"
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10200"
         }
       ],
       "columns": [
@@ -996,7 +996,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_10179"
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10179"
         },
         {
           "columns": {
@@ -1211,7 +1211,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_10186"
+          "name": "SYS_IDX_FK_WRITER_10186"
         },
         {
           "columns": {
@@ -1219,7 +1219,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10188"
+          "name": "SYS_IDX_FK_PUBLICATION_10188"
         }
       ],
       "columns": [
@@ -1336,7 +1336,7 @@
             "name": "ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10212"
+          "name": "SYS_IDX_FK_SELFREFERENCE_10212"
         }
       ],
       "columns": [
@@ -1498,7 +1498,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_10215"
+          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10215"
         },
         {
           "columns": [
@@ -1918,7 +1918,7 @@
             "name": "ΣΥΓΓΡΑΦΈΑΣ"
           },
           "unique": false,
-          "name": "SYS_IDX_10205"
+          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10205"
         }
       ],
       "columns": [
@@ -2228,7 +2228,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_10158"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10158"
         },
         {
           "columns": [
@@ -2242,7 +2242,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_10156"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10156"
         }
       ],
       "columns": [
@@ -2460,7 +2460,7 @@
     "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-09-30 20:46:11",
+    "crawlTimestamp": "2017-05-31 00:47:21",
     "title": ""
   },
   "routines": [

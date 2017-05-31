@@ -244,11 +244,11 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
-		<td class='property_value'>HSQL Database Engine 2.3.4</td>
+		<td class='property_value'>HSQL Database Engine 2.4.0</td>
 	</tr>
 	<tr>
 		<td class='property_name'>driver version</td>
-		<td class='property_value'>HSQL Database Engine Driver 2.3.4</td>
+		<td class='property_value'>HSQL Database Engine Driver 2.4.0</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -265,7 +265,7 @@ td.section {
 <text text-anchor="start" x="170.5" y="-22.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#888888">generated on</text>
 <text text-anchor="start" x="223.5" y="-22.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#888888">2017&#45;03&#45;09 22:27:11</text>
 <text text-anchor="start" x="155.5" y="-9.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#888888">database version</text>
-<text text-anchor="start" x="223.5" y="-9.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#888888">HSQL Database Engine 2.3.4</text>
+<text text-anchor="start" x="223.5" y="-9.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#888888">HSQL Database Engine 2.4.0</text>
 <polygon fill="none" stroke="#888888" points="152,-4 152,-45 331,-45 331,-4 152,-4"/>
 <!-- authors_dba8a1ff -->
 <g id="node1" class="node"><title>authors_dba8a1ff</title>
