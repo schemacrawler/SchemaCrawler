@@ -107,7 +107,7 @@ SYS_IDX_PK_BOOKS_10105                                    [unique index]
 UIDX_PREVIOUSEDITION                                      [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_10109                                         [non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10109                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 Table Constraints
@@ -159,7 +159,7 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_10179                                         [non-unique index]
+SYS_IDX_FK_PUBLICATIONS_WRITER_10179                  [non-unique index]
   WRITERID                          ascending                   
 
 SYS_IDX_PK_PUBLICATIONS_10175                             [unique index]

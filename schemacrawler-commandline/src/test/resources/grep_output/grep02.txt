@@ -128,7 +128,7 @@ Indexes
 SYS_IDX_PK_WRITERS_10165                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_10215                                         [non-unique index]
+SYS_IDX_FK_WRITERS_PUBLICATION_10215                  [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]

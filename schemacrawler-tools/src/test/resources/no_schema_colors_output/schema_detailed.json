@@ -233,7 +233,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_10118"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10118"
         },
         {
           "columns": {
@@ -241,7 +241,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_10116"
+          "name": "SYS_IDX_FK_Y_BOOK_10116"
         },
         {
           "columns": [
@@ -341,7 +341,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_10109"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109"
         }
       ],
       "columns": [

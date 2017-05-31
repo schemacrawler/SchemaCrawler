@@ -461,7 +461,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10118",
+          "name": "SYS_IDX_FK_Z_AUTHOR_10118",
           "definition": ""
         },
         {
@@ -471,7 +471,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10116",
+          "name": "SYS_IDX_FK_Y_BOOK_10116",
           "definition": ""
         },
         {
@@ -682,7 +682,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10109",
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109",
           "definition": ""
         }
       ],
@@ -1195,7 +1195,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_10158",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10158",
           "definition": ""
         },
         {
@@ -1212,7 +1212,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_10156",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10156",
           "definition": ""
         }
       ],
@@ -1551,7 +1551,7 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.3.4",
+    "databaseProductVersion": "2.4.0",
     "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
@@ -1641,11 +1641,13 @@
           "sql.pad_space",
           "sql.ref_integrity",
           "sql.regular_names",
+          "sql.restrict_exec",
           "sql.syntax_db2",
           "sql.syntax_mss",
           "sql.syntax_mys",
           "sql.syntax_ora",
           "sql.syntax_pgs",
+          "sql.sys_index_names",
           "sql.unique_nulls",
           "textdb.all_quoted",
           "textdb.cache_rows",
@@ -1679,7 +1681,7 @@
       {
         "name": "getDatabaseMinorVersion",
         "description": "database minor version",
-        "value": 3
+        "value": 4
       },
       {
         "name": "getDefaultTransactionIsolation",
@@ -1714,7 +1716,7 @@
       {
         "name": "getDriverMinorVersion",
         "description": "driver minor version",
-        "value": 3
+        "value": 4
       },
       {
         "name": "getExtraNameCharacters",
@@ -1764,7 +1766,7 @@
       {
         "name": "getJDBCMinorVersion",
         "description": "JDBC minor version",
-        "value": 0
+        "value": 2
       },
       {
         "name": "locatorsUpdateCopy",
@@ -1834,7 +1836,7 @@
       {
         "name": "getMaxLogicalLobSize",
         "description": "max logical lob size",
-        "value": 0
+        "value": 1099511627776
       },
       {
         "name": "getMaxProcedureNameLength",
@@ -2531,7 +2533,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-12-24 14:14:42",
+    "crawlTimestamp": "2017-05-31 00:42:58",
     "title": ""
   },
   "routines": [
@@ -2619,7 +2621,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.3.4",
+    "driverVersion": "2.4.0",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",

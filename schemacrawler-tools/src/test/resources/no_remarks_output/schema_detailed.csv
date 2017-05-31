@@ -68,10 +68,10 @@ FK_Y_BOOK,"[foreign key, with no action]"
 ""
 Indexes
 ""
-SYS_IDX_10118,[non-unique index]
+SYS_IDX_FK_Z_AUTHOR_10118,[non-unique index]
 "",AUTHORID,ascending
 ""
-SYS_IDX_10116,[non-unique index]
+SYS_IDX_FK_Y_BOOK_10116,[non-unique index]
 "",BOOKID,ascending
 ""
 UIDX_BOOKAUTHORS,[unique index]
@@ -111,7 +111,7 @@ SYS_IDX_PK_BOOKS_10105,[unique index]
 UIDX_PREVIOUSEDITION,[unique index]
 "",PREVIOUSEDITIONID,ascending
 ""
-SYS_IDX_10109,[non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10109,[non-unique index]
 "",PREVIOUSEDITIONID,ascending
 
 

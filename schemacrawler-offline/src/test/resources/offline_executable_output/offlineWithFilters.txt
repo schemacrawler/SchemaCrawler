@@ -25,10 +25,10 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_10158                                         [non-unique index]
+SYS_IDX_FK_SALES_SALESDATA_10158                      [non-unique index]
   SALESDATAID                       ascending                   
 
-SYS_IDX_10156                                         [non-unique index]
+SYS_IDX_FK_SALES_REGIONS_10156                        [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
