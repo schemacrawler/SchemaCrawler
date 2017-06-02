@@ -15,7 +15,8 @@ SchemaCrawler questions from users.
 
 ## Companies
 
-- [SchemaCrawler experts on LinkedIn](https://www.linkedin.com/search/results/people/?keywords=%22schemacrawler%22)
+- [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool 
+  that handles enterprise-scale schemas
 - [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
 - Architect at Nestlé Nespresso SA: 
 "I run a daily cron to export the content (metadata and data) of a 
@@ -36,12 +37,8 @@ Photograph courtesy of Adrien Sales.
   <img src="images/SchemaCrawler_Noumea.jpg" width="200" alt="Schemacrawler database diagrams in use" />
 </a>
 
-## Open Source Projects
-
-SchemaCrawler in open source projects.
-
 - [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh&type=Code)
-- [jQAssistant](http://jqassistant.org/)
+- [SchemaCrawler experts on LinkedIn](https://www.linkedin.com/search/results/people/?keywords=%22schemacrawler%22)
 
 ## Press
 
