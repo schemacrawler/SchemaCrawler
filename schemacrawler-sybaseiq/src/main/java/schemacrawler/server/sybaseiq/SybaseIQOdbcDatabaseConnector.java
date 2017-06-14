@@ -32,26 +32,26 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
-public final class SybaseIQDatabaseConnector
+public final class SybaseIQOdbcDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 1786572065393663455L;
+  private static final long serialVersionUID = 1L;
 
-  public SybaseIQDatabaseConnector()
+  public SybaseIQOdbcDatabaseConnector()
   {
     super(new DatabaseServerType("sybaseiq", "SAP Sybase IQ"),
           "/help/Connections.sybaseiq.txt",
           "/schemacrawler-sybaseiq.config.properties",
-          "/sybaseiq.information_schema",
-          "notapplicable:.*");  // do not specify a value here as it conflicts with SAP Sybase ASE
+          "/sybaseiqodbc.information_schema",
+          "notapplicable:.*");
   }
 
   @Override
   public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.doesNotSupportCatalogs();
+    databaseSpecificOverrideOptionsBuilder.doesNotSupportCatalogs();  // Unlike the regular JDBC driver, catalogs are not supported
     return databaseSpecificOverrideOptionsBuilder;
   }
 
