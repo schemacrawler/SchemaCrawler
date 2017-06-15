@@ -268,9 +268,9 @@ abstract class AbstractRetriever
                                tableName);
   }
 
-  String quotedName(final String name)
+  String nameQuotedName(final String name)
   {
-    return retrieverConnection.getIdentifiers().quotedName(name);
+    return retrieverConnection.getIdentifiers().nameQuotedName(name);
   }
 
   String unquotedName(final String name)

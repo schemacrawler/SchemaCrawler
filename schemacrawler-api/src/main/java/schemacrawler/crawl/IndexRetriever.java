@@ -150,7 +150,7 @@ final class IndexRetriever
                                    final MetadataResultSet results)
   {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    String indexName = quotedName(results.getString("INDEX_NAME"));
+    String indexName = nameQuotedName(results.getString("INDEX_NAME"));
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index <%s.%s>",
                                 table.getFullName(),
@@ -162,7 +162,7 @@ final class IndexRetriever
     // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
-    final String columnName = quotedName(unquotedName(results
+    final String columnName = nameQuotedName(unquotedName(results
       .getString("COLUMN_NAME")));
     if (isBlank(columnName))
     {
@@ -236,8 +236,8 @@ final class IndexRetriever
   {
     MutablePrimaryKey primaryKey;
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    final String columnName = quotedName(results.getString("COLUMN_NAME"));
-    final String primaryKeyName = quotedName(results.getString("PK_NAME"));
+    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+    final String primaryKeyName = nameQuotedName(results.getString("PK_NAME"));
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
     primaryKey = table.getPrimaryKey();
@@ -266,9 +266,9 @@ final class IndexRetriever
   private Optional<MutableTable> lookupTable(final NamedObjectList<MutableTable> allTables,
                                              final MetadataResultSet results)
   {
-    final String catalogName = quotedName(results.getString("TABLE_CAT"));
-    final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = quotedName(results.getString("TABLE_NAME"));
+    final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
+    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
 
     final Optional<MutableTable> optionalTable = allTables
       .lookup(new SchemaReference(catalogName, schemaName), tableName);

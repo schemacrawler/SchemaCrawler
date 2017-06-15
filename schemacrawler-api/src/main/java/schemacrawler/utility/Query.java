@@ -45,7 +45,10 @@ public final class Query
 
   private static final long serialVersionUID = 2820769346069413473L;
 
+  private final boolean hasName;
+
   private final String name;
+
   private final String query;
   private final boolean throwSQLException;
 
@@ -84,10 +87,12 @@ public final class Query
     {
       this.name = name;
       this.query = query;
+      hasName = true;
     }
     else if (isNameProvided && !isQueryProvided)
     {
       this.name = this.query = name;
+      hasName = false;
     }
     else
     {
@@ -114,6 +119,16 @@ public final class Query
   public String getQuery()
   {
     return query;
+  }
+
+  /**
+   * Whether a query name was provided.
+   *
+   * @return Whether a query name was provided
+   */
+  public boolean hasName()
+  {
+    return hasName;
   }
 
   /**

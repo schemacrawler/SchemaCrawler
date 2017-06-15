@@ -88,6 +88,10 @@ final class MetadataResultSet
     throws SQLException
   {
     this(executeAgainstSchema(query, statement, schemaInclusionRule));
+    if (query.hasName())
+    {
+      description = query.getName();
+    }
   }
 
   MetadataResultSet(final ResultSet resultSet)

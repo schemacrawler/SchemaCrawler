@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -38,7 +39,7 @@ import schemacrawler.utility.Identifiers;
 public class IdentifiersTest
 {
 
-  private final Identifiers reservedWords = Identifiers.identifiers().build();
+  private final Identifiers identifiers = Identifiers.identifiers().build();
 
   @Test
   public void blank()
@@ -46,8 +47,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "  ", "\t", };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReservedWord(word));
-      assertTrue(word, reservedWords.isToBeQuoted(word));
+      assertFalse(word, identifiers.isReservedWord(word));
+      assertTrue(word, identifiers.isToBeQuoted(word));
     }
   }
 
@@ -57,8 +58,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "", null, };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReservedWord(word));
-      assertFalse(word, reservedWords.isToBeQuoted(word));
+      assertFalse(word, identifiers.isReservedWord(word));
+      assertFalse(word, identifiers.isToBeQuoted(word));
     }
   }
 
@@ -75,8 +76,27 @@ public class IdentifiersTest
                                           " leaD" };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReservedWord(word));
-      assertTrue(word, reservedWords.isToBeQuoted(word));
+      assertFalse(word, identifiers.isReservedWord(word));
+      assertTrue(word, identifiers.isToBeQuoted(word));
+    }
+  }
+
+  @Test
+  public void nameQuotedNames()
+  {
+    final String[] names = new String[] {
+                                          "one name",
+                                          "\"UPDATE\"",
+                                          "\"goodname\"" };
+    final String[] quotedNames = new String[] {
+                                                "\"one name\"",
+                                                "\"UPDATE\"",
+                                                "goodname" };
+    for (int i = 0; i < names.length; i++)
+    {
+      final String name = names[i];
+      final String quotedName = quotedNames[i];
+      assertEquals(quotedName, identifiers.nameQuotedName(name));
     }
   }
 
@@ -86,8 +106,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "update", "UPDATE", };
     for (final String word: words)
     {
-      assertTrue(word, reservedWords.isReservedWord(word));
-      assertTrue(word, reservedWords.isToBeQuoted(word));
+      assertTrue(word, identifiers.isReservedWord(word));
+      assertTrue(word, identifiers.isToBeQuoted(word));
     }
   }
 
@@ -115,8 +135,8 @@ public class IdentifiersTest
                                           "दी८दी" };
     for (final String word: words)
     {
-      assertFalse(word, reservedWords.isReservedWord(word));
-      assertFalse(word, reservedWords.isToBeQuoted(word));
+      assertFalse(word, identifiers.isReservedWord(word));
+      assertFalse(word, identifiers.isToBeQuoted(word));
     }
   }
 

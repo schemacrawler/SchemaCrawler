@@ -131,9 +131,9 @@ final class TableRetriever
                            final InclusionRuleFilter<Table> tableFilter,
                            final TableTypes supportedTableTypes)
   {
-    final String columnCatalogName = quotedName(results.getString("TABLE_CAT"));
-    final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = quotedName(results.getString("TABLE_NAME"));
+    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
+    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving table <%s.%s.%s>",
                                 columnCatalogName,
