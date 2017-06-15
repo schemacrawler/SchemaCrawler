@@ -1,0 +1,5 @@
+SELECT
+  NULL AS CATALOG_NAME,  -- catalogs not supported in IQ ODBC Driver
+  TRIM(USER_NAME) 
+AS 
+  SCHEMA_NAME FROM SYS.SYSUSER
