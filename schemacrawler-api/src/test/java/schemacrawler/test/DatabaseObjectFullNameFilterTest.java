@@ -87,6 +87,8 @@ public class DatabaseObjectFullNameFilterTest
   {
     final Builder<Table> databaseObjectFullNameFilterBuilder = DatabaseObjectFullNameFilter
       .databaseObjectFullNameFilter();
+    databaseObjectFullNameFilterBuilder.withIdentifierQuoteString("")
+      .withConnection(getConnection());
 
     final Collection<Table> filteredTables = tableFilter(databaseObjectFullNameFilterBuilder,
                                                          "Global Counts");

@@ -110,11 +110,11 @@ final class SequenceRetriever
     {
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("SEQUENCE_CATALOG"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("SEQUENCE_SCHEMA"));
-        final String sequenceName = quotedName(results
+        final String sequenceName = nameQuotedName(results
           .getString("SEQUENCE_NAME"));
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");

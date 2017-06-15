@@ -99,14 +99,14 @@ final class RoutineRetriever
     {
       while (results.next())
       {
-        final String columnCatalogName = quotedName(results
+        final String columnCatalogName = nameQuotedName(results
           .getString("FUNCTION_CAT"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("FUNCTION_SCHEM"));
-        final String functionName = quotedName(results
+        final String functionName = nameQuotedName(results
           .getString("FUNCTION_NAME"));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        final String specificName = quotedName(results
+        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String specificName = nameQuotedName(results
           .getString("SPECIFIC_NAME"));
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
@@ -202,7 +202,7 @@ final class RoutineRetriever
       while (results.next())
       {
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
-        final String functionName = quotedName(results
+        final String functionName = nameQuotedName(results
           .getString("FUNCTION_NAME"));
         LOGGER.log(Level.FINE,
                    new StringFormat("Retrieving function: %s.%s",
@@ -266,14 +266,14 @@ final class RoutineRetriever
     {
       while (results.next())
       {
-        final String columnCatalogName = quotedName(results
+        final String columnCatalogName = nameQuotedName(results
           .getString("PROCEDURE_CAT"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("PROCEDURE_SCHEM"));
-        final String procedureName = quotedName(results
+        final String procedureName = nameQuotedName(results
           .getString("PROCEDURE_NAME"));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
-        final String specificName = quotedName(results
+        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String specificName = nameQuotedName(results
           .getString("SPECIFIC_NAME"));
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
@@ -367,7 +367,7 @@ final class RoutineRetriever
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
-        final String procedureName = quotedName(results
+        final String procedureName = nameQuotedName(results
           .getString("PROCEDURE_NAME"));
         LOGGER.log(Level.FINE,
                    new StringFormat("Retrieving procedure: %s.%s",

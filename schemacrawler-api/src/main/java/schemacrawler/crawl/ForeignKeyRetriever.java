@@ -111,7 +111,7 @@ final class ForeignKeyRetriever
       while (results.next())
       {
         // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
-        final String fkName = quotedName(results.getString("FOREIGN_KEY_NAME"));
+        final String fkName = nameQuotedName(results.getString("FOREIGN_KEY_NAME"));
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving foreign key definition <%s>",
                                     fkName));
@@ -178,25 +178,25 @@ final class ForeignKeyRetriever
   {
     while (results.next())
     {
-      String foreignKeyName = quotedName(results.getString("FK_NAME"));
+      String foreignKeyName = nameQuotedName(results.getString("FK_NAME"));
       LOGGER
         .log(Level.FINE,
              new StringFormat("Retrieving foreign key: %s", foreignKeyName));
 
-      final String pkTableCatalogName = quotedName(results
+      final String pkTableCatalogName = nameQuotedName(results
         .getString("PKTABLE_CAT"));
-      final String pkTableSchemaName = quotedName(results
+      final String pkTableSchemaName = nameQuotedName(results
         .getString("PKTABLE_SCHEM"));
-      final String pkTableName = quotedName(results.getString("PKTABLE_NAME"));
-      final String pkColumnName = quotedName(results
+      final String pkTableName = nameQuotedName(results.getString("PKTABLE_NAME"));
+      final String pkColumnName = nameQuotedName(results
         .getString("PKCOLUMN_NAME"));
 
-      final String fkTableCatalogName = quotedName(results
+      final String fkTableCatalogName = nameQuotedName(results
         .getString("FKTABLE_CAT"));
-      final String fkTableSchemaName = quotedName(results
+      final String fkTableSchemaName = nameQuotedName(results
         .getString("FKTABLE_SCHEM"));
-      final String fkTableName = quotedName(results.getString("FKTABLE_NAME"));
-      final String fkColumnName = quotedName(results
+      final String fkTableName = nameQuotedName(results.getString("FKTABLE_NAME"));
+      final String fkColumnName = nameQuotedName(results
         .getString("FKCOLUMN_NAME"));
 
       final int keySequence = results.getInt("KEY_SEQ", 0);

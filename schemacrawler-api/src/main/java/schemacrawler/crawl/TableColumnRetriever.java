@@ -171,10 +171,10 @@ final class TableColumnRetriever
     final String defaultValue = results.getString("COLUMN_DEF");
     //
 
-    final String columnCatalogName = quotedName(results.getString("TABLE_CAT"));
-    final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = quotedName(results.getString("TABLE_NAME"));
-    final String columnName = quotedName(results.getString("COLUMN_NAME"));
+    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
+    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving column <%s.%s.%s.%s>",
                                 columnCatalogName,

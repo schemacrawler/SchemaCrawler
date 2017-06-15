@@ -95,13 +95,13 @@ final class RoutineExtRetriever
     {
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("ROUTINE_CATALOG"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("ROUTINE_SCHEMA"));
-        final String routineName = quotedName(results
+        final String routineName = nameQuotedName(results
           .getString("ROUTINE_NAME"));
-        final String specificName = quotedName(results
+        final String specificName = nameQuotedName(results
           .getString("SPECIFIC_NAME"));
 
         final Optional<MutableRoutine> routineOptional = lookupRoutine(catalogName,

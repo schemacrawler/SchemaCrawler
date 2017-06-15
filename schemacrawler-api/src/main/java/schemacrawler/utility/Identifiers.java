@@ -136,7 +136,6 @@ public final class Identifiers
 
     private Builder()
     {
-      identifierQuoteString = "";
       reservedWords = loadSql2003ReservedWords();
     }
 
@@ -186,15 +185,22 @@ public final class Identifiers
      */
     public Builder withIdentifierQuoteString(final String identifierQuoteString)
     {
-      requireNonNull(identifierQuoteString,
-                     "No identifier quote string provided");
-      this.identifierQuoteString = identifierQuoteString;
+      if (isBlank(identifierQuoteString))
+      {
+        // The JDBC specification states that spaces are to treated as
+        // if identifier quoting is not supported.
+        this.identifierQuoteString = "";
+      }
+      else
+      {
+        this.identifierQuoteString = identifierQuoteString;
+      }
       return this;
     }
 
     private boolean isIdentifierQuoteStringSet()
     {
-      return identifierQuoteString == null || !identifierQuoteString.isEmpty();
+      return identifierQuoteString != null;
     }
 
   }
@@ -255,7 +261,15 @@ public final class Identifiers
 
   private Identifiers(final Builder builder)
   {
-    identifierQuoteString = builder.identifierQuoteString;
+    if (builder.isIdentifierQuoteStringSet())
+    {
+      identifierQuoteString = builder.identifierQuoteString;
+    }
+    else
+    {
+      // JDBC default is double quotes
+      identifierQuoteString = "\"";
+    }
     reservedWords = builder.reservedWords;
   }
 
@@ -344,16 +358,27 @@ public final class Identifiers
    * @return Identifier name after quoting it, or the original name if
    *         quoting is not required
    */
-  public String quotedName(final String name)
+  public String nameQuotedName(final String name)
   {
-    final String quotedName;
-    if (isToBeQuoted(name))
+    if (isBlank(name))
     {
-      quotedName = identifierQuoteString + name + identifierQuoteString;
+      return name;
+    }
+
+    // Some database drivers, such as SQLite may return quoted names,
+    // but only for some calls.
+    // So, normalize the name by unquoting it first, before attempting
+    // to quote it.
+    final String unquotedName = unquotedName(name);
+
+    final String quotedName;
+    if (isToBeQuoted(unquotedName))
+    {
+      quotedName = identifierQuoteString + unquotedName + identifierQuoteString;
     }
     else
     {
-      quotedName = name;
+      quotedName = unquotedName;
     }
     return quotedName;
   }
