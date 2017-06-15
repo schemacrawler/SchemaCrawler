@@ -104,11 +104,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        final String columnName = quotedName(results.getString("COLUMN_NAME"));
+        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
+        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
         LOGGER.log(Level.FINER,
                    "Retrieving additional column attributes: " + columnName);
 
@@ -186,10 +186,10 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
+        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
+        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
         LOGGER.log(Level.FINER,
                    "Retrieving additional table attributes: " + tableName);
 
@@ -255,11 +255,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = quotedName(results.getString("INDEX_SCHEMA"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        final String indexName = quotedName(results.getString("INDEX_NAME"));
+        final String schemaName = nameQuotedName(results.getString("INDEX_SCHEMA"));
+        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String indexName = nameQuotedName(results.getString("INDEX_NAME"));
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -292,7 +292,7 @@ final class TableExtRetriever
         }
 
         final MutableIndex index = indexOptional.get();
-        final String indexColumnName = quotedName(results
+        final String indexColumnName = nameQuotedName(results
           .getString("COLUMN_NAME"));
 
         final Optional<MutableIndexColumn> indexColumnOptional = index
@@ -362,11 +362,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = quotedName(results.getString("INDEX_SCHEMA"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
-        final String indexName = quotedName(results.getString("INDEX_NAME"));
+        final String schemaName = nameQuotedName(results.getString("INDEX_SCHEMA"));
+        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String indexName = nameQuotedName(results.getString("INDEX_NAME"));
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -452,13 +452,13 @@ final class TableExtRetriever
     {
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("PRIMARY_KEY_SCHEMA"));
-        final String tableName = quotedName(results
+        final String tableName = nameQuotedName(results
           .getString("PRIMARY_KEY_TABLE_NAME"));
-        final String pkName = quotedName(results.getString("PRIMARY_KEY_NAME"));
+        final String pkName = nameQuotedName(results.getString("PRIMARY_KEY_NAME"));
 
         final String constraintKey = new SchemaReference(catalogName,
                                                          schemaName)
@@ -547,10 +547,10 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = quotedName(results.getString("TABLE_NAME"));
+        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
+        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -634,11 +634,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("TRIGGER_CATALOG"));
-        final String schemaName = quotedName(results
+        final String schemaName = nameQuotedName(results
           .getString("TRIGGER_SCHEMA"));
-        final String triggerName = quotedName(results
+        final String triggerName = nameQuotedName(results
           .getString("TRIGGER_NAME"));
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving trigger <%s>", triggerName));
@@ -732,10 +732,10 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = quotedName(results
+        final String catalogName = nameQuotedName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = quotedName(results.getString("TABLE_SCHEMA"));
-        final String viewName = quotedName(results.getString("TABLE_NAME"));
+        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
+        final String viewName = nameQuotedName(results.getString("TABLE_NAME"));
 
         final Optional<MutableTable> viewOptional = lookupTable(catalogName,
                                                                 schemaName,
@@ -779,13 +779,13 @@ final class TableExtRetriever
   {
     while (results.next())
     {
-      final String catalogName = quotedName(results.getString("TABLE_CAT"));
-      final String schemaName = quotedName(results.getString("TABLE_SCHEM"));
-      final String tableName = quotedName(results.getString("TABLE_NAME"));
+      final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
+      final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+      final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
       final String columnName;
       if (privilegesForColumn)
       {
-        columnName = quotedName(results.getString("COLUMN_NAME"));
+        columnName = nameQuotedName(results.getString("COLUMN_NAME"));
       }
       else
       {
