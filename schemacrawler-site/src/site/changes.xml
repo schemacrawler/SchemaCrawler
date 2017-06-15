@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.16.02" date="2017-06-20" description="Miscellaneous fixes">
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Bug fix for an issue with retrieving SQLite primary keys if the DDL used quoted names.
+      ]]></action>                                 
+     </release>     
      <release version="14.16.01" date="2017-04-10" description="Java 8 dial down">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Better protection of user credentials in memory.
