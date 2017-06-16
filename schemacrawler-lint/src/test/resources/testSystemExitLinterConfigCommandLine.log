@@ -18,7 +18,7 @@ Summary of schema lints:
 [critical]      1- foreign key self-references primary key
 [critical]*     2- no indexes
 
-SchemaCrawler 14.16.01
+SchemaCrawler 14.16.02
 
 Error: Tried to exit with status 1.
 
