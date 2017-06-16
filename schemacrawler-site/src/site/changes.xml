@@ -9,6 +9,9 @@
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Bug fix for an issue with retrieving SQLite primary keys if the DDL used quoted names.
       ]]></action>                                 
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Moved Sybase IQ plugin to new GitHub project.
+      ]]></action> 
      </release>     
      <release version="14.16.01" date="2017-04-10" description="Java 8 dial down">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
