@@ -130,13 +130,6 @@
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
-                  <groupId>us.fatehi</groupId>
-                  <artifactId>schemacrawler-sybaseiq</artifactId>
-                  <version>${project.version}</version>
-                  <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
-                </artifactItem>
-                <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
                   <version>42.1.1</version>
