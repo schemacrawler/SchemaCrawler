@@ -62,7 +62,7 @@ public class TestVersion
   public void version()
   {
     Version.main(new String[0]);
-    assertTrue(outContent.toString().startsWith("SchemaCrawler 14.16.01"));
+    assertTrue(outContent.toString().startsWith("SchemaCrawler 14.16.02"));
   }
 
 }
