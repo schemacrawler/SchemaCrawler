@@ -22,7 +22,6 @@ The JDBC drivers bundled with SchemaCrawler are:
   is included with the SchemaCrawler download.
 - The [PostgreSQL](http://www.postgresql.org/) [JDBC driver](http://jdbc.postgresql.org/) 
   is included with the SchemaCrawler download.
-- The [Sybase IQ](http://www.sybase.com/products/datawarehousing/sybaseiq) [jConnect JDBC driver](http://www.sybase.com/products/allproductsa-z/softwaredeveloperkit/jconnect) needs to be downloaded separately.
 - Offline database support does not need any JDBC driver, 
   and is included with the SchemaCrawler download.
 
@@ -35,7 +34,7 @@ For the databases mentioned above, you can provide connection details by using t
 command-line options:
 
 - `-server` - identifies the database server, and can be one of `sqlite`, `oracle`, `sqlserver`, 
-   `db2`, `mysql`, `postgresql`, `sybaseiq`, `offline`
+   `db2`, `mysql`, `postgresql`, `offline`
 - `-database` - identifies the database, and can have different meaning based on the server type
 - `-host` - specifies the database server host; it is optional, and defaults to localhost
 - `-port` - specifies the database server port; it is optional, and defaults to the default port for the server type
