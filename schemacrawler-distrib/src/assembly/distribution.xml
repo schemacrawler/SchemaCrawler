@@ -289,7 +289,6 @@
     <create-dbserver-distribution database="postgresql" />
     <create-dbserver-distribution database="sqlite" />
     <create-dbserver-distribution database="sqlserver" />
-    <create-dbserver-distribution database="sybaseiq" />
 
   </target>
 
