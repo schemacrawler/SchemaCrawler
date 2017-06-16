@@ -79,7 +79,6 @@
     <module>schemacrawler-postgresql</module>
     <module>schemacrawler-sqlite</module>
     <module>schemacrawler-sqlserver</module>
-    <module>schemacrawler-sybaseiq</module>
     <module>schemacrawler-offline</module>
 
   </modules>
