@@ -21,4 +21,4 @@ All SchemaCrawler jars are in the [Central Repository](http://search.maven.org/#
 
 An (unsupported) back-port of SchemaCrawler to Java  7 is available at [sualeh/SchemaCrawler-Java7-Backport](https://github.com/sualeh/SchemaCrawler-Java7-Backport).
 
-Please get support on [StackExchange](http://stackoverflow.com/search?tab=newest&q=schemacrawler), following the [Guidelines for Support](http://sualeh.github.io/SchemaCrawler/consulting.html).
+Please get support on [Stack Overflow](http://stackoverflow.com/search?tab=newest&q=schemacrawler), following the [Guidelines for Support](http://sualeh.github.io/SchemaCrawler/consulting.html).
