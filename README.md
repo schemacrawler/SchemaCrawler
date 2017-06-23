@@ -3,7 +3,7 @@
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 [![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/sualeh/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/sualeh/schemacrawler.svg)](https://hub.docker.com/r/sualeh/schemacrawler/)
-[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/schemacrawler.svg)](http://stackoverflow.com/search?tab=newest&q=schemacrawler)
+
 
 
 
@@ -20,3 +20,5 @@ SchemaCrawler is also a Java API that makes working with database metadata as ea
 All SchemaCrawler jars are in the [Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20a%3Aschemacrawler*). They can be used as dependencies in [Gradle](https://gradle.org/) or [Apache Maven](http://maven.apache.org/) projects, or with any other build system that supports the Central Repository. [Pre-packaged Docker images](https://hub.docker.com/r/sualeh/schemacrawler/) are on Docker Hub. [Download releases with tutorials from GitHub.](https://github.com/sualeh/SchemaCrawler/releases)
 
 An (unsupported) back-port of SchemaCrawler to Java  7 is available at [sualeh/SchemaCrawler-Java7-Backport](https://github.com/sualeh/SchemaCrawler-Java7-Backport).
+
+Please get support on [Stack Overflow](http://stackoverflow.com/search?tab=newest&q=schemacrawler), following the [Guidelines for Support](http://sualeh.github.io/SchemaCrawler/consulting.html).
