@@ -325,7 +325,7 @@ schemacrawler.format.hide_constraint_names=false
           in the
           <code>schemacrawler.config.properties </code>
           file. This setting will show unqualified names of database objects
-          such as tables and prcodures.
+          such as tables and procedures.
           That is, the catalog and schema names will not be displayed. Use with care,
           especially if you have foreign keys
           that reference tables in other
