@@ -69,7 +69,7 @@ public final class Color
 
   /**
    * <a href=
-   * "http://stackoverflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe">
+   * "http://Stack Overflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe">
    * Converting from HSV (HSB in Java) to RGB without using
    * java.awt.Color</a>
    */

@@ -11,19 +11,19 @@ SchemaCrawler, to help you with advice with using SchemaCrawler in your project,
 consulting assignments for implementation. Please contact Sualeh Fatehi <sualeh@hotmail.com> 
 for details on a Professional Support Package to suit your needs.
 
-**Community Support** is available on [StackOverflow]. Helpful SchemaCrawler users, 
-including the developer of SchemaCrawler, read messages on StackOverflow. Please read 
+**Community Support** is available on [Stack Overflow]. Helpful SchemaCrawler users, 
+including the developer of SchemaCrawler, read messages on Stack Overflow. Please read 
 *Guidelines for Support* below.
 
 **Bug and Issue Reports** can be filed on the [SchemaCrawler issues page]. 
 Please do not ask questions on the issues page - instead, ask questions on 
-[StackOverflow]. Please read *Guidelines for Support* below.
+[Stack Overflow]. Please read *Guidelines for Support* below.
 
 -----
 
 ## Guidelines for Support
 
-Some guidelines for a quick response on [StackOverflow] and the [SchemaCrawler issues page]:
+Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler issues page]:
 
 - Please explain the issue briefly, and specify the versions of SchemaCrawler, Java, 
     operating system, database, and JDBC driver that you are using
@@ -33,5 +33,5 @@ Some guidelines for a quick response on [StackOverflow] and the [SchemaCrawler i
 	SchemaCrawler with an additional `-loglevel=ALL` command-line argument
 
 
-[StackOverflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
+[Stack Overflow]: http://Stack Overflow.com/search?q=schemacrawler+is%3Aquestion
 [SchemaCrawler issues page]: https://github.com/sualeh/SchemaCrawler/issues

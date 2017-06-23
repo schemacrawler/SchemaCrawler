@@ -102,25 +102,25 @@ and your OSGi Bundle Repository.
 # Building From the Source Code
 
 ## Apache Maven Build
-The Maven build is a comprehensive build that runs unit tests, constructs the SchemaCrawler jar, 
+The Apache Maven build is a comprehensive build that runs unit tests, constructs the SchemaCrawler jar, 
 and can also create the project web-site. 
 
 - Install [Apache Maven], and make sure it is on your classpath 
-- Open a command console in the SchemaCrawler directory
+- Open a command console in the SchemaCrawler `schemacrawler-parent` directory
 - Run `mvn install:install-file -DgroupId=org.xerial -DartifactId=sqlite-jdbc -Dversion=3.7.8 -Dfile=./schemacrawler-sqlite/sqlite-jdbc-3.7.8.jar -Dpackaging=jar -DgeneratePom=true`
-- Then run `mvn package` from the SchemaCrawler directory
+- Then run `mvn package` from the SchemaCrawler `schemacrawler-parent` directory
 
-The SchemaCrawler distribution will be created in the `target` of the `distribution` module.
+The SchemaCrawler distribution will be created in the `target` of the `schemacrawler-distrib` directory.
 
 ## Eclipse
 Before importing the various SchemaCrawler projects into Eclipse, make sure that you have a successful 
-Maven build. Maven will download all the dependencies needed to build SchemaCrawler. Also, install the 
+Apache Maven build. Apache Maven will download all the dependencies needed to build SchemaCrawler. Also, install the 
 [m2e Maven Integration for Eclipse] plugin.
 
 ## Proprietary JDBC Drivers
-The Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle. Download the [IBM DB2 JDBC drivers] 
-place them in the schemacrawler-db2 source directory, and install them into your local Maven repository using 
-the provided install command. Similarly, download the [Oracle JDBC drivers] put them into the schemacrawler-oracle 
+The Apache Maven build depends on some proprietary JDBC drivers for IBM DB2 and Oracle. Download the [IBM DB2 JDBC drivers] 
+place them in the schemacrawler-db2 source directory, and install them into your local Apache Maven repository using 
+the provided install command. Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-oracle` 
 source directory, and install them locally.
 
 # Acknowledgements

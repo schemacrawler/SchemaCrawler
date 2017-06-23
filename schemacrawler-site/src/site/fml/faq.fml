@@ -114,10 +114,10 @@
       </answer>
     </faq>
     <faq id="maven">
-      <question> Can SchemaCrawler be used with Maven? </question>
+      <question> Can SchemaCrawler be used with Apache Maven? </question>
       <answer>
-        <p>Yes SchemaCrawler can be used in a Maven project as an API, or to generate Maven reports in your projects. In
-          order to use SchemaCrawler in your Maven projects, simply add a dependency to SchemaCrawler in your pom.xml.
+        <p>Yes SchemaCrawler can be used in a Apache Maven project as an API, or to generate Apache Maven reports in your projects. In
+          order to use SchemaCrawler in your Apache Maven projects, simply add a dependency to SchemaCrawler in your pom.xml.
         </p>
         <p>
           <i>
@@ -129,7 +129,7 @@
           <a href="https://github.com/sualeh/SchemaCrawler-Report-Maven-Plugin">SchemaCrawler Report Maven Plugin</a>
           , you can generate a SchemaCrawler report along with other
           reports for
-          your Maven generated site.
+          your Apache Maven generated site.
         </p>
       </answer>
     </faq>
