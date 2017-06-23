@@ -499,10 +499,10 @@ for (final Schema schema: catalog.getSchemas())
     </faq>
     <faq id="maven-project">
       <question>
-        How to use SchemaCrawler in a Maven Project
+        How to use SchemaCrawler in an Apache Maven Project
       </question>
       <answer>
-        <p>In order to use SchemaCrawler in your Maven projects, add a
+        <p>In order to use SchemaCrawler in your Apache Maven projects, add a
           dependency to SchemaCrawler
           in your pom.xml.
         </p>
@@ -528,16 +528,16 @@ for (final Schema schema: catalog.getSchemas())
     </faq>
     <faq id="maven-report">
       <question>
-        How to use SchemaCrawler To Produce a Maven Report
+        How to use SchemaCrawler To Produce an Apache Maven Report
       </question>
       <answer>
         <p>
           <a
             href="https://github.com/sualeh/SchemaCrawler-Report-Maven-Plugin"
           >SchemaCrawler Report Maven Plugin</a>
-          is a SourceForge project that provides a Maven plugin that can
+          is a SourceForge project that provides an Apache Maven plugin that can
           generate database
-          documentation for a
+          documentation for an Apache 
           Maven-generated website.
         </p>
       </answer>

@@ -188,7 +188,7 @@ cannot be deleted.
 
 SchemaCrawler Lint can be configured to fail a build using a configuration file. 
 You can call SchemaCrawler using a regularly constructed command-line, 
-from Maven using the Exec Maven Plugin, or from ant using the 
+from Apache Maven using the Exec Maven Plugin, or from ant using the 
 java task, or from Gradle using JavaExec.
 
 In the configuration file, you can set a dispatch threshold for linters. 

@@ -24,7 +24,7 @@ Java SE 8, Compact Profile 2 or better.
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 [![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/sualeh/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/sualeh/schemacrawler.svg)](https://hub.docker.com/r/sualeh/schemacrawler/)
-[![StackExchange](https://img.shields.io/stackexchange/stackoverflow/t/schemacrawler.svg)](http://stackoverflow.com/search?tab=newest&q=schemacrawler)
+[![StackExchange](https://img.shields.io/stackexchange/Stack Overflow/t/schemacrawler.svg)](http://Stack Overflow.com/search?tab=newest&q=schemacrawler)
 
 -----
 
