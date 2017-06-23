@@ -6,9 +6,9 @@ There are several ways to use and extend SchemaCrawler.
 You can script against your database, using the scripting language of your choice. A live
 database connection is provided. For more information, see [SchemaCrawler Database Scripting](scripting.html).
 
-## Use SchemaCrawler in a Maven Project
+## Use SchemaCrawler in anApache Maven Project
 To use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your pom.xml,
-as decribed in the [Getting Started](readme.html).
+as described in the [Getting Started](readme.html).
 
 However, if you are creating new [Apache Maven] project, you can use a SchemaCrawler archetype.
 To generate your new project, run:

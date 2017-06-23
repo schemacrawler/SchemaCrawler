@@ -28,7 +28,7 @@
           <skip>true</skip>
         </configuration>
       </plugin>
-      <!-- Perhaps a Maven Docker plug-in here? -->
+      <!-- Perhaps a Apache Maven Docker plug-in here? -->
     </plugins>
   </build>
 </project>
