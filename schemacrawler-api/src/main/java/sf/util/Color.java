@@ -68,10 +68,8 @@ public final class Color
   }
 
   /**
-   * <a href=
-   * "http://Stack Overflow.com/questions/7896280/converting-from-hsv-hsb-in-java-to-rgb-without-using-java-awt-color-disallowe">
-   * Converting from HSV (HSB in Java) to RGB without using
-   * java.awt.Color</a>
+   * <a href= "http://stackoverflow.com/questions/7896280"> Converting
+   * from HSV (HSB in Java) to RGB without using java.awt.Color</a>
    */
   public static Color fromHSV(final float hue,
                               final float saturation,
