@@ -41,12 +41,12 @@ RUN \
 
 # Download SchemaCrawler and prepare install directories
 RUN \
-    wget -nv https://github.com/sualeh/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-main.zip \
- && unzip -q schemacrawler-"$SCHEMACRAWLER_VERSION"-main.zip \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-main/_schemacrawler schemacrawler \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-main/_testdb/sc.db schemacrawler/sc.db \
- && rm schemacrawler-"$SCHEMACRAWLER_VERSION"-main.zip \
- && rm -rf schemacrawler-"$SCHEMACRAWLER_VERSION"-main
+    wget -nv https://github.com/sualeh/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
+ && unzip -q schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
+ && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_schemacrawler schemacrawler \
+ && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_testdb/sc.db schemacrawler/sc.db \
+ && rm schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
+ && rm -rf schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution
 
 # Mapping directories
 VOLUME /share

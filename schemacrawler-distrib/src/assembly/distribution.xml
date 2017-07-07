@@ -22,7 +22,7 @@
             download-tools,
             make-super-jar,
             make-super-distribution,
-            make-main-distribution,
+            make-distribution-zip,
             make-website-distribution,
             cleanup-distribution
           "
@@ -129,11 +129,11 @@
   </target>
 
 
-  <target name="make-main-distribution">
+  <target name="make-distribution-zip">
 
     <mkdir dir="${distribution.target}/site" />
     <property name="main-distribution.staging.dir"
-              location="${distribution.target}/_main-distribution" />
+              location="${distribution.target}/_distribution" />
     <move
       file="${distribution.target}/site"
       tofile="${main-distribution.staging.dir}"/>
@@ -141,7 +141,7 @@
     <delete dir="${main-distribution.staging.dir}/images" />
 
     <property name="main-distribution.stem"
-              value="schemacrawler-${SchemaCrawler.version}-main" />
+              value="schemacrawler-${SchemaCrawler.version}-distribution" />
 
 
     <!-- 1. STAGE FOR EXAMPLES -->
