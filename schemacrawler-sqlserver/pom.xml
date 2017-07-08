@@ -36,9 +36,6 @@
         <configuration>
           <archive>
             <index>true</index>
-            <manifest>
-              <addClasspath>true</addClasspath>
-            </manifest>
             <manifestEntries>
               <Project>${project.name}, ${project.version}</Project>
               <Author>Sualeh Fatehi, sualeh@hotmail.com</Author>
