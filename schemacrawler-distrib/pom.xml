@@ -148,7 +148,7 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>6.1.0.jre8</version>
+                  <version>6.2.0.jre8</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
@@ -156,7 +156,7 @@
                 <artifactItem>
                   <groupId>com.h2database</groupId>
                   <artifactId>h2</artifactId>
-                  <version>1.4.195</version>
+                  <version>1.4.196</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
