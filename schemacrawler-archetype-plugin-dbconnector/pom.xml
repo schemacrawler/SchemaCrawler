@@ -4,7 +4,8 @@
   <parent>
     <artifactId>schemacrawler-parent</artifactId>
     <groupId>us.fatehi</groupId>
-    <version>14.16.02</version>
+    <version>14.16.03</version>
+    <relativePath>../schemacrawler-parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>schemacrawler-archetype-plugin-dbconnector</artifactId>
