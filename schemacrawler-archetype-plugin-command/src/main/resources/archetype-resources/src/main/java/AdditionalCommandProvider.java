@@ -36,6 +36,12 @@ public class AdditionalCommandProvider
   }
 
   @Override
+  public String getHelpAdditionalText()
+  {
+    return "Some additional help text...";
+  }
+
+  @Override
   public String getHelpResource()
   {
     return "/help/AdditionalCommandProvider.txt";
