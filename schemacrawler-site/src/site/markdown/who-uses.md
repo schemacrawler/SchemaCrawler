@@ -8,7 +8,7 @@ See details on the [SchemaCrawler Ecosystem](ecosystem.html).
 
 SchemaCrawler questions from users.
 
--  How [programmers](http://Stack Overflow.com/search?q=schemacrawler) use SchemaCrawler. 
+-  How [programmers](https://stackoverflow.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [database administrators](http://dba.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [system administrators](http://serverfault.com/search?q=schemacrawler) use SchemaCrawler. 
 -  How [software testers](http://sqa.stackexchange.com/search?q=schemacrawler) use SchemaCrawler. 
