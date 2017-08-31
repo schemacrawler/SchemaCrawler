@@ -1,0 +1,11 @@
+SELECT
+  NULL AS TABLE_CATALOG,
+  NULL AS TABLE_SCHEMA,
+  name AS TABLE_NAME,
+  sql AS TABLE_DEFINITION
+FROM
+  sqlite_master
+WHERE
+  type = 'table'
+ORDER BY
+  name

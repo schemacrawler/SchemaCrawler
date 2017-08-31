@@ -45,6 +45,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
@@ -84,7 +85,7 @@ public class TestSqliteDistribution
       argsMap.put("server", "sqlite");
       argsMap.put("database", sqliteDbFile.toString());
       argsMap.put("command", "details,dump,count");
-      argsMap.put("infolevel", "detailed");
+      argsMap.put("infolevel", InfoLevel.maximum.name());
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
