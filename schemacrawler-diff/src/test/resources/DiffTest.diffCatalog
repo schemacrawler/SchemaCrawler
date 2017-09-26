@@ -3,6 +3,7 @@
 /systemColumnDataTypes[CLOB] (ADDED)
 /systemColumnDataTypes[VARCHAR(512)] (REMOVED)
 /tables[Extra] (REMOVED)
+/tables[Authors] (CHANGED)
 /tables[Books] (CHANGED)
 /tables[Books]/columns[Books.Description] (CHANGED)
 /tables[BookAuthors] (CHANGED)
