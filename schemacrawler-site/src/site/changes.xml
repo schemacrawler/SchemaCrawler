@@ -5,6 +5,14 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.16.04" date="2017-09-25" description="Miscellaneous fixes">
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Updating depdencies.
+      ]]></action> 
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Bug-fix for Oracle routines.
+      ]]></action>       
+     </release>   
      <release version="14.16.03" date="2017-07-08" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Updating depdencies.
