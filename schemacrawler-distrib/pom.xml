@@ -133,7 +133,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.1.1</version>
+                  <version>42.1.4</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
@@ -149,7 +149,7 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>6.2.0.jre8</version>
+                  <version>6.2.1.jre8</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
