@@ -15,7 +15,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.signing.artifacts>true</skip.signing.artifacts>
     <springframework.version>4.3.11.RELEASE</springframework.version>
-    <maven.javadoc.skip>true</maven.javadoc.skip>
   </properties>
   <dependencies>
     <dependency>
