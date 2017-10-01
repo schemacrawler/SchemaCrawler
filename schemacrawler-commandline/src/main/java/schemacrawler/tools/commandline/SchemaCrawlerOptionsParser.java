@@ -35,7 +35,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -107,7 +106,10 @@ public final class SchemaCrawlerOptionsParser
     }
     else
     {
-      throw new SchemaCrawlerCommandLineException("Please specify an infolevel");
+      // Default to standard infolevel
+      final SchemaInfoLevel schemaInfoLevel = InfoLevel.standard
+        .buildSchemaInfoLevel();
+      optionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
     }
 
     if (config.hasValue("schemas"))
@@ -289,10 +291,11 @@ public final class SchemaCrawlerOptionsParser
   private void logOverride(final String inclusionRuleName,
                            final InclusionRule schemaInclusionRule)
   {
-    LOGGER.log(Level.INFO,
-               new StringFormat("Overriding %s inclusion rule from command-line to %s",
-                                inclusionRuleName,
-                                schemaInclusionRule));
+    LOGGER
+      .log(Level.INFO,
+           new StringFormat("Overriding %s inclusion rule from command-line to %s",
+                            inclusionRuleName,
+                            schemaInclusionRule));
   }
 
 }
