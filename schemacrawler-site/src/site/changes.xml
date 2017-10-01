@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+     <release version="14.16.05" date="2017-10-15" description="Miscellaneous fixes">
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Exclude system schemas by default.
+      ]]></action>       
+     </release>   
      <release version="14.16.04" date="2017-09-25" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Updating depdencies.
