@@ -131,6 +131,12 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <property name="sequenceInclusionRule">
       <bean class="schemacrawler.schemacrawler.IncludeAll"/>
     </property>
+    <property name="routineInclusionRule">
+      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
+    </property>
+    <property name="routineColumnInclusionRule">
+      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
+    </property>        
     <property name="tableTypes">
       <set>
         <value>TABLE</value>

@@ -67,10 +67,9 @@ public class SpringIntegrationCommandLineTest
 
     Main.main(flattenCommandlineArgs(argsMap));
 
-    failures
-      .addAll(compareOutput(executableName + ".txt",
-                            testOutputFile,
-                            TextOutputFormat.text.getFormat()));
+    failures.addAll(compareOutput(executableName + ".txt",
+                                  testOutputFile,
+                                  TextOutputFormat.text.getFormat()));
     if (failures.size() > 0)
     {
       fail(failures.toString());

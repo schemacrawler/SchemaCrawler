@@ -35,6 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -149,6 +150,8 @@ public class SchemaCrawlerTextCommandsOutputTest
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
                                                             writer);

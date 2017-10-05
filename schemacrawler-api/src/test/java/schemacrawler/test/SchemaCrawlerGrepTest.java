@@ -43,6 +43,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineColumn;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -198,6 +199,8 @@ public class SchemaCrawlerGrepTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
       schemaCrawlerOptions
         .setGrepRoutineColumnInclusionRule(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
 

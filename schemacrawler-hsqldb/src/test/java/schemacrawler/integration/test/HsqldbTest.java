@@ -42,6 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -74,14 +75,17 @@ public class HsqldbTest
   public void testHsqldbWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC\\.BOOKS"));
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());

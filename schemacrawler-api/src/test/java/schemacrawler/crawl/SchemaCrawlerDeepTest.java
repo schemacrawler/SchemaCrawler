@@ -63,16 +63,16 @@ public class SchemaCrawlerDeepTest
     final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
     assertTrue("Should not find any tables",
                catalog.getTables(systemSchema).size() == 0);
-    assertEquals("Could not find all routines",
-                 10,
+    assertEquals("Expected no routines, since routine retrieval is turned off by default",
+                 0,
                  catalog.getRoutines(systemSchema).size());
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertEquals("Could not find any tables",
                  6,
                  catalog.getTables(schema).size());
-    assertEquals("Wrong number of routines",
-                 4,
+    assertEquals("Expected no routines, since routine retrieval is turned off by default",
+                 0,
                  catalog.getRoutines(schema).size());
 
     // Try negative test

@@ -11,7 +11,10 @@
       ]]></action>  
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Make -infolevel an optional command-line argument, and default to standard.
-      ]]></action>           
+      ]]></action>
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Make -routines return no routines by default, to make it easier for first-time users.
+      ]]></action>                  
      </release>   
      <release version="14.16.04" date="2017-09-25" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[

@@ -45,6 +45,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
@@ -137,6 +138,11 @@ public class SpringIntegrationTest
     final Path testOutputFile = IOUtility.createTempFilePath(executableName,
                                                              "data");
 
+    final SchemaCrawlerOptions schemaCrawlerOptions = executable
+      .getSchemaCrawlerOptions();
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+
     executable.getOutputOptions().setOutputFile(testOutputFile);
     executable.execute(getConnection(), databaseSpecificOverrideOptions);
 
@@ -148,10 +154,9 @@ public class SpringIntegrationTest
     }
     else
     {
-      failures
-        .addAll(compareOutput(executableName + ".txt",
-                              testOutputFile,
-                              TextOutputFormat.text.name()));
+      failures.addAll(compareOutput(executableName + ".txt",
+                                    testOutputFile,
+                                    TextOutputFormat.text.name()));
     }
   }
 

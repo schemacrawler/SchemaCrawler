@@ -186,6 +186,7 @@ public class SchemaCrawlerOptionsBuilder
   public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
   {
     options.setRoutineInclusionRule(routineInclusionRule);
+    options.setRoutineColumnInclusionRule(new IncludeAll());
     return this;
   }
 

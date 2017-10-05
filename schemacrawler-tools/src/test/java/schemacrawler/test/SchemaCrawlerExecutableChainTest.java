@@ -43,6 +43,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
@@ -62,9 +64,14 @@ public class SchemaCrawlerExecutableChainTest
     final Path testOutputFile = IOUtility
       .createTempFilePath(executable.getCommand(), "data");
 
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+
     final OutputOptions outputOptions = new OutputOptions("/chain.js",
                                                           testOutputFile);
 
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 

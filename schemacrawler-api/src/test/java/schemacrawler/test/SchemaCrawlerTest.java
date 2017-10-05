@@ -98,6 +98,8 @@ public class SchemaCrawlerTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -312,6 +314,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
@@ -333,6 +337,9 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertTrue("Could not find any tables",
@@ -514,9 +521,8 @@ public class SchemaCrawlerTest
         Arrays.sort(tables, NamedObjectSort.alphabetical);
         for (final Table table: tables)
         {
-          out.println(String.format("o--> %s [%s]",
-                                    table.getFullName(),
-                                    table.getTableType()));
+          out.println(String
+            .format("o--> %s [%s]", table.getFullName(), table.getTableType()));
           final SortedMap<String, Object> tableAttributes = new TreeMap<>(table
             .getAttributes());
           for (final Entry<String, Object> tableAttribute: tableAttributes
@@ -564,8 +570,9 @@ public class SchemaCrawlerTest
         final String tableName2 = tableNames[j];
         assertEquals(tableName1 + " <--> " + tableName2,
                      Math.signum(catalog.lookupTable(schema, tableName1)
-                       .orElse(null).compareTo(catalog
-                         .lookupTable(schema, tableName2).orElse(null))),
+                       .orElse(null)
+                       .compareTo(catalog.lookupTable(schema, tableName2)
+                         .orElse(null))),
                      Math.signum(i - j),
                      1e-100);
       }
