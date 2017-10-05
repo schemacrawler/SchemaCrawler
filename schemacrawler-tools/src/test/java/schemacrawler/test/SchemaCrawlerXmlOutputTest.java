@@ -39,6 +39,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -108,10 +109,12 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
-    final SchemaCrawlerOptions options = executable.getSchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    options
+    final SchemaCrawlerOptions schemaCrawlerOptions = executable.getSchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
+    schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setNoInfo(false);
@@ -125,10 +128,9 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     executable.execute(getConnection());
 
-    failures
-      .addAll(compareOutput(XML_OUTPUT + referenceFile,
-                            testOutputFile,
-                            TextOutputFormat.html.getFormat()));
+    failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
+                                  testOutputFile,
+                                  TextOutputFormat.html.getFormat()));
   }
 
 }

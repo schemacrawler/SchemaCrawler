@@ -131,6 +131,8 @@ public class SchemaCrawlerOutputTest
         schemaCrawlerOptions
           .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
         schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+        schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+        schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -139,10 +141,9 @@ public class SchemaCrawlerOutputTest
         executable.execute(getConnection(),
                            databaseSpecificOverrideOptionsBuilder.toOptions());
 
-        failures
-          .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                testOutputFile,
-                                outputFormat.getFormat()));
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)
@@ -190,6 +191,8 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
@@ -248,6 +251,8 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
@@ -294,6 +299,8 @@ public class SchemaCrawlerOutputTest
         .setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
@@ -343,6 +350,8 @@ public class SchemaCrawlerOutputTest
         .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
@@ -399,6 +408,8 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
@@ -459,6 +470,7 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setTableInclusionRule(new ExcludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setSequenceInclusionRule(new ExcludeAll());
       schemaCrawlerOptions.setSynonymInclusionRule(new ExcludeAll());
@@ -516,6 +528,8 @@ public class SchemaCrawlerOutputTest
         .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
@@ -568,6 +582,8 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
@@ -626,6 +642,8 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);

@@ -97,17 +97,21 @@ public final class SchemaCrawlerOptions
 
     title = "";
 
+    // All schemas are included by default
     schemaInclusionRule = new IncludeAll();
+
     synonymInclusionRule = new ExcludeAll();
     sequenceInclusionRule = new ExcludeAll();
 
+    // Note: Of the database objects, only tables are included by
+    // default
     tableTypes = defaultTableTypes();
     tableInclusionRule = new IncludeAll();
     columnInclusionRule = new IncludeAll();
 
     routineTypes = allRoutineTypes();
-    routineInclusionRule = new IncludeAll();
-    routineColumnInclusionRule = new IncludeAll();
+    routineInclusionRule = new ExcludeAll();
+    routineColumnInclusionRule = new ExcludeAll();
 
   }
 

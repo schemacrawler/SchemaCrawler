@@ -50,6 +50,7 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -81,6 +82,7 @@ public class OfflineSnapshotTest
       argsMap.put("database", serializedDatabaseFile.toString());
 
       argsMap.put("infolevel", "maximum");
+      argsMap.put("routines", ".*");
       argsMap.put("command", "details");
       argsMap.put("outputformat", "text");
       argsMap.put("outputfile", out.toString());
@@ -103,6 +105,7 @@ public class OfflineSnapshotTest
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
+      argsMap.put("routines", ".*");
       argsMap.put("command", "details");
       argsMap.put("outputformat", "text");
       argsMap.put("routines", "");
@@ -127,6 +130,7 @@ public class OfflineSnapshotTest
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
+      argsMap.put("routines", ".*");
       argsMap.put("command", "list");
       argsMap.put("outputformat", "text");
       argsMap.put("schemas", "PUBLIC.BOOKS");
@@ -152,6 +156,8 @@ public class OfflineSnapshotTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     final OutputOptions inputOptions = new OutputOptions();
     inputOptions.setCompressedInputFile(serializedDatabaseFile);
@@ -172,6 +178,8 @@ public class OfflineSnapshotTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

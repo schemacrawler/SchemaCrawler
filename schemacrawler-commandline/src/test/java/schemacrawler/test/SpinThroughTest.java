@@ -126,6 +126,8 @@ public class SpinThroughTest
             .setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
           schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
           schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
+          schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+          schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
           final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
@@ -135,10 +137,9 @@ public class SpinThroughTest
             .execute(getConnection(),
                      databaseSpecificOverrideOptionsBuilder.toOptions());
 
-          failures
-            .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
+          failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
+                                        testOutputFile,
+                                        outputFormat.getFormat()));
         }
       }
     }
@@ -188,10 +189,9 @@ public class SpinThroughTest
 
           Main.main(flattenCommandlineArgs(argsMap));
 
-          failures
-            .addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
+          failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
+                                        testOutputFile,
+                                        outputFormat.getFormat()));
         }
       }
     }
@@ -215,13 +215,12 @@ public class SpinThroughTest
                                final InfoLevel infoLevel,
                                final OutputFormat outputFormat)
   {
-    final String referenceFile = String
-      .format("%d%d.%s_%s.%s",
-              schemaTextDetailType.ordinal(),
-              infoLevel.ordinal(),
-              schemaTextDetailType,
-              infoLevel,
-              outputFormat.getFormat());
+    final String referenceFile = String.format("%d%d.%s_%s.%s",
+                                               schemaTextDetailType.ordinal(),
+                                               infoLevel.ordinal(),
+                                               schemaTextDetailType,
+                                               infoLevel,
+                                               outputFormat.getFormat());
     return referenceFile;
   }
 

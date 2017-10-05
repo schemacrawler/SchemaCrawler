@@ -52,7 +52,7 @@
   matches any routines whose names start with C or P
   Routines that do not match the pattern are not displayed
   Use -routines= to omit routines
-  Optional, defaults to showing all routines
+  Optional, defaults to showing no routines
     
 -excludeinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
