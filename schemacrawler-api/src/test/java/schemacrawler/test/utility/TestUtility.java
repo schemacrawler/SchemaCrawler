@@ -38,7 +38,6 @@ import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
-import static java.nio.file.StandardCopyOption.ATOMIC_MOVE;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -203,10 +202,7 @@ public final class TestUtility
         .resolve("unit_tests_results_output").resolve(referenceFile);
       createDirectories(testOutputTargetFilePath.getParent());
       deleteIfExists(testOutputTargetFilePath);
-      move(testOutputTempFile,
-           testOutputTargetFilePath,
-           ATOMIC_MOVE,
-           REPLACE_EXISTING);
+      move(testOutputTempFile, testOutputTargetFilePath, REPLACE_EXISTING);
 
       if (!contentEquals)
       {
@@ -547,8 +543,8 @@ public final class TestUtility
   private static Path writeToTempFile(final InputStream resourceStream)
     throws IOException, FileNotFoundException
   {
-    final Path tempFile = IOUtility.createTempFilePath("resource", "data").normalize()
-      .toAbsolutePath();
+    final Path tempFile = IOUtility.createTempFilePath("resource", "data")
+      .normalize().toAbsolutePath();
 
     try (final OutputStream tempFileStream = newOutputStream(tempFile,
                                                              WRITE,
