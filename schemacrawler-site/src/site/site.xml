@@ -30,7 +30,7 @@
         = true; ga.src = ('https:' == document.location.protocol ? 'https://ssl'
         : 'http://www') + '.google-analytics.com/ga.js'; var s =
         document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s); })(); 
+        s.parentNode.insertBefore(ga, s); })();
       </script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
       <script src="js/lightbox.js"></script>
@@ -52,6 +52,7 @@
       <item name="Download" href="http://github.com/sualeh/SchemaCrawler/releases/" />
       <item name="Change History" href="changes-report.html" />
       <item name="License" href="license.html" />
+      <item name="Building From Source Code" href="building.html" />
       <item name="Suport and Consulting" href="consulting.html" />
     </menu>
     <menu name="Features">
@@ -68,11 +69,11 @@
       <item name="SchemaCrawler Report Maven Plugin" href="report-maven-plugin.html" />
     </menu>
     <menu name="Resources">
-      <item name="Getting Started" href="readme.html" />    
+      <item name="Getting Started" href="readme.html" />
       <item name="Resources" href="resources.html" />
       <item name="Code Examples" href="code-examples.html" />
       <item name="FAQS" href="faq.html" />
-      <item name="How-tos" href="how-to.html" />      
+      <item name="How-tos" href="how-to.html" />
       <item name="Get Help" href="consulting.html" />
       <item name="Javadocs" href="apidocs/index.html" />
       <item name="Project Page on GitHub" href="http://github.com/sualeh/SchemaCrawler" />
