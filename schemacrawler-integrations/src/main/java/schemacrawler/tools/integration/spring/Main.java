@@ -72,10 +72,6 @@ public final class Main
       return;
     }
 
-    // Spring should use JDK logging, like the rest of SchemaCrawler
-    System
-      .setProperty("org.apache.commons.logging.Log",
-                   org.apache.commons.logging.impl.Jdk14Logger.class.getName());
     applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
     logSafeArguments(args);
     logSystemProperties();
