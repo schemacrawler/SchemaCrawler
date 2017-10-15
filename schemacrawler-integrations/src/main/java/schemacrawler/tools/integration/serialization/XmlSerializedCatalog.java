@@ -50,6 +50,10 @@ import com.thoughtworks.xstream.converters.collections.CollectionConverter;
 import com.thoughtworks.xstream.converters.collections.MapConverter;
 import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.security.ArrayTypePermission;
+import com.thoughtworks.xstream.security.NoTypePermission;
+import com.thoughtworks.xstream.security.NullPermission;
+import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
@@ -74,6 +78,22 @@ public final class XmlSerializedCatalog
     {
 
       final XStream xStream = new XStream();
+
+      // Set security settings
+      // https://stackoverflow.com/questions/44698296/security-framework-of-xstream-not-initialized-xstream-is-probably-vulnerable
+      // clear out existing permissions and set own ones
+      xStream.addPermission(NoTypePermission.NONE);
+      // allow some basics
+      xStream.addPermission(NullPermission.NULL);
+      xStream.addPermission(PrimitiveTypePermission.PRIMITIVES);
+      xStream.addPermission(ArrayTypePermission.ARRAYS);
+      xStream.allowTypeHierarchy(Collection.class);
+      // allow any type from the same package
+      xStream.allowTypesByWildcard(new String[] {
+                                                  "schemacrawler.schema.**",
+                                                  "schemacrawler.crawl.**",
+                                                  "java.lang.**",
+                                                  "java.sql.**" });
 
       xStream.setMode(XStream.ID_REFERENCES);
 
@@ -149,10 +169,10 @@ public final class XmlSerializedCatalog
           for (final Object object: entryList)
           {
             final Map.Entry entry = (Map.Entry) object;
-            ExtendedHierarchicalStreamWriterHelper.startNode(writer,
-                                                             mapper()
-                                                               .serializedClass(Map.Entry.class),
-                                                             Map.Entry.class);
+            ExtendedHierarchicalStreamWriterHelper
+              .startNode(writer,
+                         mapper().serializedClass(Map.Entry.class),
+                         Map.Entry.class);
 
             writeItem(entry.getKey(), context, writer);
             writeItem(entry.getValue(), context, writer);
