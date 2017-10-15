@@ -18,7 +18,10 @@
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Show just SchemaCrawler information by default in the output, and not database and JDBC driver information.
         Add fine-tuned options for each.
-      ]]></action>                  
+      ]]></action>   
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Adding some security lock-downs to XStream serialization.
+      ]]></action>                      
      </release>   
      <release version="14.16.04" date="2017-09-25" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
