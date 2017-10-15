@@ -164,11 +164,10 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.println();
     formattingHelper.writeObjectStart();
-    formattingHelper
-      .writeObjectNameRow(nodeId(routine),
-                          routineName,
-                          routineType,
-                          colorMap.getColor(routine));
+    formattingHelper.writeObjectNameRow(nodeId(routine),
+                                        routineName,
+                                        routineType,
+                                        colorMap.getColor(routine));
     printRemarks(routine);
 
     if (!isBrief)
@@ -256,11 +255,10 @@ final class SchemaTextFormatter
     formattingHelper.println();
     formattingHelper.println();
     formattingHelper.writeObjectStart();
-    formattingHelper
-      .writeObjectNameRow(nodeId(synonym),
-                          synonymName,
-                          synonymType,
-                          colorMap.getColor(synonym));
+    formattingHelper.writeObjectNameRow(nodeId(synonym),
+                                        synonymName,
+                                        synonymType,
+                                        colorMap.getColor(synonym));
     printRemarks(synonym);
 
     if (!isBrief)
@@ -551,12 +549,11 @@ final class SchemaTextFormatter
           .createAnchor(fkColumnName, "#" + nodeId(fkColumn.getParent()));
         final String arrow = isForeignKey? formattingHelper
           .createLeftArrow(): formattingHelper.createWeakLeftArrow();
-        relationship = String
-          .format("%s %s%s %s",
-                  pkColumnName,
-                  arrow,
-                  fkCardinality.toString(),
-                  fkHyperlink);
+        relationship = String.format("%s %s%s %s",
+                                     pkColumnName,
+                                     arrow,
+                                     fkCardinality.toString(),
+                                     fkHyperlink);
       }
       else
       {
@@ -564,19 +561,14 @@ final class SchemaTextFormatter
           .createAnchor(pkColumnName, "#" + nodeId(pkColumn.getParent()));
         final String arrow = isForeignKey? formattingHelper
           .createRightArrow(): formattingHelper.createWeakRightArrow();
-        relationship = String
-          .format("%s %s%s %s",
-                  fkColumnName,
-                  fkCardinality.toString(),
-                  arrow,
-                  pkHyperlink);
+        relationship = String.format("%s %s%s %s",
+                                     fkColumnName,
+                                     fkCardinality.toString(),
+                                     arrow,
+                                     pkHyperlink);
       }
-      formattingHelper.writeDetailRow(keySequenceString,
-                                      relationship,
-                                      "",
-                                      false,
-                                      false,
-                                      "");
+      formattingHelper
+        .writeDetailRow(keySequenceString, relationship, "", false, false, "");
     }
   }
 

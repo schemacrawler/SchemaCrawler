@@ -69,7 +69,8 @@ abstract class ExecutableCommandProvider
     catch (final ClassNotFoundException e)
     {
       throw new SchemaCrawlerException("Could not load class "
-                                       + executableClassName, e);
+                                       + executableClassName,
+                                       e);
     }
 
     Executable executable;
@@ -79,9 +80,10 @@ abstract class ExecutableCommandProvider
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Could not instantiate using default constructor for class <%s>",
-                                  executableClassName));
+      LOGGER
+        .log(Level.FINE,
+             new StringFormat("Could not instantiate using default constructor for class <%s>",
+                              executableClassName));
       try
       {
         final Constructor<? extends Executable> constructor = commandExecutableClass
@@ -91,7 +93,8 @@ abstract class ExecutableCommandProvider
       catch (final Exception e1)
       {
         throw new SchemaCrawlerException("Could not instantiate executable for command '"
-                                         + command + "'", e1);
+                                         + command + "'",
+                                         e1);
       }
     }
 

@@ -122,27 +122,30 @@ public class GraphOptionsBuilder
                                                            "");
     if (!isBlank(scGraphvizOptsCfg))
     {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional Graphviz command-line options from config <%s>",
-                                  scGraphvizOptsCfg));
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Using additional Graphviz command-line options from config <%s>",
+                              scGraphvizOptsCfg));
       return scGraphvizOptsCfg;
     }
 
     final String scGraphvizOptsProp = System.getProperty(SC_GRAPHVIZ_OPTS);
     if (!isBlank(scGraphvizOptsProp))
     {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property <%s>",
-                                  scGraphvizOptsProp));
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS system property <%s>",
+                              scGraphvizOptsProp));
       return scGraphvizOptsProp;
     }
 
     final String scGraphvizOptsEnv = System.getenv(SC_GRAPHVIZ_OPTS);
     if (!isBlank(scGraphvizOptsEnv))
     {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable <%s>",
-                                  scGraphvizOptsEnv));
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Using additional Graphviz command-line options from SC_GRAPHVIZ_OPTS environmental variable <%s>",
+                              scGraphvizOptsEnv));
       return scGraphvizOptsEnv;
     }
 

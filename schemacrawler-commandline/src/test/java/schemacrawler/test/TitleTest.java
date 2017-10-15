@@ -118,6 +118,7 @@ public class TitleTest
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
       argsMap.put("password", "");
+      argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("infolevel", "maximum");
       argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
       argsMap.put("sorttables", "true");

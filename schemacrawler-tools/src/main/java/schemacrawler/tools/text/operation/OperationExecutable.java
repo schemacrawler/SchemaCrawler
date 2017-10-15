@@ -79,10 +79,11 @@ public final class OperationExecutable
 
     if (!isOutputFormatSupported())
     {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Output format <%s> not supported for command <%s>",
-                                  outputOptions.getOutputFormatValue(),
-                                  getCommand()));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Output format <%s> not supported for command <%s>",
+                              outputOptions.getOutputFormatValue(),
+                              getCommand()));
       return;
     }
 

@@ -208,10 +208,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER,
-             new StringFormat("Error outputting Routine: %s", e.getMessage()),
-             e);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Error outputting Routine: %s",
+                                  e.getMessage()),
+                 e);
     }
 
   }
@@ -247,10 +247,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER,
-             new StringFormat("Error outputting sequence: %s", e.getMessage()),
-             e);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Error outputting sequence: %s",
+                                  e.getMessage()),
+                 e);
     }
 
   }
@@ -292,10 +292,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER,
-             new StringFormat("Error outputting synonym: %s", e.getMessage()),
-             e);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Error outputting synonym: %s",
+                                  e.getMessage()),
+                 e);
     }
 
   }
@@ -695,10 +695,10 @@ final class SchemaJsonFormatter
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER,
-             new StringFormat("Error outputting column: %s", e.getMessage()),
-             e);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Error outputting column: %s",
+                                  e.getMessage()),
+                 e);
     }
 
     return jsonColumn;

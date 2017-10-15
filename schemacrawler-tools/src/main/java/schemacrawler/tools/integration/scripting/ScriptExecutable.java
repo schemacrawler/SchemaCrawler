@@ -123,16 +123,17 @@ public final class ScriptExecutable
 
     if (LOGGER.isLoggable(Level.CONFIG))
     {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                                  scriptEngineFactory.getEngineName(),
-                                  scriptEngineFactory.getEngineVersion(),
-                                  scriptEngineFactory.getLanguageName(),
-                                  scriptEngineFactory.getLanguageVersion(),
-                                  ObjectToString
-                                    .toString(scriptEngineFactory.getNames()),
-                                  ObjectToString.toString(scriptEngineFactory
-                                    .getExtensions())));
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                              scriptEngineFactory.getEngineName(),
+                              scriptEngineFactory.getEngineVersion(),
+                              scriptEngineFactory.getLanguageName(),
+                              scriptEngineFactory.getLanguageVersion(),
+                              ObjectToString
+                                .toString(scriptEngineFactory.getNames()),
+                              ObjectToString.toString(scriptEngineFactory
+                                .getExtensions())));
     }
 
     final CommandChainExecutable chain = new CommandChainExecutable();

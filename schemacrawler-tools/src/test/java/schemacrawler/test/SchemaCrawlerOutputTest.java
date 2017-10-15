@@ -106,6 +106,11 @@ public class SchemaCrawlerOutputTest
                                                                                   + ","
                                                                                   + SchemaTextDetailType.brief, };
 
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
+
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -134,6 +139,9 @@ public class SchemaCrawlerOutputTest
         schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
         schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
+        queriesConfig
+          .putAll(new SchemaTextOptionsBuilder(textOptions).toConfig());
+
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
@@ -161,13 +169,15 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
     textOptions.setNoHeader(false);
     textOptions.setNoFooter(false);
     textOptions.setHidePrimaryKeyNames(true);
     textOptions.setHideForeignKeyNames(true);
     textOptions.setHideIndexNames(true);
     textOptions.setHideConstraintNames(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -226,6 +236,11 @@ public class SchemaCrawlerOutputTest
   {
     clean(JSON_OUTPUT);
 
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
+
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.maximum;
     for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
@@ -254,10 +269,14 @@ public class SchemaCrawlerOutputTest
       schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
+      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
+
       final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
+      executable
+        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
                          databaseSpecificOverrideOptionsBuilder.toOptions());
 
@@ -280,8 +299,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(true);
     textOptions.setHideRemarks(true);
+    textOptions.setNoSchemaCrawlerInfo(true);
+    textOptions.setShowDatabaseInfo(false);
+    textOptions.setShowJdbcDriverInfo(false);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -330,9 +351,11 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(true);
     textOptions.setHideRemarks(true);
     textOptions.setNoSchemaColors(true);
+    textOptions.setNoSchemaCrawlerInfo(true);
+    textOptions.setShowDatabaseInfo(false);
+    textOptions.setShowJdbcDriverInfo(false);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -381,10 +404,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setShowOrdinalNumbers(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -445,10 +468,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -507,10 +530,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setShowWeakAssociations(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -562,10 +585,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setShowRowCounts(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -615,10 +638,10 @@ public class SchemaCrawlerOutputTest
     final List<String> failures = new ArrayList<>();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setShowUnqualifiedNames(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {

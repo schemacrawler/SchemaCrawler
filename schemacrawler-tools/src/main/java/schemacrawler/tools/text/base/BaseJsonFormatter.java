@@ -102,7 +102,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   public void handle(final CrawlInfo crawlInfo)
     throws SchemaCrawlerException
   {
-    if (options.isNoInfo() || crawlInfo == null)
+    if (options.isNoSchemaCrawlerInfo() || crawlInfo == null)
     {
       return;
     }
@@ -118,17 +118,19 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     }
     catch (final JSONException e)
     {
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Error outputting SchemaCrawlerHeaderInfo: %s",
-                                  e.getMessage()),
-                 e);
+      LOGGER
+        .log(Level.FINER,
+             new StringFormat("Error outputting SchemaCrawlerHeaderInfo: %s",
+                              e.getMessage()),
+             e);
     }
   }
 
   @Override
   public void handle(final DatabaseInfo dbInfo)
   {
-    if (!printVerboseDatabaseInfo || options.isNoInfo() || dbInfo == null)
+    if (!printVerboseDatabaseInfo || !options.isShowDatabaseInfo()
+        || dbInfo == null)
     {
       return;
     }
@@ -170,7 +172,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
-    if (!printVerboseDatabaseInfo || options.isNoInfo() || driverInfo == null)
+    if (!printVerboseDatabaseInfo || !options.isShowJdbcDriverInfo()
+        || driverInfo == null)
     {
       return;
     }
@@ -212,7 +215,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
   @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
-    if (!printVerboseDatabaseInfo || options.isNoInfo()
+    if (!printVerboseDatabaseInfo || options.isNoSchemaCrawlerInfo()
         || schemaCrawlerInfo == null)
     {
       return;

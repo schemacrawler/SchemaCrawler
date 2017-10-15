@@ -50,6 +50,8 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.integration.scripting.ScriptExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerExecutableChainTest
@@ -68,11 +70,19 @@ public class SchemaCrawlerExecutableChainTest
     schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
+
     final OutputOptions outputOptions = new OutputOptions("/chain.js",
                                                           testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
+    executable
+      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+        .toConfig());
     executable.execute(getConnection());
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\""
