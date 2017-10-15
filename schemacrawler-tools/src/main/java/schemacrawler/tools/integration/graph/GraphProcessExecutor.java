@@ -149,10 +149,8 @@ public class GraphProcessExecutor
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException(String.format("Could not move %s to %s",
-                                                     dotFile,
-                                                     movedDotFile),
-                                       e);
+      throw new SchemaCrawlerException(String
+        .format("Could not move %s to %s", dotFile, movedDotFile), e);
     }
 
     LOGGER.log(Level.SEVERE, message);

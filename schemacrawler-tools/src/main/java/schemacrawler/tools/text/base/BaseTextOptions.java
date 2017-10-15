@@ -44,7 +44,9 @@ public abstract class BaseTextOptions
   private boolean isAppendOutput;
   private boolean isNoFooter;
   private boolean isNoHeader;
-  private boolean isNoInfo;
+  private boolean isNoSchemaCrawlerInfo;
+  private boolean isShowDatabaseInfo;
+  private boolean isShowJdbcDriverInfo;
   private boolean isShowUnqualifiedNames;
   private boolean isNoSchemaColors;
 
@@ -85,12 +87,28 @@ public abstract class BaseTextOptions
 
   public boolean isNoInfo()
   {
-    return isNoInfo;
+    return isNoSchemaCrawlerInfo && !isShowDatabaseInfo
+           && !isShowJdbcDriverInfo;
   }
 
   public boolean isNoSchemaColors()
   {
     return isNoSchemaColors;
+  }
+
+  public boolean isNoSchemaCrawlerInfo()
+  {
+    return isNoSchemaCrawlerInfo;
+  }
+
+  public boolean isShowDatabaseInfo()
+  {
+    return isShowDatabaseInfo;
+  }
+
+  public boolean isShowJdbcDriverInfo()
+  {
+    return isShowJdbcDriverInfo;
   }
 
   public boolean isShowUnqualifiedNames()
@@ -133,14 +151,24 @@ public abstract class BaseTextOptions
     this.isNoHeader = isNoHeader;
   }
 
-  public void setNoInfo(final boolean isNoInfo)
-  {
-    this.isNoInfo = isNoInfo;
-  }
-
   public void setNoSchemaColors(final boolean isNoSchemaColors)
   {
     this.isNoSchemaColors = isNoSchemaColors;
+  }
+
+  public void setNoSchemaCrawlerInfo(final boolean isNoSchemaCrawlerInfo)
+  {
+    this.isNoSchemaCrawlerInfo = isNoSchemaCrawlerInfo;
+  }
+
+  public void setShowDatabaseInfo(final boolean isShowDatabaseInfo)
+  {
+    this.isShowDatabaseInfo = isShowDatabaseInfo;
+  }
+
+  public void setShowJdbcDriverInfo(final boolean isShowJdbcDriverInfo)
+  {
+    this.isShowJdbcDriverInfo = isShowJdbcDriverInfo;
   }
 
   public void setShowUnqualifiedNames(final boolean isShowUnqualifiedNames)

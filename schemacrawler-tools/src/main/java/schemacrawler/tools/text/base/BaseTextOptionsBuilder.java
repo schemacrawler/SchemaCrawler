@@ -44,7 +44,12 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
                                           + "no_header";
   private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
                                           + "no_footer";
-  private static final String NO_INFO = SCHEMACRAWLER_FORMAT_PREFIX + "no_info";
+  private static final String NO_SCHEMACRAWLER_INFO = SCHEMACRAWLER_FORMAT_PREFIX
+                                                      + "no_schemacrawler_info";
+  private static final String SHOW_DATABASE_INFO = SCHEMACRAWLER_FORMAT_PREFIX
+                                                   + "show_database_info";
+  private static final String SHOW_JDBC_DRIVER_INFO = SCHEMACRAWLER_FORMAT_PREFIX
+                                                      + "show_jdbc_driver_info";
   private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
                                               + "append_output";
 
@@ -89,7 +94,11 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
 
     options.setNoFooter(config.getBooleanValue(NO_FOOTER));
     options.setNoHeader(config.getBooleanValue(NO_HEADER));
-    options.setNoInfo(config.getBooleanValue(NO_INFO));
+    options.setShowDatabaseInfo(config.getBooleanValue(SHOW_DATABASE_INFO));
+    options
+      .setShowJdbcDriverInfo(config.getBooleanValue(SHOW_JDBC_DRIVER_INFO));
+    options
+      .setNoSchemaCrawlerInfo(config.getBooleanValue(NO_SCHEMACRAWLER_INFO));
     options.setAppendOutput(config.getBooleanValue(APPEND_OUTPUT));
 
     options
@@ -127,15 +136,25 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> noInfo(final boolean value)
+  public BaseTextOptionsBuilder<O> noInfo()
   {
-    options.setNoInfo(value);
+    options.setNoSchemaCrawlerInfo(true);
+    options.setShowDatabaseInfo(false);
+    options.setShowJdbcDriverInfo(false);
     return this;
   }
 
   public BaseTextOptionsBuilder<O> overwriteOutput()
   {
     options.setAppendOutput(false);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> showInfo()
+  {
+    options.setNoSchemaCrawlerInfo(false);
+    options.setShowDatabaseInfo(true);
+    options.setShowJdbcDriverInfo(true);
     return this;
   }
 
@@ -158,7 +177,11 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
 
     config.setBooleanValue(NO_FOOTER, options.isNoFooter());
     config.setBooleanValue(NO_HEADER, options.isNoHeader());
-    config.setBooleanValue(NO_INFO, options.isNoInfo());
+    config.setBooleanValue(NO_SCHEMACRAWLER_INFO,
+                           options.isNoSchemaCrawlerInfo());
+    config.setBooleanValue(SHOW_DATABASE_INFO, options.isShowDatabaseInfo());
+    config.setBooleanValue(SHOW_JDBC_DRIVER_INFO,
+                           options.isShowJdbcDriverInfo());
     config.setBooleanValue(APPEND_OUTPUT, options.isAppendOutput());
 
     config.setBooleanValue(SHOW_UNQUALIFIED_NAMES,

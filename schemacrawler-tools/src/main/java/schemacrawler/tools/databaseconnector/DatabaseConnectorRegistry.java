@@ -92,11 +92,12 @@ public final class DatabaseConnectorRegistry
         }
         catch (final Exception e)
         {
-          LOGGER.log(Level.CONFIG,
-                     new StringFormat("Could not load database connector, %s=%s",
-                                      databaseSystemIdentifier,
-                                      databaseConnector.getClass().getName()),
-                     e);
+          LOGGER
+            .log(Level.CONFIG,
+                 new StringFormat("Could not load database connector, %s=%s",
+                                  databaseSystemIdentifier,
+                                  databaseConnector.getClass().getName()),
+                 e);
         }
       }
     }

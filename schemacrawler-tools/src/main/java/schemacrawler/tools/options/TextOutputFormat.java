@@ -33,7 +33,8 @@ package schemacrawler.tools.options;
  * Enumeration for text format type.
  */
 public enum TextOutputFormat
-  implements OutputFormat
+  implements
+  OutputFormat
 {
 
  text("Plain text format"),

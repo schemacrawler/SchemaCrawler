@@ -108,10 +108,11 @@ public final class SchemaCrawlerExecutable
           .configureNewExecutable(getCommand(),
                                   schemaCrawlerOptions,
                                   outputOptions);
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Executing command <%s> using executable <%s>",
-                                    getCommand(),
-                                    executable.getClass().getName()));
+        LOGGER
+          .log(Level.INFO,
+               new StringFormat("Executing command <%s> using executable <%s>",
+                                getCommand(),
+                                executable.getClass().getName()));
       }
     }
 

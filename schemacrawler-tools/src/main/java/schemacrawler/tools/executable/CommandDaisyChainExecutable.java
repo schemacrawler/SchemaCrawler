@@ -79,7 +79,7 @@ public final class CommandDaisyChainExecutable
         {
           // Last command - no header, or info
           commonTextOptions.noHeader(true);
-          commonTextOptions.noInfo(true);
+          commonTextOptions.noInfo();
 
           commonTextOptions.appendOutput();
         }
@@ -87,7 +87,7 @@ public final class CommandDaisyChainExecutable
         {
           // Middle command - no header, footer, or info
           commonTextOptions.noHeader(true);
-          commonTextOptions.noInfo(true);
+          commonTextOptions.noInfo();
           commonTextOptions.noFooter(true);
 
           commonTextOptions.appendOutput();

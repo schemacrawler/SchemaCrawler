@@ -109,7 +109,8 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = executable.getSchemaCrawlerOptions();
+    final SchemaCrawlerOptions schemaCrawlerOptions = executable
+      .getSchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
@@ -117,10 +118,10 @@ public class SchemaCrawlerXmlOutputTest
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoInfo(false);
-    textOptions.setNoHeader(false);
-    textOptions.setNoFooter(false);
     textOptions.setAlphabeticalSortForTables(true);
+    textOptions.setNoSchemaCrawlerInfo(false);
+    textOptions.setShowDatabaseInfo(true);
+    textOptions.setShowJdbcDriverInfo(true);
 
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)

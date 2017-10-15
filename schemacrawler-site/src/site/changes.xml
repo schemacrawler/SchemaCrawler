@@ -5,7 +5,7 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.16.05" date="2017-10-15" description="Miscellaneous fixes">
+     <release version="14.17.01" date="2017-10-20" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Exclude database system schemas by default.
       ]]></action>  
@@ -14,6 +14,10 @@
       ]]></action>
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Make -routines return no routines by default, to make it easier for first-time users.
+      ]]></action>       
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Show just SchemaCrawler information by default in the output, and not database and JDBC driver information.
+        Add fine-tuned options for each.
       ]]></action>                  
      </release>   
      <release version="14.16.04" date="2017-09-25" description="Miscellaneous fixes">

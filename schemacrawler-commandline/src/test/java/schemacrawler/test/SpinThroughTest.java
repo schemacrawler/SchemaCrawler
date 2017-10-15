@@ -59,6 +59,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
 public class SpinThroughTest
@@ -129,10 +130,15 @@ public class SpinThroughTest
           schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
           schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
+          final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
+          schemaTextOptionsBuilder.showInfo();
+
           final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
           executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable.setOutputOptions(outputOptions);
+          executable
+            .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
           executable
             .execute(getConnection(),
                      databaseSpecificOverrideOptionsBuilder.toOptions());
@@ -182,6 +188,7 @@ public class SpinThroughTest
           argsMap.put("g", hsqldbProperties.toString());
           argsMap.put("sequences", ".*");
           argsMap.put("synonyms", ".*");
+          argsMap.put("noinfo", Boolean.FALSE.toString());
           argsMap.put("infolevel", infoLevel.name());
           argsMap.put("command", schemaTextDetailType.name());
           argsMap.put("outputformat", outputFormat.getFormat());

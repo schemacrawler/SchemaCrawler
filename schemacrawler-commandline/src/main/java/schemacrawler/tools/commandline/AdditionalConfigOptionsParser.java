@@ -55,8 +55,15 @@ public final class AdditionalConfigOptionsParser
       .fromConfig(config);
     if (config.hasValue("noinfo"))
     {
-      final boolean value = config.getBooleanValue("noinfo", true);
-      textOptionsBuilder.noInfo(value);
+      final boolean noinfo = config.getBooleanValue("noinfo", true);
+      if (noinfo)
+      {
+        textOptionsBuilder.noInfo();
+      }
+      else
+      {
+        textOptionsBuilder.showInfo();
+      }
       consumeOption("noinfo");
     }
     if (config.hasValue("noremarks"))

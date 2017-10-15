@@ -62,6 +62,7 @@ import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.offline.OfflineSnapshotExecutable;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
 public class OfflineSnapshotTest
@@ -81,6 +82,7 @@ public class OfflineSnapshotTest
       argsMap.put("server", "offline");
       argsMap.put("database", serializedDatabaseFile.toString());
 
+      argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
       argsMap.put("command", "details");
@@ -159,12 +161,16 @@ public class OfflineSnapshotTest
     schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
+    schemaTextOptionsBuilder.showInfo();
+
     final OutputOptions inputOptions = new OutputOptions();
     inputOptions.setCompressedInputFile(serializedDatabaseFile);
 
     final OfflineSnapshotExecutable executable = new OfflineSnapshotExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setInputOptions(inputOptions);
+    executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
     executeExecutable(executable,
                       "text",

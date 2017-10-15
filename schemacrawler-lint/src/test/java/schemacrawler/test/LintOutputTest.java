@@ -54,6 +54,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
 public class LintOutputTest
@@ -103,6 +104,10 @@ public class LintOutputTest
           .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
         schemaCrawlerOptions
           .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+        
+        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
+        schemaTextOptionsBuilder.showInfo();
+        queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
 
         final Executable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

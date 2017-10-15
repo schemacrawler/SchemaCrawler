@@ -125,7 +125,9 @@ public class GraphExecutableOptionsTest
     throws Exception
   {
     final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setNoInfo(true);
+    graphOptions.setNoSchemaCrawlerInfo(true);
+    graphOptions.setShowDatabaseInfo(false);
+    graphOptions.setShowJdbcDriverInfo(false);
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     new SchemaCrawlerOptions(),
@@ -308,6 +310,10 @@ public class GraphExecutableOptionsTest
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
     graphOptionsBuilder.sortTables(true);
+    if (!graphOptions.isNoInfo())
+    {
+      graphOptionsBuilder.showInfo();
+    }
     if (!"maximum".equals(schemaCrawlerOptions.getSchemaInfoLevel().getTag()))
     {
       graphOptionsBuilder.weakAssociations(true);

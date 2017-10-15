@@ -1014,9 +1014,8 @@ public class JSONArray
     final StringBuffer sb = new StringBuffer("[");
     if (len == 1)
     {
-      sb.append(JSONObject.valueToString(myArrayList.get(0),
-                                         indentFactor,
-                                         indent));
+      sb.append(JSONObject
+        .valueToString(myArrayList.get(0), indentFactor, indent));
     }
     else
     {
@@ -1032,9 +1031,8 @@ public class JSONArray
         {
           sb.append(' ');
         }
-        sb.append(JSONObject.valueToString(myArrayList.get(i),
-                                           indentFactor,
-                                           newindent));
+        sb.append(JSONObject
+          .valueToString(myArrayList.get(i), indentFactor, newindent));
       }
       sb.append('\n');
       for (i = 0; i < indent; i += 1)
@@ -1070,9 +1068,8 @@ public class JSONArray
     writer.write("[");
     if (len == 1)
     {
-      writer.write(JSONObject.valueToString(myArrayList.get(0),
-                                            indentFactor,
-                                            indent));
+      writer.write(JSONObject
+        .valueToString(myArrayList.get(0), indentFactor, indent));
     }
     else
     {
@@ -1088,9 +1085,8 @@ public class JSONArray
         {
           writer.write(' ');
         }
-        writer.print(JSONObject.valueToString(myArrayList.get(i),
-                                              indentFactor,
-                                              newindent));
+        writer.print(JSONObject
+          .valueToString(myArrayList.get(i), indentFactor, newindent));
       }
       writer.println();
       for (i = 0; i < indent; i += 1)

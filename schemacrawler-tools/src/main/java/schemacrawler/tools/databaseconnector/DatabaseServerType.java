@@ -131,9 +131,8 @@ public final class DatabaseServerType
     }
     else
     {
-      return String.format("%s - %s",
-                           databaseSystemIdentifier,
-                           databaseSystemName);
+      return String
+        .format("%s - %s", databaseSystemIdentifier, databaseSystemName);
     }
   }
 

@@ -161,19 +161,14 @@ public final class SchemaDotFormatter
       .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#999999\">")
       .println();
 
-    formattingHelper
-      .append(new TableRow(TextOutputFormat.html).add(newTableCell(tableName,
-                                                                   Alignment.left,
-                                                                   true,
-                                                                   tableNameBgColor,
-                                                                   colspan))
-        .add(newTableCell(tableType,
-                          Alignment.right,
-                          false,
-                          tableNameBgColor,
-                          1))
-        .toString())
-      .println();
+    formattingHelper.append(new TableRow(TextOutputFormat.html)
+      .add(newTableCell(tableName,
+                        Alignment.left,
+                        true,
+                        tableNameBgColor,
+                        colspan))
+      .add(newTableCell(tableType, Alignment.right, false, tableNameBgColor, 1))
+      .toString()).println();
 
     printTableRemarks(table);
 
@@ -404,9 +399,8 @@ public final class SchemaDotFormatter
     {
       columnName = column.getFullName();
     }
-    final String columnNode = String.format("  %s [label=<%s>];%n",
-                                            nodeId,
-                                            columnName);
+    final String columnNode = String
+      .format("  %s [label=<%s>];%n", nodeId, columnName);
 
     formattingHelper.append(columnNode);
 
@@ -449,11 +443,8 @@ public final class SchemaDotFormatter
     }
     remarksRow.add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
-      .add(newTableCell(column.getRemarks(),
-                        Alignment.left,
-                        false,
-                        Color.white,
-                        1));
+      .add(newTableCell(column
+        .getRemarks(), Alignment.left, false, Color.white, 1));
     formattingHelper.append(remarksRow.toString()).println();
   }
 
@@ -510,11 +501,8 @@ public final class SchemaDotFormatter
                              1));
       }
       row
-        .add(newTableCell(column.getName(),
-                          Alignment.left,
-                          emphasize,
-                          Color.white,
-                          1))
+        .add(newTableCell(column
+          .getName(), Alignment.left, emphasize, Color.white, 1))
         .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
         .add(newTableCell(columnDetails,
                           Alignment.left,
@@ -537,13 +525,10 @@ public final class SchemaDotFormatter
     {
       return;
     }
-    formattingHelper.append(new TableRow(TextOutputFormat.html)
-      .add(newTableCell(table.getRemarks(),
-                        Alignment.left,
-                        false,
-                        Color.white,
-                        3))
-      .toString()).println();
+    formattingHelper
+      .append(new TableRow(TextOutputFormat.html).add(newTableCell(table
+        .getRemarks(), Alignment.left, false, Color.white, 3)).toString())
+      .println();
   }
 
   private void printTableRowCount(final Table table)

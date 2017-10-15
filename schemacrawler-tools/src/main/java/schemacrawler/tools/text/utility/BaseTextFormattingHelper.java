@@ -287,16 +287,15 @@ abstract class BaseTextFormattingHelper
                                                                        : " right");
 
     final TableRow row = new TableRow(outputFormat);
-    row
-      .add(new TableCell(name,
-                         true,
-                         nameWidth,
-                         Alignment.inherit,
-                         false,
-                         "property_name",
-                         Color.white,
-                         1,
-                         outputFormat));
+    row.add(new TableCell(name,
+                          true,
+                          nameWidth,
+                          Alignment.inherit,
+                          false,
+                          "property_name",
+                          Color.white,
+                          1,
+                          outputFormat));
     row.add(new TableCell(value,
                           true,
                           valueWidth,

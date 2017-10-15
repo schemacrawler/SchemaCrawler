@@ -84,6 +84,7 @@ public class TestSqliteDistribution
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "sqlite");
       argsMap.put("database", sqliteDbFile.toString());
+      argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("command", "details,dump,count");
       argsMap.put("infolevel", InfoLevel.maximum.name());
       argsMap.put("outputfile", out.toString());

@@ -76,11 +76,12 @@ public class TestHsqldbCommandline
 
     final Path testConfigFile = IOUtility.createTempFilePath("test",
                                                              "properties");
-    try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
-                                                                 UTF_8,
-                                                                 WRITE,
-                                                                 TRUNCATE_EXISTING,
-                                                                 CREATE));)
+    try (
+        final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
+                                                                UTF_8,
+                                                                WRITE,
+                                                                TRUNCATE_EXISTING,
+                                                                CREATE));)
     {
       final Properties properties = new Properties();
       properties
@@ -98,6 +99,7 @@ public class TestHsqldbCommandline
       argsMap.put("user", "sa");
       argsMap.put("password", null);
       argsMap.put("g", testConfigFile.toString());
+      argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("command", "details,dump,count,hsqldb.tables");
       argsMap.put("infolevel", "maximum");
       argsMap.put("synonyms", ".*");

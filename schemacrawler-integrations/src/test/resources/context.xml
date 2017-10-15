@@ -190,7 +190,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           name="hideConstraintNames"
           value="false" />
         <property
-          name="noInfo"
+          name="noSchemaCrawlerInfo"
           value="true" />           
       </bean>
     </property>
@@ -213,7 +213,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           name="showLobs"
           value="true" />
                   <property
-          name="noInfo"
+          name="noSchemaCrawlerInfo"
           value="true" />
       </bean>
     </property>
@@ -247,7 +247,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
           name="showLobs"
           value="true" />
         <property
-          name="noInfo"
+          name="noSchemaCrawlerInfo"
           value="true" />          
       </bean>
     </property>
@@ -281,7 +281,7 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
     <property name="operationOptions">
       <bean class="schemacrawler.tools.text.operation.OperationOptions">
         <property
-          name="noInfo"
+          name="noSchemaCrawlerInfo"
           value="true" />          
       </bean>
     </property>      
