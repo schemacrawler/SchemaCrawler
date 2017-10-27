@@ -796,7 +796,7 @@ automatically added to table metadata as attributes. The query should return the
           </tbody>
         </table>
       </subsection>
-      <subsection name="ADDITIONAL_INFO.ADDITIONAL_TABLE_ATTRIBUTES">
+      <subsection name="ADDITIONAL_INFO.ADDITIONAL_COLUMN_ATTRIBUTES">
         <p>
 If you create a query definition in the configuration properties, called <code>select.ADDITIONAL_INFO.ADDITIONAL_COLUMN_ATTRIBUTES</code>, the columns will be automatically added to the column metadata as attributes. The query should return the following columns:
         </p>
