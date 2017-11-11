@@ -131,7 +131,8 @@ final class TableRetriever
                            final InclusionRuleFilter<Table> tableFilter,
                            final TableTypes supportedTableTypes)
   {
-    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
+    final String columnCatalogName = nameQuotedName(results
+      .getString("TABLE_CAT"));
     final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
     final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
     LOGGER.log(Level.FINE,
@@ -143,7 +144,8 @@ final class TableRetriever
     final String remarks = results.getString("REMARKS");
 
     final Optional<SchemaReference> optionalSchema = schemas
-      .lookup(new SchemaReference(columnCatalogName, schemaName).toString());
+      .lookup(new SchemaReference(columnCatalogName, schemaName)
+        .getLookupKey());
     if (!optionalSchema.isPresent())
     {
       return;
@@ -263,10 +265,7 @@ final class TableRetriever
                                   .asList(filteredTableTypes)));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTables(null,
-                 null,
-                 tableNamePattern,
-                 filteredTableTypes));)
+      .getTables(null, null, tableNamePattern, filteredTableTypes));)
     {
       results.setDescription("retrieveTables");
       while (results.next())
