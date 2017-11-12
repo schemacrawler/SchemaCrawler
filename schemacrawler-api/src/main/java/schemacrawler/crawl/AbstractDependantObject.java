@@ -34,6 +34,7 @@ import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
+import schemacrawler.utility.Identifiers;
 
 /**
  * Represents the dependent of a database object, such as a column or an
@@ -49,6 +50,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObjectReference<D> parent;
+  private transient String fullName;
 
   AbstractDependantObject(final DatabaseObjectReference<D> parent,
                           final String name)
@@ -97,21 +99,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (parent != null)
-    {
-      final String parentFullName = parent.get().getFullName();
-      if (!isBlank(parentFullName))
-      {
-        buffer.append(parentFullName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    buildFullName();
+    return fullName;
   }
 
   /**
@@ -160,6 +149,25 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   public boolean isParentPartial()
   {
     return parent.isPartialDatabaseObjectReference();
+  }
+
+  private void buildFullName()
+  {
+    // if (fullName != null)
+    // {
+    // return;
+    // }
+
+    final Identifiers identifiers = Identifiers.identifiers()
+      .withIdentifierQuoteString("\"").build();
+    if (parent != null)
+    {
+      fullName = identifiers.quoteFullName(parent.get(), getName());
+    }
+    else
+    {
+      fullName = getName();
+    }
   }
 
 }

@@ -45,6 +45,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.Schema;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -107,9 +109,8 @@ public final class Identifiers
       }
       catch (final Exception e)
       {
-        LOGGER.log(Level.WARNING,
-                   "Could not retrieve SQL keywords metadata",
-                   e);
+        LOGGER
+          .log(Level.WARNING, "Could not retrieve SQL keywords metadata", e);
       }
 
       return toUpperCase(Arrays.asList(sqlKeywords.split(",")));
@@ -381,6 +382,65 @@ public final class Identifiers
       quotedName = unquotedName;
     }
     return quotedName;
+  }
+
+  public String quoteFullName(final DatabaseObject parent, final String name)
+  {
+    final StringBuilder buffer = new StringBuilder(64);
+    if (parent != null)
+    {
+      final String parentFullName = parent.getFullName();
+      if (!isBlank(parentFullName))
+      {
+        buffer.append(parentFullName).append('.');
+      }
+    }
+    if (!isBlank(name))
+    {
+      buffer.append(name);
+    }
+    return buffer.toString();
+  }
+
+  public String quoteFullName(final Schema schema, final String name)
+  {
+    final StringBuilder buffer = new StringBuilder(64);
+    if (schema != null)
+    {
+      final String schemaFullName = schema.getFullName();
+      if (!isBlank(schemaFullName))
+      {
+        buffer.append(schemaFullName).append('.');
+      }
+    }
+    if (!isBlank(name))
+    {
+      buffer.append(name);
+    }
+    return buffer.toString();
+  }
+
+  public String quoteFullName(final String catalogName, final String name)
+  {
+    final StringBuilder buffer = new StringBuilder(64);
+
+    final boolean hasCatalogName = !isBlank(catalogName);
+    final boolean hasSchemaName = !isBlank(name);
+
+    if (hasCatalogName)
+    {
+      buffer.append(catalogName);
+    }
+    if (hasCatalogName && hasSchemaName)
+    {
+      buffer.append(".");
+    }
+    if (hasSchemaName)
+    {
+      buffer.append(name);
+    }
+
+    return buffer.toString();
   }
 
   /**

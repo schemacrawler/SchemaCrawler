@@ -30,12 +30,12 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TypedObject;
+import schemacrawler.utility.Identifiers;
 
 /**
  * Represents a database object.
@@ -50,6 +50,7 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
+  private transient String fullName;
 
   AbstractDatabaseObject(final Schema schema, final String name)
   {
@@ -135,21 +136,8 @@ abstract class AbstractDatabaseObject
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (schema != null)
-    {
-      final String schemaFullName = schema.getFullName();
-      if (!isBlank(schemaFullName))
-      {
-        buffer.append(schemaFullName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    buildFullName();
+    return fullName;
   }
 
   @Override
@@ -169,6 +157,18 @@ abstract class AbstractDatabaseObject
     result = prime * result + (schema == null? 0: schema.hashCode());
     result = prime * result + super.hashCode();
     return result;
+  }
+
+  private void buildFullName()
+  {
+    if (fullName != null)
+    {
+      return;
+    }
+
+    final Identifiers identifiers = Identifiers.identifiers()
+      .withIdentifierQuoteString("\"").build();
+    fullName = identifiers.quoteFullName(schema, getName());
   }
 
 }
