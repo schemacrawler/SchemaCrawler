@@ -153,10 +153,8 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
 
   private void buildFullName()
   {
-    // if (fullName != null)
-    // {
-    // return;
-    // }
+    // Do not cache the full name, since the object may not be
+    // completely deserialized
 
     final Identifiers identifiers = Identifiers.identifiers()
       .withIdentifierQuoteString("\"").build();
