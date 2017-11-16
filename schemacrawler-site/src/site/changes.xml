@@ -5,7 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-     <release version="14.17.01" date="2017-10-20" description="Miscellaneous fixes">
+     <release version="14.17.01" date="2017-11-20" description="Miscellaneous fixes">
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Support for SQLite named foreign keys, auto-incremented columns, and more, with the latest
+        JDBC driver for SQLite.
+      ]]></action>      
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
         Exclude database system schemas by default.
       ]]></action>  
