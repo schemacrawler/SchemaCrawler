@@ -44,6 +44,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -73,7 +74,9 @@ public final class OperationExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadOperationOptions();
@@ -104,8 +107,16 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
+        final String identifierQuoteString = Identifiers
+          .lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
+                                       connection.getMetaData());
+        LOGGER.log(Level.CONFIG,
+                   new StringFormat("Database identifier quote string is <%s>",
+                                    identifierQuoteString));
         final Identifiers identifiers = Identifiers.identifiers()
-          .withConnection(connection).build();
+          .withConnection(connection)
+          .withIdentifierQuoteString(identifierQuoteString).build();
+
         for (final Table table: getSortedTables(catalog))
         {
           final boolean isAlphabeticalSortForTableColumns = operationOptions

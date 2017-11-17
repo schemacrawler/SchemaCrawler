@@ -94,11 +94,23 @@ public class OfflineSnapshotExecutable
 
     final Catalog catalog = loadCatalog();
 
-    executeOn(catalog, connection);
+    executeOn(catalog, connection, databaseSpecificOverrideOptions);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void executeOn(Catalog catalog, Connection connection)
+    throws Exception
+  {
+    executeOn(catalog, connection, new DatabaseSpecificOverrideOptions());
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadOfflineSnapshotOptions();
@@ -125,7 +137,7 @@ public class OfflineSnapshotExecutable
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setOutputOptions(outputOptions);
-    executable.executeOn(catalog, connection);
+    executable.executeOn(catalog, connection, databaseSpecificOverrideOptions);
   }
 
   public void setInputOptions(final OutputOptions inputOptions)

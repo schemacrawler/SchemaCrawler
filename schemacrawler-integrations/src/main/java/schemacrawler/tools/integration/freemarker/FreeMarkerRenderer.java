@@ -44,6 +44,7 @@ import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -71,7 +72,7 @@ public final class FreeMarkerRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+                              final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     String templateLocation = outputOptions.getOutputFormatValue();
