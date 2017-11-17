@@ -35,6 +35,7 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -247,25 +248,16 @@ abstract class AbstractRetriever
                                          final String routineName,
                                          final String specificName)
   {
-    final String routineLookupName;
-    if (!isBlank(specificName))
-    {
-      routineLookupName = specificName;
-    }
-    else
-    {
-      routineLookupName = routineName;
-    }
-    return catalog.lookupRoutine(new SchemaReference(catalogName, schemaName),
-                                 routineLookupName);
+    return catalog.lookupRoutine(Arrays
+      .asList(catalogName, schemaName, routineName, specificName));
   }
 
   Optional<MutableTable> lookupTable(final String catalogName,
                                      final String schemaName,
                                      final String tableName)
   {
-    return catalog.lookupTable(new SchemaReference(catalogName, schemaName),
-                               tableName);
+    return catalog
+      .lookupTable(Arrays.asList(catalogName, schemaName, tableName));
   }
 
   String nameQuotedName(final String name)

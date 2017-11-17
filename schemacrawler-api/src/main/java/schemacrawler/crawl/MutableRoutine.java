@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,11 +75,7 @@ abstract class MutableRoutine
   {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(super.getLookupKey());
-    if (!isBlank(specificName))
-    {
-      lookupKey.remove(lookupKey.size() - 1);
-      lookupKey.add(specificName);
-    }
+    lookupKey.add(specificName);
     return lookupKey;
   }
 

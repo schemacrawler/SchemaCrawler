@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -343,6 +344,11 @@ final class MutableCatalog
     return lookupColumnDataType(new SchemaReference(), name);
   }
 
+  public Optional<MutableTable> lookupTable(final List<String> tableLookupKey)
+  {
+    return tables.lookup(tableLookupKey);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -443,6 +449,11 @@ final class MutableCatalog
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
     return columnDataTypes.lookupColumnDataTypeByType(type);
+  }
+
+  Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey)
+  {
+    return routines.lookup(routineLookupKey);
   }
 
   void setCrawlHeaderInfo(final String title)
