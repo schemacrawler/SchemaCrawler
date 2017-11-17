@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2017-03-09 22:27:18</td>
+		<td align='left'>2017-11-15 22:35:01</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -156,7 +156,7 @@ along with the latest updated information</td>
 		<td port='authorid_19681b5e.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='update_7e11958f.start' align='left'>"UPDATE"</td>
+		<td port='update_7e11958f.start' align='left'>UPDATE</td>
 		<td align='left'> </td>
 		<td port='update_7e11958f.end' align='left'>CLOB</td>
 	</tr>
@@ -260,7 +260,7 @@ along with the latest updated information</td>
 		<td bgcolor='#CEE2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='globalcount_22cfa042.start' align='left'>"Global Count"</td>
+		<td port='globalcount_22cfa042.start' align='left'>Global Count</td>
 		<td align='left'> </td>
 		<td port='globalcount_22cfa042.end' align='left'>INTEGER</td>
 	</tr>
@@ -353,7 +353,7 @@ along with the latest updated information</td>
 		<td bgcolor='#F2EACE' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='globalcount_9be78829.start' align='left'>"Global Count"</td>
+		<td port='globalcount_9be78829.start' align='left'>Global Count</td>
 		<td align='left'> </td>
 		<td port='globalcount_9be78829.end' align='left'>INTEGER</td>
 	</tr>
@@ -407,7 +407,7 @@ along with the latest updated information</td>
 		<td port='price_fd0e0872.end' align='left'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
-		<td port='update_4444e22e.start' align='left'>"UPDATE"</td>
+		<td port='update_4444e22e.start' align='left'>UPDATE</td>
 		<td align='left'> </td>
 		<td port='update_4444e22e.end' align='left'>CLOB</td>
 	</tr>

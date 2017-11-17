@@ -31,6 +31,7 @@ package schemacrawler.schemacrawler;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -117,9 +118,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> getLookupKey()
   {
-    return getFullName();
+    return catalog.getLookupKey();
   }
 
   @Override

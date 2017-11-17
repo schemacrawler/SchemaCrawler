@@ -33,17 +33,25 @@ import static schemacrawler.utility.QueryUtility.executeForScalar;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
 
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.Query;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public class LinterTableSql
   extends BaseLinter
 {
 
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+      .getLogger(LinterTableSql.class.getName());
+  
   private String message;
   private String sql;
 
@@ -73,7 +81,6 @@ public class LinterTableSql
 
   @Override
   protected void lint(final Table table, final Connection connection)
-    throws SchemaCrawlerException
   {
     if (isBlank(sql))
     {
@@ -84,10 +91,24 @@ public class LinterTableSql
     requireNonNull(connection, "No connection provided");
 
     final Query query = new Query(message, sql);
-    final Object queryResult = executeForScalar(query, connection, table);
-    if (queryResult != null)
+    try
     {
-      addTableLint(table, getSummary() + " " + queryResult);
+      final Identifiers identifiers = Identifiers.identifiers()
+        .withConnection(connection).build();
+      final Object queryResult = executeForScalar(query,
+                                                  connection,
+                                                  table,
+                                                  identifiers);
+      if (queryResult != null)
+      {
+        addTableLint(table, getSummary() + " " + queryResult);
+      }
+    }
+    catch (final SQLException | SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 new StringFormat("Could not get count for table, ", table),
+                 e);
     }
   }
 

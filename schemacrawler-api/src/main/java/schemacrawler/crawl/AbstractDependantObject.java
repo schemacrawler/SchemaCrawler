@@ -32,6 +32,9 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.utility.Identifiers;
@@ -101,6 +104,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   {
     buildFullName();
     return fullName;
+  }
+
+  @Override
+  public List<String> getLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(parent.get().getLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
 
   /**

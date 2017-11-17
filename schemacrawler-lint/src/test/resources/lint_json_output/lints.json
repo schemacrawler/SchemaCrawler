@@ -62,7 +62,7 @@
           "severity": "medium",
           "description": "spaces in name, or reserved word",
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "value": "\"Global Count\""
+          "value": "Global Count"
         },
         {
           "severity": "medium",
@@ -86,10 +86,10 @@
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "\"Global Count\""
+          "value": "Global Count"
         }
       ],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table"
     },
@@ -99,7 +99,7 @@
           "severity": "medium",
           "description": "spaces in name, or reserved word",
           "id": "schemacrawler.tools.linter.LinterTableWithQuotedNames",
-          "value": "\"UPDATE\""
+          "value": "UPDATE"
         },
         {
           "severity": "low",
@@ -117,13 +117,13 @@
           "severity": "low",
           "description": "should have remarks",
           "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, \"UPDATE\", PRESS_RELEASE"
+          "value": "ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE"
         },
         {
           "severity": "low",
           "description": "too many binary objects",
           "id": "schemacrawler.tools.linter.LinterTooManyLobs",
-          "value": "\"UPDATE\", PRESS_RELEASE"
+          "value": "UPDATE, PRESS_RELEASE"
         }
       ],
       "name": "PUBLICATIONS",

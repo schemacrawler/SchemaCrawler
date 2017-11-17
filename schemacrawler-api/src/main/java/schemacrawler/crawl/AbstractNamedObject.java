@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import schemacrawler.schema.NamedObject;
 import schemacrawler.utility.NamedObjectSort;
 
@@ -104,9 +108,9 @@ abstract class AbstractNamedObject
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> getLookupKey()
   {
-    return getFullName();
+    return new ArrayList<>(Arrays.asList(name));
   }
 
   /**

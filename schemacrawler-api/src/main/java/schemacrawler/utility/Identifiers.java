@@ -397,13 +397,47 @@ public final class Identifiers
     }
     if (!isBlank(name))
     {
-      buffer.append(name);
+      buffer.append(nameQuotedName(name));
     }
     return buffer.toString();
   }
 
-  public String quoteFullName(final Schema schema, final String name)
+  public String quoteFullName(final Schema schema)
   {
+    if (schema == null)
+    {
+      return "";
+    }
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
+    final StringBuilder buffer = new StringBuilder(64);
+
+    final boolean hasCatalogName = !isBlank(catalogName);
+    final boolean hasSchemaName = !isBlank(schemaName);
+
+    if (hasCatalogName)
+    {
+      buffer.append(nameQuotedName(catalogName));
+    }
+    if (hasCatalogName && hasSchemaName)
+    {
+      buffer.append(".");
+    }
+    if (hasSchemaName)
+    {
+      buffer.append(nameQuotedName(schemaName));
+    }
+
+    return buffer.toString();
+  }
+
+  public String quoteFullName(final DatabaseObject databaseObject)
+  {
+    if (databaseObject == null) return "";
+
+    final Schema schema = databaseObject.getSchema();
+    final String name = databaseObject.getName();
     final StringBuilder buffer = new StringBuilder(64);
     if (schema != null)
     {
@@ -415,31 +449,8 @@ public final class Identifiers
     }
     if (!isBlank(name))
     {
-      buffer.append(name);
+      buffer.append(nameQuotedName(name));
     }
-    return buffer.toString();
-  }
-
-  public String quoteFullName(final String catalogName, final String name)
-  {
-    final StringBuilder buffer = new StringBuilder(64);
-
-    final boolean hasCatalogName = !isBlank(catalogName);
-    final boolean hasSchemaName = !isBlank(name);
-
-    if (hasCatalogName)
-    {
-      buffer.append(catalogName);
-    }
-    if (hasCatalogName && hasSchemaName)
-    {
-      buffer.append(".");
-    }
-    if (hasSchemaName)
-    {
-      buffer.append(name);
-    }
-
     return buffer.toString();
   }
 

@@ -144,8 +144,7 @@ final class TableRetriever
     final String remarks = results.getString("REMARKS");
 
     final Optional<SchemaReference> optionalSchema = schemas
-      .lookup(new SchemaReference(columnCatalogName, schemaName)
-        .getLookupKey());
+      .lookup(Arrays.asList(columnCatalogName, schemaName));
     if (!optionalSchema.isPresent())
     {
       return;

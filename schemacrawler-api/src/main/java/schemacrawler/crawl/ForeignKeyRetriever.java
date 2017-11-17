@@ -36,6 +36,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -111,13 +112,15 @@ final class ForeignKeyRetriever
       while (results.next())
       {
         // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
-        final String fkName = nameQuotedName(results.getString("FOREIGN_KEY_NAME"));
+        final String fkName = nameQuotedName(results
+          .getString("FOREIGN_KEY_NAME"));
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving foreign key definition <%s>",
                                     fkName));
         final String definition = results.getString("FOREIGN_KEY_DEFINITION");
 
-        final Optional<MutableForeignKey> optionalFk = allFks.lookup(fkName);
+        final Optional<MutableForeignKey> optionalFk = allFks
+          .lookup(Arrays.asList(fkName));
         if (optionalFk.isPresent())
         {
           final MutableForeignKey fkConstraint = optionalFk.get();
@@ -187,7 +190,8 @@ final class ForeignKeyRetriever
         .getString("PKTABLE_CAT"));
       final String pkTableSchemaName = nameQuotedName(results
         .getString("PKTABLE_SCHEM"));
-      final String pkTableName = nameQuotedName(results.getString("PKTABLE_NAME"));
+      final String pkTableName = nameQuotedName(results
+        .getString("PKTABLE_NAME"));
       final String pkColumnName = nameQuotedName(results
         .getString("PKCOLUMN_NAME"));
 
@@ -195,7 +199,8 @@ final class ForeignKeyRetriever
         .getString("FKTABLE_CAT"));
       final String fkTableSchemaName = nameQuotedName(results
         .getString("FKTABLE_SCHEM"));
-      final String fkTableName = nameQuotedName(results.getString("FKTABLE_NAME"));
+      final String fkTableName = nameQuotedName(results
+        .getString("FKTABLE_NAME"));
       final String fkColumnName = nameQuotedName(results
         .getString("FKCOLUMN_NAME"));
 
@@ -231,7 +236,7 @@ final class ForeignKeyRetriever
       }
 
       final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
-        .lookup(foreignKeyName);
+        .lookup(Arrays.asList(foreignKeyName));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent())
       {
@@ -304,9 +309,10 @@ final class ForeignKeyRetriever
       column = new ColumnPartial(table, columnName);
       ((TablePartial) table).addColumn(column);
 
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Creating column reference for a column that is referenced by a foreign key <%s>",
-                                  column.getFullName()));
+      LOGGER
+        .log(Level.FINER,
+             new StringFormat("Creating column reference for a column that is referenced by a foreign key <%s>",
+                              column.getFullName()));
     }
     return column;
   }
@@ -338,7 +344,8 @@ final class ForeignKeyRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve foreign keys from SQL:\n"
-                                          + fkSql, e);
+                                          + fkSql,
+                                          e);
     }
   }
 
@@ -366,7 +373,8 @@ final class ForeignKeyRetriever
       catch (final SQLException e)
       {
         throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
-                                            + table, e);
+                                            + table,
+                                            e);
       }
 
       // We need to get exported keys as well, since if only a single
@@ -382,7 +390,8 @@ final class ForeignKeyRetriever
       catch (final SQLException e)
       {
         throw new SchemaCrawlerSQLException("Could not retrieve foreign keys for table "
-                                            + table, e);
+                                            + table,
+                                            e);
       }
     }
   }
@@ -395,9 +404,7 @@ final class ForeignKeyRetriever
 
     // Get imported foreign keys
     try (final MetadataResultSet results = new MetadataResultSet(metaData
-      .getImportedKeys(null,
-                       null,
-                       "%"));)
+      .getImportedKeys(null, null, "%"));)
     {
       createForeignKeys(results, foreignKeys);
     }
@@ -406,9 +413,7 @@ final class ForeignKeyRetriever
     // table is selected, we have not retrieved it's keys that are
     // imported by other tables.
     try (final MetadataResultSet results = new MetadataResultSet(metaData
-      .getExportedKeys(null,
-                       null,
-                       "%"));)
+      .getExportedKeys(null, null, "%"));)
     {
       createForeignKeys(results, foreignKeys);
     }

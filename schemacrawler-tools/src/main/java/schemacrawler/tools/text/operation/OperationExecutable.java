@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
@@ -103,6 +104,8 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
+        final Identifiers identifiers = Identifiers.identifiers()
+          .withConnection(connection).build();
         for (final Table table: getSortedTables(catalog))
         {
           final boolean isAlphabeticalSortForTableColumns = operationOptions
@@ -111,7 +114,8 @@ public final class OperationExecutable
               final ResultSet results = executeAgainstTable(query,
                                                             statement,
                                                             table,
-                                                            isAlphabeticalSortForTableColumns);)
+                                                            isAlphabeticalSortForTableColumns,
+                                                            identifiers);)
           {
             handler.handleData(table, results);
           }

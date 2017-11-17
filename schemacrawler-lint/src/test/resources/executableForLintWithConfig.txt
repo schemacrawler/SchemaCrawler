@@ -26,7 +26,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                              [lint, low]
-	should have remarks	BOOKID, AUTHORID, "UPDATE"
+	should have remarks	BOOKID, AUTHORID, UPDATE
 
 
 
@@ -46,7 +46,7 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	"Global Count"
+	should have remarks	Global Count
 
 
 
@@ -66,7 +66,7 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	"Global Count"
+	should have remarks	Global Count
 
 
 
@@ -76,7 +76,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
+	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE
 
 
 

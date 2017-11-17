@@ -33,6 +33,7 @@ import static schemacrawler.utility.QueryUtility.executeForLong;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,7 @@ import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -71,15 +73,22 @@ public final class CatalogWithCounts
 
     counts = new HashMap<>();
 
+    Identifiers identifiers;
     try
     {
       checkConnection(connection);
+      identifiers = Identifiers.identifiers().withConnection(connection)
+        .build();
     }
-    catch (final SchemaCrawlerException e)
+    catch (final SQLException | SchemaCrawlerException e)
     {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.
       LOGGER.log(Level.WARNING, "No connection provided", e);
+
+      identifiers = Identifiers.identifiers().withIdentifierQuoteString("\"")
+        .build();
+
       return;
     }
 
@@ -89,7 +98,10 @@ public final class CatalogWithCounts
     {
       try
       {
-        final long count = executeForLong(query, connection, table);
+        final long count = executeForLong(query,
+                                          connection,
+                                          table,
+                                          identifiers);
         counts.put(table, count);
         addRowCountToTable(table, count);
       }

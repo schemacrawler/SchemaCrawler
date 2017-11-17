@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -56,9 +55,9 @@ class NamedObjectList<N extends NamedObject>
 
   private static final long serialVersionUID = 3257847666804142128L;
 
-  private static String makeLookupKey(final NamedObject namedObject)
+  private static List<String> makeLookupKey(final NamedObject namedObject)
   {
-    final String key;
+    final List<String> key;
     if (namedObject == null)
     {
       key = null;
@@ -70,47 +69,31 @@ class NamedObjectList<N extends NamedObject>
     return key;
   }
 
-  private static String makeLookupKey(final NamedObject namedObject,
-                                      final String name)
+  private static List<String> makeLookupKey(final NamedObject namedObject,
+                                            final String name)
   {
-    final StringBuilder buffer = new StringBuilder(256);
-
-    final String key;
-    final String namedObjectLookupKey = makeLookupKey(namedObject);
-
-    if (namedObjectLookupKey != null)
-    {
-      buffer.append(namedObjectLookupKey);
-    }
-    if (buffer.length() > 0)
-    {
-      buffer.append('.');
-    }
-    buffer.append(name);
-
-    key = buffer.toString();
+    final List<String> key = makeLookupKey(namedObject);
+    key.add(name);
     return key;
   }
 
-  private static String makeLookupKey(final String fullName)
+  private static List<String> makeLookupKey(final String fullName)
   {
-    final String key;
+    final List<String> key = new ArrayList<>();
     if (fullName == null)
     {
-      key = null;
+      return key;
     }
-    else if (isBlank(fullName))
+    final String[] lookupKey = fullName
+      .split("\\.(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+    for (final String string: lookupKey)
     {
-      key = "";
-    }
-    else
-    {
-      key = fullName;
+      key.add(string.replace("\"", ""));
     }
     return key;
   }
 
-  private final Map<String, N> objects = new HashMap<>();
+  private final Map<List<String>, N> objects = new HashMap<>();
 
   /**
    * Add a named object to the list.
@@ -122,7 +105,7 @@ class NamedObjectList<N extends NamedObject>
   public boolean add(final N namedObject)
   {
     requireNonNull(namedObject, "Cannot add a null object to the list");
-    final String key = makeLookupKey(namedObject);
+    final List<String> key = makeLookupKey(namedObject);
     objects.put(key, namedObject);
     return true;
   }
@@ -195,7 +178,7 @@ class NamedObjectList<N extends NamedObject>
       final N namedObject = iterator.next();
       if (namedObject != null && c.contains(namedObject))
       {
-        final String key = makeLookupKey(namedObject);
+        final List<String> key = makeLookupKey(namedObject);
         objects.remove(key);
         modified = true;
       }
@@ -218,7 +201,7 @@ class NamedObjectList<N extends NamedObject>
       final N namedObject = iterator.next();
       if (namedObject != null && !c.contains(namedObject))
       {
-        final String key = makeLookupKey(namedObject);
+        final List<String> key = makeLookupKey(namedObject);
         objects.remove(key);
         modified = true;
       }
@@ -258,9 +241,21 @@ class NamedObjectList<N extends NamedObject>
     return ObjectToString.toString(values());
   }
 
+  /**
+   * Looks up a named object by lookup key.
+   *
+   * @param fullName
+   *        Fully qualified name
+   * @return Named object
+   */
+  Optional<N> lookup(final List<String> lookupKey)
+  {
+    return internalGet(lookupKey);
+  }
+
   Optional<N> lookup(final NamedObject namedObject, final String name)
   {
-    final String key = makeLookupKey(namedObject, name);
+    final List<String> key = makeLookupKey(namedObject, name);
     return internalGet(key);
   }
 
@@ -273,18 +268,12 @@ class NamedObjectList<N extends NamedObject>
    */
   Optional<N> lookup(final String fullName)
   {
-    final String key = makeLookupKey(fullName);
-    return internalGet(key);
+    return internalGet(makeLookupKey(fullName));
   }
 
   N remove(final N namedObject)
   {
     return objects.remove(makeLookupKey(namedObject));
-  }
-
-  N remove(final String fullName)
-  {
-    return objects.remove(makeLookupKey(fullName));
   }
 
   /**
@@ -299,7 +288,7 @@ class NamedObjectList<N extends NamedObject>
     return all;
   }
 
-  private Optional<N> internalGet(final String key)
+  private Optional<N> internalGet(final List<String> key)
   {
     return Optional.ofNullable(objects.get(key));
   }
