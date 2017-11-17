@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2017-03-09 22:12:44</td>
+		<td align='left'>2017-11-15 22:21:35</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -171,7 +171,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td port='update_7e11958f.start' align='right'>3</td>
-		<td align='left'>"UPDATE"</td>
+		<td align='left'>UPDATE</td>
 		<td align='left'> </td>
 		<td port='update_7e11958f.end' align='left'>CLOB</td>
 	</tr>
@@ -290,7 +290,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td port='globalcount_22cfa042.start' align='right'>1</td>
-		<td align='left'>"Global Count"</td>
+		<td align='left'>Global Count</td>
 		<td align='left'> </td>
 		<td port='globalcount_22cfa042.end' align='left'>INTEGER</td>
 	</tr>

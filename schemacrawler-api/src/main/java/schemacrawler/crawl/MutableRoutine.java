@@ -31,6 +31,9 @@ package schemacrawler.crawl;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
@@ -70,17 +73,16 @@ abstract class MutableRoutine
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> getLookupKey()
   {
-    final String lookupKey = super.getLookupKey();
-    if (isBlank(specificName))
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(super.getLookupKey());
+    if (!isBlank(specificName))
     {
-      return lookupKey;
+      lookupKey.remove(lookupKey.size() - 1);
+      lookupKey.add(specificName);
     }
-    else
-    {
-      return getSchema().getFullName() + "." + specificName;
-    }
+    return lookupKey;
   }
 
   /**

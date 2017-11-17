@@ -74,7 +74,7 @@ Relationship between books and their authors,
 along with the latest updated information
 1   BOOKID                            INTEGER NOT NULL            
 2   AUTHORID                          INTEGER NOT NULL            
-3   "UPDATE"                          CLOB                        
+3   UPDATE                            CLOB                        
 
 Foreign Keys
 
@@ -158,7 +158,7 @@ SYS_CT_10104                                          [check constraint]
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-1   "Global Count"                    INTEGER                     
+1   Global Count                      INTEGER                     
 
 
 
@@ -228,7 +228,7 @@ SYS_CT_10193                                          [check constraint]
 
 PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-1   "Global Count"                    INTEGER                     
+1   Global Count                      INTEGER                     
 
 
 
@@ -241,7 +241,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 4   WRITERID                          BIGINT NOT NULL             
 5   PUBLICATIONDATE                   DATE                        
 6   PRICE                             DOUBLE(64, 0)               
-7   "UPDATE"                          CLOB                        
+7   UPDATE                            CLOB                        
 8   PRESS_RELEASE                     CLOB                        
 
 Primary Key

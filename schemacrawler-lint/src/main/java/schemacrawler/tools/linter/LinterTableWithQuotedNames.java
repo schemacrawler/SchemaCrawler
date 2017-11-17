@@ -69,7 +69,7 @@ public class LinterTableWithQuotedNames
     }
 
     final String tableName = table.getName();
-    if (identifiers.isQuotedName(tableName))
+    if (identifiers.isToBeQuoted(tableName))
     {
       addTableLint(table, getSummary());
     }
@@ -89,7 +89,7 @@ public class LinterTableWithQuotedNames
     for (final Column column: columns)
     {
       final String columnName = column.getName();
-      if (identifiers.isQuotedName(columnName))
+      if (identifiers.isToBeQuoted(columnName))
       {
         columnsWithQuotedNames.add(columnName);
       }

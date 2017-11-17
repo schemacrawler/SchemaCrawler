@@ -31,8 +31,11 @@ package schemacrawler.schema;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -182,9 +185,9 @@ public final class SchemaReference
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> getLookupKey()
   {
-    return getFullName();
+    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
   }
 
   @Override
@@ -284,7 +287,7 @@ public final class SchemaReference
 
     final Identifiers identifiers = Identifiers.identifiers()
       .withIdentifierQuoteString("\"").build();
-    fullName = identifiers.quoteFullName(catalogName, getName());
+    fullName = identifiers.quoteFullName(this);
   }
 
 }

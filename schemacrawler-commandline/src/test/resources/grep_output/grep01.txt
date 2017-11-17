@@ -72,7 +72,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
   WRITERID                          BIGINT NOT NULL             
   PUBLICATIONDATE                   DATE                        
   PRICE                             DOUBLE(64, 0)               
-  "UPDATE"                          CLOB                        
+  UPDATE                            CLOB                        
   PRESS_RELEASE                     CLOB                        
 
 Primary Key

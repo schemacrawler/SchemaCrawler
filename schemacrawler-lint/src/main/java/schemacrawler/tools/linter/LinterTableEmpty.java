@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.QueryUtility.executeForLong;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 import schemacrawler.filter.TableTypesFilter;
@@ -39,6 +40,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.lint.BaseLinter;
 import schemacrawler.tools.lint.LintSeverity;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -71,13 +73,15 @@ public class LinterTableEmpty
     final Query query = new Query("Count", "SELECT COUNT(*) FROM ${table}");
     try
     {
-      final long count = executeForLong(query, connection, table);
+      final Identifiers identifiers = Identifiers.identifiers()
+        .withConnection(connection).build();
+      final long count = executeForLong(query, connection, table, identifiers);
       if (count == 0)
       {
         addTableLint(table, getSummary());
       }
     }
-    catch (final SchemaCrawlerException e)
+    catch (final SQLException | SchemaCrawlerException e)
     {
       LOGGER.log(Level.WARNING,
                  new StringFormat("Could not get count for table, ", table),

@@ -221,12 +221,12 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 	no non-nullable data columns	
 	no indexes	
 	spaces in name, or reserved word	
-	spaces in name, or reserved word	"Global Count"
+	spaces in name, or reserved word	Global Count
 	single column	
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	"Global Count"
+	should have remarks	Global Count
 
 
 
@@ -234,12 +234,12 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	spaces in name, or reserved word	"UPDATE"
+	spaces in name, or reserved word	UPDATE
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
-	too many binary objects	"UPDATE", PRESS_RELEASE
+	should have remarks	ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE
+	too many binary objects	UPDATE, PRESS_RELEASE
 
 
 

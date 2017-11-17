@@ -224,7 +224,7 @@
     {
       "foreignKeys": [],
       "columns": [],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
       "remarks": "",
@@ -328,7 +328,7 @@
     {
       "foreignKeys": [],
       "columns": [],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "type": "table",
       "remarks": "",
@@ -864,7 +864,7 @@
     "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-08-28 16:50:26",
+    "crawlTimestamp": "2017-11-15 22:35:13",
     "title": ""
   },
   "routines": [

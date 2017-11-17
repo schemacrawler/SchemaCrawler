@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.stream.Collectors;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -49,6 +50,7 @@ import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
+import schemacrawler.utility.Identifiers;
 
 public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler
@@ -60,6 +62,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected final DatabaseObjectColorMap colorMap;
   protected final boolean printVerboseDatabaseInfo;
   private final PrintWriter out;
+  private final Identifiers identifiers;
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
@@ -75,6 +78,9 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
+
+    identifiers = Identifiers.identifiers().withIdentifierQuoteString("\"")
+      .build();
 
     try
     {
@@ -139,8 +145,12 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
     else
     {
+      final String lookupKey = dbObject.getLookupKey().stream()
+        .filter(part -> part != null)
+        .map(part -> identifiers.nameQuotedName(part))
+        .collect(Collectors.joining("."));
       return convertForComparison(dbObject.getName()) + "_"
-             + Integer.toHexString(dbObject.getLookupKey().hashCode());
+             + Integer.toHexString(lookupKey.hashCode());
     }
   }
 
