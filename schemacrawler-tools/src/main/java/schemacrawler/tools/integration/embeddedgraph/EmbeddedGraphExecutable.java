@@ -46,6 +46,7 @@ import java.sql.Connection;
 import java.util.regex.Pattern;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -65,7 +66,7 @@ public class EmbeddedGraphExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
@@ -79,7 +80,7 @@ public class EmbeddedGraphExecutable
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
     chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);
 
-    chain.executeOn(catalog, connection);
+    chain.executeOn(catalog, connection, databaseSpecificOverrideOptions);
 
     // Interleave HTML and SVG
     try (

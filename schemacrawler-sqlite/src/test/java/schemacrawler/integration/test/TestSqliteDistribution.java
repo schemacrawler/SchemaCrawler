@@ -38,7 +38,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.Main;
@@ -72,7 +71,6 @@ public class TestSqliteDistribution
                    .toOptions().getIdentifierQuoteString());
   }
 
-  @Ignore
   @Test
   public void testSqliteMain()
     throws Exception

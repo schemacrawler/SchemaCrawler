@@ -33,6 +33,7 @@ import java.io.Writer;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 
 /**
@@ -60,7 +61,7 @@ public final class SerializationExecutable
    * {@inheritDoc}
    */
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void executeOn(final Catalog db, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     final SerializableCatalog catalog = new XmlSerializedCatalog(db);

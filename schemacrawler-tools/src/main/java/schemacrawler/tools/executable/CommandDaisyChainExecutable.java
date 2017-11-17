@@ -32,6 +32,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 
@@ -50,7 +51,7 @@ public final class CommandDaisyChainExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Commands are processed at execution time. That is, after
@@ -104,7 +105,7 @@ public final class CommandDaisyChainExecutable
 
     }
 
-    executeChain(catalog, connection);
+    executeChain(catalog, connection, databaseSpecificOverrideOptions);
 
   }
 

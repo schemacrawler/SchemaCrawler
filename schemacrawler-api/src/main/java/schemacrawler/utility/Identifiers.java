@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -490,6 +491,30 @@ public final class Identifiers
   private boolean containsSpecialCharacters(final String name)
   {
     return !isIdentifier(name);
+  }
+
+  public static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                                                   final DatabaseMetaData metaData)
+    throws SQLException
+  {
+    String identifierQuoteString;
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions
+          .hasOverrideForIdentifierQuoteString())
+    {
+      identifierQuoteString = databaseSpecificOverrideOptions
+        .getIdentifierQuoteString();
+    }
+    else
+    {
+      identifierQuoteString = metaData.getIdentifierQuoteString();
+    }
+    if (isBlank(identifierQuoteString))
+    {
+      identifierQuoteString = "";
+    }
+  
+    return identifierQuoteString;
   }
 
 }

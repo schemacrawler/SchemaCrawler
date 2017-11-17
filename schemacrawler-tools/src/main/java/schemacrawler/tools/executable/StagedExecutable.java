@@ -32,6 +32,7 @@ package schemacrawler.tools.executable;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -44,13 +45,29 @@ public interface StagedExecutable
   /**
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
-   *
+   * 
    * @param connection
    *        Database connection
    * @throws Exception
    *         On an exception
    */
   void executeOn(Catalog catalog, Connection connection)
+    throws Exception;
+
+  /**
+   * Executes functionality for SchemaCrawler, after database metadata
+   * has been obtained.
+   * 
+   * @param connection
+   *        Database connection
+   * @param databaseSpecificOverrideOptions
+   *        Overrides for the database
+   * @throws Exception
+   *         On an exception
+   */
+  void executeOn(Catalog catalog,
+                 Connection connection,
+                 DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception;
 
 }
