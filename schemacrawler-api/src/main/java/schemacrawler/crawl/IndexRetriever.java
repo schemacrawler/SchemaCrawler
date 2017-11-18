@@ -266,8 +266,10 @@ final class IndexRetriever
   private Optional<MutableTable> lookupTable(final NamedObjectList<MutableTable> allTables,
                                              final MetadataResultSet results)
   {
-    final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String catalogName = normalizeCatalogName(results
+      .getString("TABLE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
     final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
 
     final Optional<MutableTable> optionalTable = allTables
@@ -310,7 +312,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes from SQL:\n"
-                                          + indexesSql, e);
+                                          + indexesSql,
+                                          e);
     }
   }
 
@@ -331,7 +334,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
-                                          + table, e);
+                                          + table,
+                                          e);
     }
   }
 
@@ -361,11 +365,7 @@ final class IndexRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(null,
-                    null,
-                    "%",
-                    unique,
-                    true/* approximate */));)
+      .getIndexInfo(null, null, "%", unique, true/* approximate */));)
     {
       while (results.next())
       {
@@ -423,7 +423,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve primary keys from SQL:\n"
-                                          + pkSql, e);
+                                          + pkSql,
+                                          e);
     }
   }
 
@@ -449,7 +450,8 @@ final class IndexRetriever
       catch (final SQLException e)
       {
         throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
-                                            + table, e);
+                                            + table,
+                                            e);
       }
     }
   }
@@ -458,9 +460,7 @@ final class IndexRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getPrimaryKeys(null,
-                      null,
-                      "%"));)
+      .getPrimaryKeys(null, null, "%"));)
     {
       while (results.next())
       {

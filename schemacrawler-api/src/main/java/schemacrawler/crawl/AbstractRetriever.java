@@ -260,6 +260,30 @@ abstract class AbstractRetriever
       .lookupTable(Arrays.asList(catalogName, schemaName, tableName));
   }
 
+  String normalizeCatalogName(final String name)
+  {
+    if (retrieverConnection.isSupportsCatalogs())
+    {
+      return name;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  String normalizeSchemaName(final String name)
+  {
+    if (retrieverConnection.isSupportsSchemas())
+    {
+      return name;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
   String nameQuotedName(final String name)
   {
     return name;

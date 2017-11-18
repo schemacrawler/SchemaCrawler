@@ -99,9 +99,9 @@ final class TableConstraintRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("CONSTRAINT_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = nameQuotedName(results
           .getString("CONSTRAINT_NAME"));
@@ -183,9 +183,9 @@ final class TableConstraintRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("CONSTRAINT_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = nameQuotedName(results
           .getString("CONSTRAINT_NAME"));
@@ -193,7 +193,8 @@ final class TableConstraintRetriever
           .log(Level.FINER,
                new StringFormat("Retrieving constraint <%s>", constraintName));
         // "TABLE_CATALOG", "TABLE_SCHEMA"
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String tableName = nameQuotedName(results
+          .getString("TABLE_NAME"));
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -262,9 +263,9 @@ final class TableConstraintRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("CONSTRAINT_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("CONSTRAINT_SCHEMA"));
         final String constraintName = nameQuotedName(results
           .getString("CONSTRAINT_NAME"));
@@ -286,7 +287,8 @@ final class TableConstraintRetriever
         }
 
         // "TABLE_CATALOG", "TABLE_SCHEMA"
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String tableName = nameQuotedName(results
+          .getString("TABLE_NAME"));
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -302,7 +304,8 @@ final class TableConstraintRetriever
         }
 
         final MutableTable table = tableOptional.get();
-        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String columnName = nameQuotedName(results
+          .getString("COLUMN_NAME"));
         final Optional<MutableColumn> columnOptional = table
           .lookupColumn(columnName);
         if (!columnOptional.isPresent())

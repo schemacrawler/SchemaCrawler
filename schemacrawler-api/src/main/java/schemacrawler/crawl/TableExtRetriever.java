@@ -105,9 +105,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("TABLE_NAME"));
@@ -190,9 +190,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("TABLE_NAME"));
@@ -261,9 +261,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("INDEX_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("TABLE_NAME"));
@@ -371,9 +371,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("INDEX_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("TABLE_NAME"));
@@ -464,9 +464,9 @@ final class TableExtRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("PRIMARY_KEY_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("PRIMARY_KEY_TABLE_NAME"));
@@ -556,9 +556,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
         final String tableName = nameQuotedName(results
           .getString("TABLE_NAME"));
@@ -643,9 +643,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TRIGGER_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TRIGGER_SCHEMA"));
         final String triggerName = nameQuotedName(results
           .getString("TRIGGER_NAME"));
@@ -741,9 +741,9 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
         final String viewName = nameQuotedName(results.getString("TABLE_NAME"));
 
@@ -789,8 +789,9 @@ final class TableExtRetriever
   {
     while (results.next())
     {
-      final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
-      final String schemaName = nameQuotedName(results
+      final String catalogName = normalizeCatalogName(results
+        .getString("TABLE_CAT"));
+      final String schemaName = normalizeSchemaName(results
         .getString("TABLE_SCHEM"));
       final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
       final String columnName;

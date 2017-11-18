@@ -95,9 +95,9 @@ final class RoutineExtRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("ROUTINE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("ROUTINE_SCHEMA"));
         final String routineName = nameQuotedName(results
           .getString("ROUTINE_NAME"));

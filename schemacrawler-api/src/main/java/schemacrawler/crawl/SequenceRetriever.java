@@ -110,9 +110,9 @@ final class SequenceRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("SEQUENCE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("SEQUENCE_SCHEMA"));
         final String sequenceName = nameQuotedName(results
           .getString("SEQUENCE_NAME"));

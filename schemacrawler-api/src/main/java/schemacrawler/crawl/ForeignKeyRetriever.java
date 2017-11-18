@@ -186,18 +186,18 @@ final class ForeignKeyRetriever
         .log(Level.FINE,
              new StringFormat("Retrieving foreign key: %s", foreignKeyName));
 
-      final String pkTableCatalogName = nameQuotedName(results
+      final String pkTableCatalogName = normalizeCatalogName(results
         .getString("PKTABLE_CAT"));
-      final String pkTableSchemaName = nameQuotedName(results
+      final String pkTableSchemaName = normalizeSchemaName(results
         .getString("PKTABLE_SCHEM"));
       final String pkTableName = nameQuotedName(results
         .getString("PKTABLE_NAME"));
       final String pkColumnName = nameQuotedName(results
         .getString("PKCOLUMN_NAME"));
 
-      final String fkTableCatalogName = nameQuotedName(results
+      final String fkTableCatalogName = normalizeCatalogName(results
         .getString("FKTABLE_CAT"));
-      final String fkTableSchemaName = nameQuotedName(results
+      final String fkTableSchemaName = normalizeSchemaName(results
         .getString("FKTABLE_SCHEM"));
       final String fkTableName = nameQuotedName(results
         .getString("FKTABLE_NAME"));
