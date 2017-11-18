@@ -171,8 +171,10 @@ final class TableColumnRetriever
     final String defaultValue = results.getString("COLUMN_DEF");
     //
 
-    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String columnCatalogName = normalizeCatalogName(results
+      .getString("TABLE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
     final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
     final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
     LOGGER.log(Level.FINE,
@@ -211,10 +213,9 @@ final class TableColumnRetriever
       final String remarks = results.getString("REMARKS");
 
       column.setOrdinalPosition(ordinalPosition);
-      column
-        .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                        dataType,
-                                                        typeName));
+      column.setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                            dataType,
+                                                            typeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -321,10 +322,7 @@ final class TableColumnRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(null,
-                  null,
-                  "%",
-                  "%"));)
+      .getColumns(null, null, "%", "%"));)
     {
       while (results.next())
       {

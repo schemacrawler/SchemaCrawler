@@ -131,20 +131,21 @@ final class TableRetriever
                            final InclusionRuleFilter<Table> tableFilter,
                            final TableTypes supportedTableTypes)
   {
-    final String columnCatalogName = nameQuotedName(results
+    final String catalogName = normalizeCatalogName(results
       .getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
     final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving table <%s.%s.%s>",
-                                columnCatalogName,
+                                catalogName,
                                 schemaName,
                                 tableName));
     final String tableTypeString = results.getString("TABLE_TYPE");
     final String remarks = results.getString("REMARKS");
 
     final Optional<SchemaReference> optionalSchema = schemas
-      .lookup(Arrays.asList(columnCatalogName, schemaName));
+      .lookup(Arrays.asList(catalogName, schemaName));
     if (!optionalSchema.isPresent())
     {
       return;

@@ -180,15 +180,8 @@ final class SchemaRetriever
         results.setDescription("retrieveAllSchemas");
         while (results.next())
         {
-          final String catalogName;
-          if (supportsCatalogs)
-          {
-            catalogName = nameQuotedName(results.getString("TABLE_CATALOG"));
-          }
-          else
-          {
-            catalogName = null;
-          }
+          final String catalogName = normalizeCatalogName(results
+            .getString("TABLE_CATALOG"));
           final String schemaName = nameQuotedName(results
             .getString("TABLE_SCHEM"));
           LOGGER.log(Level.FINER,
@@ -218,6 +211,7 @@ final class SchemaRetriever
       }
     }
     else
+
     {
       for (final String catalogName: allCatalogNames)
       {
@@ -257,7 +251,8 @@ final class SchemaRetriever
       {
         final String catalogName = nameQuotedName(results
           .getString("CATALOG_NAME"));
-        final String schemaName = nameQuotedName(results.getString("SCHEMA_NAME"));
+        final String schemaName = nameQuotedName(results
+          .getString("SCHEMA_NAME"));
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving schema: %s --> %s",
                                     catalogName,

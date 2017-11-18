@@ -99,13 +99,14 @@ final class RoutineRetriever
     {
       while (results.next())
       {
-        final String columnCatalogName = nameQuotedName(results
+        final String columnCatalogName = normalizeCatalogName(results
           .getString("FUNCTION_CAT"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("FUNCTION_SCHEM"));
         final String functionName = nameQuotedName(results
           .getString("FUNCTION_NAME"));
-        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String columnName = nameQuotedName(results
+          .getString("COLUMN_NAME"));
         final String specificName = nameQuotedName(results
           .getString("SPECIFIC_NAME"));
 
@@ -184,9 +185,10 @@ final class RoutineRetriever
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Cannot locate schema, so not retrieving functions for schema: %s",
-                                  schema));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Cannot locate schema, so not retrieving functions for schema: %s",
+                              schema));
       return;
     }
 
@@ -266,13 +268,14 @@ final class RoutineRetriever
     {
       while (results.next())
       {
-        final String columnCatalogName = nameQuotedName(results
+        final String columnCatalogName = normalizeCatalogName(results
           .getString("PROCEDURE_CAT"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("PROCEDURE_SCHEM"));
         final String procedureName = nameQuotedName(results
           .getString("PROCEDURE_NAME"));
-        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String columnName = nameQuotedName(results
+          .getString("COLUMN_NAME"));
         final String specificName = nameQuotedName(results
           .getString("SPECIFIC_NAME"));
 
@@ -321,7 +324,8 @@ final class RoutineRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve columns for procedure "
-                                          + procedure, e);
+                                          + procedure,
+                                          e);
     }
 
   }
@@ -345,9 +349,10 @@ final class RoutineRetriever
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Cannot locate schema, so not retrieving procedures for schema: %s",
-                                  schema));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Cannot locate schema, so not retrieving procedures for schema: %s",
+                              schema));
       return;
     }
 

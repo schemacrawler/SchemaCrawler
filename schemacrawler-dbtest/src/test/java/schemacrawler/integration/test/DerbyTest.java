@@ -72,7 +72,6 @@ public class DerbyTest
                  connection.getClass().getName());
   }
 
-  @Ignore
   @Test
   public void testDerbyWithConnection()
     throws Exception
