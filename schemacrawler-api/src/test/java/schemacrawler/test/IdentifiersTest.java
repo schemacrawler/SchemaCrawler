@@ -82,21 +82,25 @@ public class IdentifiersTest
   }
 
   @Test
-  public void nameQuotedNames()
+  public void quotedNames()
   {
     final String[] names = new String[] {
                                           "one name",
                                           "\"UPDATE\"",
+                                          "1234",
+                                          "goodname",
                                           "\"goodname\"" };
     final String[] quotedNames = new String[] {
                                                 "\"one name\"",
                                                 "\"UPDATE\"",
-                                                "goodname" };
+                                                "\"1234\"",
+                                                "goodname",
+                                                "\"goodname\"" };
     for (int i = 0; i < names.length; i++)
     {
       final String name = names[i];
       final String quotedName = quotedNames[i];
-      assertEquals(quotedName, identifiers.nameQuotedName(name));
+      assertEquals(quotedName, identifiers.quoteName(name));
     }
   }
 
