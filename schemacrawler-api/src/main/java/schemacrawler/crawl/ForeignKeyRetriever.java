@@ -44,6 +44,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyDeferrability;
 import schemacrawler.schema.ForeignKeyUpdateRule;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
@@ -288,9 +289,8 @@ final class ForeignKeyRetriever
   {
     Column column = null;
 
-    final SchemaReference schema = new SchemaReference(catalogName, schemaName);
-    final Optional<MutableTable> tableOptional = catalog.lookupTable(schema,
-                                                                     tableName);
+    final Optional<MutableTable> tableOptional = catalog
+      .lookupTable(Arrays.asList(catalogName, schemaName, tableName));
     if (tableOptional.isPresent())
     {
       final Table table = tableOptional.get();
@@ -305,6 +305,7 @@ final class ForeignKeyRetriever
     if (column == null)
     {
       // Create the table and column, but do not add it to the schema
+      final Schema schema = new SchemaReference(catalogName, schemaName);
       final Table table = new TablePartial(schema, tableName);
       column = new ColumnPartial(table, columnName);
       ((TablePartial) table).addColumn(column);

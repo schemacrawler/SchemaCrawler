@@ -35,13 +35,13 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -273,7 +273,7 @@ final class IndexRetriever
     final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
 
     final Optional<MutableTable> optionalTable = allTables
-      .lookup(new SchemaReference(catalogName, schemaName), tableName);
+      .lookup(Arrays.asList(catalogName, schemaName, tableName));
     return optionalTable;
   }
 

@@ -32,12 +32,14 @@ package schemacrawler.crawl;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.TableConstraintType;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -58,7 +60,7 @@ final class TableConstraintRetriever
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TableConstraintRetriever.class.getName());
 
-  private final Map<String, MutableTableConstraint> tableConstraintsMap;
+  private final Map<List<String>, MutableTableConstraint> tableConstraintsMap;
 
   TableConstraintRetriever(final RetrieverConnection retrieverConnection,
                            final MutableCatalog catalog,
@@ -110,11 +112,8 @@ final class TableConstraintRetriever
                                     constraintName));
         final String definition = results.getString("CHECK_CLAUSE");
 
-        final String constraintKey = new SchemaReference(catalogName,
-                                                         schemaName)
-                                     + "." + constraintName;
         final MutableTableConstraint tableConstraint = tableConstraintsMap
-          .get(constraintKey);
+          .get(Arrays.asList(catalogName, schemaName, constraintName));
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
@@ -163,7 +162,7 @@ final class TableConstraintRetriever
   }
 
   private void createTableConstraints(final Connection connection,
-                                      final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                      final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
                                       final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsSql())
@@ -228,9 +227,10 @@ final class TableConstraintRetriever
         table.addTableConstraint(tableConstraint);
 
         // Add to map, since we will need this later
-        final String constraintKey = table.getSchema().getFullName() + "."
-                                     + constraintName;
-        tableConstraintsMap.put(constraintKey, tableConstraint);
+        final Schema schema = table.getSchema();
+        tableConstraintsMap.put(Arrays
+          .asList(schema.getCatalogName(), schema.getName(), constraintName),
+                                tableConstraint);
       }
     }
     catch (final Exception e)
@@ -243,7 +243,7 @@ final class TableConstraintRetriever
   }
 
   private void retrieveTableConstraintsColumns(final Connection connection,
-                                               final Map<String, MutableTableConstraint> tableConstraintsMap,
+                                               final Map<List<String>, MutableTableConstraint> tableConstraintsMap,
                                                final InformationSchemaViews informationSchemaViews)
   {
     if (!informationSchemaViews.hasTableConstraintsColumnsSql())
@@ -273,11 +273,8 @@ final class TableConstraintRetriever
                    new StringFormat("Retrieving definition for constraint <%s>",
                                     constraintName));
 
-        final String constraintKey = new SchemaReference(catalogName,
-                                                         schemaName)
-                                     + "." + constraintName;
         final MutableTableConstraint tableConstraint = tableConstraintsMap
-          .get(constraintKey);
+          .get(Arrays.asList(catalogName, schemaName, constraintName));
         if (tableConstraint == null)
         {
           LOGGER.log(Level.FINEST,
