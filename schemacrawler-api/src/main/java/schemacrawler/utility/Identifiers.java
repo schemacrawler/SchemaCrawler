@@ -29,7 +29,6 @@ package schemacrawler.utility;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -134,11 +133,13 @@ public final class Identifiers
     }
 
     private String identifierQuoteString;
+    private IdentifierQuotingStrategy identifierQuotingStrategy;
     private final Collection<String> reservedWords;
 
     private Builder()
     {
       reservedWords = loadSql2003ReservedWords();
+      identifierQuotingStrategy = IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words;
     }
 
     public Identifiers build()
@@ -200,6 +201,26 @@ public final class Identifiers
       return this;
     }
 
+    /**
+     * Specifies how to quote database object identifiers.
+     *
+     * @param identifierQuotingStrategy
+     *        Set identifier quoting strategy, or turn off quoting if
+     *        null
+     */
+    public Builder withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
+    {
+      if (identifierQuotingStrategy == null)
+      {
+        this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
+      }
+      else
+      {
+        this.identifierQuotingStrategy = identifierQuotingStrategy;
+      }
+      return this;
+    }
+
     private boolean isIdentifierQuoteStringSet()
     {
       return identifierQuoteString != null;
@@ -210,13 +231,37 @@ public final class Identifiers
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Identifiers.class.getName());
 
-  private static final Pattern isIdentifierPattern = Pattern
+  private static final Pattern isIdentifier = Pattern
     .compile("^[\\p{Nd}\\p{L}\\p{M}_]*$");
-  private static final Pattern isNumericPattern = Pattern.compile("^\\p{Nd}*$");
+  private static final Pattern isAllNumeric = Pattern.compile("^\\p{Nd}*$");
 
   public static Builder identifiers()
   {
     return new Builder();
+  }
+
+  public static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                                                   final DatabaseMetaData metaData)
+    throws SQLException
+  {
+    String identifierQuoteString;
+    if (databaseSpecificOverrideOptions != null
+        && databaseSpecificOverrideOptions
+          .hasOverrideForIdentifierQuoteString())
+    {
+      identifierQuoteString = databaseSpecificOverrideOptions
+        .getIdentifierQuoteString();
+    }
+    else
+    {
+      identifierQuoteString = metaData.getIdentifierQuoteString();
+    }
+    if (isBlank(identifierQuoteString))
+    {
+      identifierQuoteString = "";
+    }
+
+    return identifierQuoteString;
   }
 
   /**
@@ -235,30 +280,13 @@ public final class Identifiers
     }
     else
     {
-      return isIdentifierPattern.matcher(name).matches();
-    }
-  }
-
-  /**
-   * Checks if the name is composed of all numbers.
-   *
-   * @param name
-   *        Name to check.
-   * @return Whether the string consists of all numbers.
-   */
-  private static boolean isNumeric(final String name)
-  {
-    if (isBlank(name))
-    {
-      return false;
-    }
-    else
-    {
-      return isNumericPattern.matcher(name).matches();
+      return isIdentifier.matcher(name).matches()
+             && !isAllNumeric.matcher(name).matches();
     }
   }
 
   private final String identifierQuoteString;
+  private final IdentifierQuotingStrategy identifierQuotingStrategy;
   private final Collection<String> reservedWords;
 
   private Identifiers(final Builder builder)
@@ -269,9 +297,10 @@ public final class Identifiers
     }
     else
     {
-      // JDBC default is double quotes
+      // SQL standard and JDBC default is double quotes
       identifierQuoteString = "\"";
     }
+    identifierQuotingStrategy = builder.identifierQuotingStrategy;
     reservedWords = builder.reservedWords;
   }
 
@@ -284,6 +313,11 @@ public final class Identifiers
   public String getIdentifierQuoteString()
   {
     return identifierQuoteString;
+  }
+
+  public IdentifierQuotingStrategy getIdentifierQuotingStrategy()
+  {
+    return identifierQuotingStrategy;
   }
 
   /**
@@ -304,7 +338,8 @@ public final class Identifiers
    */
   public boolean isQuotedName(final String name)
   {
-    if (isBlank(name) || identifierQuoteString.isEmpty())
+    if (isBlank(name) || identifierQuoteString.isEmpty()
+        || identifierQuotingStrategy == IdentifierQuotingStrategy.quote_none)
     {
       return false;
     }
@@ -343,54 +378,52 @@ public final class Identifiers
     {
       return false;
     }
-    else
+
+    switch (identifierQuotingStrategy)
     {
-      return containsWhitespace(name) || isNumeric(name)
-             || containsSpecialCharacters(name) || isReservedWord(name);
+      case quote_none:
+        return false;
+      case quote_all:
+        return true;
+      case quote_if_special_characters:
+        return !isIdentifier(name);
+      case quote_if_special_characters_and_reserved_words:
+      default:
+        return !isIdentifier(name) || isReservedWord(name);
     }
   }
 
-  /**
-   * Quotes an identifier name using the identifier quote string. Does
-   * not quote the identifier name if quoting is not required, per
-   * generalized database rules.
-   *
-   * @param name
-   *        Identifier name to quote
-   * @return Identifier name after quoting it, or the original name if
-   *         quoting is not required
-   */
-  public String nameQuotedName(final String name)
+  public String quoteFullName(final DatabaseObject databaseObject)
   {
-    if (isBlank(name))
+    if (databaseObject == null)
     {
-      return name;
+      return "";
     }
 
-    // Some database drivers, such as SQLite may return quoted names,
-    // but only for some calls.
-    // So, normalize the name by unquoting it first, before attempting
-    // to quote it.
-    final String unquotedName = unquotedName(name);
-
-    final String quotedName;
-    if (isToBeQuoted(unquotedName))
+    final Schema schema = databaseObject.getSchema();
+    final String name = databaseObject.getName();
+    final StringBuilder buffer = new StringBuilder(512);
+    if (schema != null)
     {
-      quotedName = identifierQuoteString + unquotedName + identifierQuoteString;
+      final String schemaFullName = quoteFullName(schema);
+      if (!isBlank(schemaFullName))
+      {
+        buffer.append(schemaFullName).append('.');
+      }
     }
-    else
+    if (!isBlank(name))
     {
-      quotedName = unquotedName;
+      buffer.append(quoteName(name));
     }
-    return quotedName;
+    return buffer.toString();
   }
 
   public String quoteFullName(final DatabaseObject parent, final String name)
   {
-    final StringBuilder buffer = new StringBuilder(64);
+    final StringBuilder buffer = new StringBuilder(512);
     if (parent != null)
     {
-      final String parentFullName = parent.getFullName();
+      final String parentFullName = quoteFullName(parent);
       if (!isBlank(parentFullName))
       {
         buffer.append(parentFullName).append('.');
@@ -398,7 +431,7 @@ public final class Identifiers
     }
     if (!isBlank(name))
     {
-      buffer.append(nameQuotedName(name));
+      buffer.append(quoteName(name));
     }
     return buffer.toString();
   }
@@ -412,14 +445,14 @@ public final class Identifiers
 
     final String catalogName = schema.getCatalogName();
     final String schemaName = schema.getName();
-    final StringBuilder buffer = new StringBuilder(64);
+    final StringBuilder buffer = new StringBuilder(512);
 
     final boolean hasCatalogName = !isBlank(catalogName);
     final boolean hasSchemaName = !isBlank(schemaName);
 
     if (hasCatalogName)
     {
-      buffer.append(nameQuotedName(catalogName));
+      buffer.append(quoteName(catalogName));
     }
     if (hasCatalogName && hasSchemaName)
     {
@@ -427,94 +460,39 @@ public final class Identifiers
     }
     if (hasSchemaName)
     {
-      buffer.append(nameQuotedName(schemaName));
+      buffer.append(quoteName(schemaName));
     }
 
-    return buffer.toString();
-  }
-
-  public String quoteFullName(final DatabaseObject databaseObject)
-  {
-    if (databaseObject == null) return "";
-
-    final Schema schema = databaseObject.getSchema();
-    final String name = databaseObject.getName();
-    final StringBuilder buffer = new StringBuilder(64);
-    if (schema != null)
-    {
-      final String schemaFullName = schema.getFullName();
-      if (!isBlank(schemaFullName))
-      {
-        buffer.append(schemaFullName).append('.');
-      }
-    }
-    if (!isBlank(name))
-    {
-      buffer.append(nameQuotedName(name));
-    }
     return buffer.toString();
   }
 
   /**
-   * Remove quotes from an identifier name using the identifier quote
-   * string. Returns the original name if it was not quoted.
+   * Quotes an identifier name using the identifier quote string. Does
+   * not quote the identifier name if quoting is not required, per
+   * generalized database rules.
    *
    * @param name
-   *        Identifier name to remove quotes from
+   *        Identifier name to quote
    * @return Identifier name after quoting it, or the original name if
    *         quoting is not required
    */
-  public String unquotedName(final String name)
+  public String quoteName(final String name)
   {
     if (isBlank(name))
     {
       return name;
     }
 
-    final String unquotedName;
-    final int quoteLength = identifierQuoteString.length();
-    if (isQuotedName(name))
+    final String quotedName;
+    if (isToBeQuoted(name))
     {
-      unquotedName = name.substring(quoteLength, name.length() - quoteLength);
+      quotedName = identifierQuoteString + name + identifierQuoteString;
     }
     else
     {
-      unquotedName = name;
+      quotedName = name;
     }
-    return unquotedName;
-  }
-
-  /**
-   * Checks if an identifier name contains characters other than the
-   * ones allowed by most databases for identifier names.
-   */
-  private boolean containsSpecialCharacters(final String name)
-  {
-    return !isIdentifier(name);
-  }
-
-  public static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                                   final DatabaseMetaData metaData)
-    throws SQLException
-  {
-    String identifierQuoteString;
-    if (databaseSpecificOverrideOptions != null
-        && databaseSpecificOverrideOptions
-          .hasOverrideForIdentifierQuoteString())
-    {
-      identifierQuoteString = databaseSpecificOverrideOptions
-        .getIdentifierQuoteString();
-    }
-    else
-    {
-      identifierQuoteString = metaData.getIdentifierQuoteString();
-    }
-    if (isBlank(identifierQuoteString))
-    {
-      identifierQuoteString = "";
-    }
-
-    return identifierQuoteString;
+    return quotedName;
   }
 
 }

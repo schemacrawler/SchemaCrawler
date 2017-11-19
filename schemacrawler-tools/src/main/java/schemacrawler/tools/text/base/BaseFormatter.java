@@ -51,7 +51,6 @@ import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
-import schemacrawler.utility.Identifiers;
 
 public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler
@@ -63,7 +62,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected final DatabaseObjectColorMap colorMap;
   protected final boolean printVerboseDatabaseInfo;
   private final PrintWriter out;
-  private final Identifiers identifiers;
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
@@ -79,9 +77,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
-
-    identifiers = Identifiers.identifiers().withIdentifierQuoteString("\"")
-      .build();
 
     try
     {

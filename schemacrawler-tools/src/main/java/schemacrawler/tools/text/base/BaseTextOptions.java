@@ -30,6 +30,7 @@ package schemacrawler.tools.text.base;
 
 
 import schemacrawler.schemacrawler.Options;
+import schemacrawler.utility.IdentifierQuotingStrategy;
 
 public abstract class BaseTextOptions
   implements Options
@@ -49,6 +50,12 @@ public abstract class BaseTextOptions
   private boolean isShowJdbcDriverInfo;
   private boolean isShowUnqualifiedNames;
   private boolean isNoSchemaColors;
+  private IdentifierQuotingStrategy identifierQuotingStrategy;
+
+  public IdentifierQuotingStrategy getIdentifierQuotingStrategy()
+  {
+    return identifierQuotingStrategy;
+  }
 
   public boolean isAlphabeticalSortForRoutineColumns()
   {
@@ -139,6 +146,18 @@ public abstract class BaseTextOptions
   public void setAppendOutput(final boolean isAppendOutput)
   {
     this.isAppendOutput = isAppendOutput;
+  }
+
+  public void setIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
+  {
+    if (identifierQuotingStrategy == null)
+    {
+      this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
+    }
+    else
+    {
+      this.identifierQuotingStrategy = identifierQuotingStrategy;
+    }
   }
 
   public void setNoFooter(final boolean isNoFooter)

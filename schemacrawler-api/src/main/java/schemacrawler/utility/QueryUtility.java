@@ -148,7 +148,7 @@ public final class QueryUtility
         {
           buffer.append(", ");
         }
-        buffer.append(identifiers.nameQuotedName(column.getName()));
+        buffer.append(identifiers.quoteName(column.getName()));
       }
     }
     return buffer.toString();
