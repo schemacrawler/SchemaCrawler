@@ -34,7 +34,7 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler</artifactId>
+      <artifactId>schemacrawler-integrations</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
