@@ -157,11 +157,11 @@ final class SchemaTextFormatter
     final String routineName;
     if (options.isShowUnqualifiedNames())
     {
-      routineName = routine.getName();
+      routineName = identifiers.quoteName(routine);
     }
     else
     {
-      routineName = routine.getFullName();
+      routineName = identifiers.quoteFullName(routine);
     }
     final String routineType = "[" + routineTypeDetail + "]";
 
@@ -185,7 +185,8 @@ final class SchemaTextFormatter
       {
         formattingHelper.writeEmptyRow();
         formattingHelper.writeNameRow("", "[specific name]");
-        formattingHelper.writeWideRow(routine.getSpecificName(), "");
+        formattingHelper
+          .writeWideRow(identifiers.quoteName(routine.getSpecificName()), "");
       }
       printDefinition(routine);
     }
@@ -202,11 +203,11 @@ final class SchemaTextFormatter
     final String sequenceName;
     if (options.isShowUnqualifiedNames())
     {
-      sequenceName = sequence.getName();
+      sequenceName = identifiers.quoteName(sequence);
     }
     else
     {
-      sequenceName = sequence.getFullName();
+      sequenceName = identifiers.quoteFullName(sequence);
     }
     final String sequenceType = "[sequence]";
 
@@ -248,11 +249,11 @@ final class SchemaTextFormatter
     final String synonymName;
     if (options.isShowUnqualifiedNames())
     {
-      synonymName = synonym.getName();
+      synonymName = identifiers.quoteName(synonym);
     }
     else
     {
-      synonymName = synonym.getFullName();
+      synonymName = identifiers.quoteFullName(synonym);
     }
     final String synonymType = "[synonym]";
 
@@ -270,16 +271,18 @@ final class SchemaTextFormatter
       final String referencedObjectName;
       if (options.isShowUnqualifiedNames())
       {
-        referencedObjectName = synonym.getReferencedObject().getName();
+        referencedObjectName = identifiers
+          .quoteName(synonym.getReferencedObject());
       }
       else
       {
-        referencedObjectName = synonym.getReferencedObject().getFullName();
+        referencedObjectName = identifiers
+          .quoteFullName(synonym.getReferencedObject());
       }
       formattingHelper
         .writeDetailRow("",
                         String.format("%s %s %s",
-                                      synonym.getName(),
+                                      identifiers.quoteName(synonym),
                                       formattingHelper.createRightArrow(),
                                       referencedObjectName),
                         "");
@@ -294,11 +297,11 @@ final class SchemaTextFormatter
     final String tableName;
     if (options.isShowUnqualifiedNames())
     {
-      tableName = table.getName();
+      tableName = identifiers.quoteName(table);
     }
     else
     {
-      tableName = table.getFullName();
+      tableName = identifiers.quoteFullName(table);
     }
     final String tableType = "[" + table.getTableType() + "]";
 
@@ -514,28 +517,28 @@ final class SchemaTextFormatter
       boolean isIncoming = false;
       if (pkColumn.getParent().equals(table))
       {
-        pkColumnName = pkColumn.getName();
+        pkColumnName = identifiers.quoteName(pkColumn);
         isIncoming = true;
       }
       else if (options.isShowUnqualifiedNames())
       {
-        pkColumnName = pkColumn.getShortName();
+        pkColumnName = identifiers.quoteShortName(pkColumn);
       }
       else
       {
-        pkColumnName = pkColumn.getFullName();
+        pkColumnName = identifiers.quoteFullName(pkColumn);
       }
       if (fkColumn.getParent().equals(table))
       {
-        fkColumnName = fkColumn.getName();
+        fkColumnName = identifiers.quoteName(fkColumn);
       }
       else if (options.isShowUnqualifiedNames())
       {
-        fkColumnName = fkColumn.getShortName();
+        fkColumnName = identifiers.quoteShortName(fkColumn);
       }
       else
       {
-        fkColumnName = fkColumn.getFullName();
+        fkColumnName = identifiers.quoteFullName(fkColumn);
       }
       String keySequenceString = "";
       if (columnReference instanceof ForeignKeyColumnReference
@@ -629,7 +632,7 @@ final class SchemaTextFormatter
     {
       if (foreignKey != null)
       {
-        final String name = foreignKey.getName();
+        final String name = identifiers.quoteName(foreignKey);
 
         String updateRuleString = "";
         final ForeignKeyUpdateRule updateRule = foreignKey.getUpdateRule();
@@ -696,7 +699,7 @@ final class SchemaTextFormatter
         String indexName = "";
         if (!options.isHideIndexNames())
         {
-          indexName = index.getName();
+          indexName = identifiers.quoteName(index);
         }
         final IndexType indexType = index.getIndexType();
         String indexTypeString = "";
@@ -728,7 +731,7 @@ final class SchemaTextFormatter
 
       formattingHelper.writeEmptyRow();
 
-      final String name = primaryKey.getName();
+      final String name = identifiers.quoteName(primaryKey);
       String pkName = "";
       if (!options.isHidePrimaryKeyNames())
       {
@@ -821,7 +824,7 @@ final class SchemaTextFormatter
         ordinalNumberString = String.valueOf(column.getOrdinalPosition() + 1);
       }
       formattingHelper.writeDetailRow(ordinalNumberString,
-                                      column.getName(),
+                                      identifiers.quoteName(column),
                                       columnType.toString());
     }
   }
@@ -881,7 +884,7 @@ final class SchemaTextFormatter
         continue;
       }
 
-      final String columnName = column.getName();
+      final String columnName = identifiers.quoteName(column);
 
       final String columnDetails;
 
@@ -969,7 +972,7 @@ final class SchemaTextFormatter
         String constraintName = "";
         if (!options.isHideTableConstraintNames())
         {
-          constraintName = constraint.getName();
+          constraintName = identifiers.quoteName(constraint);
         }
         final String constraintType = constraint.getConstraintType().getValue()
           .toLowerCase();
@@ -1045,7 +1048,7 @@ final class SchemaTextFormatter
         }
         else
         {
-          triggerName = trigger.getName();
+          triggerName = identifiers.quoteName(trigger);
         }
 
         formattingHelper.writeNameRow(triggerName, triggerType);

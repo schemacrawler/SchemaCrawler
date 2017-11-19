@@ -130,11 +130,11 @@ final class DataTextFormatter
     {
       if (options.isShowUnqualifiedNames())
       {
-        tableName = table.getName();
+        tableName = identifiers.quoteName(table);
       }
       else
       {
-        tableName = table.getFullName();
+        tableName = identifiers.quoteFullName(table);
       }
     }
     else

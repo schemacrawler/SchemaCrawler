@@ -89,7 +89,7 @@ final class LintTextFormatter
 
       final String tableType = "[" + table.getTableType() + "]";
       formattingHelper.writeObjectNameRow(nodeId(table),
-                                          table.getFullName(),
+                                          identifiers.quoteFullName(table),
                                           tableType,
                                           colorMap.getColor(table));
       printLints(lints);

@@ -92,8 +92,9 @@ public final class OperationExecutable
       return;
     }
 
-    identifierQuoteString = databaseSpecificOverrideOptions
-      .getIdentifierQuoteString();
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection,
+                                   databaseSpecificOverrideOptions);
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -112,8 +113,8 @@ public final class OperationExecutable
       if (query.isQueryOver())
       {
         final String identifierQuoteString = Identifiers
-          .lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
-                                       connection.getMetaData());
+          .lookupIdentifierQuoteString(connection,
+                                       databaseSpecificOverrideOptions);
         LOGGER.log(Level.CONFIG,
                    new StringFormat("Database identifier quote string is <%s>",
                                     identifierQuoteString));

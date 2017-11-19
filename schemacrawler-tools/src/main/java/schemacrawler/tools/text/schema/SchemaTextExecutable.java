@@ -40,6 +40,7 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -81,8 +82,9 @@ public final class SchemaTextExecutable
                                       schemaCrawlerOptions);
     }
 
-    identifierQuoteString = databaseSpecificOverrideOptions
-      .getIdentifierQuoteString();
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection,
+                                   databaseSpecificOverrideOptions);
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 

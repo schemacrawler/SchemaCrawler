@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,17 +100,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public String getFullName()
   {
-    return buildFullName();
-  }
-
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(parent.get()
-      .toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
+    return Identifiers.STANDARD.quoteFullName(this);
   }
 
   /**
@@ -120,27 +109,19 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public final D getParent()
   {
+    // Check if parent is null - this can happen if the object is in an
+    // incomplete state during deserialization
+    if (parent == null)
+    {
+      return null;
+    }
     return parent.get();
   }
 
   @Override
   public final String getShortName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (parent != null)
-    {
-      final String parentName = parent.get().getName();
-      if (!isBlank(parentName))
-      {
-        buffer.append(parentName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    return Identifiers.STANDARD.quoteShortName(this);
   }
 
   /**
@@ -162,22 +143,14 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
     return parent.isPartialDatabaseObjectReference();
   }
 
-  private String buildFullName()
+  @Override
+  public List<String> toUniqueLookupKey()
   {
-    // Do not cache the full name, since the object may not be
-    // completely deserialized
-    final String fullName;
-    final Identifiers identifiers = Identifiers.identifiers()
-      .withIdentifierQuoteString("\"").build();
-    if (parent != null)
-    {
-      fullName = identifiers.quoteFullName(parent.get(), getName());
-    }
-    else
-    {
-      fullName = getName();
-    }
-    return fullName;
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(parent.get()
+      .toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
 
 }

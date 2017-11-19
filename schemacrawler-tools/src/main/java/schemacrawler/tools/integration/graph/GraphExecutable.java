@@ -45,6 +45,7 @@ import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -87,8 +88,9 @@ public final class GraphExecutable
                                       schemaCrawlerOptions);
     }
 
-    identifierQuoteString = databaseSpecificOverrideOptions
-      .getIdentifierQuoteString();
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection,
+                                   databaseSpecificOverrideOptions);
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());

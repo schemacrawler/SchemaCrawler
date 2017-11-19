@@ -45,6 +45,8 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.schema.DependantObject;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.SchemaCrawlerLogger;
@@ -228,6 +230,9 @@ public final class Identifiers
 
   }
 
+  public static final Identifiers STANDARD = Identifiers.identifiers()
+    .withIdentifierQuoteString("\"").build();
+
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Identifiers.class.getName());
 
@@ -240,11 +245,13 @@ public final class Identifiers
     return new Builder();
   }
 
-  public static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                                   final DatabaseMetaData metaData)
+  public static String lookupIdentifierQuoteString(final Connection connection,
+                                                   final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws SQLException
   {
-    String identifierQuoteString;
+    // Default to SQL standard default
+    String identifierQuoteString = "\"";
+
     if (databaseSpecificOverrideOptions != null
         && databaseSpecificOverrideOptions
           .hasOverrideForIdentifierQuoteString())
@@ -252,10 +259,19 @@ public final class Identifiers
       identifierQuoteString = databaseSpecificOverrideOptions
         .getIdentifierQuoteString();
     }
-    else
+    else if (connection != null)
     {
-      identifierQuoteString = metaData.getIdentifierQuoteString();
+      try
+      {
+        final DatabaseMetaData metaData = connection.getMetaData();
+        identifierQuoteString = metaData.getIdentifierQuoteString();
+      }
+      catch (SQLException e)
+      {
+        // Ignore
+      }
     }
+
     if (isBlank(identifierQuoteString))
     {
       identifierQuoteString = "";
@@ -436,6 +452,16 @@ public final class Identifiers
     return buffer.toString();
   }
 
+  public <P extends DatabaseObject> String quoteFullName(final DependantObject<P> dependantObject)
+  {
+    if (dependantObject == null)
+    {
+      return "";
+    }
+    return quoteFullName(dependantObject.getParent(),
+                         dependantObject.getName());
+  }
+
   public String quoteFullName(final Schema schema)
   {
     if (schema == null)
@@ -476,6 +502,25 @@ public final class Identifiers
    * @return Identifier name after quoting it, or the original name if
    *         quoting is not required
    */
+  public String quoteName(final NamedObject namedObject)
+  {
+    if (namedObject == null)
+    {
+      return "";
+    }
+    return quoteName(namedObject.getName());
+  }
+
+  /**
+   * Quotes an identifier name using the identifier quote string. Does
+   * not quote the identifier name if quoting is not required, per
+   * generalized database rules.
+   *
+   * @param name
+   *        Identifier name to quote
+   * @return Identifier name after quoting it, or the original name if
+   *         quoting is not required
+   */
   public String quoteName(final String name)
   {
     if (isBlank(name))
@@ -493,6 +538,26 @@ public final class Identifiers
       quotedName = name;
     }
     return quotedName;
+  }
+
+  public <P extends DatabaseObject> String quoteShortName(final DependantObject<P> dependantObject)
+  {
+    if (dependantObject == null)
+    {
+      return "";
+    }
+    final P parent = dependantObject.getParent();
+    final StringBuilder buffer = new StringBuilder(64);
+    if (parent != null)
+    {
+      final String parentName = parent.getName();
+      if (!isBlank(parentName))
+      {
+        buffer.append(quoteName(parentName)).append('.');
+      }
+    }
+    buffer.append(quoteName(dependantObject.getName()));
+    return buffer.toString();
   }
 
 }
