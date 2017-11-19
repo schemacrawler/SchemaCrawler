@@ -118,9 +118,9 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
-    return catalog.getLookupKey();
+    return catalog.toUniqueLookupKey();
   }
 
   @Override

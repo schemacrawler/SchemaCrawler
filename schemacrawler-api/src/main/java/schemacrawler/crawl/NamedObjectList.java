@@ -64,7 +64,7 @@ class NamedObjectList<N extends NamedObject>
     }
     else
     {
-      key = namedObject.getLookupKey();
+      key = namedObject.toUniqueLookupKey();
     }
     return key;
   }

@@ -108,7 +108,7 @@ abstract class AbstractNamedObject
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     return new ArrayList<>(Arrays.asList(name));
   }
