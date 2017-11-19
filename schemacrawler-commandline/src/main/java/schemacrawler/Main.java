@@ -91,9 +91,8 @@ public final class Main
     }
     catch (final Throwable e)
     {
-      System.err.printf("%s %s%n%n",
-                        Version.getProductName(),
-                        Version.getVersion());
+      System.err
+        .printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
       final String errorMessage = e.getMessage();
       System.err.print("Error: ");
       System.err.println(errorMessage);

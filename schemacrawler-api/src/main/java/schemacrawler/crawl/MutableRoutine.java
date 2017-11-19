@@ -29,7 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static sf.util.Utility.isBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
@@ -70,17 +71,12 @@ abstract class MutableRoutine
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
-    final String lookupKey = super.getLookupKey();
-    if (isBlank(specificName))
-    {
-      return lookupKey;
-    }
-    else
-    {
-      return getSchema().getFullName() + "." + specificName;
-    }
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
+    lookupKey.add(specificName);
+    return lookupKey;
   }
 
   /**

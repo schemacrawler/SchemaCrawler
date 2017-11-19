@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -58,30 +57,6 @@ final class RetrieverConnection
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RetrieverConnection.class.getName());
-
-  private static String lookupIdentifierQuoteString(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                                    final DatabaseMetaData metaData)
-    throws SQLException
-  {
-    String identifierQuoteString;
-    if (databaseSpecificOverrideOptions != null
-        && databaseSpecificOverrideOptions
-          .hasOverrideForIdentifierQuoteString())
-    {
-      identifierQuoteString = databaseSpecificOverrideOptions
-        .getIdentifierQuoteString();
-    }
-    else
-    {
-      identifierQuoteString = metaData.getIdentifierQuoteString();
-    }
-    if (isBlank(identifierQuoteString))
-    {
-      identifierQuoteString = "";
-    }
-
-    return identifierQuoteString;
-  }
 
   private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                                 final DatabaseMetaData metaData)
@@ -179,8 +154,8 @@ final class RetrieverConnection
     fkRetrievalStrategy = databaseSpecificOverrideOptions
       .getForeignKeyRetrievalStrategy();
 
-    final String identifierQuoteString = lookupIdentifierQuoteString(databaseSpecificOverrideOptions,
-                                                                     metaData);
+    final String identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
     LOGGER.log(Level.CONFIG,
                new StringFormat("Database identifier quote string is <%s>",
                                 identifierQuoteString));

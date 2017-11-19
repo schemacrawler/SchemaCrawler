@@ -30,12 +30,15 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.TypedObject;
+import schemacrawler.utility.Identifiers;
 
 /**
  * Represents a database object.
@@ -135,21 +138,16 @@ abstract class AbstractDatabaseObject
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (schema != null)
-    {
-      final String schemaFullName = schema.getFullName();
-      if (!isBlank(schemaFullName))
-      {
-        buffer.append(schemaFullName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    return Identifiers.STANDARD.quoteFullName(this);
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
 
   @Override

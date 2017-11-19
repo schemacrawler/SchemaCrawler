@@ -131,19 +131,21 @@ final class TableRetriever
                            final InclusionRuleFilter<Table> tableFilter,
                            final TableTypes supportedTableTypes)
   {
-    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+    final String catalogName = normalizeCatalogName(results
+      .getString("TABLE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
+    final String tableName = results.getString("TABLE_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving table <%s.%s.%s>",
-                                columnCatalogName,
+                                catalogName,
                                 schemaName,
                                 tableName));
     final String tableTypeString = results.getString("TABLE_TYPE");
     final String remarks = results.getString("REMARKS");
 
     final Optional<SchemaReference> optionalSchema = schemas
-      .lookup(new SchemaReference(columnCatalogName, schemaName).toString());
+      .lookup(Arrays.asList(catalogName, schemaName));
     if (!optionalSchema.isPresent())
     {
       return;
@@ -233,8 +235,8 @@ final class TableRetriever
       final String schemaName = schema.getName();
 
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getTables(unquotedName(catalogName),
-                   unquotedName(schemaName),
+        .getTables(catalogName,
+                   schemaName,
                    tableNamePattern,
                    filteredTableTypes));)
       {
@@ -263,10 +265,7 @@ final class TableRetriever
                                   .asList(filteredTableTypes)));
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTables(null,
-                 null,
-                 tableNamePattern,
-                 filteredTableTypes));)
+      .getTables(null, null, tableNamePattern, filteredTableTypes));)
     {
       results.setDescription("retrieveTables");
       while (results.next())

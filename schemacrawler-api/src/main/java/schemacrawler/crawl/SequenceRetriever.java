@@ -33,6 +33,8 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
@@ -110,23 +112,24 @@ final class SequenceRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("SEQUENCE_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("SEQUENCE_SCHEMA"));
-        final String sequenceName = nameQuotedName(results
-          .getString("SEQUENCE_NAME"));
+        final String sequenceName = results.getString("SEQUENCE_NAME");
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
         final BigInteger increment = results.getBigInteger("INCREMENT");
         final long longIncrement = increment == null? 1L: increment.longValue();
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
-        if (!schemas.contains(schema))
+        final Optional<SchemaReference> optionalSchema = schemas
+          .lookup(Arrays.asList(catalogName, schemaName));
+        if (!optionalSchema.isPresent())
         {
           continue;
         }
+        final Schema schema = optionalSchema.get();
 
         final MutableSequence sequence = new MutableSequence(schema,
                                                              sequenceName);

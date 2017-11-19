@@ -37,6 +37,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SearchableType;
+import schemacrawler.utility.Identifiers;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -56,11 +57,10 @@ final class MutableColumnDataType
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawler.class.getName());
 
+  private transient String fullName;
   private JavaSqlType javaSqlType;
-
   private Class<?> javaSqlTypeMappedClass;
   private boolean userDefined;
-
   private long precision;
   private String literalPrefix;
   private String literalSuffix;
@@ -112,6 +112,16 @@ final class MutableColumnDataType
   public String getDatabaseSpecificTypeName()
   {
     return getName();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getFullName()
+  {
+    buildFullName();
+    return fullName;
   }
 
   @Override
@@ -380,6 +390,26 @@ final class MutableColumnDataType
   void setUserDefined(final boolean userDefined)
   {
     this.userDefined = userDefined;
+  }
+
+  private void buildFullName()
+  {
+    if (fullName != null)
+    {
+      return;
+    }
+    final Schema schema = getSchema();
+    if (!isBlank(schema.getFullName()))
+    {
+      final Identifiers identifiers = Identifiers.identifiers()
+        .withIdentifierQuoteString("\"").build();
+      fullName = identifiers.quoteFullName(this);
+    }
+    else
+    {
+      // System data-types are reserved words, but should not be quoted
+      fullName = getName();
+    }
   }
 
 }

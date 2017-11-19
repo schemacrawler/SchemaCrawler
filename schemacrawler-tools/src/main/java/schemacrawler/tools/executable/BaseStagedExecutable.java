@@ -30,6 +30,7 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -37,6 +38,7 @@ import java.util.logging.Level;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -90,7 +92,22 @@ public abstract class BaseStagedExecutable
                                                           databaseSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
-    executeOn(catalog, connection);
+    executeOn(catalog, connection, databaseSpecificOverrideOptions);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void executeOn(Catalog catalog, Connection connection)
+    throws Exception
+  {
+    requireNonNull(catalog, "No catalog provided");
+    checkConnection(connection);
+
+    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = SchemaCrawlerUtility
+      .matchDatabaseSpecificOverrideOptions(connection);
+    executeOn(catalog, connection, dbSpecificOverrideOptions);
   }
 
 }

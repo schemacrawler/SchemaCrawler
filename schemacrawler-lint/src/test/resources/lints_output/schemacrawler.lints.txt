@@ -3,19 +3,19 @@
 [PUBLIC.FOR_LINT."Global Counts"] no non-nullable data columns
 [PUBLIC.FOR_LINT."Global Counts"] no indexes
 [PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word
-[PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: "Global Count"
+[PUBLIC.FOR_LINT."Global Counts"] spaces in name, or reserved word: Global Count
 [PUBLIC.FOR_LINT."Global Counts"] single column
 [PUBLIC.FOR_LINT."Global Counts"] empty table
 [PUBLIC.FOR_LINT."Global Counts"] should have remarks
-[PUBLIC.FOR_LINT."Global Counts"] should have remarks: "Global Count"
+[PUBLIC.FOR_LINT."Global Counts"] should have remarks: Global Count
 [PUBLIC.FOR_LINT.EXTRA_PK] empty table
 [PUBLIC.FOR_LINT.EXTRA_PK] should have remarks: WRITERID, PUBLICATIONID, ID
 [PUBLIC.FOR_LINT.EXTRA_PK] primary key not first
-[PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: "UPDATE"
+[PUBLIC.FOR_LINT.PUBLICATIONS] spaces in name, or reserved word: UPDATE
 [PUBLIC.FOR_LINT.PUBLICATIONS] empty table
 [PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks
-[PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks: ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, "UPDATE", PRESS_RELEASE
-[PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: "UPDATE", PRESS_RELEASE
+[PUBLIC.FOR_LINT.PUBLICATIONS] should have remarks: ID, DESCRIPTION, WRITERID, PUBLICATIONDATE, PRICE, UPDATE, PRESS_RELEASE
+[PUBLIC.FOR_LINT.PUBLICATIONS] too many binary objects: UPDATE, PRESS_RELEASE
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] primary key may not be a surrogate
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] empty table
 [PUBLIC.FOR_LINT.PUBLICATIONWRITERS] should have remarks

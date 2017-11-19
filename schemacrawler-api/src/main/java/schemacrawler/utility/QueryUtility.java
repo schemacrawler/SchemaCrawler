@@ -47,6 +47,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InclusionRuleWithRegularExpression;
@@ -77,13 +78,17 @@ public final class QueryUtility
   public static ResultSet executeAgainstTable(final Query query,
                                               final Statement statement,
                                               final Table table,
-                                              final boolean isAlphabeticalSortForTableColumns)
+                                              final boolean isAlphabeticalSortForTableColumns,
+                                              final Identifiers identifiers)
     throws SQLException
   {
     requireNonNull(query, "No query provided");
+    requireNonNull(identifiers, "No identifiers provided");
+
     final String sql = getQuery(query,
                                 table,
-                                isAlphabeticalSortForTableColumns);
+                                isAlphabeticalSortForTableColumns,
+                                identifiers);
     LOGGER.log(Level.FINE,
                new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSql(statement, sql);
@@ -91,11 +96,12 @@ public final class QueryUtility
 
   public static long executeForLong(final Query query,
                                     final Connection connection,
-                                    final Table table)
+                                    final Table table,
+                                    final Identifiers identifiers)
     throws SchemaCrawlerException
   {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, table, true);
+    final String sql = getQuery(query, table, true, identifiers);
     LOGGER.log(Level.FINE,
                new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForLong(connection, sql);
@@ -114,18 +120,20 @@ public final class QueryUtility
 
   public static Object executeForScalar(final Query query,
                                         final Connection connection,
-                                        final Table table)
+                                        final Table table,
+                                        final Identifiers identifiers)
     throws SchemaCrawlerException
   {
     requireNonNull(query, "No query provided");
-    final String sql = getQuery(query, table, true);
+    final String sql = getQuery(query, table, true, identifiers);
     LOGGER.log(Level.FINE,
                new StringFormat("Executing %s: %n%s", query.getName(), sql));
     return executeSqlForScalar(connection, sql);
   }
 
   private static String getColumnsListAsString(final List<Column> columns,
-                                               final boolean omitLargeObjectColumns)
+                                               final boolean omitLargeObjectColumns,
+                                               final Identifiers identifiers)
   {
     final StringBuilder buffer = new StringBuilder(1024);
     for (int i = 0; i < columns.size(); i++)
@@ -140,7 +148,7 @@ public final class QueryUtility
         {
           buffer.append(", ");
         }
-        buffer.append(column.getName());
+        buffer.append(identifiers.quoteName(column.getName()));
       }
     }
     return buffer.toString();
@@ -184,7 +192,8 @@ public final class QueryUtility
 
   private static String getQuery(final Query query,
                                  final Table table,
-                                 final boolean isAlphabeticalSortForTableColumns)
+                                 final boolean isAlphabeticalSortForTableColumns,
+                                 final Identifiers identifiers)
   {
     final Map<String, String> tableProperties = new HashMap<>();
     if (table != null)
@@ -194,15 +203,18 @@ public final class QueryUtility
       final List<Column> columns = table.getColumns();
       Collections.sort(columns, columnsSort);
 
-      if (table.getSchema() != null)
+      final Schema schema = table.getSchema();
+      if (schema != null)
       {
-        tableProperties.put("schema", table.getSchema().getFullName());
+        final String schemaName = identifiers.quoteFullName(schema);
+        tableProperties.put("schema", schemaName);
       }
-      tableProperties.put("table", table.getFullName());
+      tableProperties.put("table", identifiers.quoteFullName(table));
       tableProperties.put("tablename", table.getName());
-      tableProperties.put("columns", getColumnsListAsString(columns, false));
+      tableProperties.put("columns",
+                          getColumnsListAsString(columns, false, identifiers));
       tableProperties.put("orderbycolumns",
-                          getColumnsListAsString(columns, true));
+                          getColumnsListAsString(columns, true, identifiers));
       tableProperties.put("tabletype", table.getTableType().toString());
     }
 

@@ -109,7 +109,7 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
-PUBLIC.BOOKS."Global Counts"                                            
+PUBLIC.BOOKS.Global Counts                                              
 ------------------------------------------------------------------------
 Global Count
 
@@ -147,7 +147,7 @@ WRITERID	PUBLICATIONID	ID
 
 
 
-PUBLIC.FOR_LINT."Global Counts"                                         
+PUBLIC.FOR_LINT.Global Counts                                           
 ------------------------------------------------------------------------
 Global Count
 
@@ -183,7 +183,7 @@ PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
 
 
 
-PUBLIC."PUBLISHER SALES".REGIONS                                        
+PUBLIC.PUBLISHER SALES.REGIONS                                          
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
 El Segundo	VA	13078	USA
@@ -209,7 +209,7 @@ Kent	OH	91624	USA
 
 
 
-PUBLIC."PUBLISHER SALES".SALES                                          
+PUBLIC.PUBLISHER SALES.SALES                                            
 ------------------------------------------------------------------------
 POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT	SALESDATAID
 13078	USA	1	2001-09-29	14895.0	NULL
@@ -235,7 +235,7 @@ POSTALCODE	COUNTRY	BOOKID	PERIODENDDATE	TOTALAMOUNT	SALESDATAID
 
 
 
-PUBLIC."PUBLISHER SALES".SALESDATA                                      
+PUBLIC.PUBLISHER SALES.SALESDATA                                        
 ------------------------------------------------------------------------
 SALESDATAID	YEARLYAMOUNT
 

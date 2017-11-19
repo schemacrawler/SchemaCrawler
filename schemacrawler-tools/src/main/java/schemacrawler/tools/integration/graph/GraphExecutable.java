@@ -35,6 +35,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
@@ -44,6 +45,7 @@ import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -54,6 +56,7 @@ public final class GraphExecutable
 {
 
   private GraphOptions graphOptions;
+  private String identifierQuoteString;
 
   public GraphExecutable(final String command)
   {
@@ -64,7 +67,9 @@ public final class GraphExecutable
    * {@inheritDoc}
    */
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void executeOn(final Catalog db,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadGraphOptions();
@@ -82,6 +87,10 @@ public final class GraphExecutable
                                       connection,
                                       schemaCrawlerOptions);
     }
+
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection,
+                                   databaseSpecificOverrideOptions);
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
@@ -159,7 +168,8 @@ public final class GraphExecutable
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
-                                       outputOptions);
+                                       outputOptions,
+                                       identifierQuoteString);
 
     return formatter;
   }

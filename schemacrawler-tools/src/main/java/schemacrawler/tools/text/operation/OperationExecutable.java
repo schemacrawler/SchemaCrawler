@@ -44,10 +44,12 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
@@ -65,6 +67,7 @@ public final class OperationExecutable
     .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
+  private String identifierQuoteString;
 
   public OperationExecutable(final String command)
   {
@@ -72,7 +75,9 @@ public final class OperationExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadOperationOptions();
@@ -86,6 +91,10 @@ public final class OperationExecutable
                               getCommand()));
       return;
     }
+
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection,
+                                   databaseSpecificOverrideOptions);
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -103,6 +112,16 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
+        final String identifierQuoteString = Identifiers
+          .lookupIdentifierQuoteString(connection,
+                                       databaseSpecificOverrideOptions);
+        LOGGER.log(Level.CONFIG,
+                   new StringFormat("Database identifier quote string is <%s>",
+                                    identifierQuoteString));
+        final Identifiers identifiers = Identifiers.identifiers()
+          .withConnection(connection)
+          .withIdentifierQuoteString(identifierQuoteString).build();
+
         for (final Table table: getSortedTables(catalog))
         {
           final boolean isAlphabeticalSortForTableColumns = operationOptions
@@ -111,7 +130,8 @@ public final class OperationExecutable
               final ResultSet results = executeAgainstTable(query,
                                                             statement,
                                                             table,
-                                                            isAlphabeticalSortForTableColumns);)
+                                                            isAlphabeticalSortForTableColumns,
+                                                            identifiers);)
           {
             handler.handleData(table, results);
           }
@@ -169,13 +189,15 @@ public final class OperationExecutable
     {
       formatter = new DataJsonFormatter(operation,
                                         operationOptions,
-                                        outputOptions);
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     else
     {
       formatter = new DataTextFormatter(operation,
                                         operationOptions,
-                                        outputOptions);
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     return formatter;
   }

@@ -86,7 +86,7 @@ public class H2Test
     textOptions.setHideIndexNames(true);
     textOptions.setShowDatabaseInfo(true);
     textOptions.setShowJdbcDriverInfo(true);
-    
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
     executable

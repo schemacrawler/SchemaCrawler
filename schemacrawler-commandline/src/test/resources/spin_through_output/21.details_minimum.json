@@ -61,7 +61,7 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "definition": "",
       "type": "table",
@@ -100,7 +100,7 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.FOR_LINT.\"Global Counts\"",
       "definition": "",
       "type": "table",
@@ -220,7 +220,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2016-12-24 14:20:32",
+    "crawlTimestamp": "2017-11-15 22:34:53",
     "title": ""
   },
   "routines": [

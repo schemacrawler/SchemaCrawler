@@ -31,10 +31,15 @@ package schemacrawler.schema;
 import static sf.util.Utility.convertForComparison;
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import schemacrawler.utility.Identifiers;
 
 public final class SchemaReference
   implements Schema
@@ -44,6 +49,7 @@ public final class SchemaReference
 
   private final String catalogName;
   private final String schemaName;
+  private transient String fullName;
   private final Map<String, Object> attributeMap = new HashMap<>();
 
   public SchemaReference()
@@ -174,31 +180,14 @@ public final class SchemaReference
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-
-    final boolean hasCatalogName = !isBlank(catalogName);
-    final boolean hasSchemaName = !isBlank(getName());
-
-    if (hasCatalogName)
-    {
-      buffer.append(catalogName);
-    }
-    if (hasCatalogName && hasSchemaName)
-    {
-      buffer.append(".");
-    }
-    if (hasSchemaName)
-    {
-      buffer.append(getName());
-    }
-
-    return buffer.toString();
+    buildFullName();
+    return fullName;
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
-    return getFullName();
+    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
   }
 
   @Override
@@ -287,6 +276,18 @@ public final class SchemaReference
   public String toString()
   {
     return getFullName();
+  }
+
+  private void buildFullName()
+  {
+    if (fullName != null)
+    {
+      return;
+    }
+
+    final Identifiers identifiers = Identifiers.identifiers()
+      .withIdentifierQuoteString("\"").build();
+    fullName = identifiers.quoteFullName(this);
   }
 
 }

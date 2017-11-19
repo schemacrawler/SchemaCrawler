@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -56,6 +57,7 @@ import com.thoughtworks.xstream.security.NullPermission;
 import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -161,8 +163,28 @@ public final class XmlSerializedCatalog
             @Override
             public int compare(final Object o1, final Object o2)
             {
-              return ((Comparable) ((Map.Entry) o1).getKey())
-                .compareTo(((Map.Entry) o2).getKey());
+              final Object key1 = ((Map.Entry) o1).getKey();
+              final Object key2 = ((Map.Entry) o2).getKey();
+              if (key1 instanceof Comparable<?>
+                  && key2 instanceof Comparable<?>)
+              {
+                if (key1 != null)
+                {
+                  return ((Comparable) key1).compareTo(key2);
+                }
+                else if (key2 != null)
+                {
+                  return -1 * ((Comparable) key2).compareTo(key1);
+                }
+                else
+                {
+                  return 0;
+                }
+              }
+              else
+              {
+                return Objects.hashCode(key1) - Objects.hashCode(key2);
+              }
             }
           });
 
@@ -225,6 +247,9 @@ public final class XmlSerializedCatalog
                  .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
       xStream.alias("schema",
                     Class.forName("schemacrawler.schema.SchemaReference"));
+
+      xStream.omitField(NamedObject.class, "lookupName");
+      xStream.omitField(NamedObject.class, "fullName");
 
       return xStream;
     }

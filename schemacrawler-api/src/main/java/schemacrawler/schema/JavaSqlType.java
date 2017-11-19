@@ -170,10 +170,8 @@ public final class JavaSqlType
   @Override
   public String toString()
   {
-    return String.format("%s\t%d\t%s",
-                         javaSqlTypeName,
-                         javaSqlType,
-                         javaSqlTypeGroup);
+    return String
+      .format("%s\t%d\t%s", javaSqlTypeName, javaSqlType, javaSqlTypeGroup);
   }
 
 }

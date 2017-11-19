@@ -35,12 +35,12 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -171,10 +171,12 @@ final class TableColumnRetriever
     final String defaultValue = results.getString("COLUMN_DEF");
     //
 
-    final String columnCatalogName = nameQuotedName(results.getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
-    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+    final String columnCatalogName = normalizeCatalogName(results
+      .getString("TABLE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
+    final String tableName = results.getString("TABLE_NAME");
+    final String columnName = results.getString("COLUMN_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving column <%s.%s.%s.%s>",
                                 columnCatalogName,
@@ -183,7 +185,7 @@ final class TableColumnRetriever
                                 columnName));
 
     final Optional<MutableTable> optionalTable = allTables
-      .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
+      .lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
     if (!optionalTable.isPresent())
     {
       return null;
@@ -211,10 +213,9 @@ final class TableColumnRetriever
       final String remarks = results.getString("REMARKS");
 
       column.setOrdinalPosition(ordinalPosition);
-      column
-        .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                        dataType,
-                                                        typeName));
+      column.setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                            dataType,
+                                                            typeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -296,9 +297,9 @@ final class TableColumnRetriever
     {
       LOGGER.log(Level.FINE, "Retrieving columns for " + table);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
+        .getColumns(table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName(),
                     null));)
       {
         while (results.next())
@@ -321,10 +322,7 @@ final class TableColumnRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(null,
-                  null,
-                  "%",
-                  "%"));)
+      .getColumns(null, null, "%", "%"));)
     {
       while (results.next())
       {

@@ -76,10 +76,11 @@ public class RegularExpressionColorMap
           }
           else
           {
-            LOGGER.log(Level.CONFIG,
-                       new StringFormat("Could not add color mapping for %s = %s",
-                                        regExpPattern,
-                                        htmlColor));
+            LOGGER
+              .log(Level.CONFIG,
+                   new StringFormat("Could not add color mapping for %s = %s",
+                                    regExpPattern,
+                                    htmlColor));
           }
         }
       }
@@ -140,11 +141,12 @@ public class RegularExpressionColorMap
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Could not add literal color mapping for %s = %s",
-                                  literal,
-                                  color),
-                 e);
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Could not add literal color mapping for %s = %s",
+                              literal,
+                              color),
+             e);
     }
   }
 

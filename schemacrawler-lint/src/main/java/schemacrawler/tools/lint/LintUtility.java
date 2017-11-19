@@ -109,10 +109,10 @@ public final class LintUtility
     }
     catch (final Exception e)
     {
-      LOGGER
-        .log(Level.WARNING,
-             "Could not load linter configs from file, " + linterConfigsFile,
-             e);
+      LOGGER.log(Level.WARNING,
+                 "Could not load linter configs from file, "
+                                + linterConfigsFile,
+                 e);
       return linterConfigs;
     }
   }

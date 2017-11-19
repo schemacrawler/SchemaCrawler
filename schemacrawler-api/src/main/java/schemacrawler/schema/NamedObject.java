@@ -30,6 +30,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Represents a named object.
@@ -50,7 +51,7 @@ public interface NamedObject
   /**
    * A value guaranteed to be unique in the database for this object.
    */
-  String getLookupKey();
+  List<String> toUniqueLookupKey();
 
   /**
    * Getter for name of object.

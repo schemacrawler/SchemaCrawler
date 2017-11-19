@@ -43,6 +43,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -56,6 +57,7 @@ public class SchemaSerializationTest
   extends BaseDatabaseTest
 {
 
+  @Ignore
   @Test
   public void schemaSerializationWithXStream()
     throws Exception

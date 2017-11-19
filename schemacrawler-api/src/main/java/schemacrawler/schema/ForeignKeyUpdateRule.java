@@ -37,7 +37,8 @@ import sf.util.IdentifiedEnum;
  * Foreign key update and delete rules.
  */
 public enum ForeignKeyUpdateRule
-  implements IdentifiedEnum
+  implements
+  IdentifiedEnum
 {
 
  /**
