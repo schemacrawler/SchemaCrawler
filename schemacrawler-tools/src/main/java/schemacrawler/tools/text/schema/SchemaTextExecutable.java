@@ -52,6 +52,7 @@ public final class SchemaTextExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
+  private String identifierQuoteString;
 
   public SchemaTextExecutable(final String command)
   {
@@ -61,7 +62,7 @@ public final class SchemaTextExecutable
   @Override
   public void executeOn(final Catalog db,
                         final Connection connection,
-                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadSchemaTextOptions();
@@ -79,6 +80,9 @@ public final class SchemaTextExecutable
                                       connection,
                                       schemaCrawlerOptions);
     }
+
+    identifierQuoteString = databaseSpecificOverrideOptions
+      .getIdentifierQuoteString();
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
@@ -133,19 +137,22 @@ public final class SchemaTextExecutable
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
                                           schemaTextOptions,
-                                          outputOptions);
+                                          outputOptions,
+                                          identifierQuoteString);
     }
     else if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
                                           schemaTextOptions,
-                                          outputOptions);
+                                          outputOptions,
+                                          identifierQuoteString);
     }
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
                                           schemaTextOptions,
-                                          outputOptions);
+                                          outputOptions,
+                                          identifierQuoteString);
     }
 
     return formatter;

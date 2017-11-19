@@ -55,6 +55,7 @@ public final class GraphExecutable
 {
 
   private GraphOptions graphOptions;
+  private String identifierQuoteString;
 
   public GraphExecutable(final String command)
   {
@@ -85,6 +86,9 @@ public final class GraphExecutable
                                       connection,
                                       schemaCrawlerOptions);
     }
+
+    identifierQuoteString = databaseSpecificOverrideOptions
+      .getIdentifierQuoteString();
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
@@ -162,7 +166,8 @@ public final class GraphExecutable
 
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
-                                       outputOptions);
+                                       outputOptions,
+                                       identifierQuoteString);
 
     return formatter;
   }

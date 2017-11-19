@@ -67,6 +67,7 @@ public final class OperationExecutable
     .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
+  private String identifierQuoteString;
 
   public OperationExecutable(final String command)
   {
@@ -90,6 +91,9 @@ public final class OperationExecutable
                               getCommand()));
       return;
     }
+
+    identifierQuoteString = databaseSpecificOverrideOptions
+      .getIdentifierQuoteString();
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -184,13 +188,15 @@ public final class OperationExecutable
     {
       formatter = new DataJsonFormatter(operation,
                                         operationOptions,
-                                        outputOptions);
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     else
     {
       formatter = new DataTextFormatter(operation,
                                         operationOptions,
-                                        outputOptions);
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     return formatter;
   }

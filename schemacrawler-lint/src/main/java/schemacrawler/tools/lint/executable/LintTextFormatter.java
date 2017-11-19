@@ -52,10 +52,11 @@ final class LintTextFormatter
 {
 
   LintTextFormatter(final LintOptions options,
-                    final OutputOptions outputOptions)
+                    final OutputOptions outputOptions,
+                    final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions);
+    super(options, false, outputOptions, identifierQuoteString);
   }
 
   @Override
