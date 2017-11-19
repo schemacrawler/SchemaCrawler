@@ -151,7 +151,7 @@ final class SchemaRetriever
           .readResultsVector(getMetaData().getCatalogs());
         for (final String catalogName: metaDataCatalogNames)
         {
-          catalogNames.add(nameQuotedName(catalogName));
+          catalogNames.add(catalogName);
         }
       }
       catch (final SQLException e)
@@ -182,8 +182,8 @@ final class SchemaRetriever
         {
           final String catalogName = normalizeCatalogName(results
             .getString("TABLE_CATALOG"));
-          final String schemaName = nameQuotedName(results
-            .getString("TABLE_SCHEM"));
+          final String schemaName = results
+          .getString("TABLE_SCHEM");
           LOGGER.log(Level.FINER,
                      new StringFormat("Retrieving schema: %s --> %s",
                                       catalogName,
@@ -249,10 +249,10 @@ final class SchemaRetriever
       results.setDescription("retrieveAllSchemasFromInformationSchemaViews");
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
-          .getString("CATALOG_NAME"));
-        final String schemaName = nameQuotedName(results
-          .getString("SCHEMA_NAME"));
+        final String catalogName = results
+        .getString("CATALOG_NAME");
+        final String schemaName = results
+        .getString("SCHEMA_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving schema: %s --> %s",
                                     catalogName,

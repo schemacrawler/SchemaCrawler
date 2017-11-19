@@ -175,8 +175,8 @@ final class TableColumnRetriever
       .getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results
       .getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
-    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+    final String tableName = results.getString("TABLE_NAME");
+    final String columnName = results.getString("COLUMN_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving column <%s.%s.%s.%s>",
                                 columnCatalogName,
@@ -297,9 +297,9 @@ final class TableColumnRetriever
     {
       LOGGER.log(Level.FINE, "Retrieving columns for " + table);
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
+        .getColumns(table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName(),
                     null));)
       {
         while (results.next())

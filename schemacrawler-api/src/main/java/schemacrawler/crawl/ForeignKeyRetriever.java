@@ -113,8 +113,8 @@ final class ForeignKeyRetriever
       while (results.next())
       {
         // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
-        final String fkName = nameQuotedName(results
-          .getString("FOREIGN_KEY_NAME"));
+        final String fkName = results
+        .getString("FOREIGN_KEY_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving foreign key definition <%s>",
                                     fkName));
@@ -182,7 +182,7 @@ final class ForeignKeyRetriever
   {
     while (results.next())
     {
-      String foreignKeyName = nameQuotedName(results.getString("FK_NAME"));
+      String foreignKeyName = results.getString("FK_NAME");
       LOGGER
         .log(Level.FINE,
              new StringFormat("Retrieving foreign key: %s", foreignKeyName));
@@ -191,19 +191,19 @@ final class ForeignKeyRetriever
         .getString("PKTABLE_CAT"));
       final String pkTableSchemaName = normalizeSchemaName(results
         .getString("PKTABLE_SCHEM"));
-      final String pkTableName = nameQuotedName(results
-        .getString("PKTABLE_NAME"));
-      final String pkColumnName = nameQuotedName(results
-        .getString("PKCOLUMN_NAME"));
+      final String pkTableName = results
+      .getString("PKTABLE_NAME");
+      final String pkColumnName = results
+      .getString("PKCOLUMN_NAME");
 
       final String fkTableCatalogName = normalizeCatalogName(results
         .getString("FKTABLE_CAT"));
       final String fkTableSchemaName = normalizeSchemaName(results
         .getString("FKTABLE_SCHEM"));
-      final String fkTableName = nameQuotedName(results
-        .getString("FKTABLE_NAME"));
-      final String fkColumnName = nameQuotedName(results
-        .getString("FKCOLUMN_NAME"));
+      final String fkTableName = results
+      .getString("FKTABLE_NAME");
+      final String fkColumnName = results
+      .getString("FKCOLUMN_NAME");
 
       final int keySequence = results.getInt("KEY_SEQ", 0);
       final ForeignKeyUpdateRule updateRule = results
@@ -365,9 +365,9 @@ final class ForeignKeyRetriever
 
       // Get imported foreign keys
       try (final MetadataResultSet results = new MetadataResultSet(metaData
-        .getImportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));)
+        .getImportedKeys(table.getSchema().getCatalogName(),
+                         table.getSchema().getName(),
+                         table.getName()));)
       {
         createForeignKeys(results, foreignKeys);
       }
@@ -382,9 +382,9 @@ final class ForeignKeyRetriever
       // table is selected, we have not retrieved it's keys that are
       // imported by other tables.
       try (final MetadataResultSet results = new MetadataResultSet(metaData
-        .getExportedKeys(unquotedName(table.getSchema().getCatalogName()),
-                         unquotedName(table.getSchema().getName()),
-                         unquotedName(table.getName())));)
+        .getExportedKeys(table.getSchema().getCatalogName(),
+                         table.getSchema().getName(),
+                         table.getName()));)
       {
         createForeignKeys(results, foreignKeys);
       }
