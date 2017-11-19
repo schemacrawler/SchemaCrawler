@@ -155,7 +155,7 @@ final class RetrieverConnection
       .getForeignKeyRetrievalStrategy();
 
     final String identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(databaseSpecificOverrideOptions, metaData);
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
     LOGGER.log(Level.CONFIG,
                new StringFormat("Database identifier quote string is <%s>",
                                 identifierQuoteString));

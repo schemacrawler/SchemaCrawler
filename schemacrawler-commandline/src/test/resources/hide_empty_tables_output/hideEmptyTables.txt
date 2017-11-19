@@ -59,7 +59,7 @@ Relationship between books and their authors,
 along with the latest updated information
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
-  UPDATE                            CLOB                        
+  "UPDATE"                          CLOB                        
 
 Foreign Keys
 

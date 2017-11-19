@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2017-11-18 21:55:12</td>
+		<td align='left'>2017-11-19 15:24:12</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -82,7 +82,7 @@ digraph "SchemaCrawler_Diagram" {
 		<td bgcolor='#F2EACE' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='globalcount_ce42fa22.start' align='left'>Global Count</td>
+		<td port='globalcount_ce42fa22.start' align='left'>"Global Count"</td>
 		<td align='left'> </td>
 		<td port='globalcount_ce42fa22.end' align='left'>INTEGER</td>
 	</tr>
@@ -136,7 +136,7 @@ digraph "SchemaCrawler_Diagram" {
 		<td port='price_74a85253.end' align='left'>DOUBLE(64, 0)</td>
 	</tr>
 	<tr>
-		<td port='update_5adc5f3.start' align='left'>UPDATE</td>
+		<td port='update_5adc5f3.start' align='left'>"UPDATE"</td>
 		<td align='left'> </td>
 		<td port='update_5adc5f3.end' align='left'>CLOB</td>
 	</tr>

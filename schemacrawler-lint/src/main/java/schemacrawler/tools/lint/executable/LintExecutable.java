@@ -45,6 +45,7 @@ import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 public class LintExecutable
@@ -70,8 +71,9 @@ public class LintExecutable
     // Read lint options from the config
     lintOptions = getLintOptions();
 
-    identifierQuoteString = databaseSpecificOverrideOptions
-      .getIdentifierQuoteString();
+    identifierQuoteString = Identifiers
+        .lookupIdentifierQuoteString(connection,
+                                     databaseSpecificOverrideOptions);
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           getAdditionalConfiguration());

@@ -53,7 +53,6 @@ abstract class AbstractDatabaseObject
   private static final long serialVersionUID = 3099561832386790624L;
 
   private final Schema schema;
-  private transient String fullName;
 
   AbstractDatabaseObject(final Schema schema, final String name)
   {
@@ -139,8 +138,7 @@ abstract class AbstractDatabaseObject
   @Override
   public String getFullName()
   {
-    buildFullName();
-    return fullName;
+    return Identifiers.STANDARD.quoteFullName(this);
   }
 
   @Override
@@ -169,18 +167,6 @@ abstract class AbstractDatabaseObject
     result = prime * result + (schema == null? 0: schema.hashCode());
     result = prime * result + super.hashCode();
     return result;
-  }
-
-  private void buildFullName()
-  {
-    if (fullName != null)
-    {
-      return;
-    }
-
-    final Identifiers identifiers = Identifiers.identifiers()
-      .withIdentifierQuoteString("\"").build();
-    fullName = identifiers.quoteFullName(this);
   }
 
 }

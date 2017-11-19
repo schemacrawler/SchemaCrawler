@@ -27,7 +27,7 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
-Global Counts                                                    [table]
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
 
 

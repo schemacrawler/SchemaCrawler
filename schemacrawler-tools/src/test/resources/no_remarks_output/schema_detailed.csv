@@ -56,7 +56,7 @@ PUBLIC.BOOKS.BOOKAUTHORS,[table]
 ------------------------------------------------------------------------
 "",BOOKID,INTEGER NOT NULL
 "",AUTHORID,INTEGER NOT NULL
-"",UPDATE,CLOB
+"","""UPDATE""",CLOB
 ""
 Foreign Keys
 ""
@@ -118,7 +118,7 @@ SYS_IDX_FK_PREVIOUSEDITION_10109,[non-unique index]
 
 "PUBLIC.BOOKS.""Global Counts""",[table]
 ------------------------------------------------------------------------
-"",Global Count,INTEGER
+"","""Global Count""",INTEGER
 
 
 

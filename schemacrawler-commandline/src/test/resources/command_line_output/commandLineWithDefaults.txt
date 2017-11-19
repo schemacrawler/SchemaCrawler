@@ -72,7 +72,7 @@ Foreign Keys
 
 
 
-Global Counts                                                    [table]
+"Global Counts"                                                  [table]
 ------------------------------------------------------------------------
 
 
