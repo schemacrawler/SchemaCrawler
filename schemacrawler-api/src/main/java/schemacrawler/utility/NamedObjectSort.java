@@ -36,7 +36,8 @@ import java.util.Comparator;
 import schemacrawler.schema.NamedObject;
 
 public enum NamedObjectSort
-  implements Comparator<NamedObject>
+  implements
+  Comparator<NamedObject>
 {
 
  /**

@@ -32,6 +32,7 @@ package schemacrawler.tools.analysis.associations;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
@@ -129,9 +130,9 @@ public class WeakAssociationForeignKey
   }
 
   @Override
-  public String getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
-    return getName();
+    return Arrays.asList(getName());
   }
 
   @Override

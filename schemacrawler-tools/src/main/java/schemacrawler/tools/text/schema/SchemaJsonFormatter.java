@@ -98,17 +98,21 @@ final class SchemaJsonFormatter
    *        Options for text formatting of schema
    * @param outputOptions
    *        Options for text formatting of schema
+   * @param identifierQuoteString
+   *        TODO
    * @throws SchemaCrawlerException
    *         On an exception
    */
   SchemaJsonFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
-                      final OutputOptions outputOptions)
+                      final OutputOptions outputOptions,
+                      final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions);
+          outputOptions,
+          identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }

@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 
@@ -71,7 +72,8 @@ abstract class BaseCommandChainExecutable
   }
 
   protected final void executeChain(final Catalog catalog,
-                                    final Connection connection)
+                                    final Connection connection,
+                                    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     if (executables.isEmpty())
@@ -84,7 +86,8 @@ abstract class BaseCommandChainExecutable
     {
       if (executable instanceof BaseStagedExecutable)
       {
-        ((BaseStagedExecutable) executable).executeOn(catalog, connection);
+        ((BaseStagedExecutable) executable)
+          .executeOn(catalog, connection, databaseSpecificOverrideOptions);
       }
     }
   }

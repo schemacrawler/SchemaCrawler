@@ -284,7 +284,7 @@
           "nullable": true,
           "databaseSpecificType": "CLOB",
           "dataType": "CLOB",
-          "name": "\"UPDATE\"",
+          "name": "UPDATE",
           "width": "",
           "decimalDigits": 0,
           "autoIncremented": false
@@ -438,12 +438,12 @@
         "nullable": true,
         "databaseSpecificType": "INTEGER",
         "dataType": "INTEGER",
-        "name": "\"Global Count\"",
+        "name": "Global Count",
         "width": "",
         "decimalDigits": 0,
         "autoIncremented": false
       }],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
       "triggers": [],

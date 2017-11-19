@@ -69,17 +69,21 @@ final class SchemaListFormatter
    *        Options for text formatting of schema
    * @param outputOptions
    *        Options for text formatting of schema
+   * @param identifierQuoteString
+   *        TODO
    * @throws SchemaCrawlerException
    *         On an exception
    */
   SchemaListFormatter(final SchemaTextDetailType schemaTextDetailType,
                       final SchemaTextOptions options,
-                      final OutputOptions outputOptions)
+                      final OutputOptions outputOptions,
+                      final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions);
+          outputOptions,
+          identifierQuoteString);
     isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
   }
 
@@ -203,11 +207,11 @@ final class SchemaListFormatter
     final String routineName;
     if (options.isShowUnqualifiedNames())
     {
-      routineName = routine.getName();
+      routineName = identifiers.quoteName(routine);
     }
     else
     {
-      routineName = routine.getFullName();
+      routineName = identifiers.quoteFullName(routine);
     }
     final String routineType = "[" + routineTypeDetail + "]";
 
@@ -229,11 +233,11 @@ final class SchemaListFormatter
     final String sequenceName;
     if (options.isShowUnqualifiedNames())
     {
-      sequenceName = sequence.getName();
+      sequenceName = identifiers.quoteName(sequence);
     }
     else
     {
-      sequenceName = sequence.getFullName();
+      sequenceName = identifiers.quoteFullName(sequence);
     }
     final String sequenceType = "[sequence]";
 
@@ -251,11 +255,11 @@ final class SchemaListFormatter
     final String synonymName;
     if (options.isShowUnqualifiedNames())
     {
-      synonymName = synonym.getName();
+      synonymName = identifiers.quoteName(synonym);
     }
     else
     {
-      synonymName = synonym.getFullName();
+      synonymName = identifiers.quoteFullName(synonym);
     }
     final String synonymType = "[synonym]";
 
@@ -269,11 +273,11 @@ final class SchemaListFormatter
     final String tableName;
     if (options.isShowUnqualifiedNames())
     {
-      tableName = table.getName();
+      tableName = identifiers.quoteName(table);
     }
     else
     {
-      tableName = table.getFullName();
+      tableName = identifiers.quoteFullName(table);
     }
     final String tableType = "[" + table.getTableType() + "]";
 

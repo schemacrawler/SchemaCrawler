@@ -3017,7 +3017,7 @@
     {
       "foreignKeys": [],
       "columns": [],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
       "remarks": "",

@@ -36,6 +36,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Arrays;
+import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -49,6 +51,7 @@ import schemacrawler.tools.text.utility.JsonFormattingHelper;
 import schemacrawler.tools.text.utility.PlainTextFormattingHelper;
 import schemacrawler.tools.text.utility.TextFormattingHelper;
 import schemacrawler.tools.traversal.TraversalHandler;
+import schemacrawler.utility.Identifiers;
 
 public abstract class BaseFormatter<O extends BaseTextOptions>
   implements TraversalHandler
@@ -58,12 +61,14 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected final OutputOptions outputOptions;
   protected final TextFormattingHelper formattingHelper;
   protected final DatabaseObjectColorMap colorMap;
+  protected final Identifiers identifiers;
   protected final boolean printVerboseDatabaseInfo;
   private final PrintWriter out;
 
   protected BaseFormatter(final O options,
                           final boolean printVerboseDatabaseInfo,
-                          final OutputOptions outputOptions)
+                          final OutputOptions outputOptions,
+                          final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     this.options = requireNonNull(options, "Options not provided");
@@ -75,6 +80,11 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
 
     this.printVerboseDatabaseInfo = !options.isNoInfo()
                                     && printVerboseDatabaseInfo;
+
+    identifiers = Identifiers.identifiers()
+      .withIdentifierQuoteString(identifierQuoteString)
+      .withIdentifierQuotingStrategy(options.getIdentifierQuotingStrategy())
+      .build();
 
     try
     {
@@ -139,8 +149,9 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
     else
     {
-      return convertForComparison(dbObject.getName()) + "_"
-             + Integer.toHexString(dbObject.getLookupKey().hashCode());
+      final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
+      return convertForComparison(dbObject.getName()) + "_" + Integer
+        .toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
     }
   }
 

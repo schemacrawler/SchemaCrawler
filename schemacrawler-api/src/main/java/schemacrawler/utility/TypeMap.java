@@ -201,10 +201,11 @@ public final class TypeMap
       }
       catch (final ClassNotFoundException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not obtain class mapping for data type <%s>",
-                                    typeName),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not obtain class mapping for data type <%s>",
+                                typeName),
+               e);
         return null;
       }
     }

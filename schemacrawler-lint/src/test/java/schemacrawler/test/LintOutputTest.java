@@ -78,8 +78,8 @@ public class LintOutputTest
            "SELECT TOP 5 ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
     final String[] commands = new String[] {
-                                             SchemaTextDetailType.brief + ","
-                                             + Operation.count + ","
+                                             SchemaTextDetailType.brief
+                                             + "," + Operation.count + ","
                                              + "lint",
                                              queryCommand1 + ","
                                                        + SchemaTextDetailType.brief
@@ -104,7 +104,7 @@ public class LintOutputTest
           .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
         schemaCrawlerOptions
           .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-        
+
         final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
         schemaTextOptionsBuilder.showInfo();
         queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
@@ -115,10 +115,9 @@ public class LintOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(getConnection());
 
-        failures
-          .addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                testOutputFile,
-                                outputFormat.getFormat()));
+        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
+                                      testOutputFile,
+                                      outputFormat.getFormat()));
       }
     }
     if (failures.size() > 0)

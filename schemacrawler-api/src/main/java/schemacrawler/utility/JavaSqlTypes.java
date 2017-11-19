@@ -71,10 +71,11 @@ public final class JavaSqlTypes
       }
       catch (final SecurityException | IllegalAccessException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not access java.sql.Types field <%s>",
-                                    field),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not access java.sql.Types field <%s>",
+                                field),
+               e);
         // continue
       }
     }

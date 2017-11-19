@@ -34,6 +34,8 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -43,7 +45,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.PrimaryKey;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -104,11 +105,12 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
-        final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("TABLE_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional column attributes: " + columnName);
 
@@ -186,10 +188,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("TABLE_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional table attributes: " + tableName);
 
@@ -255,11 +258,12 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("INDEX_SCHEMA"));
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
-        final String indexName = nameQuotedName(results.getString("INDEX_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("INDEX_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+        final String indexName = results.getString("INDEX_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -292,8 +296,7 @@ final class TableExtRetriever
         }
 
         final MutableIndex index = indexOptional.get();
-        final String indexColumnName = nameQuotedName(results
-          .getString("COLUMN_NAME"));
+        final String indexColumnName = results.getString("COLUMN_NAME");
 
         final Optional<MutableIndexColumn> indexColumnOptional = index
           .lookupColumn(indexColumnName);
@@ -362,11 +365,12 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("INDEX_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("INDEX_SCHEMA"));
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
-        final String indexName = nameQuotedName(results.getString("INDEX_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("INDEX_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+        final String indexName = results.getString("INDEX_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -452,24 +456,22 @@ final class TableExtRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("PRIMARY_KEY_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("PRIMARY_KEY_SCHEMA"));
-        final String tableName = nameQuotedName(results
-          .getString("PRIMARY_KEY_TABLE_NAME"));
-        final String pkName = nameQuotedName(results.getString("PRIMARY_KEY_NAME"));
+        final String tableName = results.getString("PRIMARY_KEY_TABLE_NAME");
+        final String pkName = results.getString("PRIMARY_KEY_NAME");
 
-        final String constraintKey = new SchemaReference(catalogName,
-                                                         schemaName)
-                                     + "." + tableName + "." + pkName;
+        final List<String> constraintLookupKey = Arrays
+          .asList(catalogName, schemaName, tableName, pkName);
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving definition of primary key <%s>",
-                                    constraintKey));
+                                    constraintLookupKey));
         final String definition = results.getString("PRIMARY_KEY_DEFINITION");
 
         final Optional<MutablePrimaryKey> optionalPk = allPks
-          .lookup(constraintKey);
+          .lookup(constraintLookupKey);
         if (optionalPk.isPresent())
         {
           final MutablePrimaryKey pkConstraint = optionalPk.get();
@@ -480,7 +482,7 @@ final class TableExtRetriever
         {
           LOGGER.log(Level.FINER,
                      new StringFormat("Could not find primary key <%s>",
-                                      constraintKey));
+                                      constraintLookupKey));
         }
 
       }
@@ -496,10 +498,7 @@ final class TableExtRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumnPrivileges(null,
-                           null,
-                           "%",
-                           "%"));)
+      .getColumnPrivileges(null, null, "%", "%"));)
     {
       createPrivileges(results, true);
     }
@@ -547,10 +546,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
-        final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("TABLE_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -588,9 +588,7 @@ final class TableExtRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getTablePrivileges(null,
-                          null,
-                          "%"));)
+      .getTablePrivileges(null, null, "%"));)
     {
       createPrivileges(results, false);
     }
@@ -634,12 +632,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TRIGGER_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("TRIGGER_SCHEMA"));
-        final String triggerName = nameQuotedName(results
-          .getString("TRIGGER_NAME"));
+        final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving trigger <%s>", triggerName));
 
@@ -732,10 +729,11 @@ final class TableExtRetriever
 
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("TABLE_CATALOG"));
-        final String schemaName = nameQuotedName(results.getString("TABLE_SCHEMA"));
-        final String viewName = nameQuotedName(results.getString("TABLE_NAME"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("TABLE_SCHEMA"));
+        final String viewName = results.getString("TABLE_NAME");
 
         final Optional<MutableTable> viewOptional = lookupTable(catalogName,
                                                                 schemaName,
@@ -779,13 +777,15 @@ final class TableExtRetriever
   {
     while (results.next())
     {
-      final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
-      final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
-      final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+      final String catalogName = normalizeCatalogName(results
+        .getString("TABLE_CAT"));
+      final String schemaName = normalizeSchemaName(results
+        .getString("TABLE_SCHEM"));
+      final String tableName = results.getString("TABLE_NAME");
       final String columnName;
       if (privilegesForColumn)
       {
-        columnName = nameQuotedName(results.getString("COLUMN_NAME"));
+        columnName = results.getString("COLUMN_NAME");
       }
       else
       {

@@ -223,10 +223,11 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat("Could not parse double value for property <%s>",
-                                  propertyName),
-                 e);
+      LOGGER
+        .log(Level.FINEST,
+             new StringFormat("Could not parse double value for property <%s>",
+                              propertyName),
+             e);
       return defaultValue;
     }
   }
@@ -330,10 +331,11 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat("Could not parse integer value for property <%s>",
-                                  propertyName),
-                 e);
+      LOGGER
+        .log(Level.FINEST,
+             new StringFormat("Could not parse integer value for property <%s>",
+                              propertyName),
+             e);
       return defaultValue;
     }
   }
@@ -354,10 +356,11 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER.log(Level.FINEST,
-                 new StringFormat("Could not parse long value for property <%s>",
-                                  propertyName),
-                 e);
+      LOGGER
+        .log(Level.FINEST,
+             new StringFormat("Could not parse long value for property <%s>",
+                              propertyName),
+             e);
       return defaultValue;
     }
   }

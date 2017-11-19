@@ -35,7 +35,8 @@ import java.sql.DatabaseMetaData;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum ProcedureReturnType
-  implements RoutineReturnType
+  implements
+  RoutineReturnType
 {
 
  /**

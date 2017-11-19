@@ -52,10 +52,11 @@ final class LintTextFormatter
 {
 
   LintTextFormatter(final LintOptions options,
-                    final OutputOptions outputOptions)
+                    final OutputOptions outputOptions,
+                    final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions);
+    super(options, false, outputOptions, identifierQuoteString);
   }
 
   @Override
@@ -88,7 +89,7 @@ final class LintTextFormatter
 
       final String tableType = "[" + table.getTableType() + "]";
       formattingHelper.writeObjectNameRow(nodeId(table),
-                                          table.getFullName(),
+                                          identifiers.quoteFullName(table),
                                           tableType,
                                           colorMap.getColor(table));
       printLints(lints);
@@ -145,9 +146,8 @@ final class LintTextFormatter
         }
         else
         {
-          formattingHelper.writeRow("",
-                                    lint.getMessage(),
-                                    lint.getValueAsString());
+          formattingHelper
+            .writeRow("", lint.getMessage(), lint.getValueAsString());
         }
       }
     }

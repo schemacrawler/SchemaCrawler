@@ -46,9 +46,7 @@ public final class Query
   private static final long serialVersionUID = 2820769346069413473L;
 
   private final boolean hasName;
-
   private final String name;
-
   private final String query;
   private final boolean throwSQLException;
 

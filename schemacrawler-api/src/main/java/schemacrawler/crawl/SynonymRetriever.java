@@ -112,18 +112,17 @@ final class SynonymRetriever
     {
       while (results.next())
       {
-        final String catalogName = nameQuotedName(results
+        final String catalogName = normalizeCatalogName(results
           .getString("SYNONYM_CATALOG"));
-        final String schemaName = nameQuotedName(results
+        final String schemaName = normalizeSchemaName(results
           .getString("SYNONYM_SCHEMA"));
-        final String synonymName = nameQuotedName(results
-          .getString("SYNONYM_NAME"));
-        final String referencedObjectCatalogName = nameQuotedName(results
-          .getString("REFERENCED_OBJECT_CATALOG"));
-        final String referencedObjectSchemaName = nameQuotedName(results
-          .getString("REFERENCED_OBJECT_SCHEMA"));
-        final String referencedObjectName = nameQuotedName(results
-          .getString("REFERENCED_OBJECT_NAME"));
+        final String synonymName = results.getString("SYNONYM_NAME");
+        final String referencedObjectCatalogName = results
+          .getString("REFERENCED_OBJECT_CATALOG");
+        final String referencedObjectSchemaName = results
+          .getString("REFERENCED_OBJECT_SCHEMA");
+        final String referencedObjectName = results
+          .getString("REFERENCED_OBJECT_NAME");
 
         if (isBlank(referencedObjectName))
         {

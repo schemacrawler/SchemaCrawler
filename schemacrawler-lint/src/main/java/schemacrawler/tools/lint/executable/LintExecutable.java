@@ -37,6 +37,7 @@ import java.util.List;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintDispatch;
@@ -44,6 +45,7 @@ import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 public class LintExecutable
@@ -53,6 +55,7 @@ public class LintExecutable
   public static final String COMMAND = "lint";
 
   private LintOptions lintOptions;
+  private String identifierQuoteString;
 
   public LintExecutable()
   {
@@ -60,11 +63,17 @@ public class LintExecutable
   }
 
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void executeOn(final Catalog db,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Read lint options from the config
     lintOptions = getLintOptions();
+
+    identifierQuoteString = Identifiers
+        .lookupIdentifierQuoteString(connection,
+                                     databaseSpecificOverrideOptions);
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           getAdditionalConfiguration());
@@ -156,11 +165,15 @@ public class LintExecutable
       .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
-      formatter = new LintJsonFormatter(lintOptions, outputOptions);
+      formatter = new LintJsonFormatter(lintOptions,
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     else
     {
-      formatter = new LintTextFormatter(lintOptions, outputOptions);
+      formatter = new LintTextFormatter(lintOptions,
+                                        outputOptions,
+                                        identifierQuoteString);
     }
 
     return formatter;

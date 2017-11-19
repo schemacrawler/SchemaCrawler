@@ -67,13 +67,19 @@ final class DataTextFormatter
    *        Options for text formatting of data
    * @param outputOptions
    *        Options for text formatting of data
+   * @param identifierQuoteString
+   *        TODO
    */
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
-                    final OutputOptions outputOptions)
+                    final OutputOptions outputOptions,
+                    final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, /* printVerboseDatabaseInfo */false, outputOptions);
+    super(options,
+          /* printVerboseDatabaseInfo */false,
+          outputOptions,
+          identifierQuoteString);
     this.operation = operation;
   }
 
@@ -124,11 +130,11 @@ final class DataTextFormatter
     {
       if (options.isShowUnqualifiedNames())
       {
-        tableName = table.getName();
+        tableName = identifiers.quoteName(table);
       }
       else
       {
-        tableName = table.getFullName();
+        tableName = identifiers.quoteFullName(table);
       }
     }
     else

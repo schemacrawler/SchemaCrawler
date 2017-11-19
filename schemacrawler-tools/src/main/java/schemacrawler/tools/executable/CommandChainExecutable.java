@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -102,10 +103,12 @@ public final class CommandChainExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
-    executeChain(catalog, connection);
+    executeChain(catalog, connection, databaseSpecificOverrideOptions);
   }
 
 }

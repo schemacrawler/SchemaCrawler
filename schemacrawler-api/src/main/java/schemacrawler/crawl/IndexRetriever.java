@@ -35,13 +35,13 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -150,7 +150,7 @@ final class IndexRetriever
                                    final MetadataResultSet results)
   {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    String indexName = nameQuotedName(results.getString("INDEX_NAME"));
+    String indexName = results.getString("INDEX_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index <%s.%s>",
                                 table.getFullName(),
@@ -162,8 +162,7 @@ final class IndexRetriever
     // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
-    final String columnName = nameQuotedName(unquotedName(results
-      .getString("COLUMN_NAME")));
+    final String columnName = results.getString("COLUMN_NAME");
     if (isBlank(columnName))
     {
       return;
@@ -236,8 +235,8 @@ final class IndexRetriever
   {
     MutablePrimaryKey primaryKey;
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
-    final String primaryKeyName = nameQuotedName(results.getString("PK_NAME"));
+    final String columnName = results.getString("COLUMN_NAME");
+    final String primaryKeyName = results.getString("PK_NAME");
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
     primaryKey = table.getPrimaryKey();
@@ -266,12 +265,14 @@ final class IndexRetriever
   private Optional<MutableTable> lookupTable(final NamedObjectList<MutableTable> allTables,
                                              final MetadataResultSet results)
   {
-    final String catalogName = nameQuotedName(results.getString("TABLE_CAT"));
-    final String schemaName = nameQuotedName(results.getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+    final String catalogName = normalizeCatalogName(results
+      .getString("TABLE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("TABLE_SCHEM"));
+    final String tableName = results.getString("TABLE_NAME");
 
     final Optional<MutableTable> optionalTable = allTables
-      .lookup(new SchemaReference(catalogName, schemaName), tableName);
+      .lookup(Arrays.asList(catalogName, schemaName, tableName));
     return optionalTable;
   }
 
@@ -310,7 +311,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes from SQL:\n"
-                                          + indexesSql, e);
+                                          + indexesSql,
+                                          e);
     }
   }
 
@@ -320,9 +322,9 @@ final class IndexRetriever
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
+      .getIndexInfo(table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName(),
                     unique,
                     true/* approximate */));)
     {
@@ -331,7 +333,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve indexes for table "
-                                          + table, e);
+                                          + table,
+                                          e);
     }
   }
 
@@ -361,11 +364,7 @@ final class IndexRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(null,
-                    null,
-                    "%",
-                    unique,
-                    true/* approximate */));)
+      .getIndexInfo(null, null, "%", unique, true/* approximate */));)
     {
       while (results.next())
       {
@@ -423,7 +422,8 @@ final class IndexRetriever
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not retrieve primary keys from SQL:\n"
-                                          + pkSql, e);
+                                          + pkSql,
+                                          e);
     }
   }
 
@@ -437,9 +437,9 @@ final class IndexRetriever
         continue;
       }
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getName()),
-                        unquotedName(table.getName())));)
+        .getPrimaryKeys(table.getSchema().getCatalogName(),
+                        table.getSchema().getName(),
+                        table.getName()));)
       {
         while (results.next())
         {
@@ -449,7 +449,8 @@ final class IndexRetriever
       catch (final SQLException e)
       {
         throw new SchemaCrawlerSQLException("Could not retrieve primary keys for table "
-                                            + table, e);
+                                            + table,
+                                            e);
       }
     }
   }
@@ -458,9 +459,7 @@ final class IndexRetriever
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getPrimaryKeys(null,
-                      null,
-                      "%"));)
+      .getPrimaryKeys(null, null, "%"));)
     {
       while (results.next())
       {

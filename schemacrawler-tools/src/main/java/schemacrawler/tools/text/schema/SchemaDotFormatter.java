@@ -81,17 +81,21 @@ public final class SchemaDotFormatter
    *        Options for text formatting of schema
    * @param outputOptions
    *        Options for text formatting of schema
+   * @param identifierQuoteString
+   *        TODO
    * @throws SchemaCrawlerException
    *         On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
                             final SchemaTextOptions options,
-                            final OutputOptions outputOptions)
+                            final OutputOptions outputOptions,
+                            final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions);
+          outputOptions,
+          identifierQuoteString);
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
@@ -141,11 +145,11 @@ public final class SchemaDotFormatter
     final String tableName;
     if (options.isShowUnqualifiedNames())
     {
-      tableName = table.getName();
+      tableName = identifiers.quoteName(table);
     }
     else
     {
-      tableName = table.getFullName();
+      tableName = identifiers.quoteFullName(table);
     }
     final String tableType = "[" + table.getTableType() + "]";
 
@@ -378,7 +382,8 @@ public final class SchemaDotFormatter
           .getAttribute("schemacrawler.table.filtered_out", false);
         if (table.equals(columnRef.getPrimaryKeyColumn().getParent()))
         {
-          formattingHelper.append(printColumnReference(foreignKey.getName(),
+          formattingHelper.append(printColumnReference(identifiers
+            .quoteName(foreignKey.getName()),
                                                        columnRef,
                                                        fkCardinality,
                                                        isFkColumnFiltered));
@@ -393,11 +398,11 @@ public final class SchemaDotFormatter
     final String columnName;
     if (options.isShowUnqualifiedNames())
     {
-      columnName = column.getShortName();
+      columnName = identifiers.quoteShortName(column);
     }
     else
     {
-      columnName = column.getFullName();
+      columnName = identifiers.quoteFullName(column);
     }
     final String columnNode = String
       .format("  %s [label=<%s>];%n", nodeId, columnName);
@@ -501,8 +506,11 @@ public final class SchemaDotFormatter
                              1));
       }
       row
-        .add(newTableCell(column
-          .getName(), Alignment.left, emphasize, Color.white, 1))
+        .add(newTableCell(identifiers.quoteName(column.getName()),
+                          Alignment.left,
+                          emphasize,
+                          Color.white,
+                          1))
         .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
         .add(newTableCell(columnDetails,
                           Alignment.left,

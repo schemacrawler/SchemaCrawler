@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
+import schemacrawler.utility.IdentifierQuotingStrategy;
 
 public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   implements OptionsBuilder<BaseTextOptions>
@@ -68,6 +69,9 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
 
   private static final String NO_SCHEMA_COLORS = SCHEMACRAWLER_FORMAT_PREFIX
                                                  + "no_schema_colors";
+
+  private static final String IDENTIFIER_QUOTING_STRATEGY = SCHEMACRAWLER_FORMAT_PREFIX
+                                                            + "identifier_quoting_strategy";
 
   protected final O options;
 
@@ -120,6 +124,10 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
                        options.isAlphabeticalSortForRoutineColumns()));
 
     options.setNoSchemaColors(config.getBooleanValue(NO_SCHEMA_COLORS));
+
+    options.setIdentifierQuotingStrategy(config
+      .getEnumValue(IDENTIFIER_QUOTING_STRATEGY,
+                    IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words));
 
     return this;
   }
@@ -199,6 +207,9 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
                            options.isAlphabeticalSortForRoutineColumns());
 
     config.setBooleanValue(NO_SCHEMA_COLORS, options.isNoSchemaColors());
+
+    config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY,
+                        options.getIdentifierQuotingStrategy());
 
     return config;
   }

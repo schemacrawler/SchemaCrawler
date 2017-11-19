@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
@@ -45,10 +47,12 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.executable.CommandChainExecutable;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -77,7 +81,8 @@ public final class ScriptExecutable
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+                              final Connection connection,
+                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
 

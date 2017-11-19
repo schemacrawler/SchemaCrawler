@@ -46,6 +46,7 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import sf.util.SchemaCrawlerLogger;
@@ -85,7 +86,8 @@ public final class VelocityRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+                              final Connection connection,
+                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -137,10 +139,11 @@ public final class VelocityRenderer
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Reading Velocity template <%s>, with encoding <%s>",
-                                  templateLocation,
-                                  templateEncoding));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Reading Velocity template <%s>, with encoding <%s>",
+                              templateLocation,
+                              templateEncoding));
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);

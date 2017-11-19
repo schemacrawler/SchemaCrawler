@@ -51,7 +51,7 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
 
                                                           [lint, medium]
 	spaces in name, or reserved word	
-	spaces in name, or reserved word	"Global Count"
+	spaces in name, or reserved word	Global Count
 	single column	
 
 
@@ -70,7 +70,7 @@ PUBLIC.FOR_LINT."Global Counts"                                  [table]
 
                                                           [lint, medium]
 	spaces in name, or reserved word	
-	spaces in name, or reserved word	"Global Count"
+	spaces in name, or reserved word	Global Count
 	single column	
 
 

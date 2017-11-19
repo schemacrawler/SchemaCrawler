@@ -166,12 +166,11 @@ public final class Linters
     {
       if (linter.getLintCount() > 0)
       {
-        buffer
-          .append(String.format("%8s%s %5d- %s%n",
-                                "[" + linter.getSeverity() + "]",
-                                linter.exceedsThreshold()? "*": " ",
-                                linter.getLintCount(),
-                                linter.getSummary()));
+        buffer.append(String.format("%8s%s %5d- %s%n",
+                                    "[" + linter.getSeverity() + "]",
+                                    linter.exceedsThreshold()? "*": " ",
+                                    linter.getLintCount(),
+                                    linter.getSummary()));
       }
     }
 

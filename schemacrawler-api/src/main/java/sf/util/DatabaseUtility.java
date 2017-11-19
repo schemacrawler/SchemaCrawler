@@ -150,10 +150,11 @@ public final class DatabaseUtility
       else
       {
         final int updateCount = statement.getUpdateCount();
-        LOGGER.log(Level.FINE,
-                   new StringFormat("No results. Update count of %d for query: %s",
-                                    updateCount,
-                                    sql));
+        LOGGER
+          .log(Level.FINE,
+               new StringFormat("No results. Update count of %d for query: %s",
+                                updateCount,
+                                sql));
       }
 
       logSQLWarnings(statement);
@@ -324,9 +325,8 @@ public final class DatabaseUtility
     SQLWarning currentSqlWarning = sqlWarning;
     while (currentSqlWarning != null)
     {
-      LOGGER.log(Level.FINER,
-                 currentSqlWarning.getMessage(),
-                 currentSqlWarning);
+      LOGGER
+        .log(Level.FINER, currentSqlWarning.getMessage(), currentSqlWarning);
       currentSqlWarning = currentSqlWarning.getNextWarning();
     }
   }

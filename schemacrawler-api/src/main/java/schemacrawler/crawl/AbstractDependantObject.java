@@ -30,10 +30,13 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
+import schemacrawler.utility.Identifiers;
 
 /**
  * Represents the dependent of a database object, such as a column or an
@@ -97,21 +100,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public String getFullName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (parent != null)
-    {
-      final String parentFullName = parent.get().getFullName();
-      if (!isBlank(parentFullName))
-      {
-        buffer.append(parentFullName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    return Identifiers.STANDARD.quoteFullName(this);
   }
 
   /**
@@ -120,27 +109,19 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public final D getParent()
   {
+    // Check if parent is null - this can happen if the object is in an
+    // incomplete state during deserialization
+    if (parent == null)
+    {
+      return null;
+    }
     return parent.get();
   }
 
   @Override
   public final String getShortName()
   {
-    final StringBuilder buffer = new StringBuilder(64);
-    if (parent != null)
-    {
-      final String parentName = parent.get().getName();
-      if (!isBlank(parentName))
-      {
-        buffer.append(parentName).append('.');
-      }
-    }
-    final String quotedName = getName();
-    if (!isBlank(quotedName))
-    {
-      buffer.append(quotedName);
-    }
-    return buffer.toString();
+    return Identifiers.STANDARD.quoteShortName(this);
   }
 
   /**
@@ -160,6 +141,16 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   public boolean isParentPartial()
   {
     return parent.isPartialDatabaseObjectReference();
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(parent.get()
+      .toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
 
 }

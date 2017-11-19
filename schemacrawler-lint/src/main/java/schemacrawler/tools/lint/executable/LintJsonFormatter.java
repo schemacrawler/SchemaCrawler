@@ -49,10 +49,11 @@ final class LintJsonFormatter
 {
 
   LintJsonFormatter(final LintOptions options,
-                    final OutputOptions outputOptions)
+                    final OutputOptions outputOptions,
+                    final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, false, outputOptions);
+    super(options, false, outputOptions, identifierQuoteString);
   }
 
   @Override
@@ -72,10 +73,10 @@ final class LintJsonFormatter
       }
       catch (final JSONException e)
       {
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Error outputting table: %s", e.getMessage()),
-               e);
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Error outputting table: %s",
+                                    e.getMessage()),
+                   e);
       }
     }
   }
@@ -100,10 +101,10 @@ final class LintJsonFormatter
       }
       catch (final JSONException e)
       {
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Error outputting table: %s", e.getMessage()),
-               e);
+        LOGGER.log(Level.FINER,
+                   new StringFormat("Error outputting table: %s",
+                                    e.getMessage()),
+                   e);
       }
     }
   }
@@ -136,10 +137,10 @@ final class LintJsonFormatter
         }
         catch (final JSONException e)
         {
-          LOGGER
-            .log(Level.FINER,
-                 new StringFormat("Error outputting lint: %s", e.getMessage()),
-                 e);
+          LOGGER.log(Level.FINER,
+                     new StringFormat("Error outputting lint: %s",
+                                      e.getMessage()),
+                     e);
         }
       }
     }

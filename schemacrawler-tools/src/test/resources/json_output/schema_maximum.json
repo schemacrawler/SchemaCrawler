@@ -378,7 +378,7 @@
           "nullable": true,
           "databaseSpecificType": "CLOB",
           "dataType": "CLOB",
-          "name": "\"UPDATE\"",
+          "name": "UPDATE",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
@@ -670,13 +670,13 @@
         "nullable": true,
         "databaseSpecificType": "INTEGER",
         "dataType": "INTEGER",
-        "name": "\"Global Count\"",
+        "name": "Global Count",
         "width": "",
         "decimalDigits": 0,
         "remarks": "",
         "autoIncremented": false
       }],
-      "name": "\"Global Counts\"",
+      "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
       "triggers": [],
@@ -1187,7 +1187,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-05-31 00:42:54",
+    "crawlTimestamp": "2017-11-15 22:21:17",
     "title": ""
   },
   "routines": [

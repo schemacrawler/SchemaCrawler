@@ -35,7 +35,8 @@ import java.sql.DatabaseMetaData;
  * An enumeration wrapper around procedure column types.
  */
 public enum FunctionColumnType
-  implements RoutineColumnType
+  implements
+  RoutineColumnType
 {
 
  /**
