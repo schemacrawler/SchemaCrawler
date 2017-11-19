@@ -33,6 +33,8 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
@@ -122,11 +124,13 @@ final class SequenceRetriever
         final long longIncrement = increment == null? 1L: increment.longValue();
         final boolean cycle = results.getBoolean("CYCLE_OPTION");
 
-        final Schema schema = new SchemaReference(catalogName, schemaName);
-        if (!schemas.contains(schema))
+        final Optional<SchemaReference> optionalSchema = schemas
+          .lookup(Arrays.asList(catalogName, schemaName));
+        if (!optionalSchema.isPresent())
         {
           continue;
         }
+        final Schema schema = optionalSchema.get();
 
         final MutableSequence sequence = new MutableSequence(schema,
                                                              sequenceName);

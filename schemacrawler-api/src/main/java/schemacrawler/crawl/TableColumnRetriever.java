@@ -35,12 +35,12 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
-import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -185,7 +185,7 @@ final class TableColumnRetriever
                                 columnName));
 
     final Optional<MutableTable> optionalTable = allTables
-      .lookup(new SchemaReference(columnCatalogName, schemaName), tableName);
+      .lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
     if (!optionalTable.isPresent())
     {
       return null;
