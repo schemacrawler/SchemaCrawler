@@ -36,7 +36,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.List;
 
 import schemacrawler.schema.Column;
 import schemacrawler.schema.DatabaseObject;
@@ -145,12 +146,9 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
     else
     {
-      final String lookupKey = dbObject.toUniqueLookupKey().stream()
-        .filter(part -> part != null)
-        .map(part -> identifiers.nameQuotedName(part))
-        .collect(Collectors.joining("."));
-      return convertForComparison(dbObject.getName()) + "_"
-             + Integer.toHexString(lookupKey.hashCode());
+      final List<String> dbObjectLookupKey = dbObject.toUniqueLookupKey();
+      return convertForComparison(dbObject.getName()) + "_" + Integer
+        .toHexString(Arrays.hashCode(dbObjectLookupKey.toArray()));
     }
   }
 

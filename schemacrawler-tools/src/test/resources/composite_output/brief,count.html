@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-11-16 19:55:07</td>
+		<td class='property_value'>2017-11-18 21:54:58</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -259,7 +259,7 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='authors_dba8a1ff' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='authors_f521e766' class='caption_name'>PUBLIC.BOOKS.AUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3' class='remarks'>Contact details for book authors</td>
@@ -332,7 +332,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_aa4376'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -341,7 +341,7 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='authorslist_b29d331d' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='authorslist_9ccb3c04' class='caption_name'>PUBLIC.BOOKS.AUTHORSLIST</span> <span class='caption_description'>[view]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -349,7 +349,7 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='bookauthors_aa4376' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='bookauthors_ead84c5d' class='caption_name'>PUBLIC.BOOKS.BOOKAUTHORS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3' class='remarks'>Relationship between books and their authors, 
@@ -380,7 +380,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>AUTHORID (0..many)→ <a href='#authors_dba8a1ff'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
+		<td class='minwidth'>AUTHORID (0..many)→ <a href='#authors_f521e766'>PUBLIC.BOOKS.AUTHORS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -392,7 +392,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>BOOKID (0..many)→ <a href='#books_afd2ba21'>PUBLIC.BOOKS.BOOKS.ID</a></td>
+		<td class='minwidth'>BOOKID (0..many)→ <a href='#books_f4a675c8'>PUBLIC.BOOKS.BOOKS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -401,7 +401,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='books_afd2ba21' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='books_f4a675c8' class='caption_name'>PUBLIC.BOOKS.BOOKS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3' class='remarks'>Details for published books</td>
@@ -454,7 +454,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_aa4376'>PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</a></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#bookauthors_ead84c5d'>PUBLIC.BOOKS.BOOKAUTHORS.BOOKID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -466,7 +466,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..1) <a href='#books_afd2ba21'>PREVIOUSEDITIONID</a></td>
+		<td class='minwidth'>ID ←(0..1) <a href='#books_f4a675c8'>PREVIOUSEDITIONID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -475,7 +475,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='globalcounts_2ab3635a' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='globalcounts_7fcacf9f' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -483,7 +483,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='publishers_b8da20c0' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='publishers_8037d535' class='caption_name'>PUBLIC.BOOKS.PUBLISHERS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td colspan='3' class='remarks'>List of book publishers</td>
@@ -532,7 +532,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #F2DDCE;'><span id='regions_bc895c48' class='caption_name'>PUBLIC."PUBLISHER SALES".REGIONS</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2DDCE;'><span id='regions_dbf65bbf' class='caption_name'>PUBLIC."PUBLISHER SALES".REGIONS</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -582,12 +582,12 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>POSTALCODE ←(0..many) <a href='#sales_20be6f95'>PUBLIC."PUBLISHER SALES".SALES.POSTALCODE</a></td>
+		<td class='minwidth'>POSTALCODE ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.POSTALCODE</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>COUNTRY ←(0..many) <a href='#sales_20be6f95'>PUBLIC."PUBLISHER SALES".SALES.COUNTRY</a></td>
+		<td class='minwidth'>COUNTRY ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.COUNTRY</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -596,7 +596,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #F2DDCE;'><span id='sales_20be6f95' class='caption_name'>PUBLIC."PUBLISHER SALES".SALES</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2DDCE;'><span id='sales_751e68cc' class='caption_name'>PUBLIC."PUBLISHER SALES".SALES</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -628,7 +628,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>SALESDATAID (0..many)→ <a href='#salesdata_b64284bf'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
+		<td class='minwidth'>SALESDATAID (0..many)→ <a href='#salesdata_1193fa76'>PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -640,12 +640,12 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>POSTALCODE (0..many)→ <a href='#regions_bc895c48'>PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE</a></td>
+		<td class='minwidth'>POSTALCODE (0..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE</a></td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>COUNTRY (0..many)→ <a href='#regions_bc895c48'>PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</a></td>
+		<td class='minwidth'>COUNTRY (0..many)→ <a href='#regions_dbf65bbf'>PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -654,7 +654,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #F2DDCE;'><span id='salesdata_b64284bf' class='caption_name'>PUBLIC."PUBLISHER SALES".SALESDATA</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #F2DDCE;'><span id='salesdata_1193fa76' class='caption_name'>PUBLIC."PUBLISHER SALES".SALESDATA</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -676,7 +676,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>SALESDATAID ←(0..many) <a href='#sales_20be6f95'>PUBLIC."PUBLISHER SALES".SALES.SALESDATAID</a></td>
+		<td class='minwidth'>SALESDATAID ←(0..many) <a href='#sales_751e68cc'>PUBLIC."PUBLISHER SALES".SALES.SALESDATAID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -688,7 +688,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_d4ca985c' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1311b' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -696,7 +696,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_d4ca985d' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1311c' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -704,7 +704,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_3bfbf1d9' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a952' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -712,7 +712,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_3bfbf1da' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a953' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -723,7 +723,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='publisher_id_seq_9cb5cae7' class='caption_name'>PUBLIC.BOOKS.PUBLISHER_ID_SEQ</span> <span class='caption_description'>[sequence]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='publisher_id_seq_d9577a1c' class='caption_name'>PUBLIC.BOOKS.PUBLISHER_ID_SEQ</span> <span class='caption_description'>[sequence]</span></caption>
 
 </table>
 <p>&#160;</p>
