@@ -107,10 +107,10 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(parent.get().getLookupKey());
+    final List<String> lookupKey = new ArrayList<>(parent.get().toUniqueLookupKey());
     lookupKey.add(getName());
     return lookupKey;
   }

@@ -71,10 +71,10 @@ abstract class MutableRoutine
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(super.getLookupKey());
+    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
     lookupKey.add(specificName);
     return lookupKey;
   }

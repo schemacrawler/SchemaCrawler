@@ -185,7 +185,7 @@ public final class SchemaReference
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     return new ArrayList<>(Arrays.asList(catalogName, schemaName));
   }

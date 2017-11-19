@@ -145,7 +145,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
     else
     {
-      final String lookupKey = dbObject.getLookupKey().stream()
+      final String lookupKey = dbObject.toUniqueLookupKey().stream()
         .filter(part -> part != null)
         .map(part -> identifiers.nameQuotedName(part))
         .collect(Collectors.joining("."));

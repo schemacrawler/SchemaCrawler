@@ -144,10 +144,10 @@ abstract class AbstractDatabaseObject
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(schema.getLookupKey());
+    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
     lookupKey.add(getName());
     return lookupKey;
   }

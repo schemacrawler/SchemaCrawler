@@ -130,7 +130,7 @@ public class WeakAssociationForeignKey
   }
 
   @Override
-  public List<String> getLookupKey()
+  public List<String> toUniqueLookupKey()
   {
     return Arrays.asList(getName());
   }

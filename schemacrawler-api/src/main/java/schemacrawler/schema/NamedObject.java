@@ -51,7 +51,7 @@ public interface NamedObject
   /**
    * A value guaranteed to be unique in the database for this object.
    */
-  List<String> getLookupKey();
+  List<String> toUniqueLookupKey();
 
   /**
    * Getter for name of object.
