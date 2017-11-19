@@ -502,8 +502,8 @@ final class DatabaseInfoRetriever
     final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(unquotedName(catalogName),
-               unquotedName(schemaName),
+      .getUDTs(catalogName,
+               schemaName,
                "%",
                null));)
     {

@@ -150,7 +150,7 @@ final class IndexRetriever
                                    final MetadataResultSet results)
   {
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    String indexName = nameQuotedName(results.getString("INDEX_NAME"));
+    String indexName = results.getString("INDEX_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving index <%s.%s>",
                                 table.getFullName(),
@@ -162,8 +162,8 @@ final class IndexRetriever
     // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
-    final String columnName = nameQuotedName(unquotedName(results
-      .getString("COLUMN_NAME")));
+    final String columnName = results
+    .getString("COLUMN_NAME");
     if (isBlank(columnName))
     {
       return;
@@ -236,8 +236,8 @@ final class IndexRetriever
   {
     MutablePrimaryKey primaryKey;
     // "TABLE_CAT", "TABLE_SCHEM", "TABLE_NAME"
-    final String columnName = nameQuotedName(results.getString("COLUMN_NAME"));
-    final String primaryKeyName = nameQuotedName(results.getString("PK_NAME"));
+    final String columnName = results.getString("COLUMN_NAME");
+    final String primaryKeyName = results.getString("PK_NAME");
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
 
     primaryKey = table.getPrimaryKey();
@@ -270,7 +270,7 @@ final class IndexRetriever
       .getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results
       .getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+    final String tableName = results.getString("TABLE_NAME");
 
     final Optional<MutableTable> optionalTable = allTables
       .lookup(Arrays.asList(catalogName, schemaName, tableName));
@@ -323,9 +323,9 @@ final class IndexRetriever
   {
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getIndexInfo(unquotedName(table.getSchema().getCatalogName()),
-                    unquotedName(table.getSchema().getName()),
-                    unquotedName(table.getName()),
+      .getIndexInfo(table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName(),
                     unique,
                     true/* approximate */));)
     {
@@ -438,9 +438,9 @@ final class IndexRetriever
         continue;
       }
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getPrimaryKeys(unquotedName(table.getSchema().getCatalogName()),
-                        unquotedName(table.getSchema().getName()),
-                        unquotedName(table.getName())));)
+        .getPrimaryKeys(table.getSchema().getCatalogName(),
+                        table.getSchema().getName(),
+                        table.getName()));)
       {
         while (results.next())
         {

@@ -105,15 +105,15 @@ abstract class AbstractRetriever
     if (supportsCatalogs)
     {
       final String dbObjectCatalogName = dbObject.getSchema().getCatalogName();
-      if (catalogName != null && !unquotedName(catalogName)
-        .equals(unquotedName(dbObjectCatalogName)))
+      if (catalogName != null && !catalogName
+        .equals(dbObjectCatalogName))
       {
         belongsToCatalog = false;
       }
     }
     final String dbObjectSchemaName = dbObject.getSchema().getName();
     if (schemaName != null
-        && !unquotedName(schemaName).equals(unquotedName(dbObjectSchemaName)))
+        && !schemaName.equals(dbObjectSchemaName))
     {
       belongsToSchema = false;
     }
@@ -282,16 +282,6 @@ abstract class AbstractRetriever
     {
       return null;
     }
-  }
-
-  String nameQuotedName(final String name)
-  {
-    return name;
-  }
-
-  String unquotedName(final String name)
-  {
-    return name;
   }
 
 }

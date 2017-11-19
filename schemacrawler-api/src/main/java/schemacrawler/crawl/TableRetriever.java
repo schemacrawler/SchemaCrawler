@@ -135,7 +135,7 @@ final class TableRetriever
       .getString("TABLE_CAT"));
     final String schemaName = normalizeSchemaName(results
       .getString("TABLE_SCHEM"));
-    final String tableName = nameQuotedName(results.getString("TABLE_NAME"));
+    final String tableName = results.getString("TABLE_NAME");
     LOGGER.log(Level.FINE,
                new StringFormat("Retrieving table <%s.%s.%s>",
                                 catalogName,
@@ -235,8 +235,8 @@ final class TableRetriever
       final String schemaName = schema.getName();
 
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getTables(unquotedName(catalogName),
-                   unquotedName(schemaName),
+        .getTables(catalogName,
+                   schemaName,
                    tableNamePattern,
                    filteredTableTypes));)
       {
