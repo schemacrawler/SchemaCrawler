@@ -231,9 +231,10 @@ final class MetadataResultSet
         final String stringBooleanValue;
         if (results.wasNull() || booleanValue == null)
         {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("NULL value for column <%s>, so evaluating to 'false'",
-                                      columnName));
+          LOGGER
+            .log(Level.FINER,
+                 new StringFormat("NULL value for column <%s>, so evaluating to 'false'",
+                                  columnName));
           return false;
         }
         else
@@ -257,10 +258,11 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read boolean value for column <%s>",
-                                    columnName),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not read boolean value for column <%s>",
+                                columnName),
+               e);
       }
     }
     return false;
@@ -338,19 +340,21 @@ final class MetadataResultSet
         value = results.getInt(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("NULL int value for column <%s>, so using default %d",
-                                      columnName,
-                                      defaultValue));
+          LOGGER
+            .log(Level.FINER,
+                 new StringFormat("NULL int value for column <%s>, so using default %d",
+                                  columnName,
+                                  defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read integer value for column <%s>",
-                                    columnName),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not read integer value for column <%s>",
+                                columnName),
+               e);
       }
     }
     return value;
@@ -376,10 +380,11 @@ final class MetadataResultSet
         value = results.getLong(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("NULL long value for column <%s>, so using default %d",
-                                      columnName,
-                                      defaultValue));
+          LOGGER
+            .log(Level.FINER,
+                 new StringFormat("NULL long value for column <%s>, so using default %d",
+                                  columnName,
+                                  defaultValue));
           value = defaultValue;
         }
       }
@@ -414,19 +419,21 @@ final class MetadataResultSet
         value = results.getShort(columnName);
         if (results.wasNull())
         {
-          LOGGER.log(Level.FINER,
-                     new StringFormat("NULL short value for column <%s>, so using default %d",
-                                      columnName,
-                                      defaultValue));
+          LOGGER
+            .log(Level.FINER,
+                 new StringFormat("NULL short value for column <%s>, so using default %d",
+                                  columnName,
+                                  defaultValue));
           value = defaultValue;
         }
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read short value for column <%s>",
-                                    columnName),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not read short value for column <%s>",
+                                columnName),
+               e);
       }
     }
     return value;
@@ -459,10 +466,11 @@ final class MetadataResultSet
       }
       catch (final SQLException e)
       {
-        LOGGER.log(Level.WARNING,
-                   new StringFormat("Could not read string value for column <%s>",
-                                    columnName),
-                   e);
+        LOGGER
+          .log(Level.WARNING,
+               new StringFormat("Could not read string value for column <%s>",
+                                columnName),
+               e);
       }
     }
     return value;

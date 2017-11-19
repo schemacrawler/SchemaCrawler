@@ -38,7 +38,8 @@ import sf.util.StringFormat;
  * Table constraint type.
  */
 public enum TableConstraintType
-  implements ConstraintType
+  implements
+  ConstraintType
 {
 
  unknown("unknown"),

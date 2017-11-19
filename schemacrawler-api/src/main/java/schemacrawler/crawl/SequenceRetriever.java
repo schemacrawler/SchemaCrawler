@@ -116,8 +116,7 @@ final class SequenceRetriever
           .getString("SEQUENCE_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("SEQUENCE_SCHEMA"));
-        final String sequenceName = results
-        .getString("SEQUENCE_NAME");
+        final String sequenceName = results.getString("SEQUENCE_NAME");
         final BigInteger minimumValue = results.getBigInteger("MINIMUM_VALUE");
         final BigInteger maximumValue = results.getBigInteger("MAXIMUM_VALUE");
         final BigInteger increment = results.getBigInteger("INCREMENT");

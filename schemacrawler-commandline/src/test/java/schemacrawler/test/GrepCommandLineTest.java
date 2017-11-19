@@ -113,19 +113,17 @@ public class GrepCommandLineTest
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
-                                                                             "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
-                                                                             "-user=sa",
-                                                                             "-password=",
-                                                                             "-g=" + additionalProperties
-                                                                               .toString(),
-                                                                             "-infolevel=" + infoLevel,
-                                                                             "-command=" + schemaTextDetailType,
-                                                                             "-outputformat=" + outputFormat
-                                                                               .getFormat(),
-                                                                             "-outputfile=" + testOutputFile
-                                                                               .toString(),
-                                                                             "-noinfo", }));
+      final List<String> args = new ArrayList<>(Arrays
+        .asList(new String[] {
+                               "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
+                               "-user=sa",
+                               "-password=",
+                               "-g=" + additionalProperties.toString(),
+                               "-infolevel=" + infoLevel,
+                               "-command=" + schemaTextDetailType,
+                               "-outputformat=" + outputFormat.getFormat(),
+                               "-outputfile=" + testOutputFile.toString(),
+                               "-noinfo", }));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));

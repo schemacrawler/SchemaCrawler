@@ -61,7 +61,9 @@ public class LintExecutable
   }
 
   @Override
-  public void executeOn(final Catalog db, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog db,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Read lint options from the config

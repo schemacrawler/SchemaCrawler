@@ -513,7 +513,7 @@ public final class Identifiers
     {
       identifierQuoteString = "";
     }
-  
+
     return identifierQuoteString;
   }
 

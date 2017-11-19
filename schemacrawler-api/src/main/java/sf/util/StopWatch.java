@@ -168,10 +168,10 @@ public final class StopWatch
 
       for (final TaskInfo task: tasks)
       {
-        buffer.append(String
-          .format("-%5.1f%% - %s%n",
-                  calculatePercentage(task.getDuration(), totalDuration),
-                  task));
+        buffer.append(String.format("-%5.1f%% - %s%n",
+                                    calculatePercentage(task.getDuration(),
+                                                        totalDuration),
+                                    task));
       }
 
       return buffer.toString();

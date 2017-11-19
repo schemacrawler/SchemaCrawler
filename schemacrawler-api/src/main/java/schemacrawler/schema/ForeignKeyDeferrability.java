@@ -37,7 +37,8 @@ import sf.util.IdentifiedEnum;
  * The deferrability value for foreign keys.
  */
 public enum ForeignKeyDeferrability
-  implements IdentifiedEnum
+  implements
+  IdentifiedEnum
 {
 
  /**
@@ -47,11 +48,13 @@ public enum ForeignKeyDeferrability
  /**
   * Initially deferred.
   */
- initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred, "initially deferred"),
+ initiallyDeferred(DatabaseMetaData.importedKeyInitiallyDeferred,
+   "initially deferred"),
  /**
   * Initially immediate.
   */
- initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate, "initially immediate"),
+ initiallyImmediate(DatabaseMetaData.importedKeyInitiallyImmediate,
+   "initially immediate"),
  /**
   * Not deferrable.
   */

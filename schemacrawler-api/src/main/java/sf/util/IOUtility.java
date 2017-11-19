@@ -139,8 +139,7 @@ public final class IOUtility
     if (fileName != null)
     {
       ext = fileName.lastIndexOf('.') == -1? "": fileName
-        .substring(fileName.lastIndexOf('.') + 1,
-                   fileName.length());
+        .substring(fileName.lastIndexOf('.') + 1, fileName.length());
     }
     else
     {

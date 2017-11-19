@@ -53,7 +53,6 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   private static final long serialVersionUID = -4327208866052082457L;
 
   private final DatabaseObjectReference<D> parent;
-  private transient String fullName;
 
   AbstractDependantObject(final DatabaseObjectReference<D> parent,
                           final String name)
@@ -102,15 +101,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   @Override
   public String getFullName()
   {
-    buildFullName();
-    return fullName;
+    return buildFullName();
   }
 
   @Override
   public List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(parent.get().toUniqueLookupKey());
+    final List<String> lookupKey = new ArrayList<>(parent.get()
+      .toUniqueLookupKey());
     lookupKey.add(getName());
     return lookupKey;
   }
@@ -163,11 +162,11 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
     return parent.isPartialDatabaseObjectReference();
   }
 
-  private void buildFullName()
+  private String buildFullName()
   {
     // Do not cache the full name, since the object may not be
     // completely deserialized
-
+    final String fullName;
     final Identifiers identifiers = Identifiers.identifiers()
       .withIdentifierQuoteString("\"").build();
     if (parent != null)
@@ -178,6 +177,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
     {
       fullName = getName();
     }
+    return fullName;
   }
 
 }

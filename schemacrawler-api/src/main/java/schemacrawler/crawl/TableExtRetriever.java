@@ -109,10 +109,8 @@ final class TableExtRetriever
           .getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
-        final String tableName = results
-        .getString("TABLE_NAME");
-        final String columnName = results
-        .getString("COLUMN_NAME");
+        final String tableName = results.getString("TABLE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional column attributes: " + columnName);
 
@@ -194,8 +192,7 @@ final class TableExtRetriever
           .getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
-        final String tableName = results
-        .getString("TABLE_NAME");
+        final String tableName = results.getString("TABLE_NAME");
         LOGGER.log(Level.FINER,
                    "Retrieving additional table attributes: " + tableName);
 
@@ -265,10 +262,8 @@ final class TableExtRetriever
           .getString("INDEX_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("INDEX_SCHEMA"));
-        final String tableName = results
-        .getString("TABLE_NAME");
-        final String indexName = results
-        .getString("INDEX_NAME");
+        final String tableName = results.getString("TABLE_NAME");
+        final String indexName = results.getString("INDEX_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -301,8 +296,7 @@ final class TableExtRetriever
         }
 
         final MutableIndex index = indexOptional.get();
-        final String indexColumnName = results
-        .getString("COLUMN_NAME");
+        final String indexColumnName = results.getString("COLUMN_NAME");
 
         final Optional<MutableIndexColumn> indexColumnOptional = index
           .lookupColumn(indexColumnName);
@@ -375,10 +369,8 @@ final class TableExtRetriever
           .getString("INDEX_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("INDEX_SCHEMA"));
-        final String tableName = results
-        .getString("TABLE_NAME");
-        final String indexName = results
-        .getString("INDEX_NAME");
+        final String tableName = results.getString("TABLE_NAME");
+        final String indexName = results.getString("INDEX_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -468,10 +460,8 @@ final class TableExtRetriever
           .getString("PRIMARY_KEY_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("PRIMARY_KEY_SCHEMA"));
-        final String tableName = results
-        .getString("PRIMARY_KEY_TABLE_NAME");
-        final String pkName = results
-        .getString("PRIMARY_KEY_NAME");
+        final String tableName = results.getString("PRIMARY_KEY_TABLE_NAME");
+        final String pkName = results.getString("PRIMARY_KEY_NAME");
 
         final List<String> constraintLookupKey = Arrays
           .asList(catalogName, schemaName, tableName, pkName);
@@ -560,8 +550,7 @@ final class TableExtRetriever
           .getString("TABLE_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("TABLE_SCHEMA"));
-        final String tableName = results
-        .getString("TABLE_NAME");
+        final String tableName = results.getString("TABLE_NAME");
 
         final Optional<MutableTable> tableOptional = lookupTable(catalogName,
                                                                  schemaName,
@@ -647,8 +636,7 @@ final class TableExtRetriever
           .getString("TRIGGER_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("TRIGGER_SCHEMA"));
-        final String triggerName = results
-        .getString("TRIGGER_NAME");
+        final String triggerName = results.getString("TRIGGER_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving trigger <%s>", triggerName));
 

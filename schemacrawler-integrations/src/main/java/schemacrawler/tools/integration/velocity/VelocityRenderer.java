@@ -86,7 +86,8 @@ public final class VelocityRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final Connection connection,
+                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Set the file path, in case the template is a file template
@@ -138,10 +139,11 @@ public final class VelocityRenderer
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Reading Velocity template <%s>, with encoding <%s>",
-                                  templateLocation,
-                                  templateEncoding));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Reading Velocity template <%s>, with encoding <%s>",
+                              templateLocation,
+                              templateEncoding));
       final Template template = ve.getTemplate(templateLocation,
                                                templateEncoding);
       template.merge(context, writer);

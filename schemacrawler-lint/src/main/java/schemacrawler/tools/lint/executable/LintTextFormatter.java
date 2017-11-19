@@ -145,9 +145,8 @@ final class LintTextFormatter
         }
         else
         {
-          formattingHelper.writeRow("",
-                                    lint.getMessage(),
-                                    lint.getValueAsString());
+          formattingHelper
+            .writeRow("", lint.getMessage(), lint.getValueAsString());
         }
       }
     }

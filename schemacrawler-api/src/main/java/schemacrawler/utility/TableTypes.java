@@ -82,9 +82,8 @@ public final class TableTypes
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.WARNING,
-                 "Could not obtain table types from connection",
-                 e);
+      LOGGER
+        .log(Level.WARNING, "Could not obtain table types from connection", e);
     }
   }
 

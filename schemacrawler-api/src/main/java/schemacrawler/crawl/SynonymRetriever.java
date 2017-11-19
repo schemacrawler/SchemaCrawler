@@ -116,14 +116,13 @@ final class SynonymRetriever
           .getString("SYNONYM_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("SYNONYM_SCHEMA"));
-        final String synonymName = results
-        .getString("SYNONYM_NAME");
+        final String synonymName = results.getString("SYNONYM_NAME");
         final String referencedObjectCatalogName = results
-        .getString("REFERENCED_OBJECT_CATALOG");
+          .getString("REFERENCED_OBJECT_CATALOG");
         final String referencedObjectSchemaName = results
-        .getString("REFERENCED_OBJECT_SCHEMA");
+          .getString("REFERENCED_OBJECT_SCHEMA");
         final String referencedObjectName = results
-        .getString("REFERENCED_OBJECT_NAME");
+          .getString("REFERENCED_OBJECT_NAME");
 
         if (isBlank(referencedObjectName))
         {

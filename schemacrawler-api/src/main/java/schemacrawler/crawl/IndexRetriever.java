@@ -162,8 +162,7 @@ final class IndexRetriever
     // http://www.postgresql.org/message-id/200707231358.l6NDwlWh026230@wwwmaster.postgresql.org
     // #6253 -
     // http://www.postgresql.org/message-id/201110121403.p9CE3fsx039675@wwwmaster.postgresql.org
-    final String columnName = results
-    .getString("COLUMN_NAME");
+    final String columnName = results.getString("COLUMN_NAME");
     if (isBlank(columnName))
     {
       return;

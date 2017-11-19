@@ -103,7 +103,9 @@ public final class CommandChainExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     executeChain(catalog, connection, databaseSpecificOverrideOptions);
