@@ -81,17 +81,21 @@ public final class SchemaDotFormatter
    *        Options for text formatting of schema
    * @param outputOptions
    *        Options for text formatting of schema
+   * @param identifierQuoteString
+   *        TODO
    * @throws SchemaCrawlerException
    *         On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
                             final SchemaTextOptions options,
-                            final OutputOptions outputOptions)
+                            final OutputOptions outputOptions,
+                            final String identifierQuoteString)
     throws SchemaCrawlerException
   {
     super(options,
           schemaTextDetailType == SchemaTextDetailType.details,
-          outputOptions);
+          outputOptions,
+          identifierQuoteString);
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 

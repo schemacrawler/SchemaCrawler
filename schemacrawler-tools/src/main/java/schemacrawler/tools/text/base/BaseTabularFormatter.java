@@ -56,10 +56,14 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
   protected BaseTabularFormatter(final O options,
                                  final boolean printVerboseDatabaseInfo,
-                                 final OutputOptions outputOptions)
+                                 final OutputOptions outputOptions,
+                                 final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, printVerboseDatabaseInfo, outputOptions);
+    super(options,
+          printVerboseDatabaseInfo,
+          outputOptions,
+          identifierQuoteString);
   }
 
   /**

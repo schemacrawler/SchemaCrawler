@@ -54,6 +54,7 @@ public class LintExecutable
   public static final String COMMAND = "lint";
 
   private LintOptions lintOptions;
+  private String identifierQuoteString;
 
   public LintExecutable()
   {
@@ -68,6 +69,9 @@ public class LintExecutable
   {
     // Read lint options from the config
     lintOptions = getLintOptions();
+
+    identifierQuoteString = databaseSpecificOverrideOptions
+      .getIdentifierQuoteString();
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           getAdditionalConfiguration());
@@ -159,11 +163,15 @@ public class LintExecutable
       .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
-      formatter = new LintJsonFormatter(lintOptions, outputOptions);
+      formatter = new LintJsonFormatter(lintOptions,
+                                        outputOptions,
+                                        identifierQuoteString);
     }
     else
     {
-      formatter = new LintTextFormatter(lintOptions, outputOptions);
+      formatter = new LintTextFormatter(lintOptions,
+                                        outputOptions,
+                                        identifierQuoteString);
     }
 
     return formatter;

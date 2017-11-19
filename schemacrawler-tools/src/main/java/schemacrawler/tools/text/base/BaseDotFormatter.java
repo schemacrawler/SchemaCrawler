@@ -55,10 +55,14 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
 
   protected BaseDotFormatter(final O options,
                              final boolean printVerboseDatabaseInfo,
-                             final OutputOptions outputOptions)
+                             final OutputOptions outputOptions,
+                             final String identifierQuoteString)
     throws SchemaCrawlerException
   {
-    super(options, printVerboseDatabaseInfo, outputOptions);
+    super(options,
+          printVerboseDatabaseInfo,
+          outputOptions,
+          identifierQuoteString);
   }
 
   @Override
