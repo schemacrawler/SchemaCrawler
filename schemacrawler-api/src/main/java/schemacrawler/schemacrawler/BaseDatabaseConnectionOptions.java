@@ -204,9 +204,9 @@ abstract class BaseDatabaseConnectionOptions
       .extractTemplateVariables(connectionUrl);
     if (!unmatchedVariables.isEmpty())
     {
-      throw new IllegalArgumentException(String.format(
-                                                       "Insufficient parameters for database connection URL: missing %s",
-                                                       unmatchedVariables));
+      throw new IllegalArgumentException(String
+        .format("Insufficient parameters for database connection URL: missing %s",
+                unmatchedVariables));
     }
 
     return connectionUrl;
@@ -305,15 +305,14 @@ abstract class BaseDatabaseConnectionOptions
                                                 final String password)
     throws SQLException
   {
-    final List<String> skipProperties = Arrays
-      .asList("server",
-              "host",
-              "port",
-              "database",
-              "urlx",
-              "user",
-              "password",
-              "url");
+    final List<String> skipProperties = Arrays.asList("server",
+                                                      "host",
+                                                      "port",
+                                                      "database",
+                                                      "urlx",
+                                                      "user",
+                                                      "password",
+                                                      "url");
     final Driver jdbcDriver = getJdbcDriver(connectionUrl);
     final DriverPropertyInfo[] propertyInfo = jdbcDriver
       .getPropertyInfo(getConnectionUrl(), new Properties());
@@ -367,7 +366,8 @@ abstract class BaseDatabaseConnectionOptions
     catch (final SQLException e)
     {
       throw new SchemaCrawlerSQLException("Could not find a suitable JDBC driver for database connection URL, "
-                                          + getConnectionUrl(), e);
+                                          + getConnectionUrl(),
+                                          e);
     }
   }
 
@@ -380,12 +380,13 @@ abstract class BaseDatabaseConnectionOptions
     try
     {
       final DatabaseMetaData dbMetaData = connection.getMetaData();
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Connected to %n%s %s %nusing JDBC driver %n%s %s",
-                                  dbMetaData.getDatabaseProductName(),
-                                  dbMetaData.getDatabaseProductVersion(),
-                                  dbMetaData.getDriverName(),
-                                  dbMetaData.getDriverVersion()));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Connected to %n%s %s %nusing JDBC driver %n%s %s",
+                              dbMetaData.getDatabaseProductName(),
+                              dbMetaData.getDatabaseProductVersion(),
+                              dbMetaData.getDriverName(),
+                              dbMetaData.getDriverVersion()));
     }
     catch (final SQLException e)
     {

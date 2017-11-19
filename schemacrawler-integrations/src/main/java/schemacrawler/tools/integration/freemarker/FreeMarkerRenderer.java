@@ -72,7 +72,8 @@ public final class FreeMarkerRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final Connection connection,
+                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     String templateLocation = outputOptions.getOutputFormatValue();
@@ -84,9 +85,9 @@ public final class FreeMarkerRenderer
       templateLocation = templateFilePath.getName();
     }
 
-    System.setProperty(
-                       freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
-                       String.valueOf(freemarker.log.Logger.LIBRARY_JAVA));
+    System
+      .setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
+                   String.valueOf(freemarker.log.Logger.LIBRARY_JAVA));
     freemarker.log.Logger
       .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
 

@@ -113,8 +113,7 @@ final class ForeignKeyRetriever
       while (results.next())
       {
         // FOREIGN_KEY_CATALOG, FOREIGN_KEY_SCHEMA, FOREIGN_KEY_TABLE
-        final String fkName = results
-        .getString("FOREIGN_KEY_NAME");
+        final String fkName = results.getString("FOREIGN_KEY_NAME");
         LOGGER.log(Level.FINER,
                    new StringFormat("Retrieving foreign key definition <%s>",
                                     fkName));
@@ -191,19 +190,15 @@ final class ForeignKeyRetriever
         .getString("PKTABLE_CAT"));
       final String pkTableSchemaName = normalizeSchemaName(results
         .getString("PKTABLE_SCHEM"));
-      final String pkTableName = results
-      .getString("PKTABLE_NAME");
-      final String pkColumnName = results
-      .getString("PKCOLUMN_NAME");
+      final String pkTableName = results.getString("PKTABLE_NAME");
+      final String pkColumnName = results.getString("PKCOLUMN_NAME");
 
       final String fkTableCatalogName = normalizeCatalogName(results
         .getString("FKTABLE_CAT"));
       final String fkTableSchemaName = normalizeSchemaName(results
         .getString("FKTABLE_SCHEM"));
-      final String fkTableName = results
-      .getString("FKTABLE_NAME");
-      final String fkColumnName = results
-      .getString("FKCOLUMN_NAME");
+      final String fkTableName = results.getString("FKTABLE_NAME");
+      final String fkColumnName = results.getString("FKCOLUMN_NAME");
 
       final int keySequence = results.getInt("KEY_SEQ", 0);
       final ForeignKeyUpdateRule updateRule = results

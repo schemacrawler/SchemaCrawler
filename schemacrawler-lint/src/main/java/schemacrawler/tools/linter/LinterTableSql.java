@@ -50,8 +50,8 @@ public class LinterTableSql
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(LinterTableSql.class.getName());
-  
+    .getLogger(LinterTableSql.class.getName());
+
   private String message;
   private String sql;
 

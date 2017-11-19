@@ -99,10 +99,8 @@ final class RoutineExtRetriever
           .getString("ROUTINE_CATALOG"));
         final String schemaName = normalizeSchemaName(results
           .getString("ROUTINE_SCHEMA"));
-        final String routineName = results
-        .getString("ROUTINE_NAME");
-        final String specificName = results
-        .getString("SPECIFIC_NAME");
+        final String routineName = results.getString("ROUTINE_NAME");
+        final String specificName = results.getString("SPECIFIC_NAME");
 
         final Optional<MutableRoutine> routineOptional = lookupRoutine(catalogName,
                                                                        schemaName,

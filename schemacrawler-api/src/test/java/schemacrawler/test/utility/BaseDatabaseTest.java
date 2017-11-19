@@ -117,7 +117,7 @@ public abstract class BaseDatabaseTest
     throws SchemaCrawlerException
   {
     final UserCredentials userCredentials = new SingleUseUserCredentials("sa",
-                                                                        "");
+                                                                         "");
     final Map<String, String> map = new HashMap<>();
     map.put("url", TestDatabase.CONNECTION_STRING);
     final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,

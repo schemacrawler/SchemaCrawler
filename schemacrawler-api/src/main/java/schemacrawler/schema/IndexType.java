@@ -37,7 +37,8 @@ import sf.util.IdentifiedEnum;
  * An enumeration wrapper around index types.
  */
 public enum IndexType
-  implements IdentifiedEnum
+  implements
+  IdentifiedEnum
 {
 
  /**

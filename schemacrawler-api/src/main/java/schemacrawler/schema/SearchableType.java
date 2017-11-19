@@ -37,7 +37,8 @@ import sf.util.IdentifiedEnum;
  * An enumeration wrapper around JDBC procedure types.
  */
 public enum SearchableType
-  implements IdentifiedEnum
+  implements
+  IdentifiedEnum
 {
 
  /**
@@ -55,7 +56,8 @@ public enum SearchableType
  /**
   * Searchable except with where .. like.
   */
- predBasic(DatabaseMetaData.typePredBasic, "searchable except with where .. like"),
+ predBasic(DatabaseMetaData.typePredBasic,
+   "searchable except with where .. like"),
  /**
   * Searchable.
   */

@@ -103,12 +103,9 @@ final class RoutineRetriever
           .getString("FUNCTION_CAT"));
         final String schemaName = normalizeSchemaName(results
           .getString("FUNCTION_SCHEM"));
-        final String functionName = results
-        .getString("FUNCTION_NAME");
-        final String columnName = results
-        .getString("COLUMN_NAME");
-        final String specificName = results
-        .getString("SPECIFIC_NAME");
+        final String functionName = results.getString("FUNCTION_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
+        final String specificName = results.getString("SPECIFIC_NAME");
 
         final MutableFunctionColumn column = new MutableFunctionColumn(function,
                                                                        columnName);
@@ -204,8 +201,7 @@ final class RoutineRetriever
       while (results.next())
       {
         // "FUNCTION_CAT", "FUNCTION_SCHEM"
-        final String functionName = results
-        .getString("FUNCTION_NAME");
+        final String functionName = results.getString("FUNCTION_NAME");
         LOGGER.log(Level.FINE,
                    new StringFormat("Retrieving function: %s.%s",
                                     schema,
@@ -272,12 +268,9 @@ final class RoutineRetriever
           .getString("PROCEDURE_CAT"));
         final String schemaName = normalizeSchemaName(results
           .getString("PROCEDURE_SCHEM"));
-        final String procedureName = results
-        .getString("PROCEDURE_NAME");
-        final String columnName = results
-        .getString("COLUMN_NAME");
-        final String specificName = results
-        .getString("SPECIFIC_NAME");
+        final String procedureName = results.getString("PROCEDURE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
+        final String specificName = results.getString("SPECIFIC_NAME");
 
         final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
                                                                          columnName);
@@ -364,16 +357,13 @@ final class RoutineRetriever
     final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedures(catalogName,
-                     schemaName,
-                     "%"));)
+      .getProcedures(catalogName, schemaName, "%"));)
     {
       results.setDescription("retrieveProcedures");
       while (results.next())
       {
         // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
-        final String procedureName = results
-        .getString("PROCEDURE_NAME");
+        final String procedureName = results.getString("PROCEDURE_NAME");
         LOGGER.log(Level.FINE,
                    new StringFormat("Retrieving procedure: %s.%s",
                                     schema,

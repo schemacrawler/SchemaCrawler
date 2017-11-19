@@ -101,9 +101,11 @@ final class DatabaseInfoRetriever
   private static boolean isDatabasePropertyListMethod(final Method method)
   {
     final Class<?> returnType = method.getReturnType();
-    final boolean isDatabasePropertyListMethod = returnType
-      .equals(String.class) && method.getName()
-        .endsWith("s") && method.getParameterTypes().length == 0;
+    final boolean isDatabasePropertyListMethod = returnType.equals(String.class)
+                                                 && method.getName()
+                                                   .endsWith("s")
+                                                 && method
+                                                   .getParameterTypes().length == 0;
     return isDatabasePropertyListMethod;
   }
 
@@ -195,9 +197,10 @@ final class DatabaseInfoRetriever
         {
           if (LOGGER.isLoggable(Level.FINE))
           {
-            LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method <%s>",
-                                        method));
+            LOGGER
+              .log(Level.FINER,
+                   new StringFormat("Retrieving database property using method <%s>",
+                                    method));
           }
           final String value = (String) method.invoke(dbMetaData);
           final String[] list = value == null? new String[0]: value.split(",");
@@ -208,9 +211,10 @@ final class DatabaseInfoRetriever
         {
           if (LOGGER.isLoggable(Level.FINE))
           {
-            LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method <%s>",
-                                        method));
+            LOGGER
+              .log(Level.FINER,
+                   new StringFormat("Retrieving database property using method <%s>",
+                                    method));
           }
           final Object value = method.invoke(dbMetaData);
           dbProperties
@@ -220,38 +224,41 @@ final class DatabaseInfoRetriever
         {
           if (LOGGER.isLoggable(Level.FINE))
           {
-            LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method <%s>",
-                                        method));
+            LOGGER
+              .log(Level.FINER,
+                   new StringFormat("Retrieving database property using method <%s>",
+                                    method));
           }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = DatabaseUtility
             .readResultsVector(results);
-          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
-                                                         resultsList
-                                                           .toArray(new String[resultsList
-                                                             .size()])));
+          dbProperties.add(new ImmutableDatabaseProperty(method
+            .getName(), resultsList.toArray(new String[resultsList.size()])));
         }
         else if (isDatabasePropertyResultSetType(method))
         {
           if (LOGGER.isLoggable(Level.FINE))
           {
-            LOGGER.log(Level.FINER,
-                       new StringFormat("Retrieving database property using method <%s>",
-                                        method));
+            LOGGER
+              .log(Level.FINER,
+                   new StringFormat("Retrieving database property using method <%s>",
+                                    method));
           }
-          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
-                                                         method,
-                                                         ResultSet.TYPE_FORWARD_ONLY,
-                                                         "TYPE_FORWARD_ONLY"));
-          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
-                                                         method,
-                                                         ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                                         "TYPE_SCROLL_INSENSITIVE"));
-          dbProperties.add(retrieveResultSetTypeProperty(dbMetaData,
-                                                         method,
-                                                         ResultSet.TYPE_SCROLL_SENSITIVE,
-                                                         "TYPE_SCROLL_SENSITIVE"));
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_FORWARD_ONLY,
+                                               "TYPE_FORWARD_ONLY"));
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                               "TYPE_SCROLL_INSENSITIVE"));
+          dbProperties
+            .add(retrieveResultSetTypeProperty(dbMetaData,
+                                               method,
+                                               ResultSet.TYPE_SCROLL_SENSITIVE,
+                                               "TYPE_SCROLL_SENSITIVE"));
         }
       }
       catch (final IllegalAccessException | InvocationTargetException e)
@@ -488,9 +495,10 @@ final class DatabaseInfoRetriever
       .lookupSchema(schema.getFullName());
     if (!schemaOptional.isPresent())
     {
-      LOGGER.log(Level.INFO,
-                 new StringFormat("Cannot locate schema, so not retrieving data types for schema: %s",
-                                  schema));
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Cannot locate schema, so not retrieving data types for schema: %s",
+                              schema));
       return;
     }
 
@@ -502,10 +510,7 @@ final class DatabaseInfoRetriever
     final String schemaName = schema.getName();
 
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getUDTs(catalogName,
-               schemaName,
-               "%",
-               null));)
+      .getUDTs(catalogName, schemaName, "%", null));)
     {
       while (results.next())
       {

@@ -139,7 +139,9 @@ public class SortingTest
         final Column column = columns[i];
         assertEquals("Columns not "
                      + (sortAlphabetically? "alphabetically": "naturally")
-                     + " sorted", expectedValues[i], column.getName());
+                     + " sorted",
+                     expectedValues[i],
+                     column.getName());
       }
     }
   }
@@ -174,7 +176,9 @@ public class SortingTest
           final ForeignKey foreignKey = foreignKeys[i];
           assertEquals("Foreign keys not "
                        + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted", expectedValues[i], foreignKey.getName());
+                       + " sorted",
+                       expectedValues[i],
+                       foreignKey.getName());
         }
       }
     }

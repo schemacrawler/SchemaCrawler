@@ -62,7 +62,9 @@ public final class SchemaCrawlerExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection, DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     final Commands commands = new Commands(getCommand());
