@@ -101,7 +101,8 @@ public class OfflineSnapshotExecutable
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(Catalog catalog, Connection connection)
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
     throws Exception
   {
     executeOn(catalog, connection, new DatabaseSpecificOverrideOptions());
@@ -110,7 +111,7 @@ public class OfflineSnapshotExecutable
   @Override
   public void executeOn(final Catalog catalog,
                         final Connection connection,
-                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     loadOfflineSnapshotOptions();
