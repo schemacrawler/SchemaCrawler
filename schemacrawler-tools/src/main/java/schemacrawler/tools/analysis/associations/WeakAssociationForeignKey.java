@@ -130,12 +130,6 @@ public class WeakAssociationForeignKey
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return Arrays.asList(getName());
-  }
-
-  @Override
   public String getName()
   {
     return name;
@@ -177,6 +171,12 @@ public class WeakAssociationForeignKey
   public String toString()
   {
     return columnReferences.toString();
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return Arrays.asList(getName());
   }
 
   void add(final WeakAssociation weakAssociation)

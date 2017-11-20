@@ -107,12 +107,6 @@ abstract class AbstractNamedObject
     return getName();
   }
 
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return new ArrayList<>(Arrays.asList(name));
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -138,6 +132,12 @@ abstract class AbstractNamedObject
   public final String toString()
   {
     return getFullName();
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return new ArrayList<>(Arrays.asList(name));
   }
 
 }

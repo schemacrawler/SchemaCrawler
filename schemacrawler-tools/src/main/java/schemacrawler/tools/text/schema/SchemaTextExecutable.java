@@ -83,8 +83,7 @@ public final class SchemaTextExecutable
     }
 
     identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection,
-                                   databaseSpecificOverrideOptions);
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 

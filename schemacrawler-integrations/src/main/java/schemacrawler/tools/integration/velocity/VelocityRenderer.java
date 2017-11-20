@@ -87,7 +87,7 @@ public final class VelocityRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection,
-                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Set the file path, in case the template is a file template

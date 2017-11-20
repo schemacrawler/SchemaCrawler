@@ -185,12 +185,6 @@ public final class SchemaReference
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
-  }
-
-  @Override
   public String getName()
   {
     return schemaName;
@@ -276,6 +270,12 @@ public final class SchemaReference
   public String toString()
   {
     return getFullName();
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return new ArrayList<>(Arrays.asList(catalogName, schemaName));
   }
 
   private void buildFullName()

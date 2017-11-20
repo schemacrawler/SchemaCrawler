@@ -45,9 +45,9 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
 
