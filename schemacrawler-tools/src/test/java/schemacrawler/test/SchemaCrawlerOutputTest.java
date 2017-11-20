@@ -62,6 +62,7 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.utility.IdentifierQuotingStrategy;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerOutputTest
@@ -78,6 +79,7 @@ public class SchemaCrawlerOutputTest
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
   private static final String NO_SCHEMA_COLORS_OUTPUT = "no_schema_colors_output/";
+  private static final String IDENTIFIER_QUOTING_OUTPUT = "identifier_quoting_output/";
 
   @Test
   public void compareCompositeOutput()
@@ -223,6 +225,62 @@ public class SchemaCrawlerOutputTest
         .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
                               testOutputFile,
                               outputFormat.getFormat()));
+    }
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void compareIdentifierQuotingOutput()
+    throws Exception
+  {
+    clean(IDENTIFIER_QUOTING_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    textOptions.setHideRemarks(true);
+    textOptions.setNoSchemaCrawlerInfo(true);
+    textOptions.setShowDatabaseInfo(false);
+    textOptions.setShowJdbcDriverInfo(false);
+
+    for (final IdentifierQuotingStrategy identifierQuotingStrategy: IdentifierQuotingStrategy
+      .values())
+    {
+      final OutputFormat outputFormat = TextOutputFormat.text;
+      textOptions.setIdentifierQuotingStrategy(identifierQuotingStrategy);
+
+      final String referenceFile = "schema_" + identifierQuotingStrategy.name()
+                                   + "." + outputFormat.getFormat();
+
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, outputFormat.getFormat());
+
+      final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                            testOutputFile);
+
+      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+      schemaCrawlerOptions
+        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+      schemaCrawlerOptions
+        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
+      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
+      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+        .name());
+      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      executable.setOutputOptions(outputOptions);
+      executable
+        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+          .toConfig());
+      executable.execute(getConnection());
+
+      failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
+                                    testOutputFile,
+                                    outputFormat.getFormat()));
     }
     if (failures.size() > 0)
     {

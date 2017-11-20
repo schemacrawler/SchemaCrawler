@@ -266,7 +266,7 @@ public final class Identifiers
         final DatabaseMetaData metaData = connection.getMetaData();
         identifierQuoteString = metaData.getIdentifierQuoteString();
       }
-      catch (SQLException e)
+      catch (final SQLException e)
       {
         // Ignore
       }
@@ -411,44 +411,15 @@ public final class Identifiers
 
   public String quoteFullName(final DatabaseObject databaseObject)
   {
-    if (databaseObject == null)
-    {
-      return "";
-    }
-
-    final Schema schema = databaseObject.getSchema();
-    final String name = databaseObject.getName();
     final StringBuilder buffer = new StringBuilder(512);
-    if (schema != null)
-    {
-      final String schemaFullName = quoteFullName(schema);
-      if (!isBlank(schemaFullName))
-      {
-        buffer.append(schemaFullName).append('.');
-      }
-    }
-    if (!isBlank(name))
-    {
-      buffer.append(quoteName(name));
-    }
+    quoteFullName(buffer, databaseObject);
     return buffer.toString();
   }
 
   public String quoteFullName(final DatabaseObject parent, final String name)
   {
     final StringBuilder buffer = new StringBuilder(512);
-    if (parent != null)
-    {
-      final String parentFullName = quoteFullName(parent);
-      if (!isBlank(parentFullName))
-      {
-        buffer.append(parentFullName).append('.');
-      }
-    }
-    if (!isBlank(name))
-    {
-      buffer.append(quoteName(name));
-    }
+    quoteFullName(buffer, parent, name);
     return buffer.toString();
   }
 
@@ -464,31 +435,8 @@ public final class Identifiers
 
   public String quoteFullName(final Schema schema)
   {
-    if (schema == null)
-    {
-      return "";
-    }
-
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
     final StringBuilder buffer = new StringBuilder(512);
-
-    final boolean hasCatalogName = !isBlank(catalogName);
-    final boolean hasSchemaName = !isBlank(schemaName);
-
-    if (hasCatalogName)
-    {
-      buffer.append(quoteName(catalogName));
-    }
-    if (hasCatalogName && hasSchemaName)
-    {
-      buffer.append(".");
-    }
-    if (hasSchemaName)
-    {
-      buffer.append(quoteName(schemaName));
-    }
-
+    quoteFullName(buffer, schema);
     return buffer.toString();
   }
 
@@ -508,7 +456,10 @@ public final class Identifiers
     {
       return "";
     }
-    return quoteName(namedObject.getName());
+
+    final StringBuilder buffer = new StringBuilder(512);
+    quoteName(buffer, namedObject.getName());
+    return buffer.toString();
   }
 
   /**
@@ -523,21 +474,9 @@ public final class Identifiers
    */
   public String quoteName(final String name)
   {
-    if (isBlank(name))
-    {
-      return name;
-    }
-
-    final String quotedName;
-    if (isToBeQuoted(name))
-    {
-      quotedName = identifierQuoteString + name + identifierQuoteString;
-    }
-    else
-    {
-      quotedName = name;
-    }
-    return quotedName;
+    final StringBuilder buffer = new StringBuilder(512);
+    quoteName(buffer, name);
+    return buffer.toString();
   }
 
   public <P extends DatabaseObject> String quoteShortName(final DependantObject<P> dependantObject)
@@ -553,11 +492,110 @@ public final class Identifiers
       final String parentName = parent.getName();
       if (!isBlank(parentName))
       {
-        buffer.append(quoteName(parentName)).append('.');
+        quoteName(buffer, parentName);
+        buffer.append('.');
       }
     }
-    buffer.append(quoteName(dependantObject.getName()));
+    quoteName(buffer, dependantObject.getName());
+
     return buffer.toString();
+  }
+
+  private void quoteFullName(final StringBuilder buffer,
+                             final DatabaseObject databaseObject)
+  {
+    if (buffer == null)
+    {
+      throw new IllegalArgumentException("No buffer provided");
+    }
+    if (databaseObject == null)
+    {
+      return;
+    }
+
+    final Schema schema = databaseObject.getSchema();
+    final String name = databaseObject.getName();
+    quoteFullName(buffer, schema);
+    if (!isBlank(name))
+    {
+      if (buffer.length() > 0)
+      {
+        buffer.append('.');
+      }
+      quoteName(buffer, name);
+    }
+  }
+
+  private void quoteFullName(final StringBuilder buffer,
+                             final DatabaseObject parent,
+                             final String name)
+  {
+    if (buffer == null)
+    {
+      throw new IllegalArgumentException("No buffer provided");
+    }
+    quoteFullName(buffer, parent);
+    if (!isBlank(name))
+    {
+      if (buffer.length() > 0)
+      {
+        buffer.append('.');
+      }
+      quoteName(buffer, name);
+    }
+  }
+
+  private void quoteFullName(final StringBuilder buffer, final Schema schema)
+  {
+    if (buffer == null)
+    {
+      throw new IllegalArgumentException("No buffer provided");
+    }
+    if (schema == null)
+    {
+      return;
+    }
+
+    final String catalogName = schema.getCatalogName();
+    final String schemaName = schema.getName();
+
+    final boolean hasCatalogName = !isBlank(catalogName);
+    final boolean hasSchemaName = !isBlank(schemaName);
+
+    if (hasCatalogName)
+    {
+      quoteName(buffer, catalogName);
+    }
+    if (hasCatalogName && hasSchemaName)
+    {
+      buffer.append(".");
+    }
+    if (hasSchemaName)
+    {
+      quoteName(buffer, schemaName);
+    }
+  }
+
+  private void quoteName(final StringBuilder buffer, final String name)
+  {
+    if (buffer == null)
+    {
+      throw new IllegalArgumentException("No buffer provided");
+    }
+    if (isBlank(name))
+    {
+      return;
+    }
+
+    if (isToBeQuoted(name))
+    {
+      buffer.append(identifierQuoteString).append(name)
+        .append(identifierQuoteString);
+    }
+    else
+    {
+      buffer.append(name);
+    }
   }
 
 }
