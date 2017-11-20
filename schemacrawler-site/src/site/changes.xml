@@ -5,6 +5,11 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
+      <release version="14.17.02" date="2017-11-20" description="Miscellaneous fixes">
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Fix for Maven archetype.
+      ]]></action>                           
+     </release>  
      <release version="14.17.01" date="2017-11-20" description="Identifier quoting strategy">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Database objects getName() returns unquoted names, and getFullName() returns a name quoted using
