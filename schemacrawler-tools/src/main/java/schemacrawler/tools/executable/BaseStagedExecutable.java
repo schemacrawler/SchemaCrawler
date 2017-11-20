@@ -99,7 +99,8 @@ public abstract class BaseStagedExecutable
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(Catalog catalog, Connection connection)
+  public final void executeOn(final Catalog catalog,
+                              final Connection connection)
     throws Exception
   {
     requireNonNull(catalog, "No catalog provided");

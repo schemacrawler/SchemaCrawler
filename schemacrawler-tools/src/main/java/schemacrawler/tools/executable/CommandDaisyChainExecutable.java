@@ -53,7 +53,7 @@ public final class CommandDaisyChainExecutable
   @Override
   public void executeOn(final Catalog catalog,
                         final Connection connection,
-                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // Commands are processed at execution time. That is, after

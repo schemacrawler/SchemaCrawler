@@ -45,7 +45,7 @@ public interface StagedExecutable
   /**
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
-   * 
+   *
    * @param connection
    *        Database connection
    * @throws Exception
@@ -57,7 +57,7 @@ public interface StagedExecutable
   /**
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
-   * 
+   *
    * @param connection
    *        Database connection
    * @param databaseSpecificOverrideOptions

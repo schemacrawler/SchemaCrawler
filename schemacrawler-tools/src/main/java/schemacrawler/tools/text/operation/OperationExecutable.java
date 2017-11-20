@@ -93,8 +93,7 @@ public final class OperationExecutable
     }
 
     identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection,
-                                   databaseSpecificOverrideOptions);
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();

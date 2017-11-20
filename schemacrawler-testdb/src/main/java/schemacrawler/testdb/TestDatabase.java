@@ -262,9 +262,8 @@ public class TestDatabase
                                                      "post_schema",
                                                      "data", })
         {
-          final String scriptResource = String.format("/testdatabase/%s.%s.sql",
-                                                      schema,
-                                                      scriptType);
+          final String scriptResource = String
+            .format("/testdatabase/%s.%s.sql", schema, scriptType);
           final Reader reader = new InputStreamReader(TestDatabase.class
             .getResourceAsStream(scriptResource), UTF_8);
 

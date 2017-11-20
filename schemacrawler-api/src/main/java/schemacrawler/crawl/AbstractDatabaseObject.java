@@ -142,15 +142,6 @@ abstract class AbstractDatabaseObject
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
-    lookupKey.add(getName());
-    return lookupKey;
-  }
-
-  @Override
   public final Schema getSchema()
   {
     return schema;
@@ -167,6 +158,15 @@ abstract class AbstractDatabaseObject
     result = prime * result + (schema == null? 0: schema.hashCode());
     result = prime * result + super.hashCode();
     return result;
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(schema.toUniqueLookupKey());
+    lookupKey.add(getName());
+    return lookupKey;
   }
 
 }

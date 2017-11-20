@@ -70,15 +70,6 @@ abstract class MutableRoutine
     return definition.toString();
   }
 
-  @Override
-  public List<String> toUniqueLookupKey()
-  {
-    // Make a defensive copy
-    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
-    lookupKey.add(specificName);
-    return lookupKey;
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -107,6 +98,15 @@ abstract class MutableRoutine
   public boolean hasDefinition()
   {
     return definition.length() > 0;
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
+    lookupKey.add(specificName);
+    return lookupKey;
   }
 
   void appendDefinition(final String definition)

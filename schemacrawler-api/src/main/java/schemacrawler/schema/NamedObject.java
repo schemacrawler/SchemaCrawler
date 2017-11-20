@@ -49,15 +49,15 @@ public interface NamedObject
   String getFullName();
 
   /**
-   * A value guaranteed to be unique in the database for this object.
-   */
-  List<String> toUniqueLookupKey();
-
-  /**
    * Getter for name of object.
    *
    * @return Name of the object
    */
   String getName();
+
+  /**
+   * A value guaranteed to be unique in the database for this object.
+   */
+  List<String> toUniqueLookupKey();
 
 }

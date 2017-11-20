@@ -73,7 +73,7 @@ public final class FreeMarkerRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection,
-                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     String templateLocation = outputOptions.getOutputFormatValue();

@@ -118,12 +118,6 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
-  {
-    return catalog.toUniqueLookupKey();
-  }
-
-  @Override
   public String getName()
   {
     return catalog.getName();
@@ -293,6 +287,12 @@ public abstract class BaseCatalogDecorator
   public void setAttribute(final String name, final Object value)
   {
     catalog.setAttribute(name, value);
+  }
+
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    return catalog.toUniqueLookupKey();
   }
 
 }

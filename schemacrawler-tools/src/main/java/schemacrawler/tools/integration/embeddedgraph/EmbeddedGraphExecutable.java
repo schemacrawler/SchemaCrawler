@@ -68,7 +68,7 @@ public class EmbeddedGraphExecutable
   @Override
   public void executeOn(final Catalog catalog,
                         final Connection connection,
-                        DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");

@@ -67,7 +67,7 @@ public final class ThymeleafRenderer
   @Override
   public final void executeOn(final Catalog catalog,
                               final Connection connection,
-                              DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     final Context ctx = new Context();
