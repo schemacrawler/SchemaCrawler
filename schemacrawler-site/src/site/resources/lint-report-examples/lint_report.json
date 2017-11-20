@@ -224,7 +224,7 @@
       }
     ]},
   "schemaCrawlerInfo": {
-    "productVersion": "14.16.04",
+    "productVersion": "14.17.01",
     "productName": "SchemaCrawler"
   },
   "jdbcDriverInfo": {
