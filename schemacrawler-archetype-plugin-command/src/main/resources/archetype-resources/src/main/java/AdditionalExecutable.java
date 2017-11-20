@@ -9,6 +9,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import sf.util.StringFormat;
 
@@ -27,7 +28,9 @@ public class AdditionalExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void executeOn(final Catalog catalog,
+                        final Connection connection,
+                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception
   {
     // TODO: Possibly process command-line options, which are available
@@ -41,8 +44,7 @@ public class AdditionalExecutable
       {
         // SchemaCrawler will control output of log messages if you use
         // JDK logging
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Processing <%s>", schema));
+        LOGGER.log(Level.INFO, new StringFormat("Processing <%s>", schema));
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);
