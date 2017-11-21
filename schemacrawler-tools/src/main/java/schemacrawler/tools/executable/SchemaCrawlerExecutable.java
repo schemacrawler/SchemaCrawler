@@ -117,7 +117,7 @@ public final class SchemaCrawlerExecutable
     }
 
     executable.setAdditionalConfiguration(additionalConfiguration);
-    executable.setIdentifierQuoteString(getIdentifierQuoteString());
+    executable.setIdentifierQuoteString(identifierQuoteString);
 
     executable.executeOn(catalog, connection);
   }

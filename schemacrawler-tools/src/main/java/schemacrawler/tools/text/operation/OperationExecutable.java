@@ -110,7 +110,7 @@ public final class OperationExecutable
         // to be quoted in SQL queries if they contain spaces in the
         // name
         final Identifiers identifiers = Identifiers.identifiers()
-          .withIdentifierQuoteString(getIdentifierQuoteString()).build();
+          .withIdentifierQuoteString(identifierQuoteString).build();
 
         for (final Table table: getSortedTables(catalog))
         {
@@ -180,14 +180,14 @@ public final class OperationExecutable
       formatter = new DataJsonFormatter(operation,
                                         operationOptions,
                                         outputOptions,
-                                        getIdentifierQuoteString());
+                                        identifierQuoteString);
     }
     else
     {
       formatter = new DataTextFormatter(operation,
                                         operationOptions,
                                         outputOptions,
-                                        getIdentifierQuoteString());
+                                        identifierQuoteString);
     }
     return formatter;
   }
