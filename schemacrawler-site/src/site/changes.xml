@@ -5,13 +5,18 @@
     <author email="sualeh@hotmail.com">Sualeh Fatehi</author>
   </properties>
   <body>
-      <release version="14.17.03" date="2017-11-20" description="Miscellaneous fixes">
-      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
-        Fix for broken API call in Maven archetype.
-      ]]></action>  
-      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
-        Update to Apache Velocity example to quote database object names.
-      ]]></action>                                 
+      <release version="14.17.03" date="2017-11-21" description="Miscellaneous fixes">
+        <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+          Fixing a regression with SQLite databases created with double-quoted identifiers.
+        ]]></action>                                
+     </release>  
+      <release version="14.17.02" date="2017-11-20" description="Miscellaneous fixes">
+        <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+          Fix for broken API call in Maven archetype.
+        ]]></action>  
+        <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+          Update to Apache Velocity example to quote database object names.
+        ]]></action>                                 
      </release>  
      <release version="14.17.01" date="2017-11-19" description="Identifier quoting strategy">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
