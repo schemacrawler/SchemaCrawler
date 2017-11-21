@@ -51,6 +51,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseExecutable;
@@ -59,7 +60,6 @@ import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.Identifiers;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -76,7 +76,6 @@ public class OfflineSnapshotExecutable
     .getLogger(OfflineSnapshotExecutable.class.getName());
 
   private OutputOptions inputOptions;
-  private String identifierQuoteString;
 
   public OfflineSnapshotExecutable(final String command)
   {
@@ -94,8 +93,8 @@ public class OfflineSnapshotExecutable
     inputOptions.setCompressedInputFile(((OfflineConnection) connection)
       .getOfflineDatabasePath());
 
-    identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
+    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
+                                                          databaseSpecificOverrideOptions);
 
     final Catalog catalog = loadCatalog();
 
@@ -128,8 +127,8 @@ public class OfflineSnapshotExecutable
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setDatabaseSpecificOptions(databaseSpecificOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
-    executable.setIdentifierQuoteString(identifierQuoteString);
     executable.setOutputOptions(outputOptions);
     executable.executeOn(catalog, connection);
   }

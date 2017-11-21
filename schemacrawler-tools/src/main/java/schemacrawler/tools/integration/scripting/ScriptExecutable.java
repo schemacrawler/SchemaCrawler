@@ -138,8 +138,8 @@ public final class ScriptExecutable
 
     final CommandChainExecutable chain = new CommandChainExecutable();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    chain.setDatabaseSpecificOptions(databaseSpecificOptions);
     chain.setAdditionalConfiguration(additionalConfiguration);
-    chain.setIdentifierQuoteString(identifierQuoteString);
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     try (final Reader reader = outputOptions.openNewInputReader();

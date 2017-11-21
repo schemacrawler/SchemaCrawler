@@ -155,6 +155,9 @@ public class LintExecutable
   {
     final LintTraversalHandler formatter;
 
+    final String identifierQuoteString = databaseSpecificOptions
+        .getIdentifierQuoteString();
+    
     final TextOutputFormat outputFormat = TextOutputFormat
       .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)

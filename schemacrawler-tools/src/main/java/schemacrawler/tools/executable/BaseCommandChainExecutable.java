@@ -85,7 +85,7 @@ abstract class BaseCommandChainExecutable
       if (executable instanceof BaseStagedExecutable)
       {
         final BaseStagedExecutable stagedExecutable = (BaseStagedExecutable) executable;
-        stagedExecutable.setIdentifierQuoteString(identifierQuoteString);
+        executable.setDatabaseSpecificOptions(databaseSpecificOptions);
         stagedExecutable.executeOn(catalog, connection);
       }
     }

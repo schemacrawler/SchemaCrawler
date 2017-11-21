@@ -157,6 +157,8 @@ public final class GraphExecutable
     final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
+    final String identifierQuoteString = databaseSpecificOptions
+      .getIdentifierQuoteString();
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
                                        outputOptions,

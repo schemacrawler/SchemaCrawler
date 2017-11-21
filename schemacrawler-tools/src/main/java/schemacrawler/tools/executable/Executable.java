@@ -31,6 +31,7 @@ package schemacrawler.tools.executable;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -75,5 +76,9 @@ public interface Executable
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
+  DatabaseSpecificOptions getDatabaseSpecificOptions();
+
+  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
 
 }

@@ -124,6 +124,8 @@ public final class SchemaTextExecutable
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;
 
+    final String identifierQuoteString = databaseSpecificOptions
+      .getIdentifierQuoteString();
     final TextOutputFormat outputFormat = TextOutputFormat
       .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)

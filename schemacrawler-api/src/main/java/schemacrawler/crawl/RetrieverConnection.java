@@ -37,6 +37,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -58,51 +59,14 @@ final class RetrieverConnection
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(RetrieverConnection.class.getName());
 
-  private static boolean lookupSupportsCatalogs(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                                final DatabaseMetaData metaData)
-    throws SQLException
-  {
-    final boolean supportsCatalogs;
-    if (databaseSpecificOverrideOptions != null
-        && databaseSpecificOverrideOptions.hasOverrideForSupportsCatalogs())
-    {
-      supportsCatalogs = databaseSpecificOverrideOptions.isSupportsCatalogs();
-    }
-    else
-    {
-      supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
-    }
-    return supportsCatalogs;
-  }
-
-  private static boolean lookupSupportsSchemas(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
-                                               final DatabaseMetaData metaData)
-    throws SQLException
-  {
-    final boolean supportsSchemas;
-    if (databaseSpecificOverrideOptions != null
-        && databaseSpecificOverrideOptions.hasOverrideForSupportsSchemas())
-    {
-      supportsSchemas = databaseSpecificOverrideOptions.isSupportsSchemas();
-    }
-    else
-    {
-      supportsSchemas = metaData.supportsSchemasInTableDefinitions();
-    }
-
-    return supportsSchemas;
-  }
-
   private final Connection connection;
   private final DatabaseMetaData metaData;
-  private final boolean supportsCatalogs;
-  private final boolean supportsSchemas;
+  private final DatabaseSpecificOptions databaseSpecificOptions;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final MetadataRetrievalStrategy pkRetrievalStrategy;
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
-  private final Identifiers identifiers;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
@@ -129,19 +93,9 @@ final class RetrieverConnection
     informationSchemaViews = databaseSpecificOverrideOptions
       .getInformationSchemaViews();
 
-    supportsCatalogs = lookupSupportsCatalogs(databaseSpecificOverrideOptions,
-                                              metaData);
-    LOGGER
-      .log(Level.CONFIG,
-           new StringFormat("Database %s catalogs",
-                            supportsCatalogs? "supports": "does not support"));
-
-    supportsSchemas = lookupSupportsSchemas(databaseSpecificOverrideOptions,
-                                            metaData);
-    LOGGER
-      .log(Level.CONFIG,
-           new StringFormat("Database %s schemas",
-                            supportsSchemas? "supports": "does not support"));
+    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
+                                                          databaseSpecificOverrideOptions);
+    LOGGER.log(Level.CONFIG, new StringFormat("%s", databaseSpecificOptions));
 
     tableRetrievalStrategy = databaseSpecificOverrideOptions
       .getTableRetrievalStrategy();
@@ -153,14 +107,6 @@ final class RetrieverConnection
       .getIndexRetrievalStrategy();
     fkRetrievalStrategy = databaseSpecificOverrideOptions
       .getForeignKeyRetrievalStrategy();
-
-    final String identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Database identifier quote string is <%s>",
-                                identifierQuoteString));
-    identifiers = Identifiers.identifiers().withConnection(connection)
-      .withIdentifierQuoteString(identifierQuoteString).build();
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
@@ -197,7 +143,7 @@ final class RetrieverConnection
 
   Identifiers getIdentifiers()
   {
-    return identifiers;
+    return databaseSpecificOptions.getIdentifiers();
   }
 
   /**
@@ -237,12 +183,12 @@ final class RetrieverConnection
 
   boolean isSupportsCatalogs()
   {
-    return supportsCatalogs;
+    return databaseSpecificOptions.isSupportsCatalogs();
   }
 
   boolean isSupportsSchemas()
   {
-    return supportsSchemas;
+    return databaseSpecificOptions.isSupportsSchemas();
   }
 
 }

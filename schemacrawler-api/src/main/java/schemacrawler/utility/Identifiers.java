@@ -48,7 +48,6 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -181,6 +180,26 @@ public final class Identifiers
     }
 
     /**
+     * Tries to use the connection, but does not throw any exceptions.
+     *
+     * @see withConnection(Connection connection)
+     * @param connection
+     *        Live database connection
+     */
+    public Builder withConnectionIfPossible(final Connection connection)
+    {
+      try
+      {
+        withConnection(connection);
+      }
+      catch (NullPointerException | SQLException e)
+      {
+        // Ignore
+      }
+      return this;
+    }
+
+    /**
      * Uses the string used to quote database object identifiers as
      * provided.
      *
@@ -243,41 +262,6 @@ public final class Identifiers
   public static Builder identifiers()
   {
     return new Builder();
-  }
-
-  public static String lookupIdentifierQuoteString(final Connection connection,
-                                                   final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-    throws SQLException
-  {
-    // Default to SQL standard default
-    String identifierQuoteString = "\"";
-
-    if (databaseSpecificOverrideOptions != null
-        && databaseSpecificOverrideOptions
-          .hasOverrideForIdentifierQuoteString())
-    {
-      identifierQuoteString = databaseSpecificOverrideOptions
-        .getIdentifierQuoteString();
-    }
-    else if (connection != null)
-    {
-      try
-      {
-        final DatabaseMetaData metaData = connection.getMetaData();
-        identifierQuoteString = metaData.getIdentifierQuoteString();
-      }
-      catch (final SQLException e)
-      {
-        // Ignore
-      }
-    }
-
-    if (isBlank(identifierQuoteString))
-    {
-      identifierQuoteString = "";
-    }
-
-    return identifierQuoteString;
   }
 
   /**
