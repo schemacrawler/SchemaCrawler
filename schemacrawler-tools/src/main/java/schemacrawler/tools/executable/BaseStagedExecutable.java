@@ -55,7 +55,7 @@ public abstract class BaseStagedExecutable
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseStagedExecutable.class.getName());
 
-  private String identifierQuoteString;
+  protected String identifierQuoteString;
 
   protected BaseStagedExecutable(final String command)
   {
@@ -101,11 +101,6 @@ public abstract class BaseStagedExecutable
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     executeOn(catalog, connection);
-  }
-
-  protected final String getIdentifierQuoteString()
-  {
-    return identifierQuoteString;
   }
 
   public final void setIdentifierQuoteString(String identifierQuoteString)

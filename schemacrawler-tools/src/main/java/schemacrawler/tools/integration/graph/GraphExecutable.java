@@ -160,7 +160,7 @@ public final class GraphExecutable
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
                                        outputOptions,
-                                       getIdentifierQuoteString());
+                                       identifierQuoteString);
 
     return formatter;
   }

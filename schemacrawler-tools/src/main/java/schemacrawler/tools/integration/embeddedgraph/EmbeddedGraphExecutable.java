@@ -75,7 +75,7 @@ public class EmbeddedGraphExecutable
     final CommandChainExecutable chain = new CommandChainExecutable();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
     chain.setAdditionalConfiguration(additionalConfiguration);
-    chain.setIdentifierQuoteString(getIdentifierQuoteString());
+    chain.setIdentifierQuoteString(identifierQuoteString);
 
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
     chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);

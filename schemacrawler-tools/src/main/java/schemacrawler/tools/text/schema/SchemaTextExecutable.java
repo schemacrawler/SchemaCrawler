@@ -131,21 +131,21 @@ public final class SchemaTextExecutable
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          getIdentifierQuoteString());
+                                          identifierQuoteString);
     }
     else if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          getIdentifierQuoteString());
+                                          identifierQuoteString);
     }
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          getIdentifierQuoteString());
+                                          identifierQuoteString);
     }
 
     return formatter;

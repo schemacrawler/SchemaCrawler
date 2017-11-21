@@ -161,13 +161,13 @@ public class LintExecutable
     {
       formatter = new LintJsonFormatter(lintOptions,
                                         outputOptions,
-                                        getIdentifierQuoteString());
+                                        identifierQuoteString);
     }
     else
     {
       formatter = new LintTextFormatter(lintOptions,
                                         outputOptions,
-                                        getIdentifierQuoteString());
+                                        identifierQuoteString);
     }
 
     return formatter;
