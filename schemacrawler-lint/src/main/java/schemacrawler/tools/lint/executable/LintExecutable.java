@@ -37,7 +37,6 @@ import java.util.List;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.lint.LintDispatch;
@@ -45,7 +44,6 @@ import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 public class LintExecutable
@@ -62,8 +60,7 @@ public class LintExecutable
   }
 
   @Override
-  public void executeOn(final Catalog db,
-                        final Connection connection)
+  public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
     // Read lint options from the config
@@ -156,8 +153,8 @@ public class LintExecutable
     final LintTraversalHandler formatter;
 
     final String identifierQuoteString = databaseSpecificOptions
-        .getIdentifierQuoteString();
-    
+      .getIdentifierQuoteString();
+
     final TextOutputFormat outputFormat = TextOutputFormat
       .valueOfFromString(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
