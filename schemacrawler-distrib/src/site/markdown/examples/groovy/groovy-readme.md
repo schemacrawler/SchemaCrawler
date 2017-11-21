@@ -6,7 +6,7 @@ example shows how to script with Groovy.
 
 ## How to Setup
 1. Make sure that java is on your PATH
-2. Start a command shell in the `ivy` directory 
+2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd groovy` (or `download.sh groovy` on Unix) to
    install Groovy scripting support
 
