@@ -68,8 +68,10 @@ public final class ThymeleafRenderer
                               final Connection connection)
     throws Exception
   {
-    final Context ctx = new Context();
-    ctx.setVariable("catalog", catalog);
+    final Context context = new Context();
+    context.setVariable("catalog", catalog);
+    context.setVariable("identifiers",
+                        databaseSpecificOptions.getIdentifiers());
 
     final TemplateEngine templateEngine = new TemplateEngine();
     final Charset inputCharset = outputOptions.getInputCharset();
@@ -90,7 +92,7 @@ public final class ThymeleafRenderer
     final String templateLocation = outputOptions.getOutputFormatValue();
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
-      templateEngine.process(templateLocation, ctx, writer);
+      templateEngine.process(templateLocation, context, writer);
     }
   }
 

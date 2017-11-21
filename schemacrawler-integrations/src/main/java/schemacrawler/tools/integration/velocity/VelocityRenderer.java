@@ -133,6 +133,7 @@ public final class VelocityRenderer
 
     final Context context = new VelocityContext();
     context.put("catalog", catalog);
+    context.put("identifiers", databaseSpecificOptions.getIdentifiers());
 
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
