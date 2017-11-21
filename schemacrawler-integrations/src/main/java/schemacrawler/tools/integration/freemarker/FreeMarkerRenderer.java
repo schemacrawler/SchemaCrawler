@@ -112,14 +112,15 @@ public final class FreeMarkerRenderer
            new StringFormat("FreeMarker configuration properties <%s>", cfg));
 
     // Create the root hash
-    final Map<String, Object> objectMap = new HashMap<>();
-    objectMap.put("catalog", catalog);
+    final Map<String, Object> context = new HashMap<>();
+    context.put("catalog", catalog);
+    context.put("identifiers", databaseSpecificOptions.getIdentifiers());
 
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);
-      template.process(objectMap, writer);
+      template.process(context, writer);
     }
   }
 
