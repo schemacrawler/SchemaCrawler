@@ -85,7 +85,7 @@ public class DatabaseSpecificOptions
   /**
    * Identifier quoting using the default quoting strategy, but with the
    * correct quote string for the database.
-   * 
+   *
    * @return Identifiers
    */
   public Identifiers getIdentifiers()

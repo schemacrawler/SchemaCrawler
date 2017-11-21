@@ -67,18 +67,18 @@ public interface Executable
 
   String getCommand();
 
+  DatabaseSpecificOptions getDatabaseSpecificOptions();
+
   OutputOptions getOutputOptions();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
   void setAdditionalConfiguration(Config config);
 
+  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
+
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  DatabaseSpecificOptions getDatabaseSpecificOptions();
-
-  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
 
 }
