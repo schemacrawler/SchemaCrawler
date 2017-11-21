@@ -7,10 +7,13 @@
   <body>
       <release version="14.17.02" date="2017-11-20" description="Miscellaneous fixes">
       <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
-        Fix for Maven archetype.
-      ]]></action>                           
+        Fix for broken API call in Maven archetype.
+      ]]></action>  
+      <action dev="Sualeh Fatehi" type="fixes"><![CDATA[
+        Update to Apache Velocity example to quote database object names.
+      ]]></action>                                 
      </release>  
-     <release version="14.17.01" date="2017-11-20" description="Identifier quoting strategy">
+     <release version="14.17.01" date="2017-11-19" description="Identifier quoting strategy">
       <action dev="Sualeh Fatehi" type="add"><![CDATA[
         Database objects getName() returns unquoted names, and getFullName() returns a name quoted using
         default quoting rules. Text output is controlled by the
