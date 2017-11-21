@@ -116,8 +116,8 @@ public final class SchemaCrawlerExecutable
       }
     }
 
+    executable.setDatabaseSpecificOptions(databaseSpecificOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
-    executable.setIdentifierQuoteString(identifierQuoteString);
 
     executable.executeOn(catalog, connection);
   }

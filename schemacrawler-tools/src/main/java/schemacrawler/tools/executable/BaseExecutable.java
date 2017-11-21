@@ -34,6 +34,7 @@ import static sf.util.Utility.isBlank;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -53,6 +54,7 @@ public abstract class BaseExecutable
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
+  protected DatabaseSpecificOptions databaseSpecificOptions;
 
   protected BaseExecutable(final String command)
   {
@@ -99,6 +101,12 @@ public abstract class BaseExecutable
     return command;
   }
 
+  @Override
+  public DatabaseSpecificOptions getDatabaseSpecificOptions()
+  {
+    return databaseSpecificOptions;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -127,6 +135,15 @@ public abstract class BaseExecutable
     else
     {
       this.additionalConfiguration = additionalConfiguration;
+    }
+  }
+
+  @Override
+  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
+  {
+    if (databaseSpecificOptions != null)
+    {
+      this.databaseSpecificOptions = databaseSpecificOptions;
     }
   }
 

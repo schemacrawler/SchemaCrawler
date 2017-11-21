@@ -36,8 +36,8 @@ import java.util.logging.Level;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.utility.Identifiers;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -54,8 +54,6 @@ public abstract class BaseStagedExecutable
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseStagedExecutable.class.getName());
-
-  protected String identifierQuoteString;
 
   protected BaseStagedExecutable(final String command)
   {
@@ -74,8 +72,8 @@ public abstract class BaseStagedExecutable
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific overrides provided");
 
-    identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
+    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
+                                                          databaseSpecificOverrideOptions);
 
     LOGGER.log(Level.INFO,
                new StringFormat("Executing SchemaCrawler command <%s>",
@@ -86,10 +84,7 @@ public abstract class BaseStagedExecutable
                  String.format("Executable: %s", this.getClass().getName()));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Database object identifier quote string <%s>",
-                              identifierQuoteString));
+      LOGGER.log(Level.CONFIG, databaseSpecificOptions.toString());
     }
     if (LOGGER.isLoggable(Level.FINE))
     {
@@ -101,11 +96,6 @@ public abstract class BaseStagedExecutable
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     executeOn(catalog, connection);
-  }
-
-  public final void setIdentifierQuoteString(String identifierQuoteString)
-  {
-    this.identifierQuoteString = identifierQuoteString;
   }
 
 }
