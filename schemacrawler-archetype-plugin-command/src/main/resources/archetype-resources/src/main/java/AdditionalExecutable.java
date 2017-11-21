@@ -28,9 +28,7 @@ public class AdditionalExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     // TODO: Possibly process command-line options, which are available

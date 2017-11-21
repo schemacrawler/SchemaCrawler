@@ -55,7 +55,6 @@ public class LintExecutable
   public static final String COMMAND = "lint";
 
   private LintOptions lintOptions;
-  private String identifierQuoteString;
 
   public LintExecutable()
   {
@@ -64,18 +63,14 @@ public class LintExecutable
 
   @Override
   public void executeOn(final Catalog db,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                        final Connection connection)
     throws Exception
   {
     // Read lint options from the config
     lintOptions = getLintOptions();
 
-    identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
-
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
-                                                          getAdditionalConfiguration());
+                                                          additionalConfiguration);
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog catalog = new LintedCatalog(db, connection, linters);
@@ -166,13 +161,13 @@ public class LintExecutable
     {
       formatter = new LintJsonFormatter(lintOptions,
                                         outputOptions,
-                                        identifierQuoteString);
+                                        getIdentifierQuoteString());
     }
     else
     {
       formatter = new LintTextFormatter(lintOptions,
                                         outputOptions,
-                                        identifierQuoteString);
+                                        getIdentifierQuoteString());
     }
 
     return formatter;

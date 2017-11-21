@@ -74,6 +74,7 @@ public abstract class BaseExecutable
    * @throws Exception
    *         On an exception
    */
+  @Deprecated
   @Override
   public final void execute(final Connection connection)
     throws Exception

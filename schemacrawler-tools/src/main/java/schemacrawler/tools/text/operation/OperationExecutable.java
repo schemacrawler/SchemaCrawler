@@ -44,7 +44,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -67,7 +66,6 @@ public final class OperationExecutable
     .getLogger(OperationExecutable.class.getName());
 
   private OperationOptions operationOptions;
-  private String identifierQuoteString;
 
   public OperationExecutable(final String command)
   {
@@ -75,9 +73,7 @@ public final class OperationExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     loadOperationOptions();
@@ -91,9 +87,6 @@ public final class OperationExecutable
                               getCommand()));
       return;
     }
-
-    identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
 
     final DataTraversalHandler handler = getDataTraversalHandler();
     final Query query = getQuery();
@@ -111,15 +104,13 @@ public final class OperationExecutable
 
       if (query.isQueryOver())
       {
-        final String identifierQuoteString = Identifiers
-          .lookupIdentifierQuoteString(connection,
-                                       databaseSpecificOverrideOptions);
-        LOGGER.log(Level.CONFIG,
-                   new StringFormat("Database identifier quote string is <%s>",
-                                    identifierQuoteString));
+        // This is a special instance of identifiers that does not use
+        // the configuration from the SchemaCrawler configuration
+        // properties file, since the database always needs identifiers
+        // to be quoted in SQL queries if they contain spaces in the
+        // name
         final Identifiers identifiers = Identifiers.identifiers()
-          .withConnection(connection)
-          .withIdentifierQuoteString(identifierQuoteString).build();
+          .withIdentifierQuoteString(getIdentifierQuoteString()).build();
 
         for (final Table table: getSortedTables(catalog))
         {
@@ -189,14 +180,14 @@ public final class OperationExecutable
       formatter = new DataJsonFormatter(operation,
                                         operationOptions,
                                         outputOptions,
-                                        identifierQuoteString);
+                                        getIdentifierQuoteString());
     }
     else
     {
       formatter = new DataTextFormatter(operation,
                                         operationOptions,
                                         outputOptions,
-                                        identifierQuoteString);
+                                        getIdentifierQuoteString());
     }
     return formatter;
   }

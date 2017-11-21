@@ -45,7 +45,6 @@ import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
@@ -78,8 +77,7 @@ public final class ScriptExecutable
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection,
-                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final Connection connection)
     throws Exception
   {
 
@@ -141,6 +139,7 @@ public final class ScriptExecutable
     final CommandChainExecutable chain = new CommandChainExecutable();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
     chain.setAdditionalConfiguration(additionalConfiguration);
+    chain.setIdentifierQuoteString(getIdentifierQuoteString());
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     try (final Reader reader = outputOptions.openNewInputReader();

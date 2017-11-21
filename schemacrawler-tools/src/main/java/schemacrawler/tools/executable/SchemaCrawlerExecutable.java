@@ -32,7 +32,6 @@ import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.operation.OperationExecutable;
 import sf.util.SchemaCrawlerLogger;
@@ -62,9 +61,7 @@ public final class SchemaCrawlerExecutable
   }
 
   @Override
-  public void executeOn(final Catalog catalog,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     final Commands commands = new Commands(getCommand());
@@ -120,8 +117,9 @@ public final class SchemaCrawlerExecutable
     }
 
     executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setIdentifierQuoteString(getIdentifierQuoteString());
 
-    executable.executeOn(catalog, connection, databaseSpecificOverrideOptions);
+    executable.executeOn(catalog, connection);
   }
 
 }

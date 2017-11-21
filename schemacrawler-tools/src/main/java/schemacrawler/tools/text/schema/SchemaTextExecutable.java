@@ -32,7 +32,6 @@ package schemacrawler.tools.text.schema;
 import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
@@ -40,7 +39,6 @@ import schemacrawler.tools.executable.BaseStagedExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
-import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.NamedObjectSort;
 
 /**
@@ -53,7 +51,6 @@ public final class SchemaTextExecutable
 {
 
   private SchemaTextOptions schemaTextOptions;
-  private String identifierQuoteString;
 
   public SchemaTextExecutable(final String command)
   {
@@ -61,9 +58,7 @@ public final class SchemaTextExecutable
   }
 
   @Override
-  public void executeOn(final Catalog db,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog db, final Connection connection)
     throws Exception
   {
     loadSchemaTextOptions();
@@ -81,9 +76,6 @@ public final class SchemaTextExecutable
                                       connection,
                                       schemaCrawlerOptions);
     }
-
-    identifierQuoteString = Identifiers
-      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
@@ -139,21 +131,21 @@ public final class SchemaTextExecutable
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          identifierQuoteString);
+                                          getIdentifierQuoteString());
     }
     else if (schemaTextDetailType == SchemaTextDetailType.list)
     {
       formatter = new SchemaListFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          identifierQuoteString);
+                                          getIdentifierQuoteString());
     }
     else
     {
       formatter = new SchemaTextFormatter(schemaTextDetailType,
                                           schemaTextOptions,
                                           outputOptions,
-                                          identifierQuoteString);
+                                          getIdentifierQuoteString());
     }
 
     return formatter;
