@@ -42,7 +42,6 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 
 /**
@@ -66,8 +65,7 @@ public final class ThymeleafRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection,
-                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final Connection connection)
     throws Exception
   {
     final Context ctx = new Context();

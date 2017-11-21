@@ -46,6 +46,7 @@ public interface Executable
    * @throws Exception
    *         On an exception
    */
+  @Deprecated
   void execute(Connection connection)
     throws Exception;
 

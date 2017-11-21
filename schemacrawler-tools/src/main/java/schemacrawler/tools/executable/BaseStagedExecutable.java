@@ -30,7 +30,6 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.checkConnection;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -38,7 +37,7 @@ import java.util.logging.Level;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
+import schemacrawler.utility.Identifiers;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -55,6 +54,8 @@ public abstract class BaseStagedExecutable
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseStagedExecutable.class.getName());
+
+  private String identifierQuoteString;
 
   protected BaseStagedExecutable(final String command)
   {
@@ -73,6 +74,9 @@ public abstract class BaseStagedExecutable
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific overrides provided");
 
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
+
     LOGGER.log(Level.INFO,
                new StringFormat("Executing SchemaCrawler command <%s>",
                                 getCommand()));
@@ -82,6 +86,10 @@ public abstract class BaseStagedExecutable
                  String.format("Executable: %s", this.getClass().getName()));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Database object identifier quote string <%s>",
+                              identifierQuoteString));
     }
     if (LOGGER.isLoggable(Level.FINE))
     {
@@ -92,23 +100,17 @@ public abstract class BaseStagedExecutable
                                                           databaseSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
-    executeOn(catalog, connection, databaseSpecificOverrideOptions);
+    executeOn(catalog, connection);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void executeOn(final Catalog catalog,
-                              final Connection connection)
-    throws Exception
+  protected final String getIdentifierQuoteString()
   {
-    requireNonNull(catalog, "No catalog provided");
-    checkConnection(connection);
+    return identifierQuoteString;
+  }
 
-    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = SchemaCrawlerUtility
-      .matchDatabaseSpecificOverrideOptions(connection);
-    executeOn(catalog, connection, dbSpecificOverrideOptions);
+  public final void setIdentifierQuoteString(String identifierQuoteString)
+  {
+    this.identifierQuoteString = identifierQuoteString;
   }
 
 }

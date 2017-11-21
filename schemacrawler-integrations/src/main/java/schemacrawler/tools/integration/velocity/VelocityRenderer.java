@@ -46,7 +46,6 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import sf.util.SchemaCrawlerLogger;
@@ -86,8 +85,7 @@ public final class VelocityRenderer
    */
   @Override
   public final void executeOn(final Catalog catalog,
-                              final Connection connection,
-                              final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                              final Connection connection)
     throws Exception
   {
     // Set the file path, in case the template is a file template

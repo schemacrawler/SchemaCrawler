@@ -59,6 +59,7 @@ import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.Identifiers;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -75,6 +76,7 @@ public class OfflineSnapshotExecutable
     .getLogger(OfflineSnapshotExecutable.class.getName());
 
   private OutputOptions inputOptions;
+  private String identifierQuoteString;
 
   public OfflineSnapshotExecutable(final String command)
   {
@@ -92,26 +94,16 @@ public class OfflineSnapshotExecutable
     inputOptions.setCompressedInputFile(((OfflineConnection) connection)
       .getOfflineDatabasePath());
 
+    identifierQuoteString = Identifiers
+      .lookupIdentifierQuoteString(connection, databaseSpecificOverrideOptions);
+
     final Catalog catalog = loadCatalog();
 
-    executeOn(catalog, connection, databaseSpecificOverrideOptions);
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void executeOn(final Catalog catalog,
-                              final Connection connection)
-    throws Exception
-  {
-    executeOn(catalog, connection, new DatabaseSpecificOverrideOptions());
+    executeOn(catalog, connection);
   }
 
   @Override
-  public void executeOn(final Catalog catalog,
-                        final Connection connection,
-                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     loadOfflineSnapshotOptions();
@@ -137,8 +129,9 @@ public class OfflineSnapshotExecutable
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(additionalConfiguration);
+    executable.setIdentifierQuoteString(identifierQuoteString);
     executable.setOutputOptions(outputOptions);
-    executable.executeOn(catalog, connection, databaseSpecificOverrideOptions);
+    executable.executeOn(catalog, connection);
   }
 
   public void setInputOptions(final OutputOptions inputOptions)
