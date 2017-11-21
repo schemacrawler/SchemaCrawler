@@ -6,7 +6,7 @@ example shows how to script with Python.
 
 ## How to Setup
 1. Make sure that java is on your PATH
-2. Start a command shell in the `ivy` directory 
+2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd python` (or `download.sh python` on Unix) to
    install Python scripting support
 
