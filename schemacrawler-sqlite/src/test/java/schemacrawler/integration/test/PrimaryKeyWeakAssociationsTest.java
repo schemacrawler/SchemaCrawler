@@ -30,7 +30,6 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.nio.file.Path;
@@ -48,7 +47,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -60,7 +59,7 @@ import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class PrimaryKeyWeakAssociationsTest
-  extends BaseDatabaseTest
+  extends BaseSqliteTest
 {
 
   @Rule
@@ -70,28 +69,29 @@ public class PrimaryKeyWeakAssociationsTest
   public void weakAssociations1()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_1.db");
+    weakAssociations(testName.currentMethodFullName(), "pk_test_1.sql");
   }
 
   @Test
   public void weakAssociations2()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_2.db");
+    weakAssociations(testName.currentMethodFullName(), "pk_test_2.sql");
   }
 
   @Test
   public void weakAssociations3()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_3.db");
+    weakAssociations(testName.currentMethodFullName(), "pk_test_3.sql");
   }
 
   private void weakAssociations(final String currentMethodFullName,
-                                final String database)
+                                final String databaseSqlResource)
     throws Exception
   {
-    final Path sqliteDbFile = copyResourceToTempFile(database);
+    final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
+
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
