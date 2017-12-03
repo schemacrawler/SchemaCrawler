@@ -99,7 +99,6 @@
         <module>../schemacrawler-archetype-plugin-dbconnector</module>
 
         <module>../schemacrawler-docs</module>
-        <module>../schemacrawler-site</module>
         <module>../schemacrawler-distrib</module>
         <module>../schemacrawler-docker</module>
       </modules>

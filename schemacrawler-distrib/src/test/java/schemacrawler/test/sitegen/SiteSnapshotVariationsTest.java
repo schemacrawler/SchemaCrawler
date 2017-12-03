@@ -54,7 +54,8 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 public class SiteSnapshotVariationsTest
-  extends BaseDatabaseTest
+  extends
+  BaseDatabaseTest
 {
 
   private Path directory;
@@ -64,14 +65,15 @@ public class SiteSnapshotVariationsTest
 
   @Before
   public void _setupDirectory()
-    throws IOException, URISyntaxException
+    throws IOException,
+    URISyntaxException
   {
     if (directory != null)
     {
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/site/snapshot-examples")
+    directory = projectRootPath.resolve("target/website/snapshot-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }
@@ -85,7 +87,8 @@ public class SiteSnapshotVariationsTest
                                                                TextOutputFormat.html,
                                                                TextOutputFormat.json,
                                                                TextOutputFormat.text,
-                                                               GraphOutputFormat.htmlx })
+                                                               GraphOutputFormat.htmlx
+    })
     {
       final String outputFormatValue = outputFormat.getFormat();
       final String extension;
@@ -119,8 +122,7 @@ public class SiteSnapshotVariationsTest
   }
 
   private void run(final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final Path outputFile)
+                   final Map<String, String> config, final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
