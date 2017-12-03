@@ -244,11 +244,11 @@
       </fileset>
     </move>
   
-    <move todir="${website.staging.dir}/config">
+    <copy todir="${website.staging.dir}/config">
       <fileset dir="${website.config.location}">
         <include name="**/*.*" />
       </fileset>
-    </move>
+    </copy>
         	
   </target>
 
