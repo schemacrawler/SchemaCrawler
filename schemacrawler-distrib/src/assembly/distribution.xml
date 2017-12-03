@@ -137,7 +137,6 @@
     <move
       file="${distribution.target}/site"
       tofile="${main-distribution.staging.dir}"/>
-    <delete dir="${main-distribution.staging.dir}/css" />
     <delete dir="${main-distribution.staging.dir}/images" />
 
     <property name="main-distribution.stem"
@@ -164,13 +163,6 @@
     <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0.jar"
           todir="${main-distribution.staging.dir}/_downloader" />
-
-    <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
-      <arg value="${main-distribution.staging.dir}/examples/sc.css"/>
-      <classpath>
-        <pathelement location="${schemacrawler.distribution.jar}"/>
-      </classpath>
-    </java>
 
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}/examples/api">
@@ -227,24 +219,18 @@
   <target name="make-website-distribution">
 
     <property name="website.staging.dir"
-              location="${distribution.target}/_website" />
-    <property name="website.location"
-              location="${SchemaCrawler.home}/schemacrawler-site/target/site" />
+              location="${distribution.target}/_website/sc" />
+    <property name="website.examples.location"
+              location="${distribution.target}/website" />  	
     <property name="website.apidocs.location"
               location="${SchemaCrawler.home}/schemacrawler-api/target/apidocs" />
-
+    <property name="website.config.location"
+              location="${SchemaCrawler.home}/schemacrawler-docs/config" />
+              	
     <!-- No-op if the directories already exist, but do this so that
          downstream steps do not fail -->
     <mkdir dir="${website.staging.dir}" />
-    <mkdir dir="${website.location}" />
     <mkdir dir="${website.apidocs.location}" />
-
-    <move todir="${website.staging.dir}">
-      <fileset dir="${website.location}">
-        <include name="**/*.*" />
-        <exclude name="**/apidocs/*.*" />
-      </fileset>
-    </move>
 
     <move todir="${website.staging.dir}/apidocs">
       <fileset dir="${website.apidocs.location}">
@@ -252,13 +238,18 @@
       </fileset>
     </move>
 
-    <java classname="schemacrawler.tools.text.utility.WriteStylesheetFile">
-      <arg value="${website.staging.dir}/css/sc.css"/>
-      <classpath>
-        <pathelement location="${schemacrawler.distribution.jar}"/>
-      </classpath>
-    </java>
-
+    <move todir="${website.staging.dir}">
+      <fileset dir="${website.examples.location}">
+        <include name="**/*.*" />
+      </fileset>
+    </move>
+  
+    <move todir="${website.staging.dir}/config">
+      <fileset dir="${website.config.location}">
+        <include name="**/*.*" />
+      </fileset>
+    </move>
+        	
   </target>
 
   <target name="make-super-distribution">
