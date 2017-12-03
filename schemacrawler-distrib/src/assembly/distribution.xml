@@ -181,7 +181,7 @@
 
     <!-- Copy config files -->
     <copy todir="${main-distribution.staging.dir}/examples/lint">
-      <fileset dir="${SchemaCrawler.home}/schemacrawler-site/src/site/resources">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-docs/config">
         <include name="schemacrawler-linter-configs.xml" />
       </fileset>
     </copy>
@@ -275,10 +275,10 @@
       file="${schemacrawler.distribution.jar}"
       todir="${schemacrawler.complete-distribution}/lib"/>
     <copy
-      file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.config.properties"
+      file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
       todir="${schemacrawler.complete-distribution}/config"/>
     <copy
-      file="${SchemaCrawler.home}/schemacrawler-site/src/site/resources/config/schemacrawler.colormap.properties"
+      file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
       todir="${schemacrawler.complete-distribution}/config"/>
 
     <create-dbserver-distribution database="offline" />
