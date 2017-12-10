@@ -101,12 +101,12 @@ public final class TypeMap
 
   public TypeMap()
   {
-    this(null);
+    sqlTypeMap = createDefaultTypeMap();
   }
 
   public TypeMap(final Connection connection)
   {
-    final Map<String, Class<?>> sqlTypeMap = createDefaultTypeMap();
+    this();
 
     if (connection != null)
     {
@@ -129,8 +129,18 @@ public final class TypeMap
                    e);
       }
     }
+  }
 
-    this.sqlTypeMap = sqlTypeMap;
+  public TypeMap(final Map<String, Class<?>> sqlTypeMap)
+  {
+    if (sqlTypeMap == null)
+    {
+      this.sqlTypeMap = new HashMap<>();
+    }
+    else
+    {
+      this.sqlTypeMap = new HashMap<>(sqlTypeMap);
+    }
   }
 
   @Override
@@ -264,4 +274,5 @@ public final class TypeMap
   {
     return new HashSet<>(sqlTypeMap.values());
   }
+
 }

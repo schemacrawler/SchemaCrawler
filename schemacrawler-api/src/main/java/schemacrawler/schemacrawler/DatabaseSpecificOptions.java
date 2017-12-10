@@ -36,6 +36,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import schemacrawler.utility.Identifiers;
+import schemacrawler.utility.TypeMap;
 
 public class DatabaseSpecificOptions
   implements Options
@@ -46,6 +47,7 @@ public class DatabaseSpecificOptions
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
   private final Identifiers identifiers;
+  private final TypeMap typeMap;
 
   public DatabaseSpecificOptions(final Connection connection,
                                  final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
@@ -75,6 +77,15 @@ public class DatabaseSpecificOptions
                                               databaseSpecificOverrideOptions);
     supportsSchemas = lookupSupportsSchemas(metaData,
                                             databaseSpecificOverrideOptions);
+
+    if (databaseSpecificOverrideOptions.hasOverrideForTypeMap())
+    {
+      typeMap = databaseSpecificOverrideOptions.getTypeMap();
+    }
+    else
+    {
+      typeMap = new TypeMap(connection);
+    }
   }
 
   public String getIdentifierQuoteString()
@@ -91,6 +102,11 @@ public class DatabaseSpecificOptions
   public Identifiers getIdentifiers()
   {
     return identifiers;
+  }
+
+  public TypeMap getTypeMap()
+  {
+    return typeMap;
   }
 
   public boolean isSupportsCatalogs()
