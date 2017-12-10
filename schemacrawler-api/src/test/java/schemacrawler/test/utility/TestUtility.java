@@ -2,7 +2,7 @@
 ========================================================================
 SchemaCrawler
 http://www.schemacrawler.com
-Copyright (c) 2000-2017, Sualeh Fatehi <sualeh@hotmail.com>.
+Copyright (c) 2000-2018, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
@@ -104,9 +104,9 @@ public final class TestUtility
                                              Pattern
                                                .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
                                              Pattern
-                                               .compile(".*201[4-7]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+                                               .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
                                              Pattern
-                                               .compile(".*201[4-7]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                               .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
                                              // SVG {
                                              Pattern.compile("<svg.*"),
                                              Pattern
