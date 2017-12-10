@@ -313,7 +313,7 @@
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
               <additionalparam>-Xdoclint:html,syntax,reference,missing</additionalparam>
-              <bottom>Copyright © 2000-2017 {organizationName}. All rights reserved.</bottom>
+              <bottom>Copyright © 2000-2018 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
