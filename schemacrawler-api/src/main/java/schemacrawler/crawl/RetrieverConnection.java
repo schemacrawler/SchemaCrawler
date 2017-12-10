@@ -70,7 +70,6 @@ final class RetrieverConnection
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
-  private final TypeMap typeMap;
 
   RetrieverConnection(final Connection connection,
                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
@@ -112,7 +111,6 @@ final class RetrieverConnection
     LOGGER.log(Level.CONFIG,
                new StringFormat("Supported table types are <%s>", tableTypes));
 
-    typeMap = new TypeMap(connection);
     javaSqlTypes = new JavaSqlTypes();
   }
 
@@ -178,7 +176,7 @@ final class RetrieverConnection
 
   TypeMap getTypeMap()
   {
-    return typeMap;
+    return databaseSpecificOptions.getTypeMap();
   }
 
   boolean isSupportsCatalogs()

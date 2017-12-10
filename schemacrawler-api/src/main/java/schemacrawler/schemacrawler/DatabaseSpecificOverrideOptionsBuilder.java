@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
@@ -50,6 +52,7 @@ public class DatabaseSpecificOverrideOptionsBuilder
   private MetadataRetrievalStrategy indexRetrievalStrategy;
   private MetadataRetrievalStrategy fkRetrievalStrategy;
   private String identifierQuoteString;
+  private Map<String, Class<?>> typeMap;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
 
   public DatabaseSpecificOverrideOptionsBuilder()
@@ -63,11 +66,14 @@ public class DatabaseSpecificOverrideOptionsBuilder
     pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    typeMap = null;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder(final Config map)
   {
     this();
+    // NOTE: Not all values are read from the config. The type map is
+    // not read from the config.
     fromConfig(map);
   }
 
@@ -163,6 +169,11 @@ public class DatabaseSpecificOverrideOptionsBuilder
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
   {
     return tableRetrievalStrategy;
+  }
+
+  public Map<String, Class<?>> getTypeMap()
+  {
+    return typeMap;
   }
 
   /**
@@ -294,6 +305,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     else
     {
       this.tableRetrievalStrategy = tableRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withTypeMap(final Map<String, Class<?>> typeMap)
+  {
+    if (typeMap == null)
+    {
+      this.typeMap = null;
+    }
+    else
+    {
+      this.typeMap = new HashMap<>(typeMap);
     }
     return this;
   }

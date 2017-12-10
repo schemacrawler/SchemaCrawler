@@ -30,9 +30,11 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.Map;
 import java.util.Optional;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.utility.TypeMap;
 
 public final class DatabaseSpecificOverrideOptions
   implements Options
@@ -49,6 +51,7 @@ public final class DatabaseSpecificOverrideOptions
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
+  private final TypeMap typeMap;
 
   public DatabaseSpecificOverrideOptions()
   {
@@ -69,6 +72,16 @@ public final class DatabaseSpecificOverrideOptions
     identifierQuoteString = bldr.getIdentifierQuoteString();
     informationSchemaViews = bldr.getInformationSchemaViewsBuilder()
       .toOptions();
+
+    final Map<String, Class<?>> bldrTypeMap = bldr.getTypeMap();
+    if (bldrTypeMap != null)
+    {
+      typeMap = new TypeMap(bldrTypeMap);
+    }
+    else
+    {
+      typeMap = null;
+    }
   }
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
@@ -110,6 +123,11 @@ public final class DatabaseSpecificOverrideOptions
     return tableRetrievalStrategy;
   }
 
+  public TypeMap getTypeMap()
+  {
+    return typeMap;
+  }
+
   public boolean hasOverrideForIdentifierQuoteString()
   {
     return !isBlank(identifierQuoteString);
@@ -123,6 +141,11 @@ public final class DatabaseSpecificOverrideOptions
   public boolean hasOverrideForSupportsSchemas()
   {
     return supportsSchemas.isPresent();
+  }
+
+  public boolean hasOverrideForTypeMap()
+  {
+    return typeMap != null;
   }
 
   public boolean isSupportsCatalogs()
