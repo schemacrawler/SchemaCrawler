@@ -246,13 +246,9 @@ final class IndexRetriever
       table.setPrimaryKeyAndReplaceIndex(primaryKey);
     }
 
-    // Hack for buggy SQLite driver
-    final String unquotedColumnName = getRetrieverConnection().getIdentifiers()
-      .unquoteName(columnName);
-
     // Register primary key information
     final Optional<MutableColumn> columnOptional = table
-      .lookupColumn(unquotedColumnName);
+      .lookupColumn(columnName);
     if (columnOptional.isPresent())
     {
       final MutableColumn column = columnOptional.get();

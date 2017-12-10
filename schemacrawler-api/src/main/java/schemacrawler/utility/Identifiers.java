@@ -485,17 +485,6 @@ public final class Identifiers
     return buffer.toString();
   }
 
-  public String unquoteName(final String name)
-  {
-    if (!isBlank(name) && name.length() > identifierQuoteString.length() * 2
-        && name.startsWith(identifierQuoteString)
-        && name.endsWith(identifierQuoteString))
-    {
-      return name.substring(1, name.length() - 1);
-    }
-    return name;
-  }
-
   private void quoteFullName(final StringBuilder buffer,
                              final DatabaseObject databaseObject)
   {
