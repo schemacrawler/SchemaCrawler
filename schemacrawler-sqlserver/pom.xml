@@ -20,7 +20,7 @@
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>6.3.5.jre8-preview</version>
+      <version>6.3.6.jre8-preview</version>
       <exclusions>
         <exclusion>
           <groupId>com.microsoft.azure</groupId>
