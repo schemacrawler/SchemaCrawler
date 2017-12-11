@@ -19,7 +19,7 @@ addons:
       - graphviz
 script:
   - cd ./schemacrawler-parent
-  - mvn clean cobertura:cobertura coveralls:report
+  - mvn -Dcomplete clean cobertura:cobertura coveralls:report
 after_success:
   - mvn -Dcomplete clean install
 before_deploy:
