@@ -34,5 +34,5 @@ deploy:
     repo: sualeh/SchemaCrawler
     all_branches: true
   file_glob: true
-  file: "./schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+  file: "../schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
  
