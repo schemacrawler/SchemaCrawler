@@ -19,9 +19,9 @@ addons:
       - graphviz
 script:
   - cd ./schemacrawler-parent
-  - mvn -Dcomplete clean cobertura:cobertura coveralls:report
+  - mvn clean cobertura:cobertura coveralls:report
 after_success:
-  - mvn -DskipTests -Dcomplete clean install
+  - mvn -Dcomplete clean install
 before_deploy:
   - git fetch --tags
 deploy:
