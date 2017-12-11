@@ -108,31 +108,17 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>cobertura-maven-plugin</artifactId>
-            <version>2.7</version>
-            <dependencies>
-              <dependency>
-                <groupId>org.ow2.asm</groupId>
-                <artifactId>asm</artifactId>
-                <version>5.0.3</version>
-              </dependency>
-            </dependencies>
-            <configuration>
-              <format>xml</format>
-              <maxmem>256m</maxmem>
-              <ignoreTrivial>true</ignoreTrivial>
-              <!-- aggregated reports for multi-module projects -->
-              <aggregate>true</aggregate>
-              <instrumentation>
-                <ignores>
-                  <ignore>schemacrawler.*.test.*</ignore>
-                </ignores>
-                <excludes>
-                  <exclude>**/*Test.class</exclude>
-                </excludes>
-              </instrumentation>
-            </configuration>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.7.9</version>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
           <plugin>
               <groupId>org.eluder.coveralls</groupId>
