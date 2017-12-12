@@ -20,8 +20,6 @@ addons:
 script:
   - cd ./schemacrawler-parent
   - mvn -Dcomplete clean package jacoco:report coveralls:report
-after_success:
-  - mvn -Dcomplete clean install
 before_deploy:
   - git fetch --tags
 deploy:
