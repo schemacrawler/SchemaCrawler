@@ -131,17 +131,12 @@
 
   <target name="make-distribution-zip">
 
-    <mkdir dir="${distribution.target}/site" />
     <property name="main-distribution.staging.dir"
               location="${distribution.target}/_distribution" />
-    <move
-      file="${distribution.target}/site"
-      tofile="${main-distribution.staging.dir}"/>
-    <delete dir="${main-distribution.staging.dir}/images" />
-
     <property name="main-distribution.stem"
               value="schemacrawler-${SchemaCrawler.version}-distribution" />
-
+    <property name="distribution.examples.resources"
+              location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />
 
     <!-- 1. STAGE FOR EXAMPLES -->
 
@@ -165,6 +160,17 @@
           todir="${main-distribution.staging.dir}/_downloader" />
 
     <!-- Stage examples -->
+    <copy todir="${main-distribution.staging.dir}">
+      <fileset dir="${distribution.examples.resources}">
+        <include name="**/*" />
+      </fileset>
+    </copy>
+    <copy todir="${main-distribution.staging.dir}">
+      <fileset dir="${SchemaCrawler.home}/schemacrawler-tools/src/main/resources">
+        <include name="**/sc.css" />
+      </fileset>
+    </copy>
+  	
     <copy todir="${main-distribution.staging.dir}/examples/api">
       <fileset dir="${SchemaCrawler.home}/schemacrawler-examplecode/src/main/java">
         <include name="*.java" />
