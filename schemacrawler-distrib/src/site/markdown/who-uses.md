@@ -33,8 +33,8 @@ schemas without getting false alerts."
 Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
 Photograph courtesy of Adrien Sales.
 
-<a href="sc/images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
-<img class="img-fluid img-thumbnail" style="width: 200px" src="sc/images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
+<a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
+<img class="img-fluid img-thumbnail" style="width: 200px" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
 </a>
 
 - [A large number of projects on GitHub](https://github.com/search?q=schemacrawler+-user%3Asualeh&type=Code)

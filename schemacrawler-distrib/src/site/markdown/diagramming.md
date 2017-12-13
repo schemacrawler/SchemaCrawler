@@ -21,8 +21,8 @@ See the diagram example in the
 [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) 
 download. An example of a SchemaCrawler database diagram is below.
 
-<a href="sc/diagram-examples/diagram.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram.png" style="width: 200px;" />
+<a href="diagram-examples/diagram.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram.png" style="width: 200px;" />
 </a>
 
 
@@ -32,53 +32,53 @@ SchemaCrawler offers several options to change what you see on the database diag
 
 - Suppress schema names and foreign key names, using the `-portablenames` command-line option.
 <br />
-<a href="sc/diagram-examples/diagram_2_portablenames.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_2_portablenames.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_2_portablenames.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_2_portablenames.png" style="width: 200px;" />
 </a>
 - Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `-infolevel=standard -command=brief `command-line option.
 <br />
-<a href="sc/diagram-examples/diagram_3_important_columns.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_3_important_columns.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_3_important_columns.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_3_important_columns.png" style="width: 200px;" />
 </a>
 - Show column ordinals, by setting configuration option `schemacrawler.format.show_ordinal_numbers=true` in the configuration file.
 <br />
-<a href="sc/diagram-examples/diagram_4_ordinals.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_4_ordinals.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_4_ordinals.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_4_ordinals.png" style="width: 200px;" />
 </a>
 - Display columns in alphabetical order, using the `-sortcolumns` command-line option.
 <br />
-<a href="sc/diagram-examples/diagram_5_alphabetical.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_5_alphabetical.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_5_alphabetical.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_5_alphabetical.png" style="width: 200px;" />
 </a>
 - Grep for columns, and also display outgoing relationships, using `-grepcolumns=.*\\.BOOKS\\..*\\.ID` as a command-line option.
 <br />
-<a href="sc/diagram-examples/diagram_6_grep.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_6_grep.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_6_grep.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_6_grep.png" style="width: 200px;" />
 </a>
 - Grep for columns, but only show matching tables, using `-grepcolumns=.*\\.BOOKS\\..*\\.ID -only-matching` as command-line options.
 <br />
-<a href="sc/diagram-examples/diagram_7_grep_onlymatching.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_7_grep_onlymatching.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_7_grep_onlymatching.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_7_grep_onlymatching.png" style="width: 200px;" />
 </a>
 - Do not show cardinality on the diagrams, to avoid clutter. Set configuration option `schemacrawler.graph.show.primarykey.cardinality=false` and `schemacrawler.graph.show.foreignkey.cardinality=false` in the configuration file.
 <br />
-<a href="sc/diagram-examples/diagram_8_no_cardinality.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_8_no_cardinality.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_8_no_cardinality.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_8_no_cardinality.png" style="width: 200px;" />
 </a>
 - Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true -infolevel=maximum` on the command-line.
 <br />
-<a href="sc/diagram-examples/diagram_9_row_counts.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_9_row_counts.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_9_row_counts.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_9_row_counts.png" style="width: 200px;" />
 </a>
 - Do not show catalog and schema colors on the diagrams, set configuration option `schemacrawler.format.no_schema_colors=true`.
 <br />
-<a href="sc/diagram-examples/diagram_10_no_schema_colors.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_10_no_schema_colors.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_10_no_schema_colors.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_10_no_schema_colors.png" style="width: 200px;" />
 </a>
 - Show a title on the diagram, use `-title "Books and Publishers Schema"` on the command-line.
 <br />
-<a href="sc/diagram-examples/diagram_11_title.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
-<img class="img-fluid img-thumbnail" src="sc/diagram-examples/diagram_11_title.png" style="width: 200px;" />
+<a href="diagram-examples/diagram_11_title.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
+<img class="img-fluid img-thumbnail" src="diagram-examples/diagram_11_title.png" style="width: 200px;" />
 </a>
 
 
@@ -143,7 +143,7 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 
 Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). Photograph courtesy of Adrien Sales.
 
-<a href="sc/images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
-<img class="img-fluid img-thumbnail" style="width: 50%" src="sc/images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
+<a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
+<img class="img-fluid img-thumbnail" style="width: 50%" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
 </a>
 
