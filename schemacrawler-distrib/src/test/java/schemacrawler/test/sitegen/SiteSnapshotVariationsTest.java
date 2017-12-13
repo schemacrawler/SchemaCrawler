@@ -73,7 +73,7 @@ public class SiteSnapshotVariationsTest
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/website/snapshot-examples")
+    directory = projectRootPath.resolve("target/_website/snapshot-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }

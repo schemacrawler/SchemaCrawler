@@ -225,33 +225,34 @@
   <target name="make-website-distribution">
 
     <property name="website.staging.dir"
-              location="${distribution.target}/_website/sc" />
-    <property name="website.examples.location"
-              location="${distribution.target}/website" />  	
-    <property name="website.apidocs.location"
+              location="${distribution.target}/_website" />	
+
+    <property name="website.source.resources.location"
+              location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />  	
+    <property name="website.source.apidocs.location"
               location="${SchemaCrawler.home}/schemacrawler-api/target/apidocs" />
-    <property name="website.config.location"
+    <property name="website.source.config.location"
               location="${SchemaCrawler.home}/schemacrawler-docs/config" />
               	
     <!-- No-op if the directories already exist, but do this so that
          downstream steps do not fail -->
     <mkdir dir="${website.staging.dir}" />
-    <mkdir dir="${website.apidocs.location}" />
+    <mkdir dir="${website.source.apidocs.location}" />
 
     <move todir="${website.staging.dir}/apidocs">
-      <fileset dir="${website.apidocs.location}">
-        <include name="**/*.*" />
-      </fileset>
-    </move>
-
-    <move todir="${website.staging.dir}">
-      <fileset dir="${website.examples.location}">
+      <fileset dir="${website.source.apidocs.location}">
         <include name="**/*.*" />
       </fileset>
     </move>
   
     <copy todir="${website.staging.dir}/config">
-      <fileset dir="${website.config.location}">
+      <fileset dir="${website.source.config.location}">
+        <include name="**/*.*" />
+      </fileset>
+    </copy>
+        
+    <copy todir="${website.staging.dir}">
+      <fileset dir="${website.source.resources.location}">
         <include name="**/*.*" />
       </fileset>
     </copy>

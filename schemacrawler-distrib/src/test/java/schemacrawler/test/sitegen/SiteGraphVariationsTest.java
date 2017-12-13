@@ -74,7 +74,7 @@ public class SiteGraphVariationsTest
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/website/diagram-examples")
+    directory = projectRootPath.resolve("target/_website/diagram-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }

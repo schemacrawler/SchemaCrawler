@@ -74,7 +74,7 @@ public class SiteHTMLVariationsTest
       return;
     }
     final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/website/html-examples")
+    directory = projectRootPath.resolve("target/_website/html-examples")
       .normalize().toAbsolutePath();
     createDirectories(directory);
   }

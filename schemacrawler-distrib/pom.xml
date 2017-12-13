@@ -58,6 +58,20 @@
               <outputDirectory>${project.basedir}/target/_distribution</outputDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>website</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <headerHtmlFile>${project.basedir}/src/site/header.include</headerHtmlFile>
+              <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
+              <recursiveInput>true</recursiveInput>
+              <inputDirectory>${project.basedir}/src/site/markdown</inputDirectory>
+              <outputDirectory>${project.basedir}/target/_website</outputDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
