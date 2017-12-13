@@ -1,3 +1,10 @@
+body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 body, p, li, td, th, caption, select, input, strong {
     font-family: "Century Gothic", CenturyGothic, Geneva, sans-serif;
     font-size: 1.0rem;
