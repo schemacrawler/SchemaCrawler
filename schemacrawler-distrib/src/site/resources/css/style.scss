@@ -1,0 +1,50 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body, p, li, td, th, caption, select, input, strong {
+    font-family: "Century Gothic", CenturyGothic, Geneva, sans-serif;
+    font-size: 1.0rem;
+    line-height: 1.4rem;
+    color: rgb(16, 16, 16);
+}
+
+code, pre {
+    font-size: 1.0rem;
+}
+
+#page-content h1 {
+    font-size: 2.0rem;
+    margin-top: 2.0rem;
+    color: rgb(92, 92, 92);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    color: rgb(92, 92, 92);
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-top: 1.2rem;
+    color: rgb(92, 92, 92);
+}
+
+#banner {
+    font-family: "Palatino Linotype", Georgia, "Times New Roman", serif;
+    margin-top: 1.0rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+
+#banner h1 {
+    font-size: 3.0rem;
+}
+
+#banner p {
+    font-size: 1.5rem;
+    line-height: 2.0rem;
+}
+
