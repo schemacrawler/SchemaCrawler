@@ -136,7 +136,7 @@
     <property name="main-distribution.stem"
               value="schemacrawler-${SchemaCrawler.version}-distribution" />
     <property name="distribution.examples.resources"
-              location="${SchemaCrawler.home}/schemacrawler-distrib/src/site/resources" />
+              location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
 
     <!-- 1. STAGE FOR EXAMPLES -->
 

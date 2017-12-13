@@ -35,29 +35,30 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-  </dependencies>	
+  </dependencies>
   <build>
     <plugins>
       <plugin>
         <groupId>com.ruleoftech</groupId>
         <artifactId>markdown-page-generator-plugin</artifactId>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
         <executions>
           <execution>
+            <id>examples</id>
             <phase>process-resources</phase>
             <goals>
               <goal>generate</goal>
             </goals>
+            <configuration>
+              <headerHtmlFile>${project.basedir}/src/examples/header.include</headerHtmlFile>
+              <footerHtmlFile>${project.basedir}/src/examples/footer.include</footerHtmlFile>
+              <defaultTitle>SchemaCrawler Examples</defaultTitle>
+              <recursiveInput>true</recursiveInput>
+              <inputDirectory>${project.basedir}/src/examples/markdown</inputDirectory>
+              <outputDirectory>${project.basedir}/target/_distribution</outputDirectory>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <headerHtmlFile>${project.basedir}/src/site/header.include</headerHtmlFile>
-          <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
-          <defaultTitle>SchemaCrawler Examples</defaultTitle>
-          <recursiveInput>true</recursiveInput>
-          <inputDirectory>${project.basedir}/src/site/markdown</inputDirectory>
-          <outputDirectory>${project.basedir}/target/_distribution</outputDirectory>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
