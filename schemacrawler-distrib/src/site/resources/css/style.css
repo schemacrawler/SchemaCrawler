@@ -1,8 +1,3 @@
----
----
-
-@import "{{ site.theme }}";
-
 body, p, li, td, th, caption, select, input, strong {
     font-family: "Century Gothic", CenturyGothic, Geneva, sans-serif;
     font-size: 1.0rem;
@@ -47,4 +42,3 @@ h3 {
     font-size: 1.5rem;
     line-height: 2.0rem;
 }
-
