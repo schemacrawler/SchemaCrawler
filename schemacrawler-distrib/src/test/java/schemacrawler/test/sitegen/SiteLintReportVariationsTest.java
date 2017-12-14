@@ -78,7 +78,7 @@ public class SiteLintReportVariationsTest
   }
 
   @Test
-  public void snapshots()
+  public void lint_reports()
     throws Exception
   {
     for (final OutputFormat outputFormat: new OutputFormat[] {

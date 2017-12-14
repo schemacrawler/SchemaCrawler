@@ -64,7 +64,7 @@
                      <a class="nav-link" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-1" data-toggle="dropdown">
                      SchemaCrawler
                      </a>
                      <div class="dropdown-menu">
@@ -81,7 +81,7 @@
                      </div>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-2" data-toggle="dropdown">
                      Features
                      </a>
                      <div class="dropdown-menu">   
@@ -99,7 +99,7 @@
                      </div>
                   </li>
                   <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-3" data-toggle="dropdown">
                      Resources
                      </a>
                      <div class="dropdown-menu">   
@@ -116,10 +116,13 @@
                </ul>
             </nav>
          </header>
-         <main role="main">
+         <main>
             <div id="banner" class="jumbotron bg-light">
                <img class="img-fluid" style="display: block; float: left; width: 8.0rem;" src="images/schemacrawler_logo.svg" alt="Schemacrawler logo" />
                <h1>SchemaCrawler</h1>
                <p class="lead">Free database schema discovery and comprehension tool</p>
             </div>
             <div id="page-content" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
+
+<!-- PAGE CONTENT -- START -->
+
