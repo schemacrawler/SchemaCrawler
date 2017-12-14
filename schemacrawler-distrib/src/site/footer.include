@@ -21,6 +21,15 @@
          <footer class="footer">
             <!-- Footer with copyright -->
             <hr/>
+						
+            <div class="alert bg-light alert-dismissible fade show" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              SchemaCrawler is free and open-source software. 
+							<a href="https://www.paypal.me/sualeh">Donations are appreciated.</a>
+            </div>
+						
             <div id="footer" xmlns:dc="http://purl.org/dc/elements/1.1/">
               <p id="copyright" property="dc:rights">&copy;
                 <span property="dc:dateCopyrighted">2000-2018</span>
