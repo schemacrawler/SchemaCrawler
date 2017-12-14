@@ -52,6 +52,7 @@
             <configuration>
               <headerHtmlFile>${project.basedir}/src/examples/header.include</headerHtmlFile>
               <footerHtmlFile>${project.basedir}/src/examples/footer.include</footerHtmlFile>
+              <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,TABLES</pegdownExtensions>
               <defaultTitle>SchemaCrawler Examples</defaultTitle>
               <recursiveInput>true</recursiveInput>
               <inputDirectory>${project.basedir}/src/examples/markdown</inputDirectory>
@@ -67,6 +68,7 @@
             <configuration>
               <headerHtmlFile>${project.basedir}/src/site/header.include</headerHtmlFile>
               <footerHtmlFile>${project.basedir}/src/site/footer.include</footerHtmlFile>
+              <pegdownExtensions>SMARTYPANTS,FENCED_CODE_BLOCKS,AUTOLINKS,TABLES</pegdownExtensions>
               <recursiveInput>true</recursiveInput>
               <inputDirectory>${project.basedir}/src/site/markdown</inputDirectory>
               <outputDirectory>${project.basedir}/target/_website</outputDirectory>

@@ -51,7 +51,7 @@ is returned, it means that the lint has detected a problem. However, if
 no rows of data are returned, it means that there are no issues. 
 Example configuration:
 
-```
+```xml
 <linter id="schemacrawler.tools.linter.LinterCatalogSql">
   <config>
     <property name="message">message for SQL catalog lint</property>

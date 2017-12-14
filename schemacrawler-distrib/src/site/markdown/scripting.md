@@ -17,7 +17,7 @@ download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and
 An hypothetical example of SchemaCrawler JavaScript support is in the
 following script, which attempts to drop all the tables in the database.
 
-<div class="source"><pre> 
+```javascript
 var dropTables = function()
 {
   println(catalog.schemaCrawlerInfo);
@@ -44,4 +44,4 @@ var dropTables = function()
 };
 
 dropTables();      
-</pre></div>
+```
