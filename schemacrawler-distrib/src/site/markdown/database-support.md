@@ -8,10 +8,10 @@ systems (RDBMS) for convenience. The bundled distributions of SchemaCrawler are 
 given database system. However, some JDBC drivers are proprietary, even if free. These JDBC 
 drivers need to be downloaded separately.
 
-The JDBC drivers bundled with SchemaCrawler are:
+The JDBC drivers for database systems commonly used with SchemaCrawler are:
 
-- The [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](http://www.xerial.org/trac/Xerial/wiki/SQLiteJDBC) 
-  is included with the SchemaCrawler download. _Please do not replace this bundled driver, or SchemaCrawler will not function._
+- The [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
+  is included with the SchemaCrawler download.
 - The [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html) 
   needs to be downloaded separately.
 - The [Microsoft SQL Server](http://www.microsoft.com/sqlserver/) [JDBC driver](https://github.com/Microsoft/mssql-jdbc) 
@@ -43,7 +43,7 @@ For example, typical command-line options for SchemaCrawler for Microsoft SQL Se
 `-server=sqlserver -host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo 
 -user=schemacrawler -password=schemacrawler`
 
-You should always use the -schemas command-line switch for databases that support it. The value 
+You should always use the `-schemas` command-line switch for databases that support it. The value 
 for the `-schemas` switch is a regular expression that determines which schemas SchemaCrawler will 
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically 
 schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).

@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <meta name="copyright" content="&copy; 2000-2018 Sualeh Fatehi." />
       <!-- Begin SEO -->
-      <title>SchemaCrawler | Free database schema discovery and comprehension tool</title>
+      <title>SchemaCrawler - Free database schema discovery and comprehension tool</title>
       <meta property="og:title" content="SchemaCrawler" />
       <meta property="og:locale" content="en_US" />
       <meta name="description" content="Free database schema discovery and comprehension tool" />
@@ -22,10 +22,10 @@
          "url":"https://www.SchemaCrawler.com",
          "logo":"https://sualeh.github.io/SchemaCrawler/images/schemacrawler_logo.svg",
          "headline":"SchemaCrawler",
-           "sameAs": [
+         "sameAs": [
              "https://www.facebook.com/schemacrawler/",
              "https://www.linkedin.com/company/2826059/"
-           ],
+         ],
          "@context":"http://schema.org"
          }
       </script>
@@ -44,8 +44,9 @@
          integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
          crossorigin="anonymous"></script>
       <!-- Lightbox -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/js/lightbox.min.js"></script>
+      <!--  SchemaCrawler styles -->
       <link rel="stylesheet" href="css/style.css">
       <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -122,6 +123,15 @@
                <h1>SchemaCrawler</h1>
                <p class="lead">Free database schema discovery and comprehension tool</p>
             </div>
+            
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              SchemaCrawler is free and open-source software. 
+							<a href="https://www.paypal.me/sualeh" class="alert-link">Donations are appreciated.</a>
+            </div>
+            
             <div id="page-content" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
 
 <!-- PAGE CONTENT -- START -->
