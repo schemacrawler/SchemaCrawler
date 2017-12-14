@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-commandline</artifactId>
+      <artifactId>schemacrawler-lint</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
