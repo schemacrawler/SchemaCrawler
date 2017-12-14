@@ -28,3 +28,8 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 /schemacrawler-examplecode/derby.log
+**/hsqldb.schemacrawler.lck
+**/hsqldb.schemacrawler.lobs
+**/hsqldb.schemacrawler.log
+**/hsqldb.schemacrawler.properties
+**/hsqldb.schemacrawler.script

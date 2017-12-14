@@ -124,12 +124,12 @@
                <p class="lead">Free database schema discovery and comprehension tool</p>
             </div>
             
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <div class="alert bg-light alert-dismissible fade show" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
               SchemaCrawler is free and open-source software. 
-							<a href="https://www.paypal.me/sualeh" class="alert-link">Donations are appreciated.</a>
+							<a href="https://www.paypal.me/sualeh">Donations are appreciated.</a>
             </div>
             
             <div id="page-content" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
