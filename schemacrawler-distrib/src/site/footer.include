@@ -18,7 +18,8 @@
             $("table").addClass("table-sm");
             $("table").addClass("table-bordered");
             $("table").addClass("table-responsive");
-            $("thead").addClass("thead-dark");
+						$("table").addClass("mw-100");
+            $("thead").addClass("thead-dark");						
           </script>
 
           <!-- Footer with copyright -->
