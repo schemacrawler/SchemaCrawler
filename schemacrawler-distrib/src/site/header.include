@@ -31,17 +31,17 @@
       </script>
       <!-- End SEO -->
       <!-- Bootstrap 4.0 -->
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
-         integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+         integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
          crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
-         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" 
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
          crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" 
-         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
          crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" 
-         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
          crossorigin="anonymous"></script>
       <!-- Lightbox -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.10.0/css/lightbox.min.css" />
@@ -53,78 +53,81 @@
       <![endif]-->
    </head>
    <body>
-      <div class="container">
-         <header class="header clearfix">
-            <nav class="navbar navbar-expand-sm bg-light navbar-light">
-               <!-- Links -->
-               <ul class="navbar-nav">
-                  <li class="nav-item">
-                     <a class="nav-link" href="consulting.html">Consulting</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-1" data-toggle="dropdown">
-                     SchemaCrawler
-                     </a>
-                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="index.html">About SchemaCrawler</a>
-                        <a class="dropdown-item" href="readme.html">Readme</a>
-                        <a class="dropdown-item" href="who-uses.html">Who Uses</a>
-                        <a class="dropdown-item" href="ecosystem.html">Ecosystem</a>
-                        <a class="dropdown-item" href="database-support.html">Database System Support</a>
-                        <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
-                        <a class="dropdown-item" href="changes-report.html">Change History</a>
-                        <a class="dropdown-item" href="license.html">License</a>
-                        <a class="dropdown-item" href="building.html">Building From Source Code</a>
-                        <a class="dropdown-item" href="consulting.html">Suport and Consulting</a>
-                     </div>
-                  </li>
-                  <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-2" data-toggle="dropdown">
-                     Features
-                     </a>
-                     <div class="dropdown-menu">   
-                        <a class="dropdown-item" href="output.html">Text Output</a>
-                        <a class="dropdown-item" href="diff.html">Diff</a>
-                        <a class="dropdown-item" href="schemacrawler_grep.html">Grep</a>
-                        <a class="dropdown-item" href="diagramming.html">Diagramming</a>
-                        <a class="dropdown-item" href="scripting.html">Scripting</a>
-                        <a class="dropdown-item" href="lint.html">Lint</a>
-                        <a class="dropdown-item" href="weak-associations.html">Weak Associations</a>
-                        <a class="dropdown-item" href="offline.html">Offline Snapshots</a>
-                        <a class="dropdown-item" href="plugins.html">Plugins</a>
-                        <a class="dropdown-item" href="data-dictionary-extensions.html">Extensions Using the Data Dictionary</a>
-                        <a class="dropdown-item" href="report-maven-plugin.html">SchemaCrawler Report Maven Plugin</a>
-                     </div>
-                  </li>
-                  <li class="nav-item dropdown">
-                     <a class="nav-link dropdown-toggle" href="#" id="navbardrop-3" data-toggle="dropdown">
-                     Resources
-                     </a>
-                     <div class="dropdown-menu">   
-                        <a class="dropdown-item" href="readme.html">Getting Started</a>
-                        <a class="dropdown-item" href="resources.html">Resources</a>
-                        <a class="dropdown-item" href="code-examples.html">Code Examples</a>
-                        <a class="dropdown-item" href="faq.html">FAQS</a>
-                        <a class="dropdown-item" href="how-to.html">How-tos</a>
-                        <a class="dropdown-item" href="consulting.html">Get Help</a>
-                        <a class="dropdown-item" href="apidocs/index.html">Javadocs</a>
-                        <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler">Project Page on GitHub</a>
-                     </div>
-                  </li>
-               </ul>
-            </nav>
-         </header>
-         <main>
-            <div id="banner" class="jumbotron bg-light">
-               <img class="img-fluid" style="display: block; float: left; width: 8.0rem;" src="images/schemacrawler_logo.svg" alt="Schemacrawler logo" />
-               <h1>SchemaCrawler</h1>
-               <p class="lead">Free database schema discovery and comprehension tool</p>
-            </div>
-                        
-            <div id="page-content" class="container-fluid" style="padding-top:70px;padding-bottom:70px">
+     <header class="header clearfix">
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+           <!-- Links -->
+           <ul class="navbar-nav">
+              <li class="nav-item">
+                 <a class="nav-link" href="consulting.html">Consulting</a>
+              </li>
+              <li class="nav-item">
+                 <a class="nav-link" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
+              </li>
+              <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop-1" data-toggle="dropdown">
+                 SchemaCrawler
+                 </a>
+                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="index.html">About SchemaCrawler</a>
+                    <a class="dropdown-item" href="readme.html">Readme</a>
+                    <a class="dropdown-item" href="who-uses.html">Who Uses</a>
+                    <a class="dropdown-item" href="ecosystem.html">Ecosystem</a>
+                    <a class="dropdown-item" href="database-support.html">Database System Support</a>
+                    <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
+                    <a class="dropdown-item" href="changes-report.html">Change History</a>
+                    <a class="dropdown-item" href="license.html">License</a>
+                    <a class="dropdown-item" href="building.html">Building From Source Code</a>
+                    <a class="dropdown-item" href="consulting.html">Suport and Consulting</a>
+                 </div>
+              </li>
+              <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop-2" data-toggle="dropdown">
+                 Features
+                 </a>
+                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="output.html">Text Output</a>
+                    <a class="dropdown-item" href="diff.html">Diff</a>
+                    <a class="dropdown-item" href="schemacrawler_grep.html">Grep</a>
+                    <a class="dropdown-item" href="diagramming.html">Diagramming</a>
+                    <a class="dropdown-item" href="scripting.html">Scripting</a>
+                    <a class="dropdown-item" href="lint.html">Lint</a>
+                    <a class="dropdown-item" href="weak-associations.html">Weak Associations</a>
+                    <a class="dropdown-item" href="offline.html">Offline Snapshots</a>
+                    <a class="dropdown-item" href="plugins.html">Plugins</a>
+                    <a class="dropdown-item" href="data-dictionary-extensions.html">Extensions Using the Data Dictionary</a>
+                    <a class="dropdown-item" href="report-maven-plugin.html">SchemaCrawler Report Maven Plugin</a>
+                 </div>
+              </li>
+              <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop-3" data-toggle="dropdown">
+                 Resources
+                 </a>
+                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="readme.html">Getting Started</a>
+                    <a class="dropdown-item" href="resources.html">Resources</a>
+                    <a class="dropdown-item" href="code-examples.html">Code Examples</a>
+                    <a class="dropdown-item" href="faq.html">FAQS</a>
+                    <a class="dropdown-item" href="how-to.html">How-tos</a>
+                    <a class="dropdown-item" href="consulting.html">Get Help</a>
+                    <a class="dropdown-item" href="apidocs/index.html">Javadocs</a>
+                    <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler">Project Page on GitHub</a>
+                 </div>
+              </li>
+           </ul>
+        </nav>
+
+        <div id="banner" class="jumbotron jumbotron-fluid bg-light">
+          <div class="container-fluid">
+            <img class="img-fluid" style="display: block; float: left; width: 8.0rem;" src="images/schemacrawler_logo.svg" alt="Schemacrawler logo" />
+            <h1>SchemaCrawler</h1>
+            <p class="lead">Free database schema discovery and comprehension tool</p>
+          </div>
+        </div>
+
+     </header>
+
+     <main>
+        <div id="page-content" class="container-fluid">
 
 <!-- PAGE CONTENT -- START -->
 
