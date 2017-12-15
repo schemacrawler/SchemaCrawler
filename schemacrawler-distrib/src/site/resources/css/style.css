@@ -1,8 +1,14 @@
 body {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 3.0rem;
+  padding-right: 3.0rem;
+  padding-bottom: 3.0rem;
+}
+
+@media (max-width: 767px) {
+body {
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
 }
 
 body, p, li, td, th, caption, select, input, strong {

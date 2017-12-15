@@ -61,7 +61,7 @@ SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [comma-
 
 ### <a name="commands">What are the SchemaCrawler commands?</a>
 
-The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the provided scripts ( `schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
+The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
 
 SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _infolevel_ , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
 

@@ -1,43 +1,43 @@
 
 <!-- PAGE CONTENT -- END -->
 
-            </div>
-            <!-- Global site tag (gtag.js) - Google Analytics -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-22913512-2"></script>
-            <script>
-               window.dataLayer = window.dataLayer || [];
-               function gtag(){dataLayer.push(arguments);}
-               gtag('js', new Date());
-               
-               gtag('config', 'UA-22913512-2');
-            </script>
-						<script>
-							$("table").addClass("table-sm");
-							$("table").addClass("table-bordered");							
-							$("table").addClass("table-responsive");
-							$("thead").addClass("thead-dark");
-						</script>
-         </main>
-         <footer class="footer">
-            <!-- Footer with copyright -->
+          </div>
+       </main>
+       <footer class="footer">
+
+          <!-- Global site tag (gtag.js) - Google Analytics -->
+          <script async src="https://www.googletagmanager.com/gtag/js?id=UA-22913512-2"></script>
+          <script>
+             window.dataLayer = window.dataLayer || [];
+             function gtag(){dataLayer.push(arguments);}
+             gtag('js', new Date());
+
+             gtag('config', 'UA-22913512-2');
+          </script>
+          <script>
+            $("table").addClass("table-sm");
+            $("table").addClass("table-bordered");
+            $("table").addClass("table-responsive");
+            $("thead").addClass("thead-dark");
+          </script>
+
+          <!-- Footer with copyright -->
+          <div class="container-fluid">
             <hr/>
-						
-            <div class="alert bg-light alert-dismissible fade show" role="alert">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              SchemaCrawler is free and open-source software. 
-							<a href="https://www.paypal.me/sualeh">Donations are appreciated.</a>
+
+            <div class="bg-light">
+              <p>SchemaCrawler is free and open-source software.
+              <a href="https://www.paypal.me/sualeh">Donations are appreciated.</a></p>
             </div>
-						
+
             <div id="footer" xmlns:dc="http://purl.org/dc/elements/1.1/">
               <p id="copyright" property="dc:rights">&copy;
                 <span property="dc:dateCopyrighted">2000-2018</span>
                 <span property="dc:creator">Sualeh Fatehi &lt;sualeh@hotmail.com&gt;.</span>
               </p>
-              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.       
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
             </div>
-        </footer>     
-      </div>    
+          </div>
+      </footer>
    </body>
 </html>
