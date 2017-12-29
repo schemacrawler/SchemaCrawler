@@ -26,12 +26,13 @@
             <hr/>
 
              <div class="alert alert-info" role="alert">
-                  <a href="http://www.schemacrawler.com/">SchemaCrawler</a> is free and open-source software.       
-                  <strong><a href="https://www.paypal.me/sualeh">Donations are appreciated.</a></strong>
-             </div>
-
-            <div id="footer" xmlns:dc="http://purl.org/dc/elements/1.1/">
-              <p id="copyright" property="dc:rights">&copy;
+               <a href="http://www.schemacrawler.com/">SchemaCrawler</a> is free and open-source software.       
+               <strong><a href="https://www.paypal.me/sualeh">Donations are appreciated.</a></strong>
+            </div>
+            <div id="footer" xmlns:dc="http://purl.org/dc/elements/1.1/"  class="small">
+              <p id="copyright" property="dc:rights">
+                <span>SchemaCrawler, version 14.17.04</span><br />
+                &copy;
                 <span property="dc:dateCopyrighted">2000-2018</span>
                 <span property="dc:creator">Sualeh Fatehi &lt;sualeh@hotmail.com&gt;.</span>
               </p>
