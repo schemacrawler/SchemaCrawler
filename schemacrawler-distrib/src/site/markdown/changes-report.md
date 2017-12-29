@@ -158,6 +158,11 @@
 
 ## Releases
 
+<a name="a14.17.05"></a>
+### Release 14.17.05 - 2017-12-28
+
+* Website updates, including link to the SchemaCrawler Web Application.
+
 <a name="a14.17.04"></a>
 ### Release 14.17.04 - 2017-12-10
 
