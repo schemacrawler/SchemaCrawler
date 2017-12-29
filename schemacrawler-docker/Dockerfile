@@ -39,6 +39,11 @@ RUN \
  && apt-get install -y graphviz \
  && rm -rf /var/lib/apt/lists/*
 
+# Run the image as a non-root user
+RUN useradd -ms /bin/bash schemacrawler
+USER schemacrawler
+WORKDIR /home/schemacrawler
+
 # Download SchemaCrawler and prepare install directories
 RUN \
     wget -nv https://github.com/sualeh/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
@@ -50,6 +55,6 @@ RUN \
 
 # Mapping directories
 VOLUME /share
-WORKDIR /schemacrawler
+WORKDIR /home/schemacrawler/schemacrawler
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
