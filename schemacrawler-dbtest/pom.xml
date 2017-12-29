@@ -11,13 +11,43 @@
   <artifactId>schemacrawler-dbtest</artifactId>
   <packaging>jar</packaging>
   <name>SchemaCrawler Database Tests</name>
-  <dependencies>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <skip.signing.artifacts>true</skip.signing.artifacts>
+    <springframework.version>5.0.2.RELEASE</springframework.version>
+  </properties>  
+  <dependencies> 
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${springframework.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${springframework.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${springframework.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-dbcp2</artifactId>
+      <version>2.1.1</version>
+      <scope>test</scope>
+    </dependency>
+    
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>
+    </dependency>     
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
@@ -37,6 +67,7 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
