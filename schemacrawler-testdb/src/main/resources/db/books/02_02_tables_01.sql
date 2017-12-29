@@ -1,4 +1,4 @@
-CREATE TABLE BOOKS.Authors
+CREATE TABLE Authors
 (
   Id INTEGER NOT NULL,
   FirstName VARCHAR(20) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE BOOKS.Authors
 )
 ;
 
-CREATE TABLE BOOKS.Books
+CREATE TABLE Books
 (
   Id INTEGER NOT NULL,
   Title VARCHAR(255) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE BOOKS.Books
 )
 ;
 
-CREATE TABLE BOOKS.BookAuthors
+CREATE TABLE BookAuthors
 (
   BookId INTEGER NOT NULL,
   AuthorId INTEGER NOT NULL,
@@ -39,20 +39,20 @@ CREATE TABLE BOOKS.BookAuthors
 )
 ;
 
-CREATE TABLE BOOKS."Global Counts"
+CREATE TABLE "Global Counts"
 (
   "Global Count" INTEGER
 )
 ;
 
 -- Views
-CREATE VIEW BOOKS.AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
+CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
 ;
 
 -- Indexes
-CREATE UNIQUE INDEX UIDX_BookAuthors ON BOOKS.BookAuthors(BookId, AuthorId)
+CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)
 ;
-CREATE INDEX IDX_B_Authors ON BOOKS.Authors(LastName, FirstName)
+CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)
 ;
-CREATE INDEX IDX_A_Authors ON BOOKS.Authors(City, State, PostalCode, Country)
+CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
 ;
