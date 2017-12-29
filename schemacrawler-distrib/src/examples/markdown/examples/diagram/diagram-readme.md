@@ -5,6 +5,14 @@ The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 
 ## How to Run
 1. Make sure that java is on your PATH
+
+### Run With SQLite Database
+
+2. Start a command shell in the diagram example directory 
+3. Run `sqlite_diagram.cmd ..\..\_testdb\sc.db sc.pdf` (or `sqlite_diagram.sh  ../../_testdb/sc.db sc.pdf` on Unix) 
+
+### Run With HyperSQL Database
+
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the diagram example directory 
 4. Run `diagram.cmd` (or `diagram.sh` on Unix) 
