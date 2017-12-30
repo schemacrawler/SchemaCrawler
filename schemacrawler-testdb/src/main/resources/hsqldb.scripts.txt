@@ -16,12 +16,10 @@
 /db/books/11_synonyms_01_A.sql
 /db/books/90_data_01_A.sql
 
-/testdatabase/for_lint.pre_schema.sql
-/testdatabase/for_lint.schema.sql
-/testdatabase/for_lint.post_schema.sql
-/testdatabase/for_lint.data.sql
+/db/for_lint/for_lint.pre_schema.sql
+/db/for_lint/for_lint.schema.sql
+/db/for_lint/for_lint.post_schema.sql
 
-/testdatabase/publisher sales.pre_schema.sql
-/testdatabase/publisher sales.schema.sql
-/testdatabase/publisher sales.post_schema.sql
-/testdatabase/publisher sales.data.sql
+/db/publisher sales/publisher sales.pre_schema.sql
+/db/publisher sales/publisher sales.schema.sql
+/db/publisher sales/publisher sales.data.sql
