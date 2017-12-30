@@ -124,7 +124,7 @@ public class SpringIntegrationTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertEquals("Unexpected number of tables in the schema",
-                 6,
+                 7,
                  catalog.getTables(schema).size());
   }
 

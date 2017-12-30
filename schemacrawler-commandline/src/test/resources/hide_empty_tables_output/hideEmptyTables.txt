@@ -142,6 +142,11 @@ SYS_PK_10093                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
 Indexes
 
 SYS_IDX_SYS_PK_10093_10094                                [unique index]

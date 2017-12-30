@@ -16,6 +16,7 @@ PUBLIC	BOOKS	BOOKS	TABLE	Details for published books	NULL	NULL	NULL	NULL	NULL	ME
 PUBLIC	BOOKS	Global Counts	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	BOOKS	PUBLISHERS	TABLE	List of book publishers	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	BOOKS	TEMP_AUTHOR_LIST	GLOBAL TEMPORARY	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	DELETE
+PUBLIC	BOOKS	ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	EXTRA_PK	TABLE	Extra table with just a primary key	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	Global Counts	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	PUBLICATIONS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
@@ -23,7 +24,6 @@ PUBLIC	FOR_LINT	PUBLICATIONWRITERS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	fa
 PUBLIC	FOR_LINT	SELFREFERENCE	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	FOR_LINT	TEMP1	GLOBAL TEMPORARY	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	DELETE
 PUBLIC	FOR_LINT	WRITERS	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
-PUBLIC	FOR_LINT	ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	TABLE	NULL	NULL	NULL	NULL	NULL	NULL	MEMORY	false	NULL
 PUBLIC	INFORMATION_SCHEMA	ADMINISTRABLE_ROLE_AUTHORIZATIONS	SYSTEM TABLE	one row for each role that can be granted	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	APPLICABLE_ROLES	SYSTEM TABLE	one row for each role granted to an authorization	NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
 PUBLIC	INFORMATION_SCHEMA	ASSERTIONS	SYSTEM TABLE		NULL	NULL	NULL	NULL	NULL	MEMORY	true	NULL
@@ -266,6 +266,12 @@ ID	PUBLISHER
 
 
 
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                       
+------------------------------------------------------------------------
+ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+
+
+
 PUBLIC."PUBLISHER SALES".REGIONS                                        
 ------------------------------------------------------------------------
 CITY	STATE	POSTALCODE	COUNTRY
@@ -335,6 +341,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
 PUBLIC.BOOKS."Global Counts"                                       empty
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                  empty
 PUBLIC."PUBLISHER SALES".REGIONS                                 20 rows
 PUBLIC."PUBLISHER SALES".SALES                                   20 rows
 PUBLIC."PUBLISHER SALES".SALESDATA                                 empty
@@ -430,6 +437,28 @@ Primary Key
 SYS_PK_10093                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
+
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+
+
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+------------------------------------------------------------------------
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+Primary Key
+
+PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 
 

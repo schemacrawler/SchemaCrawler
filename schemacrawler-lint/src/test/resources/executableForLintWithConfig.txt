@@ -50,6 +50,16 @@ PUBLIC.BOOKS."Global Counts"                                     [table]
 
 
 
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
+
+
+
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
 ------------------------------------------------------------------------
 
@@ -109,16 +119,6 @@ PUBLIC.FOR_LINT.WRITERS                                          [table]
 	empty table	
 	should have remarks	
 	should have remarks	ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID
-
-
-
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
-------------------------------------------------------------------------
-
-                                                             [lint, low]
-	empty table	
-	should have remarks	
-	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
 
 
 

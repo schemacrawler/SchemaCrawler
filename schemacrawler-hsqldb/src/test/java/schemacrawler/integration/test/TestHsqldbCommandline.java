@@ -140,7 +140,7 @@ public class TestHsqldbCommandline
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull(schema);
 
-    assertEquals(6, catalog.getTables(schema).size());
+    assertEquals(7, catalog.getTables(schema).size());
     final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
     assertNotNull(table);
 

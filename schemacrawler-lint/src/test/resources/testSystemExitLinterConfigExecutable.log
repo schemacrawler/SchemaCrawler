@@ -11,7 +11,7 @@ Summary of schema lints:
 [medium]      5- no non-nullable data columns
 [medium]      6- spaces in name, or reserved word
 [medium]     10- incrementing columns
-  [high]      2- foreign key data type different from primary key
+  [high]      1- foreign key data type different from primary key
   [high]      5- no primary key
   [high]      6- redundant index
   [high]      7- primary key may not be a surrogate

@@ -325,19 +325,6 @@ td.section {
 </table>
 <p>&#160;</p>
 
-
-
-<table>
-  <caption style='background-color: #FFFFFF;'><span class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span></caption>
-
-	<tr>
-		<th>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</th>
-		<th>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</th>
-		<th>ΣΥΓΓΡΑΦΈΑΣ</th>
-	</tr>
-</table>
-<p>&#160;</p>
-
 <p>&#160;</p>
 <h2>Tables</h2>
 
@@ -732,72 +719,6 @@ td.section {
 		<td class='minwidth'>ID ←(0..many) <a href='#publicationwriters_f68ea883'>PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID</a></td>
 		<td class='minwidth'></td>
 	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_fbda5242'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
-		<td class='minwidth'></td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_fbda5242' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
-		<td class='minwidth'>BIGINT NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
-		<td class='minwidth'>INTEGER</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Primary Key</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='description right'>[primary key]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Foreign Keys</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#writers_3778840f'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
 </table>
 <p>&#160;</p>
 
@@ -1170,54 +1091,6 @@ td.section {
 		<td></td>
 		<td>should have remarks</td>
 		<td>ID, FIRSTNAME, LASTNAME, ADDRESS1, ADDRESS2, CITY, STATE, POSTALCODE, COUNTRY, PHONE1, PHONE2, EMAIL1, EMAIL2, FAX, FAX3, HOMEEMAIL11, HOMEEMAIL12, PUBLICATION_ID</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-
-
-  <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_fbda5242' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
-
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[lint, high]</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>foreign key data type different from primary key</td>
-		<td>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[lint, medium]</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>no non-nullable data columns</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[lint, low]</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>empty table</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>should have remarks</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td>should have remarks</td>
-		<td>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ</td>
 	</tr>
 </table>
 <p>&#160;</p>

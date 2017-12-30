@@ -90,6 +90,28 @@ SYS_PK_10093                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
+
+
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+------------------------------------------------------------------------
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+Primary Key
+
+PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
+  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]

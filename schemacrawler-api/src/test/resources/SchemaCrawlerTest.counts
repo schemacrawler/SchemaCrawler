@@ -43,9 +43,17 @@ schema: PUBLIC.BOOKS
     # columns: 2
     # constraints: 1
     # indexes: 1
-    # foreign keys: 0
-    # imported foreign keys: 0
+    # foreign keys: 1
+    # imported foreign keys: 1
     # exported: 0
+    # privileges: 6
+  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    # columns: 3
+    # constraints: 3
+    # indexes: 2
+    # foreign keys: 1
+    # imported foreign keys: 0
+    # exported: 1
     # privileges: 6
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
