@@ -58,6 +58,15 @@
     {
       "foreignKeys": [],
       "columns": [],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "columns": [],
       "name": "EXTRA_PK",
       "fullName": "PUBLIC.FOR_LINT.EXTRA_PK",
       "type": "table",
@@ -112,15 +121,6 @@
     {
       "foreignKeys": [],
       "columns": [],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table",
-      "remarks": "",
-      "primaryKey": {}
-    },
-    {
-      "foreignKeys": [],
-      "columns": [],
       "name": "REGIONS",
       "fullName": "PUBLIC.\"PUBLISHER SALES\".REGIONS",
       "type": "table",
@@ -147,7 +147,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-11-15 22:34:53",
+    "crawlTimestamp": "2017-12-30 01:18:55",
     "title": ""
   },
   "routines": [

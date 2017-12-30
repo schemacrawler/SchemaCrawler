@@ -65,16 +65,6 @@ CREATE TABLE EXTRA_PK
 )
 ;
 
-CREATE TABLE πίνακαβάσηςδεδομένων
-(
-  στήληβάσηςδεδομένων BIGINT NOT NULL,
-  άλληστήληβάσηςδεδομένων VARCHAR(10),  
-  συγγραφέας INT,
-  CONSTRAINT PK_πίνακαβάσηςδεδομένων PRIMARY KEY (στήληβάσηςδεδομένων),  
-  CONSTRAINT FK_πίνακαβάσηςδεδομένων_Publications FOREIGN KEY (συγγραφέας) REFERENCES Writers (Id)
-)
-;
-
 CREATE TABLE SelfReference
 (
   Id INTEGER NOT NULL,

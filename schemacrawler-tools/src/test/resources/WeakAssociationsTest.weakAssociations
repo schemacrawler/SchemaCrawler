@@ -11,6 +11,7 @@ schema: PUBLIC.BOOKS
   table: PUBLIC.BOOKS.PUBLISHERS
     weak association (1 to (0..many)):
       column reference: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

@@ -141,6 +141,12 @@ ID	PUBLISHER
 
 
 
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                       
+------------------------------------------------------------------------
+ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+
+
+
 PUBLIC.FOR_LINT.EXTRA_PK                                                
 ------------------------------------------------------------------------
 WRITERID	PUBLICATIONID	ID
@@ -174,12 +180,6 @@ ID	TITLE
 PUBLIC.FOR_LINT.WRITERS                                                 
 ------------------------------------------------------------------------
 ID	FIRSTNAME	LASTNAME	ADDRESS1	ADDRESS2	CITY	STATE	POSTALCODE	COUNTRY	PHONE1	PHONE2	EMAIL1	EMAIL2	FAX	FAX3	HOMEEMAIL11	HOMEEMAIL12	PUBLICATION_ID
-
-
-
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    
-------------------------------------------------------------------------
-ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
 
 
 

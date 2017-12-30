@@ -277,15 +277,6 @@
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
-        },
-        {
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-          "deleteRule": "no action",
-          "columnReferences": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-          }],
-          "updateRule": "no action"
         }
       ],
       "columns": [
@@ -401,57 +392,10 @@
         "unique": true,
         "name": "PK_WRITERS"
       }
-    },
-    {
-      "foreignKeys": [{
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-        "deleteRule": "no action",
-        "columnReferences": [{
-          "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-          "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-        }],
-        "updateRule": "no action"
-      }],
-      "columns": [
-        {
-          "size": 64,
-          "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
-          "size": 32,
-          "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        }
-      ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table",
-      "remarks": "",
-      "primaryKey": {
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-        },
-        "unique": true,
-        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-      }
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-29 19:57:03",
+    "crawlTimestamp": "2017-12-30 01:25:01",
     "title": ""
   }
 },
@@ -479,10 +423,6 @@
     },
     {
       "title": "PUBLIC.FOR_LINT.WRITERS",
-      "value": 0
-    },
-    {
-      "title": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "value": 0
     }
   ],
@@ -800,43 +740,6 @@
       ],
       "name": "WRITERS",
       "fullName": "PUBLIC.FOR_LINT.WRITERS",
-      "type": "table"
-    },
-    {
-      "lints": [
-        {
-          "severity": "high",
-          "description": "foreign key data type different from primary key",
-          "id": "schemacrawler.tools.linter.LinterForeignKeyMismatch",
-          "value": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS"
-        },
-        {
-          "severity": "medium",
-          "description": "no non-nullable data columns",
-          "id": "schemacrawler.tools.linter.LinterTableAllNullableColumns",
-          "value": ""
-        },
-        {
-          "severity": "low",
-          "description": "empty table",
-          "id": "schemacrawler.tools.linter.LinterTableEmpty",
-          "value": ""
-        },
-        {
-          "severity": "low",
-          "description": "should have remarks",
-          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": ""
-        },
-        {
-          "severity": "low",
-          "description": "should have remarks",
-          "id": "schemacrawler.tools.linter.LinterTableWithNoRemarks",
-          "value": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ"
-        }
-      ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
       "type": "table"
     }
   ],

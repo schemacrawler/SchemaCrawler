@@ -30,6 +30,10 @@ PUBLIC.BOOKS
   PUBLISHERS [table]
     ID [INTEGER]
     PUBLISHER [VARCHAR]
+  ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ [table]
+    ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ [BIGINT]
+    ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ [VARCHAR]
+    ΣΥΓΓΡΑΦΈΑΣ [INTEGER]
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"

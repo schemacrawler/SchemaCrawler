@@ -20,8 +20,12 @@
     # parent tables: []
   table: PUBLIC.BOOKS.PUBLISHERS
     # columns: 2
-    # child tables: []
+    # child tables: [PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ]
     # parent tables: []
+  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    # columns: 3
+    # child tables: []
+    # parent tables: [PUBLIC.BOOKS.PUBLISHERS]
   table: PUBLIC."PUBLISHER SALES".REGIONS
     # columns: 4
     # child tables: [PUBLIC."PUBLISHER SALES".SALES]

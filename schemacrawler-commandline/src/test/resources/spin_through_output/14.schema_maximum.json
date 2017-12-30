@@ -699,7 +699,15 @@
       "primaryKey": {}
     },
     {
-      "foreignKeys": [],
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
       "indexes": [{
         "columns": {
           "sortSequence": "ascending",
@@ -761,6 +769,127 @@
       }
     },
     {
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124"
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ΣΥΓΓΡΑΦΈΑΣ"
+          },
+          "unique": false,
+          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126"
+        }
+      ],
+      "columns": [
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "(10)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "columns": {
+            "size": 64,
+            "nullable": false,
+            "databaseSpecificType": "BIGINT",
+            "dataType": "BIGINT",
+            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "type": "primary_key"
+        },
+        {
+          "columns": {
+            "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ΣΥΓΓΡΑΦΈΑΣ",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+          "type": "foreign_key"
+        },
+        {
+          "columns": {
+            "size": 64,
+            "nullable": false,
+            "databaseSpecificType": "BIGINT",
+            "dataType": "BIGINT",
+            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "name": "SYS_CT_10123",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+        },
+        "unique": true,
+        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+      }
+    },
+    {
       "foreignKeys": [
         {
           "name": "FK_PUBLICATION_JOIN",
@@ -788,7 +917,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_JOIN_10179"
+          "name": "SYS_IDX_FK_WRITER_JOIN_10184"
         },
         {
           "columns": {
@@ -796,7 +925,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10175"
+          "name": "SYS_IDX_PK_EXTRA_PK_10180"
         },
         {
           "columns": {
@@ -804,7 +933,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10181"
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10186"
         }
       ],
       "columns": [
@@ -900,7 +1029,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10172",
+          "name": "SYS_CT_10177",
           "type": "check"
         },
         {
@@ -914,7 +1043,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10173",
+          "name": "SYS_CT_10178",
           "type": "check"
         },
         {
@@ -928,7 +1057,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10174",
+          "name": "SYS_CT_10179",
           "type": "check"
         }
       ],
@@ -1010,7 +1139,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10160"
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10165"
         },
         {
           "columns": {
@@ -1018,7 +1147,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10156"
+          "name": "SYS_IDX_PK_PUBLICATIONS_10161"
         }
       ],
       "columns": [
@@ -1155,7 +1284,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10153",
+          "name": "SYS_CT_10158",
           "type": "check"
         },
         {
@@ -1169,7 +1298,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10154",
+          "name": "SYS_CT_10159",
           "type": "check"
         },
         {
@@ -1183,7 +1312,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10155",
+          "name": "SYS_CT_10160",
           "type": "check"
         }
       ],
@@ -1225,7 +1354,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_10167"
+          "name": "SYS_IDX_FK_WRITER_10172"
         },
         {
           "columns": {
@@ -1233,7 +1362,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_10169"
+          "name": "SYS_IDX_FK_PUBLICATION_10174"
         }
       ],
       "columns": [
@@ -1304,7 +1433,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10162",
+          "name": "SYS_CT_10167",
           "type": "check"
         },
         {
@@ -1318,7 +1447,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10163",
+          "name": "SYS_CT_10168",
           "type": "check"
         }
       ],
@@ -1486,15 +1615,6 @@
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
-        },
-        {
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-          "deleteRule": "no action",
-          "columnReferences": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-          }],
-          "updateRule": "no action"
         }
       ],
       "indexes": [
@@ -1504,7 +1624,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10146"
+          "name": "SYS_IDX_PK_WRITERS_10151"
         },
         {
           "columns": {
@@ -1837,7 +1957,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10141",
+          "name": "SYS_CT_10146",
           "type": "check"
         },
         {
@@ -1851,7 +1971,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10142",
+          "name": "SYS_CT_10147",
           "type": "check"
         },
         {
@@ -1865,7 +1985,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10143",
+          "name": "SYS_CT_10148",
           "type": "check"
         },
         {
@@ -1879,7 +1999,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10144",
+          "name": "SYS_CT_10149",
           "type": "check"
         },
         {
@@ -1893,7 +2013,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10145",
+          "name": "SYS_CT_10150",
           "type": "check"
         }
       ],
@@ -1905,127 +2025,6 @@
         },
         "unique": true,
         "name": "PK_WRITERS"
-      }
-    },
-    {
-      "foreignKeys": [{
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-        "deleteRule": "no action",
-        "columnReferences": [{
-          "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-          "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-        }],
-        "updateRule": "no action"
-      }],
-      "indexes": [
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-          },
-          "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10184"
-        },
-        {
-          "columns": {
-            "sortSequence": "ascending",
-            "name": "ΣΥΓΓΡΑΦΈΑΣ"
-          },
-          "unique": false,
-          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10186"
-        }
-      ],
-      "columns": [
-        {
-          "size": 64,
-          "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
-          "size": 10,
-          "nullable": true,
-          "databaseSpecificType": "VARCHAR",
-          "dataType": "VARCHAR",
-          "name": "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "(10)",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
-          "size": 32,
-          "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        }
-      ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table",
-      "triggers": [],
-      "tableConstraints": [
-        {
-          "columns": {
-            "size": 64,
-            "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-            "width": "",
-            "decimalDigits": 0,
-            "autoIncremented": false
-          },
-          "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "type": "primary_key"
-        },
-        {
-          "columns": {
-            "size": 32,
-            "nullable": true,
-            "databaseSpecificType": "INTEGER",
-            "dataType": "INTEGER",
-            "name": "ΣΥΓΓΡΑΦΈΑΣ",
-            "width": "",
-            "decimalDigits": 0,
-            "autoIncremented": false
-          },
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-          "type": "foreign_key"
-        },
-        {
-          "columns": {
-            "size": 64,
-            "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-            "width": "",
-            "decimalDigits": 0,
-            "autoIncremented": false
-          },
-          "name": "SYS_CT_10183",
-          "type": "check"
-        }
-      ],
-      "remarks": "",
-      "primaryKey": {
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-        },
-        "unique": true,
-        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
       }
     },
     {
@@ -2474,7 +2473,7 @@
     "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-29 19:49:44",
+    "crawlTimestamp": "2017-12-30 01:19:07",
     "title": ""
   },
   "routines": [
@@ -2519,20 +2518,6 @@
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
       "parameters": [
         {
           "databaseSpecificType": "INTEGER",
@@ -2549,6 +2534,20 @@
           "type": "in"
         }
       ],
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
       "returnType": "does not return a table",
       "remarks": ""
     },

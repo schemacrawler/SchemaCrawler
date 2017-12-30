@@ -179,11 +179,46 @@ SYS_PK_10093                                               [primary key]
 1   ID                                ascending                   
                                     auto-incremented            
 
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+ 1  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+
 Indexes
 
 SYS_IDX_SYS_PK_10093_10094                                [unique index]
 1   ID                                ascending                   
                                     auto-incremented            
+
+
+
+PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+------------------------------------------------------------------------
+1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
+2   ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
+3   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+
+Primary Key
+
+PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
+1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+Foreign Keys
+
+FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
+ 1  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+
+Indexes
+
+SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124                     [unique index]
+1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+
+SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126      [non-unique index]
+3   ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
+
+Table Constraints
+
+SYS_CT_10123                                          [check constraint]
 
 
 
@@ -209,22 +244,22 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_JOIN_10179                          [non-unique index]
+SYS_IDX_FK_WRITER_JOIN_10184                          [non-unique index]
 1   WRITERID                          ascending                   
 
-SYS_IDX_PK_EXTRA_PK_10175                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10180                                 [unique index]
 3   ID                                ascending                   
 
-SYS_IDX_FK_PUBLICATION_JOIN_10181                     [non-unique index]
+SYS_IDX_FK_PUBLICATION_JOIN_10186                     [non-unique index]
 2   PUBLICATIONID                     ascending                   
 
 Table Constraints
 
-SYS_CT_10172                                          [check constraint]
+SYS_CT_10177                                          [check constraint]
 
-SYS_CT_10173                                          [check constraint]
+SYS_CT_10178                                          [check constraint]
 
-SYS_CT_10174                                          [check constraint]
+SYS_CT_10179                                          [check constraint]
 
 
 
@@ -267,19 +302,19 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_PUBLICATIONS_WRITER_10160                  [non-unique index]
+SYS_IDX_FK_PUBLICATIONS_WRITER_10165                  [non-unique index]
 4   WRITERID                          ascending                   
 
-SYS_IDX_PK_PUBLICATIONS_10156                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10161                             [unique index]
 1   ID                                ascending                   
 
 Table Constraints
 
-SYS_CT_10153                                          [check constraint]
+SYS_CT_10158                                          [check constraint]
 
-SYS_CT_10154                                          [check constraint]
+SYS_CT_10159                                          [check constraint]
 
-SYS_CT_10155                                          [check constraint]
+SYS_CT_10160                                          [check constraint]
 
 
 
@@ -298,17 +333,17 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_10167                               [non-unique index]
+SYS_IDX_FK_WRITER_10172                               [non-unique index]
 2   WRITERID                          ascending                   
 
-SYS_IDX_FK_PUBLICATION_10169                          [non-unique index]
+SYS_IDX_FK_PUBLICATION_10174                          [non-unique index]
 1   PUBLICATIONID                     ascending                   
 
 Table Constraints
 
-SYS_CT_10162                                          [check constraint]
+SYS_CT_10167                                          [check constraint]
 
-SYS_CT_10163                                          [check constraint]
+SYS_CT_10168                                          [check constraint]
 
 
 
@@ -383,12 +418,9 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 FK_WRITER                                  [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID                              
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
- 1  ID <--(0..many) PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
-
 Indexes
 
-SYS_IDX_PK_WRITERS_10146                                  [unique index]
+SYS_IDX_PK_WRITERS_10151                                  [unique index]
 1   ID                                ascending                   
 
 SYS_IDX_FK_WRITERS_PUBLICATION_10196                  [non-unique index]
@@ -416,45 +448,15 @@ Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
 
-SYS_CT_10141                                          [check constraint]
+SYS_CT_10146                                          [check constraint]
 
-SYS_CT_10142                                          [check constraint]
+SYS_CT_10147                                          [check constraint]
 
-SYS_CT_10143                                          [check constraint]
+SYS_CT_10148                                          [check constraint]
 
-SYS_CT_10144                                          [check constraint]
+SYS_CT_10149                                          [check constraint]
 
-SYS_CT_10145                                          [check constraint]
-
-
-
-PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                             [table]
-------------------------------------------------------------------------
-1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-2   ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
-3   ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
-
-Primary Key
-
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-Foreign Keys
-
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, with no action]
- 1  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.FOR_LINT.WRITERS.ID                              
-
-Indexes
-
-SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10184                     [unique index]
-1   ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
-
-SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10186    [non-unique index]
-3   ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
-
-Table Constraints
-
-SYS_CT_10183                                          [check constraint]
+SYS_CT_10150                                          [check constraint]
 
 
 
@@ -572,13 +574,13 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
 1   ONE                               INTEGER, in                 
+2   TWO                               INTEGER, in                 
 
 
 
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
 1   ONE                               INTEGER, in                 
-2   TWO                               INTEGER, in                 
 
 
 

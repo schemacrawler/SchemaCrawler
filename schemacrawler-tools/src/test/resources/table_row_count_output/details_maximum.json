@@ -826,7 +826,16 @@
         }
       ],
       "additionalInformation": {"rowCount": "20 rows"},
-      "foreignKeys": [],
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "definition": "",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
       "columns": [
         {
           "size": 32,
@@ -876,6 +885,143 @@
         },
         "unique": true,
         "name": "SYS_PK_10093",
+        "definition": ""
+      }
+    },
+    {
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "additionalInformation": {"rowCount": "empty"},
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "definition": "",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
+      "columns": [
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 10,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "(10)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "indexes": [
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "definition": ""
+          },
+          "unique": true,
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124",
+          "definition": ""
+        },
+        {
+          "columns": {
+            "sortSequence": "ascending",
+            "name": "ΣΥΓΓΡΑΦΈΑΣ",
+            "definition": ""
+          },
+          "unique": false,
+          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126",
+          "definition": ""
+        }
+      ],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "definition": "",
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "definition": ""
+        },
+        "unique": true,
+        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
         "definition": ""
       }
     },
@@ -2533,7 +2679,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-29 19:37:49",
+    "crawlTimestamp": "2017-12-29 20:43:46",
     "title": ""
   },
   "routines": [
@@ -2541,7 +2687,7 @@
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10137",
+      "specificName": "NEW_PUBLISHER_10142",
       "type": "procedure",
       "parameters": [{
         "databaseSpecificType": "CHARACTER VARYING",
@@ -2557,7 +2703,7 @@
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10138",
+      "specificName": "NEW_PUBLISHER_10143",
       "type": "procedure",
       "parameters": [
         {
@@ -2582,23 +2728,7 @@
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "definition": "",
-      "specificName": "CUSTOMADD_10140",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "",
-      "specificName": "CUSTOMADD_10139",
+      "specificName": "CUSTOMADD_10144",
       "type": "function",
       "parameters": [
         {
@@ -2616,6 +2746,22 @@
           "type": "in"
         }
       ],
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "definition": "",
+      "specificName": "CUSTOMADD_10145",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
       "returnType": "does not return a table",
       "remarks": ""
     }

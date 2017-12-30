@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-12-29 19:49:38</td>
+		<td class='property_value'>2017-12-30 01:19:02</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -931,6 +931,24 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_3f988fb1'>PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
 		<td colspan='3' class='section'>Indexes</td>
 	</tr>
 	<tr>
@@ -949,6 +967,113 @@ along with the latest updated information</td>
 		<td class='spacer'></td>
 		<td class='minwidth'></td>
 		<td class='minwidth'>auto-incremented</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='πίνακαβάσησδεδομένων_3f988fb1' class='caption_name'>PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'>VARCHAR(10)</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='minwidth'>INTEGER</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Foreign Keys</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS</td>
+		<td class='description right'>[foreign key, with no action]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Indexes</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124</td>
+		<td class='description right'>[unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126</td>
+		<td class='description right'>[non-unique index]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Table Constraints</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10123</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'></td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -1034,7 +1159,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_WRITER_JOIN_10179</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_WRITER_JOIN_10184</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1046,7 +1171,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10175</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_EXTRA_PK_10180</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1058,7 +1183,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATION_JOIN_10181</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATION_JOIN_10186</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1076,7 +1201,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10172</td>
+		<td colspan='2' class='name'>SYS_CT_10177</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1088,7 +1213,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10173</td>
+		<td colspan='2' class='name'>SYS_CT_10178</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1100,7 +1225,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10174</td>
+		<td colspan='2' class='name'>SYS_CT_10179</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1256,7 +1381,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATIONS_WRITER_10160</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATIONS_WRITER_10165</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1268,7 +1393,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10156</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_PUBLICATIONS_10161</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1286,7 +1411,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10153</td>
+		<td colspan='2' class='name'>SYS_CT_10158</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1298,7 +1423,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10154</td>
+		<td colspan='2' class='name'>SYS_CT_10159</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1310,7 +1435,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10155</td>
+		<td colspan='2' class='name'>SYS_CT_10160</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1376,7 +1501,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_WRITER_10167</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_WRITER_10172</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1388,7 +1513,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATION_10169</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_PUBLICATION_10174</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1406,7 +1531,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10162</td>
+		<td colspan='2' class='name'>SYS_CT_10167</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1418,7 +1543,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10163</td>
+		<td colspan='2' class='name'>SYS_CT_10168</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1714,25 +1839,13 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_fbda5242'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
 		<td colspan='3' class='section'>Indexes</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10146</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_WRITERS_10151</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1852,7 +1965,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10141</td>
+		<td colspan='2' class='name'>SYS_CT_10146</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1864,7 +1977,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10142</td>
+		<td colspan='2' class='name'>SYS_CT_10147</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1876,7 +1989,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10143</td>
+		<td colspan='2' class='name'>SYS_CT_10148</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1888,7 +2001,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10144</td>
+		<td colspan='2' class='name'>SYS_CT_10149</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1900,119 +2013,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10145</td>
+		<td colspan='2' class='name'>SYS_CT_10150</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>PUBLICATION_ID</td>
-		<td class='minwidth'></td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #F2EACE;'><span id='πίνακαβάσησδεδομένων_fbda5242' class='caption_name'>PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
-		<td class='minwidth'>BIGINT NOT NULL</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='minwidth'>VARCHAR(10)</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
-		<td class='minwidth'>INTEGER</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Primary Key</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='description right'>[primary key]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Foreign Keys</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS</td>
-		<td class='description right'>[foreign key, with no action]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#writers_3778840f'>PUBLIC.FOR_LINT.WRITERS.ID</a></td>
-		<td class='minwidth'></td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Indexes</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10184</td>
-		<td class='description right'>[unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10186</td>
-		<td class='description right'>[non-unique index]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
-		<td class='minwidth'>ascending</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Table Constraints</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'>SYS_CT_10183</td>
-		<td class='description right'>[check constraint]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -2385,7 +2391,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13139' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13153' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -2398,7 +2404,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1313a' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13154' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -2416,20 +2422,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a971' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ONE</td>
-		<td class='minwidth'>INTEGER, in</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a95b' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a975' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -2439,6 +2432,19 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>TWO</td>
+		<td class='minwidth'>INTEGER, in</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a976' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ONE</td>
 		<td class='minwidth'>INTEGER, in</td>
 	</tr>
 </table>

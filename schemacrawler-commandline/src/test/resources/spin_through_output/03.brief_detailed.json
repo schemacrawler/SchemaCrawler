@@ -231,7 +231,15 @@
       "primaryKey": {}
     },
     {
-      "foreignKeys": [],
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
       "columns": [{
         "size": 32,
         "nullable": false,
@@ -254,6 +262,53 @@
         },
         "unique": true,
         "name": "SYS_PK_10093"
+      }
+    },
+    {
+      "foreignKeys": [{
+        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "deleteRule": "no action",
+        "columnReferences": [{
+          "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
+          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+        }],
+        "updateRule": "no action"
+      }],
+      "columns": [
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "type": "table",
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+        },
+        "unique": true,
+        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
       }
     },
     {
@@ -532,15 +587,6 @@
             "fkColumn": "PUBLIC.FOR_LINT.PUBLICATIONWRITERS.WRITERID"
           }],
           "updateRule": "no action"
-        },
-        {
-          "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-          "deleteRule": "no action",
-          "columnReferences": [{
-            "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-            "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-          }],
-          "updateRule": "no action"
         }
       ],
       "columns": [
@@ -655,53 +701,6 @@
         },
         "unique": true,
         "name": "PK_WRITERS"
-      }
-    },
-    {
-      "foreignKeys": [{
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS",
-        "deleteRule": "no action",
-        "columnReferences": [{
-          "pkColumn": "PUBLIC.FOR_LINT.WRITERS.ID",
-          "fkColumn": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
-        }],
-        "updateRule": "no action"
-      }],
-      "columns": [
-        {
-          "size": 64,
-          "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        },
-        {
-          "size": 32,
-          "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
-          "width": "",
-          "decimalDigits": 0,
-          "remarks": "",
-          "autoIncremented": false
-        }
-      ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.FOR_LINT.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "type": "table",
-      "remarks": "",
-      "primaryKey": {
-        "columns": {
-          "sortSequence": "ascending",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
-        },
-        "unique": true,
-        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
       }
     },
     {
@@ -860,7 +859,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-11-15 22:35:05",
+    "crawlTimestamp": "2017-12-30 01:19:03",
     "title": ""
   },
   "routines": [

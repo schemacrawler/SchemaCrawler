@@ -73,7 +73,7 @@ public class LintTest
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
     assertNotNull("FOR_LINT schema not found", schema);
     assertEquals("FOR_LINT tables not found",
-                 8,
+                 7,
                  catalog.getTables(schema).size());
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
@@ -88,7 +88,7 @@ public class LintTest
                                                            getConnection(),
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(56, lintCollector.size());
+    assertEquals(51, lintCollector.size());
 
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -125,7 +125,7 @@ public class LintTest
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
     assertNotNull("FOR_LINT schema not found", schema);
     assertEquals("FOR_LINT tables not found",
-                 8,
+                 7,
                  catalog.getTables(schema).size());
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
@@ -135,7 +135,7 @@ public class LintTest
                                                            getConnection(),
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(45, lintCollector.size());
+    assertEquals(40, lintCollector.size());
 
     try (final TestWriter out = new TestWriter("text");)
     {

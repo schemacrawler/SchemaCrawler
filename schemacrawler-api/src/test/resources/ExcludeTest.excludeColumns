@@ -68,6 +68,16 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
       database type: VARCHAR
       type: VARCHAR
+  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+      database type: BIGINT
+      type: BIGINT
+    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ
+      database type: INTEGER
+      type: INTEGER
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

@@ -256,7 +256,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
-      assertEquals("Table count does not match", 9, tables.length);
+      assertEquals("Table count does not match", 10, tables.length);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
@@ -550,6 +550,7 @@ public class SchemaCrawlerTest
                                   "Global Counts",
                                   "PUBLISHERS",
                                   "BOOKAUTHORS",
+                                  "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
                                   "AUTHORSLIST", };
     final Random rnd = new Random();
 
