@@ -1,3 +1,4 @@
+-- Table with special characters in the name
 CREATE TABLE πίνακαβάσηςδεδομένων
 (
   στήληβάσηςδεδομένων BIGINT NOT NULL,

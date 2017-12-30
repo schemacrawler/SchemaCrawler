@@ -102,9 +102,9 @@ public class SortingTest
     final String[] sortedAlpha = new String[] {
                                                 "IDX_A_AUTHORS",
                                                 "IDX_B_AUTHORS",
-                                                "SYS_IDX_PK_AUTHORS_10097", };
+                                                "SYS_IDX_PK_AUTHORS_10098", };
     final String[] sortedNatural = new String[] {
-                                                  "SYS_IDX_PK_AUTHORS_10097",
+                                                  "SYS_IDX_PK_AUTHORS_10098",
                                                   "IDX_B_AUTHORS",
                                                   "IDX_A_AUTHORS", };
     checkIndexSort("AUTHORS", sortedAlpha, true);

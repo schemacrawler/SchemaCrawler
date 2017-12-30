@@ -1,3 +1,4 @@
+-- Table with default for a column, and a check constraint
 CREATE TABLE Authors
 (
   Id INTEGER NOT NULL,
@@ -8,12 +9,13 @@ CREATE TABLE Authors
   City VARCHAR(50),
   State VARCHAR(2),
   PostalCode VARCHAR(10),
-  Country VARCHAR(50),
+  Country VARCHAR(50) DEFAULT 'USA',
   CONSTRAINT PK_Authors PRIMARY KEY (Id),
   CONSTRAINT CHECK_UPPERCASE_State CHECK (State=UPPER(State))
 )
 ;
 
+-- Table with unique constraint, and foreign key
 CREATE TABLE Books
 (
   Id INTEGER NOT NULL,
@@ -37,22 +39,4 @@ CREATE TABLE BookAuthors
   CONSTRAINT FK_Y_Book FOREIGN KEY (BookId) REFERENCES Books (Id),
   CONSTRAINT FK_Z_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
 )
-;
-
-CREATE TABLE "Global Counts"
-(
-  "Global Count" INTEGER
-)
-;
-
--- Views
-CREATE VIEW AuthorsList AS SELECT Id, FirstName, LastName FROM Authors
-;
-
--- Indexes
-CREATE UNIQUE INDEX UIDX_BookAuthors ON BookAuthors(BookId, AuthorId)
-;
-CREATE INDEX IDX_B_Authors ON Authors(LastName, FirstName)
-;
-CREATE INDEX IDX_A_Authors ON Authors(City, State, PostalCode, Country)
 ;

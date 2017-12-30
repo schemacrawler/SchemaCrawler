@@ -29,7 +29,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10097                                  [unique index]
+SYS_IDX_PK_AUTHORS_10098                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -68,10 +68,10 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_Z_AUTHOR_10118                             [non-unique index]
+SYS_IDX_FK_Z_AUTHOR_10120                             [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_FK_Y_BOOK_10116                               [non-unique index]
+SYS_IDX_FK_Y_BOOK_10118                               [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -105,13 +105,13 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_BOOKS_10105                                    [unique index]
+SYS_IDX_PK_BOOKS_10106                                    [unique index]
   ID                                ascending                   
 
-UIDX_PREVIOUSEDITION                                      [unique index]
+SYS_IDX_U_PREVIOUSEDITION_10112                           [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_FK_PREVIOUSEDITION_10109                      [non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10110                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
 
 
@@ -130,13 +130,13 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 
 Primary Key
 
-SYS_PK_10092                                               [primary key]
+SYS_PK_10093                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
 Indexes
 
-SYS_IDX_SYS_PK_10092_10093                                [unique index]
+SYS_IDX_SYS_PK_10093_10094                                [unique index]
   ID                                ascending                   
                                     auto-incremented            
 
@@ -163,11 +163,11 @@ PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
-  TWO                               INTEGER, in                 
 
 
 
 PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
 ------------------------------------------------------------------------
   ONE                               INTEGER, in                 
+  TWO                               INTEGER, in                 
 

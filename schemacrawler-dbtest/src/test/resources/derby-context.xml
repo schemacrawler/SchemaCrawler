@@ -7,17 +7,25 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
                            
   <jdbc:embedded-database id="dataSource" type="DERBY">
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/01_01_schemas_01.sql" />
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/02_01_tables_01.sql" />
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/02_02_tables_01.sql" />
-    <!--  Global temporary tables not supported - 02_03_tables -->
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/02_04_tables_01.sql" />
-    <!--  Remarks not supported - 03_01_remarks -->
-    <!--  Routines not supported - 04_01_routines -->
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_01_triggers_01.sql" />
-    <!--  Domains not supported - 06_01_domains_01 -->
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/07_01_sequences_01.sql" />
-    <jdbc:script encoding="UTF-8" location="classpath:/db/books/10_01_data_01.sql" />
+
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/01_schemas_01_A.sql" />
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/02_types_01_A.sql" /> -->
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/03_domains_01_A.sql" /> -->
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/04_sequences_01_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_tables_01_B.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_tables_02_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_tables_03_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_tables_04_A.sql" />
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_tables_05_A.sql" /> -->
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/05_views_01_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/06_indexes_01_A.sql" />
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/07_remarks_01_A.sql" /> -->
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/08_procedures_01_A.sql" /> -->
+    <!-- <jdbc:script encoding="UTF-8" location="classpath:/db/books/09_functions_01_A.sql" /> -->
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/10_triggers_01_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/11_synonyms_01_A.sql" />
+    <jdbc:script encoding="UTF-8" location="classpath:/db/books/90_data_01_A.sql" />
+    
   </jdbc:embedded-database>
   
 </beans>

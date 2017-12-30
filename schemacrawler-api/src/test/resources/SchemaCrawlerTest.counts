@@ -25,7 +25,7 @@ schema: PUBLIC.BOOKS
     # privileges: 6
   table: PUBLIC.BOOKS.BOOKS
     # columns: 7
-    # constraints: 5
+    # constraints: 6
     # indexes: 3
     # foreign keys: 2
     # imported foreign keys: 2
