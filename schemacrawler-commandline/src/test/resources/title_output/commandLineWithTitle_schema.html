@@ -243,7 +243,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-11-19 17:54:53</td>
+		<td class='property_value'>2017-12-29 19:49:48</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -358,7 +358,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10097</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_AUTHORS_10098</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -448,7 +448,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10094</td>
+		<td colspan='2' class='name'>SYS_CT_10095</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -460,7 +460,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10095</td>
+		<td colspan='2' class='name'>SYS_CT_10096</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -472,7 +472,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10096</td>
+		<td colspan='2' class='name'>SYS_CT_10097</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -570,7 +570,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_Z_AUTHOR_10118</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_Z_AUTHOR_10120</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -582,7 +582,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_Y_BOOK_10116</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_Y_BOOK_10118</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -617,7 +617,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10111</td>
+		<td colspan='2' class='name'>SYS_CT_10113</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -629,7 +629,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10112</td>
+		<td colspan='2' class='name'>SYS_CT_10114</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -772,7 +772,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10105</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_BOOKS_10106</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -784,7 +784,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>UIDX_PREVIOUSEDITION</td>
+		<td colspan='2' class='name'>SYS_IDX_U_PREVIOUSEDITION_10112</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -796,7 +796,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_PREVIOUSEDITION_10109</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_PREVIOUSEDITION_10110</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -814,12 +814,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10102</td>
-		<td class='description right'>[check constraint]</td>
+		<td colspan='2' class='name'>U_PREVIOUSEDITION</td>
+		<td class='description right'>[unique constraint]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID</td>
+		<td class='minwidth'>PREVIOUSEDITIONID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -831,7 +831,7 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>TITLE</td>
+		<td class='minwidth'>ID</td>
 		<td class='minwidth'></td>
 	</tr>
 	<tr>
@@ -839,6 +839,18 @@ along with the latest updated information</td>
 	</tr>
 	<tr>
 		<td colspan='2' class='name'>SYS_CT_10104</td>
+		<td class='description right'>[check constraint]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>TITLE</td>
+		<td class='minwidth'></td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>SYS_CT_10105</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -905,7 +917,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_PK_10092</td>
+		<td colspan='2' class='name'>SYS_PK_10093</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
@@ -928,7 +940,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_SYS_PK_10092_10093</td>
+		<td colspan='2' class='name'>SYS_IDX_SYS_PK_10093_10094</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1025,7 +1037,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10144</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10210</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1048,7 +1060,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10140</td>
+		<td colspan='2' class='name'>SYS_CT_10206</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1060,7 +1072,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10141</td>
+		<td colspan='2' class='name'>SYS_CT_10207</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1072,7 +1084,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10142</td>
+		<td colspan='2' class='name'>SYS_CT_10208</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1084,7 +1096,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10143</td>
+		<td colspan='2' class='name'>SYS_CT_10209</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1175,7 +1187,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_SALES_SALESDATA_10158</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_SALES_SALESDATA_10224</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1187,7 +1199,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_SALES_REGIONS_10156</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_SALES_REGIONS_10222</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1210,7 +1222,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10151</td>
+		<td colspan='2' class='name'>SYS_CT_10217</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1222,7 +1234,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_CT_10152</td>
+		<td colspan='2' class='name'>SYS_CT_10218</td>
 		<td class='description right'>[check constraint]</td>
 	</tr>
 	<tr>
@@ -1276,7 +1288,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_UQ_CUSTOMERS_10150</td>
+		<td colspan='2' class='name'>SYS_IDX_UQ_CUSTOMERS_10216</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>

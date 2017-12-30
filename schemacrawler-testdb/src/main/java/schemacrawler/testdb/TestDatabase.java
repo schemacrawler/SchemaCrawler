@@ -33,6 +33,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -249,24 +250,27 @@ public class TestDatabase
 
   private void createDatabase()
   {
-    try (final Connection connection = getConnection();)
-    {
-      for (final String schema: new String[] {
-                                               "books",
-                                               "publisher sales",
-                                               "for_lint", })
-      {
-        for (final String scriptType: new String[] {
-                                                     "pre_schema",
-                                                     "schema",
-                                                     "post_schema",
-                                                     "data", })
-        {
-          final String scriptResource = String
-            .format("/testdatabase/%s.%s.sql", schema, scriptType);
-          final Reader reader = new InputStreamReader(TestDatabase.class
-            .getResourceAsStream(scriptResource), UTF_8);
 
+    try (
+        final BufferedReader hsqlScriptsReader = new BufferedReader(new InputStreamReader(TestDatabase.class
+          .getResourceAsStream("/hsqldb.scripts.txt"), UTF_8));
+        final Connection connection = getConnection();)
+    {
+      String scriptResource;
+      while ((scriptResource = hsqlScriptsReader.readLine()) != null)
+      {
+        if (scriptResource.trim().isEmpty())
+        {
+          continue;
+        }
+        if (scriptResource.startsWith("#"))
+        {
+          continue;
+        }
+
+        try (final Reader reader = new InputStreamReader(TestDatabase.class
+          .getResourceAsStream(scriptResource), UTF_8);)
+        {
           final SqlScript sqlScript = new SqlScript(connection);
           sqlScript.run(reader);
         }

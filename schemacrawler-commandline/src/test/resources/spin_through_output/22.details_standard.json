@@ -24,7 +24,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10097",
+          "name": "SYS_IDX_PK_AUTHORS_10098",
           "definition": ""
         },
         {
@@ -269,7 +269,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10118",
+          "name": "SYS_IDX_FK_Z_AUTHOR_10120",
           "definition": ""
         },
         {
@@ -279,7 +279,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10116",
+          "name": "SYS_IDX_FK_Y_BOOK_10118",
           "definition": ""
         },
         {
@@ -375,7 +375,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10105",
+          "name": "SYS_IDX_PK_BOOKS_10106",
           "definition": ""
         },
         {
@@ -385,7 +385,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "UIDX_PREVIOUSEDITION",
+          "name": "SYS_IDX_U_PREVIOUSEDITION_10112",
           "definition": ""
         },
         {
@@ -395,7 +395,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109",
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10110",
           "definition": ""
         }
       ],
@@ -528,7 +528,7 @@
           "definition": ""
         },
         "unique": true,
-        "name": "SYS_IDX_SYS_PK_10092_10093",
+        "name": "SYS_IDX_SYS_PK_10093_10094",
         "definition": ""
       }],
       "columns": [
@@ -569,7 +569,7 @@
           "definition": ""
         },
         "unique": true,
-        "name": "SYS_PK_10092",
+        "name": "SYS_PK_10093",
         "definition": ""
       }
     },
@@ -604,7 +604,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_JOIN_10198",
+          "name": "SYS_IDX_FK_WRITER_JOIN_10179",
           "definition": ""
         },
         {
@@ -614,7 +614,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10194",
+          "name": "SYS_IDX_PK_EXTRA_PK_10175",
           "definition": ""
         },
         {
@@ -624,7 +624,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10200",
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10181",
           "definition": ""
         }
       ],
@@ -755,7 +755,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10179",
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10160",
           "definition": ""
         },
         {
@@ -765,7 +765,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10175",
+          "name": "SYS_IDX_PK_PUBLICATIONS_10156",
           "definition": ""
         }
       ],
@@ -908,7 +908,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_10186",
+          "name": "SYS_IDX_FK_WRITER_10167",
           "definition": ""
         },
         {
@@ -918,7 +918,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_10188",
+          "name": "SYS_IDX_FK_PUBLICATION_10169",
           "definition": ""
         }
       ],
@@ -974,7 +974,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_SELFREFERENCE_10209",
+          "name": "SYS_IDX_PK_SELFREFERENCE_10190",
           "definition": ""
         },
         {
@@ -984,7 +984,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SELFREFERENCE_10212",
+          "name": "SYS_IDX_FK_SELFREFERENCE_10193",
           "definition": ""
         }
       ],
@@ -1091,7 +1091,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10165",
+          "name": "SYS_IDX_PK_WRITERS_10146",
           "definition": ""
         },
         {
@@ -1101,7 +1101,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10215",
+          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10196",
           "definition": ""
         },
         {
@@ -1420,7 +1420,7 @@
             "definition": ""
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10203",
+          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10184",
           "definition": ""
         },
         {
@@ -1430,7 +1430,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10205",
+          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS_10186",
           "definition": ""
         }
       ],
@@ -1518,7 +1518,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10144",
+        "name": "SYS_IDX_PK_CUSTOMERS_10210",
         "definition": ""
       }],
       "columns": [
@@ -1629,7 +1629,7 @@
             "definition": ""
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10158",
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10224",
           "definition": ""
         },
         {
@@ -1646,7 +1646,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10156",
+          "name": "SYS_IDX_FK_SALES_REGIONS_10222",
           "definition": ""
         }
       ],
@@ -1745,7 +1745,7 @@
           "definition": ""
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10150",
+        "name": "SYS_IDX_UQ_CUSTOMERS_10216",
         "definition": ""
       }],
       "columns": [
@@ -2002,7 +2002,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-11-15 22:34:58",
+    "crawlTimestamp": "2017-12-29 19:49:34",
     "title": ""
   },
   "routines": [
@@ -2010,7 +2010,7 @@
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10128",
+      "specificName": "NEW_PUBLISHER_10137",
       "type": "procedure",
       "parameters": [{
         "databaseSpecificType": "CHARACTER VARYING",
@@ -2026,7 +2026,7 @@
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
       "definition": "",
-      "specificName": "NEW_PUBLISHER_10129",
+      "specificName": "NEW_PUBLISHER_10138",
       "type": "procedure",
       "parameters": [
         {
@@ -2051,7 +2051,23 @@
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "definition": "",
-      "specificName": "CUSTOMADD_10130",
+      "specificName": "CUSTOMADD_10140",
+      "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
+      "returnType": "does not return a table",
+      "remarks": ""
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "definition": "",
+      "specificName": "CUSTOMADD_10139",
       "type": "function",
       "parameters": [
         {
@@ -2069,22 +2085,6 @@
           "type": "in"
         }
       ],
-      "returnType": "does not return a table",
-      "remarks": ""
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "",
-      "specificName": "CUSTOMADD_10131",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
       "returnType": "does not return a table",
       "remarks": ""
     },

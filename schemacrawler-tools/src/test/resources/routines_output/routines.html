@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-11-18 21:54:47</td>
+		<td class='property_value'>2017-12-29 19:37:47</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -259,7 +259,7 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1311b' class='caption_name'>NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13139' class='caption_name'>NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -274,7 +274,7 @@ td.section {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3'>NEW_PUBLISHER_10128</td>
+		<td colspan='3'>NEW_PUBLISHER_10137</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -287,7 +287,7 @@ td.section {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10128 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10137 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -295,7 +295,7 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1311c' class='caption_name'>NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1313a' class='caption_name'>NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -315,7 +315,7 @@ td.section {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3'>NEW_PUBLISHER_10129</td>
+		<td colspan='3'>NEW_PUBLISHER_10138</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -328,7 +328,7 @@ td.section {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10129 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
+		<td colspan='3' class='definition'>CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10138 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER</td>
 	</tr>
 </table>
 <p>&#160;</p>
@@ -336,7 +336,43 @@ td.section {
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a952' class='caption_name'>CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a971' class='caption_name'>CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ONE</td>
+		<td class='minwidth'>INTEGER, in</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[specific name]</td>
+	</tr>
+	<tr>
+		<td colspan='3'>CUSTOMADD_10140</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Definition</td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'></td>
+		<td class='description right'>[definition]</td>
+	</tr>
+	<tr>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10140 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a95b' class='caption_name'>CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -356,7 +392,7 @@ td.section {
 		<td class='description right'>[specific name]</td>
 	</tr>
 	<tr>
-		<td colspan='3'>CUSTOMADD_10130</td>
+		<td colspan='3'>CUSTOMADD_10139</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -369,43 +405,7 @@ td.section {
 		<td class='description right'>[definition]</td>
 	</tr>
 	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10130 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a953' class='caption_name'>CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>ONE</td>
-		<td class='minwidth'>INTEGER, in</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[specific name]</td>
-	</tr>
-	<tr>
-		<td colspan='3'>CUSTOMADD_10131</td>
-	</tr>
-	<tr>
-		<td colspan='3'></td>
-	</tr>
-	<tr>
-		<td colspan='3' class='section'>Definition</td>
-	</tr>
-	<tr>
-		<td colspan='2' class='name'></td>
-		<td class='description right'>[definition]</td>
-	</tr>
-	<tr>
-		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10131 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)</td>
+		<td colspan='3' class='definition'>CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10139 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO</td>
 	</tr>
 </table>
 <p>&#160;</p>

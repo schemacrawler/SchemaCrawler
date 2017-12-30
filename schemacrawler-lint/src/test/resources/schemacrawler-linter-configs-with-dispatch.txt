@@ -35,7 +35,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	SYS_IDX_FK_Y_BOOK_10116
+	redundant index	SYS_IDX_FK_Y_BOOK_10118
 	no primary key	
 	primary key may not be a surrogate	
                                                           [lint, medium]
@@ -49,10 +49,10 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 ------------------------------------------------------------------------
 
                                                             [lint, high]
-	redundant index	SYS_IDX_FK_PREVIOUSEDITION_10109
-	redundant index	UIDX_PREVIOUSEDITION
+	redundant index	SYS_IDX_FK_PREVIOUSEDITION_10110
+	redundant index	SYS_IDX_U_PREVIOUSEDITION_10112
                                                           [lint, medium]
-	unique index with nullable columns	UIDX_PREVIOUSEDITION
+	unique index with nullable columns	SYS_IDX_U_PREVIOUSEDITION_10112
                                                              [lint, low]
 	should have remarks	PREVIOUSEDITIONID
 
@@ -147,8 +147,8 @@ PUBLIC.FOR_LINT.SELFREFERENCE                                    [table]
                                                         [lint, critical]
 	foreign key self-references primary key	FK_SELFREFERENCE
                                                             [lint, high]
-	redundant index	SYS_IDX_FK_SELFREFERENCE_10212
-	redundant index	SYS_IDX_PK_SELFREFERENCE_10209
+	redundant index	SYS_IDX_PK_SELFREFERENCE_10190
+	redundant index	SYS_IDX_FK_SELFREFERENCE_10193
                                                              [lint, low]
 	empty table	
 	should have remarks	
@@ -227,7 +227,7 @@ PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 	no primary key	
 	primary key may not be a surrogate	
                                                           [lint, medium]
-	unique index with nullable columns	SYS_IDX_UQ_CUSTOMERS_10150
+	unique index with nullable columns	SYS_IDX_UQ_CUSTOMERS_10216
 	no non-nullable data columns	
                                                              [lint, low]
 	empty table	

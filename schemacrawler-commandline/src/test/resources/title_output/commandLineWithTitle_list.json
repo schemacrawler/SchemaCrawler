@@ -18,7 +18,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10097"
+          "name": "SYS_IDX_PK_AUTHORS_10098"
         },
         {
           "columns": [
@@ -209,7 +209,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10094",
+          "name": "SYS_CT_10095",
           "type": "check"
         },
         {
@@ -223,7 +223,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10095",
+          "name": "SYS_CT_10096",
           "type": "check"
         },
         {
@@ -237,7 +237,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10096",
+          "name": "SYS_CT_10097",
           "type": "check"
         }
       ],
@@ -325,7 +325,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10118"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10120"
         },
         {
           "columns": {
@@ -333,7 +333,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10116"
+          "name": "SYS_IDX_FK_Y_BOOK_10118"
         },
         {
           "columns": [
@@ -429,7 +429,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10111",
+          "name": "SYS_CT_10113",
           "type": "check"
         },
         {
@@ -443,7 +443,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10112",
+          "name": "SYS_CT_10114",
           "type": "check"
         }
       ],
@@ -478,7 +478,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10105"
+          "name": "SYS_IDX_PK_BOOKS_10106"
         },
         {
           "columns": {
@@ -486,7 +486,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": true,
-          "name": "UIDX_PREVIOUSEDITION"
+          "name": "SYS_IDX_U_PREVIOUSEDITION_10112"
         },
         {
           "columns": {
@@ -494,7 +494,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10110"
         }
       ],
       "columns": [
@@ -612,6 +612,20 @@
         {
           "columns": {
             "size": 32,
+            "nullable": true,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "PREVIOUSEDITIONID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "name": "U_PREVIOUSEDITION",
+          "type": "unique"
+        },
+        {
+          "columns": {
+            "size": 32,
             "nullable": false,
             "databaseSpecificType": "INTEGER",
             "dataType": "INTEGER",
@@ -620,7 +634,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10102",
+          "name": "SYS_CT_10103",
           "type": "check"
         },
         {
@@ -634,7 +648,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10103",
+          "name": "SYS_CT_10104",
           "type": "check"
         },
         {
@@ -648,7 +662,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10104",
+          "name": "SYS_CT_10105",
           "type": "check"
         }
       ],
@@ -692,7 +706,7 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_IDX_SYS_PK_10092_10093"
+        "name": "SYS_IDX_SYS_PK_10093_10094"
       }],
       "columns": [
         {
@@ -733,7 +747,7 @@
           "decimalDigits": 0,
           "autoIncremented": true
         },
-        "name": "SYS_PK_10092",
+        "name": "SYS_PK_10093",
         "type": "primary_key"
       }],
       "remarks": "List of book publishers",
@@ -743,7 +757,7 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_PK_10092"
+        "name": "SYS_PK_10093"
       }
     },
     {
@@ -774,7 +788,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10144"
+        "name": "SYS_IDX_PK_CUSTOMERS_10210"
       }],
       "columns": [
         {
@@ -864,7 +878,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10140",
+          "name": "SYS_CT_10206",
           "type": "check"
         },
         {
@@ -878,7 +892,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10141",
+          "name": "SYS_CT_10207",
           "type": "check"
         },
         {
@@ -892,7 +906,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10142",
+          "name": "SYS_CT_10208",
           "type": "check"
         },
         {
@@ -906,7 +920,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10143",
+          "name": "SYS_CT_10209",
           "type": "check"
         }
       ],
@@ -960,7 +974,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10158"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10224"
         },
         {
           "columns": [
@@ -974,7 +988,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10156"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10222"
         }
       ],
       "columns": [
@@ -1101,7 +1115,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10151",
+          "name": "SYS_CT_10217",
           "type": "check"
         },
         {
@@ -1115,7 +1129,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10152",
+          "name": "SYS_CT_10218",
           "type": "check"
         }
       ],
@@ -1138,7 +1152,7 @@
           "name": "SALESDATAID"
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10150"
+        "name": "SYS_IDX_UQ_CUSTOMERS_10216"
       }],
       "columns": [
         {
@@ -1187,7 +1201,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-11-15 22:35:20",
+    "crawlTimestamp": "2017-12-29 19:49:49",
     "title": "Database Design for Books and Publishers"
   }
 }]

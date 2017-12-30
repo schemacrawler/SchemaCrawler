@@ -30,7 +30,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10097                                  [unique index]
+SYS_IDX_PK_AUTHORS_10098                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -54,15 +54,15 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 BOOKS.AUTHORS.STATE=UPPER(BOOKS.AUTHORS.STATE)
 
-SYS_CT_10094                                          [check constraint]
+SYS_CT_10095                                          [check constraint]
   ID                                                            
 BOOKS.AUTHORS.ID IS NOT NULL
 
-SYS_CT_10095                                          [check constraint]
+SYS_CT_10096                                          [check constraint]
   FIRSTNAME                                                     
 BOOKS.AUTHORS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10096                                          [check constraint]
+SYS_CT_10097                                          [check constraint]
   LASTNAME                                                      
 BOOKS.AUTHORS.LASTNAME IS NOT NULL
 
@@ -125,10 +125,10 @@ FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLICATIONS       [foreign key, wit
 
 Indexes
 
-SYS_IDX_PK_WRITERS_10165                                  [unique index]
+SYS_IDX_PK_WRITERS_10146                                  [unique index]
   ID                                ascending                   
 
-SYS_IDX_FK_WRITERS_PUBLICATION_10215                  [non-unique index]
+SYS_IDX_FK_WRITERS_PUBLICATION_10196                  [non-unique index]
   PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -155,23 +155,23 @@ CHECK_UPPERCASE_STATE                                 [check constraint]
   STATE                                                         
 FOR_LINT.WRITERS.STATE=UPPER(FOR_LINT.WRITERS.STATE)
 
-SYS_CT_10160                                          [check constraint]
+SYS_CT_10141                                          [check constraint]
   ID                                                            
 FOR_LINT.WRITERS.ID IS NOT NULL
 
-SYS_CT_10161                                          [check constraint]
+SYS_CT_10142                                          [check constraint]
   FIRSTNAME                                                     
 FOR_LINT.WRITERS.FIRSTNAME IS NOT NULL
 
-SYS_CT_10162                                          [check constraint]
+SYS_CT_10143                                          [check constraint]
   LASTNAME                                                      
 FOR_LINT.WRITERS.LASTNAME IS NOT NULL
 
-SYS_CT_10163                                          [check constraint]
+SYS_CT_10144                                          [check constraint]
   ADDRESS2                                                      
 FOR_LINT.WRITERS.ADDRESS2 IS NOT NULL
 
-SYS_CT_10164                                          [check constraint]
+SYS_CT_10145                                          [check constraint]
   PUBLICATION_ID                                                
 FOR_LINT.WRITERS.PUBLICATION_ID IS NOT NULL
 

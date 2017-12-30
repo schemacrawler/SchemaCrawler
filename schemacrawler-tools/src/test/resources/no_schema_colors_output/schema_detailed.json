@@ -18,7 +18,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10097"
+          "name": "SYS_IDX_PK_AUTHORS_10098"
         },
         {
           "columns": [
@@ -233,7 +233,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10118"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10120"
         },
         {
           "columns": {
@@ -241,7 +241,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10116"
+          "name": "SYS_IDX_FK_Y_BOOK_10118"
         },
         {
           "columns": [
@@ -325,7 +325,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10105"
+          "name": "SYS_IDX_PK_BOOKS_10106"
         },
         {
           "columns": {
@@ -333,7 +333,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": true,
-          "name": "UIDX_PREVIOUSEDITION"
+          "name": "SYS_IDX_U_PREVIOUSEDITION_10112"
         },
         {
           "columns": {
@@ -341,7 +341,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PREVIOUSEDITION_10109"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10110"
         }
       ],
       "columns": [
@@ -458,7 +458,7 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_IDX_SYS_PK_10092_10093"
+        "name": "SYS_IDX_SYS_PK_10093_10094"
       }],
       "columns": [
         {
@@ -493,7 +493,7 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_PK_10092"
+        "name": "SYS_PK_10093"
       }
     }
   ],
@@ -537,6 +537,19 @@
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
       "type": "function",
+      "parameters": [{
+        "databaseSpecificType": "INTEGER",
+        "dataType": "INTEGER",
+        "name": "ONE",
+        "width": "",
+        "type": "in"
+      }],
+      "returnType": "does not return a table"
+    },
+    {
+      "name": "CUSTOMADD",
+      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
+      "type": "function",
       "parameters": [
         {
           "databaseSpecificType": "INTEGER",
@@ -553,19 +566,6 @@
           "type": "in"
         }
       ],
-      "returnType": "does not return a table"
-    },
-    {
-      "name": "CUSTOMADD",
-      "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "type": "function",
-      "parameters": [{
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "ONE",
-        "width": "",
-        "type": "in"
-      }],
       "returnType": "does not return a table"
     }
   ]

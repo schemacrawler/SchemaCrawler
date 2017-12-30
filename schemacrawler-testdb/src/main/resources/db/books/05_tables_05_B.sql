@@ -1,3 +1,4 @@
+-- Local temporary table
 CREATE TEMPORARY TABLE TEMP_AUTHOR_LIST
 (
   Id INTEGER NOT NULL,

@@ -1,1 +1,0 @@
-CREATE SEQUENCE Publisher_Id_Seq;
