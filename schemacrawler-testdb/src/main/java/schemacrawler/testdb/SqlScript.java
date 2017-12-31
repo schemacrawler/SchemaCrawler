@@ -31,9 +31,13 @@ package schemacrawler.testdb;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SqlScript
   implements Runnable
@@ -44,14 +48,17 @@ public class SqlScript
   private final String scriptName;
   private final Connection connection;
   private final Reader reader;
+  private final boolean runEntireScript;
 
   public SqlScript(final String scriptName,
                    final Connection connection,
-                   final Reader reader)
+                   final Reader reader,
+                   final boolean runEntireScript)
   {
     this.scriptName = scriptName;
     this.connection = requireNonNull(connection);
     this.reader = requireNonNull(reader);
+    this.runEntireScript = runEntireScript;
   }
 
   public String getScriptName()
@@ -73,36 +80,65 @@ public class SqlScript
       // NOTE: Do not close reader or connection, since we did not open
       // them
       final BufferedReader lineReader = new BufferedReader(reader);
-      String line;
-      StringBuilder sql = new StringBuilder();
-      while ((line = lineReader.readLine()) != null)
+      List<String> sqlList;
+      if (runEntireScript)
       {
-        final String trimmedLine = line.trim();
-        if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
-            && trimmedLine.endsWith(delimiter))
-        {
-          sql.append(line.substring(0, line.lastIndexOf(delimiter)));
+        sqlList = readEntireSql(lineReader);
+      }
+      else
+      {
+        sqlList = readSql(lineReader);
+      }
 
-          try (final Statement statement = connection.createStatement();)
-          {
-            statement.execute(sql.toString());
-            connection.commit();
-          }
-
-          sql = new StringBuilder();
-        }
-        else
+      for (final String sql: sqlList)
+      {
+        try (final Statement statement = connection.createStatement();)
         {
-          sql.append(line);
-          sql.append("\n");
+          statement.execute(sql);
+          connection.commit();
         }
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new RuntimeException(e);
     }
+  }
 
+  private List<String> readEntireSql(final BufferedReader lineReader)
+    throws IOException
+  {
+    final String sql = lineReader.lines().collect(Collectors.joining("\n"));
+    final List<String> list = new ArrayList<>();
+    list.add(sql);
+    return list;
+  }
+
+  private List<String> readSql(final BufferedReader lineReader)
+    throws IOException
+  {
+    final List<String> list = new ArrayList<>();
+    String line;
+    StringBuilder sql = new StringBuilder();
+    while ((line = lineReader.readLine()) != null)
+    {
+      final String trimmedLine = line.trim();
+      if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
+          && trimmedLine.endsWith(delimiter))
+      {
+        sql.append(line.substring(0, line.lastIndexOf(delimiter)));
+
+        list.add(sql.toString());
+
+        sql = new StringBuilder();
+      }
+      else
+      {
+        sql.append(line);
+        sql.append("\n");
+      }
+    }
+    return list;
   }
 
 }

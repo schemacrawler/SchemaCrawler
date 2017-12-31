@@ -82,6 +82,7 @@ public class SchemaCreator
     {
       while ((scriptResource = hsqlScriptsReader.readLine()) != null)
       {
+        boolean runEntireScript = false;
         if (scriptResource.trim().isEmpty())
         {
           continue;
@@ -91,12 +92,19 @@ public class SchemaCreator
           continue;
         }
 
+        if (scriptResource.startsWith("~"))
+        {
+          scriptResource = scriptResource.substring(1);
+          runEntireScript = true;
+        }
+
         try (final Reader reader = new InputStreamReader(TestDatabase.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,
-                                                    reader);
+                                                    reader,
+                                                    runEntireScript);
           sqlScript.run();
         }
       }
