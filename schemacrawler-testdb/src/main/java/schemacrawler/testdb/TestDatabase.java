@@ -29,16 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -217,7 +213,9 @@ public class TestDatabase
     server.setDatabasePath(0, serverFileStem);
     server.start();
 
-    createDatabase();
+    final SchemaCreator schemaCreator = new SchemaCreator(getConnection(),
+                                                          "/hsqldb.scripts.txt");
+    schemaCreator.run();
   }
 
   /**
@@ -246,46 +244,6 @@ public class TestDatabase
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     LOGGER.log(Level.INFO, "SHUTDOWN database");
-  }
-
-  private void createDatabase()
-  {
-    String scriptResource = null;
-    try (
-        final BufferedReader hsqlScriptsReader = new BufferedReader(new InputStreamReader(TestDatabase.class
-          .getResourceAsStream("/hsqldb.scripts.txt"), UTF_8));
-        final Connection connection = getConnection();)
-    {
-      while ((scriptResource = hsqlScriptsReader.readLine()) != null)
-      {
-        if (scriptResource.trim().isEmpty())
-        {
-          continue;
-        }
-        if (scriptResource.startsWith("#"))
-        {
-          continue;
-        }
-
-        try (final Reader reader = new InputStreamReader(TestDatabase.class
-          .getResourceAsStream(scriptResource), UTF_8);)
-        {
-          final SqlScript sqlScript = new SqlScript(scriptResource,
-                                                    connection,
-                                                    reader);
-          sqlScript.run();
-        }
-      }
-    }
-    catch (final SQLException | IOException e)
-    {
-      System.err.println(e.getMessage());
-      LOGGER.log(Level.WARNING,
-                 String
-                   .format("Script: %s -- %s", scriptResource, e.getMessage()),
-                 e);
-      throw new RuntimeException(e);
-    }
   }
 
   private Connection getConnection()
