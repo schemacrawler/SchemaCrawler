@@ -31,13 +31,12 @@ package schemacrawler.testdb;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SqlScript
+  implements Runnable
 {
 
   private static final String delimiter = ";";
@@ -66,36 +65,44 @@ public class SqlScript
    * @param reader
    *        Source of the SQL script
    */
+  @Override
   public void run()
-    throws IOException, SQLException
   {
-    // NOTE: Do not close reader or connection, since we did not open
-    // them
-    final BufferedReader lineReader = new BufferedReader(reader);
-    String line;
-    StringBuilder sql = new StringBuilder();
-    while ((line = lineReader.readLine()) != null)
+    try
     {
-      final String trimmedLine = line.trim();
-      if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
-          && trimmedLine.endsWith(delimiter))
+      // NOTE: Do not close reader or connection, since we did not open
+      // them
+      final BufferedReader lineReader = new BufferedReader(reader);
+      String line;
+      StringBuilder sql = new StringBuilder();
+      while ((line = lineReader.readLine()) != null)
       {
-        sql.append(line.substring(0, line.lastIndexOf(delimiter)));
-
-        try (final Statement statement = connection.createStatement();)
+        final String trimmedLine = line.trim();
+        if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
+            && trimmedLine.endsWith(delimiter))
         {
-          statement.execute(sql.toString());
-          connection.commit();
-        }
+          sql.append(line.substring(0, line.lastIndexOf(delimiter)));
 
-        sql = new StringBuilder();
-      }
-      else
-      {
-        sql.append(line);
-        sql.append("\n");
+          try (final Statement statement = connection.createStatement();)
+          {
+            statement.execute(sql.toString());
+            connection.commit();
+          }
+
+          sql = new StringBuilder();
+        }
+        else
+        {
+          sql.append(line);
+          sql.append("\n");
+        }
       }
     }
+    catch (Exception e)
+    {
+      throw new RuntimeException(e);
+    }
+
   }
 
 }
