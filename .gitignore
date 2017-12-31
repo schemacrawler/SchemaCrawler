@@ -33,3 +33,4 @@ buildNumber.properties
 **/hsqldb.schemacrawler.log
 **/hsqldb.schemacrawler.properties
 **/hsqldb.schemacrawler.script
+**/derby.log
