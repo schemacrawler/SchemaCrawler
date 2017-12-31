@@ -69,7 +69,7 @@ public class SchemaCrawlerDeepTest
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertEquals("Could not find any tables",
-                 7,
+                 10,
                  catalog.getTables(schema).size());
     assertEquals("Expected no routines, since routine retrieval is turned off by default",
                  0,

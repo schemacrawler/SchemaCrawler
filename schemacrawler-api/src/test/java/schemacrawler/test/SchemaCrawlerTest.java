@@ -106,7 +106,7 @@ public class SchemaCrawlerTest
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
       assertEquals("ColumnDataType count does not match",
-                   27,
+                   32,
                    columnDataTypes.size());
       for (final ColumnDataType columnDataType: columnDataTypes)
       {
@@ -256,7 +256,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
-      assertEquals("Table count does not match", 10, tables.length);
+      assertEquals("Table count does not match", 13, tables.length);
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
@@ -547,11 +547,14 @@ public class SchemaCrawlerTest
     final String[] tableNames = {
                                   "AUTHORS",
                                   "BOOKS",
+                                  "COUPONS",
+                                  "CUSTOMERDATA",
+                                  "CUSTOMERS",
                                   "Global Counts",
                                   "PUBLISHERS",
                                   "BOOKAUTHORS",
-                                  "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-                                  "AUTHORSLIST", };
+                                  "ΒΙΒΛΊΑ",
+                                  "AUTHORSLIST" };
     final Random rnd = new Random();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();

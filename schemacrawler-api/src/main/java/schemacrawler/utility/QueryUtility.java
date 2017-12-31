@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -135,23 +136,20 @@ public final class QueryUtility
                                                final boolean omitLargeObjectColumns,
                                                final Identifiers identifiers)
   {
-    final StringBuilder buffer = new StringBuilder(1024);
+    final List<String> columnsList = new ArrayList<>();
     for (int i = 0; i < columns.size(); i++)
     {
       final Column column = columns.get(i);
       final JavaSqlTypeGroup javaSqlTypeGroup = column.getColumnDataType()
         .getJavaSqlType().getJavaSqlTypeGroup();
       if (!(omitLargeObjectColumns
-            && javaSqlTypeGroup == JavaSqlTypeGroup.large_object))
+            && (javaSqlTypeGroup == JavaSqlTypeGroup.large_object
+                || javaSqlTypeGroup == JavaSqlTypeGroup.object)))
       {
-        if (i > 0)
-        {
-          buffer.append(", ");
-        }
-        buffer.append(identifiers.quoteName(column.getName()));
+        columnsList.add(identifiers.quoteName(column.getName()));
       }
     }
-    return buffer.toString();
+    return String.join(", ", columnsList);
   }
 
   private static String getQuery(final Query query)

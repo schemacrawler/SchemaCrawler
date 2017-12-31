@@ -99,16 +99,15 @@ public class SortingTest
     throws Exception
   {
 
-    final String[] sortedAlpha = new String[] {
-                                                "IDX_A_AUTHORS",
-                                                "IDX_B_AUTHORS",
-                                                "SYS_IDX_PK_AUTHORS_10098", };
-    final String[] sortedNatural = new String[] {
-                                                  "SYS_IDX_PK_AUTHORS_10098",
-                                                  "IDX_B_AUTHORS",
-                                                  "IDX_A_AUTHORS", };
-    checkIndexSort("AUTHORS", sortedAlpha, true);
-    checkIndexSort("AUTHORS", sortedNatural, false);
+    final String[] indexes = new String[] {
+                                            "SYS_IDX_PK_AUTHORS_10111",
+                                            "IDX_B_AUTHORS",
+                                            "IDX_A_AUTHORS", };
+    final String[] sortedIndexes = Arrays.copyOf(indexes, indexes.length);
+    Arrays.sort(sortedIndexes);
+
+    checkIndexSort("AUTHORS", sortedIndexes, true);
+    checkIndexSort("AUTHORS", indexes, false);
 
   }
 
@@ -159,7 +158,7 @@ public class SortingTest
     assertNotNull("Schema not found", schema);
 
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertEquals("Table count does not match", 7, tables.length);
+    assertEquals("Table count does not match", 10, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
@@ -194,7 +193,7 @@ public class SortingTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertEquals("Table count does not match", 7, tables.length);
+    assertEquals("Table count does not match", 10, tables.length);
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))

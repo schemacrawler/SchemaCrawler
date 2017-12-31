@@ -14,16 +14,28 @@
     # columns: 7
     # child tables: [PUBLIC.BOOKS.BOOKAUTHORS, PUBLIC.BOOKS.BOOKS]
     # parent tables: [PUBLIC.BOOKS.BOOKS]
+  table: PUBLIC.BOOKS.COUPONS
+    # columns: 4
+    # child tables: []
+    # parent tables: []
+  table: PUBLIC.BOOKS.CUSTOMERDATA
+    # columns: 2
+    # child tables: []
+    # parent tables: []
+  table: PUBLIC.BOOKS.CUSTOMERS
+    # columns: 4
+    # child tables: []
+    # parent tables: []
   table: PUBLIC.BOOKS."Global Counts"
-    # columns: 1
+    # columns: 2
     # child tables: []
     # parent tables: []
   table: PUBLIC.BOOKS.PUBLISHERS
     # columns: 2
-    # child tables: [PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ]
+    # child tables: [PUBLIC.BOOKS.ΒΙΒΛΊΑ]
     # parent tables: []
-  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    # columns: 3
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+    # columns: 4
     # child tables: []
     # parent tables: [PUBLIC.BOOKS.PUBLISHERS]
   table: PUBLIC."PUBLISHER SALES".REGIONS

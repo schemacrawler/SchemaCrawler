@@ -59,7 +59,7 @@ ID	FIRSTNAME	LASTNAME
 
 PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
-BOOKID	AUTHORID	UPDATE
+BOOKID	AUTHORID	SOMEDATA
 1	7	This is the latest update
 2	4	NULL
 2	6	Some update
@@ -109,9 +109,47 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
+PUBLIC.BOOKS.COUPONS                                                    
+------------------------------------------------------------------------
+ID	DATA	COUPONS	BOOKS
+1	sollicitudin commodo ipsum. Suspendisse non	ARRAY[]	NULL
+2	Nunc ut erat. Sed nunc est, mollis non, cursus non,	ARRAY[]	NULL
+3	turpis non enim. Mauris quis	ARRAY[]	NULL
+4	lectus ante dictum mi,	ARRAY[]	NULL
+5	NULL	ARRAY[]	NULL
+6	vulputate, posuere vulputate, lacus. Cras interdum. Nunc sollicitudin commodo ipsum.	ARRAY[]	NULL
+7	quis, pede. Praesent eu dui. Cum sociis natoque penatibus et	ARRAY[]	NULL
+8	NULL	ARRAY[]	NULL
+9	auctor quis, tristique ac, eleifend vitae, erat. Vivamus	ARRAY[]	NULL
+10	amet risus. Donec egestas. Aliquam nec enim.	ARRAY[]	NULL
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                               
+------------------------------------------------------------------------
+ID	DATA
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                                  
+------------------------------------------------------------------------
+ID	FIRSTNAME	LASTNAME	AGE
+
+
+
 PUBLIC.BOOKS.Global Counts                                              
 ------------------------------------------------------------------------
-Global Count
+Global Count	UPDATE
+1	Abbot
+2	Alexis
+3	Jasmine
+4	NULL
+5	Teagan
+6	Stella
+7	Alden
+8	Daniel
+9	NULL
+10	Yetta
 
 
 
@@ -141,9 +179,9 @@ ID	PUBLISHER
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                       
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                                     
 ------------------------------------------------------------------------
-ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+ΜΟΝΑΔΙΚΌΣ	ΤΊΤΛΟΣ	ΠΕΡΙΓΡΑΦΉ	ΕΚΔΌΤΗΣ
 
 
 

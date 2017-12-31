@@ -1,6 +1,7 @@
--- Tables with spaces in the name
+-- Tables with spaces and reserved words in the name 
 CREATE TABLE "Global Counts"
 (
-  "Global Count" INTEGER
+  "Global Count" INTEGER,
+  "UPDATE" VARCHAR(20)
 )
 ;

@@ -31,11 +31,12 @@ CREATE TABLE Books
 )
 ;
 
+-- Table with a reserved word for a column name
 CREATE TABLE BookAuthors
 (
   BookId INTEGER NOT NULL,
   AuthorId INTEGER NOT NULL,
-  "UPDATE" CLOB,
+  SomeData VARCHAR(30),
   CONSTRAINT FK_Y_Book FOREIGN KEY (BookId) REFERENCES Books (Id),
   CONSTRAINT FK_Z_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
 )

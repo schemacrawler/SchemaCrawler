@@ -7,11 +7,14 @@ schema: PUBLIC.BOOKS
       column reference: PUBLIC.BOOKS.BOOKS.ID <~~ PUBLIC."PUBLISHER SALES".SALES.BOOKID
     weak association (1 to (0..many)):
       column reference: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
+  table: PUBLIC.BOOKS.COUPONS
+  table: PUBLIC.BOOKS.CUSTOMERDATA
+  table: PUBLIC.BOOKS.CUSTOMERS
   table: PUBLIC.BOOKS."Global Counts"
   table: PUBLIC.BOOKS.PUBLISHERS
     weak association (1 to (0..many)):
       column reference: PUBLIC.BOOKS.PUBLISHERS.ID <~~ PUBLIC.BOOKS.BOOKS.PUBLISHERID
-  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

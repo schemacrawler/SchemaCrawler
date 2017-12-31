@@ -10,11 +10,17 @@ o--> PUBLIC.BOOKS.BOOKAUTHORS [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS.BOOKS [table]
       ~ COMMIT_ACTION=null
+o--> PUBLIC.BOOKS.COUPONS [table]
+      ~ COMMIT_ACTION=null
+o--> PUBLIC.BOOKS.CUSTOMERDATA [table]
+      ~ COMMIT_ACTION=null
+o--> PUBLIC.BOOKS.CUSTOMERS [table]
+      ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS."Global Counts" [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC.BOOKS.PUBLISHERS [table]
       ~ COMMIT_ACTION=null
-o--> PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ [table]
+o--> PUBLIC.BOOKS.ΒΙΒΛΊΑ [table]
       ~ COMMIT_ACTION=null
 o--> PUBLIC."PUBLISHER SALES".REGIONS [table]
       ~ COMMIT_ACTION=null

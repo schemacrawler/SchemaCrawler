@@ -18,7 +18,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_AUTHORS_10098"
+          "name": "SYS_IDX_PK_AUTHORS_10111"
         },
         {
           "columns": [
@@ -247,7 +247,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10120"
+          "name": "SYS_IDX_FK_Z_AUTHOR_10133"
         },
         {
           "columns": {
@@ -255,7 +255,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10118"
+          "name": "SYS_IDX_FK_Y_BOOK_10131"
         },
         {
           "columns": [
@@ -296,12 +296,12 @@
           "autoIncremented": false
         },
         {
-          "size": 1073741824,
+          "size": 30,
           "nullable": true,
-          "databaseSpecificType": "CLOB",
-          "dataType": "CLOB",
-          "name": "UPDATE",
-          "width": "",
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "SOMEDATA",
+          "width": "(30)",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
@@ -343,7 +343,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_BOOKS_10106"
+          "name": "SYS_IDX_PK_BOOKS_10119"
         },
         {
           "columns": {
@@ -351,7 +351,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": true,
-          "name": "SYS_IDX_U_PREVIOUSEDITION_10112"
+          "name": "SYS_IDX_U_PREVIOUSEDITION_10125"
         },
         {
           "columns": {
@@ -359,7 +359,7 @@
             "name": "PREVIOUSEDITIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PREVIOUSEDITION_10110"
+          "name": "SYS_IDX_FK_PREVIOUSEDITION_10123"
         }
       ],
       "columns": [
@@ -458,18 +458,222 @@
     },
     {
       "foreignKeys": [],
-      "indexes": [],
-      "columns": [{
-        "size": 32,
-        "nullable": true,
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "Global Count",
-        "width": "",
-        "decimalDigits": 0,
-        "remarks": "",
-        "autoIncremented": false
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "SYS_IDX_PK_COUPONS_10093"
       }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 1073741824,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "dataType": "CLOB",
+          "name": "DATA",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 0,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER ARRAY",
+          "dataType": "ARRAY",
+          "name": "COUPONS",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 0,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR(20) ARRAY[10]",
+          "dataType": "ARRAY",
+          "name": "BOOKS",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "COUPONS",
+      "fullName": "PUBLIC.BOOKS.COUPONS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_COUPONS"
+      }
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "SYS_IDX_PK_CUSTOMERDATA_10104"
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "BOOKS.VALID_STRING",
+          "dataType": "VARCHAR",
+          "name": "DATA",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "CUSTOMERDATA",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERDATA",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_CUSTOMERDATA"
+      }
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "SYS_IDX_PK_CUSTOMERS_10098"
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 100,
+          "nullable": false,
+          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(100)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 100,
+          "nullable": false,
+          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(100)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 16,
+          "nullable": true,
+          "databaseSpecificType": "BOOKS.AGE_TYPE",
+          "dataType": "SMALLINT",
+          "name": "AGE",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "CUSTOMERS",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID"
+        },
+        "unique": true,
+        "name": "PK_CUSTOMERS"
+      }
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "Global Count",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "UPDATE",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
       "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
@@ -480,11 +684,11 @@
     },
     {
       "foreignKeys": [{
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "name": "FK_ΒΙΒΛΊΑ_PUBLISHERS",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+          "fkColumn": "PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ"
         }],
         "updateRule": "no action"
       }],
@@ -494,7 +698,7 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_IDX_SYS_PK_10093_10094"
+        "name": "SYS_IDX_SYS_PK_10106_10107"
       }],
       "columns": [
         {
@@ -532,16 +736,16 @@
           "name": "ID"
         },
         "unique": true,
-        "name": "SYS_PK_10093"
+        "name": "SYS_PK_10106"
       }
     },
     {
       "foreignKeys": [{
-        "name": "FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS",
+        "name": "FK_ΒΙΒΛΊΑ_PUBLISHERS",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+          "fkColumn": "PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ"
         }],
         "updateRule": "no action"
       }],
@@ -549,18 +753,18 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+            "name": "ΕΚΔΌΤΗΣ"
           },
-          "unique": true,
-          "name": "SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124"
+          "unique": false,
+          "name": "SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143"
         },
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ΣΥΓΓΡΑΦΈΑΣ"
+            "name": "ΜΟΝΑΔΙΚΌΣ"
           },
-          "unique": false,
-          "name": "SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126"
+          "unique": true,
+          "name": "SYS_IDX_PK_ΒΙΒΛΊΑ_10139"
         }
       ],
       "columns": [
@@ -569,37 +773,48 @@
           "nullable": false,
           "databaseSpecificType": "BIGINT",
           "dataType": "BIGINT",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "name": "ΜΟΝΑΔΙΚΌΣ",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         },
         {
-          "size": 10,
-          "nullable": true,
+          "size": 255,
+          "nullable": false,
           "databaseSpecificType": "VARCHAR",
           "dataType": "VARCHAR",
-          "name": "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "(10)",
+          "name": "ΤΊΤΛΟΣ",
+          "width": "(255)",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         },
         {
-          "size": 32,
+          "size": 255,
           "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ΠΕΡΙΓΡΑΦΉ",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΕΚΔΌΤΗΣ",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         }
       ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "name": "ΒΙΒΛΊΑ",
+      "fullName": "PUBLIC.BOOKS.ΒΙΒΛΊΑ",
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
@@ -607,10 +822,10 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+          "name": "ΜΟΝΑΔΙΚΌΣ"
         },
         "unique": true,
-        "name": "PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ"
+        "name": "PK_ΒΙΒΛΊΑ"
       }
     },
     {
@@ -641,7 +856,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_JOIN_10184"
+          "name": "SYS_IDX_FK_WRITER_JOIN_10201"
         },
         {
           "columns": {
@@ -649,7 +864,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_EXTRA_PK_10180"
+          "name": "SYS_IDX_PK_EXTRA_PK_10197"
         },
         {
           "columns": {
@@ -657,7 +872,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10186"
+          "name": "SYS_IDX_FK_PUBLICATION_JOIN_10203"
         }
       ],
       "columns": [
@@ -778,7 +993,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10165"
+          "name": "SYS_IDX_FK_PUBLICATIONS_WRITER_10182"
         },
         {
           "columns": {
@@ -786,7 +1001,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_PUBLICATIONS_10161"
+          "name": "SYS_IDX_PK_PUBLICATIONS_10178"
         }
       ],
       "columns": [
@@ -922,7 +1137,7 @@
             "name": "WRITERID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITER_10172"
+          "name": "SYS_IDX_FK_WRITER_10189"
         },
         {
           "columns": {
@@ -930,7 +1145,7 @@
             "name": "PUBLICATIONID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_PUBLICATION_10174"
+          "name": "SYS_IDX_FK_PUBLICATION_10191"
         }
       ],
       "columns": [
@@ -982,7 +1197,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_SELFREFERENCE_10190"
+          "name": "SYS_IDX_PK_SELFREFERENCE_10207"
         },
         {
           "columns": {
@@ -990,7 +1205,7 @@
             "name": "ID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SELFREFERENCE_10193"
+          "name": "SYS_IDX_FK_SELFREFERENCE_10210"
         }
       ],
       "columns": [
@@ -1078,7 +1293,7 @@
             "name": "ID"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_WRITERS_10151"
+          "name": "SYS_IDX_PK_WRITERS_10168"
         },
         {
           "columns": {
@@ -1086,7 +1301,7 @@
             "name": "PUBLICATION_ID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10196"
+          "name": "SYS_IDX_FK_WRITERS_PUBLICATION_10213"
         },
         {
           "columns": [
@@ -1396,7 +1611,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10210"
+        "name": "SYS_IDX_PK_CUSTOMERS_10227"
       }],
       "columns": [
         {
@@ -1499,7 +1714,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10224"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10241"
         },
         {
           "columns": [
@@ -1513,7 +1728,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10222"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10239"
         }
       ],
       "columns": [
@@ -1608,7 +1823,7 @@
           "name": "SALESDATAID"
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10216"
+        "name": "SYS_IDX_UQ_CUSTOMERS_10233"
       }],
       "columns": [
         {
@@ -1644,7 +1859,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 01:18:58",
+    "crawlTimestamp": "2017-12-30 20:51:31",
     "title": ""
   },
   "routines": [

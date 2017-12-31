@@ -194,7 +194,7 @@ public class OfflineSnapshotTest
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema",
-                 7,
+                 10,
                  catalog.getTables(schema).size());
 
     serializedDatabaseFile = IOUtility.createTempFilePath("schemacrawler",

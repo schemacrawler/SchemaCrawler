@@ -6,13 +6,13 @@ schema: PUBLIC.BOOKS
     constraint: CHECK_UPPERCASE_STATE
       type: check
       on column: STATE
-    constraint: SYS_CT_10095
+    constraint: SYS_CT_10108
       type: check
       on column: ID
-    constraint: SYS_CT_10096
+    constraint: SYS_CT_10109
       type: check
       on column: FIRSTNAME
-    constraint: SYS_CT_10097
+    constraint: SYS_CT_10110
       type: check
       on column: LASTNAME
   table: PUBLIC.BOOKS.BOOKAUTHORS
@@ -22,10 +22,10 @@ schema: PUBLIC.BOOKS
     constraint: FK_Z_AUTHOR
       type: foreign_key
       on column: AUTHORID
-    constraint: SYS_CT_10113
+    constraint: SYS_CT_10126
       type: check
       on column: BOOKID
-    constraint: SYS_CT_10114
+    constraint: SYS_CT_10127
       type: check
       on column: AUTHORID
   table: PUBLIC.BOOKS.BOOKS
@@ -38,30 +38,63 @@ schema: PUBLIC.BOOKS
     constraint: U_PREVIOUSEDITION
       type: unique
       on column: PREVIOUSEDITIONID
+    constraint: SYS_CT_10116
+      type: check
+      on column: ID
+    constraint: SYS_CT_10117
+      type: check
+      on column: TITLE
+    constraint: SYS_CT_10118
+      type: check
+      on column: PUBLISHERID
+  table: PUBLIC.BOOKS.COUPONS
+    constraint: PK_COUPONS
+      type: primary_key
+      on column: ID
+    constraint: SYS_CT_10092
+      type: check
+      on column: ID
+  table: PUBLIC.BOOKS.CUSTOMERDATA
+    constraint: PK_CUSTOMERDATA
+      type: primary_key
+      on column: ID
     constraint: SYS_CT_10103
       type: check
       on column: ID
-    constraint: SYS_CT_10104
-      type: check
-      on column: TITLE
-    constraint: SYS_CT_10105
-      type: check
-      on column: PUBLISHERID
-  table: PUBLIC.BOOKS."Global Counts"
-  table: PUBLIC.BOOKS.PUBLISHERS
-    constraint: SYS_PK_10093
+  table: PUBLIC.BOOKS.CUSTOMERS
+    constraint: PK_CUSTOMERS
       type: primary_key
       on column: ID
-  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    constraint: PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-      type: primary_key
-      on column: ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    constraint: FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS
-      type: foreign_key
-      on column: ΣΥΓΓΡΑΦΈΑΣ
-    constraint: SYS_CT_10123
+    constraint: SYS_CT_10095
       type: check
-      on column: ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+      on column: ID
+    constraint: SYS_CT_10096
+      type: check
+      on column: FIRSTNAME
+    constraint: SYS_CT_10097
+      type: check
+      on column: LASTNAME
+  table: PUBLIC.BOOKS."Global Counts"
+  table: PUBLIC.BOOKS.PUBLISHERS
+    constraint: SYS_PK_10106
+      type: primary_key
+      on column: ID
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+    constraint: PK_ΒΙΒΛΊΑ
+      type: primary_key
+      on column: ΜΟΝΑΔΙΚΌΣ
+    constraint: FK_ΒΙΒΛΊΑ_PUBLISHERS
+      type: foreign_key
+      on column: ΕΚΔΌΤΗΣ
+    constraint: SYS_CT_10136
+      type: check
+      on column: ΜΟΝΑΔΙΚΌΣ
+    constraint: SYS_CT_10137
+      type: check
+      on column: ΤΊΤΛΟΣ
+    constraint: SYS_CT_10138
+      type: check
+      on column: ΕΚΔΌΤΗΣ
   table: PUBLIC.BOOKS.AUTHORSLIST
 schema: PUBLIC.FOR_LINT
   table: PUBLIC.FOR_LINT.EXTRA_PK
@@ -74,13 +107,13 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_WRITER_JOIN
       type: foreign_key
       on column: WRITERID
-    constraint: SYS_CT_10177
+    constraint: SYS_CT_10194
       type: check
       on column: WRITERID
-    constraint: SYS_CT_10178
+    constraint: SYS_CT_10195
       type: check
       on column: PUBLICATIONID
-    constraint: SYS_CT_10179
+    constraint: SYS_CT_10196
       type: check
       on column: ID
   table: PUBLIC.FOR_LINT."Global Counts"
@@ -91,13 +124,13 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_PUBLICATIONS_WRITER
       type: foreign_key
       on column: WRITERID
-    constraint: SYS_CT_10158
+    constraint: SYS_CT_10175
       type: check
       on column: ID
-    constraint: SYS_CT_10159
+    constraint: SYS_CT_10176
       type: check
       on column: TITLE
-    constraint: SYS_CT_10160
+    constraint: SYS_CT_10177
       type: check
       on column: WRITERID
   table: PUBLIC.FOR_LINT.PUBLICATIONWRITERS
@@ -107,10 +140,10 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_WRITER
       type: foreign_key
       on column: WRITERID
-    constraint: SYS_CT_10167
+    constraint: SYS_CT_10184
       type: check
       on column: PUBLICATIONID
-    constraint: SYS_CT_10168
+    constraint: SYS_CT_10185
       type: check
       on column: WRITERID
   table: PUBLIC.FOR_LINT.SELFREFERENCE
@@ -120,10 +153,10 @@ schema: PUBLIC.FOR_LINT
     constraint: FK_SELFREFERENCE
       type: foreign_key
       on column: ID
-    constraint: SYS_CT_10188
+    constraint: SYS_CT_10205
       type: check
       on column: ID
-    constraint: SYS_CT_10189
+    constraint: SYS_CT_10206
       type: check
       on column: TITLE
   table: PUBLIC.FOR_LINT.WRITERS
@@ -136,19 +169,19 @@ schema: PUBLIC.FOR_LINT
     constraint: CHECK_UPPERCASE_STATE
       type: check
       on column: STATE
-    constraint: SYS_CT_10146
+    constraint: SYS_CT_10163
       type: check
       on column: ID
-    constraint: SYS_CT_10147
+    constraint: SYS_CT_10164
       type: check
       on column: FIRSTNAME
-    constraint: SYS_CT_10148
+    constraint: SYS_CT_10165
       type: check
       on column: LASTNAME
-    constraint: SYS_CT_10149
+    constraint: SYS_CT_10166
       type: check
       on column: ADDRESS2
-    constraint: SYS_CT_10150
+    constraint: SYS_CT_10167
       type: check
       on column: PUBLICATION_ID
 schema: PUBLIC.INFORMATION_SCHEMA
@@ -159,16 +192,16 @@ schema: PUBLIC."PUBLISHER SALES"
       type: primary_key
       on column: COUNTRY
       on column: POSTALCODE
-    constraint: SYS_CT_10206
+    constraint: SYS_CT_10223
       type: check
       on column: CITY
-    constraint: SYS_CT_10207
+    constraint: SYS_CT_10224
       type: check
       on column: STATE
-    constraint: SYS_CT_10208
+    constraint: SYS_CT_10225
       type: check
       on column: POSTALCODE
-    constraint: SYS_CT_10209
+    constraint: SYS_CT_10226
       type: check
       on column: COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALES
@@ -179,10 +212,10 @@ schema: PUBLIC."PUBLISHER SALES"
     constraint: FK_SALES_SALESDATA
       type: foreign_key
       on column: SALESDATAID
-    constraint: SYS_CT_10217
+    constraint: SYS_CT_10234
       type: check
       on column: POSTALCODE
-    constraint: SYS_CT_10218
+    constraint: SYS_CT_10235
       type: check
       on column: COUNTRY
   table: PUBLIC."PUBLISHER SALES".SALESDATA

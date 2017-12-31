@@ -38,9 +38,9 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID
       database type: INTEGER
       type: INTEGER
-    column: PUBLIC.BOOKS.BOOKAUTHORS."UPDATE"
-      database type: CLOB
-      type: CLOB
+    column: PUBLIC.BOOKS.BOOKAUTHORS.SOMEDATA
+      database type: VARCHAR
+      type: VARCHAR
   table: PUBLIC.BOOKS.BOOKS
     column: PUBLIC.BOOKS.BOOKS.TITLE
       database type: VARCHAR
@@ -60,24 +60,54 @@ schema: PUBLIC.BOOKS
     column: PUBLIC.BOOKS.BOOKS.PREVIOUSEDITIONID
       database type: INTEGER
       type: INTEGER
+  table: PUBLIC.BOOKS.COUPONS
+    column: PUBLIC.BOOKS.COUPONS.DATA
+      database type: CLOB
+      type: CLOB
+    column: PUBLIC.BOOKS.COUPONS.COUPONS
+      database type: INTEGER ARRAY
+      type: ARRAY
+    column: PUBLIC.BOOKS.COUPONS.BOOKS
+      database type: VARCHAR(20) ARRAY[10]
+      type: ARRAY
+  table: PUBLIC.BOOKS.CUSTOMERDATA
+    column: PUBLIC.BOOKS.CUSTOMERDATA.DATA
+      database type: BOOKS.VALID_STRING
+      type: VARCHAR
+  table: PUBLIC.BOOKS.CUSTOMERS
+    column: PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
+      database type: BOOKS.NAME_TYPE
+      type: VARCHAR
+    column: PUBLIC.BOOKS.CUSTOMERS.LASTNAME
+      database type: BOOKS.NAME_TYPE
+      type: VARCHAR
+    column: PUBLIC.BOOKS.CUSTOMERS.AGE
+      database type: BOOKS.AGE_TYPE
+      type: SMALLINT
   table: PUBLIC.BOOKS."Global Counts"
     column: PUBLIC.BOOKS."Global Counts"."Global Count"
       database type: INTEGER
       type: INTEGER
+    column: PUBLIC.BOOKS."Global Counts"."UPDATE"
+      database type: VARCHAR
+      type: VARCHAR
   table: PUBLIC.BOOKS.PUBLISHERS
     column: PUBLIC.BOOKS.PUBLISHERS.PUBLISHER
       database type: VARCHAR
       type: VARCHAR
-  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
-    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
+    column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
       database type: BIGINT
       type: BIGINT
-    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+    column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
       database type: VARCHAR
       type: VARCHAR
-    column: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ
-      database type: INTEGER
-      type: INTEGER
+    column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΠΕΡΙΓΡΑΦΉ
+      database type: VARCHAR
+      type: VARCHAR
+    column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
+      database type: BIGINT
+      type: BIGINT
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

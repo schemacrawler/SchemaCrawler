@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2017-12-30 01:18:56</td>
+		<td align='left'>2017-12-30 20:51:28</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -107,6 +107,48 @@ along with the latest updated information</td>
 
 
 
+  /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "coupons_54c3042b" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.COUPONS</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.BOOKS.CUSTOMERDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "customerdata_b0af83c6" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERDATA</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.BOOKS.CUSTOMERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "customers_f705d773" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERS</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "globalcounts_7fcacf9f" [
     label=<
@@ -138,12 +180,12 @@ along with the latest updated information</td>
 
 
 
-  /* PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "πίνακαβάσησδεδομένων_3f988fb1" [
+  /* PUBLIC.BOOKS.ΒΙΒΛΊΑ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "βιβλία_3cecb755" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>PUBLIC.BOOKS.ΒΙΒΛΊΑ</i></b></td>
 		<td bgcolor='#CEE2F2' align='right'>[table]</td>
 	</tr>
       </table>

@@ -31,6 +31,9 @@ package schemacrawler.tools.text.operation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import schemacrawler.schema.Table;
@@ -221,7 +224,38 @@ final class DataJsonFormatter
     final JSONArray jsonRows = new JSONArray();
     while (dataRows.next())
     {
-      final List<Object> currentRow = dataRows.row();
+      final List<Object> currentRowRaw = dataRows.row();
+      final List<Object> currentRow = new ArrayList<>();
+      for (final Object columnData: currentRowRaw)
+      {
+        if (columnData == null || columnData instanceof Number
+            || columnData instanceof CharSequence
+            || columnData instanceof Boolean || columnData instanceof Date
+            || columnData instanceof Calendar)
+        {
+          currentRow.add(columnData);
+        }
+        else
+        {
+          final Class<? extends Object> columnDataClass = columnData.getClass();
+          try
+          {
+            if (columnDataClass.getMethod("toString")
+              .getDeclaringClass() != Object.class)
+            {
+              currentRow.add(columnData.toString());
+            }
+            else
+            {
+              currentRow.add(columnDataClass.getSimpleName());
+            }
+          }
+          catch (final NoSuchMethodException | SecurityException e)
+          {
+            currentRow.add(columnDataClass.getSimpleName());
+          }
+        }
+      }
       jsonRows.put(new JSONArray(currentRow));
     }
     return jsonRows;

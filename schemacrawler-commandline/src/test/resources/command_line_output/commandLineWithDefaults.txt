@@ -72,6 +72,39 @@ Foreign Keys
 
 
 
+COUPONS                                                          [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+
+
+CUSTOMERDATA                                                     [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+
+
+CUSTOMERS                                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+                                                           [primary key]
+  ID                                ascending                   
+
+
+
 "Global Counts"                                                  [table]
 ------------------------------------------------------------------------
 
@@ -93,24 +126,24 @@ Primary Key
 Foreign Keys
 
                                            [foreign key, with no action]
-  ID <--(0..many) ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+  ID <--(0..many) ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                                
 
 
 
-ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                             [table]
+ΒΙΒΛΊΑ                                                           [table]
 ------------------------------------------------------------------------
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+  ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
+  ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
 
 Primary Key
 
                                                            [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 Foreign Keys
 
                                            [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLISHERS.ID                              
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLISHERS.ID                              
 
 
 
