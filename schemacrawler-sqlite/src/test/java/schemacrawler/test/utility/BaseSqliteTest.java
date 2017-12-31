@@ -78,7 +78,8 @@ public abstract class BaseSqliteTest
       final SqlScript sqlScript = new SqlScript(databaseSqlResource,
                                                 connection,
                                                 readerForResource(databaseSqlResource,
-                                                                  StandardCharsets.UTF_8));
+                                                                  StandardCharsets.UTF_8),
+                                                false);
       sqlScript.run();
     }
 

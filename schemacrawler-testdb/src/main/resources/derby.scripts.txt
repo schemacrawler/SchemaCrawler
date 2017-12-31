@@ -21,7 +21,8 @@
 #/db/books/08_procedures_01_B.sql
 #/db/books/09_functions_01_A.sql
 #/db/books/09_functions_01_B.sql
-/db/books/10_triggers_01_A.sql
+~/db/books/10_triggers_01_A.sql
+#/db/books/10_triggers_01_B.sql
 /db/books/11_synonyms_01_A.sql
 /db/books/90_data_01_A.sql
 /db/books/90_data_02_A.sql
