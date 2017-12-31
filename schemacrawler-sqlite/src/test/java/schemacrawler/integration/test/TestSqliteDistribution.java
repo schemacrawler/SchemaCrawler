@@ -30,7 +30,6 @@ package schemacrawler.integration.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
@@ -43,11 +42,13 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.testdb.SchemaCreator;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
+import sf.util.IOUtility;
 
 public class TestSqliteDistribution
 {
@@ -79,7 +80,14 @@ public class TestSqliteDistribution
     {
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final Path sqliteDbFile = copyResourceToTempFile("/sc.db");
+      final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
+        .normalize().toAbsolutePath();
+
+      SchemaCreator.main(new String[] {
+                                        "jdbc:sqlite:" + sqliteDbFile,
+                                        null,
+                                        null,
+                                        "/sqlite.scripts.txt" });
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "sqlite");
