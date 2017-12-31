@@ -63,7 +63,7 @@ abstract class BaseDatabaseConnectionOptions
 
   private static final String URL = "url";
 
-  protected static final Map<String, String> toMap(final String connectionUrl)
+  protected static final Map<String, String> connectionUrlToMap(final String connectionUrl)
   {
     if (isBlank(connectionUrl))
     {
