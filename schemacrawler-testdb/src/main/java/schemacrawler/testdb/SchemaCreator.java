@@ -35,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,6 +45,22 @@ public class SchemaCreator
 
   private static final Logger LOGGER = Logger
     .getLogger(TestDatabase.class.getName());
+
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final String connectionUrl = args[0];
+    final String user = args[1];
+    final String password = args[2];
+    final String scriptsResource = args[3];
+
+    final Connection connection = DriverManager
+      .getConnection(connectionUrl, user, password);
+    connection.setAutoCommit(false);
+    final SchemaCreator schemaCreator = new SchemaCreator(connection,
+                                                          scriptsResource);
+    schemaCreator.run();
+  }
 
   private final Connection connection;
   private final String scriptsResource;

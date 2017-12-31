@@ -24,4 +24,4 @@
 #/db/books/10_triggers_01_A.sql
 #/db/books/11_synonyms_01_A.sql
 /db/books/90_data_01_A.sql
-#/db/books/90_data_02_A.sql
+/db/books/90_data_02_A.sql
