@@ -28,49 +28,31 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-@Ignore
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:derby-context.xml")
 public class DerbyTest
-  extends BaseExecutableTest
+  extends BaseAdditionalDatabaseTest
 {
 
-  @Autowired
-  private DataSource dataSource;
-
-  @Test
-  public void testDataSource()
-    throws Exception
+  @Before
+  public void createDatabase()
+    throws SchemaCrawlerException, ClassNotFoundException, SQLException
   {
-    assertNotNull(dataSource);
-    final Connection connection = getConnection();
-    assertNotNull(connection);
-    assertEquals("org.apache.derby.impl.jdbc.EmbedConnection",
-                 connection.getClass().getName());
+    Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
+    createDatabase("jdbc:derby:memory:schemacrawler;create=true",
+                   "/derby.scripts.txt");
   }
 
   @Test
@@ -93,20 +75,6 @@ public class DerbyTest
         .toConfig());
 
     executeExecutable(executable, "text", "testDerbyWithConnection.txt");
-  }
-
-  @Override
-  protected Connection getConnection()
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      return dataSource.getConnection();
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
   }
 
 }

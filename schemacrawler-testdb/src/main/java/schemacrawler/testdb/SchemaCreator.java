@@ -86,13 +86,27 @@ public class SchemaCreator
     }
     catch (final Exception e)
     {
-      System.err.println(e.getMessage());
-      LOGGER.log(Level.WARNING,
-                 String
-                   .format("Script: %s -- %s", scriptResource, e.getMessage()),
-                 e);
-      throw new RuntimeException(e);
+      final Throwable throwable = getCause(e);
+      final String message = String
+        .format("Script: %s -- %s", scriptResource, throwable.getMessage());
+
+      System.err.println(message);
+      LOGGER.log(Level.WARNING, message, throwable);
+
+      throw new RuntimeException(message, throwable);
     }
+  }
+
+  private Throwable getCause(final Throwable e)
+  {
+    Throwable cause = null;
+    Throwable result = e;
+
+    while (null != (cause = result.getCause()) && result != cause)
+    {
+      result = cause;
+    }
+    return result;
   }
 
 }

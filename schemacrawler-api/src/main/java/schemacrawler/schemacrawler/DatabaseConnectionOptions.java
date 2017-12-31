@@ -40,7 +40,7 @@ public final class DatabaseConnectionOptions
   public DatabaseConnectionOptions(final String connectionUrl)
     throws SchemaCrawlerException
   {
-    super(new SingleUseUserCredentials(), toMap(connectionUrl));
+    super(new SingleUseUserCredentials(), connectionUrlToMap(connectionUrl));
   }
 
   public DatabaseConnectionOptions(final UserCredentials userCredentials,
