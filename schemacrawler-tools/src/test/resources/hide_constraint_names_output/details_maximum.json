@@ -542,12 +542,12 @@
           "autoIncremented": false
         },
         {
-          "size": 1073741824,
+          "size": 30,
           "nullable": true,
-          "databaseSpecificType": "CLOB",
-          "dataType": "CLOB",
-          "name": "UPDATE",
-          "width": "",
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "SOMEDATA",
+          "width": "(30)",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
@@ -952,18 +952,496 @@
         }
       ],
       "foreignKeys": [],
-      "indexes": [],
-      "columns": [{
-        "size": 32,
-        "nullable": true,
-        "databaseSpecificType": "INTEGER",
-        "dataType": "INTEGER",
-        "name": "Global Count",
-        "width": "",
-        "decimalDigits": 0,
-        "remarks": "",
-        "autoIncremented": false
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
       }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 1073741824,
+          "nullable": true,
+          "databaseSpecificType": "CLOB",
+          "dataType": "CLOB",
+          "name": "DATA",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 0,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER ARRAY",
+          "dataType": "ARRAY",
+          "name": "COUPONS",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 0,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR(20) ARRAY[10]",
+          "dataType": "ARRAY",
+          "name": "BOOKS",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "COUPONS",
+      "fullName": "PUBLIC.BOOKS.COUPONS",
+      "definition": "",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "",
+          "type": "primary_key"
+        },
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.COUPONS.ID IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
+      }
+    },
+    {
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "BOOKS.VALID_STRING",
+          "dataType": "VARCHAR",
+          "name": "DATA",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "CUSTOMERDATA",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERDATA",
+      "definition": "",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "",
+          "type": "primary_key"
+        },
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.CUSTOMERDATA.ID IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
+      }
+    },
+    {
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [{
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
+      }],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": false,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "ID",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 100,
+          "nullable": false,
+          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "dataType": "VARCHAR",
+          "name": "FIRSTNAME",
+          "width": "(100)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 100,
+          "nullable": false,
+          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "dataType": "VARCHAR",
+          "name": "LASTNAME",
+          "width": "(100)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 16,
+          "nullable": true,
+          "databaseSpecificType": "BOOKS.AGE_TYPE",
+          "dataType": "SMALLINT",
+          "name": "AGE",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
+      "name": "CUSTOMERS",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERS",
+      "definition": "",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "",
+          "type": "primary_key"
+        },
+        {
+          "columns": {
+            "size": 32,
+            "nullable": false,
+            "databaseSpecificType": "INTEGER",
+            "dataType": "INTEGER",
+            "name": "ID",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.CUSTOMERS.ID IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "columns": {
+            "size": 100,
+            "nullable": false,
+            "databaseSpecificType": "BOOKS.NAME_TYPE",
+            "dataType": "VARCHAR",
+            "name": "FIRSTNAME",
+            "width": "(100)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.CUSTOMERS.FIRSTNAME IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "columns": {
+            "size": 100,
+            "nullable": false,
+            "databaseSpecificType": "BOOKS.NAME_TYPE",
+            "dataType": "VARCHAR",
+            "name": "LASTNAME",
+            "width": "(100)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.CUSTOMERS.LASTNAME IS NOT NULL",
+          "type": "check"
+        }
+      ],
+      "remarks": "",
+      "primaryKey": {
+        "columns": {
+          "sortSequence": "ascending",
+          "name": "ID",
+          "definition": ""
+        },
+        "unique": true,
+        "definition": ""
+      }
+    },
+    {
+      "privileges": [
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "DELETE"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "INSERT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "REFERENCES"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "SELECT"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "TRIGGER"
+        },
+        {
+          "grants": {
+            "grantable": true,
+            "grantee": "SA",
+            "grantor": "_SYSTEM"
+          },
+          "name": "UPDATE"
+        }
+      ],
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [
+        {
+          "size": 32,
+          "nullable": true,
+          "databaseSpecificType": "INTEGER",
+          "dataType": "INTEGER",
+          "name": "Global Count",
+          "width": "",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 20,
+          "nullable": true,
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "UPDATE",
+          "width": "(20)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        }
+      ],
       "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "definition": "",
@@ -1029,7 +1507,7 @@
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+          "fkColumn": "PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ"
         }],
         "updateRule": "no action"
       }],
@@ -1152,7 +1630,7 @@
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.PUBLISHERS.ID",
-          "fkColumn": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ"
+          "fkColumn": "PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ"
         }],
         "updateRule": "no action"
       }],
@@ -1160,19 +1638,19 @@
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "name": "ΕΚΔΌΤΗΣ",
             "definition": ""
           },
-          "unique": true,
+          "unique": false,
           "definition": ""
         },
         {
           "columns": {
             "sortSequence": "ascending",
-            "name": "ΣΥΓΓΡΑΦΈΑΣ",
+            "name": "ΜΟΝΑΔΙΚΌΣ",
             "definition": ""
           },
-          "unique": false,
+          "unique": true,
           "definition": ""
         }
       ],
@@ -1182,37 +1660,48 @@
           "nullable": false,
           "databaseSpecificType": "BIGINT",
           "dataType": "BIGINT",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "name": "ΜΟΝΑΔΙΚΌΣ",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         },
         {
-          "size": 10,
-          "nullable": true,
+          "size": 255,
+          "nullable": false,
           "databaseSpecificType": "VARCHAR",
           "dataType": "VARCHAR",
-          "name": "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-          "width": "(10)",
+          "name": "ΤΊΤΛΟΣ",
+          "width": "(255)",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         },
         {
-          "size": 32,
+          "size": 255,
           "nullable": true,
-          "databaseSpecificType": "INTEGER",
-          "dataType": "INTEGER",
-          "name": "ΣΥΓΓΡΑΦΈΑΣ",
+          "databaseSpecificType": "VARCHAR",
+          "dataType": "VARCHAR",
+          "name": "ΠΕΡΙΓΡΑΦΉ",
+          "width": "(255)",
+          "decimalDigits": 0,
+          "remarks": "",
+          "autoIncremented": false
+        },
+        {
+          "size": 64,
+          "nullable": false,
+          "databaseSpecificType": "BIGINT",
+          "dataType": "BIGINT",
+          "name": "ΕΚΔΌΤΗΣ",
           "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
         }
       ],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "name": "ΒΙΒΛΊΑ",
+      "fullName": "PUBLIC.BOOKS.ΒΙΒΛΊΑ",
       "definition": "",
       "type": "table",
       "triggers": [],
@@ -1223,7 +1712,7 @@
             "nullable": false,
             "databaseSpecificType": "BIGINT",
             "dataType": "BIGINT",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "name": "ΜΟΝΑΔΙΚΌΣ",
             "width": "",
             "decimalDigits": 0,
             "autoIncremented": false
@@ -1233,11 +1722,11 @@
         },
         {
           "columns": {
-            "size": 32,
-            "nullable": true,
-            "databaseSpecificType": "INTEGER",
-            "dataType": "INTEGER",
-            "name": "ΣΥΓΓΡΑΦΈΑΣ",
+            "size": 64,
+            "nullable": false,
+            "databaseSpecificType": "BIGINT",
+            "dataType": "BIGINT",
+            "name": "ΕΚΔΌΤΗΣ",
             "width": "",
             "decimalDigits": 0,
             "autoIncremented": false
@@ -1251,12 +1740,40 @@
             "nullable": false,
             "databaseSpecificType": "BIGINT",
             "dataType": "BIGINT",
-            "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+            "name": "ΜΟΝΑΔΙΚΌΣ",
             "width": "",
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "definition": "BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ IS NOT NULL",
+          "definition": "BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "columns": {
+            "size": 255,
+            "nullable": false,
+            "databaseSpecificType": "VARCHAR",
+            "dataType": "VARCHAR",
+            "name": "ΤΊΤΛΟΣ",
+            "width": "(255)",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ IS NOT NULL",
+          "type": "check"
+        },
+        {
+          "columns": {
+            "size": 64,
+            "nullable": false,
+            "databaseSpecificType": "BIGINT",
+            "dataType": "BIGINT",
+            "name": "ΕΚΔΌΤΗΣ",
+            "width": "",
+            "decimalDigits": 0,
+            "autoIncremented": false
+          },
+          "definition": "BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ IS NOT NULL",
           "type": "check"
         }
       ],
@@ -1264,7 +1781,7 @@
       "primaryKey": {
         "columns": {
           "sortSequence": "ascending",
-          "name": "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+          "name": "ΜΟΝΑΔΙΚΌΣ",
           "definition": ""
         },
         "unique": true,
@@ -2079,7 +2596,43 @@
     {
       "createParameters": "",
       "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.AGE_TYPE\"",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.NAME_TYPE\"",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.VALID_STRING\"",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
       "databaseSpecificTypeName": "PUBLIC.BOOKS.\"CHARACTER VARYING\"",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"INTEGER ARRAY\"",
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
@@ -2092,6 +2645,15 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "NVARCHAR",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"VARCHAR(20) ARRAY[10]\"",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
       "searchable": "unknown"
     }
   ],
@@ -3078,15 +3640,15 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-29 20:43:39",
+    "crawlTimestamp": "2017-12-30 21:36:58",
     "title": ""
   },
   "routines": [
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10142 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
-      "specificName": "NEW_PUBLISHER_10142",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10159 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = 'New Publisher'",
+      "specificName": "NEW_PUBLISHER_10159",
       "type": "procedure",
       "parameters": [{
         "databaseSpecificType": "CHARACTER VARYING",
@@ -3101,8 +3663,8 @@
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10143 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
-      "specificName": "NEW_PUBLISHER_10143",
+      "definition": "CREATE PROCEDURE BOOKS.NEW_PUBLISHER(IN NEWPUBLISHER VARCHAR(50),OUT PUBLISHER VARCHAR(50)) SPECIFIC NEW_PUBLISHER_10160 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL NEW SAVEPOINT LEVEL SET PUBLISHER = NEWPUBLISHER",
+      "specificName": "NEW_PUBLISHER_10160",
       "type": "procedure",
       "parameters": [
         {
@@ -3126,8 +3688,8 @@
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10144 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
-      "specificName": "CUSTOMADD_10144",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER,IN TWO INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10161 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN ONE+TWO",
+      "specificName": "CUSTOMADD_10161",
       "type": "function",
       "parameters": [
         {
@@ -3151,8 +3713,8 @@
     {
       "name": "CUSTOMADD",
       "fullName": "PUBLIC.BOOKS.CUSTOMADD",
-      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10145 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
-      "specificName": "CUSTOMADD_10145",
+      "definition": "CREATE FUNCTION BOOKS.CUSTOMADD(IN ONE INTEGER) RETURNS INTEGER SPECIFIC CUSTOMADD_10162 LANGUAGE SQL NOT DETERMINISTIC CONTAINS SQL CALLED ON NULL INPUT RETURN BOOKS.CUSTOMADD(ONE,1)",
+      "specificName": "CUSTOMADD_10162",
       "type": "function",
       "parameters": [{
         "databaseSpecificType": "INTEGER",
@@ -3252,15 +3814,27 @@
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "title": "PUBLIC.BOOKS.COUPONS",
+      "value": 10
+    },
+    {
+      "title": "PUBLIC.BOOKS.CUSTOMERDATA",
       "value": 0
+    },
+    {
+      "title": "PUBLIC.BOOKS.CUSTOMERS",
+      "value": 0
+    },
+    {
+      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "value": 10
     },
     {
       "title": "PUBLIC.BOOKS.PUBLISHERS",
       "value": 20
     },
     {
-      "title": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "title": "PUBLIC.BOOKS.ΒΙΒΛΊΑ",
       "value": 0
     },
     {
@@ -3630,14 +4204,14 @@
       "columnNames": [
         "BOOKID",
         "AUTHORID",
-        "UPDATE"
+        "SOMEDATA"
       ],
       "title": "PUBLIC.BOOKS.BOOKAUTHORS",
       "rows": [
         [
           1,
           7,
-          {}
+          "This is the latest update"
         ],
         [
           2,
@@ -3647,7 +4221,7 @@
         [
           2,
           6,
-          {}
+          "Some update"
         ],
         [
           3,
@@ -3657,7 +4231,7 @@
         [
           3,
           4,
-          {}
+          "No updates since a week"
         ],
         [
           3,
@@ -3931,9 +4505,142 @@
       ]
     },
     {
-      "columnNames": ["Global Count"],
-      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "columnNames": [
+        "ID",
+        "DATA",
+        "COUPONS",
+        "BOOKS"
+      ],
+      "title": "PUBLIC.BOOKS.COUPONS",
+      "rows": [
+        [
+          1,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          2,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          3,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          4,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          5,
+          null,
+          "ARRAY[]",
+          null
+        ],
+        [
+          6,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          7,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          8,
+          null,
+          "ARRAY[]",
+          null
+        ],
+        [
+          9,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ],
+        [
+          10,
+          "<binary>",
+          "ARRAY[]",
+          null
+        ]
+      ]
+    },
+    {
+      "columnNames": [
+        "ID",
+        "DATA"
+      ],
+      "title": "PUBLIC.BOOKS.CUSTOMERDATA",
       "rows": []
+    },
+    {
+      "columnNames": [
+        "ID",
+        "FIRSTNAME",
+        "LASTNAME",
+        "AGE"
+      ],
+      "title": "PUBLIC.BOOKS.CUSTOMERS",
+      "rows": []
+    },
+    {
+      "columnNames": [
+        "Global Count",
+        "UPDATE"
+      ],
+      "title": "PUBLIC.BOOKS.\"Global Counts\"",
+      "rows": [
+        [
+          1,
+          "Abbot"
+        ],
+        [
+          2,
+          "Alexis"
+        ],
+        [
+          3,
+          "Jasmine"
+        ],
+        [
+          4,
+          null
+        ],
+        [
+          5,
+          "Teagan"
+        ],
+        [
+          6,
+          "Stella"
+        ],
+        [
+          7,
+          "Alden"
+        ],
+        [
+          8,
+          "Daniel"
+        ],
+        [
+          9,
+          null
+        ],
+        [
+          10,
+          "Yetta"
+        ]
+      ]
     },
     {
       "columnNames": [
@@ -4026,11 +4733,12 @@
     },
     {
       "columnNames": [
-        "ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-        "ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-        "ΣΥΓΓΡΑΦΈΑΣ"
+        "ΜΟΝΑΔΙΚΌΣ",
+        "ΤΊΤΛΟΣ",
+        "ΠΕΡΙΓΡΑΦΉ",
+        "ΕΚΔΌΤΗΣ"
       ],
-      "title": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "title": "PUBLIC.BOOKS.ΒΙΒΛΊΑ",
       "rows": []
     },
     {

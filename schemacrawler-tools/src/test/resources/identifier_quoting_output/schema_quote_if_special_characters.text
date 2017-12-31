@@ -29,7 +29,7 @@ FK_Z_AUTHOR                                [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_AUTHORS_10098                                  [unique index]
+SYS_IDX_PK_AUTHORS_10111                                  [unique index]
   ID                                ascending                   
 
 IDX_B_AUTHORS                                         [non-unique index]
@@ -56,7 +56,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
   BOOKID                            INTEGER NOT NULL            
   AUTHORID                          INTEGER NOT NULL            
-  UPDATE                            CLOB                        
+  SOMEDATA                          VARCHAR(30)                 
 
 Foreign Keys
 
@@ -68,10 +68,10 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_Z_AUTHOR_10120                             [non-unique index]
+SYS_IDX_FK_Z_AUTHOR_10133                             [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_FK_Y_BOOK_10118                               [non-unique index]
+SYS_IDX_FK_Y_BOOK_10131                               [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -105,20 +105,76 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_BOOKS_10106                                    [unique index]
+SYS_IDX_PK_BOOKS_10119                                    [unique index]
   ID                                ascending                   
 
-SYS_IDX_U_PREVIOUSEDITION_10112                           [unique index]
+SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
   PREVIOUSEDITIONID                 ascending                   
 
-SYS_IDX_FK_PREVIOUSEDITION_10110                      [non-unique index]
+SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
   PREVIOUSEDITIONID                 ascending                   
+
+
+
+PUBLIC.BOOKS.COUPONS                                             [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  DATA                              CLOB                        
+  COUPONS                           INTEGER ARRAY               
+  BOOKS                             VARCHAR(20) ARRAY[10]       
+
+Primary Key
+
+PK_COUPONS                                                 [primary key]
+  ID                                ascending                   
+
+Indexes
+
+SYS_IDX_PK_COUPONS_10093                                  [unique index]
+  ID                                ascending                   
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  DATA                              BOOKS.VALID_STRING(20)      
+
+Primary Key
+
+PK_CUSTOMERDATA                                            [primary key]
+  ID                                ascending                   
+
+Indexes
+
+SYS_IDX_PK_CUSTOMERDATA_10104                             [unique index]
+  ID                                ascending                   
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                           [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+  FIRSTNAME                         BOOKS.NAME_TYPE(100) NOT NULL
+  LASTNAME                          BOOKS.NAME_TYPE(100) NOT NULL
+  AGE                               BOOKS.AGE_TYPE              
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+  ID                                ascending                   
+
+Indexes
+
+SYS_IDX_PK_CUSTOMERS_10098                                [unique index]
+  ID                                ascending                   
 
 
 
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
   "Global Count"                    INTEGER                     
+  UPDATE                            VARCHAR(20)                 
 
 
 
@@ -130,46 +186,47 @@ PUBLIC.BOOKS.PUBLISHERS                                          [table]
 
 Primary Key
 
-SYS_PK_10093                                               [primary key]
+SYS_PK_10106                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
 Foreign Keys
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 Indexes
 
-SYS_IDX_SYS_PK_10093_10094                                [unique index]
+SYS_IDX_SYS_PK_10106_10107                                [unique index]
   ID                                ascending                   
                                     auto-incremented            
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ           VARCHAR(10)                 
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+  ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
+  ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
+  ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
+  ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
 
 Primary Key
 
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+PK_ΒΙΒΛΊΑ                                                  [primary key]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 Foreign Keys
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 Indexes
 
-SYS_IDX_PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_10124                     [unique index]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143                    [non-unique index]
+  ΕΚΔΌΤΗΣ                           ascending                   
 
-SYS_IDX_FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS_10126      [non-unique index]
-  ΣΥΓΓΡΑΦΈΑΣ                        ascending                   
+SYS_IDX_PK_ΒΙΒΛΊΑ_10139                                   [unique index]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 
 

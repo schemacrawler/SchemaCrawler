@@ -47,10 +47,20 @@ column data-type: VARCHAR
 column data-type: PUBLIC.BOOKS.AGE_TYPE
   is user-defined: true
   based on: SMALLINT
+column data-type: PUBLIC.BOOKS."BOOKS.AGE_TYPE"
+  is user-defined: false
+column data-type: PUBLIC.BOOKS."BOOKS.NAME_TYPE"
+  is user-defined: false
+column data-type: PUBLIC.BOOKS."BOOKS.VALID_STRING"
+  is user-defined: false
 column data-type: PUBLIC.BOOKS."CHARACTER VARYING"
+  is user-defined: false
+column data-type: PUBLIC.BOOKS."INTEGER ARRAY"
   is user-defined: false
 column data-type: PUBLIC.BOOKS.NAME_TYPE
   is user-defined: true
   based on: NVARCHAR
+column data-type: PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
+  is user-defined: false
 column data-type: PUBLIC.SYSTEM_LOBS."BIGINT ARRAY"
   is user-defined: false

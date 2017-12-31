@@ -46,13 +46,23 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
+PUBLIC.BOOKS.COUPONS                                             [table]
+------------------------------------------------------------------------
+
+                                                          [lint, medium]
+	message A 1	
+	message B 2	
+
+
+
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
+	message A 1	
+	message B 2	
 	spaces in name, or reserved word	
 	spaces in name, or reserved word	Global Count
-	single column	
 
 
 

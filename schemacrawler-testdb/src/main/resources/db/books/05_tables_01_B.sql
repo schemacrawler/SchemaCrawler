@@ -1,3 +1,4 @@
+-- Table with auto-incremented column, generated
 CREATE TABLE Publishers
 (
   Id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,

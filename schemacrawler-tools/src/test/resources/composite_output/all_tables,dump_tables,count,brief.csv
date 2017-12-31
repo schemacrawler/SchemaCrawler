@@ -13,10 +13,13 @@ PUBLIC,BOOKS,AUTHORSLIST,VIEW,NULL,NULL,NULL,NULL,NULL,NULL,NULL,false,NULL
 PUBLIC,BOOKS,BOOKAUTHORS,TABLE,"Relationship between books and their authors, 
 along with the latest updated information",NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,BOOKS,TABLE,Details for published books,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
+PUBLIC,BOOKS,COUPONS,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
+PUBLIC,BOOKS,CUSTOMERDATA,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
+PUBLIC,BOOKS,CUSTOMERS,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,Global Counts,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,PUBLISHERS,TABLE,List of book publishers,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,BOOKS,TEMP_AUTHOR_LIST,GLOBAL TEMPORARY,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,DELETE
-PUBLIC,BOOKS,ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
+PUBLIC,BOOKS,ΒΙΒΛΊΑ,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,FOR_LINT,EXTRA_PK,TABLE,Extra table with just a primary key,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,FOR_LINT,Global Counts,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
 PUBLIC,FOR_LINT,PUBLICATIONS,TABLE,NULL,NULL,NULL,NULL,NULL,NULL,MEMORY,false,NULL
@@ -184,27 +187,27 @@ ID,FIRSTNAME,LASTNAME
 
 PUBLIC.BOOKS.BOOKAUTHORS,""
 ------------------------------------------------------------------------
-BOOKID,AUTHORID
-1,7
-2,4
-2,6
-3,1
-3,4
-3,5
-3,6
-4,9
-5,5
-5,7
-6,1
-6,8
-7,8
-7,9
-8,6
-9,3
-9,6
-9,7
-10,1
-10,9
+BOOKID,AUTHORID,SOMEDATA
+1,7,This is the latest update
+2,4,NULL
+2,6,Some update
+3,1,NULL
+3,4,No updates since a week
+3,5,NULL
+3,6,NULL
+4,9,NULL
+5,5,NULL
+5,7,NULL
+6,1,NULL
+6,8,NULL
+7,8,NULL
+7,9,NULL
+8,6,NULL
+9,3,NULL
+9,6,NULL
+9,7,NULL
+10,1,NULL
+10,9,NULL
 
 
 
@@ -234,9 +237,47 @@ ID,TITLE,DESCRIPTION,PUBLISHERID,PUBLICATIONDATE,PRICE,PREVIOUSEDITIONID
 
 
 
+PUBLIC.BOOKS.COUPONS,""
+------------------------------------------------------------------------
+ID
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA,""
+------------------------------------------------------------------------
+ID,DATA
+
+
+
+PUBLIC.BOOKS.CUSTOMERS,""
+------------------------------------------------------------------------
+ID,FIRSTNAME,LASTNAME,AGE
+
+
+
 "PUBLIC.BOOKS.""Global Counts""",""
 ------------------------------------------------------------------------
-Global Count
+Global Count,UPDATE
+1,Abbot
+2,Alexis
+3,Jasmine
+4,NULL
+5,Teagan
+6,Stella
+7,Alden
+8,Daniel
+9,NULL
+10,Yetta
 
 
 
@@ -266,9 +307,9 @@ ID,PUBLISHER
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,""
+PUBLIC.BOOKS.ΒΙΒΛΊΑ,""
 ------------------------------------------------------------------------
-ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ΣΥΓΓΡΑΦΈΑΣ
+ΜΟΝΑΔΙΚΌΣ,ΤΊΤΛΟΣ,ΠΕΡΙΓΡΑΦΉ,ΕΚΔΌΤΗΣ
 
 
 
@@ -339,9 +380,12 @@ PUBLIC.BOOKS.AUTHORS,20 rows
 PUBLIC.BOOKS.AUTHORSLIST,20 rows
 PUBLIC.BOOKS.BOOKAUTHORS,20 rows
 PUBLIC.BOOKS.BOOKS,20 rows
-"PUBLIC.BOOKS.""Global Counts""",empty
+PUBLIC.BOOKS.COUPONS,10 rows
+PUBLIC.BOOKS.CUSTOMERDATA,empty
+PUBLIC.BOOKS.CUSTOMERS,empty
+"PUBLIC.BOOKS.""Global Counts""",10 rows
 PUBLIC.BOOKS.PUBLISHERS,20 rows
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,empty
+PUBLIC.BOOKS.ΒΙΒΛΊΑ,empty
 "PUBLIC.""PUBLISHER SALES"".REGIONS",20 rows
 "PUBLIC.""PUBLISHER SALES"".SALES",20 rows
 "PUBLIC.""PUBLISHER SALES"".SALESDATA",empty
@@ -420,6 +464,39 @@ FK_PREVIOUSEDITION,"[foreign key, with no action]"
 
 
 
+PUBLIC.BOOKS.COUPONS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER NOT NULL
+""
+Primary Key
+""
+PK_COUPONS,[primary key]
+"",ID,ascending
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER NOT NULL
+""
+Primary Key
+""
+PK_CUSTOMERDATA,[primary key]
+"",ID,ascending
+
+
+
+PUBLIC.BOOKS.CUSTOMERS,[table]
+------------------------------------------------------------------------
+"",ID,INTEGER NOT NULL
+""
+Primary Key
+""
+PK_CUSTOMERS,[primary key]
+"",ID,ascending
+
+
+
 "PUBLIC.BOOKS.""Global Counts""",[table]
 ------------------------------------------------------------------------
 
@@ -434,31 +511,31 @@ List of book publishers
 ""
 Primary Key
 ""
-SYS_PK_10093,[primary key]
+SYS_PK_10106,[primary key]
 "",ID,ascending
 "","",auto-incremented
 ""
 Foreign Keys
 ""
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS,"[foreign key, with no action]"
-"",ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ,""
+FK_ΒΙΒΛΊΑ_PUBLISHERS,"[foreign key, with no action]"
+"",ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ,""
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ,[table]
 ------------------------------------------------------------------------
-"",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,BIGINT NOT NULL
-"",ΣΥΓΓΡΑΦΈΑΣ,INTEGER
+"",ΜΟΝΑΔΙΚΌΣ,BIGINT NOT NULL
+"",ΕΚΔΌΤΗΣ,BIGINT NOT NULL
 ""
 Primary Key
 ""
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,[primary key]
-"",ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ,ascending
+PK_ΒΙΒΛΊΑ,[primary key]
+"",ΜΟΝΑΔΙΚΌΣ,ascending
 ""
 Foreign Keys
 ""
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS,"[foreign key, with no action]"
-"",ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID,""
+FK_ΒΙΒΛΊΑ_PUBLISHERS,"[foreign key, with no action]"
+"",ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID,""
 
 
 

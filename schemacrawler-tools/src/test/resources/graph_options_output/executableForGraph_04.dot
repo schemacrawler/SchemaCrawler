@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2017-12-29 20:43:31</td>
+		<td align='left'>2017-12-30 20:40:45</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -156,9 +156,9 @@ along with the latest updated information</td>
 		<td port='authorid_f4422729.end' align='left'>INTEGER NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='update_5c46c0c.start' align='left'>"UPDATE"</td>
+		<td port='somedata_f89079e1.start' align='left'>SOMEDATA</td>
 		<td align='left'> </td>
-		<td port='update_5c46c0c.end' align='left'>CLOB</td>
+		<td port='somedata_f89079e1.end' align='left'>VARCHAR(30)</td>
 	</tr>
       </table>
     >
@@ -252,6 +252,98 @@ along with the latest updated information</td>
   "sales_751e68cc":"bookid_a3ccd678.start":w -> "books_f4a675c8":"id_a0284c53.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
+  /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "coupons_54c3042b" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>COUPONS</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='id_439d8a50.start' align='left'><b><i>ID</i></b></td>
+		<td align='left'> </td>
+		<td port='id_439d8a50.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='data_43bd68df.start' align='left'>DATA</td>
+		<td align='left'> </td>
+		<td port='data_43bd68df.end' align='left'>CLOB</td>
+	</tr>
+	<tr>
+		<td port='coupons_a7813a22.start' align='left'>COUPONS</td>
+		<td align='left'> </td>
+		<td port='coupons_a7813a22.end' align='left'>INTEGER ARRAY</td>
+	</tr>
+	<tr>
+		<td port='books_4764abbf.start' align='left'>BOOKS</td>
+		<td align='left'> </td>
+		<td port='books_4764abbf.end' align='left'>VARCHAR(20) ARRAY[10]</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.BOOKS.CUSTOMERDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "customerdata_b0af83c6" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>CUSTOMERDATA</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='id_6540fe15.start' align='left'><b><i>ID</i></b></td>
+		<td align='left'> </td>
+		<td port='id_6540fe15.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='data_6560dca4.start' align='left'>DATA</td>
+		<td align='left'> </td>
+		<td port='data_6560dca4.end' align='left'>BOOKS.VALID_STRING(20)</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
+  /* PUBLIC.BOOKS.CUSTOMERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "customers_f705d773" [
+    label=<
+      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+	<tr>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>CUSTOMERS</i></b></td>
+		<td bgcolor='#CEE2F2' align='right'>[table]</td>
+	</tr>
+	<tr>
+		<td port='id_e9b52008.start' align='left'><b><i>ID</i></b></td>
+		<td align='left'> </td>
+		<td port='id_e9b52008.end' align='left'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='firstname_97c69c08.start' align='left'>FIRSTNAME</td>
+		<td align='left'> </td>
+		<td port='firstname_97c69c08.end' align='left'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='lastname_c169d90e.start' align='left'>LASTNAME</td>
+		<td align='left'> </td>
+		<td port='lastname_c169d90e.end' align='left'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+	</tr>
+	<tr>
+		<td port='age_e9b613cc.start' align='left'>AGE</td>
+		<td align='left'> </td>
+		<td port='age_e9b613cc.end' align='left'>BOOKS.AGE_TYPE</td>
+	</tr>
+      </table>
+    >
+  ];
+
+
+
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "globalcounts_7fcacf9f" [
     label=<
@@ -264,6 +356,11 @@ along with the latest updated information</td>
 		<td port='globalcount_24c6a93.start' align='left'>"Global Count"</td>
 		<td align='left'> </td>
 		<td port='globalcount_24c6a93.end' align='left'>INTEGER</td>
+	</tr>
+	<tr>
+		<td port='update_f22510a.start' align='left'>"UPDATE"</td>
+		<td align='left'> </td>
+		<td port='update_f22510a.end' align='left'>VARCHAR(20)</td>
 	</tr>
       </table>
     >
@@ -311,32 +408,37 @@ along with the latest updated information</td>
     >
   ];
 
-  "πίνακαβάσησδεδομένων_3f988fb1":"συγγραφέασ_39efb595.start":w -> "publishers_8037d535":"id_86c2da86.end":e [label=<FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
+  "βιβλία_3cecb755":"εκδότησ_36c797de.start":w -> "publishers_8037d535":"id_86c2da86.end":e [label=<FK_ΒΙΒΛΊΑ_PUBLISHERS> style="solid" dir="both" arrowhead="teetee" arrowtail="crowodot"];
   "books_f4a675c8":"publisherid_fbe0f72f.start":w -> "publishers_8037d535":"id_86c2da86.end":e [label=<> style="dashed" dir="both" arrowhead="teetee" arrowtail="crowodot"];
 
 
-  /* PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
-  "πίνακαβάσησδεδομένων_3f988fb1" [
+  /* PUBLIC.BOOKS.ΒΙΒΛΊΑ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
+  "βιβλία_3cecb755" [
     label=<
       <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
 	<tr>
-		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td colspan='2' bgcolor='#CEE2F2' align='left'><b><i>ΒΙΒΛΊΑ</i></b></td>
 		<td bgcolor='#CEE2F2' align='right'>[table]</td>
 	</tr>
 	<tr>
-		<td port='στήληβάσησδεδομένων_4491b891.start' align='left'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td port='μοναδικόσ_1e05b960.start' align='left'><b><i>ΜΟΝΑΔΙΚΌΣ</i></b></td>
 		<td align='left'> </td>
-		<td port='στήληβάσησδεδομένων_4491b891.end' align='left'>BIGINT NOT NULL</td>
+		<td port='μοναδικόσ_1e05b960.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='άλληστήληβάσησδεδομένων_a4f14600.start' align='left'>ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td port='τίτλοσ_caa3ab4c.start' align='left'>ΤΊΤΛΟΣ</td>
 		<td align='left'> </td>
-		<td port='άλληστήληβάσησδεδομένων_a4f14600.end' align='left'>VARCHAR(10)</td>
+		<td port='τίτλοσ_caa3ab4c.end' align='left'>VARCHAR(255) NOT NULL</td>
 	</tr>
 	<tr>
-		<td port='συγγραφέασ_39efb595.start' align='left'>ΣΥΓΓΡΑΦΈΑΣ</td>
+		<td port='περιγραφή_4180d364.start' align='left'>ΠΕΡΙΓΡΑΦΉ</td>
 		<td align='left'> </td>
-		<td port='συγγραφέασ_39efb595.end' align='left'>INTEGER</td>
+		<td port='περιγραφή_4180d364.end' align='left'>VARCHAR(255)</td>
+	</tr>
+	<tr>
+		<td port='εκδότησ_36c797de.start' align='left'>ΕΚΔΌΤΗΣ</td>
+		<td align='left'> </td>
+		<td port='εκδότησ_36c797de.end' align='left'>BIGINT NOT NULL</td>
 	</tr>
       </table>
     >

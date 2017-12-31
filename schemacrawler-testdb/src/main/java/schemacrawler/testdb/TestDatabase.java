@@ -250,13 +250,12 @@ public class TestDatabase
 
   private void createDatabase()
   {
-
+    String scriptResource = null;
     try (
         final BufferedReader hsqlScriptsReader = new BufferedReader(new InputStreamReader(TestDatabase.class
           .getResourceAsStream("/hsqldb.scripts.txt"), UTF_8));
         final Connection connection = getConnection();)
     {
-      String scriptResource;
       while ((scriptResource = hsqlScriptsReader.readLine()) != null)
       {
         if (scriptResource.trim().isEmpty())
@@ -271,15 +270,20 @@ public class TestDatabase
         try (final Reader reader = new InputStreamReader(TestDatabase.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
-          final SqlScript sqlScript = new SqlScript(connection);
-          sqlScript.run(reader);
+          final SqlScript sqlScript = new SqlScript(scriptResource,
+                                                    connection,
+                                                    reader);
+          sqlScript.run();
         }
       }
     }
     catch (final SQLException | IOException e)
     {
       System.err.println(e.getMessage());
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
+      LOGGER.log(Level.WARNING,
+                 String
+                   .format("Script: %s -- %s", scriptResource, e.getMessage()),
+                 e);
       throw new RuntimeException(e);
     }
   }

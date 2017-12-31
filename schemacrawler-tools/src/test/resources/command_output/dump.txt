@@ -59,12 +59,12 @@ ID	FIRSTNAME	LASTNAME
 
 PUBLIC.BOOKS.BOOKAUTHORS                                                
 ------------------------------------------------------------------------
-BOOKID	AUTHORID	UPDATE
-1	7	<binary>
+BOOKID	AUTHORID	SOMEDATA
+1	7	This is the latest update
 2	4	NULL
-2	6	<binary>
+2	6	Some update
 3	1	NULL
-3	4	<binary>
+3	4	No updates since a week
 3	5	NULL
 3	6	NULL
 4	9	NULL
@@ -109,9 +109,47 @@ ID	TITLE	DESCRIPTION	PUBLISHERID	PUBLICATIONDATE	PRICE	PREVIOUSEDITIONID
 
 
 
+PUBLIC.BOOKS.COUPONS                                                    
+------------------------------------------------------------------------
+ID	DATA	COUPONS	BOOKS
+1	<binary>	ARRAY[]	NULL
+2	<binary>	ARRAY[]	NULL
+3	<binary>	ARRAY[]	NULL
+4	<binary>	ARRAY[]	NULL
+5	NULL	ARRAY[]	NULL
+6	<binary>	ARRAY[]	NULL
+7	<binary>	ARRAY[]	NULL
+8	NULL	ARRAY[]	NULL
+9	<binary>	ARRAY[]	NULL
+10	<binary>	ARRAY[]	NULL
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                               
+------------------------------------------------------------------------
+ID	DATA
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                                  
+------------------------------------------------------------------------
+ID	FIRSTNAME	LASTNAME	AGE
+
+
+
 PUBLIC.BOOKS."Global Counts"                                            
 ------------------------------------------------------------------------
-Global Count
+Global Count	UPDATE
+1	Abbot
+2	Alexis
+3	Jasmine
+4	NULL
+5	Teagan
+6	Stella
+7	Alden
+8	Daniel
+9	NULL
+10	Yetta
 
 
 
@@ -141,9 +179,9 @@ ID	PUBLISHER
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                       
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                                     
 ------------------------------------------------------------------------
-ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ	ΣΥΓΓΡΑΦΈΑΣ
+ΜΟΝΑΔΙΚΌΣ	ΤΊΤΛΟΣ	ΠΕΡΙΓΡΑΦΉ	ΕΚΔΌΤΗΣ
 
 
 

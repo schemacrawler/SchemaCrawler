@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -40,11 +42,22 @@ public class SqlScript
 
   private static final String delimiter = ";";
 
+  private final String scriptName;
   private final Connection connection;
+  private final Reader reader;
 
-  public SqlScript(final Connection connection)
+  public SqlScript(final String scriptName,
+                   final Connection connection,
+                   final Reader reader)
   {
-    this.connection = connection;
+    this.scriptName = scriptName;
+    this.connection = requireNonNull(connection);
+    this.reader = requireNonNull(reader);
+  }
+
+  public String getScriptName()
+  {
+    return scriptName;
   }
 
   /**
@@ -53,34 +66,34 @@ public class SqlScript
    * @param reader
    *        Source of the SQL script
    */
-  public void run(final Reader reader)
+  public void run()
     throws IOException, SQLException
   {
-    try (final BufferedReader lineReader = new BufferedReader(reader);)
+    // NOTE: Do not close reader or connection, since we did not open
+    // them
+    final BufferedReader lineReader = new BufferedReader(reader);
+    String line;
+    StringBuilder sql = new StringBuilder();
+    while ((line = lineReader.readLine()) != null)
     {
-      String line;
-      StringBuilder sql = new StringBuilder();
-      while ((line = lineReader.readLine()) != null)
+      final String trimmedLine = line.trim();
+      if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
+          && trimmedLine.endsWith(delimiter))
       {
-        final String trimmedLine = line.trim();
-        if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
-            && trimmedLine.endsWith(delimiter))
-        {
-          sql.append(line.substring(0, line.lastIndexOf(delimiter)));
+        sql.append(line.substring(0, line.lastIndexOf(delimiter)));
 
-          try (final Statement statement = connection.createStatement();)
-          {
-            statement.execute(sql.toString());
-            connection.commit();
-          }
-
-          sql = new StringBuilder();
-        }
-        else
+        try (final Statement statement = connection.createStatement();)
         {
-          sql.append(line);
-          sql.append("\n");
+          statement.execute(sql.toString());
+          connection.commit();
         }
+
+        sql = new StringBuilder();
+      }
+      else
+      {
+        sql.append(line);
+        sql.append("\n");
       }
     }
   }

@@ -53,6 +53,42 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
+      "name": "COUPONS",
+      "fullName": "PUBLIC.BOOKS.COUPONS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
+      "name": "CUSTOMERDATA",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERDATA",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
+      "name": "CUSTOMERS",
+      "fullName": "PUBLIC.BOOKS.CUSTOMERS",
+      "type": "table",
+      "triggers": [],
+      "tableConstraints": [],
+      "remarks": "",
+      "primaryKey": {}
+    },
+    {
+      "foreignKeys": [],
+      "indexes": [],
+      "columns": [],
       "name": "Global Counts",
       "fullName": "PUBLIC.BOOKS.\"Global Counts\"",
       "type": "table",
@@ -77,8 +113,8 @@
       "foreignKeys": [],
       "indexes": [],
       "columns": [],
-      "name": "ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
-      "fullName": "PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ",
+      "name": "ΒΙΒΛΊΑ",
+      "fullName": "PUBLIC.BOOKS.ΒΙΒΛΊΑ",
       "type": "table",
       "triggers": [],
       "tableConstraints": [],
@@ -195,7 +231,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 01:18:55",
+    "crawlTimestamp": "2017-12-30 20:51:27",
     "title": ""
   },
   "routines": [

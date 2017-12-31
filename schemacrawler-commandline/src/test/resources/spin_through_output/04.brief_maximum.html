@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-12-30 01:19:06</td>
+		<td class='property_value'>2017-12-30 20:51:39</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -475,6 +475,99 @@ along with the latest updated information</td>
 
 
 <table>
+  <caption style='background-color: #CEE2F2;'><span id='coupons_54c3042b' class='caption_name'>PUBLIC.BOOKS.COUPONS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_COUPONS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='customerdata_b0af83c6' class='caption_name'>PUBLIC.BOOKS.CUSTOMERDATA</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_CUSTOMERDATA</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='customers_f705d773' class='caption_name'>PUBLIC.BOOKS.CUSTOMERS</span> <span class='caption_description'>[table]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'><b><i>ID</i></b></td>
+		<td class='minwidth'>INTEGER NOT NULL</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='3' class='section'>Primary Key</td>
+	</tr>
+	<tr>
+		<td colspan='3'></td>
+	</tr>
+	<tr>
+		<td colspan='2' class='name'>PK_CUSTOMERS</td>
+		<td class='description right'>[primary key]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>ID</td>
+		<td class='minwidth'>ascending</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
   <caption style='background-color: #CEE2F2;'><span id='globalcounts_7fcacf9f' class='caption_name'>PUBLIC.BOOKS."Global Counts"</span> <span class='caption_description'>[table]</span></caption>
 
 </table>
@@ -513,7 +606,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_PK_10093</td>
+		<td colspan='2' class='name'>SYS_PK_10106</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
@@ -536,12 +629,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS</td>
+		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ID ←(0..many) <a href='#πίνακαβάσησδεδομένων_3f988fb1'>PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ</a></td>
+		<td class='minwidth'>ID ←(0..many) <a href='#βιβλία_3cecb755'>PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -550,17 +643,17 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='πίνακαβάσησδεδομένων_3f988fb1' class='caption_name'>PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</span> <span class='caption_description'>[table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='βιβλία_3cecb755' class='caption_name'>PUBLIC.BOOKS.ΒΙΒΛΊΑ</span> <span class='caption_description'>[table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'><b><i>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</i></b></td>
+		<td class='minwidth'><b><i>ΜΟΝΑΔΙΚΌΣ</i></b></td>
 		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ</td>
-		<td class='minwidth'>INTEGER</td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ</td>
+		<td class='minwidth'>BIGINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -572,12 +665,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td colspan='2' class='name'>PK_ΒΙΒΛΊΑ</td>
 		<td class='description right'>[primary key]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ</td>
+		<td class='minwidth'>ΜΟΝΑΔΙΚΌΣ</td>
 		<td class='minwidth'>ascending</td>
 	</tr>
 	<tr>
@@ -590,12 +683,12 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS</td>
+		<td colspan='2' class='name'>FK_ΒΙΒΛΊΑ_PUBLISHERS</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
-		<td class='minwidth'>ΣΥΓΓΡΑΦΈΑΣ (0..many)→ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
+		<td class='minwidth'>ΕΚΔΌΤΗΣ (0..many)→ <a href='#publishers_8037d535'>PUBLIC.BOOKS.PUBLISHERS.ID</a></td>
 		<td class='minwidth'></td>
 	</tr>
 </table>
@@ -1154,7 +1247,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13153' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13179' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -1162,7 +1255,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13154' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1318f' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -1170,7 +1263,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a975' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b0' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 </table>
 <p>&#160;</p>
@@ -1178,7 +1271,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a976' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b1' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 </table>
 <p>&#160;</p>

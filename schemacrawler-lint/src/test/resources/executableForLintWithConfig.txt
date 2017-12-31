@@ -26,7 +26,7 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 ------------------------------------------------------------------------
 
                                                              [lint, low]
-	should have remarks	BOOKID, AUTHORID, UPDATE
+	should have remarks	BOOKID, AUTHORID, SOMEDATA
 
 
 
@@ -38,25 +38,51 @@ PUBLIC.BOOKS.BOOKS                                               [table]
 
 
 
+PUBLIC.BOOKS.COUPONS                                             [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	should have remarks	
+	should have remarks	ID, DATA, COUPONS, BOOKS
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ID, DATA
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                           [table]
+------------------------------------------------------------------------
+
+                                                             [lint, low]
+	empty table	
+	should have remarks	
+	should have remarks	ID, FIRSTNAME, LASTNAME, AGE
+
+
+
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
-                                                          [lint, medium]
-	single column	
                                                              [lint, low]
-	empty table	
 	should have remarks	
-	should have remarks	Global Count
+	should have remarks	Global Count, UPDATE
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
 
                                                              [lint, low]
 	empty table	
 	should have remarks	
-	should have remarks	ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΆΛΛΗΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ, ΣΥΓΓΡΑΦΈΑΣ
+	should have remarks	ΜΟΝΑΔΙΚΌΣ, ΤΊΤΛΟΣ, ΠΕΡΙΓΡΑΦΉ, ΕΚΔΌΤΗΣ
 
 
 

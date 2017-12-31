@@ -75,9 +75,11 @@ public abstract class BaseSqliteTest
     {
       connection.setAutoCommit(false);
 
-      final SqlScript sqlScript = new SqlScript(connection);
-      sqlScript
-        .run(readerForResource(databaseSqlResource, StandardCharsets.UTF_8));
+      final SqlScript sqlScript = new SqlScript(databaseSqlResource,
+                                                connection,
+                                                readerForResource(databaseSqlResource,
+                                                                  StandardCharsets.UTF_8));
+      sqlScript.run();
     }
 
     return sqliteDbFile;

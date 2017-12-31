@@ -1,12 +1,13 @@
 /db/books/01_schemas_01_A.sql
 /db/books/02_types_01_A.sql
+/db/books/02_types_02_A.sql
 /db/books/03_domains_01_A.sql
 /db/books/04_sequences_01_A.sql
 /db/books/05_tables_01_A.sql
 /db/books/05_tables_02_A.sql
 /db/books/05_tables_03_A.sql
 /db/books/05_tables_04_A.sql
-/db/books/05_tables_05_A.sql
+/db/books/05_temp_tables_01_A.sql
 /db/books/05_views_01_A.sql
 /db/books/06_indexes_01_A.sql
 /db/books/07_remarks_01_A.sql
@@ -15,6 +16,7 @@
 /db/books/10_triggers_01_A.sql
 /db/books/11_synonyms_01_A.sql
 /db/books/90_data_01_A.sql
+/db/books/90_data_02_A.sql
 
 /db/for_lint/for_lint.pre_schema.sql
 /db/for_lint/for_lint.schema.sql

@@ -7,11 +7,17 @@ schema: PUBLIC.BOOKS
     row count: 20
   table: PUBLIC.BOOKS.BOOKS
     row count: 20
-  table: PUBLIC.BOOKS."Global Counts"
+  table: PUBLIC.BOOKS.COUPONS
+    row count: 10
+  table: PUBLIC.BOOKS.CUSTOMERDATA
     row count: 0
+  table: PUBLIC.BOOKS.CUSTOMERS
+    row count: 0
+  table: PUBLIC.BOOKS."Global Counts"
+    row count: 10
   table: PUBLIC.BOOKS.PUBLISHERS
     row count: 20
-  table: PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ
+  table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     row count: 0
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC

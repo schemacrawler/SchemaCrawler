@@ -50,6 +50,39 @@ FK_PREVIOUSEDITION                         [foreign key, with no action]
 
 
 
+PUBLIC.BOOKS.COUPONS                                             [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_COUPONS                                                 [primary key]
+  ID                                ascending                   
+
+
+
+PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_CUSTOMERDATA                                            [primary key]
+  ID                                ascending                   
+
+
+
+PUBLIC.BOOKS.CUSTOMERS                                           [table]
+------------------------------------------------------------------------
+  ID                                INTEGER NOT NULL            
+
+Primary Key
+
+PK_CUSTOMERS                                               [primary key]
+  ID                                ascending                   
+
+
+
 PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
 
@@ -64,14 +97,14 @@ List of book publishers
 
 Primary Key
 
-SYS_PK_10093                                               [primary key]
+SYS_PK_10106                                               [primary key]
   ID                                ascending                   
                                     auto-incremented            
 
 Foreign Keys
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ID <--(0..many) PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ.ΣΥΓΓΡΑΦΈΑΣ                              
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ID <--(0..many) PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ                              
 
 
 
@@ -122,20 +155,20 @@ FK_Y_BOOK                                  [foreign key, with no action]
 
 
 
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                [table]
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               BIGINT NOT NULL             
-  ΣΥΓΓΡΑΦΈΑΣ                        INTEGER                     
+  ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
+  ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
 
 Primary Key
 
-PK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                    [primary key]
-  ΣΤΉΛΗΒΆΣΗΣΔΕΔΟΜΈΝΩΝ               ascending                   
+PK_ΒΙΒΛΊΑ                                                  [primary key]
+  ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 Foreign Keys
 
-FK_ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ_PUBLISHERS         [foreign key, with no action]
-  ΣΥΓΓΡΑΦΈΑΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
+FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
+  ΕΚΔΌΤΗΣ (0..many)--> PUBLIC.BOOKS.PUBLISHERS.ID                              
 
 
 

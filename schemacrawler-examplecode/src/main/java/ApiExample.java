@@ -39,7 +39,7 @@ public final class ApiExample
     options.setRoutineInclusionRule(new ExcludeAll());
     options
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
-    options.setTableInclusionRule(tableFullName -> !tableFullName.contains("Π"));
+    options.setTableInclusionRule(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
 
     // Get the schema definition
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),

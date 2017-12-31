@@ -9,9 +9,12 @@ PUBLIC.BOOKS.AUTHORS                                             20 rows
 PUBLIC.BOOKS.AUTHORSLIST                                         20 rows
 PUBLIC.BOOKS.BOOKAUTHORS                                         20 rows
 PUBLIC.BOOKS.BOOKS                                               20 rows
-PUBLIC.BOOKS.Global Counts                                         empty
+PUBLIC.BOOKS.COUPONS                                             10 rows
+PUBLIC.BOOKS.CUSTOMERDATA                                          empty
+PUBLIC.BOOKS.CUSTOMERS                                             empty
+PUBLIC.BOOKS.Global Counts                                       10 rows
 PUBLIC.BOOKS.PUBLISHERS                                          20 rows
-PUBLIC.BOOKS.ΠΊΝΑΚΑΒΆΣΗΣΔΕΔΟΜΈΝΩΝ                                  empty
+PUBLIC.BOOKS.ΒΙΒΛΊΑ                                                empty
 PUBLIC.FOR_LINT.EXTRA_PK                                           empty
 PUBLIC.FOR_LINT.Global Counts                                      empty
 PUBLIC.FOR_LINT.PUBLICATIONS                                       empty
