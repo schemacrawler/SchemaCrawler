@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.test.utility;
 
 
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;

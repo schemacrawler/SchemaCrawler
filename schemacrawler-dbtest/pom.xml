@@ -66,14 +66,15 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.xerial</groupId>
-      <artifactId>sqlite-jdbc</artifactId>
-      <version>3.21.0.1</version>
-    </dependency>
-    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
     </dependency>
+    
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-oracle</artifactId>
+      <version>${project.version}</version>
+    </dependency>    
   </dependencies>
 </project>
