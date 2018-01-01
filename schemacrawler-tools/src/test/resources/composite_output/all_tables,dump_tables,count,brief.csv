@@ -261,7 +261,7 @@ ID,DATA
 
 PUBLIC.BOOKS.CUSTOMERS,""
 ------------------------------------------------------------------------
-ID,FIRSTNAME,LASTNAME,AGE
+ID
 
 
 

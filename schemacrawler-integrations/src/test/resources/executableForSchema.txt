@@ -205,9 +205,9 @@ SYS_CT_10103                                          [check constraint]
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
 ------------------------------------------------------------------------
 1   ID                                INTEGER NOT NULL            
-2   FIRSTNAME                         VARCHAR(100) NOT NULL       
-3   LASTNAME                          VARCHAR(100) NOT NULL       
-4   AGE                               SMALLINT                    
+2   FIRSTNAME                         DISTINCT NOT NULL           
+3   LASTNAME                          DISTINCT NOT NULL           
+4   AGE                               DISTINCT                    
 
 Primary Key
 

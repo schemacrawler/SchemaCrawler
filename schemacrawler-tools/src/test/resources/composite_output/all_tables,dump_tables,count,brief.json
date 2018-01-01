@@ -2435,12 +2435,7 @@
       "rows": []
     },
     {
-      "columnNames": [
-        "ID",
-        "FIRSTNAME",
-        "LASTNAME",
-        "AGE"
-      ],
+      "columnNames": ["ID"],
       "title": "PUBLIC.BOOKS.CUSTOMERS",
       "rows": []
     },

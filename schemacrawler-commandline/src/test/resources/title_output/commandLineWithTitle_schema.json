@@ -801,7 +801,7 @@
         {
           "size": 20,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.VALID_STRING",
+          "databaseSpecificType": "VALID_STRING",
           "dataType": "VARCHAR",
           "name": "DATA",
           "width": "(20)",
@@ -879,10 +879,10 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
-          "dataType": "VARCHAR",
+          "databaseSpecificType": "NAME_TYPE",
+          "dataType": "DISTINCT",
           "name": "FIRSTNAME",
-          "width": "(100)",
+          "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
@@ -890,10 +890,10 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
-          "dataType": "VARCHAR",
+          "databaseSpecificType": "NAME_TYPE",
+          "dataType": "DISTINCT",
           "name": "LASTNAME",
-          "width": "(100)",
+          "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false
@@ -901,8 +901,8 @@
         {
           "size": 16,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.AGE_TYPE",
-          "dataType": "SMALLINT",
+          "databaseSpecificType": "AGE_TYPE",
+          "dataType": "DISTINCT",
           "name": "AGE",
           "width": "",
           "decimalDigits": 0,
@@ -947,10 +947,10 @@
           "columns": {
             "size": 100,
             "nullable": false,
-            "databaseSpecificType": "BOOKS.NAME_TYPE",
-            "dataType": "VARCHAR",
+            "databaseSpecificType": "NAME_TYPE",
+            "dataType": "DISTINCT",
             "name": "FIRSTNAME",
-            "width": "(100)",
+            "width": "",
             "decimalDigits": 0,
             "autoIncremented": false
           },
@@ -961,10 +961,10 @@
           "columns": {
             "size": 100,
             "nullable": false,
-            "databaseSpecificType": "BOOKS.NAME_TYPE",
-            "dataType": "VARCHAR",
+            "databaseSpecificType": "NAME_TYPE",
+            "dataType": "DISTINCT",
             "name": "LASTNAME",
-            "width": "(100)",
+            "width": "",
             "decimalDigits": 0,
             "autoIncremented": false
           },
@@ -1688,7 +1688,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 20:51:44",
+    "crawlTimestamp": "2018-01-01 11:10:06",
     "title": "Database Design for Books and Publishers"
   }
 }]

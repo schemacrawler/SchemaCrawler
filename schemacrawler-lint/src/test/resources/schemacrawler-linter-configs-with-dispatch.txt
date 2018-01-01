@@ -7,11 +7,11 @@ Database                                                      [database]
 ------------------------------------------------------------------------
 
                                                           [lint, medium]
-	column with same name but different data types	FIRSTNAME [VARCHAR, PUBLIC.BOOKS."BOOKS.NAME_TYPE"]
-	column with same name but different data types	LASTNAME [VARCHAR, PUBLIC.BOOKS."BOOKS.NAME_TYPE"]
+	column with same name but different data types	FIRSTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
+	column with same name but different data types	LASTNAME [VARCHAR, PUBLIC.BOOKS.NAME_TYPE]
 	column with same name but different data types	UPDATE [CLOB, VARCHAR]
 	column with same name but different data types	ID [BIGINT, INTEGER]
-	column with same name but different data types	DATA [CLOB, PUBLIC.BOOKS."BOOKS.VALID_STRING"]
+	column with same name but different data types	DATA [CLOB, PUBLIC.BOOKS.VALID_STRING]
 	cycles in table relationships	PUBLICATIONS, WRITERS
 
 

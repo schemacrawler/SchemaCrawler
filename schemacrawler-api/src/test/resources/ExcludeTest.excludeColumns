@@ -72,17 +72,17 @@ schema: PUBLIC.BOOKS
       type: ARRAY
   table: PUBLIC.BOOKS.CUSTOMERDATA
     column: PUBLIC.BOOKS.CUSTOMERDATA.DATA
-      database type: BOOKS.VALID_STRING
+      database type: VALID_STRING
       type: VARCHAR
   table: PUBLIC.BOOKS.CUSTOMERS
     column: PUBLIC.BOOKS.CUSTOMERS.FIRSTNAME
-      database type: BOOKS.NAME_TYPE
+      database type: NAME_TYPE
       type: VARCHAR
     column: PUBLIC.BOOKS.CUSTOMERS.LASTNAME
-      database type: BOOKS.NAME_TYPE
+      database type: NAME_TYPE
       type: VARCHAR
     column: PUBLIC.BOOKS.CUSTOMERS.AGE
-      database type: BOOKS.AGE_TYPE
+      database type: AGE_TYPE
       type: SMALLINT
   table: PUBLIC.BOOKS."Global Counts"
     column: PUBLIC.BOOKS."Global Counts"."Global Count"

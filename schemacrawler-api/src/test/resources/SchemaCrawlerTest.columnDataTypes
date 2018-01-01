@@ -1,66 +1,182 @@
 column data-type: BIGINT
   is user-defined: false
+  java.sql.type: BIGINT
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: BINARY
   is user-defined: false
+  java.sql.type: BINARY
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: BIT
   is user-defined: false
+  java.sql.type: BIT
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: BLOB
   is user-defined: false
+  java.sql.type: BLOB
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: BOOLEAN
   is user-defined: false
+  java.sql.type: BOOLEAN
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: CHARACTER
   is user-defined: false
+  java.sql.type: CHAR
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: CLOB
   is user-defined: false
+  java.sql.type: CLOB
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: DATE
   is user-defined: false
+  java.sql.type: DATE
+  create parameters: null
+  literal prefix: '
+  literal suffix: '
 column data-type: DECIMAL
   is user-defined: false
+  java.sql.type: DECIMAL
+  create parameters: PRECISION,SCALE
+  literal prefix: null
+  literal suffix: null
 column data-type: DOUBLE
   is user-defined: false
+  java.sql.type: DOUBLE
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: FLOAT
   is user-defined: false
+  java.sql.type: DOUBLE
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: INTEGER
   is user-defined: false
+  java.sql.type: INTEGER
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: NUMERIC
   is user-defined: false
+  java.sql.type: NUMERIC
+  create parameters: PRECISION,SCALE
+  literal prefix: null
+  literal suffix: null
 column data-type: NVARCHAR
   is user-defined: false
+  java.sql.type: VARCHAR
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: OTHER
   is user-defined: false
+  java.sql.type: OTHER
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: REAL
   is user-defined: false
+  java.sql.type: DOUBLE
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: SMALLINT
   is user-defined: false
+  java.sql.type: SMALLINT
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: TIME
   is user-defined: false
+  java.sql.type: TIME
+  create parameters: null
+  literal prefix: '
+  literal suffix: '
 column data-type: TIMESTAMP
   is user-defined: false
+  java.sql.type: TIMESTAMP
+  create parameters: null
+  literal prefix: '
+  literal suffix: '
 column data-type: TINYINT
   is user-defined: false
+  java.sql.type: TINYINT
+  create parameters: null
+  literal prefix: null
+  literal suffix: null
 column data-type: UUID
   is user-defined: false
+  java.sql.type: BINARY
+  create parameters: null
+  literal prefix: '
+  literal suffix: '
 column data-type: VARBINARY
   is user-defined: false
+  java.sql.type: VARBINARY
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: VARCHAR
   is user-defined: false
+  java.sql.type: VARCHAR
+  create parameters: LENGTH
+  literal prefix: '
+  literal suffix: '
 column data-type: PUBLIC.BOOKS.AGE_TYPE
   is user-defined: true
+  java.sql.type: DISTINCT
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
   based on: SMALLINT
-column data-type: PUBLIC.BOOKS."BOOKS.AGE_TYPE"
-  is user-defined: false
-column data-type: PUBLIC.BOOKS."BOOKS.NAME_TYPE"
-  is user-defined: false
-column data-type: PUBLIC.BOOKS."BOOKS.VALID_STRING"
-  is user-defined: false
 column data-type: PUBLIC.BOOKS."CHARACTER VARYING"
   is user-defined: false
+  java.sql.type: VARCHAR
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
 column data-type: PUBLIC.BOOKS."INTEGER ARRAY"
   is user-defined: false
+  java.sql.type: ARRAY
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
 column data-type: PUBLIC.BOOKS.NAME_TYPE
   is user-defined: true
+  java.sql.type: DISTINCT
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
   based on: NVARCHAR
+column data-type: PUBLIC.BOOKS.VALID_STRING
+  is user-defined: false
+  java.sql.type: VARCHAR
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
 column data-type: PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
   is user-defined: false
+  java.sql.type: ARRAY
+  create parameters: 
+  literal prefix: null
+  literal suffix: null
 column data-type: PUBLIC.SYSTEM_LOBS."BIGINT ARRAY"
   is user-defined: false
+  java.sql.type: ARRAY
+  create parameters: 
+  literal prefix: null
+  literal suffix: null

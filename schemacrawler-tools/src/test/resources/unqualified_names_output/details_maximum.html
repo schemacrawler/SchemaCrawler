@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2017-12-30 20:40:36</td>
+		<td class='property_value'>2018-01-01 10:53:45</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -1386,7 +1386,7 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>DATA</td>
-		<td class='minwidth'>BOOKS.VALID_STRING(20)</td>
+		<td class='minwidth'>VALID_STRING(20)</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -1539,17 +1539,17 @@ along with the latest updated information</td>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>FIRSTNAME</td>
-		<td class='minwidth'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+		<td class='minwidth'>NAME_TYPE NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>LASTNAME</td>
-		<td class='minwidth'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+		<td class='minwidth'>NAME_TYPE NOT NULL</td>
 	</tr>
 	<tr>
 		<td class='spacer'></td>
 		<td class='minwidth'>AGE</td>
-		<td class='minwidth'>BOOKS.AGE_TYPE</td>
+		<td class='minwidth'>AGE_TYPE</td>
 	</tr>
 	<tr>
 		<td colspan='3'></td>
@@ -3603,78 +3603,6 @@ along with the latest updated information</td>
 
 <table>
 	<tr>
-		<td colspan='2' class='name'>BOOKS.AGE_TYPE</td>
-		<td class='description right'>[data type]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>defined with </td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not nullable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not auto-incrementable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>unknown</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name'>BOOKS.NAME_TYPE</td>
-		<td class='description right'>[data type]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>defined with </td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not nullable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not auto-incrementable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>unknown</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-	<tr>
-		<td colspan='2' class='name'>BOOKS.VALID_STRING</td>
-		<td class='description right'>[data type]</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>defined with </td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not nullable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>not auto-incrementable</td>
-	</tr>
-	<tr>
-		<td class='spacer'></td>
-		<td colspan='2'>unknown</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-<table>
-	<tr>
 		<td colspan='2' class='name'>CHARACTER VARYING</td>
 		<td class='description right'>[data type]</td>
 	</tr>
@@ -3746,6 +3674,30 @@ along with the latest updated information</td>
 		<td class='spacer'></td>
 		<td class='minwidth'>based on</td>
 		<td class='minwidth'>NVARCHAR</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+<table>
+	<tr>
+		<td colspan='2' class='name'>VALID_STRING</td>
+		<td class='description right'>[data type]</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2'>defined with </td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2'>not nullable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2'>not auto-incrementable</td>
+	</tr>
+	<tr>
+		<td class='spacer'></td>
+		<td colspan='2'>unknown</td>
 	</tr>
 </table>
 <p>&#160;</p>
