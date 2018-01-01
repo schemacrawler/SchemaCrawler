@@ -2213,7 +2213,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2222,7 +2222,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2231,7 +2231,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2240,7 +2240,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2249,7 +2249,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2258,7 +2258,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2267,7 +2267,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     }
   ],
   "databaseInfo": {
@@ -2276,7 +2276,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 11:09:53",
+    "crawlTimestamp": "2018-01-01 13:19:44",
     "title": ""
   },
   "routines": [

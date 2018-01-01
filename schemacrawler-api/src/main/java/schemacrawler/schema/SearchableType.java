@@ -89,7 +89,14 @@ public enum SearchableType
   @Override
   public String toString()
   {
-    return text;
+    if (this == unknown)
+    {
+      return "not searchable";
+    }
+    else
+    {
+      return text;
+    }
   }
 
 }
