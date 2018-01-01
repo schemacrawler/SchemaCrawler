@@ -1,182 +1,362 @@
-column data-type: BIGINT
-  is user-defined: false
-  java.sql.type: BIGINT
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: BINARY
-  is user-defined: false
-  java.sql.type: BINARY
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: BIT
-  is user-defined: false
-  java.sql.type: BIT
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: BLOB
-  is user-defined: false
-  java.sql.type: BLOB
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: BOOLEAN
-  is user-defined: false
-  java.sql.type: BOOLEAN
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: CHARACTER
-  is user-defined: false
-  java.sql.type: CHAR
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: CLOB
-  is user-defined: false
-  java.sql.type: CLOB
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: DATE
-  is user-defined: false
-  java.sql.type: DATE
-  create parameters: null
-  literal prefix: '
-  literal suffix: '
-column data-type: DECIMAL
-  is user-defined: false
-  java.sql.type: DECIMAL
-  create parameters: PRECISION,SCALE
-  literal prefix: null
-  literal suffix: null
-column data-type: DOUBLE
-  is user-defined: false
-  java.sql.type: DOUBLE
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: FLOAT
-  is user-defined: false
-  java.sql.type: DOUBLE
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: INTEGER
-  is user-defined: false
-  java.sql.type: INTEGER
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: NUMERIC
-  is user-defined: false
-  java.sql.type: NUMERIC
-  create parameters: PRECISION,SCALE
-  literal prefix: null
-  literal suffix: null
-column data-type: NVARCHAR
-  is user-defined: false
-  java.sql.type: VARCHAR
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: OTHER
-  is user-defined: false
-  java.sql.type: OTHER
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: REAL
-  is user-defined: false
-  java.sql.type: DOUBLE
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: SMALLINT
-  is user-defined: false
-  java.sql.type: SMALLINT
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: TIME
-  is user-defined: false
-  java.sql.type: TIME
-  create parameters: null
-  literal prefix: '
-  literal suffix: '
-column data-type: TIMESTAMP
-  is user-defined: false
-  java.sql.type: TIMESTAMP
-  create parameters: null
-  literal prefix: '
-  literal suffix: '
-column data-type: TINYINT
-  is user-defined: false
-  java.sql.type: TINYINT
-  create parameters: null
-  literal prefix: null
-  literal suffix: null
-column data-type: UUID
-  is user-defined: false
-  java.sql.type: BINARY
-  create parameters: null
-  literal prefix: '
-  literal suffix: '
-column data-type: VARBINARY
-  is user-defined: false
-  java.sql.type: VARBINARY
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: VARCHAR
-  is user-defined: false
-  java.sql.type: VARCHAR
-  create parameters: LENGTH
-  literal prefix: '
-  literal suffix: '
-column data-type: PUBLIC.BOOKS.AGE_TYPE
-  is user-defined: true
-  java.sql.type: DISTINCT
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-  based on: SMALLINT
-column data-type: PUBLIC.BOOKS."CHARACTER VARYING"
-  is user-defined: false
-  java.sql.type: VARCHAR
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-column data-type: PUBLIC.BOOKS."INTEGER ARRAY"
-  is user-defined: false
-  java.sql.type: ARRAY
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-column data-type: PUBLIC.BOOKS.NAME_TYPE
-  is user-defined: true
-  java.sql.type: DISTINCT
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-  based on: NVARCHAR
-column data-type: PUBLIC.BOOKS.VALID_STRING
-  is user-defined: false
-  java.sql.type: VARCHAR
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-column data-type: PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
-  is user-defined: false
-  java.sql.type: ARRAY
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
-column data-type: PUBLIC.SYSTEM_LOBS."BIGINT ARRAY"
-  is user-defined: false
-  java.sql.type: ARRAY
-  create parameters: 
-  literal prefix: null
-  literal suffix: null
+BIGINT
+  column data-type
+  defined with no parameters
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 64
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BIGINT
+BINARY
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BINARY
+BIT
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 1024
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BIT
+BLOB
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  not searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BLOB
+BOOLEAN
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BOOLEAN
+CHARACTER
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: CHAR
+CLOB
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  not searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: CLOB
+DATE
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DATE
+DECIMAL
+  column data-type
+  defined with PRECISION,SCALE
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 2147483647
+  minimum scale 0
+  maximum scale 32767
+  java.sql.Types: DECIMAL
+DOUBLE
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 64
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DOUBLE
+FLOAT
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 64
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DOUBLE
+INTEGER
+  column data-type
+  defined with no parameters
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 32
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: INTEGER
+NUMERIC
+  column data-type
+  defined with PRECISION,SCALE
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 2147483647
+  minimum scale 0
+  maximum scale 32767
+  java.sql.Types: NUMERIC
+NVARCHAR
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: VARCHAR
+OTHER
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: OTHER
+REAL
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 64
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DOUBLE
+SMALLINT
+  column data-type
+  defined with no parameters
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 16
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: SMALLINT
+TIME
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: TIME
+TIMESTAMP
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable except with where .. like
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: TIMESTAMP
+TINYINT
+  column data-type
+  defined with no parameters
+  nullable
+  auto-incrementable
+  no literal prefix
+  no literal suffix
+  searchable except with where .. like
+  precision 8
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: TINYINT
+UUID
+  column data-type
+  defined with no parameters
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 16
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: BINARY
+VARBINARY
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: VARBINARY
+VARCHAR
+  column data-type
+  defined with LENGTH
+  nullable
+  not auto-incrementable
+  literal prefix '
+  literal suffix '
+  searchable
+  precision 2147483647
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: VARCHAR
+PUBLIC.BOOKS.AGE_TYPE
+  user defined column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DISTINCT
+  based on SMALLINT
+PUBLIC.BOOKS."CHARACTER VARYING"
+  column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: VARCHAR
+PUBLIC.BOOKS."INTEGER ARRAY"
+  column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: ARRAY
+PUBLIC.BOOKS.NAME_TYPE
+  user defined column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: DISTINCT
+  based on NVARCHAR
+PUBLIC.BOOKS.VALID_STRING
+  column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: VARCHAR
+PUBLIC.BOOKS."VARCHAR(20) ARRAY[10]"
+  column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: ARRAY
+PUBLIC.SYSTEM_LOBS."BIGINT ARRAY"
+  column data-type
+  defined with no parameters
+  not nullable
+  not auto-incrementable
+  no literal prefix
+  no literal suffix
+  not searchable
+  precision 0
+  minimum scale 0
+  maximum scale 0
+  java.sql.Types: ARRAY

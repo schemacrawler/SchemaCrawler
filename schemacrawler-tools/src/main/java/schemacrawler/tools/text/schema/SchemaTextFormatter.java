@@ -449,21 +449,22 @@ final class SchemaTextFormatter
     {
       typeName = columnDataType.getFullName();
     }
+    if (isBlank(typeName))
+    {
+      // In some cases, JDBC drivers may not return a data type name
+      return;
+    }
 
     final String nullable = negate(columnDataType.isNullable(), "nullable");
 
     final String autoIncrementable = negate(columnDataType
       .isAutoIncrementable(), "auto-incrementable");
 
-    String definedWith = "defined with ";
-    if (columnDataType.getCreateParameters() == null)
-    {
-      definedWith = definedWith + "no parameters";
-    }
-    else
-    {
-      definedWith = definedWith + columnDataType.getCreateParameters();
-    }
+    final String createParameters = columnDataType.getCreateParameters();
+    final String definedWith = "defined with "
+                               + (isBlank(createParameters)? "no parameters"
+                                                           : createParameters);
+
     formattingHelper.writeNameRow(typeName, dataType);
     formattingHelper.writeDescriptionRow(definedWith);
     formattingHelper.writeDescriptionRow(nullable);

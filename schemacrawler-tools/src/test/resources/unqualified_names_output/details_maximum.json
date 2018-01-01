@@ -2655,7 +2655,7 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "SMALLINT",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2664,7 +2664,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2673,7 +2673,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2682,7 +2682,7 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "NVARCHAR",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2691,7 +2691,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -2700,7 +2700,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     }
   ],
   "databaseInfo": {
@@ -3686,7 +3686,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 10:53:45",
+    "crawlTimestamp": "2018-01-01 13:15:54",
     "title": ""
   },
   "routines": [
