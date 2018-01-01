@@ -132,8 +132,8 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
-  ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
-  ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
 
 Primary Key
 

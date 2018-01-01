@@ -1324,10 +1324,10 @@
       }],
       "columns": [
         {
-          "size": 64,
+          "size": 16,
           "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
+          "databaseSpecificType": "SMALLINT",
+          "dataType": "SMALLINT",
           "name": "ΜΟΝΑΔΙΚΌΣ",
           "width": "",
           "decimalDigits": 0,
@@ -1357,10 +1357,10 @@
           "autoIncremented": false
         },
         {
-          "size": 64,
+          "size": 16,
           "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
+          "databaseSpecificType": "SMALLINT",
+          "dataType": "SMALLINT",
           "name": "ΕΚΔΌΤΗΣ",
           "width": "",
           "decimalDigits": 0,
@@ -3089,7 +3089,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 13:15:53",
+    "crawlTimestamp": "2018-01-01 18:22:33",
     "title": ""
   },
   "routines": [

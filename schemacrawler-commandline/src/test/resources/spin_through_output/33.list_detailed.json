@@ -1117,10 +1117,10 @@
       ],
       "columns": [
         {
-          "size": 64,
+          "size": 16,
           "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
+          "databaseSpecificType": "SMALLINT",
+          "dataType": "SMALLINT",
           "name": "ΜΟΝΑΔΙΚΌΣ",
           "width": "",
           "decimalDigits": 0,
@@ -1150,10 +1150,10 @@
           "autoIncremented": false
         },
         {
-          "size": 64,
+          "size": 16,
           "nullable": false,
-          "databaseSpecificType": "BIGINT",
-          "dataType": "BIGINT",
+          "databaseSpecificType": "SMALLINT",
+          "dataType": "SMALLINT",
           "name": "ΕΚΔΌΤΗΣ",
           "width": "",
           "decimalDigits": 0,
@@ -1168,10 +1168,10 @@
       "tableConstraints": [
         {
           "columns": {
-            "size": 64,
+            "size": 16,
             "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
+            "databaseSpecificType": "SMALLINT",
+            "dataType": "SMALLINT",
             "name": "ΜΟΝΑΔΙΚΌΣ",
             "width": "",
             "decimalDigits": 0,
@@ -1182,10 +1182,10 @@
         },
         {
           "columns": {
-            "size": 64,
+            "size": 16,
             "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
+            "databaseSpecificType": "SMALLINT",
+            "dataType": "SMALLINT",
             "name": "ΕΚΔΌΤΗΣ",
             "width": "",
             "decimalDigits": 0,
@@ -1196,10 +1196,10 @@
         },
         {
           "columns": {
-            "size": 64,
+            "size": 16,
             "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
+            "databaseSpecificType": "SMALLINT",
+            "dataType": "SMALLINT",
             "name": "ΜΟΝΑΔΙΚΌΣ",
             "width": "",
             "decimalDigits": 0,
@@ -1224,10 +1224,10 @@
         },
         {
           "columns": {
-            "size": 64,
+            "size": 16,
             "nullable": false,
-            "databaseSpecificType": "BIGINT",
-            "dataType": "BIGINT",
+            "databaseSpecificType": "SMALLINT",
+            "dataType": "SMALLINT",
             "name": "ΕΚΔΌΤΗΣ",
             "width": "",
             "decimalDigits": 0,
@@ -2826,7 +2826,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 11:09:57",
+    "crawlTimestamp": "2018-01-01 18:26:02",
     "title": ""
   },
   "routines": [

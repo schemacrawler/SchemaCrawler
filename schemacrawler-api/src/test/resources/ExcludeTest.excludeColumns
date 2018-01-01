@@ -97,8 +97,8 @@ schema: PUBLIC.BOOKS
       type: VARCHAR
   table: PUBLIC.BOOKS.ΒΙΒΛΊΑ
     column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΜΟΝΑΔΙΚΌΣ
-      database type: BIGINT
-      type: BIGINT
+      database type: SMALLINT
+      type: SMALLINT
     column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΤΊΤΛΟΣ
       database type: VARCHAR
       type: VARCHAR
@@ -106,8 +106,8 @@ schema: PUBLIC.BOOKS
       database type: VARCHAR
       type: VARCHAR
     column: PUBLIC.BOOKS.ΒΙΒΛΊΑ.ΕΚΔΌΤΗΣ
-      database type: BIGINT
-      type: BIGINT
+      database type: SMALLINT
+      type: SMALLINT
 schema: PUBLIC.INFORMATION_SCHEMA
 schema: PUBLIC.PUBLIC
 schema: PUBLIC."PUBLISHER SALES"

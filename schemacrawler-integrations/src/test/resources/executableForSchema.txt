@@ -266,10 +266,10 @@ SYS_IDX_SYS_PK_10106_10107                                [unique index]
 
 PUBLIC.BOOKS.ΒΙΒΛΊΑ                                              [table]
 ------------------------------------------------------------------------
-1   ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
+1   ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
 2   ΤΊΤΛΟΣ                            VARCHAR(255) NOT NULL       
 3   ΠΕΡΙΓΡΑΦΉ                         VARCHAR(255)                
-4   ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
+4   ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
 
 Primary Key
 
