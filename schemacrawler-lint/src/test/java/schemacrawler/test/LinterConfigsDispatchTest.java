@@ -52,6 +52,7 @@ import org.junit.contrib.java.lang.system.internal.CheckExitCalled;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
