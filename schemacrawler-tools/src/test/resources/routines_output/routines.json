@@ -206,7 +206,7 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "SMALLINT",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -215,7 +215,7 @@
       "userDefined": false,
       "autoIncrementable": false,
       "basedOn": "",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     },
     {
       "createParameters": "",
@@ -224,7 +224,7 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "NVARCHAR",
-      "searchable": "unknown"
+      "searchable": "not searchable"
     }
   ],
   "databaseInfo": {
@@ -1210,7 +1210,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 20:40:31",
+    "crawlTimestamp": "2018-01-01 13:15:50",
     "title": ""
   },
   "routines": [
