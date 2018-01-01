@@ -45,10 +45,10 @@ PUBLIC.BOOKS
     ID [INTEGER]
     PUBLISHER [VARCHAR]
   ΒΙΒΛΊΑ [table]
-    ΜΟΝΑΔΙΚΌΣ [BIGINT]
+    ΜΟΝΑΔΙΚΌΣ [SMALLINT]
     ΤΊΤΛΟΣ [VARCHAR]
     ΠΕΡΙΓΡΑΦΉ [VARCHAR]
-    ΕΚΔΌΤΗΣ [BIGINT]
+    ΕΚΔΌΤΗΣ [SMALLINT]
 PUBLIC.INFORMATION_SCHEMA
 PUBLIC.PUBLIC
 PUBLIC."PUBLISHER SALES"

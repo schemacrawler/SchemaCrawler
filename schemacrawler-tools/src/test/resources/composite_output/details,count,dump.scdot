@@ -30,7 +30,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2018-01-01 10:53:46</td>
+		<td align='left'>2018-01-01 18:22:40</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
@@ -421,7 +421,7 @@ along with the latest updated information</td>
 	<tr>
 		<td port='μοναδικόσ_1e05b960.start' align='left'><b><i>ΜΟΝΑΔΙΚΌΣ</i></b></td>
 		<td align='left'> </td>
-		<td port='μοναδικόσ_1e05b960.end' align='left'>BIGINT NOT NULL</td>
+		<td port='μοναδικόσ_1e05b960.end' align='left'>SMALLINT NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='τίτλοσ_caa3ab4c.start' align='left'>ΤΊΤΛΟΣ</td>
@@ -436,7 +436,7 @@ along with the latest updated information</td>
 	<tr>
 		<td port='εκδότησ_36c797de.start' align='left'>ΕΚΔΌΤΗΣ</td>
 		<td align='left'> </td>
-		<td port='εκδότησ_36c797de.end' align='left'>BIGINT NOT NULL</td>
+		<td port='εκδότησ_36c797de.end' align='left'>SMALLINT NOT NULL</td>
 	</tr>
       </table>
     >

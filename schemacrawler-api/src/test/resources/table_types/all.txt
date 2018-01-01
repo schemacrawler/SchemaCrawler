@@ -49,10 +49,10 @@ PUBLIC.BOOKS
     FIRSTNAME [VARCHAR]
     LASTNAME [VARCHAR]
   ΒΙΒΛΊΑ [table]
-    ΜΟΝΑΔΙΚΌΣ [BIGINT]
+    ΜΟΝΑΔΙΚΌΣ [SMALLINT]
     ΤΊΤΛΟΣ [VARCHAR]
     ΠΕΡΙΓΡΑΦΉ [VARCHAR]
-    ΕΚΔΌΤΗΣ [BIGINT]
+    ΕΚΔΌΤΗΣ [SMALLINT]
 PUBLIC.INFORMATION_SCHEMA
   ADMINISTRABLE_ROLE_AUTHORIZATIONS [system table]
     GRANTEE [PUBLIC.INFORMATION_SCHEMA.SQL_IDENTIFIER]

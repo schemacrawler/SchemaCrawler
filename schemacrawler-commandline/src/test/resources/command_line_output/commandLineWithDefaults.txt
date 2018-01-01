@@ -132,8 +132,8 @@ Foreign Keys
 
 ΒΙΒΛΊΑ                                                           [table]
 ------------------------------------------------------------------------
-  ΜΟΝΑΔΙΚΌΣ                         BIGINT NOT NULL             
-  ΕΚΔΌΤΗΣ                           BIGINT NOT NULL             
+  ΜΟΝΑΔΙΚΌΣ                         SMALLINT NOT NULL           
+  ΕΚΔΌΤΗΣ                           SMALLINT NOT NULL           
 
 Primary Key
 
