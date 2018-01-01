@@ -106,13 +106,19 @@ public class SchemaCrawlerTest
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
       assertEquals("ColumnDataType count does not match",
-                   32,
+                   30,
                    columnDataTypes.size());
       for (final ColumnDataType columnDataType: columnDataTypes)
       {
         assertNotNull(columnDataType);
         out.println("column data-type: " + columnDataType.getFullName());
         out.println("  is user-defined: " + columnDataType.isUserDefined());
+        out.println("  java.sql.type: "
+                    + columnDataType.getJavaSqlType().getJavaSqlTypeName());
+        out.println("  create parameters: "
+                    + columnDataType.getCreateParameters());
+        out.println("  literal prefix: " + columnDataType.getLiteralPrefix());
+        out.println("  literal suffix: " + columnDataType.getLiteralSuffix());
         final ColumnDataType baseType = columnDataType.getBaseType();
         if (baseType != null)
         {

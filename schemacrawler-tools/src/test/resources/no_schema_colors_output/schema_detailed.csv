@@ -138,7 +138,7 @@ SYS_IDX_PK_COUPONS_10093,[unique index]
 PUBLIC.BOOKS.CUSTOMERDATA,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER NOT NULL
-"",DATA,BOOKS.VALID_STRING(20)
+"",DATA,VALID_STRING(20)
 ""
 Primary Key
 ""
@@ -155,9 +155,9 @@ SYS_IDX_PK_CUSTOMERDATA_10104,[unique index]
 PUBLIC.BOOKS.CUSTOMERS,[table]
 ------------------------------------------------------------------------
 "",ID,INTEGER NOT NULL
-"",FIRSTNAME,BOOKS.NAME_TYPE(100) NOT NULL
-"",LASTNAME,BOOKS.NAME_TYPE(100) NOT NULL
-"",AGE,BOOKS.AGE_TYPE
+"",FIRSTNAME,NAME_TYPE(100) NOT NULL
+"",LASTNAME,NAME_TYPE(100) NOT NULL
+"",AGE,AGE_TYPE
 ""
 Primary Key
 ""

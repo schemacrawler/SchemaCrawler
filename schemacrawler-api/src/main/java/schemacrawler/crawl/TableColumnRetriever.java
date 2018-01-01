@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -212,10 +213,24 @@ final class TableColumnRetriever
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
 
+      String columnDataTypeName = null;
+      if (!isBlank(typeName))
+      {
+        String[] split = typeName.split("\\.");
+        if (split.length > 0)
+        {
+          columnDataTypeName = split[split.length - 1];
+        }
+      }
+      if (isBlank(columnDataTypeName))
+      {
+        columnDataTypeName = typeName;
+      }
+
       column.setOrdinalPosition(ordinalPosition);
       column.setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
                                                             dataType,
-                                                            typeName));
+                                                            columnDataTypeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);

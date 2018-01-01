@@ -83,9 +83,9 @@ SELECT ID,FIRSTNAME,LASTNAME FROM BOOKS.AUTHORS
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
 ------------------------------------------------------------------------
   ID                                INTEGER NOT NULL            
-  FIRSTNAME                         BOOKS.NAME_TYPE(100) NOT NULL
-  LASTNAME                          BOOKS.NAME_TYPE(100) NOT NULL
-  AGE                               BOOKS.AGE_TYPE              
+  FIRSTNAME                         NAME_TYPE NOT NULL          
+  LASTNAME                          NAME_TYPE NOT NULL          
+  AGE                               AGE_TYPE                    
 
 Primary Key
 

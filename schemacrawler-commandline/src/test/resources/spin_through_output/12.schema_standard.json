@@ -552,7 +552,7 @@
         {
           "size": 20,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.VALID_STRING",
+          "databaseSpecificType": "VALID_STRING",
           "dataType": "VARCHAR",
           "name": "DATA",
           "width": "(20)",
@@ -601,7 +601,7 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "databaseSpecificType": "NAME_TYPE",
           "dataType": "VARCHAR",
           "name": "FIRSTNAME",
           "width": "(100)",
@@ -612,7 +612,7 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
+          "databaseSpecificType": "NAME_TYPE",
           "dataType": "VARCHAR",
           "name": "LASTNAME",
           "width": "(100)",
@@ -623,7 +623,7 @@
         {
           "size": 16,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.AGE_TYPE",
+          "databaseSpecificType": "AGE_TYPE",
           "dataType": "SMALLINT",
           "name": "AGE",
           "width": "",
@@ -1859,7 +1859,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 20:51:31",
+    "crawlTimestamp": "2018-01-01 11:09:53",
     "title": ""
   },
   "routines": [

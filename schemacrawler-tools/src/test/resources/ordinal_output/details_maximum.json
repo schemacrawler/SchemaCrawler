@@ -1233,7 +1233,7 @@
         {
           "size": 20,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.VALID_STRING",
+          "databaseSpecificType": "VALID_STRING",
           "dataType": "VARCHAR",
           "name": "DATA",
           "width": "(20)",
@@ -1374,10 +1374,10 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
-          "dataType": "VARCHAR",
+          "databaseSpecificType": "NAME_TYPE",
+          "dataType": "DISTINCT",
           "name": "FIRSTNAME",
-          "width": "(100)",
+          "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false,
@@ -1386,10 +1386,10 @@
         {
           "size": 100,
           "nullable": false,
-          "databaseSpecificType": "BOOKS.NAME_TYPE",
-          "dataType": "VARCHAR",
+          "databaseSpecificType": "NAME_TYPE",
+          "dataType": "DISTINCT",
           "name": "LASTNAME",
-          "width": "(100)",
+          "width": "",
           "decimalDigits": 0,
           "remarks": "",
           "autoIncremented": false,
@@ -1398,8 +1398,8 @@
         {
           "size": 16,
           "nullable": true,
-          "databaseSpecificType": "BOOKS.AGE_TYPE",
-          "dataType": "SMALLINT",
+          "databaseSpecificType": "AGE_TYPE",
+          "dataType": "DISTINCT",
           "name": "AGE",
           "width": "",
           "decimalDigits": 0,
@@ -1450,10 +1450,10 @@
           "columns": {
             "size": 100,
             "nullable": false,
-            "databaseSpecificType": "BOOKS.NAME_TYPE",
-            "dataType": "VARCHAR",
+            "databaseSpecificType": "NAME_TYPE",
+            "dataType": "DISTINCT",
             "name": "FIRSTNAME",
-            "width": "(100)",
+            "width": "",
             "decimalDigits": 0,
             "autoIncremented": false,
             "ordinal": 2
@@ -1466,10 +1466,10 @@
           "columns": {
             "size": 100,
             "nullable": false,
-            "databaseSpecificType": "BOOKS.NAME_TYPE",
-            "dataType": "VARCHAR",
+            "databaseSpecificType": "NAME_TYPE",
+            "dataType": "DISTINCT",
             "name": "LASTNAME",
-            "width": "(100)",
+            "width": "",
             "decimalDigits": 0,
             "autoIncremented": false,
             "ordinal": 3
@@ -2814,33 +2814,6 @@
     {
       "createParameters": "",
       "nullable": false,
-      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.AGE_TYPE\"",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "unknown"
-    },
-    {
-      "createParameters": "",
-      "nullable": false,
-      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.NAME_TYPE\"",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "unknown"
-    },
-    {
-      "createParameters": "",
-      "nullable": false,
-      "databaseSpecificTypeName": "PUBLIC.BOOKS.\"BOOKS.VALID_STRING\"",
-      "userDefined": false,
-      "autoIncrementable": false,
-      "basedOn": "",
-      "searchable": "unknown"
-    },
-    {
-      "createParameters": "",
-      "nullable": false,
       "databaseSpecificTypeName": "PUBLIC.BOOKS.\"CHARACTER VARYING\"",
       "userDefined": false,
       "autoIncrementable": false,
@@ -2863,6 +2836,15 @@
       "userDefined": true,
       "autoIncrementable": false,
       "basedOn": "NVARCHAR",
+      "searchable": "unknown"
+    },
+    {
+      "createParameters": "",
+      "nullable": false,
+      "databaseSpecificTypeName": "PUBLIC.BOOKS.VALID_STRING",
+      "userDefined": false,
+      "autoIncrementable": false,
+      "basedOn": "",
       "searchable": "unknown"
     },
     {
@@ -3858,7 +3840,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2017-12-30 21:37:01",
+    "crawlTimestamp": "2018-01-01 10:53:38",
     "title": ""
   },
   "routines": [

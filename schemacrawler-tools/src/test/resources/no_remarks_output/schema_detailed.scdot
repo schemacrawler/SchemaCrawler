@@ -240,7 +240,7 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='data_6560dca4.start' align='left'>DATA</td>
 		<td align='left'> </td>
-		<td port='data_6560dca4.end' align='left'>BOOKS.VALID_STRING(20)</td>
+		<td port='data_6560dca4.end' align='left'>VALID_STRING(20)</td>
 	</tr>
       </table>
     >
@@ -264,17 +264,17 @@ digraph "SchemaCrawler_Diagram" {
 	<tr>
 		<td port='firstname_97c69c08.start' align='left'>FIRSTNAME</td>
 		<td align='left'> </td>
-		<td port='firstname_97c69c08.end' align='left'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+		<td port='firstname_97c69c08.end' align='left'>NAME_TYPE NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='lastname_c169d90e.start' align='left'>LASTNAME</td>
 		<td align='left'> </td>
-		<td port='lastname_c169d90e.end' align='left'>BOOKS.NAME_TYPE(100) NOT NULL</td>
+		<td port='lastname_c169d90e.end' align='left'>NAME_TYPE NOT NULL</td>
 	</tr>
 	<tr>
 		<td port='age_e9b613cc.start' align='left'>AGE</td>
 		<td align='left'> </td>
-		<td port='age_e9b613cc.end' align='left'>BOOKS.AGE_TYPE</td>
+		<td port='age_e9b613cc.end' align='left'>AGE_TYPE</td>
 	</tr>
       </table>
     >
