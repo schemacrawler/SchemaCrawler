@@ -59,13 +59,11 @@ public class SchemaCreator
     connection.setAutoCommit(false);
     final SchemaCreator schemaCreator = new SchemaCreator(connection,
                                                           scriptsResource);
-    schemaCreator.verbose = true;
     schemaCreator.run();
   }
 
   private final Connection connection;
   private final String scriptsResource;
-  private boolean verbose;
 
   public SchemaCreator(final Connection connection,
                        final String scriptsResource)
@@ -84,7 +82,6 @@ public class SchemaCreator
     {
       while ((scriptResource = hsqlScriptsReader.readLine()) != null)
       {
-        boolean runEntireScript = false;
         if (scriptResource.trim().isEmpty())
         {
           continue;
@@ -94,23 +91,24 @@ public class SchemaCreator
           continue;
         }
 
+        final String delimiter;
         if (scriptResource.startsWith("~"))
         {
           scriptResource = scriptResource.substring(1);
-          runEntireScript = true;
+          delimiter = "@";
+        }
+        else
+        {
+          delimiter = ";";
         }
 
         try (final Reader reader = new InputStreamReader(TestDatabase.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
-          if (verbose)
-          {
-            System.out.println(scriptResource);
-          }
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,
                                                     reader,
-                                                    runEntireScript);
+                                                    delimiter);
           sqlScript.run();
         }
       }

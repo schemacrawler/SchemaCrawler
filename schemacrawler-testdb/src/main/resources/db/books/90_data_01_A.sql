@@ -81,4 +81,3 @@ INSERT INTO BookAuthors (BookId,AuthorId,SomeData) VALUES (9,3,NULL);
 INSERT INTO BookAuthors (BookId,AuthorId,SomeData) VALUES (9,6,NULL);
 INSERT INTO BookAuthors (BookId,AuthorId,SomeData) VALUES (10,1,NULL);
 INSERT INTO BookAuthors (BookId,AuthorId,SomeData) VALUES (10,9,NULL);
-

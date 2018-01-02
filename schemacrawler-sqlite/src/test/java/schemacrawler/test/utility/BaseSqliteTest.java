@@ -79,7 +79,7 @@ public abstract class BaseSqliteTest
                                                 connection,
                                                 readerForResource(databaseSqlResource,
                                                                   StandardCharsets.UTF_8),
-                                                false);
+                                                ";");
       sqlScript.run();
     }
 
