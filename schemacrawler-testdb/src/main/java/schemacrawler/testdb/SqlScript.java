@@ -37,28 +37,25 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SqlScript
   implements Runnable
 {
 
-  private static final String delimiter = ";";
-
   private final String scriptName;
   private final Connection connection;
   private final Reader reader;
-  private final boolean runEntireScript;
+  private final String delimiter;
 
   public SqlScript(final String scriptName,
                    final Connection connection,
                    final Reader reader,
-                   final boolean runEntireScript)
+                   final String delimiter)
   {
     this.scriptName = scriptName;
     this.connection = requireNonNull(connection);
     this.reader = requireNonNull(reader);
-    this.runEntireScript = runEntireScript;
+    this.delimiter = delimiter;
   }
 
   public String getScriptName()
@@ -80,20 +77,12 @@ public class SqlScript
       // NOTE: Do not close reader or connection, since we did not open
       // them
       final BufferedReader lineReader = new BufferedReader(reader);
-      List<String> sqlList;
-      if (runEntireScript)
-      {
-        sqlList = readEntireSql(lineReader);
-      }
-      else
-      {
-        sqlList = readSql(lineReader);
-      }
-
+      final List<String> sqlList = readSql(lineReader);
       for (final String sql: sqlList)
       {
         try (final Statement statement = connection.createStatement();)
         {
+          System.out.println(sql);
           statement.execute(sql);
           connection.commit();
         }
@@ -105,15 +94,6 @@ public class SqlScript
     }
   }
 
-  private List<String> readEntireSql(final BufferedReader lineReader)
-    throws IOException
-  {
-    final String sql = lineReader.lines().collect(Collectors.joining("\n"));
-    final List<String> list = new ArrayList<>();
-    list.add(sql);
-    return list;
-  }
-
   private List<String> readSql(final BufferedReader lineReader)
     throws IOException
   {
@@ -123,13 +103,12 @@ public class SqlScript
     while ((line = lineReader.readLine()) != null)
     {
       final String trimmedLine = line.trim();
-      if (!(trimmedLine.startsWith("--") || trimmedLine.startsWith("//"))
-          && trimmedLine.endsWith(delimiter))
+      final boolean isComment = trimmedLine.startsWith("--")
+                                || trimmedLine.startsWith("//");
+      if (!isComment && trimmedLine.endsWith(delimiter))
       {
         sql.append(line.substring(0, line.lastIndexOf(delimiter)));
-
         list.add(sql.toString());
-
         sql = new StringBuilder();
       }
       else
@@ -138,6 +117,12 @@ public class SqlScript
         sql.append("\n");
       }
     }
+    // Check if the last line is not delimited
+    if (sql.length() > 0)
+    {
+      list.add(sql.toString());
+    }
+
     return list;
   }
 
