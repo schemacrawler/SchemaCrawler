@@ -59,11 +59,13 @@ public class SchemaCreator
     connection.setAutoCommit(false);
     final SchemaCreator schemaCreator = new SchemaCreator(connection,
                                                           scriptsResource);
+    schemaCreator.verbose = true;
     schemaCreator.run();
   }
 
   private final Connection connection;
   private final String scriptsResource;
+  private boolean verbose;
 
   public SchemaCreator(final Connection connection,
                        final String scriptsResource)
@@ -101,6 +103,10 @@ public class SchemaCreator
         try (final Reader reader = new InputStreamReader(TestDatabase.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
+          if (verbose)
+          {
+            System.out.println(scriptResource);
+          }
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,
                                                     reader,
