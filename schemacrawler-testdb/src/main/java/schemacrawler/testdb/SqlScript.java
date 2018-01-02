@@ -82,7 +82,6 @@ public class SqlScript
       {
         try (final Statement statement = connection.createStatement();)
         {
-          System.out.println(sql);
           statement.execute(sql);
           connection.commit();
         }
