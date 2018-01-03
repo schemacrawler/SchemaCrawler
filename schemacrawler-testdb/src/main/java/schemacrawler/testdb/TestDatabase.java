@@ -80,8 +80,6 @@ public class TestDatabase
    *
    * @param args
    *        Command-line arguments
-   * @throws Exception
-   *         Exception
    */
   public static void main(final String[] args)
   {
@@ -90,9 +88,7 @@ public class TestDatabase
 
   /**
    * Delete files from the previous run of the database server.
-   *
-   * @param stem
-   *        File stem
+   * 
    * @throws IOException
    */
   private static void deleteServerFiles()
@@ -166,9 +162,6 @@ public class TestDatabase
 
   /**
    * Load driver, and create database, schema and data.
-   *
-   * @throws SchemaCrawlerException
-   *         On an exception
    */
   public void start()
     throws Exception
@@ -219,9 +212,7 @@ public class TestDatabase
   }
 
   /**
-   * Shuts down the database server.
-   *
-   * @throws IOException
+   * Shut down the database server.
    */
   public void stop()
   {
