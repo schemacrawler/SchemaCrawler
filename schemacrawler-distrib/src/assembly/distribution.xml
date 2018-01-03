@@ -143,18 +143,7 @@
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt"
           tofile="${main-distribution.staging.dir}/LICENSE.txt" />
-
-    <!-- Create test database -->
-    <copy file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
-          todir="${main-distribution.staging.dir}/_testdb/lib"/>
-    <copy todir="${main-distribution.staging.dir}/_testdb">
-      <fileset dir="${schemacrawler.complete-distribution}">
-        <include name="**/hsqldb*.jar" />
-      </fileset>
-    </copy>
-    <copy file="${SchemaCrawler.home}/schemacrawler-sqlite/src/test/resources/sc.db"
-          todir="${main-distribution.staging.dir}/_testdb"/>
-          	
+           	
     <!-- Copy Apache Ant Ivy -->
     <copy file="ivy-2.4.0.jar"
           todir="${main-distribution.staging.dir}/_downloader" />
@@ -202,6 +191,31 @@
       tablength="2"
       outputencoding="UTF-8" />
 
+    <!-- Create test database -->
+    <copy file="${SchemaCrawler.home}/schemacrawler-testdb/target/schemacrawler-testdb-${SchemaCrawler.version}.jar"
+          todir="${main-distribution.staging.dir}/_testdb/lib"/>
+    <copy todir="${main-distribution.staging.dir}/_testdb">
+      <fileset dir="${main-distribution.staging.dir}/_schemacrawler">
+        <include name="**/hsqldb*.jar" />
+      </fileset>
+    </copy>
+    <java 
+      classname="schemacrawler.testdb.SchemaCreator"
+      failonerror="true">
+      <arg value="jdbc:sqlite:${main-distribution.staging.dir}/_testdb/sc.db"/>
+      <arg value="sa"/>
+      <arg value=""/>
+      <arg value="/sqlite.scripts.txt"/>
+      <classpath>
+        <fileset dir="${main-distribution.staging.dir}/_testdb/lib">
+          <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="${main-distribution.staging.dir}/_schemacrawler/lib">
+          <include name="**/*.jar"/>
+        </fileset>        	
+      </classpath>
+    </java> 
+        	
     <!-- 2. CREATE BINARY DISTRIBUTION FROM THE STAGED EXAMPLES -->
 
     <!-- Create zip file for distribution -->
@@ -260,7 +274,7 @@
   </target>
 
   <target name="make-super-distribution">
-
+  	
     <copy todir="${schemacrawler.complete-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
