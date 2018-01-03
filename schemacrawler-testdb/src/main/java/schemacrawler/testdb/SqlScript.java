@@ -63,12 +63,6 @@ public class SqlScript
     return scriptName;
   }
 
-  /**
-   * Executes an SQL script.
-   *
-   * @param reader
-   *        Source of the SQL script
-   */
   @Override
   public void run()
   {
