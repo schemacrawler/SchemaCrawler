@@ -1,5 +1,5 @@
 -- Table with identity column, generated
--- PostgreSQL syntax
+-- PostgreSQL and MySQL syntax
 CREATE TABLE Publishers
 (
   Id SERIAL,
