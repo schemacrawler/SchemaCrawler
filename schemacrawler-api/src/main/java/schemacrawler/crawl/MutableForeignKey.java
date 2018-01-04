@@ -60,6 +60,7 @@ final class MutableForeignKey
 
   private final SortedSet<MutableForeignKeyColumnReference> columnReferences = new TreeSet<>();
 
+  private String specificName;
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
@@ -146,6 +147,12 @@ final class MutableForeignKey
     return deleteRule;
   }
 
+  @Override
+  public String getSpecificName()
+  {
+    return specificName;
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -188,6 +195,15 @@ final class MutableForeignKey
       .iterator();
   }
 
+  @Override
+  public List<String> toUniqueLookupKey()
+  {
+    // Make a defensive copy
+    final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
+    lookupKey.add(specificName);
+    return lookupKey;
+  }
+
   void addColumnReference(final int keySequence,
                           final Column pkColumn,
                           final Column fkColumn)
@@ -224,6 +240,11 @@ final class MutableForeignKey
   void setInitiallyDeferred(final boolean initiallyDeferred)
   {
     this.initiallyDeferred = initiallyDeferred;
+  }
+
+  void setSpecificName(final String specificName)
+  {
+    this.specificName = specificName;
   }
 
   final void setUpdateRule(final ForeignKeyUpdateRule updateRule)

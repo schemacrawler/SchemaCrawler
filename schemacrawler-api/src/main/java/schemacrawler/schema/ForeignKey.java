@@ -60,4 +60,12 @@ public interface ForeignKey
    */
   ForeignKeyUpdateRule getUpdateRule();
 
+  /**
+   * Gets a generated specific name for databases that support
+   * non-unique foreign key names.
+   * 
+   * @return Specific name of a foreign key
+   */
+  String getSpecificName();
+
 }

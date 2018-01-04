@@ -107,6 +107,8 @@ public final class TestUtility
                                                .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
                                              Pattern
                                                .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                             Pattern
+                                               .compile("SQL\\d+\\s+\\[primary key\\]"),
                                              // SVG {
                                              Pattern.compile("<svg.*"),
                                              Pattern
