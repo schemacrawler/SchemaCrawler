@@ -114,13 +114,13 @@
             <executions>
               <execution>
                 <id>prepare-agent</id>
-								<configuration>
-									<excludes>
-										<exclude>**/JSON*.*</exclude>
-										<exclude>**/*Test.*</exclude>
-										<exclude>**/Test*.*</exclude>
-									</excludes>
-								</configuration>								
+  				<configuration>
+  					<excludes>
+  						<exclude>**/JSON*.*</exclude>
+  						<exclude>**/*Test.*</exclude>
+  						<exclude>**/Test*.*</exclude>
+  					</excludes>
+  				</configuration>								
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
