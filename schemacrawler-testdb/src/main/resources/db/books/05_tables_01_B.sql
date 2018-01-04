@@ -1,9 +1,9 @@
 -- Table with auto-incremented column, generated
--- Apache Derby syntax
+-- with an unnamed primary key
+-- Apache Derby and H2 syntax
 CREATE TABLE Publishers
 (
-  Id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY,
-  Publisher VARCHAR(255),
-  CONSTRAINT PK_Publishers PRIMARY KEY (Id)
+  Id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  Publisher VARCHAR(255)
 )
 ;

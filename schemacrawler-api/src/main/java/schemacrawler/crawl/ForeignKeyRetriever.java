@@ -120,7 +120,7 @@ final class ForeignKeyRetriever
         final String definition = results.getString("FOREIGN_KEY_DEFINITION");
 
         final Optional<MutableForeignKey> optionalFk = allFks
-          .lookup(Arrays.asList(fkName));
+          .lookup(Arrays.asList(fkName, fkName));
         if (optionalFk.isPresent())
         {
           final MutableForeignKey fkConstraint = optionalFk.get();
@@ -225,14 +225,19 @@ final class ForeignKeyRetriever
         continue;
       }
 
+      final String specificName;
       if (isBlank(foreignKeyName))
       {
-        foreignKeyName = MetaDataUtility.constructForeignKeyName(pkColumn,
-                                                                 fkColumn);
+        specificName = MetaDataUtility.constructForeignKeyName(pkColumn,
+                                                               fkColumn);
+      }
+      else
+      {
+        specificName = foreignKeyName;
       }
 
       final Optional<MutableForeignKey> foreignKeyOptional = foreignKeys
-        .lookup(Arrays.asList(foreignKeyName));
+        .lookup(Arrays.asList(foreignKeyName, specificName));
       final MutableForeignKey foreignKey;
       if (foreignKeyOptional.isPresent())
       {
@@ -241,6 +246,9 @@ final class ForeignKeyRetriever
       else
       {
         foreignKey = new MutableForeignKey(foreignKeyName);
+        foreignKey.setSpecificName(specificName);
+        // Specific name needs to be set before the foreign key is added
+        // to the list, since it is part of the unique lookup key
         foreignKeys.add(foreignKey);
       }
 
