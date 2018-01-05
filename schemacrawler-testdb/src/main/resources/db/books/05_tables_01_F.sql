@@ -5,6 +5,6 @@ CREATE TABLE Publishers
 (
   Id SERIAL,
   Publisher VARCHAR(255),
-  CONSTRAINT PRIMARY KEY (Id)
+  PRIMARY KEY (Id)
 )
 ;
