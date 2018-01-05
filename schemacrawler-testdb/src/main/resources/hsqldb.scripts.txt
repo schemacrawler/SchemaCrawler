@@ -2,7 +2,10 @@
 #/db/books/01_schemas_01_B.sql
 /db/books/02_types_01_A.sql
 #/db/books/02_types_01_B.sql
+#/db/books/02_types_01_C.sql
 /db/books/02_types_02_A.sql
+#/db/books/02_types_02_B.sql
+#/db/books/02_types_02_C.sql
 /db/books/03_domains_01_A.sql
 /db/books/04_sequences_01_A.sql
 /db/books/05_tables_01_A.sql
@@ -10,8 +13,10 @@
 #/db/books/05_tables_01_C.sql
 #/db/books/05_tables_01_D.sql
 #/db/books/05_tables_01_E.sql
+#/db/books/05_tables_01_F.sql
 /db/books/05_tables_02_A.sql
 /db/books/05_tables_03_A.sql
+#/db/books/05_tables_03_B.sql
 /db/books/05_tables_04_A.sql
 #/db/books/05_tables_04_B.sql
 /db/books/05_temp_tables_01_A.sql
@@ -31,6 +36,7 @@
 /db/books/90_data_01_A.sql
 #/db/books/90_data_01_B.sql
 /db/books/90_data_02_A.sql
+#/db/books/90_data_02_B.sql
 
 /db/for_lint/for_lint.pre_schema.sql
 /db/for_lint/for_lint.schema.sql
