@@ -18,4 +18,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="&quot;jdbc:sqlite:${workspace_loc:SchemaCrawler for SQLite/target}/sc.db&quot;&#13;&#10;schemacrawler&#13;&#10;schemacrawler&#13;&#10;/sqlite.scripts.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 7 - Additional Database Tests"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dschemacrawler.testdb.SqlScript.debug=true&#13;&#10;-Dschemacrawler.testdb.TestSchemaCreator.debug=true"/>
 </launchConfiguration>

@@ -3,7 +3,7 @@
   "tables": [
     {
       "foreignKeys": [{
-        "name": "FK_Z_AUTHOR",
+        "name": "Z_FK_AUTHOR",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -300,7 +300,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Z_AUTHOR",
+          "name": "Z_FK_AUTHOR",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -309,7 +309,7 @@
           "updateRule": "no action"
         },
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -325,7 +325,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10133"
+          "name": "SYS_IDX_Z_FK_AUTHOR_10134"
         },
         {
           "columns": {
@@ -333,7 +333,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10131"
+          "name": "SYS_IDX_SYS_FK_10128_10132"
         },
         {
           "columns": [
@@ -401,7 +401,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "type": "foreign_key"
         },
         {
@@ -415,7 +415,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "FK_Z_AUTHOR",
+          "name": "Z_FK_AUTHOR",
           "type": "foreign_key"
         },
         {
@@ -453,7 +453,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -1104,7 +1104,7 @@
             "name": "ΕΚΔΌΤΗΣ"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143"
+          "name": "SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144"
         },
         {
           "columns": {
@@ -1112,7 +1112,7 @@
             "name": "ΜΟΝΑΔΙΚΌΣ"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΒΙΒΛΊΑ_10139"
+          "name": "SYS_IDX_PK_ΒΙΒΛΊΑ_10140"
         }
       ],
       "columns": [
@@ -1205,7 +1205,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10136",
+          "name": "SYS_CT_10137",
           "type": "check"
         },
         {
@@ -1219,7 +1219,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10137",
+          "name": "SYS_CT_10138",
           "type": "check"
         },
         {
@@ -1233,7 +1233,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10138",
+          "name": "SYS_CT_10139",
           "type": "check"
         }
       ],
@@ -1275,7 +1275,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10227"
+        "name": "SYS_IDX_PK_CUSTOMERS_10228"
       }],
       "columns": [
         {
@@ -1365,7 +1365,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10223",
+          "name": "SYS_CT_10224",
           "type": "check"
         },
         {
@@ -1379,7 +1379,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10224",
+          "name": "SYS_CT_10225",
           "type": "check"
         },
         {
@@ -1393,7 +1393,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10225",
+          "name": "SYS_CT_10226",
           "type": "check"
         },
         {
@@ -1407,7 +1407,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10226",
+          "name": "SYS_CT_10227",
           "type": "check"
         }
       ],
@@ -1461,7 +1461,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10241"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10242"
         },
         {
           "columns": [
@@ -1475,7 +1475,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10239"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10240"
         }
       ],
       "columns": [
@@ -1602,7 +1602,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10234",
+          "name": "SYS_CT_10235",
           "type": "check"
         },
         {
@@ -1616,7 +1616,7 @@
             "decimalDigits": 0,
             "autoIncremented": false
           },
-          "name": "SYS_CT_10235",
+          "name": "SYS_CT_10236",
           "type": "check"
         }
       ],
@@ -1639,7 +1639,7 @@
           "name": "SALESDATAID"
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10233"
+        "name": "SYS_IDX_UQ_CUSTOMERS_10234"
       }],
       "columns": [
         {
@@ -1688,24 +1688,10 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 18:22:29",
+    "crawlTimestamp": "2018-01-06 13:49:01",
     "title": ""
   },
   "routines": [
-    {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "procedure",
-      "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
-        "width": "",
-        "type": "out"
-      }],
-      "returnType": "no result",
-      "remarks": ""
-    },
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
@@ -1726,6 +1712,20 @@
           "type": "out"
         }
       ],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
       "returnType": "no result",
       "remarks": ""
     },

@@ -25,7 +25,7 @@ PK_AUTHORS                                                 [primary key]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes
@@ -63,18 +63,18 @@ along with the latest updated information
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
-SYS_IDX_FK_Z_AUTHOR_10133                             [non-unique index]
+SYS_IDX_Z_FK_AUTHOR_10134                             [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_FK_Y_BOOK_10131                               [non-unique index]
+SYS_IDX_SYS_FK_10128_10132                            [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -108,7 +108,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -202,7 +202,7 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_CUSTOMERS_10227                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10228                                [unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 
@@ -228,10 +228,10 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
+SYS_IDX_FK_SALES_SALESDATA_10242                      [non-unique index]
   SALESDATAID                       ascending                   
 
-SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
+SYS_IDX_FK_SALES_REGIONS_10240                        [non-unique index]
   POSTALCODE                        ascending                   
   COUNTRY                           ascending                   
 

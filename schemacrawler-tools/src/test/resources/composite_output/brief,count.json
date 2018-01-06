@@ -3,7 +3,7 @@
   "tables": [
     {
       "foreignKeys": [{
-        "name": "FK_Z_AUTHOR",
+        "name": "Z_FK_AUTHOR",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -115,7 +115,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Z_AUTHOR",
+          "name": "Z_FK_AUTHOR",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -124,7 +124,7 @@
           "updateRule": "no action"
         },
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -166,7 +166,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -545,7 +545,7 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 18:22:38",
+    "crawlTimestamp": "2018-01-06 13:49:08",
     "title": ""
   },
   "routines": [

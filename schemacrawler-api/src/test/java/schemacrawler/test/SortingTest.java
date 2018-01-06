@@ -57,16 +57,6 @@ public class SortingTest
     throws Exception
   {
 
-    final String[] sortedAlpha = new String[] {
-                                                "ADDRESS1",
-                                                "ADDRESS2",
-                                                "CITY",
-                                                "COUNTRY",
-                                                "FIRSTNAME",
-                                                "ID",
-                                                "LASTNAME",
-                                                "POSTALCODE",
-                                                "STATE", };
     final String[] sortedNatural = new String[] {
                                                   "ID",
                                                   "FIRSTNAME",
@@ -77,6 +67,11 @@ public class SortingTest
                                                   "STATE",
                                                   "POSTALCODE",
                                                   "COUNTRY", };
+
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
+
     checkColumnSort("AUTHORS", sortedAlpha, true);
     checkColumnSort("AUTHORS", sortedNatural, false);
 
@@ -87,8 +82,14 @@ public class SortingTest
     throws Exception
   {
 
-    final String[] sortedAlpha = new String[] { "FK_Y_BOOK", "FK_Z_AUTHOR", };
-    final String[] sortedNatural = new String[] { "FK_Z_AUTHOR", "FK_Y_BOOK", };
+    final String[] sortedNatural = new String[] {
+                                                  "Z_FK_AUTHOR",
+                                                  "SYS_FK_10128", };
+
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
+
     checkFkSort("BOOKAUTHORS", sortedAlpha, true);
     checkFkSort("BOOKAUTHORS", sortedNatural, false);
 
@@ -99,15 +100,16 @@ public class SortingTest
     throws Exception
   {
 
-    final String[] indexes = new String[] {
-                                            "SYS_IDX_PK_AUTHORS_10111",
-                                            "IDX_B_AUTHORS",
-                                            "IDX_A_AUTHORS", };
-    final String[] sortedIndexes = Arrays.copyOf(indexes, indexes.length);
-    Arrays.sort(sortedIndexes);
+    final String[] sortedNatural = new String[] {
+                                                  "SYS_IDX_PK_AUTHORS_10111",
+                                                  "IDX_B_AUTHORS",
+                                                  "IDX_A_AUTHORS", };
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
 
-    checkIndexSort("AUTHORS", sortedIndexes, true);
-    checkIndexSort("AUTHORS", indexes, false);
+    checkIndexSort("AUTHORS", sortedAlpha, true);
+    checkIndexSort("AUTHORS", sortedNatural, false);
 
   }
 

@@ -46,7 +46,8 @@ public class TestSchemaCreator
   private static final Logger LOGGER = Logger
     .getLogger(TestDatabase.class.getName());
 
-  private static final boolean debug = false;
+  private static final boolean debug = Boolean.valueOf(System
+    .getProperty("schemacrawler.testdb.TestSchemaCreator.debug", "false"));
 
   public static void main(final String[] args)
     throws Exception
@@ -109,7 +110,7 @@ public class TestSchemaCreator
         {
           if (debug)
           {
-            System.out.println("Executing: " + scriptResource);
+            LOGGER.log(Level.INFO, "Executing: " + scriptResource);
           }
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,

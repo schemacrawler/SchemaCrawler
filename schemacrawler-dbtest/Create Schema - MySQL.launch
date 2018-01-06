@@ -18,4 +18,5 @@
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="jdbc:mysql://scmysql.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler&#13;&#10;schemacrawler&#13;&#10;schemacrawler&#13;&#10;/mysql.scripts.txt"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="SchemaCrawler - 7 - Additional Database Tests"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dschemacrawler.testdb.SqlScript.debug=true&#13;&#10;-Dschemacrawler.testdb.TestSchemaCreator.debug=true"/>
 </launchConfiguration>

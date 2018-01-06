@@ -25,7 +25,7 @@ PK_AUTHORS                                                 [primary key]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes

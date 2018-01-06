@@ -3,7 +3,7 @@
   "tables": [
     {
       "foreignKeys": [{
-        "name": "FK_Z_AUTHOR",
+        "name": "Z_FK_AUTHOR",
         "deleteRule": "no action",
         "columnReferences": [{
           "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -222,7 +222,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Z_AUTHOR",
+          "name": "Z_FK_AUTHOR",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.AUTHORS.ID",
@@ -231,7 +231,7 @@
           "updateRule": "no action"
         },
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -247,7 +247,7 @@
             "name": "AUTHORID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Z_AUTHOR_10133"
+          "name": "SYS_IDX_Z_FK_AUTHOR_10134"
         },
         {
           "columns": {
@@ -255,7 +255,7 @@
             "name": "BOOKID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_Y_BOOK_10131"
+          "name": "SYS_IDX_SYS_FK_10128_10132"
         },
         {
           "columns": [
@@ -318,7 +318,7 @@
     {
       "foreignKeys": [
         {
-          "name": "FK_Y_BOOK",
+          "name": "SYS_FK_10128",
           "deleteRule": "no action",
           "columnReferences": [{
             "pkColumn": "PUBLIC.BOOKS.BOOKS.ID",
@@ -756,7 +756,7 @@
             "name": "ΕΚΔΌΤΗΣ"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143"
+          "name": "SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144"
         },
         {
           "columns": {
@@ -764,7 +764,7 @@
             "name": "ΜΟΝΑΔΙΚΌΣ"
           },
           "unique": true,
-          "name": "SYS_IDX_PK_ΒΙΒΛΊΑ_10139"
+          "name": "SYS_IDX_PK_ΒΙΒΛΊΑ_10140"
         }
       ],
       "columns": [
@@ -856,7 +856,7 @@
           }
         ],
         "unique": true,
-        "name": "SYS_IDX_PK_CUSTOMERS_10227"
+        "name": "SYS_IDX_PK_CUSTOMERS_10228"
       }],
       "columns": [
         {
@@ -959,7 +959,7 @@
             "name": "SALESDATAID"
           },
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_SALESDATA_10241"
+          "name": "SYS_IDX_FK_SALES_SALESDATA_10242"
         },
         {
           "columns": [
@@ -973,7 +973,7 @@
             }
           ],
           "unique": false,
-          "name": "SYS_IDX_FK_SALES_REGIONS_10239"
+          "name": "SYS_IDX_FK_SALES_REGIONS_10240"
         }
       ],
       "columns": [
@@ -1068,7 +1068,7 @@
           "name": "SALESDATAID"
         },
         "unique": true,
-        "name": "SYS_IDX_UQ_CUSTOMERS_10233"
+        "name": "SYS_IDX_UQ_CUSTOMERS_10234"
       }],
       "columns": [
         {
@@ -1104,24 +1104,10 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-01 18:22:32",
+    "crawlTimestamp": "2018-01-06 13:49:03",
     "title": ""
   },
   "routines": [
-    {
-      "name": "NEW_PUBLISHER",
-      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
-      "type": "procedure",
-      "parameters": [{
-        "databaseSpecificType": "CHARACTER VARYING",
-        "dataType": "VARCHAR",
-        "name": "PUBLISHER",
-        "width": "",
-        "type": "out"
-      }],
-      "returnType": "no result",
-      "remarks": ""
-    },
     {
       "name": "NEW_PUBLISHER",
       "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
@@ -1142,6 +1128,20 @@
           "type": "out"
         }
       ],
+      "returnType": "no result",
+      "remarks": ""
+    },
+    {
+      "name": "NEW_PUBLISHER",
+      "fullName": "PUBLIC.BOOKS.NEW_PUBLISHER",
+      "type": "procedure",
+      "parameters": [{
+        "databaseSpecificType": "CHARACTER VARYING",
+        "dataType": "VARCHAR",
+        "name": "PUBLISHER",
+        "width": "",
+        "type": "out"
+      }],
       "returnType": "no result",
       "remarks": ""
     },
