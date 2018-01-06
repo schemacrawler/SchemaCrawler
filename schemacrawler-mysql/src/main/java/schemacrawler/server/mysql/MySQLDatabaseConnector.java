@@ -43,7 +43,7 @@ public final class MySQLDatabaseConnector
           "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
           "/mysql.information_schema",
-          "jdbc:mysql:.*");
+          "jdbc:(mysql|mariadb):.*");
   }
 
 }
