@@ -37,10 +37,13 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class SqlScript
   implements Runnable
 {
+
+  private static final boolean debug = false;
 
   private final String scriptName;
   private final Connection connection;
@@ -76,6 +79,14 @@ public class SqlScript
       {
         try (final Statement statement = connection.createStatement();)
         {
+          if (Pattern.matches("\\s+", sql))
+          {
+            continue;
+          }
+          if (debug)
+          {
+            System.out.println(sql);
+          }
           statement.execute(sql);
           connection.commit();
         }

@@ -36,7 +36,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.testdb.SchemaCreator;
+import schemacrawler.testdb.TestSchemaCreator;
 
 public abstract class BaseAdditionalDatabaseTest
   extends BaseExecutableTest
@@ -60,7 +60,7 @@ public abstract class BaseAdditionalDatabaseTest
 
     try (Connection connection = getConnection();)
     {
-      final SchemaCreator schemaCreator = new SchemaCreator(connection,
+      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
                                                             scriptsResource);
       schemaCreator.run();
     }

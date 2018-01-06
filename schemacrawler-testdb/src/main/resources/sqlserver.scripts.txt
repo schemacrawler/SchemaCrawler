@@ -1,5 +1,6 @@
 #/db/books/01_schemas_01_A.sql
 /db/books/01_schemas_01_B.sql
+#/db/books/01_schemas_01_C.sql
 #/db/books/02_types_01_A.sql
 #/db/books/02_types_01_B.sql
 #/db/books/02_types_01_C.sql

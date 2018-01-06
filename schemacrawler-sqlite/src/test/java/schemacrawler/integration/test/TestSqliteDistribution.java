@@ -42,7 +42,7 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.testdb.SchemaCreator;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.options.InfoLevel;
@@ -83,7 +83,7 @@ public class TestSqliteDistribution
       final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
         .normalize().toAbsolutePath();
 
-      SchemaCreator.main(new String[] {
+      TestSchemaCreator.main(new String[] {
                                         "jdbc:sqlite:" + sqliteDbFile,
                                         null,
                                         null,
