@@ -4,12 +4,13 @@
 ## Release 14.18.01 - 2018-01-10
 
 * Ignore MariaDb driver for MySQL if both are on the classpath.
-* Verify support for unnamed primary keys.
+* Verify support for unnamed primary keys and foreign keys.
 * Support unnamed foreign keys.
 * System to build reference schema for most common databases.
 * Tests for unusual data types, user-defined data types, domains and temporary tables.
 * Support for generating SQLite database from scripts.
 * Added tests for ascending and descending columns in indexes.
+* Getting MySQL plugin to support MariaDB as well
 
 <a name="a14.17.05"></a>
 ## Release 14.17.05 - 2017-12-28
