@@ -1,4 +1,4 @@
-SchemaCrawler 14.17.05
+SchemaCrawler 14.18.01
 
 Error: Could not connect to jdbc:sqlite:nodatabase.db, for unspecified user, with properties {}
 

@@ -1,4 +1,4 @@
-SchemaCrawler 14.17.05
+SchemaCrawler 14.18.01
 
 Error: Unknown command <badcommand>: unexpected token: BADCOMMAND
 
