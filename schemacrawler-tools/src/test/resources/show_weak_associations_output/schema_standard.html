@@ -240,7 +240,7 @@ td.section {
 	</tr>
 	<tr>
 		<td class='property_name'>generated on</td>
-		<td class='property_value'>2018-01-01 18:22:32</td>
+		<td class='property_value'>2018-01-06 13:49:03</td>
 	</tr>
 	<tr>
 		<td class='property_name'>database version</td>
@@ -337,7 +337,7 @@ td.section {
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -467,7 +467,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_Z_AUTHOR</td>
+		<td colspan='2' class='name'>Z_FK_AUTHOR</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -479,7 +479,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td colspan='2' class='name'>SYS_FK_10128</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -497,7 +497,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_Z_AUTHOR_10133</td>
+		<td colspan='2' class='name'>SYS_IDX_Z_FK_AUTHOR_10134</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -509,7 +509,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_Y_BOOK_10131</td>
+		<td colspan='2' class='name'>SYS_IDX_SYS_FK_10128_10132</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -639,7 +639,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>FK_Y_BOOK</td>
+		<td colspan='2' class='name'>SYS_FK_10128</td>
 		<td class='description right'>[foreign key, with no action]</td>
 	</tr>
 	<tr>
@@ -1123,7 +1123,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1135,7 +1135,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_ΒΙΒΛΊΑ_10139</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_ΒΙΒΛΊΑ_10140</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1227,7 +1227,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10227</td>
+		<td colspan='2' class='name'>SYS_IDX_PK_CUSTOMERS_10228</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1341,7 +1341,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_SALES_SALESDATA_10241</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_SALES_SALESDATA_10242</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1353,7 +1353,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_FK_SALES_REGIONS_10239</td>
+		<td colspan='2' class='name'>SYS_IDX_FK_SALES_REGIONS_10240</td>
 		<td class='description right'>[non-unique index]</td>
 	</tr>
 	<tr>
@@ -1412,7 +1412,7 @@ along with the latest updated information</td>
 		<td colspan='3'></td>
 	</tr>
 	<tr>
-		<td colspan='2' class='name'>SYS_IDX_UQ_CUSTOMERS_10233</td>
+		<td colspan='2' class='name'>SYS_IDX_UQ_CUSTOMERS_10234</td>
 		<td class='description right'>[unique index]</td>
 	</tr>
 	<tr>
@@ -1429,20 +1429,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13179' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
-
-	<tr>
-		<td class='spacer'></td>
-		<td class='minwidth'>PUBLISHER</td>
-		<td class='minwidth'>CHARACTER VARYING, out</td>
-	</tr>
-</table>
-<p>&#160;</p>
-
-
-
-<table>
-  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1318f' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f13190' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -1460,7 +1447,20 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b0' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='new_publisher_43f1318f' class='caption_name'>PUBLIC.BOOKS.NEW_PUBLISHER</span> <span class='caption_description'>[procedure, no result]</span></caption>
+
+	<tr>
+		<td class='spacer'></td>
+		<td class='minwidth'>PUBLISHER</td>
+		<td class='minwidth'>CHARACTER VARYING, out</td>
+	</tr>
+</table>
+<p>&#160;</p>
+
+
+
+<table>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b1' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>
@@ -1478,7 +1478,7 @@ along with the latest updated information</td>
 
 
 <table>
-  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b1' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
+  <caption style='background-color: #CEE2F2;'><span id='customadd_a370a9b2' class='caption_name'>PUBLIC.BOOKS.CUSTOMADD</span> <span class='caption_description'>[function, does not return a table]</span></caption>
 
 	<tr>
 		<td class='spacer'></td>

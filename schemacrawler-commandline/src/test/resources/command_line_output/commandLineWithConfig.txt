@@ -19,7 +19,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   ID <-- BOOKAUTHORS.BOOKID                                     
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]

@@ -15,7 +15,7 @@ CREATE TABLE Authors
 )
 ;
 
--- Table with unique constraint, and foreign key
+-- Table with unique constraint, and self-referencing foreign key
 CREATE TABLE Books
 (
   Id INTEGER NOT NULL,
@@ -32,12 +32,14 @@ CREATE TABLE Books
 ;
 
 -- Table with a reserved word for a column name
+-- Contains unnamed foreign key
+-- Foreign keys have a different natural and alphabetical sort order
 CREATE TABLE BookAuthors
 (
   BookId INTEGER NOT NULL,
   AuthorId INTEGER NOT NULL,
   SomeData VARCHAR(30),
-  CONSTRAINT FK_Y_Book FOREIGN KEY (BookId) REFERENCES Books (Id),
-  CONSTRAINT FK_Z_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
+  FOREIGN KEY (BookId) REFERENCES Books (Id),
+  CONSTRAINT Z_FK_Author FOREIGN KEY (AuthorId) REFERENCES Authors (Id)
 )
 ;

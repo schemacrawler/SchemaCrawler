@@ -23,7 +23,7 @@ PK_AUTHORS                                                 [primary key]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 
@@ -42,7 +42,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -147,10 +147,10 @@ along with the latest updated information
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 

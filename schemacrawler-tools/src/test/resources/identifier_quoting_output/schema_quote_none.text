@@ -24,7 +24,7 @@ PK_AUTHORS                                                 [primary key]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes
@@ -60,18 +60,18 @@ PUBLIC.BOOKS.BOOKAUTHORS                                         [table]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
   AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
-SYS_IDX_FK_Z_AUTHOR_10133                             [non-unique index]
+SYS_IDX_Z_FK_AUTHOR_10134                             [non-unique index]
   AUTHORID                          ascending                   
 
-SYS_IDX_FK_Y_BOOK_10131                               [non-unique index]
+SYS_IDX_SYS_FK_10128_10132                            [non-unique index]
   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -97,7 +97,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
   ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -222,10 +222,10 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143                    [non-unique index]
+SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
   ΕΚΔΌΤΗΣ                           ascending                   
 
-SYS_IDX_PK_ΒΙΒΛΊΑ_10139                                   [unique index]
+SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
   ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 
@@ -237,13 +237,13 @@ Routines
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
+  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-  NEWPUBLISHER                      CHARACTER VARYING, in       
   PUBLISHER                         CHARACTER VARYING, out      
 
 

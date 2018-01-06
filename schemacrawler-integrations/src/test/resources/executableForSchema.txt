@@ -25,7 +25,7 @@ PK_AUTHORS                                                 [primary key]
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID                              
 
 Indexes
@@ -78,18 +78,18 @@ along with the latest updated information
 
 Foreign Keys
 
-FK_Z_AUTHOR                                [foreign key, with no action]
+Z_FK_AUTHOR                                [foreign key, with no action]
  1  AUTHORID (0..many)--> PUBLIC.BOOKS.AUTHORS.ID                              
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
  1  BOOKID (0..many)--> PUBLIC.BOOKS.BOOKS.ID                              
 
 Indexes
 
-SYS_IDX_FK_Z_AUTHOR_10133                             [non-unique index]
+SYS_IDX_Z_FK_AUTHOR_10134                             [non-unique index]
 2   AUTHORID                          ascending                   
 
-SYS_IDX_FK_Y_BOOK_10131                               [non-unique index]
+SYS_IDX_SYS_FK_10128_10132                            [non-unique index]
 1   BOOKID                            ascending                   
 
 UIDX_BOOKAUTHORS                                          [unique index]
@@ -129,7 +129,7 @@ PK_BOOKS                                                   [primary key]
 
 Foreign Keys
 
-FK_Y_BOOK                                  [foreign key, with no action]
+SYS_FK_10128                               [foreign key, with no action]
  1  ID <--(0..many) PUBLIC.BOOKS.BOOKAUTHORS.BOOKID                              
 
 FK_PREVIOUSEDITION                         [foreign key, with no action]
@@ -283,19 +283,19 @@ FK_ΒΙΒΛΊΑ_PUBLISHERS                       [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10143                    [non-unique index]
+SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
 4   ΕΚΔΌΤΗΣ                           ascending                   
 
-SYS_IDX_PK_ΒΙΒΛΊΑ_10139                                   [unique index]
+SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
 1   ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
 Table Constraints
 
-SYS_CT_10136                                          [check constraint]
-
 SYS_CT_10137                                          [check constraint]
 
 SYS_CT_10138                                          [check constraint]
+
+SYS_CT_10139                                          [check constraint]
 
 
 
@@ -321,22 +321,22 @@ FK_WRITER_JOIN                             [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_JOIN_10201                          [non-unique index]
+SYS_IDX_FK_WRITER_JOIN_10202                          [non-unique index]
 1   WRITERID                          ascending                   
 
-SYS_IDX_PK_EXTRA_PK_10197                                 [unique index]
+SYS_IDX_PK_EXTRA_PK_10198                                 [unique index]
 3   ID                                ascending                   
 
-SYS_IDX_FK_PUBLICATION_JOIN_10203                     [non-unique index]
+SYS_IDX_FK_PUBLICATION_JOIN_10204                     [non-unique index]
 2   PUBLICATIONID                     ascending                   
 
 Table Constraints
 
-SYS_CT_10194                                          [check constraint]
-
 SYS_CT_10195                                          [check constraint]
 
 SYS_CT_10196                                          [check constraint]
+
+SYS_CT_10197                                          [check constraint]
 
 
 
@@ -379,19 +379,19 @@ FK_PUBLICATIONS_WRITER                     [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_PUBLICATIONS_WRITER_10182                  [non-unique index]
+SYS_IDX_FK_PUBLICATIONS_WRITER_10183                  [non-unique index]
 4   WRITERID                          ascending                   
 
-SYS_IDX_PK_PUBLICATIONS_10178                             [unique index]
+SYS_IDX_PK_PUBLICATIONS_10179                             [unique index]
 1   ID                                ascending                   
 
 Table Constraints
 
-SYS_CT_10175                                          [check constraint]
-
 SYS_CT_10176                                          [check constraint]
 
 SYS_CT_10177                                          [check constraint]
+
+SYS_CT_10178                                          [check constraint]
 
 
 
@@ -410,17 +410,17 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_WRITER_10189                               [non-unique index]
+SYS_IDX_FK_WRITER_10190                               [non-unique index]
 2   WRITERID                          ascending                   
 
-SYS_IDX_FK_PUBLICATION_10191                          [non-unique index]
+SYS_IDX_FK_PUBLICATION_10192                          [non-unique index]
 1   PUBLICATIONID                     ascending                   
 
 Table Constraints
 
-SYS_CT_10184                                          [check constraint]
-
 SYS_CT_10185                                          [check constraint]
+
+SYS_CT_10186                                          [check constraint]
 
 
 
@@ -441,17 +441,17 @@ FK_SELFREFERENCE                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_SELFREFERENCE_10207                            [unique index]
+SYS_IDX_PK_SELFREFERENCE_10208                            [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_FK_SELFREFERENCE_10210                        [non-unique index]
+SYS_IDX_FK_SELFREFERENCE_10211                        [non-unique index]
 1   ID                                ascending                   
 
 Table Constraints
 
-SYS_CT_10205                                          [check constraint]
-
 SYS_CT_10206                                          [check constraint]
+
+SYS_CT_10207                                          [check constraint]
 
 
 
@@ -497,10 +497,10 @@ FK_WRITER                                  [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_WRITERS_10168                                  [unique index]
+SYS_IDX_PK_WRITERS_10169                                  [unique index]
 1   ID                                ascending                   
 
-SYS_IDX_FK_WRITERS_PUBLICATION_10213                  [non-unique index]
+SYS_IDX_FK_WRITERS_PUBLICATION_10214                  [non-unique index]
 18  PUBLICATION_ID                    ascending                   
 
 IDX_A1_WRITERS                                        [non-unique index]
@@ -525,8 +525,6 @@ Table Constraints
 
 CHECK_UPPERCASE_STATE                                 [check constraint]
 
-SYS_CT_10163                                          [check constraint]
-
 SYS_CT_10164                                          [check constraint]
 
 SYS_CT_10165                                          [check constraint]
@@ -534,6 +532,8 @@ SYS_CT_10165                                          [check constraint]
 SYS_CT_10166                                          [check constraint]
 
 SYS_CT_10167                                          [check constraint]
+
+SYS_CT_10168                                          [check constraint]
 
 
 
@@ -558,19 +558,19 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_PK_CUSTOMERS_10227                                [unique index]
+SYS_IDX_PK_CUSTOMERS_10228                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
 
 Table Constraints
-
-SYS_CT_10223                                          [check constraint]
 
 SYS_CT_10224                                          [check constraint]
 
 SYS_CT_10225                                          [check constraint]
 
 SYS_CT_10226                                          [check constraint]
+
+SYS_CT_10227                                          [check constraint]
 
 
 
@@ -594,18 +594,18 @@ FK_SALES_REGIONS                           [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_FK_SALES_SALESDATA_10241                      [non-unique index]
+SYS_IDX_FK_SALES_SALESDATA_10242                      [non-unique index]
 6   SALESDATAID                       ascending                   
 
-SYS_IDX_FK_SALES_REGIONS_10239                        [non-unique index]
+SYS_IDX_FK_SALES_REGIONS_10240                        [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
 
 Table Constraints
 
-SYS_CT_10234                                          [check constraint]
-
 SYS_CT_10235                                          [check constraint]
+
+SYS_CT_10236                                          [check constraint]
 
 
 
@@ -621,7 +621,7 @@ FK_SALES_SALESDATA                         [foreign key, with no action]
 
 Indexes
 
-SYS_IDX_UQ_CUSTOMERS_10233                                [unique index]
+SYS_IDX_UQ_CUSTOMERS_10234                                [unique index]
 1   SALESDATAID                       ascending                   
 
 Table Constraints
@@ -637,14 +637,14 @@ Routines
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-1   PUBLISHER                         VARCHAR, out                
+1   NEWPUBLISHER                      VARCHAR, in                 
+2   PUBLISHER                         VARCHAR, out                
 
 
 
 PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
 ------------------------------------------------------------------------
-1   NEWPUBLISHER                      VARCHAR, in                 
-2   PUBLISHER                         VARCHAR, out                
+1   PUBLISHER                         VARCHAR, out                
 
 
 

@@ -37,13 +37,19 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 public class SqlScript
   implements Runnable
 {
 
-  private static final boolean debug = false;
+  private static final Logger LOGGER = Logger
+    .getLogger(SqlScript.class.getName());
+
+  private static final boolean debug = Boolean.valueOf(System
+    .getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
 
   private final String scriptName;
   private final Connection connection;
@@ -85,7 +91,7 @@ public class SqlScript
           }
           if (debug)
           {
-            System.out.println(sql);
+            LOGGER.log(Level.INFO, "\n" + sql);
           }
           statement.execute(sql);
           connection.commit();
