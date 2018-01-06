@@ -107,8 +107,12 @@ public final class TestUtility
                                                .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
                                              Pattern
                                                .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                             // Apache Derby unnamed
+                                             // database objects
                                              Pattern
                                                .compile("SQL\\d+\\s+\\[primary key\\]"),
+                                             Pattern
+                                               .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
                                              // SVG {
                                              Pattern.compile("<svg.*"),
                                              Pattern
