@@ -47,7 +47,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.testdb.SchemaCreator;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
@@ -63,7 +63,7 @@ public class TempTablesTest
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
       .normalize().toAbsolutePath();
 
-    SchemaCreator.main(new String[] {
+    TestSchemaCreator.main(new String[] {
                                       "jdbc:sqlite:" + sqliteDbFile,
                                       null,
                                       null,

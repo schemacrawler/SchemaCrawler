@@ -88,7 +88,7 @@ public class TestDatabase
 
   /**
    * Delete files from the previous run of the database server.
-   * 
+   *
    * @throws IOException
    */
   private static void deleteServerFiles()
@@ -206,8 +206,8 @@ public class TestDatabase
     server.setDatabasePath(0, serverFileStem);
     server.start();
 
-    final SchemaCreator schemaCreator = new SchemaCreator(getConnection(),
-                                                          "/hsqldb.scripts.txt");
+    final TestSchemaCreator schemaCreator = new TestSchemaCreator(getConnection(),
+                                                                  "/hsqldb.scripts.txt");
     schemaCreator.run();
   }
 

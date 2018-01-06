@@ -39,12 +39,14 @@ import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SchemaCreator
+public class TestSchemaCreator
   implements Runnable
 {
 
   private static final Logger LOGGER = Logger
     .getLogger(TestDatabase.class.getName());
+
+  private static final boolean debug = false;
 
   public static void main(final String[] args)
     throws Exception
@@ -57,16 +59,16 @@ public class SchemaCreator
     final Connection connection = DriverManager
       .getConnection(connectionUrl, user, password);
     connection.setAutoCommit(false);
-    final SchemaCreator schemaCreator = new SchemaCreator(connection,
-                                                          scriptsResource);
+    final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
+                                                                  scriptsResource);
     schemaCreator.run();
   }
 
   private final Connection connection;
   private final String scriptsResource;
 
-  public SchemaCreator(final Connection connection,
-                       final String scriptsResource)
+  public TestSchemaCreator(final Connection connection,
+                           final String scriptsResource)
   {
     this.connection = requireNonNull(connection);
     this.scriptsResource = requireNonNull(scriptsResource);
@@ -105,6 +107,10 @@ public class SchemaCreator
         try (final Reader reader = new InputStreamReader(TestDatabase.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
+          if (debug)
+          {
+            System.out.println("Executing: " + scriptResource);
+          }
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,
                                                     reader,
