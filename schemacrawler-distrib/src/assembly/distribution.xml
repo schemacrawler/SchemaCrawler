@@ -200,7 +200,7 @@
       </fileset>
     </copy>
     <java 
-      classname="schemacrawler.testdb.SchemaCreator"
+      classname="schemacrawler.testdb.TestSchemaCreator"
       failonerror="true">
       <arg value="jdbc:sqlite:${main-distribution.staging.dir}/_testdb/sc.db"/>
       <arg value="sa"/>
