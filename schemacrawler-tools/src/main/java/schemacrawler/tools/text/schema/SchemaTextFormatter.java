@@ -834,6 +834,27 @@ final class SchemaTextFormatter
     }
   }
 
+  private void printTableColumnGenerated(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column.isGenerated())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+    formattingHelper.writeDetailRow("", "", "generated");
+  }
+
   private void printTableColumnAutoIncremented(final Column column)
   {
     if (column == null)
@@ -952,6 +973,7 @@ final class SchemaTextFormatter
 
       printTableColumnHidden(column);
       printTableColumnAutoIncremented(column);
+      printTableColumnGenerated(column);
       printTableColumnRemarks(column);
       if (column instanceof DefinedObject)
       {
