@@ -419,6 +419,36 @@ public final class SchemaDotFormatter
     return nodeId;
   }
 
+  private void printTableColumnGenerated(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column.isGenerated())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+
+    final TableRow row = new TableRow(TextOutputFormat.html);
+    if (options.isShowOrdinalNumbers())
+    {
+      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+    }
+    row.add(newTableCell("", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+      .add(newTableCell("generated", Alignment.left, false, Color.white, 1));
+    formattingHelper.append(row.toString()).println();
+  }
+
   private void printTableColumnAutoIncremented(final Column column)
   {
     if (column == null)
@@ -567,6 +597,7 @@ public final class SchemaDotFormatter
 
       printTableColumnHidden(column);
       printTableColumnAutoIncremented(column);
+      printTableColumnGenerated(column);
       printTableColumnRemarks(column);
     }
   }
