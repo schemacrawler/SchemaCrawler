@@ -314,8 +314,12 @@ final class SchemaTextFormatter
                                         colorMap.getColor(table));
     printRemarks(table);
 
-    final List<Column> columns = table.getColumns();
-    printTableColumns(columns, false);
+    printTableColumns(table.getColumns());
+    if (isVerbose)
+    {
+      printTableColumns(new ArrayList<>(table.getHiddenColumns()));
+    }
+
     printPrimaryKey(table.getPrimaryKey());
     printForeignKeys(table);
     if (!isBrief)
@@ -716,7 +720,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(index.getColumns(), true);
+          printTableColumns(index.getColumns());
         }
         printDependantObjectDefinition(index);
       }
@@ -744,7 +748,7 @@ final class SchemaTextFormatter
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printRemarks(primaryKey);
-      printTableColumns(primaryKey.getColumns(), false);
+      printTableColumns(primaryKey.getColumns());
       printDependantObjectDefinition(primaryKey);
     }
   }
@@ -851,6 +855,27 @@ final class SchemaTextFormatter
     formattingHelper.writeDetailRow("", "", "auto-incremented");
   }
 
+  private void printTableColumnHidden(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column.isHidden())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+    formattingHelper.writeDetailRow("", "", "hidden");
+  }
+
   private void printTableColumnRemarks(final Column column)
   {
     if (column == null || !column.hasRemarks() || options.isHideRemarks())
@@ -861,8 +886,7 @@ final class SchemaTextFormatter
       .writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
   }
 
-  private void printTableColumns(final List<? extends Column> columns,
-                                 final boolean showHidden)
+  private void printTableColumns(final List<? extends Column> columns)
   {
     if (columns.isEmpty())
     {
@@ -876,10 +900,6 @@ final class SchemaTextFormatter
 
     for (final Column column: columns)
     {
-      if (!showHidden && column.isHidden())
-      {
-        continue;
-      }
       if (isBrief && !isColumnSignificant(column))
       {
         continue;
@@ -930,6 +950,7 @@ final class SchemaTextFormatter
                                       emphasize,
                                       "");
 
+      printTableColumnHidden(column);
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
       if (column instanceof DefinedObject)
@@ -983,7 +1004,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(constraint.getColumns(), true);
+          printTableColumns(constraint.getColumns());
         }
         printDependantObjectDefinition(constraint);
       }

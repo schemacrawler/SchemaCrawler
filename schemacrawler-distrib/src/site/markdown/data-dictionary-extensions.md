@@ -189,8 +189,12 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 
 ### METADATA_EXTENSION.EXT_HIDDEN_TABLE_COLUMNS
 
-For details on the columns in this view, please refer to [getColumns](https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getColumns-java.lang.String-java.lang.String-java.lang.String-java.lang.String-)
-
+| Column name | Description |
+| --- | --- |
+| TABLE_CATALOG | The name of the catalog containing the table. |
+| TABLE_SCHEMA | The name of the schema containing the table. |
+| TABLE_NAME | The name of the table. |
+| COLUMN_NAME | The name of the hidden column. |
 
 ### METADATA_EXTENSION.EXT_SYNONYMS
 
