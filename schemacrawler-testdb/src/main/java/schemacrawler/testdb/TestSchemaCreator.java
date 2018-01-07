@@ -118,6 +118,11 @@ public class TestSchemaCreator
                                                     delimiter);
           sqlScript.run();
         }
+
+        if (debug)
+        {
+          LOGGER.log(Level.INFO, "Complete");
+        }
       }
     }
     catch (final Exception e)
