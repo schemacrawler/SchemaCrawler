@@ -37,6 +37,7 @@
 /db/books/11_synonyms_01_A.sql
 #/db/books/12_generated_columns_01_A.sql
 /db/books/12_generated_columns_01_B.sql
+#/db/books/12_generated_columns_01_C.sql
 #/db/books/12_hidden_columns_01_A.sql
 /db/books/12_hidden_columns_01_B.sql
 #/db/books/90_data_01_A.sql
