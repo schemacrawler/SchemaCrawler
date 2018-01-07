@@ -321,23 +321,38 @@ final class SchemaJsonFormatter
       jsonTable.put("type", table.getTableType());
       printRemarks(table, jsonTable);
 
+      final List<Column> columns = table.getColumns();
       final JSONArray jsonColumns = new JSONArray();
       jsonTable.put("columns", jsonColumns);
-      final List<Column> columns = table.getColumns();
       Collections.sort(columns,
                        NamedObjectSort.getNamedObjectSort(options
                          .isAlphabeticalSortForTableColumns()));
       for (final Column column: columns)
       {
-        if (column.isHidden())
-        {
-          continue;
-        }
         if (isBrief && !isColumnSignificant(column))
         {
           continue;
         }
         jsonColumns.put(handleTableColumn(column));
+      }
+
+      final List<Column> hiddenColumns = new ArrayList<>(table
+        .getHiddenColumns());
+      if (isVerbose && !hiddenColumns.isEmpty())
+      {
+        final JSONArray jsonHiddenColumns = new JSONArray();
+        jsonTable.put("hiddenColumns", jsonHiddenColumns);
+        Collections.sort(hiddenColumns,
+                         NamedObjectSort.getNamedObjectSort(options
+                           .isAlphabeticalSortForTableColumns()));
+        for (final Column hiddenColumn: hiddenColumns)
+        {
+          if (isBrief && !isColumnSignificant(hiddenColumn))
+          {
+            continue;
+          }
+          jsonHiddenColumns.put(handleTableColumn(hiddenColumn));
+        }
       }
 
       jsonTable.put("primaryKey", handleIndex(table.getPrimaryKey()));

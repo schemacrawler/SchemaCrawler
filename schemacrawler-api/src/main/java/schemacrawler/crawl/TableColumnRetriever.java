@@ -37,7 +37,10 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
@@ -86,6 +89,8 @@ final class TableColumnRetriever
       return;
     }
 
+    final Set<List<String>> hiddenColumns = retrieveHiddenColumns();
+
     final MetadataRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
       .getTableColumnRetrievalStrategy();
     switch (tableColumnRetrievalStrategy)
@@ -94,18 +99,22 @@ final class TableColumnRetriever
         LOGGER
           .log(Level.INFO,
                "Retrieving table columns, using fast data dictionary retrieval");
-        retrieveColumnsFromDataDictionary(allTables, columnFilter);
+        retrieveColumnsFromDataDictionary(allTables,
+                                          columnFilter,
+                                          hiddenColumns);
         break;
 
       case metadata_all:
         LOGGER.log(Level.INFO,
                    "Retrieving table columns, using fast meta-data retrieval");
-        retrieveColumnsFromMetadataForAllTables(allTables, columnFilter);
+        retrieveColumnsFromMetadataForAllTables(allTables,
+                                                columnFilter,
+                                                hiddenColumns);
         break;
 
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
-        retrieveColumnsFromMetadata(allTables, columnFilter);
+        retrieveColumnsFromMetadata(allTables, columnFilter, hiddenColumns);
         break;
 
       default:
@@ -114,55 +123,10 @@ final class TableColumnRetriever
 
   }
 
-  void retrieveHiddenColumns(final NamedObjectList<MutableTable> allTables,
-                             final InclusionRule columnInclusionRule)
-    throws SQLException
-  {
-    requireNonNull(allTables);
-
-    final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                               true);
-    if (columnFilter.isExcludeAll())
-    {
-      LOGGER.log(Level.INFO,
-                 "Not retrieving columns, since this was not requested");
-      return;
-    }
-
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews.hasExtHiddenTableColumnsSql())
-    {
-      LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
-      return;
-    }
-    final Query hiddenColumnsSql = informationSchemaViews
-      .getExtHiddenTableColumnsSql();
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
-    {
-      results.setDescription("retrieveHiddenColumns");
-      while (results.next())
-      {
-        final MutableColumn column = createTableColumn(results,
-                                                       allTables,
-                                                       columnFilter,
-                                                       false);
-        if (column != null)
-        {
-          column.setHidden(true);
-        }
-      }
-    }
-  }
-
   private MutableColumn createTableColumn(final MetadataResultSet results,
                                           final NamedObjectList<MutableTable> allTables,
                                           final InclusionRuleFilter<Column> columnFilter,
-                                          final boolean isHidden)
+                                          final Set<List<String>> hiddenColumns)
     throws SQLException
   {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
@@ -213,10 +177,14 @@ final class TableColumnRetriever
       final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
       final String remarks = results.getString("REMARKS");
 
+      final List<String> lookupKey = Arrays
+        .asList(columnCatalogName, schemaName, tableName, columnName);
+      final boolean isHidden = hiddenColumns.contains(lookupKey);
+
       String columnDataTypeName = null;
       if (!isBlank(typeName))
       {
-        String[] split = typeName.split("\\.");
+        final String[] split = typeName.split("\\.");
         if (split.length > 0)
         {
           columnDataTypeName = split[split.length - 1];
@@ -228,9 +196,10 @@ final class TableColumnRetriever
       }
 
       column.setOrdinalPosition(ordinalPosition);
-      column.setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
-                                                            dataType,
-                                                            columnDataTypeName));
+      column
+        .setColumnDataType(lookupOrCreateColumnDataType(table.getSchema(),
+                                                        dataType,
+                                                        columnDataTypeName));
       column.setSize(size);
       column.setDecimalDigits(decimalDigits);
       column.setNullable(isNullable);
@@ -250,6 +219,7 @@ final class TableColumnRetriever
                                   column.getFullName()));
       if (isHidden)
       {
+        column.setHidden(true);
         table.addHiddenColumn(column);
       }
       else
@@ -279,7 +249,8 @@ final class TableColumnRetriever
   }
 
   private void retrieveColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
-                                                 final InclusionRuleFilter<Column> columnFilter)
+                                                 final InclusionRuleFilter<Column> columnFilter,
+                                                 final Set<List<String>> hiddenColumns)
     throws SchemaCrawlerSQLException, SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
@@ -299,13 +270,14 @@ final class TableColumnRetriever
       results.setDescription("retrieveColumnsFromDataDictionary");
       while (results.next())
       {
-        createTableColumn(results, allTables, columnFilter, false);
+        createTableColumn(results, allTables, columnFilter, hiddenColumns);
       }
     }
   }
 
   private void retrieveColumnsFromMetadata(final NamedObjectList<MutableTable> allTables,
-                                           final InclusionRuleFilter<Column> columnFilter)
+                                           final InclusionRuleFilter<Column> columnFilter,
+                                           final Set<List<String>> hiddenColumns)
     throws SchemaCrawlerSQLException
   {
     for (final MutableTable table: allTables)
@@ -319,7 +291,7 @@ final class TableColumnRetriever
       {
         while (results.next())
         {
-          createTableColumn(results, allTables, columnFilter, false);
+          createTableColumn(results, allTables, columnFilter, hiddenColumns);
         }
       }
       catch (final SQLException e)
@@ -333,7 +305,8 @@ final class TableColumnRetriever
   }
 
   private void retrieveColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
-                                                       final InclusionRuleFilter<Column> columnFilter)
+                                                       final InclusionRuleFilter<Column> columnFilter,
+                                                       final Set<List<String>> hiddenColumns)
     throws SQLException
   {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
@@ -341,9 +314,58 @@ final class TableColumnRetriever
     {
       while (results.next())
       {
-        createTableColumn(results, allTables, columnFilter, false);
+        createTableColumn(results, allTables, columnFilter, hiddenColumns);
       }
     }
+  }
+
+  private Set<List<String>> retrieveHiddenColumns()
+    throws SQLException
+  {
+
+    final Set<List<String>> hiddenColumns = new HashSet<>();
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasExtHiddenTableColumnsSql())
+    {
+      LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
+      return hiddenColumns;
+    }
+    final Query hiddenColumnsSql = informationSchemaViews
+      .getExtHiddenTableColumnsSql();
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrieveHiddenColumns");
+      while (results.next())
+      {
+        // NOTE: The column names in the extension table are different
+        // than the database metadata column names
+        final String catalogName = normalizeCatalogName(results
+          .getString("TABLE_CATALOG"));
+        final String schemaName = normalizeSchemaName(results
+          .getString("TABLE_SCHEMA"));
+        final String tableName = results.getString("TABLE_NAME");
+        final String columnName = results.getString("COLUMN_NAME");
+
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Retrieving hidden column <%s.%s.%s.%s>",
+                                    catalogName,
+                                    schemaName,
+                                    tableName,
+                                    columnName));
+
+        final List<String> lookupKey = Arrays
+          .asList(catalogName, schemaName, tableName, columnName);
+        hiddenColumns.add(lookupKey);
+      }
+    }
+
+    return hiddenColumns;
   }
 
 }

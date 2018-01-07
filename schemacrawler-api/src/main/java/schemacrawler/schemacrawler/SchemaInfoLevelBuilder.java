@@ -65,7 +65,6 @@ public final class SchemaInfoLevelBuilder
     maximum.setRetrieveTableDefinitionsInformation(true);
     maximum.setRetrieveForeignKeyDefinitions(true);
     maximum.setRetrievePrimaryKeyDefinitions(true);
-    maximum.setRetrieveHiddenTableColumns(true);
     maximum.setRetrieveAdditionalTableAttributes(true);
     maximum.setRetrieveAdditionalColumnAttributes(true);
     maximum.setRetrieveIndexInformation(true);

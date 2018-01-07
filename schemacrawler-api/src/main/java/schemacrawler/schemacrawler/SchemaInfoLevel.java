@@ -69,7 +69,6 @@ public final class SchemaInfoLevel
   private boolean retrieveAdditionalTableAttributes;
   private boolean retrieveAdditionalColumnAttributes;
   private boolean retrieveTableDefinitionsInformation;
-  private boolean retrieveHiddenTableColumns;
 
   public String getTag()
   {
@@ -114,11 +113,6 @@ public final class SchemaInfoLevel
   public boolean isRetrieveForeignKeys()
   {
     return retrieveForeignKeys;
-  }
-
-  public boolean isRetrieveHiddenTableColumns()
-  {
-    return retrieveHiddenTableColumns;
   }
 
   public boolean isRetrieveIndexColumnInformation()
@@ -254,11 +248,6 @@ public final class SchemaInfoLevel
   public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
   {
     this.retrieveForeignKeys = retrieveForeignKeys;
-  }
-
-  public void setRetrieveHiddenTableColumns(final boolean retrieveHiddenTableColumns)
-  {
-    this.retrieveHiddenTableColumns = retrieveHiddenTableColumns;
   }
 
   public void setRetrieveIndexColumnInformation(final boolean retrieveIndexColumnInformation)

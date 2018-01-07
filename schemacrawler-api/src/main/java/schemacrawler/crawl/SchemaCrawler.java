@@ -603,11 +603,6 @@ public final class SchemaCrawler
           columnRetriever.retrieveColumns(allTables,
                                           options.getColumnInclusionRule());
         }
-        if (infoLevel.isRetrieveHiddenTableColumns())
-        {
-          columnRetriever
-            .retrieveHiddenColumns(allTables, options.getColumnInclusionRule());
-        }
         return null;
       });
 

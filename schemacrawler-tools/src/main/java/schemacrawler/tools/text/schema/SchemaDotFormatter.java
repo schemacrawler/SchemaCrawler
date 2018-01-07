@@ -33,10 +33,12 @@ import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessa
 import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.BaseForeignKey;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
@@ -70,6 +72,7 @@ public final class SchemaDotFormatter
   implements SchemaTraversalHandler
 {
 
+  private final boolean isVerbose;
   private final boolean isBrief;
 
   /**
@@ -96,6 +99,7 @@ public final class SchemaDotFormatter
           schemaTextDetailType == SchemaTextDetailType.details,
           outputOptions,
           identifierQuoteString);
+    isVerbose = schemaTextDetailType == SchemaTextDetailType.details;
     isBrief = schemaTextDetailType == SchemaTextDetailType.brief;
   }
 
@@ -176,8 +180,11 @@ public final class SchemaDotFormatter
 
     printTableRemarks(table);
 
-    final List<Column> columns = table.getColumns();
-    printTableColumns(columns, false);
+    printTableColumns(table.getColumns());
+    if (isVerbose)
+    {
+      printTableColumns(new ArrayList<>(table.getHiddenColumns()));
+    }
 
     printTableRowCount(table);
 
@@ -414,25 +421,66 @@ public final class SchemaDotFormatter
 
   private void printTableColumnAutoIncremented(final Column column)
   {
-    if (column == null || !column.isAutoIncremented())
+    if (column == null)
     {
       return;
     }
-    final TableRow autoIncrementedRow = new TableRow(TextOutputFormat.html);
+    try
+    {
+      if (!column.isAutoIncremented())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+
+    final TableRow row = new TableRow(TextOutputFormat.html);
     if (options.isShowOrdinalNumbers())
     {
-      autoIncrementedRow
-        .add(newTableCell("", Alignment.right, false, Color.white, 1));
+      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
     }
-    autoIncrementedRow
-      .add(newTableCell("", Alignment.left, false, Color.white, 1))
+    row.add(newTableCell("", Alignment.left, false, Color.white, 1))
       .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
       .add(newTableCell("auto-incremented",
                         Alignment.left,
                         false,
                         Color.white,
                         1));
-    formattingHelper.append(autoIncrementedRow.toString()).println();
+    formattingHelper.append(row.toString()).println();
+  }
+
+  private void printTableColumnHidden(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column.isHidden())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+
+    final TableRow row = new TableRow(TextOutputFormat.html);
+    if (options.isShowOrdinalNumbers())
+    {
+      row.add(newTableCell("", Alignment.right, false, Color.white, 1));
+    }
+    row.add(newTableCell("", Alignment.left, false, Color.white, 1))
+      .add(newTableCell(" ", Alignment.left, false, Color.white, 1))
+      .add(newTableCell("hidden", Alignment.left, false, Color.white, 1));
+    formattingHelper.append(row.toString()).println();
   }
 
   private void printTableColumnRemarks(final Column column)
@@ -453,8 +501,7 @@ public final class SchemaDotFormatter
     formattingHelper.append(remarksRow.toString()).println();
   }
 
-  private void printTableColumns(final List<Column> columns,
-                                 final boolean showHidden)
+  private void printTableColumns(final List<Column> columns)
   {
     if (columns.isEmpty())
     {
@@ -468,10 +515,6 @@ public final class SchemaDotFormatter
 
     for (final Column column: columns)
     {
-      if (!showHidden && column.isHidden())
-      {
-        continue;
-      }
       if (isBrief && !isColumnSignificant(column))
       {
         continue;
@@ -522,6 +565,7 @@ public final class SchemaDotFormatter
       row.lastCell().addAttribute("port", nodeId(column) + ".end");
       formattingHelper.append(row.toString()).println();
 
+      printTableColumnHidden(column);
       printTableColumnAutoIncremented(column);
       printTableColumnRemarks(column);
     }

@@ -11,6 +11,7 @@
 * Support for generating SQLite database from scripts.
 * Added tests for ascending and descending columns in indexes.
 * Getting MySQL plugin to support MariaDB as well
+* Consistent treatment for hidden table columns, with special marking in details output
 
 <a name="a14.17.05"></a>
 ## Release 14.17.05 - 2017-12-28
