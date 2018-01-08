@@ -314,10 +314,10 @@ final class SchemaTextFormatter
                                         colorMap.getColor(table));
     printRemarks(table);
 
-    printTableColumns(table.getColumns());
+    printTableColumns(table.getColumns(), true);
     if (isVerbose)
     {
-      printTableColumns(new ArrayList<>(table.getHiddenColumns()));
+      printTableColumns(new ArrayList<>(table.getHiddenColumns()), true);
     }
 
     printPrimaryKey(table.getPrimaryKey());
@@ -720,7 +720,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(index.getColumns());
+          printTableColumns(index.getColumns(), false);
         }
         printDependantObjectDefinition(index);
       }
@@ -748,7 +748,7 @@ final class SchemaTextFormatter
       }
       formattingHelper.writeNameRow(pkName, "[primary key]");
       printRemarks(primaryKey);
-      printTableColumns(primaryKey.getColumns());
+      printTableColumns(primaryKey.getColumns(), false);
       printDependantObjectDefinition(primaryKey);
     }
   }
@@ -907,7 +907,8 @@ final class SchemaTextFormatter
       .writeDetailRow("", "", column.getRemarks(), true, false, "remarks");
   }
 
-  private void printTableColumns(final List<? extends Column> columns)
+  private void printTableColumns(final List<? extends Column> columns,
+                                 final boolean extraDetails)
   {
     if (columns.isEmpty())
     {
@@ -971,13 +972,17 @@ final class SchemaTextFormatter
                                       emphasize,
                                       "");
 
-      printTableColumnHidden(column);
-      printTableColumnAutoIncremented(column);
-      printTableColumnGenerated(column);
-      printTableColumnRemarks(column);
-      if (column instanceof DefinedObject)
+      if (extraDetails)
       {
-        printDependantObjectDefinition((DefinedObject) column);
+        printTableColumnHidden(column);
+        printTableColumnAutoIncremented(column);
+        printTableColumnGenerated(column);
+        printTableColumnRemarks(column);
+
+        if (column instanceof DefinedObject)
+        {
+          printDependantObjectDefinition((DefinedObject) column);
+        }
       }
     }
   }
@@ -1026,7 +1031,7 @@ final class SchemaTextFormatter
 
         if (!isBrief)
         {
-          printTableColumns(constraint.getColumns());
+          printTableColumns(constraint.getColumns(), false);
         }
         printDependantObjectDefinition(constraint);
       }
