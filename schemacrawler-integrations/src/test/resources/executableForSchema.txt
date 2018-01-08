@@ -249,7 +249,6 @@ Primary Key
 
 SYS_PK_10106                                               [primary key]
 1   ID                                ascending                   
-                                    auto-incremented            
 
 Foreign Keys
 
@@ -260,7 +259,6 @@ Indexes
 
 SYS_IDX_SYS_PK_10106_10107                                [unique index]
 1   ID                                ascending                   
-                                    auto-incremented            
 
 
 
