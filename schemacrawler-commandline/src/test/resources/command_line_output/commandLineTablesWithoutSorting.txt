@@ -99,7 +99,6 @@ Primary Key
 
 SYS_PK_10106                                               [primary key]
   ID                                ascending                   
-                                    auto-incremented            
 
 Foreign Keys
 

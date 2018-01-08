@@ -121,7 +121,6 @@ Primary Key
 
                                                            [primary key]
   ID                                ascending                   
-                                    auto-incremented            
 
 Foreign Keys
 
