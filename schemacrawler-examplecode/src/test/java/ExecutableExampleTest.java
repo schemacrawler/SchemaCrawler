@@ -34,10 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemErrRule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -45,11 +42,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class ExecutableExampleTest
   extends BaseDatabaseTest
 {
-
-  @Rule
-  public final SystemErrRule sysErrLog = new SystemErrRule().enableLog().mute();
-  @Rule
-  public final SystemOutRule sysOutLog = new SystemOutRule().enableLog().mute();
   
   @Test
   public void executableExample()
