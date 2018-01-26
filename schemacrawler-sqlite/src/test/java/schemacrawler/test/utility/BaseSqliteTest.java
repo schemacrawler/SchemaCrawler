@@ -29,12 +29,16 @@ package schemacrawler.test.utility;
 
 
 import static schemacrawler.test.utility.TestUtility.readerForResource;
+import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.logging.Level;
 
 import javax.sql.DataSource;
+
+import org.junit.BeforeClass;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -48,6 +52,13 @@ import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
 {
+
+  @BeforeClass
+  public static void setApplicationLogLevel()
+    throws Exception
+  {
+    applyApplicationLogLevel(Level.OFF);
+  }
 
   protected DataSource createDataSource(final Path sqliteDbFile)
     throws SchemaCrawlerException
