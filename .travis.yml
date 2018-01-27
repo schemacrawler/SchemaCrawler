@@ -41,6 +41,6 @@ deploy:
       repo: sualeh/SchemaCrawler
       branch: master
       tags: true
-    local_dir: "../schemacrawler-distrib/target/_website"
+    local_dir: "$HOME/build/sualeh/SchemaCrawler/../schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
