@@ -12,7 +12,7 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <properties>
-    <springframework.version>5.0.2.RELEASE</springframework.version>
+    <springframework.version>5.0.3.RELEASE</springframework.version>
   </properties>
   <dependencies>
     <dependency>

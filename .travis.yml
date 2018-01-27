@@ -36,6 +36,7 @@ deploy:
   - provider: pages
     github_token: $GITHUB_TOKEN
     skip_cleanup: true
+    keep-history: true
     on:
       repo: sualeh/SchemaCrawler
       branch: master
