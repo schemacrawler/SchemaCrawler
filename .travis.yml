@@ -21,7 +21,8 @@ addons:
     packages:
       - graphviz
 script:
-  - cd "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-parent"
+  - cd "./schemacrawler-parent"
+  - echo $SC_BUILD_DIR
   - mvn -Dcomplete clean package jacoco:report coveralls:report
 before_deploy:
   - git fetch --tags
@@ -35,7 +36,7 @@ deploy:
       repo: sualeh/SchemaCrawler
       branch: master
       tags: true
-    local_dir: "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/_website"
+    local_dir: "../schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
   - provider: releases
@@ -47,4 +48,4 @@ deploy:
       branch: master
       tags: true
     file_glob: true
-    file: "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+    file: "../schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
