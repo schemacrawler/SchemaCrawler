@@ -21,7 +21,6 @@ script:
   - cd ./schemacrawler-parent
   - mvn -Dcomplete clean package jacoco:report coveralls:report
 before_deploy:
-  - cd ..
   - git fetch --tags
 deploy:
   - provider: pages
@@ -33,7 +32,7 @@ deploy:
       repo: sualeh/SchemaCrawler
       branch: master
       tags: true
-    local_dir: "./schemacrawler-distrib/target/_website"
+    local_dir: "../schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
   - provider: releases
@@ -45,4 +44,4 @@ deploy:
       branch: master
       tags: true
     file_glob: true
-    file: "./schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+    file: "../schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
