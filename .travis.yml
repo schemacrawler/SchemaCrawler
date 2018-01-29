@@ -9,6 +9,9 @@ notifications:
     - change
   on_failure:
     - change
+env:
+  global:
+    - SC_BUILD_DIR=`pwd`
 cache:
   directories:
     - .autoconf
@@ -18,7 +21,7 @@ addons:
     packages:
       - graphviz
 script:
-  - cd "$TRAVIS_BUILD_DIR/SchemaCrawler/schemacrawler-parent"
+  - cd "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-parent"
   - mvn -Dcomplete clean package jacoco:report coveralls:report
 before_deploy:
   - git fetch --tags
@@ -32,7 +35,7 @@ deploy:
       repo: sualeh/SchemaCrawler
       branch: master
       tags: true
-    local_dir: "$TRAVIS_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/_website"
+    local_dir: "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
   - provider: releases
@@ -44,4 +47,4 @@ deploy:
       branch: master
       tags: true
     file_glob: true
-    file: "$TRAVIS_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+    file: "$SC_BUILD_DIR/SchemaCrawler/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
