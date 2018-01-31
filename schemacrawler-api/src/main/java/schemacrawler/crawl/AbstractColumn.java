@@ -54,6 +54,15 @@ abstract class AbstractColumn<P extends DatabaseObject>
   private int decimalDigits;
   private boolean nullable;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param parent
+   *        Parent of this object
+   * @param name
+   *        Name of the named object
+   */
   AbstractColumn(final DatabaseObjectReference<P> parent, final String name)
   {
     super(parent, name);
@@ -63,7 +72,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
    * {@inheritDoc}
    */
   @Override
-  public int compareTo(final NamedObject obj)
+  public final int compareTo(final NamedObject obj)
   {
     if (obj == null)
     {
@@ -178,7 +187,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
     return nullable;
   }
 
-  void setColumnDataType(final ColumnDataType columnDataType)
+  final void setColumnDataType(final ColumnDataType columnDataType)
   {
     this.columnDataType = columnDataType;
   }

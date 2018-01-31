@@ -53,6 +53,15 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
 
   private final DatabaseObjectReference<D> parent;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param parent
+   *        Parent of this object
+   * @param name
+   *        Name of the named object
+   */
   AbstractDependantObject(final DatabaseObjectReference<D> parent,
                           final String name)
   {
@@ -65,7 +74,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
    * {@inheritDoc}
    */
   @Override
-  public boolean equals(final Object obj)
+  public final boolean equals(final Object obj)
   {
     if (!super.equals(obj))
     {
@@ -98,7 +107,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
    * {@inheritDoc}
    */
   @Override
-  public String getFullName()
+  public final String getFullName()
   {
     return Identifiers.STANDARD.quoteFullName(this);
   }
@@ -128,7 +137,7 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
    * {@inheritDoc}
    */
   @Override
-  public int hashCode()
+  public final int hashCode()
   {
     final int prime = 31;
     int result = super.hashCode();
@@ -138,13 +147,13 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
   }
 
   @Override
-  public boolean isParentPartial()
+  public final boolean isParentPartial()
   {
     return parent.isPartialDatabaseObjectReference();
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
+  public final List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(parent.get()

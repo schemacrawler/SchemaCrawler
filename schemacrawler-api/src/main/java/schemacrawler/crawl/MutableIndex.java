@@ -79,7 +79,7 @@ class MutableIndex
    * </p>
    */
   @Override
-  public int compareTo(final NamedObject obj)
+  public final int compareTo(final NamedObject obj)
   {
     if (obj == null || !(obj instanceof Index))
     {
@@ -132,7 +132,7 @@ class MutableIndex
    * {@inheritDoc}
    */
   @Override
-  public List<IndexColumn> getColumns()
+  public final List<IndexColumn> getColumns()
   {
     return new ArrayList<IndexColumn>(columns.values());
   }
@@ -141,7 +141,7 @@ class MutableIndex
    * {@inheritDoc}
    */
   @Override
-  public String getDefinition()
+  public final String getDefinition()
   {
     return definition.toString();
   }
@@ -174,7 +174,7 @@ class MutableIndex
   }
 
   @Override
-  public boolean hasDefinition()
+  public final boolean hasDefinition()
   {
     return definition.length() > 0;
   }
@@ -189,7 +189,7 @@ class MutableIndex
   }
 
   @Override
-  public Iterator<IndexColumn> iterator()
+  public final Iterator<IndexColumn> iterator()
   {
     return getColumns().iterator();
   }
@@ -198,17 +198,17 @@ class MutableIndex
    * {@inheritDoc}
    */
   @Override
-  public Optional<MutableIndexColumn> lookupColumn(final String name)
+  public final Optional<MutableIndexColumn> lookupColumn(final String name)
   {
     return columns.lookup(this, name);
   }
 
-  void addColumn(final MutableIndexColumn column)
+  final void addColumn(final MutableIndexColumn column)
   {
     columns.add(column);
   }
 
-  void appendDefinition(final String definition)
+  final void appendDefinition(final String definition)
   {
     if (definition != null)
     {

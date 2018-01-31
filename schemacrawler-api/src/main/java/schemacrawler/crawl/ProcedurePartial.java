@@ -37,6 +37,7 @@ import java.util.Optional;
 import schemacrawler.schema.Procedure;
 import schemacrawler.schema.ProcedureColumn;
 import schemacrawler.schema.ProcedureReturnType;
+import schemacrawler.schema.RoutineType;
 
 final class ProcedurePartial
   extends RoutinePartial
@@ -55,6 +56,12 @@ final class ProcedurePartial
   public List<ProcedureColumn> getColumns()
   {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.procedure;
   }
 
   @Override

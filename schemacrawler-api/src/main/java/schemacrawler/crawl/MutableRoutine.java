@@ -54,6 +54,15 @@ abstract class MutableRoutine
   private RoutineBodyType routineBodyType;
   private final StringBuilder definition;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param schema
+   *        Schema of this object
+   * @param name
+   *        Name of the named object
+   */
   MutableRoutine(final Schema schema, final String name)
   {
     super(schema, name);
@@ -65,7 +74,7 @@ abstract class MutableRoutine
    * {@inheritDoc}
    */
   @Override
-  public String getDefinition()
+  public final String getDefinition()
   {
     return definition.toString();
   }
@@ -74,13 +83,13 @@ abstract class MutableRoutine
    * {@inheritDoc}
    */
   @Override
-  public RoutineBodyType getRoutineBodyType()
+  public final RoutineBodyType getRoutineBodyType()
   {
     return routineBodyType;
   }
 
   @Override
-  public String getSpecificName()
+  public final String getSpecificName()
   {
     return specificName;
   }
@@ -95,13 +104,13 @@ abstract class MutableRoutine
   }
 
   @Override
-  public boolean hasDefinition()
+  public final boolean hasDefinition()
   {
     return definition.length() > 0;
   }
 
   @Override
-  public List<String> toUniqueLookupKey()
+  public final List<String> toUniqueLookupKey()
   {
     // Make a defensive copy
     final List<String> lookupKey = new ArrayList<>(super.toUniqueLookupKey());
@@ -109,7 +118,7 @@ abstract class MutableRoutine
     return lookupKey;
   }
 
-  void appendDefinition(final String definition)
+  final void appendDefinition(final String definition)
   {
     if (definition != null)
     {
@@ -117,12 +126,12 @@ abstract class MutableRoutine
     }
   }
 
-  void setRoutineBodyType(final RoutineBodyType routineBodyType)
+  final void setRoutineBodyType(final RoutineBodyType routineBodyType)
   {
     this.routineBodyType = routineBodyType;
   }
 
-  void setSpecificName(final String specificName)
+  final void setSpecificName(final String specificName)
   {
     this.specificName = specificName;
   }
