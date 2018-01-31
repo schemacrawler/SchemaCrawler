@@ -54,6 +54,15 @@ abstract class AbstractDatabaseObject
 
   private final Schema schema;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param schema
+   *        Schema of this object
+   * @param name
+   *        Name of the named object
+   */
   AbstractDatabaseObject(final Schema schema, final String name)
   {
     super(name);

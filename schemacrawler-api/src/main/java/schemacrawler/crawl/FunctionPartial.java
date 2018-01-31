@@ -37,6 +37,7 @@ import java.util.Optional;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
 import schemacrawler.schema.FunctionReturnType;
+import schemacrawler.schema.RoutineType;
 
 final class FunctionPartial
   extends RoutinePartial
@@ -55,6 +56,12 @@ final class FunctionPartial
   public List<FunctionColumn> getColumns()
   {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.function;
   }
 
   @Override

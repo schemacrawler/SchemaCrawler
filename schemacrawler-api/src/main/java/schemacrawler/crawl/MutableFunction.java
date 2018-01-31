@@ -38,7 +38,6 @@ import java.util.Optional;
 import schemacrawler.schema.Function;
 import schemacrawler.schema.FunctionColumn;
 import schemacrawler.schema.FunctionReturnType;
-import schemacrawler.schema.RoutineBodyType;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
 
@@ -57,14 +56,12 @@ final class MutableFunction
 
   private FunctionReturnType returnType;
   private final NamedObjectList<MutableFunctionColumn> columns = new NamedObjectList<>();
-  private RoutineBodyType routineBodyType;
 
   MutableFunction(final Schema schema, final String name)
   {
     super(schema, name);
     // Default values
     returnType = FunctionReturnType.unknown;
-    routineBodyType = RoutineBodyType.unknown;
   }
 
   /**
@@ -83,15 +80,6 @@ final class MutableFunction
   public FunctionReturnType getReturnType()
   {
     return returnType;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public RoutineBodyType getRoutineBodyType()
-  {
-    return routineBodyType;
   }
 
   @Override
@@ -117,12 +105,6 @@ final class MutableFunction
   void setReturnType(final FunctionReturnType returnType)
   {
     this.returnType = requireNonNull(returnType, "Null function return type");
-  }
-
-  @Override
-  void setRoutineBodyType(final RoutineBodyType routineBodyType)
-  {
-    this.routineBodyType = routineBodyType;
   }
 
 }

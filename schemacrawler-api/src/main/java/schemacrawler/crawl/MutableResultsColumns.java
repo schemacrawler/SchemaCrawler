@@ -42,7 +42,7 @@ import schemacrawler.schema.ResultsColumns;
  *
  * @author Sualeh Fatehi
  */
-class MutableResultsColumns
+final class MutableResultsColumns
   extends AbstractNamedObject
   implements ResultsColumns
 {

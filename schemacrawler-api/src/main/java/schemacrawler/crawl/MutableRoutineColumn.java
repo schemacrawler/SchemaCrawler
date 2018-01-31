@@ -45,6 +45,15 @@ abstract class MutableRoutineColumn<R extends Routine>
 
   private static final long serialVersionUID = 3546361725629772857L;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param parent
+   *        Parent of this object
+   * @param name
+   *        Name of the named object
+   */
   MutableRoutineColumn(final DatabaseObjectReference<R> parent,
                        final String name)
   {
@@ -55,12 +64,12 @@ abstract class MutableRoutineColumn<R extends Routine>
    * {@inheritDoc}
    */
   @Override
-  public int getPrecision()
+  public final int getPrecision()
   {
     return getDecimalDigits();
   }
 
-  void setPrecision(final int precision)
+  final void setPrecision(final int precision)
   {
     setDecimalDigits(precision);
   }

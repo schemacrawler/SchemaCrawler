@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineBodyType;
@@ -44,50 +42,49 @@ abstract class RoutinePartial
 
   private static final long serialVersionUID = 1508498300413360531L;
 
-  RoutinePartial(final Routine routine)
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param schema
+   *        Schema of this object
+   * @param name
+   *        Name of the named object
+   */
+  RoutinePartial(final Schema schema, final String name)
   {
-    this(requireNonNull(routine, "No routine provided").getSchema(),
-         routine.getName());
-    addAttributes(routine.getAttributes());
-  }
-
-  RoutinePartial(final Schema schema, final String tableName)
-  {
-    super(schema, tableName);
+    super(schema, name);
   }
 
   @Override
-  public String getDefinition()
+  public final String getDefinition()
   {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public RoutineBodyType getRoutineBodyType()
+  public final RoutineBodyType getRoutineBodyType()
   {
     throw new NotLoadedException(this);
   }
 
   @Override
-  public RoutineType getRoutineType()
+  public final String getSpecificName()
   {
     throw new NotLoadedException(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public String getSpecificName()
+  public final RoutineType getType()
   {
-    throw new NotLoadedException(this);
+    return getRoutineType();
   }
 
   @Override
-  public RoutineType getType()
-  {
-    throw new NotLoadedException(this);
-  }
-
-  @Override
-  public boolean hasDefinition()
+  public final boolean hasDefinition()
   {
     throw new NotLoadedException(this);
   }

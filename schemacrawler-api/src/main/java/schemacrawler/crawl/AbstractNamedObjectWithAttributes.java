@@ -54,6 +54,13 @@ abstract class AbstractNamedObjectWithAttributes
   private String remarks;
   private final Map<String, Object> attributeMap;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param name
+   *        Name of the named object
+   */
   AbstractNamedObjectWithAttributes(final String name)
   {
     super(name);
@@ -115,7 +122,7 @@ abstract class AbstractNamedObjectWithAttributes
    * {@inheritDoc}
    */
   @Override
-  public boolean hasAttribute(final String name)
+  public final boolean hasAttribute(final String name)
   {
     return attributeMap.containsKey(name);
   }

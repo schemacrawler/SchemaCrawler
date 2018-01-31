@@ -49,6 +49,13 @@ abstract class AbstractNamedObject
 
   private final String name;
 
+  /**
+   * Effective Java - Item 17 - Minimize Mutability - Package-private
+   * constructors make a class effectively final
+   * 
+   * @param name
+   *        Name of the named object
+   */
   AbstractNamedObject(final String name)
   {
     this.name = name;
