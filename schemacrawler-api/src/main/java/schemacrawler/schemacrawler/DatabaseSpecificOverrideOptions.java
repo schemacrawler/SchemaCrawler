@@ -49,6 +49,8 @@ public final class DatabaseSpecificOverrideOptions
   private final MetadataRetrievalStrategy pkRetrievalStrategy;
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
+  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private final MetadataRetrievalStrategy functionRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
@@ -69,6 +71,8 @@ public final class DatabaseSpecificOverrideOptions
     pkRetrievalStrategy = bldr.getPrimaryKeyRetrievalStrategy();
     indexRetrievalStrategy = bldr.getIndexRetrievalStrategy();
     fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
+    procedureRetrievalStrategy = bldr.getProcedureRetrievalStrategy();
+    functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();
     informationSchemaViews = bldr.getInformationSchemaViewsBuilder()
       .toOptions();
@@ -84,9 +88,19 @@ public final class DatabaseSpecificOverrideOptions
     }
   }
 
+  public MetadataRetrievalStrategy getFkRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
+  }
+
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
+  {
+    return functionRetrievalStrategy;
   }
 
   public String getIdentifierQuoteString()
@@ -108,9 +122,19 @@ public final class DatabaseSpecificOverrideOptions
     return informationSchemaViews;
   }
 
+  public MetadataRetrievalStrategy getPkRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
+  }
+
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
     return pkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
+  {
+    return procedureRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()

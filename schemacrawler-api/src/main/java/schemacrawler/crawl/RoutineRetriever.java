@@ -35,6 +35,7 @@ import static sf.util.Utility.isBlank;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 
@@ -163,11 +164,11 @@ final class RoutineRetriever
 
   }
 
-  void retrieveFunctions(final Schema schema,
+  void retrieveFunctions(final NamedObjectList<SchemaReference> schemas,
                          final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    requireNonNull(schema, "No schema provided");
+    requireNonNull(schemas);
 
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                    false);
@@ -178,65 +179,30 @@ final class RoutineRetriever
       return;
     }
 
-    final Optional<SchemaReference> schemaOptional = catalog
-      .lookupSchema(schema.getFullName());
-    if (!schemaOptional.isPresent())
+    final MetadataRetrievalStrategy functionRetrievalStrategy = getRetrieverConnection()
+      .getFunctionRetrievalStrategy();
+    switch (functionRetrievalStrategy)
     {
-      LOGGER
-        .log(Level.INFO,
-             new StringFormat("Cannot locate schema, so not retrieving functions for schema: %s",
-                              schema));
-      return;
-    }
+      case data_dictionary_all:
+        LOGGER
+          .log(Level.INFO,
+               "Retrieving functions, using fast data dictionary retrieval");
+        retrieveFunctionsFromDataDictionary(schemas, functionFilter);
+        break;
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Retrieving functions for schema: %s", schema));
+      case metadata_all:
+        LOGGER.log(Level.INFO,
+                   "Retrieving functions, using fast meta-data retrieval");
+        retrieveFunctionsFromMetadataForAllFunctions(schemas, functionFilter);
+        break;
 
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving functions");
+        retrieveFunctionsFromMetadata(schemas, functionFilter);
+        break;
 
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctions(catalogName, schemaName, "%"));)
-    {
-      while (results.next())
-      {
-        // "FUNCTION_CAT", "FUNCTION_SCHEM"
-        final String functionName = results.getString("FUNCTION_NAME");
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Retrieving function: %s.%s",
-                                    schema,
-                                    functionName));
-        if (isBlank(functionName))
-        {
-          continue;
-        }
-        final FunctionReturnType functionType = results
-          .getEnumFromShortId("FUNCTION_TYPE", FunctionReturnType.unknown);
-        final String remarks = results.getString("REMARKS");
-        final String specificName = results.getString("SPECIFIC_NAME");
-
-        final MutableFunction function = new MutableFunction(schema,
-                                                             functionName);
-        if (functionFilter.test(function))
-        {
-          function.setReturnType(functionType);
-          function.setSpecificName(specificName);
-          function.setRemarks(remarks);
-          function.addAttributes(results.getAttributes());
-
-          catalog.addRoutine(function);
-        }
-      }
-    }
-    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
-    {
-      logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"),
-                                e);
-    }
-    catch (final SQLException e)
-    {
-      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"),
-                                       e);
+      default:
+        break;
     }
 
   }
@@ -323,11 +289,11 @@ final class RoutineRetriever
 
   }
 
-  void retrieveProcedures(final Schema schema,
+  void retrieveProcedures(final NamedObjectList<SchemaReference> schemas,
                           final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    requireNonNull(schema, "No schema provided");
+    requireNonNull(schemas);
 
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                      false);
@@ -338,59 +304,238 @@ final class RoutineRetriever
       return;
     }
 
-    final Optional<SchemaReference> schemaOptional = catalog
-      .lookupSchema(schema.getFullName());
-    if (!schemaOptional.isPresent())
+    final MetadataRetrievalStrategy procedureRetrievalStrategy = getRetrieverConnection()
+      .getProcedureRetrievalStrategy();
+    switch (procedureRetrievalStrategy)
     {
-      LOGGER
-        .log(Level.INFO,
-             new StringFormat("Cannot locate schema, so not retrieving procedures for schema: %s",
-                              schema));
+      case data_dictionary_all:
+        LOGGER
+          .log(Level.INFO,
+               "Retrieving procedures, using fast data dictionary retrieval");
+        retrieveProceduresFromDataDictionary(schemas, procedureFilter);
+        break;
+
+      case metadata_all:
+        LOGGER.log(Level.INFO,
+                   "Retrieving procedures, using fast meta-data retrieval");
+        retrieveProceduresFromMetadataForAllProcedures(schemas,
+                                                       procedureFilter);
+        break;
+
+      case metadata:
+        LOGGER.log(Level.INFO, "Retrieving procedures");
+        retrieveProceduresFromMetadata(schemas, procedureFilter);
+        break;
+
+      default:
+        break;
+    }
+
+  }
+
+  private void createFunction(final MetadataResultSet results,
+                              final NamedObjectList<SchemaReference> schemas,
+                              final InclusionRuleFilter<Function> functionFilter)
+  {
+    final String catalogName = normalizeCatalogName(results
+      .getString("FUNCTION_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("FUNCTION_SCHEM"));
+    final String functionName = results.getString("FUNCTION_NAME");
+    LOGGER.log(Level.FINE,
+               new StringFormat("Retrieving function <%s.%s.%s>",
+                                catalogName,
+                                schemaName,
+                                functionName));
+
+    if (isBlank(functionName))
+    {
       return;
     }
 
+    final FunctionReturnType functionType = results
+      .getEnumFromShortId("FUNCTION_TYPE", FunctionReturnType.unknown);
+    final String remarks = results.getString("REMARKS");
+    final String specificName = results.getString("SPECIFIC_NAME");
+
+    final Optional<SchemaReference> optionalSchema = schemas
+      .lookup(Arrays.asList(catalogName, schemaName));
+    if (!optionalSchema.isPresent())
+    {
+      return;
+    }
+    final Schema schema = optionalSchema.get();
+
+    final MutableFunction function = new MutableFunction(schema, functionName);
+    if (functionFilter.test(function))
+    {
+      function.setReturnType(functionType);
+      function.setSpecificName(specificName);
+      function.setRemarks(remarks);
+      function.addAttributes(results.getAttributes());
+
+      catalog.addRoutine(function);
+    }
+  }
+
+  private void createProcedure(final MetadataResultSet results,
+                               final NamedObjectList<SchemaReference> schemas,
+                               final InclusionRuleFilter<Procedure> procedureFilter)
+  {
+    final String catalogName = normalizeCatalogName(results
+      .getString("PROCEDURE_CAT"));
+    final String schemaName = normalizeSchemaName(results
+      .getString("PROCEDURE_SCHEM"));
+    final String procedureName = results.getString("PROCEDURE_NAME");
+    LOGGER.log(Level.FINE,
+               new StringFormat("Retrieving procedure <%s.%s.%s>",
+                                catalogName,
+                                schemaName,
+                                procedureName));
+    if (isBlank(procedureName))
+    {
+      return;
+    }
+    final ProcedureReturnType procedureType = results
+      .getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
+    final String remarks = results.getString("REMARKS");
+    final String specificName = results.getString("SPECIFIC_NAME");
+
+    final Optional<SchemaReference> optionalSchema = schemas
+      .lookup(Arrays.asList(catalogName, schemaName));
+    if (!optionalSchema.isPresent())
+    {
+      return;
+    }
+    final Schema schema = optionalSchema.get();
+
+    final MutableProcedure procedure = new MutableProcedure(schema,
+                                                            procedureName);
+    if (procedureFilter.test(procedure))
+    {
+      procedure.setReturnType(procedureType);
+      procedure.setSpecificName(specificName);
+      procedure.setRemarks(remarks);
+      procedure.addAttributes(results.getAttributes());
+
+      catalog.addRoutine(procedure);
+    }
+  }
+
+  private void retrieveFunctionsFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
+                                                   final InclusionRuleFilter<Function> functionFilter)
+  {
     LOGGER
-      .log(Level.INFO,
-           new StringFormat("Retrieving procedures for schema: %s", schema));
+      .log(Level.CONFIG,
+           "Not retrieving functions, since retrieval from data dictionary is not supported");
+  }
 
-    final String catalogName = schema.getCatalogName();
-    final String schemaName = schema.getName();
+  private void retrieveFunctionsFromMetadata(final NamedObjectList<SchemaReference> schemas,
+                                             final InclusionRuleFilter<Function> functionFilter)
+  {
+    for (final Schema schema: schemas)
+    {
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Retrieving functions for schema <%s>", schema));
 
+      final String catalogName = schema.getCatalogName();
+      final String schemaName = schema.getName();
+
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getFunctions(catalogName, schemaName, "%"));)
+      {
+        results.setDescription("retrieveFunctions");
+        while (results.next())
+        {
+          createFunction(results, schemas, functionFilter);
+        }
+      }
+      catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
+      {
+        logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"),
+                                  e);
+      }
+      catch (final SQLException e)
+      {
+        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"),
+                                         e);
+      }
+    }
+  }
+
+  private void retrieveFunctionsFromMetadataForAllFunctions(final NamedObjectList<SchemaReference> schemas,
+                                                            final InclusionRuleFilter<Function> functionFilter)
+    throws SQLException
+  {
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedures(catalogName, schemaName, "%"));)
+      .getFunctions(null, null, "%"));)
+    {
+      results.setDescription("retrieveFunctions");
+      while (results.next())
+      {
+        createFunction(results, schemas, functionFilter);
+      }
+    }
+    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
+    {
+      logSQLFeatureNotSupported(new StringFormat("Could not retrieve functions"),
+                                e);
+    }
+    catch (final SQLException e)
+    {
+      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve functions"),
+                                       e);
+    }
+  }
+
+  private void retrieveProceduresFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
+                                                    final InclusionRuleFilter<Procedure> procedureFilter)
+  {
+    LOGGER
+      .log(Level.CONFIG,
+           "Not retrieving procedures, since retrieval from the data dictionary is not supported");
+
+  }
+
+  private void retrieveProceduresFromMetadata(final NamedObjectList<SchemaReference> schemas,
+                                              final InclusionRuleFilter<Procedure> procedureFilter)
+    throws SQLException
+  {
+    for (final Schema schema: schemas)
+    {
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Retrieving procedures for schema <%s>", schema));
+
+      final String catalogName = schema.getCatalogName();
+      final String schemaName = schema.getName();
+
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getProcedures(catalogName, schemaName, "%"));)
+      {
+        results.setDescription("retrieveProcedures");
+        while (results.next())
+        {
+          createProcedure(results, schemas, procedureFilter);
+        }
+      }
+    }
+  }
+
+  private void retrieveProceduresFromMetadataForAllProcedures(final NamedObjectList<SchemaReference> schemas,
+                                                              final InclusionRuleFilter<Procedure> procedureFilter)
+    throws SQLException
+  {
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getProcedures(null, null, "%"));)
     {
       results.setDescription("retrieveProcedures");
       while (results.next())
       {
-        // "PROCEDURE_CAT", "PROCEDURE_SCHEM"
-        final String procedureName = results.getString("PROCEDURE_NAME");
-        LOGGER.log(Level.FINE,
-                   new StringFormat("Retrieving procedure: %s.%s",
-                                    schema,
-                                    procedureName));
-        if (isBlank(procedureName))
-        {
-          continue;
-        }
-        final ProcedureReturnType procedureType = results
-          .getEnumFromShortId("PROCEDURE_TYPE", ProcedureReturnType.unknown);
-        final String remarks = results.getString("REMARKS");
-        final String specificName = results.getString("SPECIFIC_NAME");
-
-        final MutableProcedure procedure = new MutableProcedure(schema,
-                                                                procedureName);
-        if (procedureFilter.test(procedure))
-        {
-          procedure.setReturnType(procedureType);
-          procedure.setSpecificName(specificName);
-          procedure.setRemarks(remarks);
-          procedure.addAttributes(results.getAttributes());
-
-          catalog.addRoutine(procedure);
-        }
+        createProcedure(results, schemas, procedureFilter);
       }
     }
-
   }
 
 }

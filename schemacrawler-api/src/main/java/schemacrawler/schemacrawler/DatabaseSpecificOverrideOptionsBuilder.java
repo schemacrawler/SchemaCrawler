@@ -43,6 +43,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
   private static final String SC_RETRIEVAL_PRIMARY_KEYS = "schemacrawler.schema.retrieval.strategy.primarykeys";
   private static final String SC_RETRIEVAL_INDEXES = "schemacrawler.schema.retrieval.strategy.indexes";
   private static final String SC_RETRIEVAL_FOREIGN_KEYS = "schemacrawler.schema.retrieval.strategy.foreignkeys";
+  private static final String SC_RETRIEVAL_PROCEDURES = "schemacrawler.schema.retrieval.strategy.procedures";
+  private static final String SC_RETRIEVAL_FUNCTIONS = "schemacrawler.schema.retrieval.strategy.functions";
 
   private Optional<Boolean> supportsSchemas;
   private Optional<Boolean> supportsCatalogs;
@@ -51,6 +53,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
   private MetadataRetrievalStrategy pkRetrievalStrategy;
   private MetadataRetrievalStrategy indexRetrievalStrategy;
   private MetadataRetrievalStrategy fkRetrievalStrategy;
+  private MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private MetadataRetrievalStrategy functionRetrievalStrategy;
   private String identifierQuoteString;
   private Map<String, Class<?>> typeMap;
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
@@ -66,6 +70,8 @@ public class DatabaseSpecificOverrideOptionsBuilder
     pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     typeMap = null;
   }
 
@@ -122,13 +128,27 @@ public class DatabaseSpecificOverrideOptionsBuilder
       .getEnumValue(SC_RETRIEVAL_INDEXES, indexRetrievalStrategy);
     fkRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
+    procedureRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_PROCEDURES, procedureRetrievalStrategy);
+    functionRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_FUNCTIONS, functionRetrievalStrategy);
 
     return this;
+  }
+
+  public MetadataRetrievalStrategy getFkRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
+  {
+    return functionRetrievalStrategy;
   }
 
   public String getIdentifierQuoteString()
@@ -146,9 +166,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return informationSchemaViewsBuilder;
   }
 
+  public MetadataRetrievalStrategy getPkRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
+  }
+
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
     return pkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
+  {
+    return procedureRetrievalStrategy;
   }
 
   public Optional<Boolean> getSupportsCatalogs()
@@ -234,6 +264,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
+  public DatabaseSpecificOverrideOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy functionRetrievalStrategy)
+  {
+    if (functionRetrievalStrategy == null)
+    {
+      this.functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.functionRetrievalStrategy = functionRetrievalStrategy;
+    }
+    return this;
+  }
+
   public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
   {
     if (indexRetrievalStrategy == null)
@@ -279,6 +322,19 @@ public class DatabaseSpecificOverrideOptionsBuilder
     else
     {
       this.pkRetrievalStrategy = pkRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy procedureRetrievalStrategy)
+  {
+    if (procedureRetrievalStrategy == null)
+    {
+      this.procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.procedureRetrievalStrategy = procedureRetrievalStrategy;
     }
     return this;
   }

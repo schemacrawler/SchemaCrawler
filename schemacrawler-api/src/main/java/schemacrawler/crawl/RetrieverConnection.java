@@ -67,6 +67,8 @@ final class RetrieverConnection
   private final MetadataRetrievalStrategy pkRetrievalStrategy;
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
+  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private final MetadataRetrievalStrategy functionRetrievalStrategy;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
@@ -106,6 +108,10 @@ final class RetrieverConnection
       .getIndexRetrievalStrategy();
     fkRetrievalStrategy = databaseSpecificOverrideOptions
       .getForeignKeyRetrievalStrategy();
+    procedureRetrievalStrategy = databaseSpecificOverrideOptions
+      .getProcedureRetrievalStrategy();
+    functionRetrievalStrategy = databaseSpecificOverrideOptions
+      .getFunctionRetrievalStrategy();
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
@@ -114,9 +120,19 @@ final class RetrieverConnection
     javaSqlTypes = new JavaSqlTypes();
   }
 
+  public MetadataRetrievalStrategy getFkRetrievalStrategy()
+  {
+    return fkRetrievalStrategy;
+  }
+
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
+  {
+    return functionRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
@@ -124,9 +140,19 @@ final class RetrieverConnection
     return indexRetrievalStrategy;
   }
 
+  public MetadataRetrievalStrategy getPkRetrievalStrategy()
+  {
+    return pkRetrievalStrategy;
+  }
+
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
     return pkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
+  {
+    return procedureRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
