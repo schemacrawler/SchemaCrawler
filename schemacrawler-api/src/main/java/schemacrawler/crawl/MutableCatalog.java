@@ -312,7 +312,20 @@ final class MutableCatalog
   @Override
   public Optional<SchemaReference> lookupSchema(final String name)
   {
-    return schemas.lookup(name);
+    // Schemas need to be looked up by full name, since either the
+    // catalog or schema may be null, depending on the database
+    if (name == null)
+    {
+      return Optional.empty();
+    }
+    for (final SchemaReference schema: schemas)
+    {
+      if (name.equals(schema.getFullName()))
+      {
+        return Optional.of(schema);
+      }
+    }
+    return Optional.empty();
   }
 
   /**

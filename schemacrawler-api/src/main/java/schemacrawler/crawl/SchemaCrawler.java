@@ -283,18 +283,17 @@ public final class SchemaCrawler
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
-        for (final Schema schema: retriever.getAllSchemas())
+        final NamedObjectList<SchemaReference> schemas = retriever
+          .getAllSchemas();
+        if (routineTypes.contains(RoutineType.procedure))
         {
-          if (routineTypes.contains(RoutineType.procedure))
-          {
-            retriever.retrieveProcedures(schema,
-                                         options.getRoutineInclusionRule());
-          }
-          if (routineTypes.contains(RoutineType.function))
-          {
-            retriever.retrieveFunctions(schema,
-                                        options.getRoutineInclusionRule());
-          }
+          retriever.retrieveProcedures(schemas,
+                                       options.getRoutineInclusionRule());
+        }
+        if (routineTypes.contains(RoutineType.function))
+        {
+          retriever.retrieveFunctions(schemas,
+                                      options.getRoutineInclusionRule());
         }
         return null;
       });
