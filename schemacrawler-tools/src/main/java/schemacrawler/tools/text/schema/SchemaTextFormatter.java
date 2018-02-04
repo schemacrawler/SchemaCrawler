@@ -183,10 +183,14 @@ final class SchemaTextFormatter
     {
       if (!options.isHideRoutineSpecificNames())
       {
-        formattingHelper.writeEmptyRow();
-        formattingHelper.writeNameRow("", "[specific name]");
-        formattingHelper
-          .writeWideRow(identifiers.quoteName(routine.getSpecificName()), "");
+        final String specificName = routine.getSpecificName();
+        if (!isBlank(specificName))
+        {
+          formattingHelper.writeEmptyRow();
+          formattingHelper.writeNameRow("", "[specific name]");
+          formattingHelper.writeWideRow(identifiers.quoteName(specificName),
+                                        "");
+        }
       }
       printDefinition(routine);
     }
