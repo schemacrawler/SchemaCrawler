@@ -44,8 +44,10 @@ public final class ResultSetExample
         .getResultColumns(results);
       for (final ResultsColumn column: resultColumns)
       {
-        System.out
-          .println("o--> " + column + " (" + column.getColumnDataType() + ")");
+        System.out.println("o--> " + column);
+        System.out.println("     - label:     " + column.getLabel());
+        System.out.println("     - data-type: " + column.getColumnDataType());
+        System.out.println("     - table:     " + column.getParent());
       }
     }
 

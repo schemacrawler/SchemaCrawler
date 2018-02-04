@@ -1,3 +1,9 @@
-o--> PUBLIC.BOOKS.BOOKS.TITLE (PUBLIC.BOOKS."VARCHAR")
-o--> AUTHOR (VARCHAR)
+o--> PUBLIC.BOOKS.BOOKS.TITLE
+     - label:     BOOKTITLE
+     - data-type: PUBLIC.BOOKS."VARCHAR"
+     - table:     PUBLIC.BOOKS.BOOKS
+o--> AUTHOR
+     - label:     AUTHOR
+     - data-type: VARCHAR
+     - table:     
 
