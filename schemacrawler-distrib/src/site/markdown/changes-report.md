@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a14.19.01"></a>
+## Release 14.19.01 - 2018-02-04
+
+* Fixing bug when retrieving Oracle procedure metadata
+* Adding test support for routines
+* Adding test code for retreiving result set metadata
+
 <a name="a14.18.01"></a>
 ## Release 14.18.01 - 2018-01-10
 
