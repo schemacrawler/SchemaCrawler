@@ -31,6 +31,7 @@
 #/db/books/07_remarks_01_A.sql
 #/db/books/08_procedures_01_A.sql
 #/db/books/08_procedures_01_B.sql
+#/db/books/08_procedures_01_C.sql
 #/db/books/09_functions_01_A.sql
 #/db/books/09_functions_01_B.sql
 #/db/books/09_functions_01_C.sql

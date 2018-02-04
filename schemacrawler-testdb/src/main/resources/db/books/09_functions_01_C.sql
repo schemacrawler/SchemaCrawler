@@ -1,3 +1,5 @@
+-- Functions
+-- Oracle syntax
 CREATE FUNCTION CustomAdd(One INTEGER) RETURNS INTEGER
   AS 'SELECT One + 1;'
   LANGUAGE SQL
