@@ -102,7 +102,27 @@ final class MutableResultsColumns
   @Override
   public Optional<MutableResultsColumn> lookupColumn(final String name)
   {
-    return columns.lookup(name);
+    // Look up by name, full name or label
+    if (name == null)
+    {
+      return Optional.empty();
+    }
+    for (final MutableResultsColumn column: columns)
+    {
+      if (name.equals(column.getLabel()))
+      {
+        return Optional.of(column);
+      }
+      if (name.equals(column.getFullName()))
+      {
+        return Optional.of(column);
+      }
+      if (name.equals(column.getName()))
+      {
+        return Optional.of(column);
+      }
+    }
+    return Optional.empty();
   }
 
   void addColumn(final MutableResultsColumn column)

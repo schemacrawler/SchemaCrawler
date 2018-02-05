@@ -77,22 +77,6 @@ class NamedObjectList<N extends NamedObject>
     return key;
   }
 
-  private static List<String> makeLookupKey(final String fullName)
-  {
-    final List<String> key = new ArrayList<>();
-    if (fullName == null)
-    {
-      return key;
-    }
-    final String[] lookupKey = fullName
-      .split("\\.(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-    for (final String string: lookupKey)
-    {
-      key.add(string.replace("\"", ""));
-    }
-    return key;
-  }
-
   private final Map<List<String>, N> objects = new HashMap<>();
 
   /**
@@ -257,18 +241,6 @@ class NamedObjectList<N extends NamedObject>
   {
     final List<String> key = makeLookupKey(namedObject, name);
     return internalGet(key);
-  }
-
-  /**
-   * Looks up a named object by name.
-   *
-   * @param fullName
-   *        Fully qualified name
-   * @return Named object
-   */
-  Optional<N> lookup(final String fullName)
-  {
-    return internalGet(makeLookupKey(fullName));
   }
 
   N remove(final N namedObject)
