@@ -49,7 +49,7 @@ import sf.util.ObjectToString;
  *
  * @author Sualeh Fatehi
  */
-class NamedObjectList<N extends NamedObject>
+final class NamedObjectList<N extends NamedObject>
   implements Serializable, Collection<N>
 {
 

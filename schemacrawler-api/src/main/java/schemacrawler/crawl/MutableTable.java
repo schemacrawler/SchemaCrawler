@@ -351,42 +351,42 @@ class MutableTable
     return triggers.lookup(this, triggerName);
   }
 
-  void addColumn(final MutableColumn column)
+  final void addColumn(final MutableColumn column)
   {
     columns.add(column);
   }
 
-  void addForeignKey(final MutableForeignKey foreignKey)
+  final void addForeignKey(final MutableForeignKey foreignKey)
   {
     foreignKeys.add(foreignKey);
   }
 
-  void addHiddenColumn(final MutableColumn column)
+  final void addHiddenColumn(final MutableColumn column)
   {
     hiddenColumns.add(column);
   }
 
-  void addIndex(final MutableIndex index)
+  final void addIndex(final MutableIndex index)
   {
     indexes.add(index);
   }
 
-  void addPrivilege(final MutablePrivilege<Table> privilege)
+  final void addPrivilege(final MutablePrivilege<Table> privilege)
   {
     privileges.add(privilege);
   }
 
-  void addTableConstraint(final MutableTableConstraint tableConstraint)
+  final void addTableConstraint(final MutableTableConstraint tableConstraint)
   {
     constraints.add(tableConstraint);
   }
 
-  void addTrigger(final MutableTrigger trigger)
+  final void addTrigger(final MutableTrigger trigger)
   {
     triggers.add(trigger);
   }
 
-  void appendDefinition(final String definition)
+  final void appendDefinition(final String definition)
   {
     if (definition != null)
     {
@@ -394,7 +394,7 @@ class MutableTable
     }
   }
 
-  void setPrimaryKeyAndReplaceIndex(final MutablePrimaryKey primaryKey)
+  final void setPrimaryKeyAndReplaceIndex(final MutablePrimaryKey primaryKey)
   {
     if (primaryKey == null)
     {
@@ -416,12 +416,12 @@ class MutableTable
     }
   }
 
-  void setSortIndex(final int sortIndex)
+  final void setSortIndex(final int sortIndex)
   {
     this.sortIndex = sortIndex;
   }
 
-  void setTableType(final TableType tableType)
+  final void setTableType(final TableType tableType)
   {
     if (tableType == null)
     {

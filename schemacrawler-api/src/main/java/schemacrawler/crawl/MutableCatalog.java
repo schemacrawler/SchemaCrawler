@@ -88,7 +88,7 @@ final class MutableCatalog
   private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
   private ImmutableCrawlInfo crawlInfo;
   private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
-  private final ColumnDataTypes columnDataTypes = new ColumnDataTypes();
+  private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
   private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
@@ -461,7 +461,20 @@ final class MutableCatalog
 
   MutableColumnDataType lookupColumnDataTypeByType(final int type)
   {
-    return columnDataTypes.lookupColumnDataTypeByType(type);
+    final SchemaReference systemSchema = new SchemaReference();
+    MutableColumnDataType columnDataType = null;
+    for (final MutableColumnDataType currentColumnDataType: columnDataTypes)
+    {
+      if (type == currentColumnDataType.getJavaSqlType().getJavaSqlType())
+      {
+        columnDataType = currentColumnDataType;
+        if (columnDataType.getSchema().equals(systemSchema))
+        {
+          break;
+        }
+      }
+    }
+    return columnDataType;
   }
 
   Optional<MutableRoutine> lookupRoutine(final List<String> routineLookupKey)

@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 public class SchemaCrawlerLogger
 {
 
-  private static String loggerClass = SchemaCrawlerLogger.class.getName();
+  private final static String loggerClass = SchemaCrawlerLogger.class.getName();
 
   public static SchemaCrawlerLogger getLogger(final String name)
   {

@@ -64,8 +64,6 @@ final class MutableForeignKey
   private ForeignKeyUpdateRule updateRule;
   private ForeignKeyUpdateRule deleteRule;
   private ForeignKeyDeferrability deferrability;
-  private Boolean deferrable; // initialize to null
-  private Boolean initiallyDeferred; // initialize to null
   private final StringBuilder definition;
 
   MutableForeignKey(final String name)
@@ -171,21 +169,21 @@ final class MutableForeignKey
   @Override
   public boolean isDeferrable()
   {
-    if (deferrable == null)
+    if (deferrability == null)
     {
       throw new NotLoadedException(this);
     }
-    return deferrable;
+    return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
 
   @Override
   public boolean isInitiallyDeferred()
   {
-    if (initiallyDeferred == null)
+    if (deferrability == null)
     {
       throw new NotLoadedException(this);
     }
-    return initiallyDeferred;
+    return deferrability == ForeignKeyDeferrability.initiallyDeferred;
   }
 
   @Override
@@ -227,19 +225,9 @@ final class MutableForeignKey
     this.deferrability = deferrability;
   }
 
-  void setDeferrable(final boolean deferrable)
-  {
-    this.deferrable = deferrable;
-  }
-
   final void setDeleteRule(final ForeignKeyUpdateRule deleteRule)
   {
     this.deleteRule = deleteRule;
-  }
-
-  void setInitiallyDeferred(final boolean initiallyDeferred)
-  {
-    this.initiallyDeferred = initiallyDeferred;
   }
 
   void setSpecificName(final String specificName)

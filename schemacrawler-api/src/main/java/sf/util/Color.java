@@ -39,7 +39,7 @@ import static sf.util.Utility.isBlank;
 public final class Color
 {
 
-  public static Color white = new Color(255, 255, 255);
+  public final static Color white = new Color(255, 255, 255);
 
   public static Color fromHexTriplet(final String htmlColor)
   {
