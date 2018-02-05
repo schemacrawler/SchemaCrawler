@@ -80,7 +80,7 @@ class DatabaseObjectReference<D extends DatabaseObject>
    *
    * @see java.lang.ref.SoftReference#get()
    */
-  public D get()
+  public final D get()
   {
     final D dereferencedDatabaseObject;
     if (databaseObjectRef != null)
