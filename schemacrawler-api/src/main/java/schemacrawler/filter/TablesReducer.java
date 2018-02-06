@@ -43,15 +43,15 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-final class TablesReducer
+public final class TablesReducer
   implements Reducer<Table>
 {
 
   private final SchemaCrawlerOptions options;
   private final Predicate<Table> tableFilter;
 
-  TablesReducer(final SchemaCrawlerOptions options,
-                final Predicate<Table> tableFilter)
+  public TablesReducer(final SchemaCrawlerOptions options,
+                       final Predicate<Table> tableFilter)
   {
     this.options = requireNonNull(options);
     this.tableFilter = requireNonNull(tableFilter);
