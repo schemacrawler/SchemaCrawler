@@ -30,6 +30,10 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
+import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
+import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
+import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -335,11 +339,11 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("filterRoutines", () -> {
+      stopWatch.time("filterAndSortRoutines", () -> {
         // Filter the list of routines based on grep criteria
         final Predicate<Routine> routineFilter = routineFilter(options);
         ((Reducible) catalog).reduce(Routine.class,
-                                     new RoutinesReducer(routineFilter));
+                                     getRoutineReducer(routineFilter));
         return null;
       });
 
@@ -391,8 +395,8 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("sortAndFilterSchemas", () -> {
-        ((Reducible) catalog).reduce(Schema.class, new SchemasReducer(options));
+      stopWatch.time("filterAndSortSchemas", () -> {
+        ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(options));
         return null;
       });
 
@@ -455,9 +459,9 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("sortAndFilterSequences", () -> {
+      stopWatch.time("filterAndSortSequences", () -> {
         ((Reducible) catalog).reduce(Sequence.class,
-                                     new SequencesReducer(options));
+                                     getSequenceReducer(options));
         return null;
       });
 
@@ -512,9 +516,8 @@ public final class SchemaCrawler
         return null;
       });
 
-      stopWatch.time("sortAndFilterSynonms", () -> {
-        ((Reducible) catalog).reduce(Synonym.class,
-                                     new SynonymsReducer(options));
+      stopWatch.time("filterAndSortSynonms", () -> {
+        ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(options));
         return null;
       });
 
