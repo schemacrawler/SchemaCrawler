@@ -2,14 +2,15 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.filter.FilterFactory.routineFilter;
+import static schemacrawler.filter.FilterFactory.schemaFilter;
+import static schemacrawler.filter.FilterFactory.sequenceFilter;
+import static schemacrawler.filter.FilterFactory.synonymFilter;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
 
-import schemacrawler.filter.DatabaseObjectFilter;
-import schemacrawler.filter.IncludeAllFilter;
-import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Routine;
@@ -51,64 +52,30 @@ public final class ReducerFactory
 
   }
 
-  public static Reducer<Routine> getRoutineReducer(final Predicate<Routine> routineFilter)
+  public static Reducer<Routine> getRoutineReducer(final SchemaCrawlerOptions options)
   {
-    return new BaseReducer<Routine>(routineFilter)
+    return new BaseReducer<Routine>(routineFilter(options))
     {
     };
   }
 
   public static Reducer<Schema> getSchemaReducer(final SchemaCrawlerOptions options)
   {
-    final Predicate<Schema> schemaFilter;
-    if (options == null)
-    {
-      schemaFilter = new IncludeAllFilter<Schema>();
-    }
-    else
-    {
-      schemaFilter = new InclusionRuleFilter<Schema>(options
-        .getSchemaInclusionRule(), true);
-    }
-
-    return new BaseReducer<Schema>(schemaFilter)
+    return new BaseReducer<Schema>(schemaFilter(options))
     {
     };
   }
 
   public static Reducer<Sequence> getSequenceReducer(final SchemaCrawlerOptions options)
   {
-    final Predicate<Sequence> sequenceFilter;
-    if (options == null)
-    {
-      sequenceFilter = new IncludeAllFilter<Sequence>();
-    }
-    else
-    {
-      sequenceFilter = new DatabaseObjectFilter<Sequence>(options,
-                                                          options
-                                                            .getSequenceInclusionRule());
-    }
-    return new BaseReducer<Sequence>(sequenceFilter)
+    return new BaseReducer<Sequence>(sequenceFilter(options))
     {
     };
   }
 
   public static Reducer<Synonym> getSynonymReducer(final SchemaCrawlerOptions options)
   {
-    final Predicate<Synonym> synonymFilter;
-    if (options == null)
-    {
-      synonymFilter = new IncludeAllFilter<Synonym>();
-    }
-    else
-    {
-      synonymFilter = new DatabaseObjectFilter<Synonym>(options,
-                                                        options
-                                                          .getSynonymInclusionRule());
-    }
-
-    return new BaseReducer<Synonym>(synonymFilter)
+    return new BaseReducer<Synonym>(synonymFilter(options))
     {
     };
   }

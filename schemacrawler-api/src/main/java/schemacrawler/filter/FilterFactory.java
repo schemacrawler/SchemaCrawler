@@ -31,6 +31,9 @@ package schemacrawler.filter;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
@@ -45,6 +48,25 @@ public final class FilterFactory
       .and(new RoutineGrepFilter(options));
 
     return routineFilter;
+  }
+
+  public static Predicate<Schema> schemaFilter(final SchemaCrawlerOptions options)
+  {
+    return new InclusionRuleFilter<Schema>(options.getSchemaInclusionRule(),
+                                           true);
+  }
+
+  public static Predicate<Sequence> sequenceFilter(final SchemaCrawlerOptions options)
+  {
+    return new DatabaseObjectFilter<Sequence>(options,
+                                              options
+                                                .getSequenceInclusionRule());
+  }
+
+  public static Predicate<Synonym> synonymFilter(final SchemaCrawlerOptions options)
+  {
+    return new DatabaseObjectFilter<Synonym>(options,
+                                             options.getSynonymInclusionRule());
   }
 
   public static Predicate<Table> tableFilter(final SchemaCrawlerOptions options)
