@@ -34,7 +34,6 @@ import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
 import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
 import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
 import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.io.IOException;
@@ -117,9 +116,8 @@ public class OfflineSnapshotExecutable
     ((Reducible) catalog)
       .reduce(Table.class,
               new TablesReducer(schemaCrawlerOptions, tableFilter));
-    final Predicate<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Routine.class,
-                                 getRoutineReducer(routineFilter));
+                                 getRoutineReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Synonym.class,
                                  getSynonymReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Sequence.class,

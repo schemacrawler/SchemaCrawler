@@ -34,7 +34,6 @@ import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
 import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
 import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
 import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.sql.Connection;
@@ -341,9 +340,7 @@ public final class SchemaCrawler
 
       stopWatch.time("filterAndSortRoutines", () -> {
         // Filter the list of routines based on grep criteria
-        final Predicate<Routine> routineFilter = routineFilter(options);
-        ((Reducible) catalog).reduce(Routine.class,
-                                     getRoutineReducer(routineFilter));
+        ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(options));
         return null;
       });
 
