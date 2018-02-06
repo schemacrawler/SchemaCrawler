@@ -30,6 +30,10 @@ package schemacrawler.tools.offline;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
+import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
+import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
+import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
@@ -39,10 +43,6 @@ import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
-import schemacrawler.crawl.RoutinesReducer;
-import schemacrawler.crawl.SchemasReducer;
-import schemacrawler.crawl.SequencesReducer;
-import schemacrawler.crawl.SynonymsReducer;
 import schemacrawler.crawl.TablesReducer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
@@ -112,18 +112,18 @@ public class OfflineSnapshotExecutable
 
     // Reduce all
     ((Reducible) catalog).reduce(Schema.class,
-                                 new SchemasReducer(schemaCrawlerOptions));
+                                 getSchemaReducer(schemaCrawlerOptions));
     final Predicate<Table> tableFilter = tableFilter(schemaCrawlerOptions);
     ((Reducible) catalog)
       .reduce(Table.class,
               new TablesReducer(schemaCrawlerOptions, tableFilter));
     final Predicate<Routine> routineFilter = routineFilter(schemaCrawlerOptions);
     ((Reducible) catalog).reduce(Routine.class,
-                                 new RoutinesReducer(routineFilter));
+                                 getRoutineReducer(routineFilter));
     ((Reducible) catalog).reduce(Synonym.class,
-                                 new SynonymsReducer(schemaCrawlerOptions));
+                                 getSynonymReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Sequence.class,
-                                 new SequencesReducer(schemaCrawlerOptions));
+                                 getSequenceReducer(schemaCrawlerOptions));
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
