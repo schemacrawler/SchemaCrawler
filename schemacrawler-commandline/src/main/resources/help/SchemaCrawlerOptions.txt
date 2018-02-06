@@ -112,6 +112,8 @@
   other non-matching tables
   Optional, default is false
 
+--- Additional Filtering Options ---
+
 -hideemptytables
   Shows only tables that have rows of data
   Will work only if infolevel is maximum
@@ -126,4 +128,3 @@
   <depth of child tables> is the number of generations of descendants
   for the tables selected by grep, and shown in the results
   Optional, default is 0
-    
