@@ -30,11 +30,12 @@ package schemacrawler.tools.offline;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
-import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
-import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
-import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.FilterFactory.tableFilter;
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -42,7 +43,6 @@ import java.sql.Connection;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
-import schemacrawler.crawl.TablesReducer;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
@@ -114,8 +114,7 @@ public class OfflineSnapshotExecutable
                                  getSchemaReducer(schemaCrawlerOptions));
     final Predicate<Table> tableFilter = tableFilter(schemaCrawlerOptions);
     ((Reducible) catalog)
-      .reduce(Table.class,
-              new TablesReducer(schemaCrawlerOptions, tableFilter));
+      .reduce(Table.class, getTableReducer(schemaCrawlerOptions, tableFilter));
     ((Reducible) catalog).reduce(Routine.class,
                                  getRoutineReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Synonym.class,

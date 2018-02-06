@@ -30,11 +30,12 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.crawl.ReducerFactory.getRoutineReducer;
-import static schemacrawler.crawl.ReducerFactory.getSchemaReducer;
-import static schemacrawler.crawl.ReducerFactory.getSequenceReducer;
-import static schemacrawler.crawl.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.FilterFactory.tableFilter;
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -631,7 +632,7 @@ public final class SchemaCrawler
         // parent-child relationships
         final Predicate<Table> tableFilter = tableFilter(options);
         ((Reducible) catalog).reduce(Table.class,
-                                     new TablesReducer(options, tableFilter));
+                                     getTableReducer(options, tableFilter));
 
         // Sort the remaining tables
         final TablesGraph tablesGraph = new TablesGraph(allTables);
