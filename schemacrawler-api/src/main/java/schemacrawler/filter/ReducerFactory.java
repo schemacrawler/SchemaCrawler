@@ -82,6 +82,13 @@ public final class ReducerFactory
     };
   }
 
+  public static Reducer<Table> getTableReducer(final Predicate<Table> tableFilter)
+  {
+    return new BaseReducer<Table>(tableFilter)
+    {
+    };
+  }
+
   public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options)
   {
     return new TablesReducer(options, tableFilter(options));
