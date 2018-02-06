@@ -1,4 +1,4 @@
-package schemacrawler.crawl;
+package schemacrawler.filter;
 
 
 import static java.util.Objects.requireNonNull;
@@ -17,6 +17,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public final class ReducerFactory
@@ -78,6 +79,12 @@ public final class ReducerFactory
     return new BaseReducer<Synonym>(synonymFilter(options))
     {
     };
+  }
+
+  public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options,
+                                               final Predicate<Table> tableFilter)
+  {
+    return new TablesReducer(options, tableFilter);
   }
 
   private ReducerFactory()
