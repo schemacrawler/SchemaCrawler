@@ -6,6 +6,7 @@ import static schemacrawler.filter.FilterFactory.routineFilter;
 import static schemacrawler.filter.FilterFactory.schemaFilter;
 import static schemacrawler.filter.FilterFactory.sequenceFilter;
 import static schemacrawler.filter.FilterFactory.synonymFilter;
+import static schemacrawler.filter.FilterFactory.tableFilter;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -81,10 +82,9 @@ public final class ReducerFactory
     };
   }
 
-  public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options,
-                                               final Predicate<Table> tableFilter)
+  public static Reducer<Table> getTableReducer(final SchemaCrawlerOptions options)
   {
-    return new TablesReducer(options, tableFilter);
+    return new TablesReducer(options, tableFilter(options));
   }
 
   private ReducerFactory()

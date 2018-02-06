@@ -30,7 +30,6 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.FilterFactory.tableFilter;
 import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
 import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
@@ -41,7 +40,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.function.Predicate;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
@@ -630,9 +628,7 @@ public final class SchemaCrawler
       stopWatch.time("filterAndSortTables", () -> {
         // Filter the list of tables based on grep criteria, and
         // parent-child relationships
-        final Predicate<Table> tableFilter = tableFilter(options);
-        ((Reducible) catalog).reduce(Table.class,
-                                     getTableReducer(options, tableFilter));
+        ((Reducible) catalog).reduce(Table.class, getTableReducer(options));
 
         // Sort the remaining tables
         final TablesGraph tablesGraph = new TablesGraph(allTables);
