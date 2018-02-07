@@ -8,12 +8,11 @@ import static schemacrawler.filter.FilterFactory.sequenceFilter;
 import static schemacrawler.filter.FilterFactory.synonymFilter;
 import static schemacrawler.filter.FilterFactory.tableFilter;
 
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.function.Predicate;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Reducer;
+import schemacrawler.schema.ReducibleCollection;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
@@ -36,20 +35,10 @@ public final class ReducerFactory
     }
 
     @Override
-    public void reduce(final Collection<? extends N> allNamedObjects)
+    public void reduce(final ReducibleCollection<? extends N> allNamedObjects)
     {
-      if (allNamedObjects != null)
-      {
-        final Collection<N> keepList = new HashSet<>();
-        for (final N namedObject: allNamedObjects)
-        {
-          if (filter.test(namedObject))
-          {
-            keepList.add(namedObject);
-          }
-        }
-        allNamedObjects.retainAll(keepList);
-      }
+      requireNonNull(allNamedObjects);
+      allNamedObjects.filter(filter);
     }
 
   }

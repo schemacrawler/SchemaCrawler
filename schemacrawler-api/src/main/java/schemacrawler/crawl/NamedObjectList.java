@@ -39,9 +39,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Predicate;
 
 import schemacrawler.schema.NamedObject;
+import schemacrawler.schema.ReducibleCollection;
 import sf.util.ObjectToString;
 
 /**
@@ -50,7 +54,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 final class NamedObjectList<N extends NamedObject>
-  implements Serializable, Collection<N>
+  implements Serializable, Collection<N>, ReducibleCollection<N>
 {
 
   private static final long serialVersionUID = 3257847666804142128L;
@@ -123,6 +127,26 @@ final class NamedObjectList<N extends NamedObject>
       }
     }
     return true;
+  }
+
+  @Override
+  public void filter(final Predicate<? super N> predicate)
+  {
+    if (predicate == null)
+    {
+      return;
+    }
+
+    final Set<Entry<List<String>, N>> entrySet = objects.entrySet();
+    for (final Iterator<Entry<List<String>, N>> iterator = entrySet
+      .iterator(); iterator.hasNext();)
+    {
+      final Entry<List<String>, N> entry = iterator.next();
+      if (!predicate.test(entry.getValue()))
+      {
+        iterator.remove();
+      }
+    }
   }
 
   @Override
@@ -263,6 +287,12 @@ final class NamedObjectList<N extends NamedObject>
   private Optional<N> internalGet(final List<String> key)
   {
     return Optional.ofNullable(objects.get(key));
+  }
+
+  @Override
+  public boolean isFiltered(NamedObject object)
+  {
+    return !contains(object);
   }
 
 }
