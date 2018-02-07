@@ -39,6 +39,7 @@ import schemacrawler.schema.ForeignKey;
 import schemacrawler.schema.ForeignKeyColumnReference;
 import schemacrawler.schema.PartialDatabaseObject;
 import schemacrawler.schema.Reducer;
+import schemacrawler.schema.ReducibleCollection;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -58,18 +59,18 @@ final class TablesReducer
   }
 
   @Override
-  public void reduce(final Collection<? extends Table> allTables)
+  public void reduce(final ReducibleCollection<? extends Table> allTables)
   {
     if (allTables == null)
     {
       return;
     }
-    allTables.retainAll(doReduce(allTables));
+    doReduce(allTables);
 
     removeForeignKeys(allTables);
   }
 
-  private Collection<Table> doReduce(final Collection<? extends Table> allTables)
+  private void doReduce(final ReducibleCollection<? extends Table> allTables)
   {
     // Filter tables, keeping the ones we need
     final Set<Table> reducedTables = new HashSet<>();
@@ -105,7 +106,7 @@ final class TablesReducer
       }
     }
 
-    return keepTables;
+    allTables.filter(table -> keepTables.contains(table));
   }
 
   private Collection<Table> includeRelatedTables(final TableRelationshipType tableRelationshipType,
@@ -138,16 +139,16 @@ final class TablesReducer
     return table instanceof PartialDatabaseObject;
   }
 
-  private void markTableFilteredOut(final Table referencedTable)
+  private void markTableFilteredOut(final Table table)
   {
-    referencedTable.setAttribute("schemacrawler.table.filtered_out", true);
+    table.setAttribute("schemacrawler.table.filtered_out", true);
     if (options.isGrepOnlyMatching())
     {
-      referencedTable.setAttribute("schemacrawler.table.no_grep_match", true);
+      table.setAttribute("schemacrawler.table.no_grep_match", true);
     }
   }
 
-  private void removeForeignKeys(final Collection<? extends Table> allTables)
+  private void removeForeignKeys(final ReducibleCollection<? extends Table> allTables)
   {
     for (final Table table: allTables)
     {
@@ -158,7 +159,7 @@ final class TablesReducer
           final Table referencedTable = fkColumnRef.getForeignKeyColumn()
             .getParent();
           if (isTablePartial(referencedTable)
-              || !allTables.contains(referencedTable))
+              || allTables.isFiltered(referencedTable))
           {
             markTableFilteredOut(referencedTable);
           }

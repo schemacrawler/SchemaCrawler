@@ -27,13 +27,10 @@ http://www.gnu.org/licenses/
 */
 package schemacrawler.schema;
 
-
-import java.util.Collection;
-
 @FunctionalInterface
 public interface Reducer<N extends NamedObject>
 {
 
-  void reduce(final Collection<? extends N> namedObjects);
+  void reduce(final ReducibleCollection<? extends N> namedObjects);
 
 }
