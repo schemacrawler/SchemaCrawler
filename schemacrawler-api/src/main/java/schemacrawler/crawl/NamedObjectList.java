@@ -33,7 +33,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -54,7 +53,7 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 final class NamedObjectList<N extends NamedObject>
-  implements Serializable, Collection<N>, ReducibleCollection<N>
+  implements Serializable, ReducibleCollection<N>
 {
 
   private static final long serialVersionUID = 3257847666804142128L;
@@ -89,8 +88,7 @@ final class NamedObjectList<N extends NamedObject>
    * @param namedObject
    *        Named object
    */
-  @Override
-  public boolean add(final N namedObject)
+  boolean add(final N namedObject)
   {
     requireNonNull(namedObject, "Cannot add a null object to the list");
     final List<String> key = makeLookupKey(namedObject);
@@ -98,35 +96,10 @@ final class NamedObjectList<N extends NamedObject>
     return true;
   }
 
-  @Override
-  public boolean addAll(final Collection<? extends N> c)
+  boolean contains(final NamedObject namedObject)
   {
-    throw new UnsupportedOperationException("Bulk operations are not supported");
-  }
-
-  @Override
-  public void clear()
-  {
-    objects.clear();
-  }
-
-  @Override
-  public boolean contains(final Object object)
-  {
-    return objects.containsKey(makeLookupKey((N) object));
-  }
-
-  @Override
-  public boolean containsAll(final Collection<?> c)
-  {
-    for (final Object e: c)
-    {
-      if (!contains(e))
-      {
-        return false;
-      }
-    }
-    return true;
+    requireNonNull(namedObject, "Cannot add a null object to the list");
+    return objects.containsKey(makeLookupKey(namedObject));
   }
 
   @Override
@@ -149,8 +122,7 @@ final class NamedObjectList<N extends NamedObject>
     }
   }
 
-  @Override
-  public boolean isEmpty()
+  boolean isEmpty()
   {
     return objects.isEmpty();
   }
@@ -164,80 +136,14 @@ final class NamedObjectList<N extends NamedObject>
     return values().iterator();
   }
 
-  @Override
-  public boolean remove(final Object object)
-  {
-    final N removedObject = objects.remove(makeLookupKey((N) object));
-    return removedObject != null;
-  }
-
-  @Override
-  public boolean removeAll(final Collection<?> c)
-  {
-    if (c == null)
-    {
-      return false;
-    }
-
-    boolean modified = false;
-    final Iterator<N> iterator = iterator();
-    while (iterator.hasNext())
-    {
-      final N namedObject = iterator.next();
-      if (namedObject != null && c.contains(namedObject))
-      {
-        final List<String> key = makeLookupKey(namedObject);
-        objects.remove(key);
-        modified = true;
-      }
-    }
-    return modified;
-  }
-
-  @Override
-  public boolean retainAll(final Collection<?> c)
-  {
-    if (c == null)
-    {
-      return false;
-    }
-
-    boolean modified = false;
-    final Iterator<N> iterator = iterator();
-    while (iterator.hasNext())
-    {
-      final N namedObject = iterator.next();
-      if (namedObject != null && !c.contains(namedObject))
-      {
-        final List<String> key = makeLookupKey(namedObject);
-        objects.remove(key);
-        modified = true;
-      }
-    }
-    return modified;
-  }
-
   /**
    * Returns the number of elements in this list.
    *
    * @return Number of elements in this list.
    */
-  @Override
-  public int size()
+  int size()
   {
     return objects.size();
-  }
-
-  @Override
-  public Object[] toArray()
-  {
-    return values().toArray();
-  }
-
-  @Override
-  public <T> T[] toArray(final T[] a)
-  {
-    return values().toArray(a);
   }
 
   /**
