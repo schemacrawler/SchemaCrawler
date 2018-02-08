@@ -82,26 +82,6 @@ final class NamedObjectList<N extends NamedObject>
 
   private final Map<List<String>, N> objects = new HashMap<>();
 
-  /**
-   * Add a named object to the list.
-   *
-   * @param namedObject
-   *        Named object
-   */
-  boolean add(final N namedObject)
-  {
-    requireNonNull(namedObject, "Cannot add a null object to the list");
-    final List<String> key = makeLookupKey(namedObject);
-    objects.put(key, namedObject);
-    return true;
-  }
-
-  boolean contains(final NamedObject namedObject)
-  {
-    requireNonNull(namedObject, "Cannot add a null object to the list");
-    return objects.containsKey(makeLookupKey(namedObject));
-  }
-
   @Override
   public void filter(final Predicate<? super N> predicate)
   {
@@ -122,9 +102,10 @@ final class NamedObjectList<N extends NamedObject>
     }
   }
 
-  boolean isEmpty()
+  @Override
+  public boolean isFiltered(final NamedObject object)
   {
-    return objects.isEmpty();
+    return !contains(object);
   }
 
   /**
@@ -133,17 +114,37 @@ final class NamedObjectList<N extends NamedObject>
   @Override
   public Iterator<N> iterator()
   {
-    return values().iterator();
-  }
+    final class UnmodifiableIterator
+      implements Iterator<N>
+    {
 
-  /**
-   * Returns the number of elements in this list.
-   *
-   * @return Number of elements in this list.
-   */
-  int size()
-  {
-    return objects.size();
+      private final Iterator<N> iterator;
+
+      UnmodifiableIterator(final Iterator<N> iterator)
+      {
+        this.iterator = iterator;
+      }
+
+      @Override
+      public boolean hasNext()
+      {
+        return iterator.hasNext();
+      }
+
+      @Override
+      public N next()
+      {
+        return iterator.next();
+      }
+
+      @Override
+      public void remove()
+      {
+        throw new UnsupportedOperationException();
+      }
+
+    }
+    return new UnmodifiableIterator(values().iterator());
   }
 
   /**
@@ -153,6 +154,30 @@ final class NamedObjectList<N extends NamedObject>
   public String toString()
   {
     return ObjectToString.toString(values());
+  }
+
+  /**
+   * Add a named object to the list.
+   *
+   * @param namedObject
+   *        Named object
+   */
+  boolean add(final N namedObject)
+  {
+    requireNonNull(namedObject, "Cannot add a null object to the list");
+    final List<String> key = makeLookupKey(namedObject);
+    objects.put(key, namedObject);
+    return true;
+  }
+
+  boolean contains(final NamedObject namedObject)
+  {
+    return objects.containsKey(makeLookupKey(namedObject));
+  }
+
+  boolean isEmpty()
+  {
+    return objects.isEmpty();
   }
 
   /**
@@ -179,6 +204,16 @@ final class NamedObjectList<N extends NamedObject>
   }
 
   /**
+   * Returns the number of elements in this list.
+   *
+   * @return Number of elements in this list.
+   */
+  int size()
+  {
+    return objects.size();
+  }
+
+  /**
    * Gets all named objects in the list, in sorted order.
    *
    * @return All named objects
@@ -193,12 +228,6 @@ final class NamedObjectList<N extends NamedObject>
   private Optional<N> internalGet(final List<String> key)
   {
     return Optional.ofNullable(objects.get(key));
-  }
-
-  @Override
-  public boolean isFiltered(NamedObject object)
-  {
-    return !contains(object);
   }
 
 }
