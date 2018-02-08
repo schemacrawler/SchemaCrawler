@@ -70,24 +70,22 @@ public class GrepCommandLineTest
 
     final String[][] grepArgs = new String[][] {
                                                  new String[] {
-                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE",
-                                                                "-routines=", },
+                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE", },
                                                  new String[] {
-                                                                "-grepcolumns=.*\\..*NAME",
-                                                                "-routines=", },
+                                                                "-grepcolumns=.*\\..*NAME", },
                                                  new String[] {
-                                                                "-grepdef=.*book authors.*",
-                                                                "-routines=", },
+                                                                "-grepdef=.*book authors.*", },
                                                  new String[] {
                                                                 "-tables=",
+                                                                "-routines=.*",
                                                                 "-grepinout=.*\\.B_COUNT", },
                                                  new String[] {
                                                                 "-tables=",
+                                                                "-routines=.*",
                                                                 "-grepinout=.*\\.B_OFFSET", },
                                                  new String[] {
                                                                 "-grepcolumns=.*\\.STREET|.*\\.PRICE",
-                                                                "-grepdef=.*book authors.*",
-                                                                "-routines=", }, };
+                                                                "-grepdef=.*book authors.*", }, };
     for (int i = 0; i < grepArgs.length; i++)
     {
       final String[] grepArgsForRun = grepArgs[i];

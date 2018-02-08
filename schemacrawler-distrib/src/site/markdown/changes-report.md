@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.19.02"></a>
+## Release 14.19.02 - 2018-02-11
+
+* Make -routines return no routines by default, to make it easier for first-time users.
+
 <a name="a14.19.01"></a>
 ## Release 14.19.01 - 2018-02-04
 

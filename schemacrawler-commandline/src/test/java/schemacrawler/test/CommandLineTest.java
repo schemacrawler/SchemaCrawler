@@ -86,6 +86,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("tables", "");
+    args.put("routines", ".*");
     args.put("sortcolumns", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -99,6 +100,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("tables", "");
+    args.put("routines", ".*");
     args.put("sortcolumns", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -112,6 +114,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("tables", "");
+    args.put("routines", ".*");
     args.put("sortroutines", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -125,6 +128,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("tables", "");
+    args.put("routines", ".*");
     args.put("sortroutines", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -224,7 +228,7 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<>();
     args.put("portablenames", Boolean.TRUE.toString());
     args.put("tables", "");
-    args.put("routines", "");
+    args.put("routines", ".*");
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
 
