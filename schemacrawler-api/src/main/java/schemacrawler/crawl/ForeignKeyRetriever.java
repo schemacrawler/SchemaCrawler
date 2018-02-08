@@ -181,7 +181,7 @@ final class ForeignKeyRetriever
   {
     while (results.next())
     {
-      String foreignKeyName = results.getString("FK_NAME");
+      final String foreignKeyName = results.getString("FK_NAME");
       LOGGER
         .log(Level.FINE,
              new StringFormat("Retrieving foreign key: %s", foreignKeyName));

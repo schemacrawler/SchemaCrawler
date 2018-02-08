@@ -57,7 +57,7 @@ abstract class AbstractColumn<P extends DatabaseObject>
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private
    * constructors make a class effectively final
-   * 
+   *
    * @param parent
    *        Parent of this object
    * @param name
