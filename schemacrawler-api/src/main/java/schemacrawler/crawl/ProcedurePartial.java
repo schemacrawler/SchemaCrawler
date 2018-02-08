@@ -59,15 +59,15 @@ final class ProcedurePartial
   }
 
   @Override
-  public RoutineType getRoutineType()
-  {
-    return RoutineType.procedure;
-  }
-
-  @Override
   public ProcedureReturnType getReturnType()
   {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.procedure;
   }
 
   @Override

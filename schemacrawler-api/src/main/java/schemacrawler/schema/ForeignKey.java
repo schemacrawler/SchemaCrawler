@@ -54,18 +54,18 @@ public interface ForeignKey
   ForeignKeyUpdateRule getDeleteRule();
 
   /**
+   * Gets a generated specific name for databases that support
+   * non-unique foreign key names.
+   *
+   * @return Specific name of a foreign key
+   */
+  String getSpecificName();
+
+  /**
    * Gets the update rule.
    *
    * @return Update rule
    */
   ForeignKeyUpdateRule getUpdateRule();
-
-  /**
-   * Gets a generated specific name for databases that support
-   * non-unique foreign key names.
-   * 
-   * @return Specific name of a foreign key
-   */
-  String getSpecificName();
 
 }

@@ -59,15 +59,15 @@ final class FunctionPartial
   }
 
   @Override
-  public RoutineType getRoutineType()
-  {
-    return RoutineType.function;
-  }
-
-  @Override
   public FunctionReturnType getReturnType()
   {
     throw new NotLoadedException(this);
+  }
+
+  @Override
+  public RoutineType getRoutineType()
+  {
+    return RoutineType.function;
   }
 
   @Override

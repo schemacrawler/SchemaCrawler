@@ -48,7 +48,7 @@ abstract class MutableRoutineColumn<R extends Routine>
   /**
    * Effective Java - Item 17 - Minimize Mutability - Package-private
    * constructors make a class effectively final
-   * 
+   *
    * @param parent
    *        Parent of this object
    * @param name
