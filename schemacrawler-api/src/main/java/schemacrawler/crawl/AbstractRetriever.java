@@ -89,9 +89,9 @@ abstract class AbstractRetriever
    *        Database schema to check against
    * @return Whether the database object belongs to the specified schema
    */
-  boolean belongsToSchema(final DatabaseObject dbObject,
-                          final String catalogName,
-                          final String schemaName)
+  final boolean belongsToSchema(final DatabaseObject dbObject,
+                                final String catalogName,
+                                final String schemaName)
   {
     if (dbObject == null)
     {
@@ -118,33 +118,33 @@ abstract class AbstractRetriever
     return belongsToCatalog && belongsToSchema;
   }
 
-  NamedObjectList<SchemaReference> getAllSchemas()
+  final NamedObjectList<SchemaReference> getAllSchemas()
   {
     return catalog.getAllSchemas();
   }
 
-  Connection getDatabaseConnection()
+  final Connection getDatabaseConnection()
   {
     return retrieverConnection.getConnection();
   }
 
-  DatabaseMetaData getMetaData()
+  final DatabaseMetaData getMetaData()
   {
     return retrieverConnection.getMetaData();
   }
 
-  RetrieverConnection getRetrieverConnection()
+  final RetrieverConnection getRetrieverConnection()
   {
     return retrieverConnection;
   }
 
-  InclusionRule getSchemaInclusionRule()
+  final InclusionRule getSchemaInclusionRule()
   {
     return options.getSchemaInclusionRule();
   }
 
-  void logPossiblyUnsupportedSQLFeature(final StringFormat message,
-                                        final SQLException e)
+  final void logPossiblyUnsupportedSQLFeature(final StringFormat message,
+                                              final SQLException e)
   {
     // HYC00 = Optional feature not implemented
     // HY000 = General error
@@ -161,7 +161,8 @@ abstract class AbstractRetriever
     }
   }
 
-  void logSQLFeatureNotSupported(final StringFormat message, final Throwable e)
+  final void logSQLFeatureNotSupported(final StringFormat message,
+                                       final Throwable e)
   {
     LOGGER.log(Level.WARNING, message);
     LOGGER.log(Level.FINE, message, e);
@@ -179,9 +180,9 @@ abstract class AbstractRetriever
    *        Database specific type name
    * @return Column data type
    */
-  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
-                                                     final int javaSqlType,
-                                                     final String databaseSpecificTypeName)
+  final MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
+                                                           final int javaSqlType,
+                                                           final String databaseSpecificTypeName)
   {
     return lookupOrCreateColumnDataType(schema,
                                         javaSqlType,
@@ -201,10 +202,10 @@ abstract class AbstractRetriever
    *        Database specific type name
    * @return Column data type
    */
-  MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
-                                                     final int javaSqlTypeInt,
-                                                     final String databaseSpecificTypeName,
-                                                     final String mappedClassName)
+  final MutableColumnDataType lookupOrCreateColumnDataType(final Schema schema,
+                                                           final int javaSqlTypeInt,
+                                                           final String databaseSpecificTypeName,
+                                                           final String mappedClassName)
   {
     MutableColumnDataType columnDataType = catalog
       .lookupColumnDataType(schema, databaseSpecificTypeName).orElse(catalog
@@ -241,24 +242,24 @@ abstract class AbstractRetriever
     return columnDataType;
   }
 
-  Optional<MutableRoutine> lookupRoutine(final String catalogName,
-                                         final String schemaName,
-                                         final String routineName,
-                                         final String specificName)
+  final Optional<MutableRoutine> lookupRoutine(final String catalogName,
+                                               final String schemaName,
+                                               final String routineName,
+                                               final String specificName)
   {
     return catalog.lookupRoutine(Arrays
       .asList(catalogName, schemaName, routineName, specificName));
   }
 
-  Optional<MutableTable> lookupTable(final String catalogName,
-                                     final String schemaName,
-                                     final String tableName)
+  final Optional<MutableTable> lookupTable(final String catalogName,
+                                           final String schemaName,
+                                           final String tableName)
   {
     return catalog
       .lookupTable(Arrays.asList(catalogName, schemaName, tableName));
   }
 
-  String normalizeCatalogName(final String name)
+  final String normalizeCatalogName(final String name)
   {
     if (retrieverConnection.isSupportsCatalogs())
     {
@@ -270,7 +271,7 @@ abstract class AbstractRetriever
     }
   }
 
-  String normalizeSchemaName(final String name)
+  final String normalizeSchemaName(final String name)
   {
     if (retrieverConnection.isSupportsSchemas())
     {

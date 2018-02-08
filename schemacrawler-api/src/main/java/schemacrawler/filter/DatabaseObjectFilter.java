@@ -35,15 +35,15 @@ import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
-public class DatabaseObjectFilter<D extends DatabaseObject>
+final class DatabaseObjectFilter<D extends DatabaseObject>
   implements Predicate<D>
 {
 
   private final InclusionRule schemaInclusionRule;
   private final InclusionRule databaseObjectInclusionRule;
 
-  public DatabaseObjectFilter(final SchemaCrawlerOptions options,
-                              final InclusionRule databaseObjectInclusionRule)
+  DatabaseObjectFilter(final SchemaCrawlerOptions options,
+                       final InclusionRule databaseObjectInclusionRule)
   {
     if (options != null)
     {
