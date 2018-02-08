@@ -41,7 +41,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
@@ -163,11 +162,6 @@ final class RetrieverConnection
   Connection getConnection()
   {
     return connection;
-  }
-
-  Identifiers getIdentifiers()
-  {
-    return databaseSpecificOptions.getIdentifiers();
   }
 
   /**
