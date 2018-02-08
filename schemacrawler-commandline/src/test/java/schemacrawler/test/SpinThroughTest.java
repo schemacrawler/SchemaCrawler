@@ -188,6 +188,7 @@ public class SpinThroughTest
           argsMap.put("g", hsqldbProperties.toString());
           argsMap.put("sequences", ".*");
           argsMap.put("synonyms", ".*");
+          argsMap.put("routines", ".*");
           argsMap.put("noinfo", Boolean.FALSE.toString());
           argsMap.put("infolevel", infoLevel.name());
           argsMap.put("command", schemaTextDetailType.name());

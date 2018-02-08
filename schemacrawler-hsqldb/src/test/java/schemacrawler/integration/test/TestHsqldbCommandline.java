@@ -103,6 +103,7 @@ public class TestHsqldbCommandline
       argsMap.put("command", "details,dump,count,hsqldb.tables");
       argsMap.put("infolevel", "maximum");
       argsMap.put("synonyms", ".*");
+      argsMap.put("routines", ".*");
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));

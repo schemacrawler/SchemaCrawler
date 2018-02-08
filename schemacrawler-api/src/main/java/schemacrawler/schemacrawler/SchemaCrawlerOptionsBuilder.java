@@ -122,8 +122,8 @@ public class SchemaCrawlerOptionsBuilder
       .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE));
 
     options.setRoutineInclusionRule(configProperties
-      .getInclusionRule(SC_ROUTINE_PATTERN_INCLUDE,
-                        SC_ROUTINE_PATTERN_EXCLUDE));
+      .getInclusionRuleDefaultExclude(SC_ROUTINE_PATTERN_INCLUDE,
+                                      SC_ROUTINE_PATTERN_EXCLUDE));
     options.setRoutineColumnInclusionRule(configProperties
       .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
                         SC_ROUTINE_COLUMN_PATTERN_EXCLUDE));
