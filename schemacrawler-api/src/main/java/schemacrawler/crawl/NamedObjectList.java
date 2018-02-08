@@ -49,8 +49,10 @@ import sf.util.ObjectToString;
 
 /**
  * Ordered list of named objects, that can be searched associatively.
- *
- * @author Sualeh Fatehi
+ * NamedObjectList has the ability to look up by dependent object which
+ * is not created yet. That is, by NamedObject + String. Returns values
+ * sorted in natural sort order, and is iterable. The iterator does not
+ * allow modifications to the underlying data structure.
  */
 final class NamedObjectList<N extends NamedObject>
   implements Serializable, ReducibleCollection<N>
