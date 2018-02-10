@@ -10,7 +10,7 @@
 
 * Fixing bug when retrieving Oracle procedure metadata
 * Adding test support for routines
-* Adding test code for retreiving result set metadata
+* Adding test code for retrieving result set metadata
 
 <a name="a14.18.01"></a>
 ## Release 14.18.01 - 2018-01-10
