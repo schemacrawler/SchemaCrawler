@@ -31,9 +31,6 @@ package schemacrawler.tools.executable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 
 final class OperationExecutableCommandProvider
@@ -55,22 +52,6 @@ final class OperationExecutableCommandProvider
   OperationExecutableCommandProvider()
   {
     super(supportedCommands(), OPERATION_EXECUTABLE);
-  }
-
-  @Deprecated
-  @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    throw new RuntimeException("Accessing deprecated method");
-  }
-
-  @Deprecated
-  @Override
-  public String getCommand()
-  {
-    throw new RuntimeException("Accessing deprecated method");
   }
 
   @Override

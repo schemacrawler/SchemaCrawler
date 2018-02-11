@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.executable;
+package schemacrawler.tools.integration.graph;
 
 
 import static sf.util.Utility.isBlank;
@@ -35,12 +35,13 @@ import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.ExecutableCommandProvider;
+import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextExecutable;
 
-public final class SchemaExecutableCommandProvider
+public final class GraphExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
@@ -57,7 +58,7 @@ public final class SchemaExecutableCommandProvider
     return supportedCommands;
   }
 
-  public SchemaExecutableCommandProvider()
+  public GraphExecutableCommandProvider()
   {
     super(supportedCommands, "");
   }
@@ -77,8 +78,28 @@ public final class SchemaExecutableCommandProvider
         .format("Command <%s> not supported", command));
     }
 
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    final boolean isGraph = GraphOutputFormat
+      .isGraphOutputFormat(outputFormatValue);
+    final boolean isEmbeddedGraph = GraphOutputFormat.htmlx.getFormat()
+      .equalsIgnoreCase(outputFormatValue);
+
     // Create and configure executable
-    final Executable executable = new SchemaTextExecutable(command);
+    final Executable executable;
+    if (isEmbeddedGraph)
+    {
+      executable = new EmbeddedGraphExecutable(command);
+    }
+    else if (isGraph)
+    {
+      executable = new GraphExecutable(command);
+    }
+    else
+    {
+      throw new SchemaCrawlerException(String
+        .format("Command <%s> not supported", command));
+    }
+
     if (schemaCrawlerOptions != null)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -110,7 +131,7 @@ public final class SchemaExecutableCommandProvider
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     return supportedCommands.contains(command)
            && (isBlank(outputFormatValue)
-               || TextOutputFormat.isTextOutputFormat(outputFormatValue));
+               || GraphOutputFormat.isGraphOutputFormat(outputFormatValue));
   }
 
 }

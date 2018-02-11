@@ -38,7 +38,7 @@ import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-abstract class ExecutableCommandProvider
+public abstract class ExecutableCommandProvider
   implements CommandProvider
 {
 
@@ -53,6 +53,15 @@ abstract class ExecutableCommandProvider
   {
     this.supportedCommands = supportedCommands;
     this.executableClassName = executableClassName;
+  }
+
+  @Deprecated
+  @Override
+  public final Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   @Override
@@ -104,6 +113,13 @@ abstract class ExecutableCommandProvider
     executable.setOutputOptions(outputOptions);
 
     return executable;
+  }
+
+  @Deprecated
+  @Override
+  public final String getCommand()
+  {
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   /**
