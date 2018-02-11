@@ -34,12 +34,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.integration.scripting.ScriptCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 /**
  * Command registry for mapping commands to executable.
@@ -68,6 +70,10 @@ public final class CommandRegistry
         .load(CommandProvider.class);
       for (final CommandProvider commandProvider: serviceLoader)
       {
+        LOGGER.log(Level.CONFIG,
+                   new StringFormat("Loading commands %s, provided by %s",
+                                    commandProvider.getSupportedCommands(),
+                                    commandProvider.getClass().getName()));
         commandProviders.add(commandProvider);
       }
     }
