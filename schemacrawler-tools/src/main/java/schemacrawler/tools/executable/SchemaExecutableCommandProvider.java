@@ -28,7 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -43,14 +44,34 @@ class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  public SchemaExecutableCommandProvider(final SchemaTextDetailType schemaTextDetailType)
+  private static Collection<String> supportedCommands()
   {
-    super(requireNonNull(schemaTextDetailType, "No schema text detail provided")
-      .name(), "");
+    final Collection<String> supportedCommands = new ArrayList<>();
+    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
+      .values())
+    {
+      supportedCommands.add(schemaTextDetailType.name());
+    }
+    return supportedCommands;
+  }
+
+  public SchemaExecutableCommandProvider()
+  {
+    super(supportedCommands(), "");
+  }
+
+  @Deprecated
+  @Override
+  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -73,15 +94,15 @@ class SchemaExecutableCommandProvider
     final Executable executable;
     if (isEmbeddedGraph)
     {
-      executable = new EmbeddedGraphExecutable(getCommand());
+      executable = new EmbeddedGraphExecutable(command);
     }
     else if (isGraph)
     {
-      executable = new GraphExecutable(getCommand());
+      executable = new GraphExecutable(command);
     }
     else
     {
-      executable = new SchemaTextExecutable(getCommand());
+      executable = new SchemaTextExecutable(command);
     }
 
     if (schemaCrawlerOptions != null)
@@ -96,4 +117,18 @@ class SchemaExecutableCommandProvider
     return executable;
 
   }
+
+  @Deprecated
+  @Override
+  public String getCommand()
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return supportedCommands();
+  }
+
 }

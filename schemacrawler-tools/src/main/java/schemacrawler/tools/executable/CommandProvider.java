@@ -28,6 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
@@ -35,14 +38,38 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
+  @Deprecated
   Executable configureNewExecutable(SchemaCrawlerOptions schemaCrawlerOptions,
                                     OutputOptions outputOptions)
     throws SchemaCrawlerException;
 
+  default Executable configureNewExecutable(final String command,
+                                            final SchemaCrawlerOptions schemaCrawlerOptions,
+                                            final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    return configureNewExecutable(getCommand(),
+                                  schemaCrawlerOptions,
+                                  outputOptions);
+  }
+
+  @Deprecated
   String getCommand();
 
   String getHelpAdditionalText();
 
   String getHelpResource();
+
+  default Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(getCommand());
+  }
+
+  default boolean supportsCommand(final String command,
+                                  final SchemaCrawlerOptions schemaCrawlerOptions,
+                                  final OutputOptions outputOptions)
+  {
+    return getCommand().equals(command);
+  }
 
 }

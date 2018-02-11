@@ -32,7 +32,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.options.OutputOptions;
 
 public class TestCommandPlugin
 {
@@ -42,7 +44,9 @@ public class TestCommandPlugin
     throws Exception
   {
     final CommandRegistry registry = new CommandRegistry();
-    assertTrue(registry.hasCommand("lint"));
+    assertTrue(registry.supportsCommand("lint",
+                                        new SchemaCrawlerOptions(),
+                                        new OutputOptions()));
   }
 
 }

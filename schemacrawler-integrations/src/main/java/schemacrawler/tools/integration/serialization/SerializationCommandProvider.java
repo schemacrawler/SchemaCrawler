@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
@@ -37,8 +41,18 @@ public class SerializationCommandProvider
   implements CommandProvider
 {
 
+  @Deprecated
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final SerializationExecutable executable = new SerializationExecutable();
@@ -53,10 +67,11 @@ public class SerializationCommandProvider
     return executable;
   }
 
+  @Deprecated
   @Override
   public String getCommand()
   {
-    return SerializationExecutable.COMMAND;
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   /**
@@ -72,6 +87,20 @@ public class SerializationCommandProvider
   public String getHelpResource()
   {
     return "/help/SerializationExecutable.txt";
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(SerializationExecutable.COMMAND);
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return SerializationExecutable.COMMAND.equals(command);
   }
 
 }

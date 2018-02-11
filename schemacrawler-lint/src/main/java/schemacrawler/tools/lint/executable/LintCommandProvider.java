@@ -28,8 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
@@ -44,8 +47,18 @@ public class LintCommandProvider
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LintCommandProvider.class.getName());
 
+  @Deprecated
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final LintExecutable executable = new LintExecutable();
@@ -60,10 +73,11 @@ public class LintCommandProvider
     return executable;
   }
 
+  @Deprecated
   @Override
   public String getCommand()
   {
-    return LintExecutable.COMMAND;
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   @Override
@@ -84,6 +98,20 @@ public class LintCommandProvider
   public String getHelpResource()
   {
     return "/help/LintCommandProvider.txt";
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(LintExecutable.COMMAND);
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return LintExecutable.COMMAND.equals(command);
   }
 
 }

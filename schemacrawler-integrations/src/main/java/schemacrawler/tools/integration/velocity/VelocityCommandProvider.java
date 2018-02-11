@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.velocity;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
@@ -37,8 +41,18 @@ public class VelocityCommandProvider
   implements CommandProvider
 {
 
+  @Deprecated
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final VelocityRenderer executable = new VelocityRenderer();
@@ -53,10 +67,11 @@ public class VelocityCommandProvider
     return executable;
   }
 
+  @Deprecated
   @Override
   public String getCommand()
   {
-    return VelocityRenderer.COMMAND;
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   /**
@@ -74,4 +89,17 @@ public class VelocityCommandProvider
     return "/help/VelocityRenderer.txt";
   }
 
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(VelocityRenderer.COMMAND);
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return VelocityRenderer.COMMAND.equals(command);
+  }
 }

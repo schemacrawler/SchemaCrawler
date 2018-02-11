@@ -75,7 +75,8 @@ public final class SchemaCrawlerExecutable
 
     for (final String command: commands)
     {
-      final boolean isCommand = commandRegistry.hasCommand(command);
+      final boolean isCommand = commandRegistry
+        .supportsCommand(command, schemaCrawlerOptions, outputOptions);
       final boolean isConfiguredQuery = additionalConfiguration != null
                                         && additionalConfiguration
                                           .containsKey(command);

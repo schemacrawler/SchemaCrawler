@@ -31,22 +31,15 @@ package schemacrawler.tools.executable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.ServiceLoader;
-import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.integration.scripting.ScriptCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.operation.Operation;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 /**
  * Command registry for mapping commands to executable.
@@ -54,44 +47,28 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
-  implements Iterable<String>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CommandRegistry.class.getName());
 
-  private static Map<String, CommandProvider> loadCommandRegistry()
+  private static List<CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
   {
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-      .values())
-    {
-      commandProviders
-        .add(new SchemaExecutableCommandProvider(schemaTextDetailType));
-    }
-
-    for (final Operation operation: Operation.values())
-    {
-      commandProviders.add(new OperationExecutableCommandProvider(operation));
-    }
-
+    commandProviders.add(new SchemaExecutableCommandProvider());
+    commandProviders.add(new OperationExecutableCommandProvider());
     commandProviders.add(new ScriptCommandProvider());
 
     try
     {
       final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader
         .load(CommandProvider.class);
-      for (final CommandProvider commandRegistryEntry: serviceLoader)
+      for (final CommandProvider commandProvider: serviceLoader)
       {
-        final String executableCommand = commandRegistryEntry.getCommand();
-        LOGGER.log(Level.FINER,
-                   new StringFormat("Loading executable, %s=%s",
-                                    executableCommand,
-                                    commandRegistryEntry.getClass().getName()));
-        commandProviders.add(commandRegistryEntry);
+        commandProviders.add(commandProvider);
       }
     }
     catch (final Exception e)
@@ -100,15 +77,10 @@ public final class CommandRegistry
                                        e);
     }
 
-    final Map<String, CommandProvider> commandRegistry = new HashMap<>();
-    for (final CommandProvider commandProvider: commandProviders)
-    {
-      commandRegistry.put(commandProvider.getCommand(), commandProvider);
-    }
-    return commandRegistry;
+    return commandProviders;
   }
 
-  private final Map<String, CommandProvider> commandRegistry;
+  private final List<CommandProvider> commandRegistry;
 
   public CommandRegistry()
     throws SchemaCrawlerException
@@ -118,43 +90,29 @@ public final class CommandRegistry
 
   public String getHelpAdditionalText(final String command)
   {
-    final String helpAdditionalText;
-    if (commandRegistry.containsKey(command))
-    {
-      helpAdditionalText = commandRegistry.get(command).getHelpAdditionalText();
-    }
-    else
-    {
-      helpAdditionalText = null;
-    }
-
-    return helpAdditionalText;
+    // TODO
+    throw new RuntimeException(command);
   }
 
   public String getHelpResource(final String command)
   {
-    final String helpResource;
-    if (commandRegistry.containsKey(command))
-    {
-      helpResource = commandRegistry.get(command).getHelpResource();
-    }
-    else
-    {
-      helpResource = null;
-    }
-
-    return helpResource;
+    // TODO
+    throw new RuntimeException(command);
   }
 
-  public boolean hasCommand(final String command)
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
   {
-    return command != null && commandRegistry.containsKey(command);
-  }
-
-  @Override
-  public Iterator<String> iterator()
-  {
-    return lookupAvailableCommands().iterator();
+    for (final CommandProvider commandProvider: commandRegistry)
+    {
+      if (commandProvider
+        .supportsCommand(command, schemaCrawlerOptions, outputOptions))
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   Executable configureNewExecutable(final String command,
@@ -162,26 +120,33 @@ public final class CommandRegistry
                                     final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    final CommandProvider commandProvider;
-    if (commandRegistry.containsKey(command))
+    CommandProvider executableCommandProvider = null;
+    for (final CommandProvider commandProvider: commandRegistry)
     {
-      commandProvider = commandRegistry.get(command);
+      if (commandProvider
+        .supportsCommand(command, schemaCrawlerOptions, outputOptions))
+      {
+        executableCommandProvider = commandProvider;
+        break;
+      }
     }
-    else
+    if (executableCommandProvider == null)
     {
-      commandProvider = new OperationExecutableCommandProvider(command);
+      executableCommandProvider = new OperationExecutableCommandProvider();
     }
 
-    return commandProvider.configureNewExecutable(schemaCrawlerOptions,
-                                                  outputOptions);
+    return executableCommandProvider
+      .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
   }
 
-  private Collection<String> lookupAvailableCommands()
+  public Collection<String> getSupportedCommands()
   {
-    final List<String> availableCommands = new ArrayList<>(commandRegistry
-      .keySet());
-    Collections.sort(availableCommands);
-    return availableCommands;
+    Collection<String> supportedCommands = new HashSet<>();
+    for (CommandProvider commandProvider: commandRegistry)
+    {
+      supportedCommands.addAll(commandProvider.getSupportedCommands());
+    }
+    return supportedCommands;
   }
 
 }

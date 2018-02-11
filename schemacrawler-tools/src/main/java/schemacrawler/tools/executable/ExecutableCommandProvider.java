@@ -29,6 +29,7 @@ package schemacrawler.tools.executable;
 
 
 import java.lang.reflect.Constructor;
+import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -44,18 +45,19 @@ abstract class ExecutableCommandProvider
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ExecutableCommandProvider.class.getName());
 
-  private final String command;
+  private final Collection<String> supportedCommands;
   private final String executableClassName;
 
-  ExecutableCommandProvider(final String command,
-                            final String executableClassName)
+  public ExecutableCommandProvider(final Collection<String> supportedCommands,
+                                   final String executableClassName)
   {
-    this.command = command;
+    this.supportedCommands = supportedCommands;
     this.executableClassName = executableClassName;
   }
 
   @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -104,12 +106,6 @@ abstract class ExecutableCommandProvider
     return executable;
   }
 
-  @Override
-  public String getCommand()
-  {
-    return command;
-  }
-
   /**
    * {@inheritDoc}
    */
@@ -124,6 +120,14 @@ abstract class ExecutableCommandProvider
   {
     final String helpResource = "/help/DefaultExecutable.txt";
     return helpResource;
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return supportedCommands.contains(command);
   }
 
   @Override
