@@ -32,6 +32,8 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
+import java.util.Collection;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -144,11 +146,14 @@ public final class SchemaCrawlerHelpCommandLine
     System.out.println(loadHelpText("/help/SchemaCrawlerOptions.txt"));
     System.out.println(loadHelpText("/help/Config.txt"));
     System.out.println(loadHelpText("/help/ApplicationOptions.txt"));
-    if (!commandRegistry.hasCommand(command))
+
+    final Collection<String> supportedCommands = commandRegistry
+      .getSupportedCommands();
+    if (!supportedCommands.contains(command))
     {
       System.out.println(loadHelpText("/help/Command.txt"));
       System.out.println("  Available commands are: ");
-      for (final String availableCommand: commandRegistry)
+      for (final String availableCommand: supportedCommands)
       {
         System.out.println("    " + availableCommand);
       }

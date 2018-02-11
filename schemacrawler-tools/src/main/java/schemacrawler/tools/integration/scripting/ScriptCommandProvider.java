@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
@@ -37,8 +41,18 @@ public class ScriptCommandProvider
   implements CommandProvider
 {
 
+  @Deprecated
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final ScriptExecutable executable = new ScriptExecutable();
@@ -47,10 +61,11 @@ public class ScriptCommandProvider
     return executable;
   }
 
+  @Deprecated
   @Override
   public String getCommand()
   {
-    return ScriptExecutable.COMMAND;
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   /**
@@ -66,6 +81,20 @@ public class ScriptCommandProvider
   public String getHelpResource()
   {
     return "/help/ScriptExecutable.txt";
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(ScriptExecutable.COMMAND);
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return ScriptExecutable.COMMAND.equals(command);
   }
 
 }

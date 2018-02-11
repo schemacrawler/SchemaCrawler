@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
@@ -37,8 +41,18 @@ public class ThymeleafCommandProvider
   implements CommandProvider
 {
 
+  @Deprecated
   @Override
   public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Executable configureNewExecutable(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)
   {
     final ThymeleafRenderer executable = new ThymeleafRenderer();
@@ -53,10 +67,11 @@ public class ThymeleafCommandProvider
     return executable;
   }
 
+  @Deprecated
   @Override
   public String getCommand()
   {
-    return ThymeleafRenderer.COMMAND;
+    throw new RuntimeException("Accessing deprecated method");
   }
 
   /**
@@ -72,6 +87,20 @@ public class ThymeleafCommandProvider
   public String getHelpResource()
   {
     return "/help/ThymeleafRenderer.txt";
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return Arrays.asList(ThymeleafRenderer.COMMAND);
+  }
+
+  @Override
+  public boolean supportsCommand(final String command,
+                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                 final OutputOptions outputOptions)
+  {
+    return ThymeleafRenderer.COMMAND.equals(command);
   }
 
 }

@@ -28,8 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.Operation;
 
 final class OperationExecutableCommandProvider
@@ -38,16 +42,41 @@ final class OperationExecutableCommandProvider
 
   private static final String OPERATION_EXECUTABLE = "schemacrawler.tools.text.operation.OperationExecutable";
 
-  OperationExecutableCommandProvider(final Operation operation)
+  private static Collection<String> supportedCommands()
   {
-    super(requireNonNull(operation, "No operation provided").name(),
-          OPERATION_EXECUTABLE);
+    final Collection<String> supportedCommands = new ArrayList<>();
+    for (final Operation operation: Operation.values())
+    {
+      supportedCommands.add(operation.name());
+    }
+    return supportedCommands;
   }
 
-  OperationExecutableCommandProvider(final String operation)
+  OperationExecutableCommandProvider()
   {
-    super(requireNonNull(operation, "No operation provided"),
-          OPERATION_EXECUTABLE);
+    super(supportedCommands(), OPERATION_EXECUTABLE);
+  }
+
+  @Deprecated
+  @Override
+  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
+    throws SchemaCrawlerException
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Deprecated
+  @Override
+  public String getCommand()
+  {
+    throw new RuntimeException("Accessing deprecated method");
+  }
+
+  @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return supportedCommands();
   }
 
 }
