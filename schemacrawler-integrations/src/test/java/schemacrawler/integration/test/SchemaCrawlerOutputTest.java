@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test;
+package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.fail;
