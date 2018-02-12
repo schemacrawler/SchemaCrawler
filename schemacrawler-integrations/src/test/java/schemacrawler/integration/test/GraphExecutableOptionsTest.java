@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.graph;
+package schemacrawler.integration.test;
 
 
 import static java.nio.file.Files.copy;
@@ -50,6 +50,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
+import schemacrawler.tools.integration.graph.GraphExecutable;
+import schemacrawler.tools.integration.graph.GraphOptions;
+import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;

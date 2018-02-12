@@ -38,7 +38,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.integration.graph.GraphExecutableCommandProvider;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -62,7 +61,6 @@ public final class CommandRegistry
 
     commandProviders.add(new SchemaExecutableCommandProvider());
     commandProviders.add(new OperationExecutableCommandProvider());
-    commandProviders.add(new GraphExecutableCommandProvider());
 
     try
     {
