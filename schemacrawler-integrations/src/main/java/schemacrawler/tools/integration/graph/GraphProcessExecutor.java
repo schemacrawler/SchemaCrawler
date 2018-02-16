@@ -47,62 +47,104 @@ import sf.util.FileContents;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public class GraphProcessExecutor
-  extends ProcessExecutor
+final class GraphProcessExecutor
+  implements GraphExecutor
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphProcessExecutor.class.getName());
 
-  private final Path outputFile;
-  private final Path dotFile;
+  @Override
+  public boolean canGenerate(final GraphOutputFormat graphOutputFormat)
+  {
+    requireNonNull(graphOutputFormat, "No graph output format provided");
 
-  public GraphProcessExecutor(final Path dotFile,
-                              final Path outputFile,
-                              final GraphOptions graphOptions,
-                              final GraphOutputFormat graphOutputFormat)
-    throws IOException
+    final List<String> command = new ArrayList<>();
+    command.add("dot");
+    command.add("-V");
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Checking if Graphviz is available:\n%s",
+                                command.toString()));
+
+    final ProcessExecutor processExecutor = new ProcessExecutor();
+    processExecutor.setCommandLine(command);
+
+    Integer exitCode;
+    try
+    {
+      exitCode = processExecutor.call();
+      LOGGER.log(Level.INFO,
+                 new FileContents(processExecutor.getProcessOutput()));
+    }
+    catch (final Exception e)
+    {
+      exitCode = -1;
+    }
+    final boolean isProcessInError = exitCode == null || exitCode != 0;
+
+    return isProcessInError;
+  }
+
+  @Override
+  public int generate(final Path dotFile,
+                      final Path outputFile,
+                      final List<String> graphvizOpts,
+                      final GraphOutputFormat graphOutputFormat)
+    throws SchemaCrawlerException
   {
     requireNonNull(dotFile, "No DOT file provided");
     requireNonNull(outputFile, "No graph output file provided");
-    requireNonNull(graphOptions, "No graph options provided");
+    requireNonNull(graphvizOpts, "No Graphviz options provided");
     requireNonNull(graphOutputFormat, "No graph output format provided");
 
     if (!isFileReadable(dotFile))
     {
-      throw new IOException("Cannot read DOT file, " + dotFile);
+      throw new SchemaCrawlerException("Cannot read DOT file, " + dotFile);
     }
-    this.dotFile = dotFile;
 
-    this.outputFile = outputFile.normalize().toAbsolutePath();
-    if (!isFileWritable(this.outputFile))
+    final Path graphOutputFile = outputFile.normalize().toAbsolutePath();
+    if (!isFileWritable(graphOutputFile))
     {
-      throw new IOException("Cannot write output file, " + this.outputFile);
+      throw new SchemaCrawlerException("Cannot write output file, "
+                                       + graphOutputFile);
     }
 
-    createDiagramCommand(dotFile, outputFile, graphOptions, graphOutputFormat);
-    LOGGER
-      .log(Level.INFO,
-           "Generating diagram using Graphviz:\n" + getCommand().toString());
+    final List<String> command = createDiagramCommand(dotFile,
+                                                      graphOutputFile,
+                                                      graphvizOpts,
+                                                      graphOutputFormat);
+    LOGGER.log(Level.INFO,
+               new StringFormat("Generating diagram using Graphviz:\n%s",
+                                command.toString()));
 
-  }
+    final ProcessExecutor processExecutor = new ProcessExecutor();
+    processExecutor.setCommandLine(command);
 
-  @Override
-  public Integer call()
-    throws Exception
-  {
-    final Integer exitCode = super.call();
+    Integer exitCode;
+    try
+    {
+      exitCode = processExecutor.call();
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(String
+        .format("Could not generate diagram using Graphviz:\n%s",
+                command.toString()), e);
+    }
     final boolean isProcessInError = exitCode == null || exitCode != 0;
 
-    LOGGER.log(Level.INFO, new FileContents(getProcessOutput()));
-    final Supplier<String> processError = new FileContents(getProcessOutput());
+    LOGGER.log(Level.INFO,
+               new FileContents(processExecutor.getProcessOutput()));
+    final Supplier<String> processError = new FileContents(processExecutor
+      .getProcessOutput());
     if (isProcessInError)
     {
       LOGGER.log(Level.SEVERE,
                  new StringFormat("Process returned exit code %d%n%s",
                                   exitCode,
                                   processError));
-      captureRecovery();
+      captureRecovery(dotFile, graphOutputFile, processExecutor.getCommand());
     }
     else
     {
@@ -114,17 +156,9 @@ public class GraphProcessExecutor
     return exitCode;
   }
 
-  public Path getDotFile()
-  {
-    return dotFile;
-  }
-
-  public Path getOutputFile()
-  {
-    return outputFile;
-  }
-
-  private void captureRecovery()
+  private void captureRecovery(final Path dotFile,
+                               final Path outputFile,
+                               final List<String> command)
     throws SchemaCrawlerException
   {
     // Move DOT file to current directory
@@ -132,7 +166,6 @@ public class GraphProcessExecutor
       .resolve(dotFile.getFileName());
 
     // Print command to run
-    final List<String> command = getCommand();
     command.remove(command.size() - 1);
     command.remove(command.size() - 1);
     command.add(outputFile.toString());
@@ -141,7 +174,7 @@ public class GraphProcessExecutor
     final String message = String
       .format("%s%nGenerate your diagram manually, using:%n%s",
               readResourceFully("/dot.error.txt"),
-              String.join(" ", quoteCommandLine(command)));
+              String.join(" ", command));
 
     try
     {
@@ -157,25 +190,23 @@ public class GraphProcessExecutor
     throw new SchemaCrawlerException(message);
   }
 
-  private void createDiagramCommand(final Path dotFile,
-                                    final Path outputFile,
-                                    final GraphOptions graphOptions,
-                                    final GraphOutputFormat graphOutputFormat)
+  private List<String> createDiagramCommand(final Path dotFile,
+                                            final Path outputFile,
+                                            final List<String> graphvizOpts,
+                                            final GraphOutputFormat graphOutputFormat)
   {
     final List<String> command = new ArrayList<>();
     command.add("dot");
 
-    if (graphOptions != null)
-    {
-      command.addAll(graphOptions.getGraphvizOpts());
-    }
+    command.addAll(graphvizOpts);
+
     command.add("-T");
     command.add(graphOutputFormat.getFormat());
     command.add("-o");
     command.add(outputFile.toString());
     command.add(dotFile.toString());
 
-    setCommandLine(command);
+    return command;
   }
 
 }

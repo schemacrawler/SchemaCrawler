@@ -33,7 +33,10 @@ import static sf.util.IOUtility.createTempFilePath;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.List;
 
+import guru.nidi.graphviz.engine.Format;
+import guru.nidi.graphviz.engine.Graphviz;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -114,14 +117,19 @@ public final class GraphExecutable
 
     if (graphOutputFormat != GraphOutputFormat.scdot)
     {
+      Path outputFile = outputOptions.getOutputFile();
+
+      Graphviz.fromFile(dotFile.toFile()).width(700).render(Format.SVG)
+        .toFile(outputFile.toFile());
+
       // Create graph image
       final GraphOptions graphOptions = getGraphOptions();
-      final GraphProcessExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
-                                                                                 outputOptions
-                                                                                   .getOutputFile(),
-                                                                                 graphOptions,
-                                                                                 graphOutputFormat);
-      graphProcessExecutor.call();
+      final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
+
+      final GraphExecutor graphExecutor = new GraphProcessExecutor();
+      graphExecutor.canGenerate(graphOutputFormat);
+      graphExecutor
+        .generate(dotFile, outputFile, graphvizOpts, graphOutputFormat);
     }
   }
 
