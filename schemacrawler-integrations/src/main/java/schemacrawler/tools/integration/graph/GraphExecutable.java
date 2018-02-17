@@ -117,7 +117,7 @@ public final class GraphExecutable
 
     if (graphOutputFormat != GraphOutputFormat.scdot)
     {
-      Path outputFile = outputOptions.getOutputFile();
+      final Path outputFile = outputOptions.getOutputFile();
 
       Graphviz.fromFile(dotFile.toFile()).width(700).render(Format.SVG)
         .toFile(outputFile.toFile());
@@ -125,11 +125,33 @@ public final class GraphExecutable
       // Create graph image
       final GraphOptions graphOptions = getGraphOptions();
       final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
+      boolean graphGenerated = false;
 
-      final GraphExecutor graphExecutor = new GraphProcessExecutor();
-      graphExecutor.canGenerate(graphOutputFormat);
-      graphExecutor
-        .generate(dotFile, outputFile, graphvizOpts, graphOutputFormat);
+      final GraphExecutor graphJavaExecutor = new GraphJavaExecutor(dotFile,
+                                                                    outputFile,
+                                                                    graphOutputFormat);
+      if (!graphGenerated && graphJavaExecutor.canGenerate())
+      {
+        final boolean success = graphJavaExecutor.call();
+        if (success)
+        {
+          graphGenerated = true;
+        }
+      }
+
+      final GraphExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
+                                                                          outputFile,
+                                                                          graphOutputFormat,
+                                                                          graphvizOpts);
+      if (!graphGenerated && graphProcessExecutor.canGenerate())
+      {
+        final boolean success = graphJavaExecutor.call();
+        if (success)
+        {
+          graphGenerated = true;
+        }
+      }
+
     }
   }
 
