@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static schemacrawler.tools.integration.graph.GraphExecutorUtility.canMap;
-import static schemacrawler.tools.integration.graph.GraphExecutorUtility.generateGraph;
+import static schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility.canMap;
+import static schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility.generateGraph;
 
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -74,27 +74,34 @@ final class GraphJavaExecutor
   public boolean canGenerate()
   {
 
+    final String className = "guru.nidi.graphviz.engine.Graphviz";
+
     boolean hasClass;
+    boolean supportsFormat;
     try
     {
-      Class.forName("guru.nidi.graphviz.engine.Graphviz");
+      Class.forName(className);
       hasClass = true;
+      supportsFormat = hasClass && canMap(graphOutputFormat);
     }
     catch (final Exception e)
     {
+      LOGGER
+        .log(Level.INFO, new StringFormat("Could not load <%s>", className), e);
       hasClass = false;
+      supportsFormat = false;
     }
 
-    final boolean canGenerateFormat = canMap(graphOutputFormat);
+    LOGGER.log(Level.INFO,
+               new StringFormat("Checking if diagram can be generated - "
+                                + " can load <%s> = <%b>, "
+                                + " can generate format <%s> = <%b>",
+                                className,
+                                hasClass,
+                                graphOutputFormat.getDescription(),
+                                supportsFormat));
 
-    LOGGER
-      .log(Level.INFO,
-           new StringFormat("Checking if diagram can be generated - has Java class = <%b>, can generate format <%s> = <%b>",
-                            hasClass,
-                            graphOutputFormat.getDescription(),
-                            canGenerateFormat));
-
-    return hasClass && canGenerateFormat;
+    return hasClass && supportsFormat;
 
   }
 

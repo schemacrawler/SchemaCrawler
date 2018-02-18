@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static java.nio.file.Files.move;
 import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readResourceFully;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +101,7 @@ final class GraphProcessExecutor
                  new StringFormat("Process returned exit code %d%n%s",
                                   exitCode,
                                   processError));
-      captureRecovery(dotFile, outputFile, processExecutor.getCommand());
+      showCommandline(dotFile, outputFile, processExecutor.getCommand());
     }
     else
     {
@@ -150,13 +148,18 @@ final class GraphProcessExecutor
     return successful;
   }
 
-  private void captureRecovery(final Path dotFile,
+  private void showCommandline(final Path dotFile,
                                final Path outputFile,
                                final List<String> command)
   {
-    // Move DOT file to current directory
+    if (!LOGGER.isLoggable(Level.SEVERE))
+    {
+      return;
+    }
+
+    // Find name of DOT file in local directory
     final Path movedDotFile = outputFile.normalize().getParent()
-      .resolve(dotFile.getFileName());
+      .resolve(outputFile.getFileName() + ".dot");
 
     // Print command to run
     command.remove(command.size() - 1);
@@ -164,24 +167,10 @@ final class GraphProcessExecutor
     command.add(outputFile.toString());
     command.add(movedDotFile.toString());
 
-    final String message = String
-      .format("%s%nGenerate your diagram manually, using:%n%s",
-              readResourceFully("/dot.error.txt"),
-              String.join(" ", command));
-
-    try
-    {
-      move(dotFile, movedDotFile);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.INFO,
-                 String
-                   .format("Could not move %s to %s", dotFile, movedDotFile),
-                 e);
-    }
-
-    LOGGER.log(Level.SEVERE, message);
+    LOGGER.log(Level.SEVERE,
+               String.format("%s%nGenerate your diagram manually, using:%n%s",
+                             readResourceFully("/dot.error.txt"),
+                             String.join(" ", command)));
   }
 
   private List<String> createDiagramCommand()

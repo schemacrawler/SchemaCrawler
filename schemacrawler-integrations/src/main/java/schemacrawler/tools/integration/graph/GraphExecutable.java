@@ -29,13 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static java.nio.file.Files.move;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.List;
+import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
@@ -49,6 +53,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the graphing integration.
@@ -56,6 +61,9 @@ import schemacrawler.utility.NamedObjectSort;
 public final class GraphExecutable
   extends BaseStagedExecutable
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(GraphExecutable.class.getName());
 
   private GraphOptions graphOptions;
 
@@ -127,13 +135,6 @@ public final class GraphExecutable
 
       if (!graphGenerated)
       {
-        graphGenerated = generateGraph(new GraphJavaExecutor(dotFile,
-                                                             outputFile,
-                                                             graphOutputFormat));
-      }
-
-      if (!graphGenerated)
-      {
         graphGenerated = generateGraph(new GraphProcessExecutor(dotFile,
                                                                 outputFile,
                                                                 graphOutputFormat,
@@ -142,8 +143,20 @@ public final class GraphExecutable
 
       if (!graphGenerated)
       {
+        graphGenerated = generateGraph(new GraphJavaExecutor(dotFile,
+                                                             outputFile,
+                                                             graphOutputFormat));
+      }
+
+      if (!graphGenerated)
+      {
+        final Path movedDotFile = moveDotFile(dotFile, outputFile);
+
         final String message = readResourceFully("/dot.error.txt");
-        throw new SchemaCrawlerCommandLineException(message);
+        throw new SchemaCrawlerCommandLineException(String
+          .format("%s%nGenerated DOT file:%n%s",
+                  message,
+                  movedDotFile == null? "<failed>": movedDotFile));
       }
 
     }
@@ -218,6 +231,28 @@ public final class GraphExecutable
       graphOptions = new GraphOptionsBuilder()
         .fromConfig(additionalConfiguration).toOptions();
     }
+  }
+
+  private Path moveDotFile(final Path dotFile, final Path outputFile)
+  {
+    // Move DOT file to current directory
+    final Path movedDotFile = outputFile.normalize().getParent()
+      .resolve(outputFile.getFileName() + ".dot");
+
+    try
+    {
+      move(dotFile, movedDotFile, REPLACE_EXISTING);
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.INFO,
+                 String
+                   .format("Could not move %s to %s", dotFile, movedDotFile),
+                 e);
+      return null;
+    }
+
+    return movedDotFile;
   }
 
 }
