@@ -1,5 +1,5 @@
 Graphviz was not available to create the requested diagram.
  
 Please reinstall Graphviz, and make it available on the 
-system PATH. Meanwhile, a Graphviz .dot file has been 
+system PATH. Meanwhile, a Graphviz DOT file has been 
 created instead. 

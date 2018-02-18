@@ -1,13 +1,20 @@
 package schemacrawler.tools.integration.graph;
 
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.FileReader;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.engine.GraphvizJdkEngine;
+import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.IOUtility;
 
-final class GraphExecutorUtility
+public final class GraphvizJavaExecutorUtility
 {
 
   public static boolean canMap(final GraphOutputFormat graphOutputFormat)
@@ -16,7 +23,7 @@ final class GraphExecutorUtility
   }
 
   /**
-   * Need a static method to account for imports pf pure Java Graphviz
+   * Need a static method to account for imports of pure Java Graphviz
    * library.
    *
    * @param dotFile
@@ -33,16 +40,42 @@ final class GraphExecutorUtility
                                    final GraphOutputFormat graphOutputFormat)
     throws SchemaCrawlerException
   {
+    requireNonNull(dotFile, "No DOT file provided");
+    requireNonNull(outputFile, "No graph output file provided");
+    requireNonNull(graphOutputFormat, "No graph output format provided");
+
     try
     {
-      Graphviz.fromFile(dotFile.toFile()).render(map(graphOutputFormat))
-        .toFile(outputFile.toFile());
+      // Strip all line breaks, in order to use the pure Java engine for
+      // Graphviz
+      String dotSource = IOUtility.readFully(new FileReader(dotFile.toFile()));
+      dotSource = dotSource.replaceAll("\\R", " ");
+
+      Graphviz.useEngine(new GraphvizV8Engine(), new GraphvizJdkEngine());
+      final Format format = map(graphOutputFormat);
+      Graphviz.fromString(dotSource).render(format).toFile(outputFile.toFile());
     }
     catch (final Exception e)
     {
       throw new SchemaCrawlerException("Cannot generate graph from " + dotFile,
                                        e);
     }
+  }
+
+  public static void main(final String[] args)
+    throws Exception
+  {
+    if (args.length != 3)
+    {
+      throw new IllegalArgumentException("<format> <DOT file> <output file>");
+    }
+
+    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
+      .valueOf(args[0]);
+    final Path dotFile = Paths.get(args[1]).normalize().toAbsolutePath();
+    final Path outputFile = Paths.get(args[2]).normalize().toAbsolutePath();
+
+    generateGraph(dotFile, outputFile, graphOutputFormat);
   }
 
   private static Format map(final GraphOutputFormat graphOutputFormat)
@@ -74,7 +107,7 @@ final class GraphExecutorUtility
     return null;
   }
 
-  private GraphExecutorUtility()
+  private GraphvizJavaExecutorUtility()
   {
     // Prevent instantiation
   }
