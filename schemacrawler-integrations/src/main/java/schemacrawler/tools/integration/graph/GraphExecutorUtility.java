@@ -15,6 +15,19 @@ final class GraphExecutorUtility
     return map(graphOutputFormat) != null;
   }
 
+  /**
+   * Need a static method to account for imports pf pure Java Graphviz
+   * library.
+   *
+   * @param dotFile
+   *        Path to DOT file
+   * @param outputFile
+   *        Path to output file
+   * @param graphOutputFormat
+   *        Output format
+   * @throws SchemaCrawlerException
+   *         Thrown on an exception
+   */
   public static void generateGraph(final Path dotFile,
                                    final Path outputFile,
                                    final GraphOutputFormat graphOutputFormat)

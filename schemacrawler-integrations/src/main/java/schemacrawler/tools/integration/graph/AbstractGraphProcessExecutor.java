@@ -53,19 +53,20 @@ abstract class AbstractGraphProcessExecutor
     requireNonNull(outputFile, "No graph output file provided");
     requireNonNull(graphOutputFormat, "No graph output format provided");
 
-    if (!isFileReadable(dotFile))
-    {
-      throw new SchemaCrawlerException("Cannot read DOT file, " + dotFile);
-    }
-
     this.dotFile = dotFile.normalize().toAbsolutePath();
     this.outputFile = outputFile.normalize().toAbsolutePath();
-    if (!isFileWritable(outputFile))
+    this.graphOutputFormat = graphOutputFormat;
+
+    if (!isFileReadable(this.dotFile))
+    {
+      throw new SchemaCrawlerException("Cannot read DOT file, " + this.dotFile);
+    }
+
+    if (!isFileWritable(this.outputFile))
     {
       throw new SchemaCrawlerException("Cannot write output file, "
-                                       + outputFile);
+                                       + this.outputFile);
     }
-    this.graphOutputFormat = graphOutputFormat;
   }
 
 }

@@ -89,15 +89,15 @@ final class GraphProcessExecutor
                  String.format("Could not generate diagram using Graphviz:\n%s",
                                command.toString()),
                  e);
-      exitCode = -1;
+      exitCode = Integer.MIN_VALUE;
     }
-    final boolean isProcessInError = exitCode == null || exitCode != 0;
+    final boolean successful = exitCode != null && exitCode == 0;
 
     LOGGER.log(Level.INFO,
                new FileContents(processExecutor.getProcessOutput()));
     final Supplier<String> processError = new FileContents(processExecutor
-      .getProcessOutput());
-    if (isProcessInError)
+      .getProcessError());
+    if (!successful)
     {
       LOGGER.log(Level.SEVERE,
                  new StringFormat("Process returned exit code %d%n%s",
@@ -112,7 +112,7 @@ final class GraphProcessExecutor
                  new StringFormat("Generated diagram <%s>", outputFile));
     }
 
-    return isProcessInError;
+    return successful;
   }
 
   @Override
@@ -139,11 +139,15 @@ final class GraphProcessExecutor
     }
     catch (final Exception e)
     {
-      exitCode = -1;
-    }
-    final boolean isProcessInError = exitCode == null || exitCode != 0;
+      LOGGER.log(Level.WARNING, "Could not execute Graphviz command", e);
+      LOGGER.log(Level.WARNING,
+                 new FileContents(processExecutor.getProcessError()));
 
-    return isProcessInError;
+      exitCode = Integer.MIN_VALUE;
+    }
+    final boolean successful = exitCode != null && exitCode == 0;
+
+    return successful;
   }
 
   private void captureRecovery(final Path dotFile,
