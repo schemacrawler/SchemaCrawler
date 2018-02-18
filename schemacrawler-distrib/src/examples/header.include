@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" lang="en">
     <title>SchemaCrawler Example</title>
+    <link rel="stylesheet" type="text/css" href="./sc.css">
     <link rel="stylesheet" type="text/css" href="../sc.css">
     <link rel="stylesheet" type="text/css" href="../../sc.css">
   </head>

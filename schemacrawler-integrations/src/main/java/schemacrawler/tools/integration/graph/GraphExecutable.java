@@ -29,15 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.createTempFilePath;
+import static sf.util.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.List;
 
-import guru.nidi.graphviz.engine.Format;
-import guru.nidi.graphviz.engine.Graphviz;
 import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
@@ -119,37 +120,30 @@ public final class GraphExecutable
     {
       final Path outputFile = outputOptions.getOutputFile();
 
-      Graphviz.fromFile(dotFile.toFile()).width(700).render(Format.SVG)
-        .toFile(outputFile.toFile());
-
       // Create graph image
       final GraphOptions graphOptions = getGraphOptions();
       final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
       boolean graphGenerated = false;
 
-      final GraphExecutor graphJavaExecutor = new GraphJavaExecutor(dotFile,
-                                                                    outputFile,
-                                                                    graphOutputFormat);
-      if (!graphGenerated && graphJavaExecutor.canGenerate())
+      if (!graphGenerated)
       {
-        final boolean success = graphJavaExecutor.call();
-        if (success)
-        {
-          graphGenerated = true;
-        }
+        graphGenerated = generateGraph(new GraphJavaExecutor(dotFile,
+                                                             outputFile,
+                                                             graphOutputFormat));
       }
 
-      final GraphExecutor graphProcessExecutor = new GraphProcessExecutor(dotFile,
-                                                                          outputFile,
-                                                                          graphOutputFormat,
-                                                                          graphvizOpts);
-      if (!graphGenerated && graphProcessExecutor.canGenerate())
+      if (!graphGenerated)
       {
-        final boolean success = graphJavaExecutor.call();
-        if (success)
-        {
-          graphGenerated = true;
-        }
+        graphGenerated = generateGraph(new GraphProcessExecutor(dotFile,
+                                                                outputFile,
+                                                                graphOutputFormat,
+                                                                graphvizOpts));
+      }
+
+      if (!graphGenerated)
+      {
+        final String message = readResourceFully("/dot.error.txt");
+        throw new SchemaCrawlerCommandLineException(message);
       }
 
     }
@@ -164,6 +158,26 @@ public final class GraphExecutable
   public final void setGraphOptions(final GraphOptions graphOptions)
   {
     this.graphOptions = graphOptions;
+  }
+
+  private boolean generateGraph(final GraphExecutor graphExecutor)
+  {
+    requireNonNull(graphExecutor);
+
+    boolean graphGenerated = false;
+    try
+    {
+      if (graphExecutor.canGenerate())
+      {
+        graphGenerated = graphExecutor.call();
+      }
+    }
+    catch (final Exception e)
+    {
+      // Assume that all exceptions have been logged previously
+      graphGenerated = false;
+    }
+    return graphGenerated;
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()

@@ -36,6 +36,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 final class GraphJavaExecutor
   extends AbstractGraphProcessExecutor
@@ -85,6 +86,13 @@ final class GraphJavaExecutor
     }
 
     final boolean canGenerateFormat = canMap(graphOutputFormat);
+
+    LOGGER
+      .log(Level.INFO,
+           new StringFormat("Checking if diagram can be generated - has Java class = <%b>, can generate format <%s> = <%b>",
+                            hasClass,
+                            graphOutputFormat.getDescription(),
+                            canGenerateFormat));
 
     return hasClass && canGenerateFormat;
 

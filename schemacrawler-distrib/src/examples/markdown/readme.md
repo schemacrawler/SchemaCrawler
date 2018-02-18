@@ -30,6 +30,7 @@ SchemaCrawler integrates with, using the provided scripts.
 2. Start a command shell in the `_downloader` directory 
 3. Run `download.cmd` (or `download.sh` on Unix). 
    Provide one of the following arguments:    
+    - `graphviz-java` - for a pure Java Gaphviz library to generate diagrams
     - `groovy` - for Groovy language scripting with SchemaCrawler
     - `python` - for Python language scripting with SchemaCrawler
     - `ruby` - for Ruby language scripting with SchemaCrawler
