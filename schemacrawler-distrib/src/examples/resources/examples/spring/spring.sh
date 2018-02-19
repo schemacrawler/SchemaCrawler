@@ -1,1 +1,1 @@
-java -classpath $(echo ../../_schemacrawler/lib/*.jar | tr ' ' ':')  schemacrawler.tools.integration.spring.Main -context-file=context.xml -executable=executableForSchema -datasource=datasource
+java -classpath ../../_schemacrawler/config:$(echo ../../_schemacrawler/lib/*.jar | tr ' ' ':')  schemacrawler.tools.integration.spring.Main -context-file=context.xml -executable=executableForSchema -datasource=datasource
