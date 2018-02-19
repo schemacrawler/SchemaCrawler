@@ -29,21 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import java.io.PrintWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
-import org.apache.commons.io.IOUtils;
-import org.custommonkey.xmlunit.DetailedDiff;
-import org.custommonkey.xmlunit.Diff;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
@@ -52,12 +51,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import sf.util.IOUtility;
 
 public class SchemaSerializationTest
   extends BaseDatabaseTest
 {
 
-  @Ignore
   @Test
   public void schemaSerializationWithXStream()
     throws Exception
@@ -72,7 +71,7 @@ public class SchemaSerializationTest
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema",
-                 6,
+                 10,
                  catalog.getTables(schema).size());
 
     XmlSerializedCatalog xmlCatalog;
@@ -95,29 +94,67 @@ public class SchemaSerializationTest
       .lookupSchema("PUBLIC.BOOKS").orElse(null);
     assertNotNull("Could not obtain deserialized schema", deserializedSchema);
     assertEquals("Unexpected number of tables in the deserialized schema",
-                 6,
+                 10,
                  catalog.getTables(deserializedSchema).size());
 
-    writer = new StringWriter();
-    xmlCatalog.save(writer);
-    writer.close();
-    final String xmlSerializedCatalog2 = writer.toString();
-    assertNotNull("Catalog was not serialized to XML", xmlSerializedCatalog2);
-    assertNotSame("Catalog was not serialized to XML",
-                  0,
-                  xmlSerializedCatalog2.trim().length());
+    /**
+     * writer = new StringWriter(); xmlCatalog.save(writer);
+     * writer.close(); final String xmlSerializedCatalog2 =
+     * writer.toString(); assertNotNull("Catalog was not serialized to
+     * XML", xmlSerializedCatalog2); assertNotSame("Catalog was not
+     * serialized to XML", 0, xmlSerializedCatalog2.trim().length());
+     * final DetailedDiff xmlDiff = new DetailedDiff(new
+     * Diff(xmlSerializedCatalog1, xmlSerializedCatalog2)); final
+     * List<?> allDifferences = xmlDiff.getAllDifferences(); if
+     * (!xmlDiff.similar()) { IOUtils.write(xmlSerializedCatalog1, new
+     * PrintWriter("serialized-schema-1.xml", UTF_8.name()));
+     * IOUtils.write(xmlSerializedCatalog2, new
+     * PrintWriter("serialized-schema-2.xml", UTF_8.name())); }
+     * assertEquals(xmlDiff.toString(), 0, allDifferences.size());
+     **/
+  }
 
-    final DetailedDiff xmlDiff = new DetailedDiff(new Diff(xmlSerializedCatalog1,
-                                                           xmlSerializedCatalog2));
-    final List<?> allDifferences = xmlDiff.getAllDifferences();
-    if (!xmlDiff.similar())
+  @Test
+  public void schemaSerializationWithJava()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull("Could not obtain catalog", catalog);
+    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schema);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalog.getTables(schema).size());
+
+    final Path testOutputFile = IOUtility
+      .createTempFilePath("sc_java_serialization", "ser");
+    try (
+        final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(testOutputFile
+          .toFile()));)
     {
-      IOUtils.write(xmlSerializedCatalog1,
-                    new PrintWriter("serialized-schema-1.xml", UTF_8.name()));
-      IOUtils.write(xmlSerializedCatalog2,
-                    new PrintWriter("serialized-schema-2.xml", UTF_8.name()));
+      out.writeObject(catalog);
     }
-    assertEquals(xmlDiff.toString(), 0, allDifferences.size());
+    assertTrue("Catalog was not serialized", Files.size(testOutputFile) > 0);
+
+    Catalog catalogDeserialized = null;
+    try (
+        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(testOutputFile
+          .toFile()));)
+    {
+      catalogDeserialized = (Catalog) in.readObject();
+    }
+
+    final Schema schemaDeserialized = catalogDeserialized
+      .lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schemaDeserialized);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalogDeserialized.getTables(schemaDeserialized).size());
   }
 
 }
