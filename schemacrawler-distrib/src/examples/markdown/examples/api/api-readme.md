@@ -10,6 +10,7 @@ alternative to using JDBC metadata.
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Run `api.cmd` (or `api.sh` on Unix) to compile and run the first example 
 4. Run `executable.cmd` (or `executable.sh` on Unix) to compile and run the second example 
+5. Run `resultset.cmd` (or `resultset.sh` on Unix) to compile and run the third example 
 
 ## How to Experiment
 1. Try uncommenting the code block in `ApiExample.java` that modifies the default options. 
