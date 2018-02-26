@@ -25,30 +25,43 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.executable;
+package schemacrawler.tools.iosource;
 
 
-import java.util.Collection;
+import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.options.OutputOptions;
+import java.io.Reader;
+import java.io.StringReader;
+import java.nio.charset.Charset;
+import java.util.Objects;
 
-public interface CommandProvider
+public class StringInputResource
+  implements InputResource
 {
 
-  Executable configureNewExecutable(String command,
-                                    SchemaCrawlerOptions schemaCrawlerOptions,
-                                    OutputOptions outputOptions)
-    throws SchemaCrawlerException;
+  private final String data;
 
-  InputResource getHelp();
+  public StringInputResource(final String data)
+  {
+    this.data = Objects.toString(data, "");
+  }
 
-  Collection<String> getSupportedCommands();
+  @Override
+  public Reader openNewInputReader(final Charset charset)
+  {
+    requireNonNull(charset, "No input charset provided");
+    return new StringReader(data);
+  }
 
-  boolean supportsCommand(String command,
-                          SchemaCrawlerOptions schemaCrawlerOptions,
-                          OutputOptions outputOptions);
+  @Override
+  public String toString()
+  {
+    return getDescription();
+  }
+
+  private String getDescription()
+  {
+    return "<data>";
+  }
 
 }

@@ -38,6 +38,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -92,16 +94,16 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
-  public String getHelpAdditionalText(final String command)
+  public InputResource getHelp(final String command)
   {
-    // TODO
-    throw new RuntimeException(command);
-  }
-
-  public String getHelpResource(final String command)
-  {
-    // TODO
-    throw new RuntimeException(command);
+    for (CommandProvider commandProvider: commandRegistry)
+    {
+      if (commandProvider.getSupportedCommands().contains(command))
+      {
+        return commandProvider.getHelp();
+      }
+    }
+    return new StringInputResource("");
   }
 
   public boolean supportsCommand(final String command,
