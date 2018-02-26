@@ -28,27 +28,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
 
 public class ThymeleafCommandProvider
   implements CommandProvider
 {
 
-  @Deprecated
-  @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    throw new RuntimeException("Accessing deprecated method");
-  }
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
   public Executable configureNewExecutable(final String command,
@@ -67,26 +67,22 @@ public class ThymeleafCommandProvider
     return executable;
   }
 
-  @Deprecated
   @Override
-  public String getCommand()
+  public InputResource getHelp()
   {
-    throw new RuntimeException("Accessing deprecated method");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getHelpAdditionalText()
-  {
-    return "";
-  }
-
-  @Override
-  public String getHelpResource()
-  {
-    return "/help/ThymeleafRenderer.txt";
+    final String helpResource = "/help/ThymeleafRenderer.txt";
+    try
+    {
+      return new ClasspathInputResource(helpResource);
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 String.format("Could not load help resource <%s>",
+                               helpResource),
+                 e);
+      return new StringInputResource("");
+    }
   }
 
   @Override

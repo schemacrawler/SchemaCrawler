@@ -28,12 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -53,15 +57,6 @@ public abstract class ExecutableCommandProvider
   {
     this.supportedCommands = supportedCommands;
     this.executableClassName = executableClassName;
-  }
-
-  @Deprecated
-  @Override
-  public final Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    throw new RuntimeException("Accessing deprecated method");
   }
 
   @Override
@@ -115,27 +110,22 @@ public abstract class ExecutableCommandProvider
     return executable;
   }
 
-  @Deprecated
   @Override
-  public final String getCommand()
-  {
-    throw new RuntimeException("Accessing deprecated method");
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String getHelpAdditionalText()
-  {
-    return "";
-  }
-
-  @Override
-  public String getHelpResource()
+  public InputResource getHelp()
   {
     final String helpResource = "/help/DefaultExecutable.txt";
-    return helpResource;
+    try
+    {
+      return new ClasspathInputResource(helpResource);
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 String.format("Could not load help resource <%s>",
+                               helpResource),
+                 e);
+      return new StringInputResource("");
+    }
   }
 
   @Override

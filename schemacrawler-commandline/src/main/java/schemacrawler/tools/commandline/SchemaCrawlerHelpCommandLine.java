@@ -28,11 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.Collection;
+import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -40,6 +44,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.iosource.InputResource;
+import sf.util.IOUtility;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -50,30 +57,22 @@ public final class SchemaCrawlerHelpCommandLine
   implements CommandLine
 {
 
-  private static String loadHelpText(final String helpResource)
-  {
-    if (isBlank(helpResource)
-        || SchemaCrawlerHelpCommandLine.class.getResource(helpResource) == null)
-    {
-      return "";
-    }
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SchemaCrawlerHelpCommandLine.class.getName());
 
-    return readResourceFully(helpResource);
-  }
-
+  private final PrintWriter out;
   private final String command;
   private final boolean showVersionOnly;
   private final String connectionHelpResource;
   private final DatabaseServerType dbServerType;
 
   /**
-   * Loads objects from command-line options. Optionally loads the
-   * config from the classpath.
+   * Shows help based on command-line options.
    *
-   * @param args
-   *        Command line arguments.
-   * @param configResource
-   *        Config resource.
+   * @param argsMap
+   *        Parsed command line arguments.
+   * @param showVersionOnly
+   *        Whether to show version message and exit.
    * @throws SchemaCrawlerException
    *         On an exception
    */
@@ -90,6 +89,8 @@ public final class SchemaCrawlerHelpCommandLine
     dbServerType = dbConnector.getDatabaseServerType();
 
     this.showVersionOnly = showVersionOnly;
+
+    out = new PrintWriter(System.out);
 
     String command = null;
     if (!argsMap.isEmpty())
@@ -118,11 +119,10 @@ public final class SchemaCrawlerHelpCommandLine
 
     if (dbServerType != null && !dbServerType.isUnknownDatabaseSystem())
     {
-      System.out
-        .println("SchemaCrawler for " + dbServerType.getDatabaseSystemName());
+      out.println("SchemaCrawler for " + dbServerType.getDatabaseSystemName());
     }
-    System.out.println(loadHelpText("/help/SchemaCrawler.txt"));
-    System.out.println();
+    printHelpText("/help/SchemaCrawler.txt");
+    out.println();
     if (showVersionOnly)
     {
       System.exit(0);
@@ -131,42 +131,37 @@ public final class SchemaCrawlerHelpCommandLine
     if (isBlank(connectionHelpResource))
     {
       final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
-      System.out.println(loadHelpText("/help/Connections.txt"));
-      System.out.println("Available servers are: ");
+      printHelpText("/help/Connections.txt");
+      out.println("Available servers are: ");
       for (final String availableServer: databaseConnectorRegistry)
       {
-        System.out.println("  " + availableServer);
+        out.println("  " + availableServer);
       }
-      System.out.println();
+      out.println();
     }
     else
     {
-      System.out.println(loadHelpText(connectionHelpResource));
+      printHelpText(connectionHelpResource);
     }
-    System.out.println(loadHelpText("/help/SchemaCrawlerOptions.txt"));
-    System.out.println(loadHelpText("/help/Config.txt"));
-    System.out.println(loadHelpText("/help/ApplicationOptions.txt"));
+    printHelpText("/help/SchemaCrawlerOptions.txt");
+    printHelpText("/help/Config.txt");
+    printHelpText("/help/ApplicationOptions.txt");
 
     final Collection<String> supportedCommands = commandRegistry
       .getSupportedCommands();
     if (!supportedCommands.contains(command))
     {
-      System.out.println(loadHelpText("/help/Command.txt"));
-      System.out.println("  Available commands are: ");
+      printHelpText("/help/Command.txt");
+      out.println("  Available commands are: ");
       for (final String availableCommand: supportedCommands)
       {
-        System.out.println("    " + availableCommand);
+        out.println("    " + availableCommand);
       }
-      System.out.println();
+      out.println();
     }
     else
     {
-      final String helpResource = commandRegistry.getHelpResource(command);
-      System.out.println(loadHelpText(helpResource));
-
-      final String helpAdditionalText = commandRegistry
-        .getHelpAdditionalText(command);
-      System.out.println(helpAdditionalText);
+      printHelpText(commandRegistry.getHelp(command));
     }
 
     System.exit(0);
@@ -175,6 +170,41 @@ public final class SchemaCrawlerHelpCommandLine
   public final String getCommand()
   {
     return command;
+  }
+
+  private void printHelpText(final InputResource helpResource)
+  {
+    if (helpResource == null)
+    {
+      return;
+    }
+    try (final Reader helpReader = helpResource.openNewInputReader(UTF_8);)
+    {
+      IOUtility.copy(helpReader, out);
+      // Do not close System.out
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 String.format("Could not print help from resource <%s>",
+                               helpResource),
+                 e);
+    }
+  }
+
+  private void printHelpText(final String helpClaspathResource)
+  {
+    try
+    {
+      printHelpText(helpClaspathResource);
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING,
+                 String.format("Could not find help resource <%s>",
+                               helpClaspathResource),
+                 e);
+    }
   }
 
 }

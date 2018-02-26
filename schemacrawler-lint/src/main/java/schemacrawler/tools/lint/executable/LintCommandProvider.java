@@ -28,16 +28,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
 
 public class LintCommandProvider
@@ -46,15 +57,6 @@ public class LintCommandProvider
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(LintCommandProvider.class.getName());
-
-  @Deprecated
-  @Override
-  public Executable configureNewExecutable(final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    throw new RuntimeException("Accessing deprecated method");
-  }
 
   @Override
   public Executable configureNewExecutable(final String command,
@@ -73,31 +75,37 @@ public class LintCommandProvider
     return executable;
   }
 
-  @Deprecated
   @Override
-  public String getCommand()
-  {
-    throw new RuntimeException("Accessing deprecated method");
-  }
-
-  @Override
-  public String getHelpAdditionalText()
+  public InputResource getHelp()
   {
     try
     {
-      return LinterHelp.getLinterHelpText();
+      final Path tempFilePath = IOUtility.createTempFilePath("sc_lint_help",
+                                                             ".txt");
+      try (Writer writer = Files.newBufferedWriter(tempFilePath,
+                                                   StandardCharsets.UTF_8,
+                                                   StandardOpenOption.WRITE,
+                                                   StandardOpenOption.APPEND))
+      {
+        final InputResource helpResource = new ClasspathInputResource("/help/LintCommandProvider.txt");
+        try (Reader helpReader = helpResource
+          .openNewInputReader(StandardCharsets.UTF_8);)
+        {
+          IOUtility.copy(helpReader, writer);
+        }
+        try (Reader additionalHelpReader = new StringReader(LinterHelp
+          .getLinterHelpText());)
+        {
+          IOUtility.copy(additionalHelpReader, writer);
+        }
+      }
+      return new FileInputResource(tempFilePath);
     }
     catch (final Exception e)
     {
-      LOGGER.log(Level.FINE, "Cannot get linter help", e);
-      return "";
+      LOGGER.log(Level.WARNING, "Could not generate lint command help", e);
+      return new StringInputResource("");
     }
-  }
-
-  @Override
-  public String getHelpResource()
-  {
-    return "/help/LintCommandProvider.txt";
   }
 
   @Override
