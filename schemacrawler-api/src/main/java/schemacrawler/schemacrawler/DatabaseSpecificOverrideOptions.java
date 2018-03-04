@@ -36,6 +36,14 @@ import java.util.Optional;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.utility.TypeMap;
 
+/**
+ * Provides for database specific overrides for SchemaCrawler
+ * functionality. This can add or inject database plugins, or override
+ * defaults. It is recommended to build these options using factory
+ * methods in SchemaCrawlerUtility.
+ * 
+ * @author Sualeh Fatehi <sualeh@hotmail.com>
+ */
 public final class DatabaseSpecificOverrideOptions
   implements Options
 {
@@ -54,11 +62,6 @@ public final class DatabaseSpecificOverrideOptions
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
-
-  public DatabaseSpecificOverrideOptions()
-  {
-    this(null);
-  }
 
   protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
   {
