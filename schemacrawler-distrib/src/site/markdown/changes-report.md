@@ -1,12 +1,14 @@
 # SchemaCrawler Change History
 
-<a name="a14.19.02"></a>
-## Release 14.19.02 - 2018-02-11
+<a name="a14.20.01"></a>
+## Release 14.20.01 - 2018-03-04
 
 * Make -routines return no routines by default, to make it easier for first-time users.
+* Support a pure Java implementation of Graphviz (nidi3/graphviz-java), for cases where Graphviz cannot be installed.
+* Changed CommandProvider API
 
-<a name="a14.19.01"></a>
-## Release 14.19.01 - 2018-02-04
+<a name="a14.20.01"></a>
+## Release 14.20.01 - 2018-02-04
 
 * Fixing bug when retrieving Oracle procedure metadata
 * Adding test support for routines
