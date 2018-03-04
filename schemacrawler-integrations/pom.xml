@@ -85,7 +85,7 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.1.15.0</version>
+      <version>9.1.16.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
