@@ -7,7 +7,7 @@ is database-specific. This example demonstrates how to execute arbitrary SQL.
 ## How to Run
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file 
-3. Start a command shell in the db-specific-query example directory. 
+3. Start a command shell in the `db-specific-query` example directory. 
 4. Run `db-specific-query.cmd` (or `db-specific-query.sh` on Unix). 
 
 ## How to Experiment

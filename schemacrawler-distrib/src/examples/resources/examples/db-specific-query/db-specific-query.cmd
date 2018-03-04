@@ -1,2 +1,2 @@
 @echo off
-java -classpath ../../_schemacrawler/config;../../_schemacrawler/lib/*;lib/* schemacrawler.Main -server=hsqldb -database=schemacrawler -user=sa -password= -infolevel=standard -command=hsqldb.tables %*
+..\..\_schemacrawler\schemacrawler.cmd -server=hsqldb -database=schemacrawler -user=sa -password= -infolevel=standard -command=hsqldb.tables %*
