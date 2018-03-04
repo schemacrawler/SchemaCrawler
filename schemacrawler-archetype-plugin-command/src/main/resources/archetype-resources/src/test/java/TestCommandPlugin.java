@@ -16,7 +16,7 @@ public class TestCommandPlugin
     throws Exception
   {
     final CommandRegistry registry = new CommandRegistry();
-    assertTrue(registry.hasCommand("additional"));
+    assertTrue(registry.getSupportedCommands().contains("additional"));
   }
 
 }
