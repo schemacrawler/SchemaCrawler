@@ -44,6 +44,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
@@ -181,6 +182,7 @@ public final class SchemaCrawlerHelpCommandLine
     try (final Reader helpReader = helpResource.openNewInputReader(UTF_8);)
     {
       IOUtility.copy(helpReader, out);
+      out.println();
       // Do not close System.out
     }
     catch (final IOException e)
@@ -196,7 +198,7 @@ public final class SchemaCrawlerHelpCommandLine
   {
     try
     {
-      printHelpText(helpClaspathResource);
+      printHelpText(new ClasspathInputResource(helpClaspathResource));
     }
     catch (final Exception e)
     {
