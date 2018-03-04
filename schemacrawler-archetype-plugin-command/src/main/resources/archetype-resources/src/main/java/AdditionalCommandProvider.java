@@ -54,6 +54,7 @@ public class AdditionalCommandProvider
     catch (final IOException e)
     {
       // Log error...
+      return new StringInputResource("No help available");
     }
   }
   
