@@ -39,7 +39,9 @@ deploy:
       branch: master
       tags: true
     file_glob: true
-    file: "$SC_BUILD_DIR/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+    file: 
+      - "$SC_BUILD_DIR/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
+      - "$SC_BUILD_DIR/schemacrawler-distrib/target/schemacrawler-*-distribution.zip.SHA-512"
   - provider: pages
     github_token: $GITHUB_TOKEN
     skip_cleanup: true

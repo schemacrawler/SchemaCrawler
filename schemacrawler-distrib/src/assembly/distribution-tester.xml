@@ -1,0 +1,22 @@
+<project name="schemacrawler-distribution-tester" default="distribution-tester"
+  basedir="../..">
+
+  <property name="SchemaCrawler.home" location=".." />
+  <property name="SchemaCrawler.version" value="14.19.01" />
+
+  <import file="distribution.xml" />
+
+  <target name="clean">
+    <property name="distribution.target"
+      location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+    <delete dir="${distribution.target}/_distribution" verbose="true" />
+  </target>
+
+  <target name="distribution-tester" depends="clean">
+    <antcall target="make-distribution">
+      <param name="SchemaCrawler.home" value=".." />
+      <param name="SchemaCrawler.version" value="14.19.01" />
+    </antcall>
+  </target>
+
+</project>
