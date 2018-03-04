@@ -45,6 +45,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
@@ -89,7 +90,7 @@ public abstract class BaseDatabaseTest
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    return getCatalog(new DatabaseSpecificOverrideOptions(),
+    return getCatalog(new DatabaseSpecificOverrideOptionsBuilder().toOptions(),
                       schemaCrawlerOptions);
   }
 

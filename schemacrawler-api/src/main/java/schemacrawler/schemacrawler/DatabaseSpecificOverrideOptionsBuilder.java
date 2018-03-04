@@ -34,7 +34,7 @@ import java.util.Optional;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 
-public class DatabaseSpecificOverrideOptionsBuilder
+public final class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
