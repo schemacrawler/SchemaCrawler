@@ -80,7 +80,7 @@ public final class CatalogWithCounts
       identifiers = Identifiers.identifiers().withConnection(connection)
         .build();
     }
-    catch (final SQLException | SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.

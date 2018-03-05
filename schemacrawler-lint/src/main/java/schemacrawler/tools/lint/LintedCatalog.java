@@ -38,6 +38,7 @@ import java.util.logging.Level;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.SchemaCrawlerLogger;
 
 public final class LintedCatalog
@@ -62,7 +63,7 @@ public final class LintedCatalog
     {
       checkConnection(connection);
     }
-    catch (final SchemaCrawlerException e)
+    catch (final SchemaCrawlerSQLException e)
     {
       // The offline snapshot executable may not have a live connection,
       // so we cannot fail with an exception. Log and continue.

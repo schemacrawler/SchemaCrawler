@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 
 /**
  * Utility methods.
@@ -55,8 +56,8 @@ public final class DatabaseUtility
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseUtility.class.getName());
 
-  public static void checkConnection(final Connection connection)
-    throws SchemaCrawlerException
+  public static Connection checkConnection(final Connection connection)
+    throws SchemaCrawlerSQLException
   {
     try
     {
@@ -68,8 +69,29 @@ public final class DatabaseUtility
     }
     catch (final NullPointerException | SQLException e)
     {
-      throw new SchemaCrawlerException("Bad database connection", e);
+      throw new SchemaCrawlerSQLException("Bad database connection", e);
     }
+
+    return connection;
+  }
+
+  public static ResultSet checkResultSet(final ResultSet resultSet)
+    throws SchemaCrawlerSQLException
+  {
+    try
+    {
+      requireNonNull(resultSet, "No result-set provided");
+      if (resultSet.isClosed())
+      {
+        throw new SQLException("Result-set is closed");
+      }
+    }
+    catch (final NullPointerException | SQLException e)
+    {
+      throw new SchemaCrawlerSQLException("Bad result-set", e);
+    }
+
+    return resultSet;
   }
 
   public static Statement createStatement(final Connection connection)

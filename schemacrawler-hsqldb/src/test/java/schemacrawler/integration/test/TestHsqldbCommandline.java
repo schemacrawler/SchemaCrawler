@@ -125,8 +125,7 @@ public class TestHsqldbCommandline
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
-    final Connection connection = getConnection();
-    checkConnection(connection);
+    final Connection connection = checkConnection(getConnection());
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific override options provided");
 

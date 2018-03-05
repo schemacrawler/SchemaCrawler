@@ -138,7 +138,7 @@ public final class DatabaseConnectorRegistry
       final String url = connection.getMetaData().getURL();
       return lookupDatabaseConnectorFromUrl(url);
     }
-    catch (final SQLException | SchemaCrawlerException e)
+    catch (final SQLException e)
     {
       return DatabaseConnector.UNKNOWN;
     }

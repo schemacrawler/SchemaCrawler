@@ -41,7 +41,7 @@ public final class ResultSetExample
     {
       // Get result set metadata
       final ResultsColumns resultColumns = SchemaCrawlerUtility
-        .getResultColumns(results);
+        .getResultsColumns(results);
       for (final ResultsColumn column: resultColumns)
       {
         System.out.println("o--> " + column);

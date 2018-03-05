@@ -42,4 +42,9 @@ public class SchemaCrawlerSQLException
     super(reason, cause);
   }
 
+  public SchemaCrawlerSQLException(final String reason, final Exception cause)
+  {
+    super(reason, cause);
+  }
+
 }
