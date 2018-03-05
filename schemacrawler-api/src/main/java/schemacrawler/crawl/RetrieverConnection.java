@@ -40,7 +40,6 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
@@ -76,15 +75,8 @@ final class RetrieverConnection
                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws SQLException
   {
-    try
-    {
-      checkConnection(connection);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SQLException("Bad database connection", e);
-    }
-    this.connection = connection;
+
+    this.connection = checkConnection(connection);
     metaData = connection.getMetaData();
 
     requireNonNull(databaseSpecificOverrideOptions,

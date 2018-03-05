@@ -79,8 +79,9 @@ public final class SchemaCrawler
    * @param resultSet
    *        Result set
    * @return Schema
+   * @throws SQLException
    */
-  public static ResultsColumns getResultColumns(final ResultSet resultSet)
+  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
   {
     ResultsColumns resultColumns = null;
     try

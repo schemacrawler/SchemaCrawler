@@ -37,6 +37,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schema.DatabaseObject;
@@ -47,7 +48,6 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.TypeMap;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 /**
  * Base class for retriever that uses database metadata to get the
@@ -143,7 +143,7 @@ abstract class AbstractRetriever
     return options.getSchemaInclusionRule();
   }
 
-  final void logPossiblyUnsupportedSQLFeature(final StringFormat message,
+  final void logPossiblyUnsupportedSQLFeature(final Supplier<String> message,
                                               final SQLException e)
   {
     // HYC00 = Optional feature not implemented
@@ -161,7 +161,7 @@ abstract class AbstractRetriever
     }
   }
 
-  final void logSQLFeatureNotSupported(final StringFormat message,
+  final void logSQLFeatureNotSupported(final Supplier<String> message,
                                        final Throwable e)
   {
     LOGGER.log(Level.WARNING, message);

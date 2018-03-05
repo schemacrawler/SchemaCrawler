@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
-import static sf.util.DatabaseUtility.checkConnection;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
@@ -42,8 +40,10 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import sf.util.DatabaseUtility;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.UtilityMarker;
@@ -84,6 +84,7 @@ public final class SchemaCrawlerUtility
   public static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions(final Connection connection)
     throws SchemaCrawlerException
   {
+    checkConnection(connection);
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector dbConnector = registry
       .lookupDatabaseConnector(connection);
@@ -131,10 +132,14 @@ public final class SchemaCrawlerUtility
    * @param resultSet
    *        Live result-set.
    * @return Result-set metadata.
+   * @throws SchemaCrawlerException
+   *         On an exception.
    */
-  public static ResultsColumns getResultColumns(final ResultSet resultSet)
+  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
+    throws SchemaCrawlerException
   {
-    return SchemaCrawler.getResultColumns(resultSet);
+    checkResultSet(resultSet);
+    return SchemaCrawler.getResultsColumns(resultSet);
   }
 
   /**
@@ -154,6 +159,32 @@ public final class SchemaCrawlerUtility
       .toOptions();
 
     return dbSpecificOverrideOptions;
+  }
+
+  private static void checkConnection(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      DatabaseUtility.checkConnection(connection);
+    }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException("Bad database connection", e);
+    }
+  }
+
+  private static void checkResultSet(final ResultSet resultSet)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      DatabaseUtility.checkResultSet(resultSet);
+    }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException("Bad result-set", e);
+    }
   }
 
   private SchemaCrawlerUtility()

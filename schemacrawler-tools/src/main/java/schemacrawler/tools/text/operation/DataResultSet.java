@@ -73,7 +73,7 @@ final class DataResultSet
   {
     this.rows = requireNonNull(rows, "Cannot use null results");
     this.showLobs = showLobs;
-    resultsColumns = SchemaCrawler.getResultColumns(rows).getColumns();
+    resultsColumns = SchemaCrawler.getResultsColumns(rows).getColumns();
   }
 
   public String[] getColumnNames()

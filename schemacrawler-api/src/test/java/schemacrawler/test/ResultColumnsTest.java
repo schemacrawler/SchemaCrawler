@@ -82,7 +82,7 @@ public class ResultColumnsTest
       {
 
         final ResultsColumns resultColumns = SchemaCrawler
-          .getResultColumns(resultSet);
+          .getResultsColumns(resultSet);
 
         assertNotNull("Could not obtain result columns", resultColumns);
         final ResultsColumn[] columns = resultColumns.getColumns()
