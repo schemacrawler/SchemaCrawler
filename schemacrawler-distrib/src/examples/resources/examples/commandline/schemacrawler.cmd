@@ -1,1 +1,0 @@
-@..\..\_schemacrawler\schemacrawler.cmd %*
