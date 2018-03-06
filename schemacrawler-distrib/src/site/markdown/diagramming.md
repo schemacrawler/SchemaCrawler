@@ -12,8 +12,13 @@ ones, whether they are parent or child tables. If your schema changes, you can s
 regenerate the diagram, without having to know the exact changes that were made to the 
 schema.
 
+SchemaCrawler relies on [Graphviz](http://www.graphviz.org/) to generate diagrams.
 Install [Graphviz](http://www.graphviz.org/) first, and ensure that it is on the system 
-PATH. Then you can run SchemaCrawler with the correct command-line options - for 
+PATH. If installing [Graphviz](http://www.graphviz.org/) is not an option for you, use 
+the pure Java Graphviz library. Instructions are provided with the SchemaCrawler download.
+Currently, the the pure Java Graphviz library is only able to generate PNG and SVG diagrams.
+
+Then you can run SchemaCrawler with the correct command-line options - for 
 example, 
 `-command=schema -outputformat=png -outputfile=graph.png` 
 
