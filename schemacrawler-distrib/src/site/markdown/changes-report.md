@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a14.20.01"></a>
-## Release 14.20.01 - 2018-03-04
+## Release 14.20.01 - 2018-03-05
 
 * Make -routines return no routines by default, to make it easier for first-time users.
 * Support a pure Java implementation of Graphviz (nidi3/graphviz-java), for cases where Graphviz cannot be installed.
