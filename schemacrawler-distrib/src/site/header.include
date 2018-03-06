@@ -61,7 +61,7 @@
                  <a class="nav-link" href="consulting.html">Consulting</a>
               </li>
               <li class="nav-item">
-                 <a class="nav-link" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
+                 <a class="nav-link" href="http://github.com/schemacrawler/SchemaCrawler/releases/">Download</a>
               </li>
               <li class="nav-item dropdown">
                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop-1" data-toggle="dropdown">
@@ -73,7 +73,7 @@
                     <a class="dropdown-item" href="who-uses.html">Who Uses</a>
                     <a class="dropdown-item" href="ecosystem.html">Ecosystem</a>
                     <a class="dropdown-item" href="database-support.html">Database System Support</a>
-                    <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler/releases/">Download</a>
+                    <a class="dropdown-item" href="http://github.com/schemacrawler/SchemaCrawler/releases/">Download</a>
                     <a class="dropdown-item" href="changes-report.html">Change History</a>
                     <a class="dropdown-item" href="license.html">License</a>
                     <a class="dropdown-item" href="building.html">Building From Source Code</a>
@@ -111,7 +111,7 @@
                     <a class="dropdown-item" href="how-to.html">How-tos</a>
                     <a class="dropdown-item" href="consulting.html">Get Help</a>
                     <a class="dropdown-item" href="apidocs/index.html">Javadocs</a>
-                    <a class="dropdown-item" href="http://github.com/sualeh/SchemaCrawler">Project Page on GitHub</a>
+                    <a class="dropdown-item" href="http://github.com/schemacrawler/SchemaCrawler">Project Page on GitHub</a>
                  </div>
               </li>
            </ul>

@@ -31,4 +31,4 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
 
 
 [Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion
-[SchemaCrawler issues page]: https://github.com/sualeh/SchemaCrawler/issues
+[SchemaCrawler issues page]: https://github.com/schemacrawler/SchemaCrawler/issues

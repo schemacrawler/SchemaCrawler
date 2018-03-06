@@ -18,7 +18,7 @@ example,
 `-command=schema -outputformat=png -outputfile=graph.png` 
 
 See the diagram example in the 
-[SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) 
+[SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) 
 download. An example of a SchemaCrawler database diagram is below.
 
 <a href="diagram-examples/diagram.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
