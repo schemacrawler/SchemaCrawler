@@ -111,7 +111,7 @@ Yes, the SchemaCrawler command-line can be called from ant, using the exec task.
 Yes SchemaCrawler can be used in a Apache Maven project as an API, or to generate Apache Maven reports in your projects. In order to use SchemaCrawler in your Apache Maven projects, simply add a dependency to SchemaCrawler in your pom.xml.
 _For more details, see the [plugins](plugins.html) page._
 
-Using the [SchemaCrawler Report Maven Plugin](https://github.com/sualeh/SchemaCrawler-Report-Maven-Plugin) , you can generate a SchemaCrawler report along with other reports for your Apache Maven generated site.
+Using the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) , you can generate a SchemaCrawler report along with other reports for your Apache Maven generated site.
 
 ----------
 
@@ -187,7 +187,7 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. SchemaCra
 
 Also, look at the [scripting](scripting.html) page.
 
-_For more details, see scripting example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
+_For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and `examples\python` directories._
 
 ----------
 
@@ -197,15 +197,15 @@ SchemaCrawler is an API that improves on the standard JDBC metadata facilities. 
 
 Read [Java API Makes Database Metadata as Easily Accessible as POJOs](http://www.devx.com/Java/Article/32443) for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler API, but the concepts are the same.) You can also browse the [javadocs](apidocs/index.html).
 
-_For more details, see scripting example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download, in the `examples\api` directory._
+_For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\api` directory._
 
 ----------
 
 ### <a name="integrations">Can SchemaCrawler be used integrated with other programs?</a>
 
-SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is designed to be used programmatically with the [Spring Framework](https://spring.io/) . For more details, see scripting example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download, in the `examples\spring` directory.
+SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is designed to be used programmatically with the [Spring Framework](https://spring.io/) . For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\spring` directory.
 
-SchemaCrawler comes pre-built with integration with [Apache Velocity.](http://velocity.apache.org/) This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download, in the `examples\velocity` directory.
+SchemaCrawler comes pre-built with integration with [Apache Velocity.](http://velocity.apache.org/) This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\velocity` directory.
 
 
 </dl>
@@ -215,7 +215,7 @@ SchemaCrawler comes pre-built with integration with [Apache Velocity.](http://ve
 
 ### <a name="availibility">Where is SchemaCrawler available?</a>
 
-SchemaCrawler is available as a download from [GitHub](https://github.com/sualeh/SchemaCrawler/releases) .
+SchemaCrawler is available as a download from [GitHub](https://github.com/schemacrawler/SchemaCrawler/releases) .
 
 ----------
 

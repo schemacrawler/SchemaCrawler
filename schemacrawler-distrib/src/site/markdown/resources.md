@@ -6,7 +6,7 @@ To read more about SchemaCrawler, you can read:
 - Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - The SchemaCrawler API [javadocs](apidocs/index.html) .
 - Download the [SchemaCrawler
- examples](http://github.com/sualeh/SchemaCrawler/releases/)
+ examples](http://github.com/schemacrawler/SchemaCrawler/releases/)
  for an overview of all SchemaCrawler features and capabilities.
 - [Java API Makes Database Metadata as Easily Accessible as
  POJOs](http://www.devx.com/Java/Article/32443) for an introduction

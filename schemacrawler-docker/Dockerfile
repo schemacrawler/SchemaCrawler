@@ -31,7 +31,7 @@ ARG SCHEMACRAWLER_VERSION=14.20.01
 
 LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \
       "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
-      "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/sualeh/schemacrawler"
+      "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
 # Install GraphViz
 RUN \
@@ -41,7 +41,7 @@ RUN \
 
 # Download SchemaCrawler and prepare install directories
 RUN \
-    wget -nv https://github.com/sualeh/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
+    wget -nv https://github.com/schemacrawler/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
  && unzip -q schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
  && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_schemacrawler schemacrawler \
  && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_testdb/sc.db schemacrawler/sc.db \

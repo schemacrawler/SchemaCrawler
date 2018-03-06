@@ -209,13 +209,13 @@ SchemaCrawler has built-in support to be used with JavaScript scripts. Write you
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated ouput. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options - `-command script -outputformat <your script file>` . `-command velocity -outputformat <your Velocity template>` . See the Velocity example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated ouput. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options - `-command script -outputformat <your script file>` . `-command velocity -outputformat <your Velocity template>` . See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 ----------
 
 ### <a name="diagrams">How to create a database diagram of your schema</a>
 
-SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download. For more details, see the [diagram section](diagramming.html).
+SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the diagram example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download. For more details, see the [diagram section](diagramming.html).
 
 ----------
 
@@ -234,7 +234,7 @@ You can provide additional Graphviz command-line options using the SC_GRAPHVIZ_O
 ### <a name="api">How to use SchemaCrawler programmatically</a>
 
 Read [Java API Makes Database Metadata as Easily Accessible as POJOs](http://www.devx.com/Java/Article/32443) for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler API, but the concepts are the same.) You can also browse the [javadocs](apidocs/index.html) .
-_See the api example in the [SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/) download.
+_See the api example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 Or, if you are impatient, try code similar to the following:
 
@@ -267,7 +267,7 @@ Call the SchemaCrawler command-line from ant, using the exec task.
 
 ### <a name="maven-report">How to use SchemaCrawler To Produce an Apache Maven Report</a>
 
-[SchemaCrawler Report Maven Plugin](https://github.com/sualeh/SchemaCrawler-Report-Maven-Plugin) is a SourceForge project that provides an Apache Maven plugin that can generate database documentation for an Apache Maven-generated website.
+[SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) is a SourceForge project that provides an Apache Maven plugin that can generate database documentation for an Apache Maven-generated website.
 
 ----------
 

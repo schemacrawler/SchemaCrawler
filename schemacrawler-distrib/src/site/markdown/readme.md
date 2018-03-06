@@ -81,10 +81,10 @@ about [building].
 [database support]: database-support.html
 [building]: building.html
 [Java]: https://www.java.com/
-[SchemaCrawler examples]: http://github.com/sualeh/SchemaCrawler/releases/
-[SchemaCrawler distribution with examples]: http://github.com/sualeh/SchemaCrawler/releases/
+[SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
+[SchemaCrawler distribution with examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler jars]: http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler 
-[SchemaCrawler Docker image]: https://hub.docker.com/r/sualeh/schemacrawler/
+[SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Gradle]: https://gradle.org/
 [Groovy]: http://www.groovy-lang.org/
 [Ruby]: http://www.ruby-lang.org/en/

@@ -16,11 +16,11 @@ convenience is [bundled with drivers](database-support.html) for some commonly u
 RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8, Compact Profile 2 or better.
 
-[![Build Status](https://travis-ci.org/sualeh/SchemaCrawler.svg?branch=master)](https://travis-ci.org/sualeh/SchemaCrawler)
-[![Coverage Status](https://coveralls.io/repos/sualeh/SchemaCrawler/badge.svg?branch=master&service=github)](https://coveralls.io/github/sualeh/SchemaCrawler?branch=master)
+[![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler)
+[![Coverage Status](https://coveralls.io/repos/schemacrawler/SchemaCrawler/badge.svg?branch=master&service=github)](https://coveralls.io/github/schemacrawler/SchemaCrawler?branch=master)
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
-[![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/sualeh/SchemaCrawler/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/sualeh/schemacrawler.svg)](https://hub.docker.com/r/sualeh/schemacrawler/)
+[![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 
 -----
 
@@ -47,7 +47,7 @@ SchemaCrawler has powerful scripting ability,
 using JavaScript, Groovy, Ruby or Python. A live connection is provided to the
 script context to allow you to select from or even modify your database.
 Examples are provided for all of these with the
-[download](http://github.com/sualeh/SchemaCrawler/releases/).
+[download](http://github.com/schemacrawler/SchemaCrawler/releases/).
 
 SchemaCrawler is integrated with templating engines, such
 as [Apache Velocity](http://velocity.apache.org/), [Thymeleaf](http://www.thymeleaf.org/) or

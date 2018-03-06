@@ -10,7 +10,7 @@ database connection is provided to your script as the "connection" object. You
 can use standard JDBC to script against the database.
 
 For more details, see scripting example in the 
-[SchemaCrawler examples](http://github.com/sualeh/SchemaCrawler/releases/)
+[SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/)
 download, in the `examples\javascript`, `examples\groovy`, `examples\ruby` and
 `examples\python` directories.
 

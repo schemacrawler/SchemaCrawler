@@ -4,14 +4,14 @@
 
 ## Download
 
-The pre-packaged [Docker image for SchemaCrawler](https://hub.docker.com/r/sualeh/schemacrawler/) is on Docker Hub.
+The pre-packaged [Docker image for SchemaCrawler](https://hub.docker.com/r/schemacrawler/schemacrawler/) is on Docker Hub.
 
 
 ## Run
 
 Download the latest Docker image for SchemaCrawler from Docker Hub, run
 ```
-docker pull sualeh/schemacrawler
+docker pull schemacrawler/schemacrawler
 ```
 
 Check that the Docker image for SchemaCrawler has been installed correctly, run
@@ -20,7 +20,7 @@ docker run \
 -v $(pwd):/share \
 --rm -i -t \
 --entrypoint=/bin/bash \
-sualeh/schemacrawler
+schemacrawler/schemacrawler
 ```
 
 Then, run SchemaCrawler from the command-line within the container, like this
@@ -73,7 +73,7 @@ docker run \
 -v $(pwd):/share \
 --rm -i -t \
 --entrypoint=/bin/bash \
-sualeh/schemacrawler
+schemacrawler/schemacrawler
 ```
 
 Then, run SchemaCrawler from the command-line within the container, like this
@@ -96,7 +96,7 @@ Exit the Docker container for SchemaCrawler, and look at the `schema.png` file i
 In the directory containing the Docker file, run
 ```
 docker build \
--t sualeh/schemacrawler:14.12.01 -t sualeh/schemacrawler:latest \
+-t schemacrawler/schemacrawler:14.12.01 -t schemacrawler/schemacrawler:latest \
 --build-arg SCHEMACRAWLER_VERSION=14.12.01 \
 .
 ```
@@ -105,5 +105,5 @@ Of course, change the SchemaCrawler version number.
 To deploy, run
 ```
 docker login
-docker push sualeh/schemacrawler
+docker push schemacrawler/schemacrawler
 ```

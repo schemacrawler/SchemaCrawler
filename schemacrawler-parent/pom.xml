@@ -10,7 +10,7 @@
   <version>14.20.01</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
-  <url>https://github.com/sualeh/SchemaCrawler</url>
+  <url>https://github.com/schemacrawler/SchemaCrawler</url>
   <inceptionYear>2003</inceptionYear>
   <licenses>
     <license>
@@ -42,8 +42,8 @@
     <name>Sualeh Fatehi</name>
   </organization>
   <scm>
-    <url>https://github.com/sualeh/SchemaCrawler</url>
-    <connection>scm:git:git://github.com/sualeh/SchemaCrawler.git</connection>
+    <url>https://github.com/schemacrawler/SchemaCrawler</url>
+    <connection>scm:git:git://github.com/schemacrawler/SchemaCrawler.git</connection>
   </scm>
   <distributionManagement>
     <snapshotRepository>
