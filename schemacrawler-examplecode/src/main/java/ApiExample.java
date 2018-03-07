@@ -39,7 +39,8 @@ public final class ApiExample
     options.setRoutineInclusionRule(new ExcludeAll());
     options
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
-    options.setTableInclusionRule(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
+    options.setTableInclusionRule(tableFullName -> !tableFullName
+      .contains("ΒΙΒΛΊΑ"));
 
     // Get the schema definition
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
@@ -73,7 +74,8 @@ public final class ApiExample
   private static Connection getConnection()
     throws SchemaCrawlerException, SQLException
   {
-    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);
     return dataSource.getConnection("sa", "");
   }
 
