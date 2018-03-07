@@ -264,7 +264,7 @@
 
     <copy todir="${website.staging.dir}">
       <fileset dir="${website.source.resources.location}">
-        <include name="**/*.*" />
+        <include name="**/*" />
       </fileset>
     </copy>
 
