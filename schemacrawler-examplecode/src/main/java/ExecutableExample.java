@@ -57,7 +57,8 @@ public final class ExecutableExample
   private static Connection getConnection()
     throws SchemaCrawlerException, SQLException
   {
-    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);
     return dataSource.getConnection("sa", "");
   }
 
