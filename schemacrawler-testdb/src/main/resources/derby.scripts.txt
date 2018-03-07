@@ -29,6 +29,7 @@
 /db/books/05_views_01_A.sql
 /db/books/06_indexes_01_A.sql
 #/db/books/07_remarks_01_A.sql
+#/db/books/07_remarks_01_B.sql
 #/db/books/08_procedures_01_A.sql
 #/db/books/08_procedures_01_B.sql
 #/db/books/08_procedures_01_C.sql
