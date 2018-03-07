@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.logging.Level;
 
 import schemacrawler.tools.options.OutputFormat;
@@ -130,6 +132,10 @@ public enum GraphOutputFormat
 
   private static GraphOutputFormat fromFormatOrNull(final String format)
   {
+    if (isBlank(format))
+    {
+      return null;
+    }
     for (final GraphOutputFormat graphFormat: GraphOutputFormat.values())
     {
       if (graphFormat.getFormat().equalsIgnoreCase(format))
@@ -141,7 +147,6 @@ public enum GraphOutputFormat
   }
 
   private final String format;
-
   private final String description;
 
   private GraphOutputFormat(final String format, final String description)

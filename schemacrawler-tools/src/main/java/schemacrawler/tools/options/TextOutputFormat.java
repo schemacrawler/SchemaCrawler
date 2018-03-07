@@ -29,6 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.options;
 
 
+import static sf.util.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Enumeration for text format type.
  */
@@ -37,7 +42,7 @@ public enum TextOutputFormat
   OutputFormat
 {
 
- text("Plain text format"),
+ text("Plain text format", "txt"),
  html("HyperText Markup Language (HTML) format"),
  csv("Comma-separated values (CSV) format"),
  tsv("Tab-separated values (TSV) format"),
@@ -45,36 +50,56 @@ public enum TextOutputFormat
 
   public static boolean isTextOutputFormat(final String format)
   {
-    try
-    {
-      TextOutputFormat.valueOf(format);
-      return true;
-    }
-    catch (final IllegalArgumentException | NullPointerException e)
-    {
-      return false;
-    }
+    return fromFormatOrNull(format) != null;
   }
 
   public static TextOutputFormat valueOfFromString(final String format)
   {
-    TextOutputFormat outputFormat;
-    try
+    final TextOutputFormat outputFormat = fromFormatOrNull(format);
+    if (outputFormat == null)
     {
-      outputFormat = TextOutputFormat.valueOf(format);
+      return TextOutputFormat.text;
     }
-    catch (final IllegalArgumentException | NullPointerException e)
+    else
     {
-      outputFormat = text;
+      return outputFormat;
     }
-    return outputFormat;
+  }
+
+  private static TextOutputFormat fromFormatOrNull(final String format)
+  {
+    if (isBlank(format))
+    {
+      return null;
+    }
+    final String comparableFormat = format.toLowerCase();
+    for (final TextOutputFormat textFormat: TextOutputFormat.values())
+    {
+      if (textFormat.formatSpecifiers.contains(comparableFormat))
+      {
+        return textFormat;
+      }
+    }
+    return null;
   }
 
   private final String description;
+  final List<String> formatSpecifiers;
 
-  private TextOutputFormat(final String description)
+  private TextOutputFormat(final String description,
+                           final String... additionalFormatSpecifiers)
   {
     this.description = description;
+
+    formatSpecifiers = new ArrayList<>();
+    formatSpecifiers.add(name());
+    if (additionalFormatSpecifiers != null)
+    {
+      for (final String additionalFormatSpecifier: additionalFormatSpecifiers)
+      {
+        formatSpecifiers.add(additionalFormatSpecifier);
+      }
+    }
   }
 
   @Override
