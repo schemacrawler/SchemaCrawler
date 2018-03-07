@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.20.02"></a>
+## Release 14.20.02 - 2018-03-10
+
+* Upgrade to support Apache Velocity 2.0.
+
 <a name="a14.20.01"></a>
 ## Release 14.20.01 - 2018-03-05
 

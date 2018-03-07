@@ -4,9 +4,10 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-velocity" />
   <dependencies>
-    <dependency org="org.apache.velocity" name="velocity"
-      rev="1.7" />
-      
+    <dependency org="org.apache.velocity" name="velocity-engine-scripting"
+      rev="2.0" />
+    <dependency org="org.slf4j" name="slf4j-jdk14" rev="1.7.25" />
+
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
     <exclude type="javadoc" ext="jar" />
