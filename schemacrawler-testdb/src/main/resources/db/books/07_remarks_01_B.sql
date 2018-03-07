@@ -11,7 +11,7 @@ EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description',
    'user', 'dbo', 'table', 'Publishers', 'column', 'Id'
 ;
 EXECUTE SP_ADDEXTENDEDPROPERTY 'MS_Description', 
-   'TName of book publisher',
+   'Name of book publisher',
    'user', 'dbo', 'table', 'Publishers', 'column', 'Publisher'
 ;
 
