@@ -8,7 +8,7 @@ SET SCHEMA $schema.fullName;
 CREATE TABLE $identifiers.quoteName($table)
 (
 #foreach($column in $table.columns)
-#if($velocityCount > 1)
+#if($foreach.count > 1)
 ,
 #end
   $identifiers.quoteName($column) $column.columnDataType#if(!$column.isNullable()) NOT NULL#end
