@@ -31,9 +31,6 @@ package schemacrawler.tools.options;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Enumeration for text format type.
  */
@@ -42,7 +39,7 @@ public enum TextOutputFormat
   OutputFormat
 {
 
- text("Plain text format", "txt"),
+ text("Plain text format"),
  html("HyperText Markup Language (HTML) format"),
  csv("Comma-separated values (CSV) format"),
  tsv("Tab-separated values (TSV) format"),
@@ -72,10 +69,9 @@ public enum TextOutputFormat
     {
       return null;
     }
-    final String comparableFormat = format.toLowerCase();
     for (final TextOutputFormat textFormat: TextOutputFormat.values())
     {
-      if (textFormat.formatSpecifiers.contains(comparableFormat))
+      if (textFormat.getFormat().equalsIgnoreCase(format))
       {
         return textFormat;
       }
@@ -84,22 +80,10 @@ public enum TextOutputFormat
   }
 
   private final String description;
-  final List<String> formatSpecifiers;
 
-  private TextOutputFormat(final String description,
-                           final String... additionalFormatSpecifiers)
+  private TextOutputFormat(final String description)
   {
     this.description = description;
-
-    formatSpecifiers = new ArrayList<>();
-    formatSpecifiers.add(name());
-    if (additionalFormatSpecifiers != null)
-    {
-      for (final String additionalFormatSpecifier: additionalFormatSpecifiers)
-      {
-        formatSpecifiers.add(additionalFormatSpecifier);
-      }
-    }
   }
 
   @Override
