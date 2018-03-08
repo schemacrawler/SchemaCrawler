@@ -3,6 +3,8 @@
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
 [![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/sualeh/schemacrawler/)
+[![Chocolatey](https://img.shields.io/badge/chocolatey-download-blue.svg)](https://chocolatey.org/packages/schemacrawler)
+
 
 
 
