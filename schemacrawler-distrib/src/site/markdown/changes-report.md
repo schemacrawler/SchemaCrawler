@@ -1,9 +1,10 @@
 # SchemaCrawler Change History
 
 <a name="a14.20.02"></a>
-## Release 14.20.02 - 2018-03-10
+## Release 14.20.02 - 2018-03-07
 
 * Upgrade to support Apache Velocity 2.0.
+* Added remarks for tables and columns to Microsoft SQL Server test schema.
 
 <a name="a14.20.01"></a>
 ## Release 14.20.01 - 2018-03-05
@@ -12,8 +13,8 @@
 * Support a pure Java implementation of Graphviz (nidi3/graphviz-java), for cases where Graphviz cannot be installed.
 * Changed CommandProvider API
 
-<a name="a14.20.01"></a>
-## Release 14.20.01 - 2018-02-04
+<a name="a14.19.01"></a>
+## Release 14.19.01 - 2018-02-04
 
 * Fixing bug when retrieving Oracle procedure metadata
 * Adding test support for routines
