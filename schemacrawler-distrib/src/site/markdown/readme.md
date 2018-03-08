@@ -74,6 +74,10 @@ to launch SchemaCrawler
 To use SchemaCrawler in your development projects, or to build SchemaCrawler from the source code, read 
 about [building].
 
+## Additonal Installation Options
+
+Additonal installation options are available from the [SchemaCrawler ecosystem](ecosystem.html).
+
 
 [FAQs]: faq.html
 [resources]: resources.html

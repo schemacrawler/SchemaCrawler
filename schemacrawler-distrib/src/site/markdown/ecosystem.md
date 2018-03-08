@@ -31,3 +31,7 @@ Adrien Sales <Adrien.Sales at GMail>.
 ### RPM SchemaCrawler package
 The [RPM SchemaCrawler package](https://github.com/adriens/schemacrawler-rpm) is maintained by
 Adrien Sales <Adrien.Sales at GMail>.
+
+### Chocolatey SchemaCrawler package
+The [Chocolatey SchemaCrawler package](https://github.com/adriens/chocolatey-schemacrawler) is maintained by
+Adrien Sales <Adrien.Sales at GMail>.

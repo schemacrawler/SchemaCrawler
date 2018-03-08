@@ -125,3 +125,9 @@ SchemaCrawler provides metadata for the following database objects:
 The sample code below demonstrates just how easy it is to use SchemaCrawler. For more details, please refer to the [javadocs](apidocs/index.html).
 
 <script src="https://gist.github.com/sualeh/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
+
+
+## Acknowledgements
+
+- SchemaCrawler is grateful to Adrien Sales for developing the SchemaCrawler ecosystem.
+- SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
