@@ -67,11 +67,6 @@ and install them into your local Apache Maven repository using the provided inst
 Similarly, download the [Oracle JDBC drivers] put them into the `schemacrawler-oracle` source 
 directory, and install them locally.
 
-# Acknowledgements
-
-- SchemaCrawler is grateful to Adrien Sales for developing the [Debian SchemaCrawler package].
-- SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
-
 
 [Java]: https://www.java.com/
 [Eclipse]: http://www.eclipse.org/downloads/eclipse-packages/
@@ -93,4 +88,3 @@ directory, and install them locally.
 [Oracle JDBC drivers]: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
 [Clover]: http://www.atlassian.com/software/clover/
 [how-tos]: how-to.html
-[Debian SchemaCrawler package]: https://github.com/adriens/schemacrawler-deb
