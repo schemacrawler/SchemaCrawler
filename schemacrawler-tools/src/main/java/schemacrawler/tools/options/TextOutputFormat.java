@@ -31,6 +31,12 @@ package schemacrawler.tools.options;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.List;
+import java.util.logging.Level;
+
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
+
 /**
  * Enumeration for text format type.
  */
@@ -39,28 +45,46 @@ public enum TextOutputFormat
   OutputFormat
 {
 
- text("Plain text format"),
+ text("Plain text format", "txt"),
  html("HyperText Markup Language (HTML) format"),
  csv("Comma-separated values (CSV) format"),
  tsv("Tab-separated values (TSV) format"),
  json("JavaScript Object Notation (JSON) format"),;
 
-  public static boolean isTextOutputFormat(final String format)
-  {
-    return fromFormatOrNull(format) != null;
-  }
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(TextOutputFormat.class.getName());
 
-  public static TextOutputFormat valueOfFromString(final String format)
+  /**
+   * Gets the value from the format.
+   *
+   * @param format
+   *        Text output format.
+   * @return TextOutputFormat
+   */
+  public static TextOutputFormat fromFormat(final String format)
   {
     final TextOutputFormat outputFormat = fromFormatOrNull(format);
     if (outputFormat == null)
     {
-      return TextOutputFormat.text;
+      LOGGER
+        .log(Level.CONFIG,
+             new StringFormat("Unknown format <%s>, using default", format));
+      return text;
     }
     else
     {
       return outputFormat;
     }
+  }
+
+  /**
+   * Checks if the value of the format is supported.
+   *
+   * @return True if the format is a text output format
+   */
+  public static boolean isSupportedFormat(final String format)
+  {
+    return fromFormatOrNull(format) != null;
   }
 
   private static TextOutputFormat fromFormatOrNull(final String format)
@@ -69,39 +93,53 @@ public enum TextOutputFormat
     {
       return null;
     }
-    for (final TextOutputFormat textFormat: TextOutputFormat.values())
+    for (final TextOutputFormat outputFormat: TextOutputFormat.values())
     {
-      if (textFormat.getFormat().equalsIgnoreCase(format))
+      if (outputFormat.outputFormatState.isSupportedFormat(format))
       {
-        return textFormat;
+        return outputFormat;
       }
     }
     return null;
   }
 
-  private final String description;
+  private final OutputFormatState outputFormatState;
 
   private TextOutputFormat(final String description)
   {
-    this.description = description;
+    outputFormatState = new OutputFormatState(name(), description);
+  }
+
+  private TextOutputFormat(final String description,
+                           final String... additionalFormatSpecifiers)
+  {
+    outputFormatState = new OutputFormatState(name(),
+                                              description,
+                                              additionalFormatSpecifiers);
   }
 
   @Override
   public String getDescription()
   {
-    return description;
+    return outputFormatState.getDescription();
   }
 
   @Override
   public String getFormat()
   {
-    return name();
+    return outputFormatState.getFormat();
+  }
+
+  @Override
+  public List<String> getFormats()
+  {
+    return outputFormatState.getFormats();
   }
 
   @Override
   public String toString()
   {
-    return String.format("%s - %s", getFormat(), description);
+    return outputFormatState.toString();
   }
 
 }

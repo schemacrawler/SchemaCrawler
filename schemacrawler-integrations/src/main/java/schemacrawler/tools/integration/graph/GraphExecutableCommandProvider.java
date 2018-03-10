@@ -80,7 +80,7 @@ public final class GraphExecutableCommandProvider
 
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isGraph = GraphOutputFormat
-      .isGraphOutputFormat(outputFormatValue);
+      .isSupportedFormat(outputFormatValue);
     final boolean isEmbeddedGraph = GraphOutputFormat.htmlx.getFormat()
       .equalsIgnoreCase(outputFormatValue);
 
@@ -131,7 +131,7 @@ public final class GraphExecutableCommandProvider
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     return supportedCommands.contains(command)
            && (isBlank(outputFormatValue)
-               || GraphOutputFormat.isGraphOutputFormat(outputFormatValue));
+               || GraphOutputFormat.isSupportedFormat(outputFormatValue));
   }
 
 }

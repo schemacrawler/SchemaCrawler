@@ -97,7 +97,7 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
     }
 
     final TextOutputFormat outputFormat = TextOutputFormat
-      .valueOfFromString(outputOptions.getOutputFormatValue());
+      .fromFormat(outputOptions.getOutputFormatValue());
     switch (outputFormat)
     {
       case html:
