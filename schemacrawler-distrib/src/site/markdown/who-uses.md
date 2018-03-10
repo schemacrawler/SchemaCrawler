@@ -32,7 +32,7 @@ schemas without getting false alerts."
 
 - SchemaCrawler database diagrams in use at the Scrum meeting at the Software
 Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
-Photograph courtesy of Adrien Sales.
+Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 <a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
 <img class="img-fluid img-thumbnail" style="width: 200px" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
@@ -73,5 +73,5 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Thom Snoeren's blog post, [SchemaCrawler 2: Database Metadata Discovery](http://tsn-admin.blogspot.com/2015/02/schemacrawler-2-database-metadata.html)
 - Stefan Pröll's blog post, [Create an ER Diagram of an Existing SQLite Database (or many other RDBMS)](http://blog.stefanproell.at/2016/01/11/create-an-er-diagram-of-an-existing-sqlite-database-or-manyoother-rdbms/)
 - Allison Tharp's blog post, [Using SchemaCrawler to Generate a SQLite DB Graph](http://www.techtrek.io/using-schemacrawler-to-generate-a-sqlite-db-graph/)
-- Adrien Sales' presentation, [database continuous deployment and development](http://dsi-ville-noumea.github.io/presentation-continuous-database/)
+- [Adrien Sales](https://www.linkedin.com/in/adrien-sales)' presentation, [database continuous deployment and development](http://dsi-ville-noumea.github.io/presentation-continuous-database/)
 - Tobias Weis' blog, [Short: Schema diagram from an existing sqlite database](http://blog.tobias-weis.de/short-schema-diagram-from-an-existing-sqlite-database/)

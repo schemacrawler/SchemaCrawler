@@ -129,5 +129,6 @@ The sample code below demonstrates just how easy it is to use SchemaCrawler. For
 
 ## Acknowledgements
 
-- SchemaCrawler is grateful to Adrien Sales for developing the SchemaCrawler ecosystem.
-- SchemaCrawler is grateful to Atlassian for providing a license for [Clover].
+SchemaCrawler is grateful to 
+- [Adrien Sales](https://www.linkedin.com/in/adrien-sales) for developing the [SchemaCrawler ecosystem](ecosystem.html).
+- [Atlassian](https://www.atlassian.com/) for providing a license for [Clover](https://www.atlassian.com/software/clover).
