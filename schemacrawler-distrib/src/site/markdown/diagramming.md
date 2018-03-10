@@ -146,7 +146,8 @@ configuration file, `schemacrawler.config.properties`, and edit the line with
 
 ## SchemaCrawler Diagrams in Use
 
-Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). Photograph courtesy of Adrien Sales.
+Schemacrawler database diagrams in use at the Scrum meeting at the Software Development Departement of [La Ville de Nouméa](http://www.noumea.nc/). 
+Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 <a href="images/SchemaCrawler_Noumea.jpg" data-lightbox="sc-in-use" data-title="Schemacrawler database diagrams in use">
 <img class="img-fluid img-thumbnail" style="width: 50%" src="images/SchemaCrawler_Noumea.jpg" alt="Schemacrawler database diagrams in use" />
