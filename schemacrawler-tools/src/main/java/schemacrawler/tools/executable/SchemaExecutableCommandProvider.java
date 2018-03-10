@@ -110,7 +110,7 @@ public final class SchemaExecutableCommandProvider
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     return supportedCommands.contains(command)
            && (isBlank(outputFormatValue)
-               || TextOutputFormat.isTextOutputFormat(outputFormatValue));
+               || TextOutputFormat.isSupportedFormat(outputFormatValue));
   }
 
 }

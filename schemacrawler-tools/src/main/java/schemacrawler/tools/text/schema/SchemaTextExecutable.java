@@ -127,7 +127,7 @@ public final class SchemaTextExecutable
     final String identifierQuoteString = databaseSpecificOptions
       .getIdentifierQuoteString();
     final TextOutputFormat outputFormat = TextOutputFormat
-      .valueOfFromString(outputOptions.getOutputFormatValue());
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,

@@ -159,7 +159,7 @@ public final class OperationExecutable
   {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
     final boolean isOutputFormatSupported = TextOutputFormat
-      .isTextOutputFormat(outputFormatValue);
+      .isSupportedFormat(outputFormatValue);
     return isOutputFormatSupported;
   }
 
@@ -176,7 +176,7 @@ public final class OperationExecutable
     final OperationOptions operationOptions = getOperationOptions();
     final DataTraversalHandler formatter;
     final TextOutputFormat outputFormat = TextOutputFormat
-      .valueOfFromString(outputOptions.getOutputFormatValue());
+      .fromFormat(outputOptions.getOutputFormatValue());
     final String identifierQuoteString = databaseSpecificOptions
       .getIdentifierQuoteString();
     if (outputFormat == TextOutputFormat.json)

@@ -156,7 +156,7 @@ public class LintExecutable
       .getIdentifierQuoteString();
 
     final TextOutputFormat outputFormat = TextOutputFormat
-      .valueOfFromString(outputOptions.getOutputFormatValue());
+      .fromFormat(outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new LintJsonFormatter(lintOptions,
