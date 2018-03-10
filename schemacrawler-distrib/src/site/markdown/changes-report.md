@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.20.03"></a>
+## Release 14.20.03 - 2018-03-10
+
+- Website updates
+
 <a name="a14.20.02"></a>
 ## Release 14.20.02 - 2018-03-07
 

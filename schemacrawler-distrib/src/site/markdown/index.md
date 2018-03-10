@@ -17,10 +17,12 @@ RDBMS systems. SchemaCrawler works with any operating system that supports
 Java SE 8, Compact Profile 2 or better.
 
 [![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler)
-[![Coverage Status](https://coveralls.io/repos/schemacrawler/SchemaCrawler/badge.svg?branch=master&service=github)](https://coveralls.io/github/schemacrawler/SchemaCrawler?branch=master)
+[![Coverage Status](https://img.shields.io/codecov/c/github/schemacrawler/SchemaCrawler/master.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
+
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler)
-[![Main distribution](https://img.shields.io/badge/zip-download-brightgreen.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
+[![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
+[![Docker Pulls](https://img.shields.io/docker/pulls/sualeh/schemacrawler.svg)](https://hub.docker.com/r/sualeh/schemacrawler/)
+[![Chocolatey](https://img.shields.io/badge/chocolatey-install-blue.svg)](https://chocolatey.org/packages/schemacrawler)
 
 -----
 
