@@ -25,11 +25,11 @@
 # ========================================================================
 
 # ------------------------------------------------------------------------
-# This Dockerfile builds a SchemaCrawler Docker image from a SchemaCrawler 
-# release.
+# This Dockerfile builds a SchemaCrawler Docker image from a local 
+# SchemaCrawler build.
 # ------------------------------------------------------------------------
 
-FROM openjdk:8-jdk
+FROM openjdk
 
 ARG SCHEMACRAWLER_VERSION=14.20.03
 
@@ -37,7 +37,7 @@ LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_V
       "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
       "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
-# Install GraphViz
+# Install depdencies - vi and GraphViz
 RUN \
     apt-get update \
  && apt-get install -y -q vim \
@@ -48,17 +48,11 @@ RUN \
 RUN useradd -ms /bin/bash schemacrawler
 USER schemacrawler
 WORKDIR /home/schemacrawler
-
-# Download SchemaCrawler and prepare install directories
-RUN \
-    wget -nv https://github.com/schemacrawler/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && unzip -q schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_schemacrawler schemacrawler \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_testdb/sc.db schemacrawler/sc.db \
- && rm schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && rm -rf schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution
+ 
+# Copy SchemaCrawler distribution from the local build
+COPY ./schemacrawler-distrib/target/_distribution/_schemacrawler schemacrawler
+COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db sc.db
 
 WORKDIR /home/schemacrawler/schemacrawler
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
-
