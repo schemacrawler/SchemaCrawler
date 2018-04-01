@@ -37,7 +37,7 @@ LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_V
       "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
       "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
-# Install depdencies - vi and GraphViz
+# Install GraphViz
 RUN \
     apt-get update \
  && apt-get install -y -q graphviz \
