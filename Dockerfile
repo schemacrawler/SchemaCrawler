@@ -37,22 +37,18 @@ LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_V
       "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \
       "us.fatehi.schemacrawler.docker-hub"="https://hub.docker.com/r/schemacrawler/schemacrawler"
 
-# Install depdencies - vi and GraphViz
+# Install GraphViz
 RUN \
     apt-get update \
- && apt-get install -y -q vim \
  && apt-get install -y -q graphviz \
  && rm -rf /var/lib/apt/lists/*
-
-# Run the image as a non-root user
-RUN useradd -ms /bin/bash schemacrawler
-USER schemacrawler
-WORKDIR /home/schemacrawler
  
 # Copy SchemaCrawler distribution from the local build
 COPY ./schemacrawler-distrib/target/_distribution/_schemacrawler schemacrawler
-COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db sc.db
+COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db schemacrawler/sc.db
+RUN chmod +x schemacrawler/schemacrawler.sh
 
-WORKDIR /home/schemacrawler/schemacrawler
+WORKDIR schemacrawler
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
+
