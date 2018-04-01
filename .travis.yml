@@ -29,6 +29,18 @@ after_success:
 before_deploy:
   - cd $SC_BUILD_DIR
   - git fetch --tags
+after_success:
+  - docker version  
+  # Build Docker image
+  - docker build -t schemacrawler/schemacrawler .
+  - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v14.20.03
+  - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
+  # Deploy image to Docker Hub
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker push schemacrawler/schemacrawler
+  - docker logout  
+  # Remove the image, so Travis does not cache it
+  - docker rm schemacrawler/schemacrawler
 deploy:
   - provider: releases
     api_key:
