@@ -40,6 +40,7 @@ LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_V
 # Install GraphViz
 RUN \
     apt-get update \
+ && apt-get install -y -q vim \
  && apt-get install -y -q graphviz \
  && rm -rf /var/lib/apt/lists/*
  
@@ -53,7 +54,8 @@ RUN useradd -ms /bin/bash schemacrawler
 USER schemacrawler
 WORKDIR /home/schemacrawler
 
-COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db /home/schemacrawler/sc.db
+COPY --chown=schemacrawler:schemacrawler ./schemacrawler-distrib/target/_distribution/_testdb/sc.db /home/schemacrawler/sc.db
+COPY --chown=schemacrawler:schemacrawler ./schemacrawler-distrib/target/_distribution/_schemacrawler/config/* /home/schemacrawler/
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
 

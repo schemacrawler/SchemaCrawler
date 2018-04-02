@@ -16,7 +16,7 @@ schemacrawler-commandline/
 schemacrawler-db2/
 schemacrawler-dbtest/
 schemacrawler-diff/
-#schemacrawler-distrib/
+schemacrawler-distrib/
 schemacrawler-docker/
 schemacrawler-docs/
 schemacrawler-examplecode/
@@ -33,3 +33,5 @@ schemacrawler-sqlserver/
 schemacrawler-testdb/
 schemacrawler-tools/
 workspace/
+!schemacrawler-distrib/target/_distribution
+
