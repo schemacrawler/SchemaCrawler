@@ -44,11 +44,16 @@ RUN \
  && rm -rf /var/lib/apt/lists/*
  
 # Copy SchemaCrawler distribution from the local build
-COPY ./schemacrawler-distrib/target/_distribution/_schemacrawler schemacrawler
-COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db schemacrawler/sc.db
-RUN chmod +x schemacrawler/schemacrawler.sh
+COPY ./schemacrawler-distrib/target/_distribution/_schemacrawler /opt/schemacrawler
+COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db /opt/schemacrawler/sc.db
+RUN chmod +x /opt/schemacrawler/schemacrawler.sh
 
-WORKDIR schemacrawler
+# Run the image as a non-root user
+RUN useradd -ms /bin/bash schemacrawler
+USER schemacrawler
+WORKDIR /home/schemacrawler
+
+COPY ./schemacrawler-distrib/target/_distribution/_testdb/sc.db /home/schemacrawler/sc.db
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
 
