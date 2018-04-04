@@ -33,7 +33,7 @@ before_deploy:
   - git fetch --tags
 deploy:
   - provider: script
-    script: bash -c "cd schemacrawler-parent/; ./docker-build.sh"
+    script: bash -c "cd schemacrawler-docker/; ./docker-build.sh"
     skip_cleanup: true
     on:
       repo: schemacrawler/SchemaCrawler
