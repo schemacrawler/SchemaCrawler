@@ -12,7 +12,9 @@ pwd
 docker version  
 
 # Build Docker image
-docker build -t schemacrawler/schemacrawler -t schemacrawler/schemacrawler:v14.20.03 -t schemacrawler/schemacrawler:latest . 
+docker build -t schemacrawler/schemacrawler .
+docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v14.20.03 
+docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
 
 # Deploy image to Docker Hub
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -20,5 +22,5 @@ docker push schemacrawler/schemacrawler
 docker logout  
 
 # Remove local image
-# docker rm schemacrawler/schemacrawler
+docker rm schemacrawler/schemacrawler
 

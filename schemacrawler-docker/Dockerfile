@@ -57,7 +57,7 @@ USER schemacrawler
 WORKDIR /home/schemacrawler
 
 COPY --chown=schemacrawler:schemacrawler _testdb/sc.db /home/schemacrawler/sc.db
-COPY --chown=schemacrawler:schemacrawler ./schemacrawler-distrib/target/_distribution/_schemacrawler/config/* /home/schemacrawler/
+COPY --chown=schemacrawler:schemacrawler _schemacrawler/config/* /home/schemacrawler/
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
 
