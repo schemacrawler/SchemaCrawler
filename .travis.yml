@@ -3,7 +3,9 @@ jdk:
   - oraclejdk8
 os:
   - linux
-sudo: false
+sudo: required
+services:
+  - docker
 notifications:
   on_success:
     - change
