@@ -1,10 +1,18 @@
 #!/bin/bash
 
+# Set up Dockerfile to be within the build context, to support older versions
+# of Docker
+# The build context is the distribution staging directory,
+# schemacrawler-distrib/target/_distribution
+cp ./Dockerfile ../schemacrawler-distrib/target/_distribution
+cd ../schemacrawler-distrib/target/_distribution
+
 # Print Docker version
+pwd
 docker version  
 
 # Build Docker image
-docker build -t schemacrawler/schemacrawler -t schemacrawler/schemacrawler:v14.20.03 -t schemacrawler/schemacrawler:latest -f ./Dockerfile ../schemacrawler-distrib/target/_distribution 
+docker build -t schemacrawler/schemacrawler -t schemacrawler/schemacrawler:v14.20.03 -t schemacrawler/schemacrawler:latest . 
 
 # Deploy image to Docker Hub
 echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -13,3 +21,4 @@ docker logout
 
 # Remove local image
 # docker rm schemacrawler/schemacrawler
+
