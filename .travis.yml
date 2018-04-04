@@ -29,19 +29,25 @@ after_success:
 before_deploy:
   - cd $SC_BUILD_DIR
   - git fetch --tags
-after_success:
-  - docker version  
-  # Build Docker image
-  - docker build -t schemacrawler/schemacrawler .
-  - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v14.20.03
-  - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
-  # Deploy image to Docker Hub
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  - docker push schemacrawler/schemacrawler
-  - docker logout  
-  # Remove the image, so Travis does not cache it
-  - docker rm schemacrawler/schemacrawler
 deploy:
+  - provider: script
+    script:
+      - docker version  
+      # Build Docker image
+      - docker build -t schemacrawler/schemacrawler .
+      - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v14.20.03
+      - docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
+      # Deploy image to Docker Hub
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker push schemacrawler/schemacrawler
+      - docker logout  
+      # Remove the image, so Travis does not cache it
+      - docker rm schemacrawler/schemacrawler
+    skip_cleanup: true
+    on:
+      repo: schemacrawler/SchemaCrawler
+      branch: master
+      tags: true
   - provider: releases
     api_key:
       secure: ozkdQjIFJqyzLaX1FNTn/nP+CpuQa9+HoO9pxdMYSNrRn4AWb1WBl37/76QBLBI6ehvRLqPolbz32JxUmyYW/HMuDqI+8vlE2i5iOy5DZHvSayU5U8GwzHg8ibSfXpnEwc2fMmnOEdQeEjnRRU9Aa2k1/8B/MVa6ouF9jjpt+g9tZeXyvitBndD9SlpHb/zlEfiGTjPWHXABBu6K1omWotClbDpr3u5PhljZiCMOwV6gi8FAXTcV9Q/JXp29d9kDlrLUFmAAh6rLaBCAMrum9AnLtEht85YzxZEZAgfnuqHLf77Z65u1J7mLe0rIYXCal1q/Kn2dzg2HXPChvaZqbXFxOQ2V1WoNiyqtYE9tdYIbDAaM3Igzq+WSovrAHil8aBeWXeFdUS+AgQL2yEu/KiV0ggnrviOV6gvVlDRMEbXEg2+rkvX+qeDnlriB/oS8v5sWiPVaVbP6YfBFfmG2VGKsHDdXonG7/id5aLIQ4t9q2IFgKe/qO8hOkZMIMScFkwrPleNpqqo0VvKPmCS07S9cEMqimXkj18Vmh6rMM0w6yt0vjpOT9NjRFWn/MvAGH0dLBO5Jm8z2wFjXggNw3XiglYy8EUxYQunvhJEZOmFtls5g5rSNVfTuZsjoOYOye6DrdtewmB7yzVOGgBaBVUsIr0POxQv+x238rkwfSyo=
