@@ -1,20 +1,11 @@
-# Docker Image for SchemaCrawler
+## Docker Image for SchemaCrawler
 
 > Please see the [SchemaCrawler website](http://www.schemacrawler.com/).
 
-## Download
+### Run
 
-The pre-packaged [Docker image for SchemaCrawler](https://hub.docker.com/r/schemacrawler/schemacrawler/) is on Docker Hub.
-
-
-## Run
-
-Download the latest Docker image for SchemaCrawler from Docker Hub, run
-```
-docker pull schemacrawler/schemacrawler
-```
-
-Check that the Docker image for SchemaCrawler has been installed correctly, run
+Check that the Docker image for SchemaCrawler has been installed correctly, first start
+the Docker container
 ```
 docker run \
 -v $(pwd):/share \
@@ -25,29 +16,51 @@ schemacrawler/schemacrawler
 
 Then, run SchemaCrawler from the command-line within the container, like this
 ```
-./schemacrawler.sh \
+/opt/schemacrawler/schemacrawler.sh \
 -server=sqlite -user= -password= -database=sc.db \
--infolevel=maximum -routines= -command=schema \
+-infolevel=maximum -command=schema \
 -outputfile=/share/sc_db.png
 ```
 The image exports a volume called `/share`, and you can map it to your local directory. 
 
 Exit the Docker container for SchemaCrawler, and look at the `sc_db.png` file in your local directory.
 
-## Examples
+### Examples
 
-### Run SchemaCrawler Against Microsoft SQL Server on Amazon RDS
+#### Run SchemaCrawler With a Modified Configuration
 
-Here is an example of how to connect to Microsoft SQL Server on Amazon RDS. Run the SchemaCrawler Docker image using the command above, to get a new container, with a command shell. Then run SchemaCrawler, for example
+Run the SchemaCrawler Docker image using the command above, to get a new container, with a command shell. 
+
+Edit the SchemaCrawler configuration properties file within the container, using
 ```
-./schemacrawler.sh \
+vi schemacrawler.config.properties
+```
+
+Then, run SchemaCrawler from the command-line within the container, similarly to this example
+```
+/opt/schemacrawler/schemacrawler.sh \
+-server=sqlite -user= -password= -database=sc.db \
+-g ./schemacrawler.config.properties \
+-infolevel=maximum -command=schema \
+-outputfile=/share/sc_db.png
+```
+
+#### Run SchemaCrawler Against Microsoft SQL Server on Amazon RDS
+
+Here is an example of how to connect to Microsoft SQL Server on Amazon RDS. 
+
+Run the SchemaCrawler Docker image using the command above, to get a new container, with a command shell. 
+
+Then, run SchemaCrawler from the command-line within the container, similarly to this example
+```
+/opt/schemacrawler/schemacrawler.sh \
 -server=sqlserver -host=host.us-east-1.rds.amazonaws.com \
 -user=schemacrawler -password=schemacrawler \
 -database=SCHEMACRAWLER -schemas=SCHEMACRAWLER.dbo \
 -infolevel=minimum -command=list
 ```
 
-### Run SchemaCrawler Against PostgreSQL Running in Another Docker Container
+#### Run SchemaCrawler Against PostgreSQL Running in Another Docker Container
 
 Follow instructions on [Docker Hub for running a PostgreSQL container](https://hub.docker.com/_/postgres/).
 
@@ -76,34 +89,13 @@ docker run \
 schemacrawler/schemacrawler
 ```
 
-Then, run SchemaCrawler from the command-line within the container, like this
+Then, run SchemaCrawler from the command-line within the container, similarly to this example
 ```
-./schemacrawler.sh \
+/opt/schemacrawler/schemacrawler.sh \
 -server=postgresql -host=postgres_host \
 -user=schemacrawler -password=schemacrawler \
 -database=schemacrawler \
 -infolevel=standard -routines= -command=schema \
 -outputformat=png \
 -o /share/schema.png
-```
-
-Exit the Docker container for SchemaCrawler, and look at the `schema.png` file in your local directory.
-
------
-
-## Build and Deploy Docker Image
-
-In the directory containing the Docker file, run
-```
-docker build \
--t schemacrawler/schemacrawler:14.12.01 -t schemacrawler/schemacrawler:latest \
---build-arg SCHEMACRAWLER_VERSION=14.12.01 \
-.
-```
-Of course, change the SchemaCrawler version number.
-
-To deploy, run
-```
-docker login
-docker push schemacrawler/schemacrawler
 ```

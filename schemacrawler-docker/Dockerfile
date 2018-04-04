@@ -25,11 +25,13 @@
 # ========================================================================
 
 # ------------------------------------------------------------------------
-# This Dockerfile builds a SchemaCrawler Docker image from a SchemaCrawler 
-# release.
+# This Dockerfile builds a SchemaCrawler Docker image from a local
+# SchemaCrawler build. The build should be run from the distribution
+# staging directory,
+# schemacrawler-distrib/target/_distribution
 # ------------------------------------------------------------------------
 
-FROM openjdk:8-jdk
+FROM openjdk
 
 ARG SCHEMACRAWLER_VERSION=14.20.03
 
@@ -39,26 +41,23 @@ LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_V
 
 # Install GraphViz
 RUN \
-    apt-get update \
- && apt-get install -y -q vim \
- && apt-get install -y -q graphviz \
+    apt-get -y -q update \
+ && apt-get -y -q install vim \
+ && apt-get -y -q install graphviz \
  && rm -rf /var/lib/apt/lists/*
+
+# Copy SchemaCrawler distribution from the local build
+COPY _schemacrawler /opt/schemacrawler
+COPY _testdb/sc.db /opt/schemacrawler/sc.db
+RUN chmod +x /opt/schemacrawler/schemacrawler.sh
 
 # Run the image as a non-root user
 RUN useradd -ms /bin/bash schemacrawler
 USER schemacrawler
 WORKDIR /home/schemacrawler
 
-# Download SchemaCrawler and prepare install directories
-RUN \
-    wget -nv https://github.com/schemacrawler/SchemaCrawler/releases/download/v"$SCHEMACRAWLER_VERSION"/schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && unzip -q schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_schemacrawler schemacrawler \
- && mv schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution/_testdb/sc.db schemacrawler/sc.db \
- && rm schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution.zip \
- && rm -rf schemacrawler-"$SCHEMACRAWLER_VERSION"-distribution
-
-WORKDIR /home/schemacrawler/schemacrawler
+COPY --chown=schemacrawler:schemacrawler _testdb/sc.db /home/schemacrawler/sc.db
+COPY --chown=schemacrawler:schemacrawler ./schemacrawler-distrib/target/_distribution/_schemacrawler/config/* /home/schemacrawler/
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
 
