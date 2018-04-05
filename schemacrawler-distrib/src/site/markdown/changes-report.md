@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.20.04"></a>
+## Release 14.20.04 - 2018-04-04
+
+- Docker image updated with non-root user, and documentation updated for latest Docker version
+
 <a name="a14.20.03"></a>
 ## Release 14.20.03 - 2018-03-10
 
