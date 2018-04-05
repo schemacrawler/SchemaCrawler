@@ -64,27 +64,32 @@ Then, run SchemaCrawler from the command-line within the container, similarly to
 
 Follow instructions on [Docker Hub for running a PostgreSQL container](https://hub.docker.com/_/postgres/).
 
-Run your PostgreSQL Docker container, making sure to specify a host name with the `-h` option, for example, run
+Create a local network.
+```
+docker network create pgnet
+```
+
+Run your PostgreSQL Docker container in the network, for example, run
 ``` 
-docker run --name scpostgres \
+docker run -v `pwd`:/backup/ \
 -e POSTGRES_USER=schemacrawler \
 -e POSTGRES_PASSWORD=schemacrawler \
--h postgres_host \
+--net pgnet --name scpostgres \
 -d postgres
 ```
 
-Create your schema with `psql`, like this
+Create your schema with `psql`, by starting `psql` like this
 ```
-docker run -it --rm --link scpostgres:postgres postgres \
-psql -h postgres -U schemacrawler
+docker exec -it scpostgres \
+psql -U schemacrawler schemacrawler
 ```
 
-Run the Docker image for SchemaCrawler against your PostgreSQL database, for example
+Run the Docker image for SchemaCrawler against your PostgreSQL database in the same network, for example
 ```
 docker run \
---link scpostgres:postgres \
 -v $(pwd):/share \
---rm -i -t \
+-it \
+--net pgnet --name schemacrawler \
 --entrypoint=/bin/bash \
 schemacrawler/schemacrawler
 ```
@@ -92,7 +97,7 @@ schemacrawler/schemacrawler
 Then, run SchemaCrawler from the command-line within the container, similarly to this example
 ```
 /opt/schemacrawler/schemacrawler.sh \
--server=postgresql -host=postgres_host \
+-server=postgresql -host=scpostgres \
 -user=schemacrawler -password=schemacrawler \
 -database=schemacrawler \
 -infolevel=standard -routines= -command=schema \
