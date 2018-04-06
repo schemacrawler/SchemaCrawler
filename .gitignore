@@ -1,6 +1,8 @@
 *.patch
 .clover
 .svn
+.idea/
+**/*.iml
 .settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-db2/*.jar
 /schemacrawler-distrib/*.bnd
