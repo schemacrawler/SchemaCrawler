@@ -45,16 +45,20 @@ public class EqualsTest
   {
     final NamedObject testObject1 = new AbstractNamedObject("test")
     {
+      static final long serialVersionUID = 1L;
     };
     final NamedObject testObject2 = new AbstractNamedObject("test")
     {
+      static final long serialVersionUID = 1L;
     };
     final NamedObject testObject3 = new AbstractNamedObject("test 2")
     {
+      static final long serialVersionUID = 1L;
     };
 
-    new EqualsTester().addEqualityGroup(testObject1, testObject2)
-      .addEqualityGroup(testObject3).testEquals();
+    final EqualsTester equalsTester = new EqualsTester()
+      .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
+    equalsTester.testEquals();
   }
 
   @Test
@@ -76,9 +80,10 @@ public class EqualsTest
     final Privilege<Table> testPrivilege4 = new MutablePrivilege<>(new TableReference(table2),
                                                                    "privilegeB");
 
-    new EqualsTester().addEqualityGroup(testPrivilege1, testPrivilege2)
-      .addEqualityGroup(testPrivilege3).addEqualityGroup(testPrivilege4)
-      .testEquals();
+    final EqualsTester equalsTester = new EqualsTester()
+      .addEqualityGroup(testPrivilege1, testPrivilege2)
+      .addEqualityGroup(testPrivilege3).addEqualityGroup(testPrivilege4);
+    equalsTester.testEquals();
   }
 
 }
