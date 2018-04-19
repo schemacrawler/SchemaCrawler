@@ -32,53 +32,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 
 /**
- * A JSONArray is an ordered sequence of values. Its external text form
- * is a string wrapped in square brackets with commas separating the
- * values. The internal form is an object having <code>get</code> and
- * <code>opt</code> methods for accessing the values by index, and
- * <code>put</code> methods for adding or replacing values. The values
- * can be any of these types: <code>Boolean</code>,
- * <code>JSONArray</code>, <code>JSONObject</code>, <code>Number</code>,
- * <code>String</code>, or the <code>JSONObject.NULL object</code>.
- * <p>
- * The constructor can convert a JSON text into a Java object. The
- * <code>toString</code> method converts to JSON text.
- * <p>
- * A <code>get</code> method returns a value if one can be found, and
- * throws an exception if one cannot be found. An <code>opt</code>
- * method returns a default value instead of throwing an exception, and
- * so is useful for obtaining optional values.
- * <p>
- * The generic <code>get()</code> and <code>opt()</code> methods return
- * an object which you can cast or query for type. There are also typed
- * <code>get</code> and <code>opt</code> methods that do type checking
- * and type coercion for you.
- * <p>
- * The texts produced by the <code>toString</code> methods strictly
- * conform to JSON syntax rules. The constructors are more forgiving in
- * the texts they will accept:
- * <ul>
- * <li>An extra <code>,</code>&nbsp;<small>(comma)</small> may appear
- * just before the closing bracket.</li>
- * <li>The <code>null</code> value will be inserted when there is
- * <code>,</code>&nbsp;<small>(comma)</small> elision.</li>
- * <li>Strings may be quoted with <code>'</code>&nbsp;<small>(single
- * quote)</small>.</li>
- * <li>Strings do not need to be quoted at all if they do not begin with
- * a quote or single quote, and if they do not contain leading or
- * trailing spaces, and if they do not contain any of these characters:
- * <code>{ } [ ] / \ : , = ; #</code> and if they do not look like
- * numbers and if they are not the reserved words <code>true</code>,
- * <code>false</code>, or <code>null</code>.</li>
- * <li>Values can be separated by <code>;</code>
- * <small>(semicolon)</small> as well as by <code>,</code>
- * <small>(comma)</small>.</li>
- * <li>Numbers may have the <code>0x-</code> <small>(hex)</small>
- * prefix.</li>
- * </ul>
+ * {@link https://github.com/stleary/JSON-java}
  *
  * @author JSON.org
  * @version 2011-08-25
@@ -153,7 +109,7 @@ public class JSONArray
    * @throws JSONException
    *         If the array contains an invalid number.
    */
-  public String join(final String separator)
+  private String join(final String separator)
     throws JSONException
   {
     final int len = length();
@@ -175,252 +131,9 @@ public class JSONArray
    *
    * @return The length (or size).
    */
-  public int length()
+  private int length()
   {
     return myArrayList.size();
-  }
-
-  /**
-   * Append a boolean value. This increases the array's length by one.
-   *
-   * @param value
-   *        A boolean value.
-   * @return this.
-   */
-  public JSONArray put(final boolean value)
-  {
-    put(value? Boolean.TRUE: Boolean.FALSE);
-    return this;
-  }
-
-  /**
-   * Put a value in the JSONArray, where the value will be a JSONArray
-   * which is produced from a Collection.
-   *
-   * @param value
-   *        A Collection value.
-   * @return this.
-   */
-  public JSONArray put(final Collection value)
-  {
-    put(new JSONArray(value));
-    return this;
-  }
-
-  /**
-   * Append a double value. This increases the array's length by one.
-   *
-   * @param value
-   *        A double value.
-   * @throws JSONException
-   *         if the value is not finite.
-   * @return this.
-   */
-  public JSONArray put(final double value)
-    throws JSONException
-  {
-    final Double d = new Double(value);
-    JSONObject.testValidity(d);
-    put(d);
-    return this;
-  }
-
-  /**
-   * Append an int value. This increases the array's length by one.
-   *
-   * @param value
-   *        An int value.
-   * @return this.
-   */
-  public JSONArray put(final int value)
-  {
-    put(new Integer(value));
-    return this;
-  }
-
-  /**
-   * Put or replace a boolean value in the JSONArray. If the index is
-   * greater than the length of the JSONArray, then null elements will
-   * be added as necessary to pad it out.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        A boolean value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative.
-   */
-  public JSONArray put(final int index, final boolean value)
-    throws JSONException
-  {
-    put(index, value? Boolean.TRUE: Boolean.FALSE);
-    return this;
-  }
-
-  /**
-   * Put a value in the JSONArray, where the value will be a JSONArray
-   * which is produced from a Collection.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        A Collection value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative or if the value is not finite.
-   */
-  public JSONArray put(final int index, final Collection value)
-    throws JSONException
-  {
-    put(index, new JSONArray(value));
-    return this;
-  }
-
-  /**
-   * Put or replace a double value. If the index is greater than the
-   * length of the JSONArray, then null elements will be added as
-   * necessary to pad it out.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        A double value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative or if the value is not finite.
-   */
-  public JSONArray put(final int index, final double value)
-    throws JSONException
-  {
-    put(index, new Double(value));
-    return this;
-  }
-
-  /**
-   * Put or replace an int value. If the index is greater than the
-   * length of the JSONArray, then null elements will be added as
-   * necessary to pad it out.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        An int value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative.
-   */
-  public JSONArray put(final int index, final int value)
-    throws JSONException
-  {
-    put(index, new Integer(value));
-    return this;
-  }
-
-  /**
-   * Put or replace a long value. If the index is greater than the
-   * length of the JSONArray, then null elements will be added as
-   * necessary to pad it out.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        A long value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative.
-   */
-  public JSONArray put(final int index, final long value)
-    throws JSONException
-  {
-    put(index, new Long(value));
-    return this;
-  }
-
-  /**
-   * Put a value in the JSONArray, where the value will be a JSONObject
-   * that is produced from a Map.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        The Map value.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative or if the the value is an invalid
-   *         number.
-   */
-  public JSONArray put(final int index, final Map value)
-    throws JSONException
-  {
-    put(index, new JSONObject(value));
-    return this;
-  }
-
-  /**
-   * Put or replace an object value in the JSONArray. If the index is
-   * greater than the length of the JSONArray, then null elements will
-   * be added as necessary to pad it out.
-   *
-   * @param index
-   *        The subscript.
-   * @param value
-   *        The value to put into the array. The value should be a
-   *        Boolean, Double, Integer, JSONArray, JSONObject, Long, or
-   *        String, or the JSONObject.NULL object.
-   * @return this.
-   * @throws JSONException
-   *         If the index is negative or if the the value is an invalid
-   *         number.
-   */
-  public JSONArray put(final int index, final Object value)
-    throws JSONException
-  {
-    JSONObject.testValidity(value);
-    if (index < 0)
-    {
-      throw new JSONException("JSONArray[" + index + "] not found.");
-    }
-    if (index < length())
-    {
-      myArrayList.set(index, value);
-    }
-    else
-    {
-      while (index != length())
-      {
-        put(JSONObject.NULL);
-      }
-      put(value);
-    }
-    return this;
-  }
-
-  /**
-   * Append an long value. This increases the array's length by one.
-   *
-   * @param value
-   *        A long value.
-   * @return this.
-   */
-  public JSONArray put(final long value)
-  {
-    put(new Long(value));
-    return this;
-  }
-
-  /**
-   * Put a value in the JSONArray, where the value will be a JSONObject
-   * which is produced from a Map.
-   *
-   * @param value
-   *        A Map value.
-   * @return this.
-   */
-  public JSONArray put(final Map value)
-  {
-    put(new JSONObject(value));
-    return this;
   }
 
   /**
@@ -463,24 +176,6 @@ public class JSONArray
   }
 
   /**
-   * Make a prettyprinted JSON text of this JSONArray. Warning: This
-   * method assumes that the data structure is acyclical.
-   *
-   * @param indentFactor
-   *        The number of spaces to add to each level of indentation.
-   * @return a printable, displayable, transmittable representation of
-   *         the object, beginning with <code>[</code>&nbsp;<small>(left
-   *         bracket)</small> and ending with <code>]</code> &nbsp;
-   *         <small>(right bracket)</small>.
-   * @throws JSONException
-   */
-  public String toString(final int indentFactor)
-    throws JSONException
-  {
-    return toString(indentFactor, 0);
-  }
-
-  /**
    * Write the contents of the JSONArray as JSON text to a writer. For
    * compactness, no whitespace is added.
    * <p>
@@ -489,7 +184,7 @@ public class JSONArray
    * @return The writer.
    * @throws JSONException
    */
-  public Writer write(final Writer writer)
+  Writer write(final Writer writer)
     throws JSONException
   {
     try
