@@ -1,7 +1,12 @@
 # SchemaCrawler Change History
 
 <a name="a14.20.05"></a>
-## Release 14.20.05 - 2018-04-04
+## Release 14.20.05 - 2018-04-19
+
+- Fixed issue #178 with JSON data generation
+
+<a name="a14.20.04"></a>
+## Release 14.20.04 - 2018-04-04
 
 - Docker image updated with non-root user, and documentation updated for latest Docker version
 
