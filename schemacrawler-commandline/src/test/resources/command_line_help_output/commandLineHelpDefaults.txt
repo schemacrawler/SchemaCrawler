@@ -1,0 +1,212 @@
+SchemaCrawler 14.20.05
+Database schema discovery and comprehension tool
+Copyright (c) 2000-2018, Sualeh Fatehi <sualeh@hotmail.com>.
+
+You can search for database schema objects using regular expressions, 
+and output the schema and data in a readable text format. You can find 
+potential schema design issues with lint. The output serves for 
+database documentation is designed to be diff-ed against other database 
+schemas. SchemaCrawler also generates schema diagrams.
+
+
+--- Connection Options ---
+
+For database connections, please read
+http://www.SchemaCrawler.com/database-support.html
+first, before running SchemaCrawler.
+
+For connecting to specific databases, use
+
+-server=<database system identifier>
+  Where <database system identifier> is a database 
+  for which a SchemaCrawler plug-in is available.   
+  For help on server specific connection options, 
+  re-run SchemaCrawler with:
+  -help -server=<database system identifier>
+
+On the other hand, if your database does not have a 
+SchemaCrawler plug-in, use
+
+-url=<url>
+  JDBC connection URL to the database.
+
+Then, provide a username and password
+
+-u=<user> (short for -user=<user>)
+  Database user name.
+
+-password=<password>
+  Database password.
+
+Available servers are: 
+
+--- Filtering Options ---
+     
+-i=<infolevel> (short for -infolevel=<infolevel>)
+  <infolevel> is one of minimum, standard, detailed, or maximum
+  The info level determines the amount of database metadata retrieved,
+  and also determines the time taken to crawl the schema
+  Optional, defaults to standard
+         
+-schemas=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified schema 
+  namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
+  -schemas=.*\.C.*|.*\.P.*
+  matches any schemas whose names start with C or P
+  Schemas that do not match the pattern are not displayed
+  Optional, defaults to showing all schemas
+  
+-tabletypes=<tabletypes>
+  <tabletypes> is a comma-separated list of table types supported by the
+  database
+  If no value is specified, all types of tables are shown
+  Optional, defaults to TABLE,VIEW
+  
+-tables=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified table 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME" - for example, 
+  -tables=.*\.C.*|.*\.P.*
+  matches any tables whose names start with C or P
+  Tables that do not match the pattern are not displayed
+  Use with care, since -tables= actually takes tables out of
+  consideration from the perspective of SchemaCrawler
+  To filter tables, look into the grep options
+  Optional, defaults to showing all tables
+    
+-excludecolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified column 
+  names, in the form "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" - for example, 
+  -excludecolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Columns that match the pattern are not displayed
+  Optional, default is to show all columns
+
+-routinetypes=<routinetypes>
+  <routinetypes> is a comma-separated list of routine types of 
+  PROCEDURE,FUNCTION
+  Optional, defaults to PROCEDURE,FUNCTION
+        
+-routines=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified  
+  stored procedure or function names, in the form 
+  "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for example, 
+  -routines=.*\.C.*|.*\.P.*
+  matches any routines whose names start with C or P
+  Routines that do not match the pattern are not displayed
+  Use -routines= to omit routines
+  Optional, defaults to showing no routines
+    
+-excludeinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  parameter names - for example, 
+  -excludeinout=@p1|@p2
+  matches parameters named @p1 or @p2 in any procedure 
+  Parameters that match the pattern are not displayed
+  Optional, default is to show all parameters
+
+-synonyms=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified synonym 
+  names, in the form "CATALOGNAME.SCHEMANAME.SYNONYMNAME" - for example, 
+  -synonyms=.*\.C.*|.*\.P.*
+  matches any synonyms whose names start with C or P
+  Synonyms that do not match the pattern are not displayed
+  Synonyms will only be shown when -infolevel=maximum
+  Use -synonyms= to omit synonyms
+  Optional, defaults to showing no synonyms
+
+-sequences=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified sequence 
+  names, in the form "CATALOGNAME.SCHEMANAME.SEQUENCENAME" - for example, 
+  -sequences=.*\.C.*|.*\.P.*
+  matches any sequences whose names start with C or P
+  Sequences that do not match the pattern are not displayed
+  Use -sequences= to omit sequences
+  Sequences will only be shown when -infolevel=maximum
+  Optional, defaults to showing no sequences
+
+--- Grep Options ---
+    
+-grepcolumns=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  column names, in the form "SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+  -grepcolumns=.*\.STREET|.*\.PRICE
+  matches columns named STREET or PRICE in any table
+  Optional, default is no grep
+   
+-grepinout=<regular-expression>
+  <regular-expression> is a regular expression to match fully qualified 
+  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example,
+  -grepinout=.*\.STREET|.*\.PRICE
+  matches inouts named STREET or PRICE in any table
+  Optional, default is no grep
+  
+-grepdef=<regular-expression>
+  <regular-expression> is a regular expression to match text within remarks and
+  definitions of views, stored proedures and triggers, if available
+  Optional, default is no grep
+    
+-invert-match   
+  Inverts the sense of matching, and shows non-matching tables and columns
+  Optional, default is false
+
+-only-matching
+  Shows only matching tables, and does not show foreign keys that reference
+  other non-matching tables
+  Optional, default is false
+
+--- Additional Filtering Options ---
+
+-hideemptytables
+  Shows only tables that have rows of data
+  Will work only if infolevel is maximum
+  Optional, default is false
+    
+-parents=<depth of parent tables>
+  <depth of parent tables> is the number of generations of ancestors
+  for the tables selected by grep, and shown in the results
+  Optional, default is 0
+  
+-children=<depth of child tables>
+  <depth of child tables> is the number of generations of descendants
+  for the tables selected by grep, and shown in the results
+  Optional, default is 0
+
+--- Configuration Options ---
+Command-line options will override configuration file options.
+
+SchemaCrawler configuration reads a resource called
+schemacrawler.config.properties from the CLASSPATH, which
+includes the lib/ folder. You can modify the default settings
+in this file. 
+
+The order of loading configuration settings is:
+1. From a CLASSPATH resource called
+   schemacrawler.config.properties
+2. Which can be overridden by settings in a 
+   configuration file (see below)
+3. Which can be overridden by other command-line options
+
+-g=<config-file> (short for -configfile <config-file>)
+  Reads SchemaCrawler configuration properties from <config-file>
+  Optional, uses the default schemacrawler.config.properties file
+  in the current directory, or in-built default options
+
+--- Application Options ---
+
+-loglevel=<loglevel>
+  Sets the logging granularity, where <loglevel> is one of: 
+  OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
+  Optional, default OFF
+
+-?, -h, -help, --help
+  Shows SchemaCrawler help
+
+-V, --version
+  Shows the SchemaCrawler version number
+
+--- Command ---
+
+-c=<command> (short for -command=<command>)
+  Where <command> is a SchemaCrawler command.   
+  For help on a command, re-run SchemaCrawler with:
+  -help -c=<command>
