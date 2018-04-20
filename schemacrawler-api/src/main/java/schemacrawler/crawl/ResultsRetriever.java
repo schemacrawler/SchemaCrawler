@@ -56,6 +56,8 @@ final class ResultsRetriever
   ResultsRetriever(final ResultSet resultSet)
     throws SQLException
   {
+    // NOTE: Do not check if the result set is closed, since some JDBC
+    // drivers like SQLite may not work
     requireNonNull(resultSet, "Cannot retrieve metadata for null results");
     resultsMetaData = resultSet.getMetaData();
   }

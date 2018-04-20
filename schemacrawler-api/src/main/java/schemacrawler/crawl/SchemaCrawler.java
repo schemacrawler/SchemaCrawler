@@ -73,30 +73,6 @@ public final class SchemaCrawler
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawler.class.getName());
 
-  /**
-   * Gets the result set columns metadata.
-   *
-   * @param resultSet
-   *        Result set
-   * @return Schema
-   * @throws SQLException
-   */
-  public static ResultsColumns getResultsColumns(final ResultSet resultSet)
-  {
-    ResultsColumns resultColumns = null;
-    try
-    {
-      final ResultsRetriever resultsRetriever = new ResultsRetriever(resultSet);
-      resultColumns = resultsRetriever.retrieveResults();
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, e.getMessage(), e);
-      resultColumns = null;
-    }
-    return resultColumns;
-  }
-
   private static void crawlColumnDataTypes(final MutableCatalog catalog,
                                            final RetrieverConnection retrieverConnection,
                                            final SchemaCrawlerOptions options)

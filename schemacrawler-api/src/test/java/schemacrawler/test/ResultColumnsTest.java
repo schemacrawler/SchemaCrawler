@@ -39,7 +39,7 @@ import java.util.logging.Level;
 import org.junit.Rule;
 import org.junit.Test;
 
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -81,8 +81,8 @@ public class ResultColumnsTest
           final ResultSet resultSet = statement.executeQuery(sql);)
       {
 
-        final ResultsColumns resultColumns = SchemaCrawler
-          .getResultsColumns(resultSet);
+        final ResultsColumns resultColumns = new ResultsCrawler(resultSet)
+          .crawl();
 
         assertNotNull("Could not obtain result columns", resultColumns);
         final ResultsColumn[] columns = resultColumns.getColumns()

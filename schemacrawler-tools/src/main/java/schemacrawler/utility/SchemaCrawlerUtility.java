@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 
+import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
@@ -138,8 +139,12 @@ public final class SchemaCrawlerUtility
   public static ResultsColumns getResultsColumns(final ResultSet resultSet)
     throws SchemaCrawlerException
   {
+    // NOTE: Some JDBC drivers like SQLite may not work with closed
+    // result-sets
     checkResultSet(resultSet);
-    return SchemaCrawler.getResultsColumns(resultSet);
+    final ResultsCrawler resultSetCrawler = new ResultsCrawler(resultSet);
+    final ResultsColumns resultsColumns = resultSetCrawler.crawl();
+    return resultsColumns;
   }
 
   /**
