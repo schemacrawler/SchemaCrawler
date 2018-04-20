@@ -126,7 +126,7 @@ public final class SchemaCrawlerHelpCommandLine
     out.println();
     if (showVersionOnly)
     {
-      System.exit(0);
+      return;
     }
 
     if (isBlank(connectionHelpResource))
@@ -165,7 +165,6 @@ public final class SchemaCrawlerHelpCommandLine
       printHelpText(commandRegistry.getHelp(command));
     }
 
-    System.exit(0);
   }
 
   public final String getCommand()
