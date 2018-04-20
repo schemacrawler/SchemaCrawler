@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.utility.BinaryData;
@@ -73,7 +73,7 @@ final class DataResultSet
   {
     this.rows = requireNonNull(rows, "Cannot use null results");
     this.showLobs = showLobs;
-    resultsColumns = SchemaCrawler.getResultsColumns(rows).getColumns();
+    resultsColumns = new ResultsCrawler(rows).crawl().getColumns();
   }
 
   public String[] getColumnNames()
