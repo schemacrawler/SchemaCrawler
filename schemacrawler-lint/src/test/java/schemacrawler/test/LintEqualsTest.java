@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -147,9 +148,35 @@ public class LintEqualsTest
                                                 LintSeverity.critical,
                                                 "message",
                                                 "");
+    final Lint<String> testObject4 = new Lint<>("linterId1",
+                                                "linterInstanceId",
+                                                new SimpleNamedObject("test1"),
+                                                LintSeverity.critical,
+                                                "message",
+                                                "");
+    final Lint<File> testObject5 = new Lint<>("linterId",
+                                              "linterInstanceId",
+                                              new SimpleNamedObject("test1"),
+                                              LintSeverity.critical,
+                                              "message",
+                                              new File(""));
+    final Lint<String> testObject6 = new Lint<>("linterId",
+                                                "linterInstanceId",
+                                                new SimpleNamedObject("test1"),
+                                                LintSeverity.high,
+                                                "message",
+                                                "");
+    final Lint<String> testObject7 = new Lint<>("linterId",
+                                                "linterInstanceId",
+                                                new SimpleNamedObject("test1"),
+                                                LintSeverity.critical,
+                                                "message1",
+                                                "");
 
     final EqualsTester equalsTester = new EqualsTester()
-      .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
+      .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3)
+      .addEqualityGroup(testObject4).addEqualityGroup(testObject5)
+      .addEqualityGroup(testObject6).addEqualityGroup(testObject7);
     equalsTester.testEquals();
   }
 
