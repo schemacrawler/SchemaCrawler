@@ -85,9 +85,7 @@ public final class FreeMarkerRenderer
 
     System
       .setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
-                   String.valueOf(freemarker.log.Logger.LIBRARY_JAVA));
-    freemarker.log.Logger
-      .selectLoggerLibrary(freemarker.log.Logger.LIBRARY_JAVA);
+                   freemarker.log.Logger.LIBRARY_NAME_JUL);
 
     LOGGER.log(Level.INFO,
                new StringFormat("Rendering using FreeMarker, version %s"
