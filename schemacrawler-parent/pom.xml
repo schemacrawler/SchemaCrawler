@@ -122,16 +122,16 @@
               </execution>
               <execution>
                 <id>report</id>
-                <phase>test</phase>
+                <phase>prepare-package</phase>
                 <configuration>
                   <excludes>
-                    <exclude>**/JSON*.*</exclude>
-                    <exclude>**/*Test.*</exclude>
-                    <exclude>**/Test*.*</exclude>
+                    <exclude>**/JSON*.class</exclude>
+                    <exclude>**/*Test.class</exclude>
+                    <exclude>**/Test*.class</exclude>
                   </excludes>
                 </configuration>
                 <goals>
-                  <goal>report</goal>
+                  <goal>report-aggregate</goal>
                 </goals>
               </execution>							
             </executions>
