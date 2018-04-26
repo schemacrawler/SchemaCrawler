@@ -167,16 +167,43 @@ public class SchemaCrawlerTest
           Arrays.sort(columns);
           for (final Column column: columns)
           {
-            out.println(String.format("%s [%s] default=\"%s\"",
-                                      column.getFullName(),
-                                      column.getColumnDataType(),
-                                      column.getDefaultValue()));
+            out.println(String.format("%s", column.getFullName()));
+
+            out.println(String
+              .format("  - %s=%s", "data-type", column.getColumnDataType()));
+            out.println(String.format("  - %s=%s", "size", column.getSize()));
+            out.println(String.format("  - %s=%s",
+                                      "decimal digits",
+                                      column.getDecimalDigits()));
+            out.println(String.format("  - %s=%s", "width", column.getWidth()));
+            out.println(String
+              .format("  - %s=%s", "default value", column.getDefaultValue()));
+            out.println(String.format("  - %s=%s",
+                                      "auto-incremented",
+                                      column.isAutoIncremented()));
+            out.println(String
+              .format("  - %s=%s", "nullable", column.isNullable()));
+            out.println(String
+              .format("  - %s=%s", "generated", column.isGenerated()));
+            out.println(String.format("  - %s=%s",
+                                      "part of primary key",
+                                      column.isPartOfPrimaryKey()));
+            out.println(String.format("  - %s=%s",
+                                      "part of foreign key",
+                                      column.isPartOfForeignKey()));
+            out.println(String.format("  - %s=%s",
+                                      "ordinal position",
+                                      column.getOrdinalPosition()));
+            out.println(String
+              .format("  - %s=%s", "remarks", column.getRemarks()));
+
+            out.println(String.format("  - %s=%s", "attibutes", ""));
             final SortedMap<String, Object> columnAttributes = new TreeMap<>(column
               .getAttributes());
             for (final Entry<String, Object> columnAttribute: columnAttributes
               .entrySet())
             {
-              out.println(String.format("  ~ %s=%s",
+              out.println(String.format("    ~ %s=%s",
                                         columnAttribute.getKey(),
                                         columnAttribute.getValue()));
             }
