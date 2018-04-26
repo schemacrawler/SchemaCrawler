@@ -122,7 +122,7 @@
               </execution>
               <execution>
                 <id>report</id>
-                <phase>prepare-package</phase>
+                <phase>test</phase>
                 <configuration>
                   <excludes>
                     <exclude>**/JSON*.class</exclude>
