@@ -108,35 +108,37 @@
         <maven.javadoc.skip>false</maven.javadoc.skip>
       </properties>
       <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.1</version>
+            <executions>
+              <execution>
+                <id>prepare-agent</id>
+                <goals>
+                  <goal>prepare-agent</goal>
+                </goals>
+              </execution>
+              <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <configuration>
+                  <excludes>
+                    <exclude>**/JSON*.*</exclude>
+                    <exclude>**/*Test.*</exclude>
+                    <exclude>**/Test*.*</exclude>
+                  </excludes>
+                </configuration>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+              </execution>							
+            </executions>
+          </plugin>
+        </plugins>
         <pluginManagement>
           <plugins>
-            <plugin>
-              <groupId>org.jacoco</groupId>
-              <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.1</version>
-              <executions>
-                <execution>
-                  <id>prepare-agent</id>
-                  <goals>
-                    <goal>prepare-agent</goal>
-                  </goals>
-                </execution>
-                <execution>
-                  <id>report</id>
-                  <phase>test</phase>
-                  <configuration>
-                    <excludes>
-                      <exclude>**/JSON*.class</exclude>
-                      <exclude>**/*Test.class</exclude>
-                      <exclude>**/Test*.class</exclude>
-                    </excludes>
-                  </configuration>
-                  <goals>
-                    <goal>report-aggregate</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
             <plugin>
               <groupId>org.eluder.coveralls</groupId>
               <artifactId>coveralls-maven-plugin</artifactId>
@@ -318,8 +320,7 @@
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
               <additionalparam>-Xdoclint:html,syntax,reference,missing</additionalparam>
-              <bottom>Copyright © 2000-2018 {organizationName}. All
-                rights reserved.</bottom>
+              <bottom>Copyright © 2000-2018 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
           </execution>
