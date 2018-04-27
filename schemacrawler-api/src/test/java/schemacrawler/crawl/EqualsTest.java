@@ -62,6 +62,27 @@ public class EqualsTest
   }
 
   @Test
+  public void namedObjectWithAttributesEquals()
+  {
+    final NamedObject testObject1 = new AbstractNamedObjectWithAttributes("test")
+    {
+      static final long serialVersionUID = 1L;
+    };
+    final NamedObject testObject2 = new AbstractNamedObjectWithAttributes("test")
+    {
+      static final long serialVersionUID = 1L;
+    };
+    final NamedObject testObject3 = new AbstractNamedObjectWithAttributes("test 2")
+    {
+      static final long serialVersionUID = 1L;
+    };
+
+    final EqualsTester equalsTester = new EqualsTester()
+      .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
+    equalsTester.testEquals();
+  }
+
+  @Test
   public void privilegeEquals()
   {
     final Table table1 = new MutableTable(new SchemaReference("catalog",
