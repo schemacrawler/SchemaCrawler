@@ -32,11 +32,15 @@ package schemacrawler.tools.text.base;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.html.Alignment;
@@ -49,11 +53,11 @@ import sf.util.Color;
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseDotFormatter<O extends BaseTextOptions>
-  extends BaseFormatter<O>
+public abstract class BaseDotFormatter
+  extends BaseFormatter<GraphOptions>
 {
 
-  protected BaseDotFormatter(final O options,
+  protected BaseDotFormatter(final GraphOptions options,
                              final boolean printVerboseDatabaseInfo,
                              final OutputOptions outputOptions,
                              final String identifierQuoteString)
@@ -68,8 +72,8 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
   @Override
   public void begin()
   {
-    final String text = readResourceFully("/dot.header.txt");
-    formattingHelper.append(text).println();
+    final String header = makeGraphvizHeader();
+    formattingHelper.append(header).println();
   }
 
   @Override
@@ -185,7 +189,7 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
     {
       return;
     }
-    formattingHelper.append("  graph [fontcolor=\"#888888\", ").println();
+    formattingHelper.append("  graph [ ").println();
     formattingHelper.append("    label=<").println();
     formattingHelper
       .append("<table color=\"#888888\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
@@ -221,6 +225,35 @@ public abstract class BaseDotFormatter<O extends BaseTextOptions>
                          bgColor,
                          colspan,
                          TextOutputFormat.html);
+  }
+
+  private String makeGraphvizAttributes(final Map<String, String> graphvizAttributes,
+                                        final String prefix)
+  {
+    final StringBuilder buffer = new StringBuilder();
+    for (final Entry<String, String> entry: graphvizAttributes.entrySet())
+    {
+      final String[] key = entry.getKey().split("\\.");
+      if (key.length == 2 && key[0].equals(prefix))
+      {
+        buffer.append("    ").append(key[1]).append("=").append("\"")
+          .append(entry.getValue()).append("\"").append("\n");
+      }
+    }
+    return buffer.toString();
+  }
+
+  private String makeGraphvizHeader()
+  {
+    final Map<String, String> graphvizAttributes = options
+      .getGraphvizAttributes();
+    final String graphvizHeaderTemplate = readResourceFully("/dot.header.txt");
+    final String graphvizHeader = String
+      .format(graphvizHeaderTemplate,
+              makeGraphvizAttributes(graphvizAttributes, "graph"),
+              makeGraphvizAttributes(graphvizAttributes, "node"),
+              makeGraphvizAttributes(graphvizAttributes, "edge"));
+    return graphvizHeader;
   }
 
 }

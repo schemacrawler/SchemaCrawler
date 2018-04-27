@@ -1,27 +1,24 @@
 digraph "SchemaCrawler_Diagram" {
 
   graph [
-    nodesep="0.18"
-    ranksep="0.46"
-    rankdir="RL"
     fontname="Helvetica"
-    fontsize="8"
+    rankdir="RL"
+
   ];
   
   node [
     fontname="Helvetica"
-    fontsize="8"
-    shape="plaintext"
+    shape="none"
+
   ];
   
   edge [
     fontname="Helvetica"
-    fontsize="8"  
-    arrowsize="0.8"
+
   ];
 
 
-  graph [fontcolor="#888888", 
+  graph [ 
     label=<
 <table color="#888888" border="1" cellborder="0" cellspacing="0">
 	<tr>
@@ -30,7 +27,7 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2018-01-06 13:49:09</td>
+		<td align='left'>2018-04-27 14:42:25</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
