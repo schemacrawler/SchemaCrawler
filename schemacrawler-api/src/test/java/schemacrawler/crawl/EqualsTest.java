@@ -28,12 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import java.io.Serializable;
+
 import org.junit.Test;
 
 import com.google.common.testing.EqualsTester;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Privilege;
+import schemacrawler.schema.Property;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 
@@ -43,18 +46,20 @@ public class EqualsTest
   @Test
   public void namedObjectEquals()
   {
-    final NamedObject testObject1 = new AbstractNamedObject("test")
+    final class TestNamedObject
+      extends AbstractNamedObject
     {
       static final long serialVersionUID = 1L;
-    };
-    final NamedObject testObject2 = new AbstractNamedObject("test")
-    {
-      static final long serialVersionUID = 1L;
-    };
-    final NamedObject testObject3 = new AbstractNamedObject("test 2")
-    {
-      static final long serialVersionUID = 1L;
-    };
+
+      private TestNamedObject(final String name)
+      {
+        super(name);
+      }
+    }
+
+    final NamedObject testObject1 = new TestNamedObject("test");
+    final NamedObject testObject2 = new TestNamedObject("test");
+    final NamedObject testObject3 = new TestNamedObject("test 2");
 
     final EqualsTester equalsTester = new EqualsTester()
       .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
@@ -64,18 +69,20 @@ public class EqualsTest
   @Test
   public void namedObjectWithAttributesEquals()
   {
-    final NamedObject testObject1 = new AbstractNamedObjectWithAttributes("test")
+    final class TestNamedObject
+      extends AbstractNamedObjectWithAttributes
     {
       static final long serialVersionUID = 1L;
-    };
-    final NamedObject testObject2 = new AbstractNamedObjectWithAttributes("test")
-    {
-      static final long serialVersionUID = 1L;
-    };
-    final NamedObject testObject3 = new AbstractNamedObjectWithAttributes("test 2")
-    {
-      static final long serialVersionUID = 1L;
-    };
+
+      private TestNamedObject(final String name)
+      {
+        super(name);
+      }
+    }
+
+    final NamedObject testObject1 = new TestNamedObject("test");
+    final NamedObject testObject2 = new TestNamedObject("test");
+    final NamedObject testObject3 = new TestNamedObject("test 2");
 
     final EqualsTester equalsTester = new EqualsTester()
       .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
@@ -104,6 +111,41 @@ public class EqualsTest
     final EqualsTester equalsTester = new EqualsTester()
       .addEqualityGroup(testPrivilege1, testPrivilege2)
       .addEqualityGroup(testPrivilege3).addEqualityGroup(testPrivilege4);
+    equalsTester.testEquals();
+  }
+
+  @Test
+  public void propertyEquals()
+  {
+    final class TestProperty
+      extends AbstractProperty
+    {
+      static final long serialVersionUID = 1L;
+
+      private TestProperty(final String name, final Serializable value)
+      {
+        super(name, value);
+      }
+
+      @Override
+      public int compareTo(final Property o)
+      {
+        return 0;
+      }
+
+      @Override
+      public String getDescription()
+      {
+        return getName();
+      }
+    }
+
+    final Property testObject1 = new TestProperty("test", "value");
+    final Property testObject2 = new TestProperty("test", "value");
+    final Property testObject3 = new TestProperty("test 2", "value 2");
+
+    final EqualsTester equalsTester = new EqualsTester()
+      .addEqualityGroup(testObject1, testObject2).addEqualityGroup(testObject3);
     equalsTester.testEquals();
   }
 
