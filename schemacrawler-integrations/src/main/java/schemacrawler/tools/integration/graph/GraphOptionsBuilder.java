@@ -32,7 +32,10 @@ import static sf.util.Utility.isBlank;
 import static sf.util.Utility.join;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
@@ -48,6 +51,7 @@ public class GraphOptionsBuilder
   private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = "schemacrawler.graph.show.foreignkey.cardinality";
   private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
+  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = "schemacrawler.graph.graphviz";
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOptions.class.getName());
@@ -81,6 +85,7 @@ public class GraphOptionsBuilder
       .getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true));
 
     options.setGraphvizOpts(listGraphvizOpts(readGraphvizOpts(config)));
+    options.setGraphvizAttributes(readGraphvizAttributes(config));
 
     return this;
   }
@@ -114,6 +119,31 @@ public class GraphOptionsBuilder
     final List<String> graphVizOptionsList = Arrays
       .asList(graphVizOptions.split("\\s+"));
     return graphVizOptionsList;
+  }
+
+  private Map<String, String> readGraphvizAttributes(final Config config)
+  {
+    final Map<String, String> graphvizAttributes = new HashMap<>();
+    for (final Entry<String, String> configEntry: config.entrySet())
+    {
+      final String fullKey = configEntry.getKey();
+      if (fullKey == null || !fullKey.startsWith(GRAPH_GRAPHVIZ_ATTRIBUTES))
+      {
+        continue;
+      }
+
+      final String key = fullKey
+        .substring(GRAPH_GRAPHVIZ_ATTRIBUTES.length() + 1);
+      final String value = configEntry.getValue();
+      graphvizAttributes.put(key, value);
+    }
+
+    if (graphvizAttributes.isEmpty())
+    {
+      return null;
+    }
+
+    return graphvizAttributes;
   }
 
   private String readGraphvizOpts(final Config config)

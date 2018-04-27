@@ -29,7 +29,9 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 
@@ -40,14 +42,21 @@ public class GraphOptions
   private static final long serialVersionUID = -5850945398335496207L;
 
   private List<String> graphvizOpts;
+  private Map<String, String> graphvizAttributes;
   private boolean isShowForeignKeyCardinality;
   private boolean isShowPrimaryKeyCardinality;
 
   public GraphOptions()
   {
     graphvizOpts = new ArrayList<>();
+    graphvizAttributes = makeDefaultGraphvizAttributes();
     isShowForeignKeyCardinality = true;
     isShowPrimaryKeyCardinality = true;
+  }
+
+  public Map<String, String> getGraphvizAttributes()
+  {
+    return graphvizAttributes;
   }
 
   public List<String> getGraphvizOpts()
@@ -63,6 +72,18 @@ public class GraphOptions
   public boolean isShowPrimaryKeyCardinality()
   {
     return isShowPrimaryKeyCardinality;
+  }
+
+  public void setGraphvizAttributes(final Map<String, String> graphvizAttributes)
+  {
+    if (graphvizAttributes == null)
+    {
+      this.graphvizAttributes = makeDefaultGraphvizAttributes();
+    }
+    else
+    {
+      this.graphvizAttributes = graphvizAttributes;
+    }
   }
 
   public void setGraphvizOpts(final List<String> graphvizOpts)
@@ -85,6 +106,24 @@ public class GraphOptions
   public void setShowPrimaryKeyCardinality(final boolean isShowPrimaryKeyCardinality)
   {
     this.isShowPrimaryKeyCardinality = isShowPrimaryKeyCardinality;
+  }
+
+  private Map<String, String> makeDefaultGraphvizAttributes()
+  {
+    final Map<String, String> graphvizProperties = new HashMap<>();
+
+    final String GRAPH = "graph.";
+    graphvizProperties.put(GRAPH + "rankdir", "RL");
+    graphvizProperties.put(GRAPH + "fontname", "Helvetica");
+
+    final String NODE = "node.";
+    graphvizProperties.put(NODE + "fontname", "Helvetica");
+    graphvizProperties.put(NODE + "shape", "none");
+
+    final String EDGE = "edge.";
+    graphvizProperties.put(EDGE + "fontname", "Helvetica");
+
+    return graphvizProperties;
   }
 
 }

@@ -68,7 +68,7 @@ import sf.util.Color;
  * @author Sualeh Fatehi
  */
 public final class SchemaDotFormatter
-  extends BaseDotFormatter<SchemaTextOptions>
+  extends BaseDotFormatter
   implements SchemaTraversalHandler
 {
 
@@ -90,7 +90,7 @@ public final class SchemaDotFormatter
    *         On an exception
    */
   public SchemaDotFormatter(final SchemaTextDetailType schemaTextDetailType,
-                            final SchemaTextOptions options,
+                            final GraphOptions options,
                             final OutputOptions outputOptions,
                             final String identifierQuoteString)
     throws SchemaCrawlerException
