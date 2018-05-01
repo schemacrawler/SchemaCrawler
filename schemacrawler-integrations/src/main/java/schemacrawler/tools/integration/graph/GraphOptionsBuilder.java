@@ -105,6 +105,8 @@ public class GraphOptionsBuilder
     config.setStringValue(GRAPH_GRAPHVIZ_OPTS,
                           join(options.getGraphvizOpts(), " "));
 
+    graphvizAttributesToConfig(options.getGraphvizAttributes(), config);
+
     return config;
   }
 
@@ -112,6 +114,19 @@ public class GraphOptionsBuilder
   public GraphOptions toOptions()
   {
     return (GraphOptions) super.toOptions();
+  }
+
+  private void graphvizAttributesToConfig(final Map<String, String> graphvizAttributes,
+                                          final Config config)
+  {
+    for (final Entry<String, String> graphvizAttribute: graphvizAttributes
+      .entrySet())
+    {
+      final String fullKey = String
+        .format("%s.%s", GRAPH_GRAPHVIZ_ATTRIBUTES, graphvizAttribute.getKey());
+      final String value = graphvizAttribute.getValue();
+      config.put(fullKey, value);
+    }
   }
 
   private List<String> listGraphvizOpts(final String graphVizOptions)

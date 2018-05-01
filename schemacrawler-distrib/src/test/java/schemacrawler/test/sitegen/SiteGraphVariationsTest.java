@@ -119,6 +119,32 @@ public class SiteGraphVariationsTest
   }
 
   @Test
+  public void diagram_12_graphviz_attributes()
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("infolevel", "standard");
+    args.put("portablenames", "true");
+
+    final Map<String, String> config = new HashMap<>();
+    final String GRAPH = "schemacrawler.graph.graphviz.graph.";
+    config.put(GRAPH + "rankdir", "RL");
+    config.put(GRAPH + "fontname", "Helvetica");
+
+    final String NODE = "schemacrawler.graph.graphviz.node.";
+    config.put(NODE + "fontname", "Helvetica");
+    config.put(NODE + "shape", "none");
+
+    final String EDGE = "schemacrawler.graph.graphviz.edge.";
+    config.put(EDGE + "fontname", "Helvetica");
+
+    // Test
+    config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
+
+    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+  }
+
+  @Test
   public void diagram_2_portablenames()
     throws Exception
   {
