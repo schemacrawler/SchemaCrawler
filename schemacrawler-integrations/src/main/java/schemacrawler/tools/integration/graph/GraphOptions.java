@@ -110,20 +110,21 @@ public class GraphOptions
 
   private Map<String, String> makeDefaultGraphvizAttributes()
   {
-    final Map<String, String> graphvizProperties = new HashMap<>();
+    final Map<String, String> graphvizAttributes = new HashMap<>();
 
     final String GRAPH = "graph.";
-    graphvizProperties.put(GRAPH + "rankdir", "RL");
-    graphvizProperties.put(GRAPH + "fontname", "Helvetica");
+    graphvizAttributes.put(GRAPH + "rankdir", "RL");
+    graphvizAttributes.put(GRAPH + "labeljust", "r");
+    graphvizAttributes.put(GRAPH + "fontname", "Helvetica");
 
     final String NODE = "node.";
-    graphvizProperties.put(NODE + "fontname", "Helvetica");
-    graphvizProperties.put(NODE + "shape", "none");
+    graphvizAttributes.put(NODE + "shape", "none");
+    graphvizAttributes.put(NODE + "fontname", "Helvetica");
 
     final String EDGE = "edge.";
-    graphvizProperties.put(EDGE + "fontname", "Helvetica");
+    graphvizAttributes.put(EDGE + "fontname", "Helvetica");
 
-    return graphvizProperties;
+    return graphvizAttributes;
   }
 
 }

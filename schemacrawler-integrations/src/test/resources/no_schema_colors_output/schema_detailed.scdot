@@ -2,6 +2,7 @@ digraph "SchemaCrawler_Diagram" {
 
   graph [
     fontname="Helvetica"
+    labeljust="r"
     rankdir="RL"
 
   ];
@@ -21,7 +22,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.AUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authors_f521e766" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -81,7 +82,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.AUTHORSLIST -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "authorslist_9ccb3c04" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.AUTHORSLIST</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[view]</td>
@@ -110,7 +111,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.BOOKAUTHORS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "bookauthors_ead84c5d" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKAUTHORS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -139,7 +140,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.BOOKS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "books_f4a675c8" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.BOOKS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -190,7 +191,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.COUPONS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "coupons_54c3042b" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.COUPONS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -224,7 +225,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.CUSTOMERDATA -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "customerdata_b0af83c6" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERDATA</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -248,7 +249,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.CUSTOMERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "customers_f705d773" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.CUSTOMERS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -282,7 +283,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS."Global Counts" -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "globalcounts_7fcacf9f" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS."Global Counts"</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -306,7 +307,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.PUBLISHERS -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "publishers_8037d535" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.PUBLISHERS</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>
@@ -336,7 +337,7 @@ digraph "SchemaCrawler_Diagram" {
   /* PUBLIC.BOOKS.ΒΙΒΛΊΑ -=-=-=-=-=-=-=-=-=-=-=-=-=- */
   "βιβλία_3cecb755" [
     label=<
-      <table border="1" cellborder="0" cellpadding="2" cellspacing="0" bgcolor="white" color="#999999">
+      <table border="1" cellborder="0" cellspacing="0" color="#888888">
 	<tr>
 		<td colspan='2' bgcolor='#F2F2F2' align='left'><b><i>PUBLIC.BOOKS.ΒΙΒΛΊΑ</i></b></td>
 		<td bgcolor='#F2F2F2' align='right'>[table]</td>

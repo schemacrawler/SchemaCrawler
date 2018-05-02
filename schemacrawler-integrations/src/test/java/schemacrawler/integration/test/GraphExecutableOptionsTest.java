@@ -32,13 +32,15 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,8 +69,15 @@ public class GraphExecutableOptionsTest
   private static Path directory;
 
   @BeforeClass
+  public static void removeOutputDir()
+    throws Exception
+  {
+    clean(GRAPH_OPTIONS_OUTPUT);
+  }
+
+  @BeforeClass
   public static void setupDirectory()
-    throws IOException, URISyntaxException
+    throws Exception
   {
     final Path codePath = Paths.get(GraphExecutableOptionsTest.class
       .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
@@ -77,6 +86,7 @@ public class GraphExecutableOptionsTest
       .resolve("../../../schemacrawler-docs/graphs/"
                + GraphExecutableOptionsTest.class.getSimpleName())
       .normalize().toAbsolutePath();
+    FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
 
@@ -271,6 +281,30 @@ public class GraphExecutableOptionsTest
   {
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setShowRowCounts(true);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+    executableGraph(SchemaTextDetailType.schema.name(),
+                    schemaCrawlerOptions,
+                    graphOptions,
+                    testName.currentMethodName());
+  }
+
+  @Test
+  public void executableForGraph_13()
+    throws Exception
+  {
+    final Map<String, String> graphvizAttributes = new HashMap<>();
+
+    final String GRAPH = "graph.";
+    graphvizAttributes.put(GRAPH + "splines", "ortho");
+
+    final String NODE = "node.";
+    graphvizAttributes.put(NODE + "shape", "none");
+
+    final GraphOptions graphOptions = new GraphOptions();
+    graphOptions.setGraphvizAttributes(graphvizAttributes);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
