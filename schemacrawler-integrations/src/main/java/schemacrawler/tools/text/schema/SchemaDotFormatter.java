@@ -166,7 +166,7 @@ public final class SchemaDotFormatter
       .println();
     formattingHelper.append("    label=<").println();
     formattingHelper
-      .append("      <table border=\"1\" cellborder=\"0\" cellpadding=\"2\" cellspacing=\"0\" bgcolor=\"white\" color=\"#999999\">")
+      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
       .println();
 
     formattingHelper.append(new TableRow(TextOutputFormat.html)

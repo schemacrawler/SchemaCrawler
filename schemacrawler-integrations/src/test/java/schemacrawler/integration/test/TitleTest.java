@@ -31,6 +31,7 @@ package schemacrawler.integration.test;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -62,6 +63,8 @@ public class TitleTest
   public void commandLineWithTitle()
     throws Exception
   {
+    clean(TITLE_OUTPUT);
+
     final OutputFormat[] outputFormats = new OutputFormat[] {
                                                               TextOutputFormat.text,
                                                               TextOutputFormat.html,

@@ -174,9 +174,8 @@ public abstract class BaseDotFormatter
       return;
     }
 
-    formattingHelper.append("      </table>    >").println();
-    formattingHelper.append("    labeljust=r").println();
-    formattingHelper.append("    labelloc=b").println();
+    formattingHelper.append("      </table>").println();
+    formattingHelper.append("    >").println();
     formattingHelper.append("  ];").println();
     formattingHelper.println();
   }
@@ -189,10 +188,12 @@ public abstract class BaseDotFormatter
     {
       return;
     }
+    formattingHelper.append("  /* ").append("Title Block")
+      .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").println();
     formattingHelper.append("  graph [ ").println();
     formattingHelper.append("    label=<").println();
     formattingHelper
-      .append("<table color=\"#888888\" border=\"1\" cellborder=\"0\" cellspacing=\"0\">")
+      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
       .println();
   }
 
