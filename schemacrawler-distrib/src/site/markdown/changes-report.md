@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.20.06"></a>
+## Release 14.20.06 - 2018-05-02
+
+- Fixed issue #181 with more control (and configuration) over graph generation
+
 <a name="a14.20.05"></a>
 ## Release 14.20.05 - 2018-04-19
 
