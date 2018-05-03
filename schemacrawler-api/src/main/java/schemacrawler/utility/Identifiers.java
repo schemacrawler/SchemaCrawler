@@ -488,10 +488,7 @@ public final class Identifiers
   private void quoteFullName(final StringBuilder buffer,
                              final DatabaseObject databaseObject)
   {
-    if (buffer == null)
-    {
-      throw new IllegalArgumentException("No buffer provided");
-    }
+    requireNonNull(buffer, "No buffer provided");
     if (databaseObject == null)
     {
       return;
@@ -514,10 +511,7 @@ public final class Identifiers
                              final DatabaseObject parent,
                              final String name)
   {
-    if (buffer == null)
-    {
-      throw new IllegalArgumentException("No buffer provided");
-    }
+    requireNonNull(buffer, "No buffer provided");
     quoteFullName(buffer, parent);
     if (!isBlank(name))
     {
@@ -531,10 +525,7 @@ public final class Identifiers
 
   private void quoteFullName(final StringBuilder buffer, final Schema schema)
   {
-    if (buffer == null)
-    {
-      throw new IllegalArgumentException("No buffer provided");
-    }
+    requireNonNull(buffer, "No buffer provided");
     if (schema == null)
     {
       return;
@@ -562,10 +553,7 @@ public final class Identifiers
 
   private void quoteName(final StringBuilder buffer, final String name)
   {
-    if (buffer == null)
-    {
-      throw new IllegalArgumentException("No buffer provided");
-    }
+    requireNonNull(buffer, "No buffer provided");
     if (isBlank(name))
     {
       return;
