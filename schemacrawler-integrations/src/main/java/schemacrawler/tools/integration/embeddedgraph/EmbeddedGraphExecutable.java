@@ -117,15 +117,22 @@ public class EmbeddedGraphExecutable
   {
     finalHtmlFileWriter.append(System.lineSeparator());
     boolean skipLines = true;
+    boolean isSvgStart = false;
     String line;
     while ((line = baseSvgFileReader.readLine()) != null)
     {
       if (skipLines)
       {
-        skipLines = !svgStart.matcher(line).matches();
+        isSvgStart = svgStart.matcher(line).matches();
+        skipLines = !isSvgStart;
       }
       if (!skipLines)
       {
+        if (isSvgStart)
+        {
+          line = "<svg";
+          isSvgStart = false;
+        }
         finalHtmlFileWriter.append(line).append(System.lineSeparator());
       }
     }
