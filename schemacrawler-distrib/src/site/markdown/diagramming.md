@@ -70,12 +70,12 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_8_no_cardinality.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_8_no_cardinality.png" style="width: 200px;" />
 </a>
-- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true -infolevel=maximum` on the command-line.
+- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` in the configuration file, and use `-infolevel=maximum` on the command-line.
 <br />
 <a href="diagram-examples/diagram_9_row_counts.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_9_row_counts.png" style="width: 200px;" />
 </a>
-- Do not show catalog and schema colors on the diagrams, set configuration option `schemacrawler.format.no_schema_colors=true`.
+- Do not show catalog and schema colors on the diagrams, set configuration option `schemacrawler.format.no_schema_colors=true` in the configuration file.
 <br />
 <a href="diagram-examples/diagram_10_no_schema_colors.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_10_no_schema_colors.png" style="width: 200px;" />
@@ -86,11 +86,12 @@ SchemaCrawler offers several options to change what you see on the database diag
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_11_title.png" style="width: 200px;" />
 </a>
 </a>
-- Set Graphviz attributes for the graph, node and edge, for example, set configuration option `schemacrawler.graph.graphviz.graph.splines=ortho`.
+- Set Graphviz attributes for the graph, node and edge, for example, set configuration option `schemacrawler.graph.graphviz.graph.splines=ortho` in the configuration file.
 <br />
 <a href="diagram-examples/diagram_12_graphviz_attributes.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_12_graphviz_attributes.png" style="width: 200px;" />
 </a>
+
 
 ## Additional Configuration
 
