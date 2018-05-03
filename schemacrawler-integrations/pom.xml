@@ -12,7 +12,7 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler Integrations</name>
   <properties>
-    <springframework.version>5.0.3.RELEASE</springframework.version>
+    <springframework.version>5.0.5.RELEASE</springframework.version>
   </properties>
   <dependencies>
     <dependency>
@@ -85,7 +85,7 @@
     <dependency>
       <groupId>org.jruby</groupId>
       <artifactId>jruby</artifactId>
-      <version>9.1.16.0</version>
+      <version>9.1.17.0</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
