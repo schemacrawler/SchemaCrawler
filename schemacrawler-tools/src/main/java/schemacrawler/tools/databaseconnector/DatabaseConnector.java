@@ -168,10 +168,8 @@ public abstract class DatabaseConnector
                                                         final Config additionalConfig)
     throws SchemaCrawlerException
   {
-    if (userCredentials == null)
-    {
-      throw new IllegalArgumentException("No database connection user credentials provided");
-    }
+    requireNonNull(userCredentials,
+                   "No database connection user credentials provided");
 
     final Config config = getConfig();
     if (additionalConfig != null)
