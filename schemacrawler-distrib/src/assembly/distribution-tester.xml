@@ -2,7 +2,7 @@
   basedir="../..">
 
   <property name="SchemaCrawler.home" location=".." />
-  <property name="SchemaCrawler.version" value="14.20.05" />
+  <property name="SchemaCrawler.version" value="14.20.06" />
 
   <import file="distribution.xml" />
 
@@ -15,7 +15,7 @@
   <target name="distribution-tester" depends="clean">
     <antcall target="make-distribution">
       <param name="SchemaCrawler.home" value=".." />
-      <param name="SchemaCrawler.version" value="14.20.05" />
+      <param name="SchemaCrawler.version" value="14.20.06" />
     </antcall>
   </target>
 
