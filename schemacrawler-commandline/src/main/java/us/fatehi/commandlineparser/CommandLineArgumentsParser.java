@@ -82,7 +82,7 @@ public class CommandLineArgumentsParser
 
   public CommandLineArgumentsParser(final String[] args)
   {
-    this.args = requireNonNull(args);
+    this.args = requireNonNull(args, "No arguments provided");
     optionsMap = new Config();
     nonOptionArguments = new ArrayList<>();
   }

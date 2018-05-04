@@ -61,18 +61,18 @@ final class ImmutableCrawlInfo
                      final DatabaseInfo databaseInfo,
                      final String title)
   {
-    requireNonNull(schemaCrawlerInfo);
+    requireNonNull(schemaCrawlerInfo, "No SchemaCrawler information provided");
     this.schemaCrawlerInfo = String
       .format("%s %s",
               schemaCrawlerInfo.getSchemaCrawlerProductName(),
               schemaCrawlerInfo.getSchemaCrawlerVersion());
 
-    requireNonNull(jdbcDriverInfo);
+    requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
     this.jdbcDriverInfo = String.format("%s %s",
                                         jdbcDriverInfo.getDriverName(),
                                         jdbcDriverInfo.getDriverVersion());
 
-    requireNonNull(databaseInfo);
+    requireNonNull(databaseInfo, "No database information provided");
     this.databaseInfo = String.format("%s %s",
                                       databaseInfo.getProductName(),
                                       databaseInfo.getProductVersion());

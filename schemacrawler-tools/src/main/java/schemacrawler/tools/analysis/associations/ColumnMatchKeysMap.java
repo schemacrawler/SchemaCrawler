@@ -44,7 +44,7 @@ final class ColumnMatchKeysMap
 
   ColumnMatchKeysMap(final List<Table> tables)
   {
-    requireNonNull(tables);
+    requireNonNull(tables, "No tables provided");
     columnsForMatchKey = new Multimap<>();
     matchKeysForColumn = new Multimap<>();
 

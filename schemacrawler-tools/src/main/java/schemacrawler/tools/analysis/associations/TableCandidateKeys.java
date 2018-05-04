@@ -48,7 +48,7 @@ final class TableCandidateKeys
 
   TableCandidateKeys(final Table table)
   {
-    this.table = requireNonNull(table);
+    this.table = requireNonNull(table, "No table provided");
     tableKeys = listTableKeys(table);
   }
 

@@ -78,7 +78,7 @@ final class TableColumnRetriever
                        final InclusionRule columnInclusionRule)
     throws SQLException
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final InclusionRuleFilter<Column> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
                                                                                true);

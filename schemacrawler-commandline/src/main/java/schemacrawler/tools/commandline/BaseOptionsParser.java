@@ -54,7 +54,7 @@ public abstract class BaseOptionsParser<O extends Options>
 
   protected BaseOptionsParser(final Config config)
   {
-    this.config = requireNonNull(config);
+    this.config = requireNonNull(config, "No config provided");
   }
 
   protected final void consumeOption(final String primaryOptionName)
@@ -68,7 +68,7 @@ public abstract class BaseOptionsParser<O extends Options>
   protected final void normalizeOptionName(final String primaryOptionName,
                                            final String... alternateOptionName)
   {
-    requireNonNull(primaryOptionName);
+    requireNonNull(primaryOptionName, "No option name provided");
     final List<String> optionNames = new ArrayList<>();
     optionNames.add(primaryOptionName);
     if (alternateOptionName != null)

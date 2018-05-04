@@ -168,7 +168,7 @@ final class RoutineRetriever
                          final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    requireNonNull(schemas);
+    requireNonNull(schemas, "No schemas provided");
 
     final InclusionRuleFilter<Function> functionFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                    false);
@@ -293,7 +293,7 @@ final class RoutineRetriever
                           final InclusionRule routineInclusionRule)
     throws SQLException
   {
-    requireNonNull(schemas);
+    requireNonNull(schemas, "No schemas provided");
 
     final InclusionRuleFilter<Procedure> procedureFilter = new InclusionRuleFilter<>(routineInclusionRule,
                                                                                      false);

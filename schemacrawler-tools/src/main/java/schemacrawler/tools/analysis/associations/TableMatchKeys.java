@@ -61,7 +61,7 @@ final class TableMatchKeys
 
   TableMatchKeys(final List<Table> tables)
   {
-    this.tables = requireNonNull(tables);
+    this.tables = requireNonNull(tables, "No tables provided");
     tableKeys = new Multimap<>();
 
     analyzeTables();

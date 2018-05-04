@@ -77,7 +77,7 @@ final class ForeignKeys
 
   private Collection<ColumnReference> mapForeignKeyColumns(final List<Table> tables)
   {
-    requireNonNull(tables);
+    requireNonNull(tables, "No tables provided");
 
     final Collection<ColumnReference> fkColumnsMap = new HashSet<>();
     for (final Table table: tables)

@@ -86,7 +86,7 @@ public class SchemaCrawlerLogger
                   final String msg,
                   final Throwable thrown)
   {
-    requireNonNull(level);
+    requireNonNull(level, "No log level provided");
 
     if (!logger.isLoggable(level))
     {

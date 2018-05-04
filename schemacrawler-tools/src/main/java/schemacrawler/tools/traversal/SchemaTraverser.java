@@ -92,12 +92,14 @@ public class SchemaTraverser
 
   public void setRoutinesComparator(final Comparator<NamedObject> routinesComparator)
   {
-    this.routinesComparator = requireNonNull(routinesComparator);
+    this.routinesComparator = requireNonNull(routinesComparator,
+                                             "No routines comparator provided");
   }
 
   public void setTablesComparator(final Comparator<NamedObject> tablesComparator)
   {
-    this.tablesComparator = requireNonNull(tablesComparator);
+    this.tablesComparator = requireNonNull(tablesComparator,
+                                           "No tables comparator provided");
   }
 
   public final void traverse()
