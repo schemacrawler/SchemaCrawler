@@ -62,8 +62,9 @@ public class SqlScript
                    final String delimiter)
   {
     this.scriptName = scriptName;
-    this.connection = requireNonNull(connection);
-    this.reader = requireNonNull(reader);
+    this.connection = requireNonNull(connection,
+                                     "No database connection provided");
+    this.reader = requireNonNull(reader, "No reader provided");
     this.delimiter = delimiter;
   }
 

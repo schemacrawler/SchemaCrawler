@@ -77,7 +77,7 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
 
   protected BaseTextOptionsBuilder(final O options)
   {
-    this.options = requireNonNull(options);
+    this.options = requireNonNull(options, "No options provided");
   }
 
   public BaseTextOptionsBuilder<O> appendOutput()

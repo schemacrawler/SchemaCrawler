@@ -95,7 +95,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   public Set<DirectedEdge<T>> getIncomingEdges(final Vertex<T> vertexTo)
   {
-    Objects.requireNonNull(vertexTo);
+    Objects.requireNonNull(vertexTo, "No vertex provided");
 
     final Set<DirectedEdge<T>> incomingEdges = new HashSet<>();
     for (final DirectedEdge<T> edge: edges)
@@ -118,7 +118,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
 
   public Set<DirectedEdge<T>> getOutgoingEdges(final Vertex<T> vertexFrom)
   {
-    Objects.requireNonNull(vertexFrom);
+    Objects.requireNonNull(vertexFrom, "No vertex provided");
 
     final Set<DirectedEdge<T>> outgoingEdges = new HashSet<>();
     for (final DirectedEdge<T> edge: edges)

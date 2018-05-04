@@ -79,7 +79,7 @@ final class ForeignKeyRetriever
 
   void retrieveForeignKeyDefinitions(final NamedObjectList<MutableTable> allTables)
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
@@ -145,7 +145,7 @@ final class ForeignKeyRetriever
   void retrieveForeignKeys(final NamedObjectList<MutableTable> allTables)
     throws SQLException
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final MetadataRetrievalStrategy fkRetrievalStrategy = getRetrieverConnection()
       .getForeignKeyRetrievalStrategy();

@@ -31,13 +31,13 @@ public final class ReducerFactory
 
     protected BaseReducer(final Predicate<N> filter)
     {
-      this.filter = requireNonNull(filter);
+      this.filter = requireNonNull(filter, "No filter provided");
     }
 
     @Override
     public void reduce(final ReducibleCollection<? extends N> allNamedObjects)
     {
-      requireNonNull(allNamedObjects);
+      requireNonNull(allNamedObjects, "No named objects provided");
       allNamedObjects.filter(filter);
     }
 

@@ -57,7 +57,7 @@ public final class Main
   public static void main(final String[] args)
     throws Exception
   {
-    requireNonNull(args);
+    requireNonNull(args, "No arguments provided");
 
     final Config argsMap = CommandLineUtility.parseArgs(args);
 

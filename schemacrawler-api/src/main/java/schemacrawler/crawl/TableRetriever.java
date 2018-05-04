@@ -80,7 +80,7 @@ final class TableRetriever
                       final InclusionRule tableInclusionRule)
     throws SQLException
   {
-    requireNonNull(schemas);
+    requireNonNull(schemas, "No schemas provided");
 
     final InclusionRuleFilter<Table> tableFilter = new InclusionRuleFilter<>(tableInclusionRule,
                                                                              false);

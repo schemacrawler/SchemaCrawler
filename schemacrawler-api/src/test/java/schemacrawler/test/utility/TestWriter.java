@@ -72,7 +72,8 @@ public class TestWriter
   public TestWriter(final String outputformat, final boolean isCompressed)
     throws IOException
   {
-    this.outputformat = requireNonNull(outputformat);
+    this.outputformat = requireNonNull(outputformat,
+                                       "No output format provided");
     tempFile = IOUtility
       .createTempFilePath("schemacrawler",
                           outputformat.replaceAll("[/\\\\]", ""));
@@ -140,7 +141,8 @@ public class TestWriter
   {
     out.close();
 
-    final List<String> failures = compareOutput(requireNonNull(referenceFile),
+    requireNonNull(referenceFile, "No reference file provided");
+    final List<String> failures = compareOutput(referenceFile,
                                                 tempFile,
                                                 outputformat,
                                                 isCompressed);

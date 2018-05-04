@@ -74,7 +74,7 @@ final class IndexRetriever
   void retrieveIndexes(final NamedObjectList<MutableTable> allTables)
     throws SQLException
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final MetadataRetrievalStrategy indexRetrievalStrategy = getRetrieverConnection()
       .getIndexRetrievalStrategy();
@@ -106,7 +106,7 @@ final class IndexRetriever
   void retrievePrimaryKeys(final NamedObjectList<MutableTable> allTables)
     throws SQLException
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final MetadataRetrievalStrategy pkRetrievalStrategy = getRetrieverConnection()
       .getPrimaryKeyRetrievalStrategy();

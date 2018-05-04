@@ -175,7 +175,7 @@ public final class GraphExecutable
 
   private boolean generateGraph(final GraphExecutor graphExecutor)
   {
-    requireNonNull(graphExecutor);
+    requireNonNull(graphExecutor, "No graph executor provided");
 
     boolean graphGenerated = false;
     try

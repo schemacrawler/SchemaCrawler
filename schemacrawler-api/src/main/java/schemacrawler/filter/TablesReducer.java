@@ -54,8 +54,8 @@ final class TablesReducer
   TablesReducer(final SchemaCrawlerOptions options,
                 final Predicate<Table> tableFilter)
   {
-    this.options = requireNonNull(options);
-    this.tableFilter = requireNonNull(tableFilter);
+    this.options = requireNonNull(options, "No SchemaCrawler options provided");
+    this.tableFilter = requireNonNull(tableFilter, "No table filter provided");
   }
 
   @Override

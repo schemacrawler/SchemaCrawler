@@ -130,7 +130,7 @@ public class PropertiesUtility
    */
   private static Properties loadProperties(final Reader reader)
   {
-    requireNonNull(reader);
+    requireNonNull(reader, "No reader provided");
     final Properties properties = new Properties();
     try (final BufferedReader bufferedReader = new BufferedReader(reader);)
     {

@@ -71,8 +71,10 @@ public class TestSchemaCreator
   public TestSchemaCreator(final Connection connection,
                            final String scriptsResource)
   {
-    this.connection = requireNonNull(connection);
-    this.scriptsResource = requireNonNull(scriptsResource);
+    this.connection = requireNonNull(connection,
+                                     "No database connection provided");
+    this.scriptsResource = requireNonNull(scriptsResource,
+                                          "No script resource provided");
   }
 
   @Override

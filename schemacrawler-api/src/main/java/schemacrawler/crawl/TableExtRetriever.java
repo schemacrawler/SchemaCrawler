@@ -422,7 +422,7 @@ final class TableExtRetriever
 
   void retrievePrimaryKeyDefinitions(final NamedObjectList<MutableTable> allTables)
   {
-    requireNonNull(allTables);
+    requireNonNull(allTables, "No tables provided");
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();

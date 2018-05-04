@@ -51,8 +51,10 @@ public abstract class BaseColumnReference
   protected BaseColumnReference(final Column primaryKeyColumn,
                                 final Column foreignKeyColumn)
   {
-    this.primaryKeyColumn = requireNonNull(primaryKeyColumn);
-    this.foreignKeyColumn = requireNonNull(foreignKeyColumn);
+    this.primaryKeyColumn = requireNonNull(primaryKeyColumn,
+                                           "No primary key column provided");
+    this.foreignKeyColumn = requireNonNull(foreignKeyColumn,
+                                           "No foreign key column provided");
   }
 
   @Override
