@@ -3,12 +3,15 @@
 #set( $symbol_escape = '\' )
 package ${package};
 
+import java.io.IOException;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class NewDBDatabaseConnector
   extends DatabaseConnector
@@ -18,9 +21,10 @@ public final class NewDBDatabaseConnector
     .getLogger(NewDBDatabaseConnector.class.getName());
 
   public NewDBDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("newdb", "NewDB"),
-          "/help/Connections.newdb.txt",
+          new ClasspathInputResource("/help/Connections.newdb.txt"),
           "/schemacrawler-newdb.config.properties",
           "/newdb.information_schema",
           url -> Pattern.matches("jdbc:newdb:.*", url),

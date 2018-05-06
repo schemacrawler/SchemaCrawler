@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.Config;
@@ -37,6 +38,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
@@ -45,9 +47,10 @@ public final class SQLiteDatabaseConnector
   private static final long serialVersionUID = -926915070636247650L;
 
   public SQLiteDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
-          "/help/Connections.sqlite.txt",
+          new ClasspathInputResource("/help/Connections.sqlite.txt"),
           "/schemacrawler-sqlite.config.properties",
           "/sqlite.information_schema",
           url -> Pattern.matches("jdbc:sqlite:.*", url),

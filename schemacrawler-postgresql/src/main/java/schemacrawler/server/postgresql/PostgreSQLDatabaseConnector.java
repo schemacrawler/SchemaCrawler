@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
@@ -40,9 +42,10 @@ public final class PostgreSQLDatabaseConnector
   private static final long serialVersionUID = -3501763931031195572L;
 
   public PostgreSQLDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
-          "/help/Connections.postgresql.txt",
+          new ClasspathInputResource("/help/Connections.postgresql.txt"),
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema",
           url -> Pattern.matches("jdbc:postgresql:.*", url),

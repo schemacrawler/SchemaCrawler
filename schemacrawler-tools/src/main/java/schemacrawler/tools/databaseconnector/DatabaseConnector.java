@@ -31,6 +31,7 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.io.StringReader;
 import java.sql.Connection;
 import java.util.function.Predicate;
 
@@ -45,6 +46,7 @@ import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.iosource.InputResource;
 
 public abstract class DatabaseConnector
   implements Options
@@ -52,7 +54,12 @@ public abstract class DatabaseConnector
 
   private static final long serialVersionUID = 6133330582637434099L;
 
-  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
+  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector(DatabaseServerType.UNKNOWN,
+                                                                           charset -> new StringReader(""),
+                                                                           null,
+                                                                           null,
+                                                                           url -> false,
+                                                                           connection -> true)
   {
 
     private static final long serialVersionUID = 3057770737518232349L;
@@ -60,14 +67,14 @@ public abstract class DatabaseConnector
   };
 
   private final DatabaseServerType dbServerType;
-  private final String connectionHelpResource;
+  private final InputResource connectionHelpResource;
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
   private final Predicate<String> supportsUrlPredicate;
   private final Predicate<Connection> supportsConnectionPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final String connectionHelpResource,
+                              final InputResource connectionHelpResource,
                               final String configResource,
                               final String informationSchemaViewsResourceFolder,
                               final Predicate<String> supportsUrlPredicate,
@@ -76,11 +83,8 @@ public abstract class DatabaseConnector
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
 
-    if (isBlank(connectionHelpResource))
-    {
-      throw new IllegalArgumentException("No connection help resource provided");
-    }
-    this.connectionHelpResource = connectionHelpResource;
+    this.connectionHelpResource = requireNonNull(connectionHelpResource,
+                                                 "No connection help provided");
 
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
@@ -89,17 +93,6 @@ public abstract class DatabaseConnector
                                                "No database connection URL predicate provided");
     this.supportsConnectionPredicate = requireNonNull(supportsConnectionPredicate,
                                                       "No database connection predicate provided");
-  }
-
-  private DatabaseConnector()
-  {
-    dbServerType = DatabaseServerType.UNKNOWN;
-    connectionHelpResource = null;
-    configResource = null;
-    informationSchemaViewsResourceFolder = null;
-    // Do not accept any database connection URL
-    supportsUrlPredicate = url -> false;
-    supportsConnectionPredicate = connection -> true;
   }
 
   /**
@@ -112,7 +105,7 @@ public abstract class DatabaseConnector
     return config;
   }
 
-  public String getConnectionHelpResource()
+  public InputResource getConnectionHelpResource()
   {
     return connectionHelpResource;
   }

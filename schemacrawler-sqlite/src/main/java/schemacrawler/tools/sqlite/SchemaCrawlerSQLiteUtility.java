@@ -33,6 +33,7 @@ import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.isFileReadable;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -63,14 +64,14 @@ public class SchemaCrawlerSQLiteUtility
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", dbFile.toString());
-    final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
-      .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
     final Connection connection;
     try
     {
+      final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
+        .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
       connection = connectionOptions.getConnection();
     }
-    catch (final SQLException e)
+    catch (final IOException | SQLException e)
     {
       throw new SchemaCrawlerException("Cannot read SQLite database " + dbFile,
                                        e);

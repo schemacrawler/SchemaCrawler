@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.hsqldb;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class HyperSQLDatabaseConnector
   extends DatabaseConnector
@@ -40,9 +42,10 @@ public final class HyperSQLDatabaseConnector
   private static final long serialVersionUID = 5148345984002037384L;
 
   public HyperSQLDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
-          "/help/Connections.hsqldb.txt",
+          new ClasspathInputResource("/help/Connections.hsqldb.txt"),
           "/schemacrawler-hsqldb.config.properties",
           "/hsqldb.information_schema",
           url -> Pattern.matches("jdbc:hsqldb:.*", url),

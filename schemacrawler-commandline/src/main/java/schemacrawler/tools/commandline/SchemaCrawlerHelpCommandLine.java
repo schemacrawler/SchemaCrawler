@@ -64,7 +64,7 @@ public final class SchemaCrawlerHelpCommandLine
   private final PrintWriter out;
   private final String command;
   private final boolean showVersionOnly;
-  private final String connectionHelpResource;
+  private final InputResource connectionHelpResource;
   private final DatabaseServerType dbServerType;
 
   /**
@@ -129,7 +129,7 @@ public final class SchemaCrawlerHelpCommandLine
       return;
     }
 
-    if (isBlank(connectionHelpResource))
+    if (connectionHelpResource == null)
     {
       final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
       printHelpText("/help/Connections.txt");

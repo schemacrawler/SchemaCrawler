@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
@@ -40,9 +42,10 @@ public final class SqlServerDatabaseConnector
   private static final long serialVersionUID = 6732719260206397502L;
 
   public SqlServerDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-          "/help/Connections.sqlserver.txt",
+          new ClasspathInputResource("/help/Connections.sqlserver.txt"),
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema",
           url -> Pattern.matches("jdbc:sqlserver:.*", url),
