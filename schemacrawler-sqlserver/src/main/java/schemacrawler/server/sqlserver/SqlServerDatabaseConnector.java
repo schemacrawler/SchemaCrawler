@@ -45,7 +45,8 @@ public final class SqlServerDatabaseConnector
           "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema",
-          url -> Pattern.matches("jdbc:sqlserver:.*", url));
+          url -> Pattern.matches("jdbc:sqlserver:.*", url),
+          connection -> true);
   }
 
 }

@@ -23,7 +23,8 @@ public final class NewDBDatabaseConnector
           "/help/Connections.newdb.txt",
           "/schemacrawler-newdb.config.properties",
           "/newdb.information_schema",
-          url -> Pattern.matches("jdbc:newdb:.*", url));
+          url -> Pattern.matches("jdbc:newdb:.*", url),
+          connection -> true);
     // SchemaCrawler will control output of log messages if you use JDK logging
     LOGGER.log(Level.INFO, "Loaded plugin for NewDB");
   }

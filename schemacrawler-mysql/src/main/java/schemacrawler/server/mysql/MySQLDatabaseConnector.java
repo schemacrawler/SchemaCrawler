@@ -45,7 +45,8 @@ public final class MySQLDatabaseConnector
           "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
           "/mysql.information_schema",
-          url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url));
+          url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url),
+          connection -> true);
   }
 
 }

@@ -31,6 +31,7 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.function.Predicate;
 
 import schemacrawler.schemacrawler.Config;
@@ -63,12 +64,14 @@ public abstract class DatabaseConnector
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
   private final Predicate<String> supportsUrlPredicate;
+  private final Predicate<Connection> supportsConnectionPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final String connectionHelpResource,
                               final String configResource,
                               final String informationSchemaViewsResourceFolder,
-                              final Predicate<String> supportsUrlPredicate)
+                              final Predicate<String> supportsUrlPredicate,
+                              final Predicate<Connection> supportsConnectionPredicate)
   {
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
@@ -84,6 +87,8 @@ public abstract class DatabaseConnector
 
     this.supportsUrlPredicate = requireNonNull(supportsUrlPredicate,
                                                "No database connection URL predicate provided");
+    this.supportsConnectionPredicate = requireNonNull(supportsConnectionPredicate,
+                                                      "No database connection predicate provided");
   }
 
   private DatabaseConnector()
@@ -94,6 +99,7 @@ public abstract class DatabaseConnector
     informationSchemaViewsResourceFolder = null;
     // Do not accept any database connection URL
     supportsUrlPredicate = url -> false;
+    supportsConnectionPredicate = connection -> false;
   }
 
   /**
@@ -180,8 +186,21 @@ public abstract class DatabaseConnector
     return new SchemaCrawlerExecutable(command);
   }
 
+  public final boolean supportsConnection(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return false;
+    }
+    return supportsConnectionPredicate.test(connection);
+  }
+
   public final boolean supportsUrl(final String url)
   {
+    if (isBlank(url))
+    {
+      return false;
+    }
     return supportsUrlPredicate.test(url);
   }
 
