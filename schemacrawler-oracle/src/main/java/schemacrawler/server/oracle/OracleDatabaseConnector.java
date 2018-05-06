@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.function.Predicate;
@@ -40,6 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -91,9 +93,10 @@ public final class OracleDatabaseConnector
   private static final long serialVersionUID = 2877116088126348915L;
 
   public OracleDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("oracle", "Oracle"),
-          "/help/Connections.oracle.txt",
+          new ClasspathInputResource("/help/Connections.oracle.txt"),
           "/schemacrawler-oracle.config.properties",
           "/oracle.information_schema",
           url -> Pattern.matches("jdbc:oracle:.*", url),

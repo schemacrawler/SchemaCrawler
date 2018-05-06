@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 import static sf.util.Utility.applyApplicationLogLevel;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -68,8 +69,16 @@ public abstract class BaseSqliteTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final DataSource dataSource = new SQLiteDatabaseConnector()
-      .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
+    DataSource dataSource;
+    try
+    {
+      dataSource = new SQLiteDatabaseConnector()
+        .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
+    }
+    catch (final IOException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e);
+    }
 
     return dataSource;
   }

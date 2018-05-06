@@ -28,12 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class OfflineDatabaseConnector
   extends DatabaseConnector
@@ -42,9 +44,10 @@ public final class OfflineDatabaseConnector
   private static final long serialVersionUID = 1727911478084169179L;
 
   public OfflineDatabaseConnector()
+    throws IOException
   {
     super(new DatabaseServerType("offline", "Offline"),
-          "/help/Connections.offline.txt",
+          new ClasspathInputResource("/help/Connections.offline.txt"),
           "/schemacrawler-offline.config.properties",
           null,
           url -> Pattern.matches("jdbc:offline:.*", url),
