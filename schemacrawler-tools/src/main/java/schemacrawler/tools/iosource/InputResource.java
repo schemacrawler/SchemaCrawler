@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+@FunctionalInterface
 public interface InputResource
 {
 
