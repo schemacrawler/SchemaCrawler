@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -43,7 +45,7 @@ public final class SqlServerDatabaseConnector
           "/help/Connections.sqlserver.txt",
           "/schemacrawler-sqlserver.config.properties",
           "/sqlserver.information_schema",
-          "jdbc:sqlserver:.*");
+          url -> Pattern.matches("jdbc:sqlserver:.*", url));
   }
 
 }

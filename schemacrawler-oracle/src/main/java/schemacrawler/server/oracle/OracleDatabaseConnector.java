@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -47,7 +49,7 @@ public final class OracleDatabaseConnector
           "/help/Connections.oracle.txt",
           "/schemacrawler-oracle.config.properties",
           "/oracle.information_schema",
-          "jdbc:oracle:.*");
+          url -> Pattern.matches("jdbc:oracle:.*", url));
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }

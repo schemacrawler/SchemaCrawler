@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.hsqldb;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -43,7 +45,7 @@ public final class HyperSQLDatabaseConnector
           "/help/Connections.hsqldb.txt",
           "/schemacrawler-hsqldb.config.properties",
           "/hsqldb.information_schema",
-          "jdbc:hsqldb:.*");
+          url -> Pattern.matches("jdbc:hsqldb:.*", url));
   }
 
 }

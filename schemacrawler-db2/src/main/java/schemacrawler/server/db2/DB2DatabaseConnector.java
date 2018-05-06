@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.db2;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -45,7 +47,7 @@ public final class DB2DatabaseConnector
           "/help/Connections.db2.txt",
           "/schemacrawler-db2.config.properties",
           "/db2.information_schema",
-          "jdbc:db2:.*");
+          url -> Pattern.matches("jdbc:db2:.*", url));
   }
 
   @Override

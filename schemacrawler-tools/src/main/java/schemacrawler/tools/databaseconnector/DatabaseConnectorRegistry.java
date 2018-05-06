@@ -45,7 +45,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
-import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
@@ -166,14 +165,7 @@ public final class DatabaseConnectorRegistry
     for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
       .values())
     {
-      final Pattern connectionUrlPattern = databaseConnector
-        .getConnectionUrlPattern();
-      if (connectionUrlPattern == null)
-      {
-        continue;
-      }
-
-      if (connectionUrlPattern.matcher(url).matches())
+      if (databaseConnector.supportsUrl(url))
       {
         return databaseConnector;
       }

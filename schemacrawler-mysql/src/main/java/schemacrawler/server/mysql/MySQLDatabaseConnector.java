@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.mysql;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -43,7 +45,7 @@ public final class MySQLDatabaseConnector
           "/help/Connections.mysql.txt",
           "/schemacrawler-mysql.config.properties",
           "/mysql.information_schema",
-          "jdbc:(mysql|mariadb):.*");
+          url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url));
   }
 
 }
