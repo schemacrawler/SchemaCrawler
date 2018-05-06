@@ -45,7 +45,8 @@ public final class HyperSQLDatabaseConnector
           "/help/Connections.hsqldb.txt",
           "/schemacrawler-hsqldb.config.properties",
           "/hsqldb.information_schema",
-          url -> Pattern.matches("jdbc:hsqldb:.*", url));
+          url -> Pattern.matches("jdbc:hsqldb:.*", url),
+          connection -> true);
   }
 
 }

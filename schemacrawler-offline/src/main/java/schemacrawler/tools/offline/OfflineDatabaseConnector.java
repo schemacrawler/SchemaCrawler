@@ -47,7 +47,8 @@ public final class OfflineDatabaseConnector
           "/help/Connections.offline.txt",
           "/schemacrawler-offline.config.properties",
           null,
-          url -> Pattern.matches("jdbc:offline:.*", url));
+          url -> Pattern.matches("jdbc:offline:.*", url),
+          connection -> true);
   }
 
   @Override

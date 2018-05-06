@@ -47,7 +47,8 @@ public final class DB2DatabaseConnector
           "/help/Connections.db2.txt",
           "/schemacrawler-db2.config.properties",
           "/db2.information_schema",
-          url -> Pattern.matches("jdbc:db2:.*", url));
+          url -> Pattern.matches("jdbc:db2:.*", url),
+          connection -> true);
   }
 
   @Override

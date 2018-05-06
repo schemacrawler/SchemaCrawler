@@ -125,9 +125,11 @@ public final class SchemaCrawlerCommandLine
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
-    // Execute
     try (final Connection connection = connectionOptions.getConnection();)
     {
+      // Check if the version of database and JDBC driver are supported
+      dbConnector.supportsConnection(connection);
+      // Execute the command
       executable.execute(connection, databaseSpecificOverrideOptions);
     }
   }

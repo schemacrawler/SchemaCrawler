@@ -50,7 +50,8 @@ public final class SQLiteDatabaseConnector
           "/help/Connections.sqlite.txt",
           "/schemacrawler-sqlite.config.properties",
           "/sqlite.information_schema",
-          url -> Pattern.matches("jdbc:sqlite:.*", url));
+          url -> Pattern.matches("jdbc:sqlite:.*", url),
+          connection -> true);
   }
 
   @Override

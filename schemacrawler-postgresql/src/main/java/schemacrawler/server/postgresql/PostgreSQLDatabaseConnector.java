@@ -45,7 +45,8 @@ public final class PostgreSQLDatabaseConnector
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema",
-          url -> Pattern.matches("jdbc:postgresql:.*", url));
+          url -> Pattern.matches("jdbc:postgresql:.*", url),
+          connection -> true);
   }
 
 }

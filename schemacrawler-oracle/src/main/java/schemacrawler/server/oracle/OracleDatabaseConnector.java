@@ -49,7 +49,8 @@ public final class OracleDatabaseConnector
           "/help/Connections.oracle.txt",
           "/schemacrawler-oracle.config.properties",
           "/oracle.information_schema",
-          url -> Pattern.matches("jdbc:oracle:.*", url));
+          url -> Pattern.matches("jdbc:oracle:.*", url),
+          connection -> true);
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
