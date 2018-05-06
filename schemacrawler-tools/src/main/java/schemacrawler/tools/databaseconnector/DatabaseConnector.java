@@ -99,7 +99,7 @@ public abstract class DatabaseConnector
     informationSchemaViewsResourceFolder = null;
     // Do not accept any database connection URL
     supportsUrlPredicate = url -> false;
-    supportsConnectionPredicate = connection -> false;
+    supportsConnectionPredicate = connection -> true;
   }
 
   /**

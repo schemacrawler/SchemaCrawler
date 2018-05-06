@@ -42,6 +42,7 @@ import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
+import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -128,7 +129,16 @@ public final class SchemaCrawlerCommandLine
     try (final Connection connection = connectionOptions.getConnection();)
     {
       // Check if the version of database and JDBC driver are supported
-      dbConnector.supportsConnection(connection);
+      final boolean supportsConnection = dbConnector
+        .supportsConnection(connection);
+      if (!supportsConnection)
+      {
+        throw new SchemaCrawlerCommandLineException(String
+          .format("The SchemaCrawler plugin for %s does not support %s%n"
+                  + "Please remove the SchemaCrawler plugin jar from the classpath, and run SchemaCrawler again",
+                  dbConnector.getDatabaseServerType().getDatabaseSystemName(),
+                  DatabaseUtility.getDatabaseVersion(connection)));
+      }
       // Execute the command
       executable.execute(connection, databaseSpecificOverrideOptions);
     }

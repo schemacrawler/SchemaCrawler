@@ -33,6 +33,7 @@ import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
@@ -253,6 +254,17 @@ public final class DatabaseUtility
     {
       throw new SchemaCrawlerException(sql, e);
     }
+  }
+
+  public static String getDatabaseVersion(final Connection connection)
+    throws SchemaCrawlerException, SQLException
+  {
+    checkConnection(connection);
+
+    final DatabaseMetaData dbMetaData = connection.getMetaData();
+    final String dbProductName = dbMetaData.getDatabaseProductName();
+    final String dbProductVersion = dbMetaData.getDatabaseProductVersion();
+    return dbProductName + " " + dbProductVersion;
   }
 
   public static void logSQLWarnings(final ResultSet resultSet)

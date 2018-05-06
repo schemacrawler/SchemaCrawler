@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
@@ -36,10 +40,53 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
+import sf.util.DatabaseUtility;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
+
+  private static class OracleConnectionSupport
+    implements Predicate<Connection>
+  {
+
+    @Override
+    public boolean test(final Connection connection)
+    {
+      if (connection == null)
+      {
+        LOGGER.log(Level.FINE, "No Oracle database connection provided");
+        return false;
+      }
+
+      try
+      {
+        final DatabaseMetaData dbMetaData = connection.getMetaData();
+        final int oracleMajorVersion = dbMetaData.getDatabaseMajorVersion();
+        if (oracleMajorVersion < 12)
+        {
+          LOGGER.log(Level.INFO,
+                     new StringFormat("%s is not supported",
+                                      DatabaseUtility
+                                        .getDatabaseVersion(connection)));
+          return false;
+        }
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+        return false;
+      }
+
+      return true;
+    }
+
+  }
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(OracleDatabaseConnector.class.getName());
 
   private static final long serialVersionUID = 2877116088126348915L;
 
@@ -50,7 +97,7 @@ public final class OracleDatabaseConnector
           "/schemacrawler-oracle.config.properties",
           "/oracle.information_schema",
           url -> Pattern.matches("jdbc:oracle:.*", url),
-          connection -> true);
+          new OracleConnectionSupport());
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
