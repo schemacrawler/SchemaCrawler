@@ -31,7 +31,6 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.io.StringReader;
 import java.sql.Connection;
 import java.util.function.Predicate;
 
@@ -54,12 +53,7 @@ public abstract class DatabaseConnector
 
   private static final long serialVersionUID = 6133330582637434099L;
 
-  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector(DatabaseServerType.UNKNOWN,
-                                                                           charset -> new StringReader(""),
-                                                                           null,
-                                                                           null,
-                                                                           url -> false,
-                                                                           connection -> true)
+  protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
 
     private static final long serialVersionUID = 3057770737518232349L;
@@ -67,6 +61,7 @@ public abstract class DatabaseConnector
   };
 
   private final DatabaseServerType dbServerType;
+
   private final InputResource connectionHelpResource;
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
@@ -93,6 +88,20 @@ public abstract class DatabaseConnector
                                                "No database connection URL predicate provided");
     this.supportsConnectionPredicate = requireNonNull(supportsConnectionPredicate,
                                                       "No database connection predicate provided");
+  }
+
+  /**
+   * Constructor for unknown databases. Bypass the null-checks of the
+   * main constructor
+   */
+  private DatabaseConnector()
+  {
+    dbServerType = DatabaseServerType.UNKNOWN;
+    connectionHelpResource = null;
+    configResource = null;
+    informationSchemaViewsResourceFolder = null;
+    supportsUrlPredicate = url -> false;
+    supportsConnectionPredicate = connection -> true;
   }
 
   /**
