@@ -31,7 +31,7 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import java.util.regex.Pattern;
+import java.util.function.Predicate;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
@@ -62,13 +62,13 @@ public abstract class DatabaseConnector
   private final String connectionHelpResource;
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
-  private final Pattern connectionUrlPattern;
+  private final Predicate<String> supportsUrlPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final String connectionHelpResource,
                               final String configResource,
                               final String informationSchemaViewsResourceFolder,
-                              final String connectionUrlPrefix)
+                              final Predicate<String> supportsUrlPredicate)
   {
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
@@ -82,11 +82,8 @@ public abstract class DatabaseConnector
     this.configResource = configResource;
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
 
-    if (isBlank(connectionUrlPrefix))
-    {
-      throw new IllegalArgumentException("No JDBC connection URL prefix provided");
-    }
-    connectionUrlPattern = Pattern.compile(connectionUrlPrefix);
+    this.supportsUrlPredicate = requireNonNull(supportsUrlPredicate,
+                                               "No database connection URL predicate provided");
   }
 
   private DatabaseConnector()
@@ -95,7 +92,8 @@ public abstract class DatabaseConnector
     connectionHelpResource = null;
     configResource = null;
     informationSchemaViewsResourceFolder = null;
-    connectionUrlPattern = null;
+    // Do not accept any database connection URL
+    supportsUrlPredicate = url -> false;
   }
 
   /**
@@ -111,11 +109,6 @@ public abstract class DatabaseConnector
   public String getConnectionHelpResource()
   {
     return connectionHelpResource;
-  }
-
-  public final Pattern getConnectionUrlPattern()
-  {
-    return connectionUrlPattern;
   }
 
   public DatabaseServerType getDatabaseServerType()
@@ -185,6 +178,11 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
+  }
+
+  public final boolean supportsUrl(final String url)
+  {
+    return supportsUrlPredicate.test(url);
   }
 
   /**

@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
 
@@ -43,7 +45,7 @@ public final class PostgreSQLDatabaseConnector
           "/help/Connections.postgresql.txt",
           "/schemacrawler-postgresql.config.properties",
           "/postgresql.information_schema",
-          "jdbc:postgresql:.*");
+          url -> Pattern.matches("jdbc:postgresql:.*", url));
   }
 
 }

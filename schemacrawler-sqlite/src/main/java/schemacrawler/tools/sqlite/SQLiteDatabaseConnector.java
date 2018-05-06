@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
@@ -48,7 +50,7 @@ public final class SQLiteDatabaseConnector
           "/help/Connections.sqlite.txt",
           "/schemacrawler-sqlite.config.properties",
           "/sqlite.information_schema",
-          "jdbc:sqlite:.*");
+          url -> Pattern.matches("jdbc:sqlite:.*", url));
   }
 
   @Override

@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
@@ -45,7 +47,7 @@ public final class OfflineDatabaseConnector
           "/help/Connections.offline.txt",
           "/schemacrawler-offline.config.properties",
           null,
-          "jdbc:offline:.*");
+          url -> Pattern.matches("jdbc:offline:.*", url));
   }
 
   @Override
