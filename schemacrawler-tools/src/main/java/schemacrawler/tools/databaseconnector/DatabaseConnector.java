@@ -99,20 +99,6 @@ public abstract class DatabaseConnector
   }
 
   /**
-   * Checks if the database connection options are valid, the JDBC
-   * driver class can be loaded, and so on. Throws an exception if there
-   * is a problem.
-   *
-   * @throws SchemaCrawlerException
-   *         If there is a problem with creating connection options.
-   */
-  public void checkDatabaseConnectionOptions()
-    throws SchemaCrawlerException
-  {
-    newDatabaseConnectionOptions(new SingleUseUserCredentials(), null);
-  }
-
-  /**
    * Gets the complete bundled database configuration set. This is
    * useful in building the SchemaCrawler options.
    */
@@ -199,6 +185,20 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
+  }
+
+  /**
+   * Checks if the database connection options are valid, the JDBC
+   * driver class can be loaded, and so on. Throws an exception if there
+   * is a problem.
+   *
+   * @throws SchemaCrawlerException
+   *         If there is a problem with creating connection options.
+   */
+  void checkDatabaseConnectionOptions()
+    throws SchemaCrawlerException
+  {
+    newDatabaseConnectionOptions(new SingleUseUserCredentials(), null);
   }
 
 }
