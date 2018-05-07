@@ -61,7 +61,6 @@ public abstract class DatabaseConnector
   };
 
   private final DatabaseServerType dbServerType;
-
   private final InputResource connectionHelpResource;
   private final String configResource;
   private final String informationSchemaViewsResourceFolder;
