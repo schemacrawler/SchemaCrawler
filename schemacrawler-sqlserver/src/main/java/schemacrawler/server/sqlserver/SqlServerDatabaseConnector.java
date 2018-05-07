@@ -46,7 +46,7 @@ public final class SqlServerDatabaseConnector
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
           new ClasspathInputResource("/help/Connections.sqlserver.txt"),
-          "/schemacrawler-sqlserver.config.properties",
+          new ClasspathInputResource("/schemacrawler-sqlserver.config.properties"),
           "/sqlserver.information_schema",
           url -> Pattern.matches("jdbc:sqlserver:.*", url),
           connection -> true);

@@ -97,7 +97,7 @@ public final class OracleDatabaseConnector
   {
     super(new DatabaseServerType("oracle", "Oracle"),
           new ClasspathInputResource("/help/Connections.oracle.txt"),
-          "/schemacrawler-oracle.config.properties",
+          new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
           "/oracle.information_schema",
           url -> Pattern.matches("jdbc:oracle:.*", url),
           new OracleConnectionSupport());

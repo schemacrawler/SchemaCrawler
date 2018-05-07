@@ -29,19 +29,27 @@ package schemacrawler.tools.text.utility;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.PropertiesUtility.loadProperties;
+import static schemacrawler.utility.PropertiesUtility.loadProperties;
 import static sf.util.Utility.isBlank;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.logging.Level;
 
 import schemacrawler.schema.DatabaseObject;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.FileInputResource;
 import sf.util.Color;
 import sf.util.RegularExpressionColorMap;
+import sf.util.SchemaCrawlerLogger;
 
 public class DatabaseObjectColorMap
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(DatabaseObjectColorMap.class.getName());
 
   private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES = "schemacrawler.colormap.properties";
 
@@ -56,9 +64,28 @@ public class DatabaseObjectColorMap
     }
 
     // Load from classpath and also current directory, in that order
-    properties.putAll(loadProperties("/" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
-    properties.putAll(loadProperties(Paths
-      .get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES)));
+    try
+    {
+      final ClasspathInputResource classpathColorMap = new ClasspathInputResource("/"
+                                                                                  + SCHEMACRAWLER_COLORMAP_PROPERTIES);
+      properties.putAll(loadProperties(classpathColorMap));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG, "Could not load color map from CLASSPATH");
+    }
+
+    try
+    {
+      final FileInputResource fileColorMap = new FileInputResource(Paths
+        .get("./" + SCHEMACRAWLER_COLORMAP_PROPERTIES));
+
+      properties.putAll(loadProperties(fileColorMap));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG, "Could not load color map from file");
+    }
 
     return new DatabaseObjectColorMap(properties, noColors);
   }

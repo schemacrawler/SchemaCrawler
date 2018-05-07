@@ -46,7 +46,7 @@ public final class MySQLDatabaseConnector
   {
     super(new DatabaseServerType("mysql", "MySQL"),
           new ClasspathInputResource("/help/Connections.mysql.txt"),
-          "/schemacrawler-mysql.config.properties",
+          new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
           "/mysql.information_schema",
           url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url),
           connection -> true);

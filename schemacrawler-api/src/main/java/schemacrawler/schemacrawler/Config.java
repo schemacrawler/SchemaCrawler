@@ -30,13 +30,9 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.PropertiesUtility.loadProperties;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,44 +57,6 @@ public final class Config
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Config.class.getName());
-
-  /**
-   * Loads the SchemaCrawler configuration from properties file.
-   *
-   * @param configFilename
-   *        Configuration file name.
-   * @return Configuration properties.
-   * @throws IOException
-   */
-  public static Config loadFile(final String configFilename)
-  {
-    final Properties configProperties;
-    if (!isBlank(configFilename))
-    {
-      final Path configPath = Paths.get(configFilename).normalize()
-        .toAbsolutePath();
-      configProperties = loadProperties(configPath);
-    }
-    else
-    {
-      configProperties = new Properties();
-    }
-    return new Config(configProperties);
-  }
-
-  /**
-   * Loads the SchemaCrawler configuration, from a properties file
-   * stream.
-   *
-   * @param configStream
-   *        Configuration stream.
-   * @return Configuration properties.
-   */
-  public static Config loadResource(final String resource)
-  {
-    final Properties configProperties = loadProperties(resource);
-    return new Config(configProperties);
-  }
 
   /**
    * Copies properties into a map.

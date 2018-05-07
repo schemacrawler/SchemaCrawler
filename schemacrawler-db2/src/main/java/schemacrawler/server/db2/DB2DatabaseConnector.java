@@ -48,7 +48,7 @@ public final class DB2DatabaseConnector
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/help/Connections.db2.txt"),
-          "/schemacrawler-db2.config.properties",
+          new ClasspathInputResource("/schemacrawler-db2.config.properties"),
           "/db2.information_schema",
           url -> Pattern.matches("jdbc:db2:.*", url),
           connection -> true);

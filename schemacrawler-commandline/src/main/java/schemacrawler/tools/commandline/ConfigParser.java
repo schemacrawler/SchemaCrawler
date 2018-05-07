@@ -29,8 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.utility.PropertiesUtility;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Parses the command-line.
@@ -40,6 +48,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 public class ConfigParser
   extends BaseConfigOptionsParser
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(ConfigParser.class.getName());
 
   private static final String CONFIG_FILE = "configfile";
 
@@ -58,9 +69,21 @@ public class ConfigParser
   public void loadConfig()
     throws SchemaCrawlerException
   {
-    final String configfile = config
-      .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
-    config.putAll(Config.loadFile(configfile));
+    try
+    {
+      final String configfile = config
+        .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
+      final Path configFilePath = Paths.get(configfile).normalize()
+        .toAbsolutePath();
+      config.putAll(PropertiesUtility
+        .loadConfig(new FileInputResource(configFilePath)));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG,
+                 "schemacrawler.config.properties not found on CLASSPATH",
+                 e);
+    }
   }
 
 }
