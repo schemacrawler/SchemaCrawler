@@ -109,8 +109,7 @@ public class CommandLineNegativeTest
       argsMap.putAll(argsMapOverride);
 
       final Config runConfig = new Config();
-      final Config informationSchema = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config informationSchema = loadHsqldbConfig();
       runConfig.putAll(informationSchema);
       if (config != null)
       {

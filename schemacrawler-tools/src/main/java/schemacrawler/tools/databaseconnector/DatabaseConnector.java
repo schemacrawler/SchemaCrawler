@@ -46,6 +46,7 @@ import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.utility.PropertiesUtility;
 
 public abstract class DatabaseConnector
   implements Options
@@ -62,14 +63,14 @@ public abstract class DatabaseConnector
 
   private final DatabaseServerType dbServerType;
   private final InputResource connectionHelpResource;
-  private final String configResource;
+  private final InputResource configResource;
   private final String informationSchemaViewsResourceFolder;
   private final Predicate<String> supportsUrlPredicate;
   private final Predicate<Connection> supportsConnectionPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource connectionHelpResource,
-                              final String configResource,
+                              final InputResource configResource,
                               final String informationSchemaViewsResourceFolder,
                               final Predicate<String> supportsUrlPredicate,
                               final Predicate<Connection> supportsConnectionPredicate)
@@ -80,7 +81,9 @@ public abstract class DatabaseConnector
     this.connectionHelpResource = requireNonNull(connectionHelpResource,
                                                  "No connection help provided");
 
-    this.configResource = configResource;
+    this.configResource = requireNonNull(configResource,
+                                         "No config resource provided");
+
     this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
 
     this.supportsUrlPredicate = requireNonNull(supportsUrlPredicate,
@@ -109,8 +112,11 @@ public abstract class DatabaseConnector
    */
   public final Config getConfig()
   {
-    final Config config = Config.loadResource(configResource);
-    return config;
+    if (configResource == null)
+    {
+      return new Config();
+    }
+    return PropertiesUtility.loadConfig(configResource);
   }
 
   public InputResource getConnectionHelpResource()

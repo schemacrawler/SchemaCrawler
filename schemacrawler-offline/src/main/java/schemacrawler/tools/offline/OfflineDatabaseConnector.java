@@ -48,7 +48,7 @@ public final class OfflineDatabaseConnector
   {
     super(new DatabaseServerType("offline", "Offline"),
           new ClasspathInputResource("/help/Connections.offline.txt"),
-          "/schemacrawler-offline.config.properties",
+          new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           null,
           url -> Pattern.matches("jdbc:offline:.*", url),
           connection -> true);

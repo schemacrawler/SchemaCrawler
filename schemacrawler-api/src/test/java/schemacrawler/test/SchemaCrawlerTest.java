@@ -90,8 +90,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -142,8 +141,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -223,8 +221,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -327,8 +324,7 @@ public class SchemaCrawlerTest
   public void routineDefinitions()
     throws Exception
   {
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = loadHsqldbConfig();
 
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
       .fromConfig(config);
@@ -392,8 +388,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -432,8 +427,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -470,8 +464,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -521,8 +514,7 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final Config config = Config
-        .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      final Config config = loadHsqldbConfig();
 
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
         .fromConfig(config);
@@ -631,8 +623,7 @@ public class SchemaCrawlerTest
   public void triggers()
     throws Exception
   {
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = loadHsqldbConfig();
 
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
       .fromConfig(config);
@@ -665,8 +656,7 @@ public class SchemaCrawlerTest
   public void viewDefinitions()
     throws Exception
   {
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = loadHsqldbConfig();
 
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
       .fromConfig(config);

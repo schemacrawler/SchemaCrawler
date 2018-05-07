@@ -90,8 +90,7 @@ public class SchemaCrawlerJsonOutputTest
     final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
                                                           testOutputFile);
 
-    final Config config = Config
-      .loadResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    final Config config = loadHsqldbConfig();
 
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
       .fromConfig(config);

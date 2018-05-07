@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.logging.Level;
 
@@ -41,7 +42,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.PropertiesUtility;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -181,7 +184,17 @@ public final class SchemaCrawlerCommandLine
     config.putAll(dbConnector.getConfig());
 
     // 2. Load config from CLASSPATH, in place
-    config.putAll(Config.loadResource("/schemacrawler.config.properties"));
+    try
+    {
+      config.putAll(PropertiesUtility
+        .loadConfig(new ClasspathInputResource("/schemacrawler.config.properties")));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG,
+                 "schemacrawler.config.properties not found on CLASSPATH",
+                 e);
+    }
 
     // 3. Load config from files, in place
     config.putAll(argsMap);

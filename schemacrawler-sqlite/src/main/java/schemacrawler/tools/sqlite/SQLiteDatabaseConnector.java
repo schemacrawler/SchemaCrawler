@@ -51,7 +51,7 @@ public final class SQLiteDatabaseConnector
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/help/Connections.sqlite.txt"),
-          "/schemacrawler-sqlite.config.properties",
+          new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           "/sqlite.information_schema",
           url -> Pattern.matches("jdbc:sqlite:.*", url),
           connection -> true);
