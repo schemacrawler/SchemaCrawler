@@ -59,7 +59,7 @@ public class ClasspathInputResource
     {
       final IOException e = new IOException("Cannot read classpath resource, "
                                             + this.classpathResource);
-      LOGGER.log(Level.CONFIG, e.getMessage(), e);
+      LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }

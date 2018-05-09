@@ -72,7 +72,7 @@ public class DatabaseObjectColorMap
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.CONFIG, "Could not load color map from CLASSPATH", e);
+      LOGGER.log(Level.CONFIG, "Could not load color map from CLASSPATH");
     }
 
     try
@@ -84,7 +84,7 @@ public class DatabaseObjectColorMap
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.CONFIG, "Could not load color map from file", e);
+      LOGGER.log(Level.CONFIG, "Could not load color map from file");
     }
 
     return new DatabaseObjectColorMap(properties, noColors);

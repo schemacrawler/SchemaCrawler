@@ -192,8 +192,7 @@ public final class SchemaCrawlerCommandLine
     catch (final IOException e)
     {
       LOGGER.log(Level.CONFIG,
-                 "schemacrawler.config.properties not found on CLASSPATH",
-                 e);
+                 "schemacrawler.config.properties not found on CLASSPATH");
     }
 
     // 3. Load config from files, in place

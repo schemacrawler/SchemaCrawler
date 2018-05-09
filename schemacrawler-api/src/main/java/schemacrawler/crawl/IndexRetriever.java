@@ -167,6 +167,11 @@ final class IndexRetriever
     {
       return;
     }
+    LOGGER.log(Level.FINE,
+               new StringFormat("Retrieving index column <%s.%s.%s>",
+                                table.getFullName(),
+                                indexName,
+                                columnName));
 
     final boolean uniqueIndex = !results.getBoolean("NON_UNIQUE");
     final IndexType type = results.getEnumFromId("TYPE", IndexType.unknown);
@@ -238,6 +243,11 @@ final class IndexRetriever
     final String columnName = results.getString("COLUMN_NAME");
     final String primaryKeyName = results.getString("PK_NAME");
     final int keySequence = Integer.parseInt(results.getString("KEY_SEQ"));
+    LOGGER.log(Level.FINE,
+               new StringFormat("Retrieving primary column <%s.%s.%s>",
+                                table.getFullName(),
+                                primaryKeyName,
+                                columnName));
 
     primaryKey = table.getPrimaryKey();
     if (primaryKey == null)
