@@ -58,7 +58,7 @@ public class FileInputResource
     if (!isFileReadable(inputFile))
     {
       final IOException e = new IOException("Cannot read file, " + inputFile);
-      LOGGER.log(Level.CONFIG, e.getMessage(), e);
+      LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }

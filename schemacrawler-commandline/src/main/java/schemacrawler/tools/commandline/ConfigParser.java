@@ -80,9 +80,9 @@ public class ConfigParser
     }
     catch (final IOException e)
     {
-      LOGGER.log(Level.CONFIG,
-                 "schemacrawler.config.properties not found on CLASSPATH",
-                 e);
+      LOGGER
+        .log(Level.CONFIG,
+             "schemacrawler.config.properties not found in the current directory");
     }
   }
 
