@@ -96,6 +96,8 @@ public final class TestUtility
                                              Pattern
                                                .compile("driver version.*"),
                                              Pattern
+                                               .compile("operating system.*"),
+                                             Pattern
                                                .compile("\\s+<schemaCrawlerVersion>.*"),
                                              Pattern
                                                .compile("\\s+<schemaCrawlerAbout>.*"),
