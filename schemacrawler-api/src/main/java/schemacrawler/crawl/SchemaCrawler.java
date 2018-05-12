@@ -204,8 +204,8 @@ public final class SchemaCrawler
       });
 
       LOGGER.log(Level.INFO, "Retrieving SchemaCrawler crawl information");
-      stopWatch.time("retrieveCrawlHeaderInfo", () -> {
-        retriever.retrieveCrawlHeaderInfo(options.getTitle());
+      stopWatch.time("retrieveCrawlInfo", () -> {
+        retriever.retrieveCrawlInfo(options.getTitle());
         return null;
       });
 
@@ -774,8 +774,10 @@ public final class SchemaCrawler
       final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
                                                                               databaseSpecificOverrideOptions);
 
-      crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
+      LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));
+
+      crawlSchemas(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlColumnDataTypes(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlTables(catalog, retrieverConnection, schemaCrawlerOptions);
       crawlRoutines(catalog, retrieverConnection, schemaCrawlerOptions);

@@ -86,6 +86,7 @@ final class MutableCatalog
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
+  private final ImmutableOperatingSystemInfo osInfo;
   private ImmutableCrawlInfo crawlInfo;
   private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
@@ -101,6 +102,7 @@ final class MutableCatalog
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
     schemaCrawlerInfo = new ImmutableSchemaCrawlerInfo();
+    osInfo = new ImmutableOperatingSystemInfo();
   }
 
   /**
@@ -134,6 +136,11 @@ final class MutableCatalog
   public CrawlInfo getCrawlInfo()
   {
     return crawlInfo;
+  }
+
+  public ImmutableOperatingSystemInfo getOsInfo()
+  {
+    return osInfo;
   }
 
   @Override
@@ -482,11 +489,12 @@ final class MutableCatalog
     return routines.lookup(routineLookupKey);
   }
 
-  void setCrawlHeaderInfo(final String title)
+  void setCrawlInfo(final String title)
   {
     crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo,
                                        jdbcDriverInfo,
                                        databaseInfo,
+                                       osInfo,
                                        title);
   }
 

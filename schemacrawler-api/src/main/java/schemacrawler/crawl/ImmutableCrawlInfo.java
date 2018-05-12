@@ -31,16 +31,18 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
+import schemacrawler.schema.OperatingSystemInfo;
 import schemacrawler.schema.SchemaCrawlerInfo;
 
 /**
- * SchemaCrawler information.
+ * SchemaCrawler crawl information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
@@ -48,34 +50,64 @@ final class ImmutableCrawlInfo
   implements CrawlInfo
 {
 
+  private final class ProductVersion
+    implements Serializable
+  {
+
+    private static final long serialVersionUID = -8371737063111046491L;
+
+    private final String productName;
+    private final String version;
+
+    protected ProductVersion(final String productName, final String version)
+    {
+      this.productName = productName;
+      this.version = version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString()
+    {
+      return String.format("%s %s", productName, version);
+    }
+
+  }
+
   private static final long serialVersionUID = 5982990326485881993L;
 
-  private final String schemaCrawlerInfo;
-  private final String jdbcDriverInfo;
-  private final String databaseInfo;
+  private final ProductVersion schemaCrawlerInfo;
+  private final ProductVersion jdbcDriverInfo;
+  private final ProductVersion databaseInfo;
+  private final ProductVersion osInfo;
   private final String title;
   private final LocalDateTime crawlTimestamp;
 
   ImmutableCrawlInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
                      final JdbcDriverInfo jdbcDriverInfo,
                      final DatabaseInfo databaseInfo,
+                     final OperatingSystemInfo osInfo,
                      final String title)
   {
     requireNonNull(schemaCrawlerInfo, "No SchemaCrawler information provided");
-    this.schemaCrawlerInfo = String
-      .format("%s %s",
-              schemaCrawlerInfo.getSchemaCrawlerProductName(),
-              schemaCrawlerInfo.getSchemaCrawlerVersion());
+    this.schemaCrawlerInfo = new ProductVersion(schemaCrawlerInfo
+      .getSchemaCrawlerProductName(),
+                                                schemaCrawlerInfo
+                                                  .getSchemaCrawlerVersion());
 
     requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
-    this.jdbcDriverInfo = String.format("%s %s",
-                                        jdbcDriverInfo.getDriverName(),
-                                        jdbcDriverInfo.getDriverVersion());
+    this.jdbcDriverInfo = new ProductVersion(jdbcDriverInfo.getDriverName(),
+                                             jdbcDriverInfo.getDriverVersion());
 
     requireNonNull(databaseInfo, "No database information provided");
-    this.databaseInfo = String.format("%s %s",
-                                      databaseInfo.getProductName(),
-                                      databaseInfo.getProductVersion());
+    this.databaseInfo = new ProductVersion(databaseInfo.getProductName(),
+                                           databaseInfo.getProductVersion());
+
+    requireNonNull(osInfo, "No database information provided");
+    this.osInfo = new ProductVersion(osInfo.getOperatingSystemName(),
+                                     osInfo.getOperatingSystemVersion());
 
     this.title = title;
     crawlTimestamp = LocalDateTime.now();
@@ -90,19 +122,24 @@ final class ImmutableCrawlInfo
   @Override
   public String getDatabaseInfo()
   {
-    return databaseInfo;
+    return databaseInfo.toString();
   }
 
   @Override
   public String getJdbcDriverInfo()
   {
-    return jdbcDriverInfo;
+    return jdbcDriverInfo.toString();
+  }
+
+  public String getOperatingSystemInfo()
+  {
+    return osInfo.toString();
   }
 
   @Override
   public String getSchemaCrawlerInfo()
   {
-    return schemaCrawlerInfo;
+    return schemaCrawlerInfo.toString();
   }
 
   @Override
@@ -127,6 +164,8 @@ final class ImmutableCrawlInfo
     info.append("-- database: ").append(databaseInfo)
       .append(System.lineSeparator());
     info.append("-- driver: ").append(jdbcDriverInfo)
+      .append(System.lineSeparator());
+    info.append("-- operating system: ").append(osInfo)
       .append(System.lineSeparator());
     return info.toString();
   }

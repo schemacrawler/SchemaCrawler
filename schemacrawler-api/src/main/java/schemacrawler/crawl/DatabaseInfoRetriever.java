@@ -321,9 +321,9 @@ final class DatabaseInfoRetriever
 
   }
 
-  void retrieveCrawlHeaderInfo(final String title)
+  void retrieveCrawlInfo(final String title)
   {
-    catalog.setCrawlHeaderInfo(title);
+    catalog.setCrawlInfo(title);
   }
 
   /**
