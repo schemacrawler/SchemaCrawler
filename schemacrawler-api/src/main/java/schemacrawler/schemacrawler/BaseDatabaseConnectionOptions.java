@@ -43,6 +43,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
@@ -80,7 +81,6 @@ abstract class BaseDatabaseConnectionOptions
 
   protected BaseDatabaseConnectionOptions(final UserCredentials userCredentials,
                                           final Map<String, String> properties)
-    throws SchemaCrawlerException
   {
     if (userCredentials == null)
     {
@@ -338,13 +338,15 @@ abstract class BaseDatabaseConnectionOptions
     }
     if (connectionProperties != null)
     {
-      for (final String connectionProperty: connectionProperties.keySet())
+      for (final Entry<String, String> connectionProperty: connectionProperties
+        .entrySet())
       {
-        final String value = connectionProperties.get(connectionProperty);
-        if (jdbcDriverProperties.containsKey(connectionProperty.toLowerCase())
+        final String property = connectionProperty.getKey();
+        final String value = connectionProperty.getValue();
+        if (jdbcDriverProperties.containsKey(property.toLowerCase())
             && value != null)
         {
-          jdbcConnectionProperties.put(connectionProperty, value);
+          jdbcConnectionProperties.put(property, value);
         }
       }
 

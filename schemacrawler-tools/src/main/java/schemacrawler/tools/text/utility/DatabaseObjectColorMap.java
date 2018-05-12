@@ -53,7 +53,7 @@ public class DatabaseObjectColorMap
 
   private static final String SCHEMACRAWLER_COLORMAP_PROPERTIES = "schemacrawler.colormap.properties";
 
-  public static Color default_object_color = Color.fromHSV(0, 0, 0.95f);
+  public static final Color default_object_color = Color.fromHSV(0, 0, 0.95f);
 
   public static DatabaseObjectColorMap initialize(final boolean noColors)
   {

@@ -26,9 +26,10 @@ public final class NewDBDatabaseConnector
     super(new DatabaseServerType("newdb", "NewDB"),
           new ClasspathInputResource("/help/Connections.newdb.txt"),
           new ClasspathInputResource("/schemacrawler-newdb.config.properties"),
-          "/newdb.information_schema",
-          url -> Pattern.matches("jdbc:newdb:.*", url),
-          connection -> true);
+          (informationSchemaViewsBuilder,
+              connection) -> informationSchemaViewsBuilder
+                .fromResourceFolder("/newdb.information_schema"),
+          url -> Pattern.matches("jdbc:newdb:.*", url));
     // SchemaCrawler will control output of log messages if you use JDK logging
     LOGGER.log(Level.INFO, "Loaded plugin for NewDB");
   }

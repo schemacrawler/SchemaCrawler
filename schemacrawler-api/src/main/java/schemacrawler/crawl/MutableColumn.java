@@ -80,7 +80,7 @@ final class MutableColumn
   @Override
   public Collection<Privilege<Column>> getPrivileges()
   {
-    return new ArrayList<Privilege<Column>>(privileges.values());
+    return new ArrayList<>(privileges.values());
   }
 
   /**

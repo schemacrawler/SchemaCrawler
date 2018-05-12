@@ -31,6 +31,8 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,8 +57,11 @@ public class TestOracleDistribution
   public void testIdentifierQuoteString()
     throws Exception
   {
+
+    final Connection connection = null;
     assertEquals("",
-                 dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+                 dbConnector
+                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
                    .toOptions().getIdentifierQuoteString());
   }
 
@@ -64,10 +69,14 @@ public class TestOracleDistribution
   public void testSupports()
     throws Exception
   {
-    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().hasOverrideForSupportsCatalogs());
-    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().hasOverrideForSupportsSchemas());
+
+    final Connection connection = null;
+    assertTrue(!dbConnector
+      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
+      .hasOverrideForSupportsCatalogs());
+    assertTrue(!dbConnector
+      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
+      .hasOverrideForSupportsSchemas());
   }
 
 }

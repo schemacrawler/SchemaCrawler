@@ -52,21 +52,19 @@ public final class FilterFactory
 
   public static Predicate<Schema> schemaFilter(final SchemaCrawlerOptions options)
   {
-    return new InclusionRuleFilter<Schema>(options.getSchemaInclusionRule(),
-                                           true);
+    return new InclusionRuleFilter<>(options.getSchemaInclusionRule(), true);
   }
 
   public static Predicate<Sequence> sequenceFilter(final SchemaCrawlerOptions options)
   {
-    return new DatabaseObjectFilter<Sequence>(options,
-                                              options
-                                                .getSequenceInclusionRule());
+    return new DatabaseObjectFilter<>(options,
+                                      options.getSequenceInclusionRule());
   }
 
   public static Predicate<Synonym> synonymFilter(final SchemaCrawlerOptions options)
   {
-    return new DatabaseObjectFilter<Synonym>(options,
-                                             options.getSynonymInclusionRule());
+    return new DatabaseObjectFilter<>(options,
+                                      options.getSynonymInclusionRule());
   }
 
   public static Predicate<Table> tableFilter(final SchemaCrawlerOptions options)

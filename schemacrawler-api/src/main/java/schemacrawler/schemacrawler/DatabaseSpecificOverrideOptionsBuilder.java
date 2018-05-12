@@ -28,9 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 
@@ -293,6 +295,17 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   public InformationSchemaViewsBuilder withInformationSchemaViews()
   {
     return informationSchemaViewsBuilder;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+                                                                                        final Connection connection)
+  {
+    if (informationSchemaViewsBuilderForConnection != null)
+    {
+      informationSchemaViewsBuilderForConnection
+        .accept(informationSchemaViewsBuilder, connection);
+    }
+    return this;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder withoutIdentifierQuoteString()

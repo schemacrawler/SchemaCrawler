@@ -37,14 +37,11 @@ import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.ResultsColumns;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schema.Schema;
@@ -316,7 +313,7 @@ public final class SchemaCrawler
 
       stopWatch.time("filterAndSortRoutines", () -> {
         // Filter the list of routines based on grep criteria
-        ((Reducible) catalog).reduce(Routine.class, getRoutineReducer(options));
+        catalog.reduce(Routine.class, getRoutineReducer(options));
         return null;
       });
 
@@ -369,7 +366,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("filterAndSortSchemas", () -> {
-        ((Reducible) catalog).reduce(Schema.class, getSchemaReducer(options));
+        catalog.reduce(Schema.class, getSchemaReducer(options));
         return null;
       });
 
@@ -433,8 +430,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("filterAndSortSequences", () -> {
-        ((Reducible) catalog).reduce(Sequence.class,
-                                     getSequenceReducer(options));
+        catalog.reduce(Sequence.class, getSequenceReducer(options));
         return null;
       });
 
@@ -490,7 +486,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("filterAndSortSynonms", () -> {
-        ((Reducible) catalog).reduce(Synonym.class, getSynonymReducer(options));
+        catalog.reduce(Synonym.class, getSynonymReducer(options));
         return null;
       });
 
@@ -605,7 +601,7 @@ public final class SchemaCrawler
       stopWatch.time("filterAndSortTables", () -> {
         // Filter the list of tables based on grep criteria, and
         // parent-child relationships
-        ((Reducible) catalog).reduce(Table.class, getTableReducer(options));
+        catalog.reduce(Table.class, getTableReducer(options));
 
         // Sort the remaining tables
         final TablesGraph tablesGraph = new TablesGraph(allTables);
@@ -745,7 +741,6 @@ public final class SchemaCrawler
    */
   public SchemaCrawler(final Connection connection,
                        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-    throws SchemaCrawlerException
   {
     this.connection = requireNonNull(connection, "No connection specified");
     this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,

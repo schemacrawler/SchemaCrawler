@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import schemacrawler.schemacrawler.Config;
@@ -39,6 +40,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
@@ -64,16 +66,14 @@ public abstract class DatabaseConnector
   private final DatabaseServerType dbServerType;
   private final InputResource connectionHelpResource;
   private final InputResource configResource;
-  private final String informationSchemaViewsResourceFolder;
+  private final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection;
   private final Predicate<String> supportsUrlPredicate;
-  private final Predicate<Connection> supportsConnectionPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource connectionHelpResource,
                               final InputResource configResource,
-                              final String informationSchemaViewsResourceFolder,
-                              final Predicate<String> supportsUrlPredicate,
-                              final Predicate<Connection> supportsConnectionPredicate)
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+                              final Predicate<String> supportsUrlPredicate)
   {
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
@@ -84,12 +84,10 @@ public abstract class DatabaseConnector
     this.configResource = requireNonNull(configResource,
                                          "No config resource provided");
 
-    this.informationSchemaViewsResourceFolder = informationSchemaViewsResourceFolder;
+    this.informationSchemaViewsBuilderForConnection = informationSchemaViewsBuilderForConnection;
 
     this.supportsUrlPredicate = requireNonNull(supportsUrlPredicate,
                                                "No database connection URL predicate provided");
-    this.supportsConnectionPredicate = requireNonNull(supportsConnectionPredicate,
-                                                      "No database connection predicate provided");
   }
 
   /**
@@ -101,9 +99,8 @@ public abstract class DatabaseConnector
     dbServerType = DatabaseServerType.UNKNOWN;
     connectionHelpResource = null;
     configResource = null;
-    informationSchemaViewsResourceFolder = null;
+    informationSchemaViewsBuilderForConnection = null;
     supportsUrlPredicate = url -> false;
-    supportsConnectionPredicate = connection -> true;
   }
 
   /**
@@ -132,12 +129,16 @@ public abstract class DatabaseConnector
   /**
    * Gets the complete bundled database specific configuration set,
    * including the SQL for information schema views.
+   *
+   * @param connection
+   *        Database connection
    */
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(final Connection connection)
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withInformationSchemaViews()
-      .fromResourceFolder(informationSchemaViewsResourceFolder);
+    databaseSpecificOverrideOptionsBuilder
+      .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
+                                               connection);
 
     return databaseSpecificOverrideOptionsBuilder;
   }
@@ -191,15 +192,6 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     return new SchemaCrawlerExecutable(command);
-  }
-
-  public final boolean supportsConnection(final Connection connection)
-  {
-    if (connection == null)
-    {
-      return false;
-    }
-    return supportsConnectionPredicate.test(connection);
   }
 
   public final boolean supportsUrl(final String url)

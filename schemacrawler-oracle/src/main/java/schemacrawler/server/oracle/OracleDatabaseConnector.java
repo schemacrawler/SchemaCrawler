@@ -31,12 +31,14 @@ package schemacrawler.server.oracle;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseServerType;
@@ -87,6 +89,48 @@ public final class OracleDatabaseConnector
 
   }
 
+  private static class OracleInformationSchemaViewsBuilder
+    implements BiConsumer<InformationSchemaViewsBuilder, Connection>
+  {
+
+    @Override
+    public void accept(final InformationSchemaViewsBuilder informationSchemaViewsBuilder,
+                       final Connection connection)
+    {
+      if (informationSchemaViewsBuilder == null)
+      {
+        LOGGER.log(Level.FINE, "No information schema views builder provided");
+        return;
+      }
+
+      informationSchemaViewsBuilder
+        .fromResourceFolder("/oracle.information_schema");
+
+      try
+      {
+        if (connection == null)
+        {
+          LOGGER.log(Level.FINE, "No Oracle database connection provided");
+          return;
+        }
+        final DatabaseMetaData dbMetaData = connection.getMetaData();
+        final int oracleMajorVersion = dbMetaData.getDatabaseMajorVersion();
+        if (oracleMajorVersion < 12)
+        {
+          informationSchemaViewsBuilder
+            .fromResourceFolder("/oracle.information_schema.old");
+        }
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+        return;
+      }
+
+    }
+
+  }
+
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(OracleDatabaseConnector.class.getName());
 
@@ -98,17 +142,16 @@ public final class OracleDatabaseConnector
     super(new DatabaseServerType("oracle", "Oracle"),
           new ClasspathInputResource("/help/Connections.oracle.txt"),
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
-          "/oracle.information_schema",
-          url -> Pattern.matches("jdbc:oracle:.*", url),
-          new OracleConnectionSupport());
+          new OracleInformationSchemaViewsBuilder(),
+          url -> Pattern.matches("jdbc:oracle:.*", url));
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
     databaseSpecificOverrideOptionsBuilder
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)

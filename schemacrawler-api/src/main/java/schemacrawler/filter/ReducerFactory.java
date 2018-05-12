@@ -23,7 +23,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 public final class ReducerFactory
 {
 
-  private static abstract class BaseReducer<N extends NamedObject>
+  private abstract static class BaseReducer<N extends NamedObject>
     implements Reducer<N>
   {
 

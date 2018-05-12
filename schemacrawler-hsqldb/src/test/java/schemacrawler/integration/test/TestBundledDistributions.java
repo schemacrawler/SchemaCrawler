@@ -31,6 +31,8 @@ package schemacrawler.integration.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
+
 import org.junit.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -48,10 +50,11 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("hsqldb");
+    final Connection connection = null;
     assertEquals(10,
                  databaseSystemIdentifier
-                   .getDatabaseSpecificOverrideOptionsBuilder().toOptions()
-                   .getInformationSchemaViews().size());
+                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .toOptions().getInformationSchemaViews().size());
   }
 
   @Test

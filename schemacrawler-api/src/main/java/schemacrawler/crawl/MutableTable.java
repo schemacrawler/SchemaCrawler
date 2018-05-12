@@ -121,7 +121,7 @@ class MutableTable
   @Override
   public List<Column> getColumns()
   {
-    return new ArrayList<Column>(columns.values());
+    return new ArrayList<>(columns.values());
   }
 
   /**
@@ -157,7 +157,7 @@ class MutableTable
   @Override
   public Collection<Column> getHiddenColumns()
   {
-    return new HashSet<Column>(hiddenColumns.values());
+    return new HashSet<>(hiddenColumns.values());
   }
 
   @Override
@@ -172,7 +172,7 @@ class MutableTable
   @Override
   public Collection<Index> getIndexes()
   {
-    return new ArrayList<Index>(indexes.values());
+    return new ArrayList<>(indexes.values());
   }
 
   /**
@@ -190,7 +190,7 @@ class MutableTable
   @Override
   public Collection<Privilege<Table>> getPrivileges()
   {
-    return new ArrayList<Privilege<Table>>(privileges.values());
+    return new ArrayList<>(privileges.values());
   }
 
   /**
@@ -245,7 +245,7 @@ class MutableTable
   @Override
   public Collection<TableConstraint> getTableConstraints()
   {
-    return new ArrayList<TableConstraint>(constraints.values());
+    return new ArrayList<>(constraints.values());
   }
 
   /**
@@ -263,7 +263,7 @@ class MutableTable
   @Override
   public Collection<Trigger> getTriggers()
   {
-    return new ArrayList<Trigger>(triggers.values());
+    return new ArrayList<>(triggers.values());
   }
 
   /**
@@ -435,7 +435,7 @@ class MutableTable
 
   private Collection<ForeignKey> getForeignKeys(final TableAssociationType tableAssociationType)
   {
-    final List<ForeignKey> foreignKeysList = new ArrayList<ForeignKey>(foreignKeys
+    final List<ForeignKey> foreignKeysList = new ArrayList<>(foreignKeys
       .values());
     if (tableAssociationType != null
         && tableAssociationType != TableAssociationType.all)

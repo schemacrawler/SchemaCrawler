@@ -47,9 +47,10 @@ public final class PostgreSQLDatabaseConnector
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
           new ClasspathInputResource("/help/Connections.postgresql.txt"),
           new ClasspathInputResource("/schemacrawler-postgresql.config.properties"),
-          "/postgresql.information_schema",
-          url -> Pattern.matches("jdbc:postgresql:.*", url),
-          connection -> true);
+          (informationSchemaViewsBuilder,
+           connection) -> informationSchemaViewsBuilder
+             .fromResourceFolder("/postgresql.information_schema"),
+          url -> Pattern.matches("jdbc:postgresql:.*", url));
   }
 
 }

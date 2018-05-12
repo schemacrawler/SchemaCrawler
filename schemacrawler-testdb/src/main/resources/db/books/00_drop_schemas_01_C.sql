@@ -1,2 +1,2 @@
 -- Oracle syntax
-DROP USER BOOKS;
+DROP USER BOOKS CASCADE;

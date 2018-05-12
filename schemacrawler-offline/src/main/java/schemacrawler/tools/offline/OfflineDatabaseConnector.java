@@ -50,8 +50,7 @@ public final class OfflineDatabaseConnector
           new ClasspathInputResource("/help/Connections.offline.txt"),
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           null,
-          url -> Pattern.matches("jdbc:offline:.*", url),
-          connection -> true);
+          url -> Pattern.matches("jdbc:offline:.*", url));
   }
 
   @Override

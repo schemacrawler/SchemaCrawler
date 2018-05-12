@@ -45,7 +45,6 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.PropertiesUtility;
-import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -64,7 +63,6 @@ public final class SchemaCrawlerCommandLine
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
-  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
   private final DatabaseConnector dbConnector;
@@ -104,15 +102,6 @@ public final class SchemaCrawlerCommandLine
     // provided configuration, and bundled configuration
     connectionOptions = dbConnector
       .newDatabaseConnectionOptions(userCredentials, config);
-
-    // Get partially built database specific options, built from the
-    // classpath resources, and then override from config loaded in from
-    // the command-line
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.fromConfig(config);
-    databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
-      .toOptions();
   }
 
   @Override
@@ -131,17 +120,17 @@ public final class SchemaCrawlerCommandLine
     executable.setAdditionalConfiguration(config);
     try (final Connection connection = connectionOptions.getConnection();)
     {
-      // Check if the version of database and JDBC driver are supported
-      final boolean supportsConnection = dbConnector
-        .supportsConnection(connection);
-      if (!supportsConnection)
-      {
-        throw new SchemaCrawlerCommandLineException(String
-          .format("The SchemaCrawler plugin for %s does not support %s%n"
-                  + "Please remove the SchemaCrawler plugin jar from the classpath, and run SchemaCrawler again",
-                  dbConnector.getDatabaseServerType().getDatabaseSystemName(),
-                  DatabaseUtility.getDatabaseVersion(connection)));
-      }
+      // Get partially built database specific options, built from the
+      // classpath resources, and then override from config loaded in
+      // from
+      // the command-line
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
+        .getDatabaseSpecificOverrideOptionsBuilder(connection);
+      databaseSpecificOverrideOptionsBuilder.fromConfig(config);
+      databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
+        .toOptions();
+
       // Execute the command
       executable.execute(connection, databaseSpecificOverrideOptions);
     }

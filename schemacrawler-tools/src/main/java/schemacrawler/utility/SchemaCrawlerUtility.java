@@ -69,7 +69,6 @@ public final class SchemaCrawlerUtility
    *         On an exception.
    */
   public static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions()
-    throws SchemaCrawlerException
   {
     return new DatabaseSpecificOverrideOptionsBuilder();
   }
@@ -94,7 +93,7 @@ public final class SchemaCrawlerUtility
            "Using database plugin for " + dbConnector.getDatabaseServerType());
 
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder();
+      .getDatabaseSpecificOverrideOptionsBuilder(connection);
     return databaseSpecificOverrideOptionsBuilder;
   }
 

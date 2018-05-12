@@ -117,15 +117,15 @@ public class TestHsqldbCommandline
     throws Exception
   {
 
+    final Connection connection = checkConnection(getConnection());
     final DatabaseConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector();
 
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = hsqldbSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder().toOptions();
+      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
-    final Connection connection = checkConnection(getConnection());
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific override options provided");
 
