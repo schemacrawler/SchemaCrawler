@@ -33,6 +33,7 @@ import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,8 +68,11 @@ public class TestSqliteDistribution
   public void testIdentifierQuoteString()
     throws Exception
   {
+
+    final Connection connection = null;
     assertEquals("\"",
-                 dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
+                 dbConnector
+                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
                    .toOptions().getIdentifierQuoteString());
   }
 
@@ -84,10 +88,10 @@ public class TestSqliteDistribution
         .normalize().toAbsolutePath();
 
       TestSchemaCreator.main(new String[] {
-                                        "jdbc:sqlite:" + sqliteDbFile,
-                                        null,
-                                        null,
-                                        "/sqlite.scripts.txt" });
+                                            "jdbc:sqlite:" + sqliteDbFile,
+                                            null,
+                                            null,
+                                            "/sqlite.scripts.txt" });
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "sqlite");
@@ -107,10 +111,14 @@ public class TestSqliteDistribution
   public void testSupports()
     throws Exception
   {
-    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().hasOverrideForSupportsCatalogs());
-    assertTrue(!dbConnector.getDatabaseSpecificOverrideOptionsBuilder()
-      .toOptions().hasOverrideForSupportsSchemas());
+
+    final Connection connection = null;
+    assertTrue(!dbConnector
+      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
+      .hasOverrideForSupportsCatalogs());
+    assertTrue(!dbConnector
+      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
+      .hasOverrideForSupportsSchemas());
   }
 
 }

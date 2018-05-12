@@ -47,9 +47,10 @@ public final class HyperSQLDatabaseConnector
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           new ClasspathInputResource("/help/Connections.hsqldb.txt"),
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
-          "/hsqldb.information_schema",
-          url -> Pattern.matches("jdbc:hsqldb:.*", url),
-          connection -> true);
+          (informationSchemaViewsBuilder,
+           connection) -> informationSchemaViewsBuilder
+             .fromResourceFolder("/hsqldb.information_schema"),
+          url -> Pattern.matches("jdbc:hsqldb:.*", url));
   }
 
 }

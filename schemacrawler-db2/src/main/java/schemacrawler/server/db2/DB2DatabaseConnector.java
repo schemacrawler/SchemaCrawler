@@ -29,6 +29,7 @@ package schemacrawler.server.db2;
 
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
@@ -49,15 +50,16 @@ public final class DB2DatabaseConnector
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/help/Connections.db2.txt"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
-          "/db2.information_schema",
-          url -> Pattern.matches("jdbc:db2:.*", url),
-          connection -> true);
+          (informationSchemaViewsBuilder,
+           connection) -> informationSchemaViewsBuilder
+             .fromResourceFolder("/db2.information_schema"),
+          url -> Pattern.matches("jdbc:db2:.*", url));
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
     databaseSpecificOverrideOptionsBuilder
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
     return databaseSpecificOverrideOptionsBuilder;

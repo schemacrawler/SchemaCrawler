@@ -116,7 +116,10 @@ public final class InformationSchemaViewsBuilder
    */
   public InformationSchemaViewsBuilder fromResourceFolder(final String classpath)
   {
-    informationSchemaQueries.clear();
+    if (isBlank(classpath))
+    {
+      return this;
+    }
 
     for (final InformationSchemaKey key: InformationSchemaKey.values())
     {

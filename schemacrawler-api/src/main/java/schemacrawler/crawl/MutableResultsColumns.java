@@ -62,7 +62,7 @@ final class MutableResultsColumns
   @Override
   public List<ResultsColumn> getColumns()
   {
-    return new ArrayList<ResultsColumn>(columns.values());
+    return new ArrayList<>(columns.values());
   }
 
   /**
@@ -73,7 +73,7 @@ final class MutableResultsColumns
   {
     String columnsList = "";
     final List<ResultsColumn> columns = getColumns();
-    if (columns != null && columns.size() > 0)
+    if (columns != null && !columns.isEmpty())
     {
       final StringBuilder buffer = new StringBuilder(1024);
       for (int i = 0; i < columns.size(); i++)

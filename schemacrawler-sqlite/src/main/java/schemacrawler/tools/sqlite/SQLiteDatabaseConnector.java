@@ -29,6 +29,7 @@ package schemacrawler.tools.sqlite;
 
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.Config;
@@ -52,15 +53,16 @@ public final class SQLiteDatabaseConnector
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/help/Connections.sqlite.txt"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
-          "/sqlite.information_schema",
-          url -> Pattern.matches("jdbc:sqlite:.*", url),
-          connection -> true);
+          (informationSchemaViewsBuilder,
+           connection) -> informationSchemaViewsBuilder
+             .fromResourceFolder("/sqlite.information_schema"),
+          url -> Pattern.matches("jdbc:sqlite:.*", url));
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder()
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder();
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
     databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
     return databaseSpecificOverrideOptionsBuilder;
   }
