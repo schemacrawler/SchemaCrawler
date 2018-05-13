@@ -129,8 +129,7 @@ public final class JavaSqlTypes
       final Integer sqlTypeInt = sqlType.getVendorTypeNumber();
       final JavaSqlTypeGroup sqlTypeGroup = groupJavaSqlType(sqlTypeInt);
 
-      final JavaSqlType javaSqlType = new JavaSqlType(sqlType,
-                                                      sqlTypeGroup);
+      final JavaSqlType javaSqlType = new JavaSqlType(sqlType, sqlTypeGroup);
       javaSqlTypes.put(sqlTypeInt, javaSqlType);
     }
 

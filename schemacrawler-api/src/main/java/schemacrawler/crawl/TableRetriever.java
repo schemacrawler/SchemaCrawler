@@ -186,7 +186,7 @@ final class TableRetriever
                                                 final String tableNamePattern,
                                                 final Collection<String> tableTypes,
                                                 final InclusionRuleFilter<Table> tableFilter)
-    throws SchemaCrawlerSQLException, SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();

@@ -41,8 +41,6 @@ public final class DatabaseConfigConnectionOptions
   extends BaseDatabaseConnectionOptions
 {
 
-  private static final long serialVersionUID = -8141436553988174836L;
-
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseConfigConnectionOptions.class.getName());
 

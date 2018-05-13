@@ -78,7 +78,10 @@ final class NamedObjectList<N extends NamedObject>
                                             final String name)
   {
     final List<String> key = makeLookupKey(namedObject);
-    key.add(name);
+    if (key != null)
+    {
+      key.add(name);
+    }
     return key;
   }
 

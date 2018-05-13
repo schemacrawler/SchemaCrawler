@@ -127,7 +127,6 @@ final class TableColumnRetriever
                                           final NamedObjectList<MutableTable> allTables,
                                           final InclusionRuleFilter<Column> columnFilter,
                                           final Set<List<String>> hiddenColumns)
-    throws SQLException
   {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
     // don't handle it properly otherwise.
@@ -251,7 +250,7 @@ final class TableColumnRetriever
   private void retrieveColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
                                                  final InclusionRuleFilter<Column> columnFilter,
                                                  final Set<List<String>> hiddenColumns)
-    throws SchemaCrawlerSQLException, SQLException
+    throws SQLException
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();

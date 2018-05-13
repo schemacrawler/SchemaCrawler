@@ -140,7 +140,6 @@ final class TableConstraintRetriever
    *         On a SQL exception
    */
   void retrieveTableConstraintInformation()
-    throws SQLException
   {
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()

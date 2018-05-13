@@ -60,7 +60,7 @@ final class ImmutableSchemaCrawlerInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated
    */
   @Override
@@ -72,7 +72,7 @@ final class ImmutableSchemaCrawlerInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated
    */
   @Override

@@ -94,11 +94,12 @@ public class RegularExpressionColorMap
 
   public Optional<Color> match(final String value)
   {
-    for (final Pattern pattern: colorMap.keySet())
+    for (final Entry<Pattern, Color> entry: colorMap.entrySet())
     {
+      final Pattern pattern = entry.getKey();
       if (pattern.matcher(value).matches())
       {
-        return Optional.of(colorMap.get(pattern));
+        return Optional.of(entry.getValue());
       }
     }
     return Optional.empty();

@@ -47,6 +47,9 @@ import java.util.Stack;
 public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super T>>
 {
 
+  private static final String ATTRIBUTE_LOWLINK = "lowlink";
+  private static final String ATTRIBUTE_INDEX = "index";
+
   private final DirectedGraph<T> graph;
   private final Collection<List<T>> stronglyConnectedComponents;
   private final Stack<Vertex<T>> stack;
@@ -70,7 +73,7 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
   {
     for (final Vertex<T> vertex: graph.vertexSet())
     {
-      if (!vertex.hasAttribute("index"))
+      if (!vertex.hasAttribute(ATTRIBUTE_INDEX))
       {
         strongConnect(vertex, 0);
       }
@@ -80,33 +83,36 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
 
   private void strongConnect(final Vertex<T> vertexFrom, final int index)
   {
-    vertexFrom.putAttribute("index", index);
-    vertexFrom.putAttribute("lowlink", index);
+    vertexFrom.putAttribute(ATTRIBUTE_INDEX, index);
+    vertexFrom.putAttribute(ATTRIBUTE_LOWLINK, index);
     stack.push(vertexFrom);
 
     for (final DirectedEdge<T> edge: graph.getOutgoingEdges(vertexFrom))
     {
       final Vertex<T> vertexTo = edge.getTo();
-      if (!vertexTo.hasAttribute("index"))
+      if (!vertexTo.hasAttribute(ATTRIBUTE_INDEX))
       {
         // Successor vertex has not yet been visited; recurse on it
         strongConnect(vertexTo, index + 1);
-        vertexFrom.putAttribute("lowlink",
-                                Math
-                                  .min((int) vertexFrom.getAttribute("lowlink"),
-                                       (int) vertexTo.getAttribute("lowlink")));
+        vertexFrom
+          .putAttribute(ATTRIBUTE_LOWLINK,
+                        Math
+                          .min((int) vertexFrom.getAttribute(ATTRIBUTE_LOWLINK),
+                               (int) vertexTo.getAttribute(ATTRIBUTE_LOWLINK)));
       }
       else if (stack.contains(vertexTo))
       {
         // Successor vertex is on stack, hence in the current SCC
-        vertexFrom.putAttribute("lowlink",
-                                Math
-                                  .min((int) vertexFrom.getAttribute("lowlink"),
-                                       (int) vertexTo.getAttribute("index")));
+        vertexFrom
+          .putAttribute(ATTRIBUTE_LOWLINK,
+                        Math
+                          .min((int) vertexFrom.getAttribute(ATTRIBUTE_LOWLINK),
+                               (int) vertexTo.getAttribute(ATTRIBUTE_INDEX)));
       }
     }
 
-    if (vertexFrom.getAttribute("lowlink") == vertexFrom.getAttribute("index"))
+    if (vertexFrom.getAttribute(ATTRIBUTE_LOWLINK) == vertexFrom
+      .getAttribute(ATTRIBUTE_INDEX))
     {
       final LinkedList<T> scc = new LinkedList<>();
       Vertex<T> sccVertex;

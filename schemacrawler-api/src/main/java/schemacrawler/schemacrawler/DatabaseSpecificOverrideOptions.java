@@ -41,14 +41,12 @@ import schemacrawler.utility.TypeMap;
  * functionality. This can add or inject database plugins, or override
  * defaults. It is recommended to build these options using factory
  * methods in SchemaCrawlerUtility.
- * 
+ *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
 public final class DatabaseSpecificOverrideOptions
   implements Options
 {
-
-  private static final long serialVersionUID = -5593417085363698921L;
 
   private final Optional<Boolean> supportsSchemas;
   private final Optional<Boolean> supportsCatalogs;
@@ -91,11 +89,6 @@ public final class DatabaseSpecificOverrideOptions
     }
   }
 
-  public MetadataRetrievalStrategy getFkRetrievalStrategy()
-  {
-    return fkRetrievalStrategy;
-  }
-
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
@@ -123,11 +116,6 @@ public final class DatabaseSpecificOverrideOptions
   public InformationSchemaViews getInformationSchemaViews()
   {
     return informationSchemaViews;
-  }
-
-  public MetadataRetrievalStrategy getPkRetrievalStrategy()
-  {
-    return pkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()

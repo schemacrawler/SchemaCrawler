@@ -111,11 +111,6 @@ final class RetrieverConnection
     javaSqlTypes = new JavaSqlTypes();
   }
 
-  public MetadataRetrievalStrategy getFkRetrievalStrategy()
-  {
-    return fkRetrievalStrategy;
-  }
-
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
@@ -129,11 +124,6 @@ final class RetrieverConnection
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
     return indexRetrievalStrategy;
-  }
-
-  public MetadataRetrievalStrategy getPkRetrievalStrategy()
-  {
-    return pkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()

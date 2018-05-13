@@ -138,7 +138,7 @@ public class DirectedGraph<T extends Comparable<? super T>>
     writer.append("digraph {\n");
     if (name != null && !name.isEmpty())
     {
-      writer.append(String.format("  [label=\"%s\"]\n", name));
+      writer.append(String.format("  [label=\"%s\"]%n", name));
     }
     // writer.append(" graph [rankdir=\"LR\"];\n");
     for (final Vertex<T> vertex: verticesMap.values())

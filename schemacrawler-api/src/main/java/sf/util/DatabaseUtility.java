@@ -96,7 +96,7 @@ public final class DatabaseUtility
   }
 
   public static Statement createStatement(final Connection connection)
-    throws SchemaCrawlerException, SQLException
+    throws SQLException
   {
     checkConnection(connection);
     return connection.createStatement();
@@ -104,7 +104,6 @@ public final class DatabaseUtility
 
   public static void executeScriptFromResource(final Connection connection,
                                                final String scriptResource)
-    throws SchemaCrawlerException
   {
     try (final Statement statement = createStatement(connection);)
     {
@@ -131,7 +130,6 @@ public final class DatabaseUtility
     }
     catch (final SQLException e)
     {
-      System.err.println(e.getMessage());
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
   }
@@ -257,7 +255,7 @@ public final class DatabaseUtility
   }
 
   public static String getDatabaseVersion(final Connection connection)
-    throws SchemaCrawlerException, SQLException
+    throws SQLException
   {
     checkConnection(connection);
 

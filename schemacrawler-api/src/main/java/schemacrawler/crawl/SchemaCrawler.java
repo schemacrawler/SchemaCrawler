@@ -121,21 +121,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving column data type information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving column data type information",
+                                       e);
     }
   }
 
@@ -211,21 +208,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving database information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving database information",
+                                       e);
     }
   }
 
@@ -327,21 +321,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving routine information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving routine information",
+                                       e);
     }
   }
 
@@ -379,21 +370,18 @@ public final class SchemaCrawler
         throw new SchemaCrawlerException("No matching schemas found");
       }
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving schema information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving schema information",
+                                       e);
     }
   }
 
@@ -436,21 +424,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving sequence information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving sequence information",
+                                       e);
     }
   }
 
@@ -492,21 +477,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving synonym information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving synonym information",
+                                       e);
     }
   }
 
@@ -708,21 +690,18 @@ public final class SchemaCrawler
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving table information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving table information",
+                                       e);
     }
   }
 

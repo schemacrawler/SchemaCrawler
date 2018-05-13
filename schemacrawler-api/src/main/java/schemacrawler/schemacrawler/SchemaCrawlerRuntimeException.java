@@ -30,11 +30,23 @@ package schemacrawler.schemacrawler;
 
 
 /**
- * Options.
- *
- * @author Sualeh Fatehi
+ * Exception for the SchemaCrawler.
  */
-public interface Options
+public class SchemaCrawlerRuntimeException
+  extends RuntimeException
 {
+
+  private static final long serialVersionUID = 3257848770627713076L;
+
+  public SchemaCrawlerRuntimeException(final String message)
+  {
+    super(message);
+  }
+
+  public SchemaCrawlerRuntimeException(final String message,
+                                       final Throwable cause)
+  {
+    super(message + ": " + cause.getMessage(), cause);
+  }
 
 }

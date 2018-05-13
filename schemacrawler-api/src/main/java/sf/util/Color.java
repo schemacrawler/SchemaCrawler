@@ -97,7 +97,7 @@ public final class Color
       case 5:
         return fromRGB(value, p, q);
       default:
-        throw new RuntimeException(String
+        throw new IllegalArgumentException(String
           .format("Could not convert from HSV (%f, %f, %f) to RGB",
                   normaliedHue,
                   saturation,

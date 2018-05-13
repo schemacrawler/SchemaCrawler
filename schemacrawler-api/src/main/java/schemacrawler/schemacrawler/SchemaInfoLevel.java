@@ -38,8 +38,6 @@ public final class SchemaInfoLevel
   implements Options
 {
 
-  private static final long serialVersionUID = -6721986729175552425L;
-
   private String tag;
 
   private boolean retrieveTables;

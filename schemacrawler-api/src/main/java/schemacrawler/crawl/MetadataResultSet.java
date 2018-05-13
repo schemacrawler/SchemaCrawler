@@ -503,7 +503,6 @@ final class MetadataResultSet
   }
 
   void setDescription(final String description)
-    throws SQLException
   {
     this.description = description;
   }

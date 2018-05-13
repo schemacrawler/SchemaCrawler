@@ -78,7 +78,7 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated
    */
   @Override
@@ -94,14 +94,14 @@ final class MutableJdbcDriverInfo
   @Override
   public Collection<JdbcDriverProperty> getDriverProperties()
   {
-    final List<JdbcDriverProperty> properties = new ArrayList<JdbcDriverProperty>(jdbcDriverProperties);
+    final List<JdbcDriverProperty> properties = new ArrayList<>(jdbcDriverProperties);
     Collections.sort(properties);
     return properties;
   }
 
   /**
    * {@inheritDoc}
-   * 
+   *
    * @deprecated
    */
   @Override

@@ -63,7 +63,6 @@ public final class ResultsCrawler
    *         On a SchemaCrawler exception
    */
   public ResultsCrawler(final ResultSet results)
-    throws SchemaCrawlerException
   {
     // NOTE: Do not check if the result set is closed, since some JDBC
     // drivers like SQLite may not work
@@ -91,29 +90,24 @@ public final class ResultsCrawler
     {
       final ResultsRetriever resultsRetriever = new ResultsRetriever(results);
       final ResultsColumns resultsColumns = stopWatch
-        .time("retrieveSynonymInformation", () -> {
-          return resultsRetriever.retrieveResults();
-        });
+        .time("retrieveResults", resultsRetriever::retrieveResults);
 
       LOGGER.log(Level.INFO, stopWatch.stringify());
 
       return resultsColumns;
     }
+    catch (final SchemaCrawlerSQLException e)
+    {
+      throw new SchemaCrawlerException(e.getMessage(), e.getCause());
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw e;
+    }
     catch (final Exception e)
     {
-      if (e instanceof SchemaCrawlerSQLException)
-      {
-        throw new SchemaCrawlerException(e.getMessage(), e.getCause());
-      }
-      else if (e instanceof SchemaCrawlerException)
-      {
-        throw (SchemaCrawlerException) e;
-      }
-      else
-      {
-        throw new SchemaCrawlerException("Exception retrieving result-set information",
-                                         e);
-      }
+      throw new SchemaCrawlerException("Exception retrieving result-set information",
+                                       e);
     }
   }
 

@@ -53,8 +53,6 @@ public final class Config
   implements Options, Map<String, String>
 {
 
-  private static final long serialVersionUID = 8720699738076915453L;
-
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Config.class.getName());
 
