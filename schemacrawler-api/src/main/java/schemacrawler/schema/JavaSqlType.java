@@ -29,6 +29,7 @@ package schemacrawler.schema;
 
 
 import java.io.Serializable;
+import java.sql.SQLType;
 
 /**
  * A wrapper around java.sql.Types.
@@ -36,7 +37,7 @@ import java.io.Serializable;
  * @author Sualeh Fatehi
  */
 public final class JavaSqlType
-  implements Serializable, Comparable<JavaSqlType>
+  implements SQLType, Serializable, Comparable<JavaSqlType>
 {
 
   public enum JavaSqlTypeGroup
@@ -64,24 +65,48 @@ public final class JavaSqlType
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
                                                             JavaSqlTypeGroup.unknown);
-  private final int javaSqlType;
-  private final String javaSqlTypeName;
 
+  private final SQLType sqlType;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
-  public JavaSqlType(final int javaSqlType,
-                     final String javaSqlTypeName,
+  public JavaSqlType(final SQLType sqlType,
                      final JavaSqlTypeGroup javaSqlTypeGroup)
   {
-    this.javaSqlType = javaSqlType;
-    this.javaSqlTypeName = javaSqlTypeName;
+    this.sqlType = sqlType;
     this.javaSqlTypeGroup = javaSqlTypeGroup;
+  }
+
+  private JavaSqlType(final int typeNumber,
+                      final String typeName,
+                      final JavaSqlTypeGroup sqlTypeGroup)
+  {
+    this(new SQLType()
+    {
+
+      @Override
+      public String getName()
+      {
+        return typeName;
+      }
+
+      @Override
+      public String getVendor()
+      {
+        return "SchemaCrawler";
+      }
+
+      @Override
+      public Integer getVendorTypeNumber()
+      {
+        return typeNumber;
+      }
+    }, sqlTypeGroup);
   }
 
   @Override
   public int compareTo(final JavaSqlType otherSqlDataType)
   {
-    return javaSqlTypeName.compareTo(otherSqlDataType.javaSqlTypeName);
+    return sqlType.getName().compareTo(otherSqlDataType.sqlType.getName());
   }
 
   @Override
@@ -100,29 +125,15 @@ public final class JavaSqlType
       return false;
     }
     final JavaSqlType other = (JavaSqlType) obj;
-    if (javaSqlType != other.javaSqlType)
+    if (sqlType == null)
     {
-      return false;
-    }
-    if (javaSqlTypeGroup == null)
-    {
-      if (other.javaSqlTypeGroup != null)
+      if (other.sqlType != null)
       {
         return false;
       }
     }
-    else if (!javaSqlTypeGroup.equals(other.javaSqlTypeGroup))
-    {
-      return false;
-    }
-    if (javaSqlTypeName == null)
-    {
-      if (other.javaSqlTypeName != null)
-      {
-        return false;
-      }
-    }
-    else if (!javaSqlTypeName.equals(other.javaSqlTypeName))
+    else if (!sqlType.getVendorTypeNumber()
+      .equals(other.sqlType.getVendorTypeNumber()))
     {
       return false;
     }
@@ -136,7 +147,7 @@ public final class JavaSqlType
    */
   public int getJavaSqlType()
   {
-    return javaSqlType;
+    return sqlType.getVendorTypeNumber();
   }
 
   public JavaSqlTypeGroup getJavaSqlTypeGroup()
@@ -151,7 +162,25 @@ public final class JavaSqlType
    */
   public String getJavaSqlTypeName()
   {
-    return javaSqlTypeName;
+    return sqlType.getName();
+  }
+
+  @Override
+  public String getName()
+  {
+    return sqlType.getName();
+  }
+
+  @Override
+  public String getVendor()
+  {
+    return sqlType.getVendor();
+  }
+
+  @Override
+  public Integer getVendorTypeNumber()
+  {
+    return sqlType.getVendorTypeNumber();
   }
 
   @Override
@@ -159,19 +188,18 @@ public final class JavaSqlType
   {
     final int prime = 31;
     int result = 1;
-    result = prime * result + javaSqlType;
     result = prime * result
-             + (javaSqlTypeGroup == null? 0: javaSqlTypeGroup.hashCode());
-    result = prime * result
-             + (javaSqlTypeName == null? 0: javaSqlTypeName.hashCode());
+             + (sqlType == null? 0: sqlType.getVendorTypeNumber());
     return result;
   }
 
   @Override
   public String toString()
   {
-    return String
-      .format("%s\t%d\t%s", javaSqlTypeName, javaSqlType, javaSqlTypeGroup);
+    return String.format("%s\t%d\t%s",
+                         sqlType.getName(),
+                         sqlType.getVendorTypeNumber(),
+                         javaSqlTypeGroup);
   }
 
 }

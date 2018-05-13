@@ -216,7 +216,7 @@ abstract class AbstractRetriever
       columnDataType = new MutableColumnDataType(schema,
                                                  databaseSpecificTypeName);
       final JavaSqlType javaSqlType = retrieverConnection.getJavaSqlTypes()
-        .get(javaSqlTypeInt);
+        .valueOf(javaSqlTypeInt);
       columnDataType.setJavaSqlType(javaSqlType);
       if (isBlank(mappedClassName))
       {

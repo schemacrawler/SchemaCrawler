@@ -99,7 +99,7 @@ final class ResultsRetriever
       final String columnClassName = resultsMetaData.getColumnClassName(i);
       final MutableColumnDataType columnDataType = new MutableColumnDataType(schema,
                                                                              databaseSpecificTypeName);
-      columnDataType.setJavaSqlType(javaSqlTypes.get(javaSqlType));
+      columnDataType.setJavaSqlType(javaSqlTypes.valueOf(javaSqlType));
       columnDataType.setTypeMappedClass(columnClassName);
       columnDataType.setPrecision(resultsMetaData.getPrecision(i));
       final int scale = resultsMetaData.getScale(i);
