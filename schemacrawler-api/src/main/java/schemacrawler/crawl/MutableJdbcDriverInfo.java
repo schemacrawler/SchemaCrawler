@@ -78,11 +78,14 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
+   * 
+   * @deprecated
    */
   @Override
+  @Deprecated
   public String getDriverName()
   {
-    return driverName;
+    return getProductName();
   }
 
   /**
@@ -98,9 +101,30 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
+   * 
+   * @deprecated
    */
   @Override
+  @Deprecated
   public String getDriverVersion()
+  {
+    return getProductVersion();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getProductName()
+  {
+    return driverName;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String getProductVersion()
   {
     return driverVersion;
   }
@@ -121,8 +145,8 @@ final class MutableJdbcDriverInfo
   public String toString()
   {
     final StringBuilder info = new StringBuilder(1024);
-    info.append("-- driver: ").append(getDriverName()).append(' ')
-      .append(getDriverVersion()).append(System.lineSeparator());
+    info.append("-- driver: ").append(getProductName()).append(' ')
+      .append(getProductVersion()).append(System.lineSeparator());
     info.append("-- driver class: ").append(getDriverClassName())
       .append(System.lineSeparator());
     info.append("-- url: ").append(getConnectionUrl())

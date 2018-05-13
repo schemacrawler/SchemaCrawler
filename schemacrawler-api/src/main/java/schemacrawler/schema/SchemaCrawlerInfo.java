@@ -29,15 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import java.io.Serializable;
-
 /**
  * SchemaCrawler information.
  *
  * @author Sualeh Fatehi
  */
 public interface SchemaCrawlerInfo
-  extends Serializable
+  extends ProductVersion
 {
 
   /**
@@ -51,14 +49,18 @@ public interface SchemaCrawlerInfo
    * Gets the name of the SchemaCrawler product.
    *
    * @return Name of the SchemaCrawler product
+   * @deprecated
    */
+  @Deprecated
   String getSchemaCrawlerProductName();
 
   /**
    * Gets the SchemaCrawler version.
    *
    * @return SchemaCrawler version
+   * @deprecated
    */
+  @Deprecated
   String getSchemaCrawlerVersion();
 
 }

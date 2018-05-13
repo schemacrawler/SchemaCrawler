@@ -204,10 +204,10 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow("driver name",
-                                       driverInfo.getDriverName(),
+                                       driverInfo.getProductName(),
                                        Alignment.inherit);
     formattingHelper.writeNameValueRow("driver version",
-                                       driverInfo.getDriverVersion(),
+                                       driverInfo.getProductVersion(),
                                        Alignment.inherit);
     formattingHelper.writeNameValueRow("driver class name",
                                        driverInfo.getDriverClassName(),
@@ -250,12 +250,10 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
     formattingHelper.writeObjectStart();
     formattingHelper.writeNameValueRow("product name",
-                                       schemaCrawlerInfo
-                                         .getSchemaCrawlerProductName(),
+                                       schemaCrawlerInfo.getProductName(),
                                        Alignment.inherit);
     formattingHelper.writeNameValueRow("product version",
-                                       schemaCrawlerInfo
-                                         .getSchemaCrawlerVersion(),
+                                       schemaCrawlerInfo.getProductVersion(),
                                        Alignment.inherit);
     formattingHelper.writeObjectEnd();
   }

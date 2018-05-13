@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -38,22 +37,8 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface DatabaseInfo
-  extends Serializable
+  extends ProductVersion
 {
-
-  /**
-   * Gets the name of the RDBMS vendor and product.
-   *
-   * @return Name of the RDBMS vendor and product
-   */
-  String getProductName();
-
-  /**
-   * Gets the RDBMS product version.
-   *
-   * @return RDBMS product version
-   */
-  String getProductVersion();
 
   /**
    * Gets all database properties.

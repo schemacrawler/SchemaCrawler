@@ -37,39 +37,16 @@ import schemacrawler.schema.OperatingSystemInfo;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class ImmutableOperatingSystemInfo
+  extends BaseProductVersion
   implements OperatingSystemInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String operatingSystemName;
-  private final String operatingSystemVersion;
-
   ImmutableOperatingSystemInfo()
   {
-    operatingSystemName = System.getProperty("os.name", "<unknown>");
-    operatingSystemVersion = System.getProperty("os.version", "");
-  }
-
-  @Override
-  public String getOperatingSystemName()
-  {
-    return operatingSystemName;
-  }
-
-  @Override
-  public String getOperatingSystemVersion()
-  {
-    return operatingSystemVersion;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public String toString()
-  {
-    return String.format("%s %s", operatingSystemName, operatingSystemVersion);
+    super(System.getProperty("os.name", "<unknown>"),
+          System.getProperty("os.version", ""));
   }
 
 }

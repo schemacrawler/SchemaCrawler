@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -38,7 +37,7 @@ import java.util.Collection;
  * @author Sualeh Fatehi
  */
 public interface JdbcDriverInfo
-  extends Serializable
+  extends ProductVersion
 {
 
   /**
@@ -59,7 +58,9 @@ public interface JdbcDriverInfo
    * Gets the name of the JDBC driver.
    *
    * @return Driver name
+   * @deprecated
    */
+  @Deprecated
   String getDriverName();
 
   /**
@@ -73,7 +74,9 @@ public interface JdbcDriverInfo
    * Gets the JDBC driver version.
    *
    * @return Driver version.
+   * @deprecated
    */
+  @Deprecated
   String getDriverVersion();
 
   /**
