@@ -31,20 +31,14 @@ package schemacrawler.utility;
 
 import static sf.util.Utility.isBlank;
 
-import java.lang.reflect.Field;
-import java.sql.Types;
-import java.util.Collection;
+import java.sql.JDBCType;
+import java.sql.SQLType;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
 
 import schemacrawler.schema.JavaSqlType;
 import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 /**
  * Utility to work with java.sql.Types.
@@ -52,35 +46,8 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class JavaSqlTypes
-  implements Map<Integer, JavaSqlType>, Iterable<JavaSqlType>
+  implements Iterable<JavaSqlType>
 {
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(JavaSqlTypes.class.getName());
-
-  private static Map<String, Integer> createJavaSqlTypesMap()
-  {
-    final Map<String, Integer> javaSqlTypesMap = new HashMap<>();
-    for (final Field field: Types.class.getFields())
-    {
-      try
-      {
-        final String javaSqlTypeName = field.getName();
-        final Integer javaSqlType = (Integer) field.get(null);
-        javaSqlTypesMap.put(javaSqlTypeName, javaSqlType);
-      }
-      catch (final SecurityException | IllegalAccessException e)
-      {
-        LOGGER
-          .log(Level.WARNING,
-               new StringFormat("Could not access java.sql.Types field <%s>",
-                                field),
-               e);
-        // continue
-      }
-    }
-    return javaSqlTypesMap;
-  }
 
   private static JavaSqlTypeGroup groupJavaSqlType(final int type)
   {
@@ -156,25 +123,15 @@ public final class JavaSqlTypes
 
   private static Map<Integer, JavaSqlType> mapJavaSqlTypes()
   {
-    final Map<String, Integer> javaSqlTypesMap = createJavaSqlTypesMap();
-
     final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<>();
-
-    for (final Entry<String, Integer> javaSqlTypesEntry: javaSqlTypesMap
-      .entrySet())
+    for (final SQLType sqlType: JDBCType.values())
     {
-      if (javaSqlTypesEntry.getKey() != null
-          && javaSqlTypesEntry.getValue() != null)
-      {
-        final Integer javaSqlTypeInt = javaSqlTypesEntry.getValue();
-        final String javaSqlTypeName = javaSqlTypesEntry.getKey();
-        final JavaSqlTypeGroup javaSqlTypeGroup = groupJavaSqlType(javaSqlTypeInt);
+      final Integer sqlTypeInt = sqlType.getVendorTypeNumber();
+      final JavaSqlTypeGroup sqlTypeGroup = groupJavaSqlType(sqlTypeInt);
 
-        final JavaSqlType javaSqlType = new JavaSqlType(javaSqlTypeInt,
-                                                        javaSqlTypeName,
-                                                        javaSqlTypeGroup);
-        javaSqlTypes.put(javaSqlTypeInt, javaSqlType);
-      }
+      final JavaSqlType javaSqlType = new JavaSqlType(sqlType,
+                                                      sqlTypeGroup);
+      javaSqlTypes.put(sqlTypeInt, javaSqlType);
     }
 
     return javaSqlTypes;
@@ -185,49 +142,6 @@ public final class JavaSqlTypes
   public JavaSqlTypes()
   {
     javaSqlTypeMap = mapJavaSqlTypes();
-  }
-
-  @Override
-  public void clear()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean containsKey(final Object key)
-  {
-    return javaSqlTypeMap.containsKey(key);
-  }
-
-  @Override
-  public boolean containsValue(final Object value)
-  {
-    return javaSqlTypeMap.containsValue(value);
-  }
-
-  @Override
-  public Set<java.util.Map.Entry<Integer, JavaSqlType>> entrySet()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public boolean equals(final Object o)
-  {
-    return javaSqlTypeMap.equals(o);
-  }
-
-  @Override
-  public JavaSqlType get(final Object key)
-  {
-    if (containsKey(key))
-    {
-      return javaSqlTypeMap.get(key);
-    }
-    else
-    {
-      return JavaSqlType.UNKNOWN;
-    }
   }
 
   /**
@@ -258,48 +172,11 @@ public final class JavaSqlTypes
   }
 
   @Override
-  public int hashCode()
-  {
-    return javaSqlTypeMap.hashCode();
-  }
-
-  @Override
-  public boolean isEmpty()
-  {
-    return javaSqlTypeMap.isEmpty();
-  }
-
-  @Override
   public Iterator<JavaSqlType> iterator()
   {
     return javaSqlTypeMap.values().iterator();
   }
 
-  @Override
-  public Set<Integer> keySet()
-  {
-    return new HashSet<>(javaSqlTypeMap.keySet());
-  }
-
-  @Override
-  public JavaSqlType put(final Integer key, final JavaSqlType value)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public void putAll(final Map<? extends Integer, ? extends JavaSqlType> m)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public JavaSqlType remove(final Object key)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public int size()
   {
     return javaSqlTypeMap.size();
@@ -311,10 +188,16 @@ public final class JavaSqlTypes
     return javaSqlTypeMap.toString();
   }
 
-  @Override
-  public Collection<JavaSqlType> values()
+  public JavaSqlType valueOf(final int key)
   {
-    return new HashSet<>(javaSqlTypeMap.values());
+    if (javaSqlTypeMap.containsKey(key))
+    {
+      return javaSqlTypeMap.get(key);
+    }
+    else
+    {
+      return JavaSqlType.UNKNOWN;
+    }
   }
 
 }
