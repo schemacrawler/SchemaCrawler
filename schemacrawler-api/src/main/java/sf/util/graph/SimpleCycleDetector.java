@@ -56,6 +56,8 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
 
   }
 
+  private static final String ATTRIBUTE_TRAVERSAL_STATE = "traversalstate";
+
   private final DirectedGraph<T> graph;
 
   public SimpleCycleDetector(final DirectedGraph<T> graph)
@@ -73,7 +75,8 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
     final Collection<Vertex<T>> vertices = clearTraversalStates();
     for (final Vertex<T> vertex: vertices)
     {
-      if (vertex.getAttribute("traversalstate") == TraversalState.notStarted)
+      if (vertex
+        .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
       {
         if (visitForCyles(vertex))
         {
@@ -90,26 +93,28 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
     final Collection<Vertex<T>> vertices = graph.vertexSet();
     for (final Vertex<T> vertex: vertices)
     {
-      vertex.putAttribute("traversalstate", TraversalState.notStarted);
+      vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.notStarted);
     }
     return vertices;
   }
 
   private boolean visitForCyles(final Vertex<T> vertex)
   {
-    vertex.putAttribute("traversalstate", TraversalState.inProgress);
+    vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.inProgress);
 
     for (final DirectedEdge<T> edge: graph.edgeSet())
     {
       if (edge.isFrom(vertex))
       {
         final Vertex<T> to = edge.getTo();
-        if (to.getAttribute("traversalstate") == TraversalState.inProgress)
+        if (to
+          .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.inProgress)
         {
-          to.putAttribute("traversalstate", TraversalState.marked);
+          to.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.marked);
           return true;
         }
-        else if (to.getAttribute("traversalstate") == TraversalState.notStarted)
+        else if (to
+          .getAttribute(ATTRIBUTE_TRAVERSAL_STATE) == TraversalState.notStarted)
         {
           if (visitForCyles(to))
           {
@@ -119,7 +124,7 @@ public class SimpleCycleDetector<T extends Comparable<? super T>>
       }
     }
 
-    vertex.putAttribute("traversalstate", TraversalState.complete);
+    vertex.putAttribute(ATTRIBUTE_TRAVERSAL_STATE, TraversalState.complete);
 
     return false;
   }

@@ -42,8 +42,6 @@ public class DatabaseSpecificOptions
   implements Options
 {
 
-  private static final long serialVersionUID = -3064713207381359649L;
-
   private final boolean supportsCatalogs;
   private final boolean supportsSchemas;
   private final Identifiers identifiers;

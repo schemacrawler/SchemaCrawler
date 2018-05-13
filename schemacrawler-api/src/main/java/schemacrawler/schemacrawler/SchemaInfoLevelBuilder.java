@@ -107,4 +107,9 @@ public final class SchemaInfoLevelBuilder
     return standard;
   }
 
+  private SchemaInfoLevelBuilder()
+  {
+    // Prevent instantiation
+  }
+
 }

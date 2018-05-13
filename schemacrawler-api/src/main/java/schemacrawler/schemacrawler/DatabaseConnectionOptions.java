@@ -35,8 +35,6 @@ public final class DatabaseConnectionOptions
   extends BaseDatabaseConnectionOptions
 {
 
-  private static final long serialVersionUID = -8141436553988174836L;
-
   public DatabaseConnectionOptions(final String connectionUrl)
   {
     super(new SingleUseUserCredentials(), connectionUrlToMap(connectionUrl));

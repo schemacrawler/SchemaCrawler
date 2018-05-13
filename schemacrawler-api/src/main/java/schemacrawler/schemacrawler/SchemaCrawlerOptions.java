@@ -48,8 +48,6 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private static final long serialVersionUID = -3557794862382066029L;
-
   private static Collection<RoutineType> allRoutineTypes()
   {
     return Arrays.asList(RoutineType.procedure, RoutineType.function);

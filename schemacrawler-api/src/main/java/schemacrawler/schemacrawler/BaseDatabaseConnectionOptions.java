@@ -57,8 +57,6 @@ abstract class BaseDatabaseConnectionOptions
   implements ConnectionOptions
 {
 
-  private static final long serialVersionUID = -8141436553988174836L;
-
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(BaseDatabaseConnectionOptions.class.getName());
 
@@ -237,7 +235,7 @@ abstract class BaseDatabaseConnectionOptions
   public Logger getParentLogger()
     throws SQLFeatureNotSupportedException
   {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+    throw newSQLFeatureNotSupportedException();
   }
 
   @Override
@@ -257,7 +255,7 @@ abstract class BaseDatabaseConnectionOptions
   public void setLoginTimeout(final int seconds)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+    throw newSQLFeatureNotSupportedException();
   }
 
   @Override
@@ -266,7 +264,7 @@ abstract class BaseDatabaseConnectionOptions
   {
     if (out != null)
     {
-      throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+      throw newSQLFeatureNotSupportedException();
     }
   }
 
@@ -297,7 +295,7 @@ abstract class BaseDatabaseConnectionOptions
   public <T> T unwrap(final Class<T> iface)
     throws SQLException
   {
-    throw new SQLFeatureNotSupportedException("Not supported", "HYC00");
+    throw newSQLFeatureNotSupportedException();
   }
 
   private Properties createConnectionProperties(final String connectionUrl,
@@ -394,6 +392,11 @@ abstract class BaseDatabaseConnectionOptions
     {
       LOGGER.log(Level.WARNING, "Could not log connection information", e);
     }
+  }
+
+  private SQLFeatureNotSupportedException newSQLFeatureNotSupportedException()
+  {
+    return new SQLFeatureNotSupportedException("Not supported", "HYC00");
   }
 
   private Properties parseConnectionProperties(final String connectionPropertiesString)

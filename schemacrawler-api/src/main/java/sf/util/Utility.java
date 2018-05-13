@@ -186,7 +186,7 @@ public final class Utility
       final Class<E> enumClass = (Class<E>) defaultValue.getClass();
       for (final E enumValue: EnumSet.allOf(enumClass))
       {
-        if (((IdentifiedEnum) enumValue).getId() == value)
+        if (enumValue.getId() == value)
         {
           return enumValue;
         }

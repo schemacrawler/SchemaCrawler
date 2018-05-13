@@ -109,7 +109,7 @@ final class MutableForeignKey
   @Override
   public List<ForeignKeyColumnReference> getColumnReferences()
   {
-    return new ArrayList<ForeignKeyColumnReference>(columnReferences);
+    return new ArrayList<>(columnReferences);
   }
 
   @Override

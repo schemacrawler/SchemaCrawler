@@ -138,11 +138,6 @@ final class MutableCatalog
     return crawlInfo;
   }
 
-  public ImmutableOperatingSystemInfo getOsInfo()
-  {
-    return osInfo;
-  }
-
   @Override
   public MutableDatabaseInfo getDatabaseInfo()
   {
@@ -156,6 +151,11 @@ final class MutableCatalog
   public MutableJdbcDriverInfo getJdbcDriverInfo()
   {
     return jdbcDriverInfo;
+  }
+
+  public ImmutableOperatingSystemInfo getOsInfo()
+  {
+    return osInfo;
   }
 
   /**

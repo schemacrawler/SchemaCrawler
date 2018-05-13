@@ -48,6 +48,7 @@ import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -91,7 +92,7 @@ public final class Identifiers
       }
       if (reservedWords.isEmpty())
       {
-        throw new RuntimeException("No SQL 2003 reserved words found");
+        throw new SchemaCrawlerRuntimeException("No SQL 2003 reserved words found");
       }
 
       return toUpperCase(reservedWords);

@@ -138,11 +138,6 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public MetadataRetrievalStrategy getFkRetrievalStrategy()
-  {
-    return fkRetrievalStrategy;
-  }
-
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
@@ -166,11 +161,6 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
   {
     return informationSchemaViewsBuilder;
-  }
-
-  public MetadataRetrievalStrategy getPkRetrievalStrategy()
-  {
-    return pkRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()

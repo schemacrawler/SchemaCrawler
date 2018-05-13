@@ -70,8 +70,6 @@ public final class InformationSchemaViews
   implements Options
 {
 
-  private static final long serialVersionUID = 3587581365346059044L;
-
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
   /**

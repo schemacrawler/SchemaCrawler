@@ -134,7 +134,7 @@ class MutableIndex
   @Override
   public final List<IndexColumn> getColumns()
   {
-    return new ArrayList<IndexColumn>(columns.values());
+    return new ArrayList<>(columns.values());
   }
 
   /**
