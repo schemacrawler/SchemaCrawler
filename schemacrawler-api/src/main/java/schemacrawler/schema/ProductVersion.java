@@ -29,13 +29,24 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
-/**
- * Operating system information.
- *
- * @author Sualeh Fatehi
- */
-public interface OperatingSystemInfo
-  extends ProductVersion
+import java.io.Serializable;
+
+public interface ProductVersion
+  extends Serializable
 {
+
+  /**
+   * Gets the name of the product.
+   * 
+   * @return Name of the product
+   */
+  String getProductName();
+
+  /**
+   * Gets the version of the product.
+   * 
+   * @return Version of the product
+   */
+  String getProductVersion();
 
 }

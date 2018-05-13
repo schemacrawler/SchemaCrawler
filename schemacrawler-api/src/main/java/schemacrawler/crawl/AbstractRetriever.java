@@ -69,7 +69,6 @@ abstract class AbstractRetriever
   AbstractRetriever(final RetrieverConnection retrieverConnection,
                     final MutableCatalog catalog,
                     final SchemaCrawlerOptions options)
-    throws SQLException
   {
     this.retrieverConnection = requireNonNull(retrieverConnection,
                                               "No retriever connection provided");

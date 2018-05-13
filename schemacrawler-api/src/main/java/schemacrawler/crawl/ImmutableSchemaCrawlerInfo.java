@@ -38,19 +38,17 @@ import schemacrawler.schema.SchemaCrawlerInfo;
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
 final class ImmutableSchemaCrawlerInfo
+  extends BaseProductVersion
   implements SchemaCrawlerInfo
 {
 
   private static final long serialVersionUID = 4051323422934251828L;
 
-  private final String schemaCrawlerProductName;
-  private final String schemaCrawlerVersion;
   private final String schemaCrawlerAbout;
 
   ImmutableSchemaCrawlerInfo()
   {
-    schemaCrawlerProductName = Version.getProductName();
-    schemaCrawlerVersion = Version.getVersion();
+    super(Version.getProductName(), Version.getVersion());
     schemaCrawlerAbout = Version.about();
   }
 
@@ -60,16 +58,28 @@ final class ImmutableSchemaCrawlerInfo
     return schemaCrawlerAbout;
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @deprecated
+   */
   @Override
+  @Deprecated
   public String getSchemaCrawlerProductName()
   {
-    return schemaCrawlerProductName;
+    return getProductName();
   }
 
+  /**
+   * {@inheritDoc}
+   * 
+   * @deprecated
+   */
   @Override
+  @Deprecated
   public String getSchemaCrawlerVersion()
   {
-    return schemaCrawlerVersion;
+    return getProductVersion();
   }
 
   /**

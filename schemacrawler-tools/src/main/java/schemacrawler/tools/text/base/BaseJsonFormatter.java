@@ -187,8 +187,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       final JSONObject jsonDriverInfo = new JSONObject();
       jsonRoot.put("jdbcDriverInfo", jsonDriverInfo);
 
-      jsonDriverInfo.put("driverName", driverInfo.getDriverName());
-      jsonDriverInfo.put("driverVersion", driverInfo.getDriverVersion());
+      jsonDriverInfo.put("driverName", driverInfo.getProductName());
+      jsonDriverInfo.put("driverVersion", driverInfo.getProductVersion());
       jsonDriverInfo.put("driverClassName", driverInfo.getDriverClassName());
       jsonDriverInfo.put("url", driverInfo.getConnectionUrl());
       jsonDriverInfo.put("isJDBCCompliant",
@@ -230,10 +230,10 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       final JSONObject jsonSchemaCrawlerInfo = new JSONObject();
       jsonRoot.put("schemaCrawlerInfo", jsonSchemaCrawlerInfo);
 
-      jsonSchemaCrawlerInfo
-        .put("productName", schemaCrawlerInfo.getSchemaCrawlerProductName());
+      jsonSchemaCrawlerInfo.put("productName",
+                                schemaCrawlerInfo.getProductName());
       jsonSchemaCrawlerInfo.put("productVersion",
-                                schemaCrawlerInfo.getSchemaCrawlerVersion());
+                                schemaCrawlerInfo.getProductVersion());
     }
     catch (final JSONException e)
     {

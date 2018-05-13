@@ -38,14 +38,12 @@ public final class DatabaseConnectionOptions
   private static final long serialVersionUID = -8141436553988174836L;
 
   public DatabaseConnectionOptions(final String connectionUrl)
-    throws SchemaCrawlerException
   {
     super(new SingleUseUserCredentials(), connectionUrlToMap(connectionUrl));
   }
 
   public DatabaseConnectionOptions(final UserCredentials userCredentials,
                                    final Map<String, String> properties)
-    throws SchemaCrawlerException
   {
     super(userCredentials, properties);
   }
