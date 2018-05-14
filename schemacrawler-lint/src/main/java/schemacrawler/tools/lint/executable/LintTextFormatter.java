@@ -103,6 +103,7 @@ final class LintTextFormatter
   @Override
   public void handleEnd()
   {
+    // No output required
   }
 
   /**

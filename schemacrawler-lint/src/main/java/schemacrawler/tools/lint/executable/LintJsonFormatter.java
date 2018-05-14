@@ -112,11 +112,13 @@ final class LintJsonFormatter
   @Override
   public void handleEnd()
   {
+    // No output required
   }
 
   @Override
   public void handleStart()
   {
+    // No output required
   }
 
   private JSONArray handleLints(final Collection<Lint<?>> lints)

@@ -51,14 +51,18 @@ public final class Linters
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(Linters.class.getName());
 
-  private final List<Linter> linters = new ArrayList<>();
-  private final LintCollector collector = new LintCollector();
-  private final LinterRegistry registry = new LinterRegistry();
+  private final List<Linter> linters;
+  private final LintCollector collector;
+  private final LinterRegistry registry;
 
   public Linters(final LinterConfigs linterConfigs)
     throws SchemaCrawlerException
   {
     requireNonNull(linterConfigs, "No linter configs provided");
+
+    linters = new ArrayList<>();
+    collector = new LintCollector();
+    registry = new LinterRegistry();
 
     final Set<String> registeredLinters = registry.allRegisteredLinters();
 
