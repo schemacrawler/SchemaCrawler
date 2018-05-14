@@ -85,7 +85,7 @@ public final class SchemaDotFormatter
    * @param outputOptions
    *        Options for text formatting of schema
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for database objects
    * @throws SchemaCrawlerException
    *         On an exception
    */
@@ -107,6 +107,7 @@ public final class SchemaDotFormatter
   public void handle(final ColumnDataType columnDataType)
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**
@@ -118,6 +119,7 @@ public final class SchemaDotFormatter
   @Override
   public void handle(final Routine routine)
   {
+    // No output required
   }
 
   /**
@@ -129,6 +131,7 @@ public final class SchemaDotFormatter
   @Override
   public void handle(final Sequence sequence)
   {
+    // No output required
   }
 
   /**
@@ -140,6 +143,7 @@ public final class SchemaDotFormatter
   @Override
   public void handle(final Synonym synonym)
   {
+    // No output required
   }
 
   @Override
@@ -203,59 +207,69 @@ public final class SchemaDotFormatter
   @Override
   public void handleColumnDataTypesEnd()
   {
+    // No output required
   }
 
   @Override
   public void handleColumnDataTypesStart()
   {
+    // No output required
   }
 
   @Override
   public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleRoutinesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSequencesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSequencesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSynonymsEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSynonymsStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleTablesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleTablesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   private String arrowhead(final ForeignKeyCardinality connectivity)
@@ -277,7 +291,7 @@ public final class SchemaDotFormatter
 
   private String[] getPortIds(final Column column, final boolean isNewNode)
   {
-    final String portIds[] = new String[2];
+    final String[] portIds = new String[2];
 
     if (!isNewNode)
     {

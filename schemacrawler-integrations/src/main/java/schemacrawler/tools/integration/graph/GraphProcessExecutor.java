@@ -84,7 +84,7 @@ final class GraphProcessExecutor
     catch (final Exception e)
     {
       LOGGER.log(Level.INFO,
-                 String.format("Could not generate diagram using Graphviz:\n%s",
+                 String.format("Could not generate diagram using Graphviz:%n%s",
                                command.toString()),
                  e);
       exitCode = Integer.MIN_VALUE;
@@ -101,7 +101,7 @@ final class GraphProcessExecutor
                  new StringFormat("Process returned exit code %d%n%s",
                                   exitCode,
                                   processError));
-      showCommandline(dotFile, outputFile, processExecutor.getCommand());
+      showCommandline(outputFile, processExecutor.getCommand());
     }
     else
     {
@@ -164,8 +164,7 @@ final class GraphProcessExecutor
     return command;
   }
 
-  private void showCommandline(final Path dotFile,
-                               final Path outputFile,
+  private void showCommandline(final Path outputFile,
                                final List<String> command)
   {
     if (!LOGGER.isLoggable(Level.SEVERE))

@@ -37,7 +37,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -158,33 +157,27 @@ public final class XmlSerializedCatalog
         {
           final Map map = (Map) source;
           final List entryList = new ArrayList(map.entrySet());
-          Collections.sort(entryList, new Comparator()
-          {
-            @Override
-            public int compare(final Object o1, final Object o2)
+          Collections.sort(entryList, (o1, o2) -> {
+            final Object key1 = ((Map.Entry) o1).getKey();
+            final Object key2 = ((Map.Entry) o2).getKey();
+            if (key1 instanceof Comparable<?> && key2 instanceof Comparable<?>)
             {
-              final Object key1 = ((Map.Entry) o1).getKey();
-              final Object key2 = ((Map.Entry) o2).getKey();
-              if (key1 instanceof Comparable<?>
-                  && key2 instanceof Comparable<?>)
+              if (key1 != null)
               {
-                if (key1 != null)
-                {
-                  return ((Comparable) key1).compareTo(key2);
-                }
-                else if (key2 != null)
-                {
-                  return -1 * ((Comparable) key2).compareTo(key1);
-                }
-                else
-                {
-                  return 0;
-                }
+                return ((Comparable) key1).compareTo(key2);
+              }
+              else if (key2 != null)
+              {
+                return -1 * ((Comparable) key2).compareTo(key1);
               }
               else
               {
-                return Objects.hashCode(key1) - Objects.hashCode(key2);
+                return 0;
               }
+            }
+            else
+            {
+              return Objects.hashCode(key1) - Objects.hashCode(key2);
             }
           });
 
@@ -253,7 +246,9 @@ public final class XmlSerializedCatalog
 
       return xStream;
     }
-    catch (final ClassNotFoundException e)
+    catch (
+
+    final ClassNotFoundException e)
     {
       throw new SchemaCrawlerException("Could not load internal classes", e);
     }
