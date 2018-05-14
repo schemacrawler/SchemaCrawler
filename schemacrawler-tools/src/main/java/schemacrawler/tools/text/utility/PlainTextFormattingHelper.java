@@ -81,6 +81,7 @@ public class PlainTextFormattingHelper
   @Override
   public void writeDocumentEnd()
   {
+    // No output required
   }
 
   /**
@@ -89,6 +90,7 @@ public class PlainTextFormattingHelper
   @Override
   public void writeDocumentStart()
   {
+    // No output required
   }
 
   @Override
@@ -113,14 +115,11 @@ public class PlainTextFormattingHelper
             prefix = System.lineSeparator();
             separator = separator("_");
             break;
-          case subTitle:
-            prefix = System.lineSeparator();
-            separator = defaultSeparator;
-            break;
           case section:
             prefix = "";
             separator = separator("-=-");
             break;
+          case subTitle: // Fall-through
           default:
             prefix = System.lineSeparator();
             separator = defaultSeparator;
@@ -160,6 +159,7 @@ public class PlainTextFormattingHelper
   @Override
   public void writeObjectStart()
   {
+    // No output required
   }
 
 }

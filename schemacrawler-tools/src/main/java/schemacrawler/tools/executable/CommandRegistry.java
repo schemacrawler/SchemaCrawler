@@ -96,7 +96,7 @@ public final class CommandRegistry
 
   public InputResource getHelp(final String command)
   {
-    for (CommandProvider commandProvider: commandRegistry)
+    for (final CommandProvider commandProvider: commandRegistry)
     {
       if (commandProvider.getSupportedCommands().contains(command))
       {
@@ -104,6 +104,16 @@ public final class CommandRegistry
       }
     }
     return new StringInputResource("");
+  }
+
+  public Collection<String> getSupportedCommands()
+  {
+    final Collection<String> supportedCommands = new HashSet<>();
+    for (final CommandProvider commandProvider: commandRegistry)
+    {
+      supportedCommands.addAll(commandProvider.getSupportedCommands());
+    }
+    return supportedCommands;
   }
 
   public boolean supportsCommand(final String command,
@@ -143,16 +153,6 @@ public final class CommandRegistry
 
     return executableCommandProvider
       .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
-  }
-
-  public Collection<String> getSupportedCommands()
-  {
-    Collection<String> supportedCommands = new HashSet<>();
-    for (CommandProvider commandProvider: commandRegistry)
-    {
-      supportedCommands.addAll(commandProvider.getSupportedCommands());
-    }
-    return supportedCommands;
   }
 
 }

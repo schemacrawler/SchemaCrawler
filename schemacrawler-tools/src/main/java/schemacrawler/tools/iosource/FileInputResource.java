@@ -83,11 +83,6 @@ public class FileInputResource
   @Override
   public String toString()
   {
-    return getDescription();
-  }
-
-  private String getDescription()
-  {
     return inputFile.toString();
   }
 

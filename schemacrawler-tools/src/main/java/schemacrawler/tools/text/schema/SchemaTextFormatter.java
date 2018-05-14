@@ -113,7 +113,7 @@ final class SchemaTextFormatter
    * @param outputOptions
    *        Options for text formatting of schema
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for identifier
    * @throws SchemaCrawlerException
    *         On an exception
    */
@@ -351,6 +351,7 @@ final class SchemaTextFormatter
   @Override
   public void handleColumnDataTypesEnd()
   {
+    // No output required
   }
 
   /**
@@ -372,6 +373,7 @@ final class SchemaTextFormatter
   public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**
@@ -391,6 +393,7 @@ final class SchemaTextFormatter
   public void handleSequencesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**
@@ -410,6 +413,7 @@ final class SchemaTextFormatter
   public void handleSynonymsEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**
@@ -429,6 +433,7 @@ final class SchemaTextFormatter
   public void handleTablesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**
@@ -658,7 +663,7 @@ final class SchemaTextFormatter
         }
 
         final String ruleString;
-        if (updateRule == deleteRule
+        if (deleteRule != null && updateRule == deleteRule
             && updateRule != ForeignKeyUpdateRule.unknown)
         {
           ruleString = ", with " + deleteRule.toString();
@@ -838,27 +843,6 @@ final class SchemaTextFormatter
     }
   }
 
-  private void printTableColumnGenerated(final Column column)
-  {
-    if (column == null)
-    {
-      return;
-    }
-    try
-    {
-      if (!column.isGenerated())
-      {
-        return;
-      }
-    }
-    catch (final NotLoadedException e)
-    {
-      // The column may be partial for index pseudo-columns
-      return;
-    }
-    formattingHelper.writeDetailRow("", "", "generated");
-  }
-
   private void printTableColumnAutoIncremented(final Column column)
   {
     if (column == null)
@@ -878,6 +862,27 @@ final class SchemaTextFormatter
       return;
     }
     formattingHelper.writeDetailRow("", "", "auto-incremented");
+  }
+
+  private void printTableColumnGenerated(final Column column)
+  {
+    if (column == null)
+    {
+      return;
+    }
+    try
+    {
+      if (!column.isGenerated())
+      {
+        return;
+      }
+    }
+    catch (final NotLoadedException e)
+    {
+      // The column may be partial for index pseudo-columns
+      return;
+    }
+    formattingHelper.writeDetailRow("", "", "generated");
   }
 
   private void printTableColumnHidden(final Column column)

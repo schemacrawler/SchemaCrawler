@@ -40,8 +40,6 @@ public final class OperationOptions
   extends BaseTextOptions
 {
 
-  private static final long serialVersionUID = -7977434852526746391L;
-
   private boolean isShowLobs;
 
   /**

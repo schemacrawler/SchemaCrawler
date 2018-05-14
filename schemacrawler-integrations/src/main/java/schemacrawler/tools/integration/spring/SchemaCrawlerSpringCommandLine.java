@@ -46,7 +46,6 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
 import sf.util.SchemaCrawlerLogger;
@@ -62,7 +61,6 @@ public class SchemaCrawlerSpringCommandLine
   private final SpringOptions springOptions;
 
   public SchemaCrawlerSpringCommandLine(final Config argsMap)
-    throws SchemaCrawlerException
   {
     requireNonNull(argsMap, "No command-line arguments provided");
     final SpringOptionsParser springOptionsParser = new SpringOptionsParser(argsMap);

@@ -34,10 +34,8 @@ import static sf.util.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -154,19 +152,14 @@ final class TableMatchKeys
 
     // Make sure we have the smallest prefixes
     final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
-    Collections.sort(keySet, new Comparator<String>()
-    {
-      @Override
-      public int compare(final String o1, final String o2)
+    Collections.sort(keySet, (key1, key2) -> {
+      int comparison = 0;
+      comparison = key2.length() - key1.length();
+      if (comparison == 0)
       {
-        int comparison = 0;
-        comparison = o2.length() - o1.length();
-        if (comparison == 0)
-        {
-          comparison = o2.compareTo(o1);
-        }
-        return comparison;
+        comparison = key2.compareTo(key1);
       }
+      return comparison;
     });
     for (int i = 0; i < keySet.size(); i++)
     {
@@ -185,17 +178,9 @@ final class TableMatchKeys
     // order
     final List<Map.Entry<String, Integer>> prefixesList = new ArrayList<>(prefixesMap
       .entrySet());
-    Collections.sort(prefixesList, new Comparator<Map.Entry<String, Integer>>()
-    {
-
-      @Override
-      public int compare(final Entry<String, Integer> entry1,
-                         final Entry<String, Integer> entry2)
-      {
-        return entry1.getValue().compareTo(entry2.getValue());
-      }
-
-    });
+    Collections
+      .sort(prefixesList,
+            (entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()));
 
     // Reduce the number of prefixes in use
     final List<String> prefixes = new ArrayList<>();

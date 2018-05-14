@@ -108,11 +108,6 @@ public class CompressedFileOutputResource
   @Override
   public String toString()
   {
-    return getDescription();
-  }
-
-  private String getDescription()
-  {
     return outputFile.toString();
   }
 

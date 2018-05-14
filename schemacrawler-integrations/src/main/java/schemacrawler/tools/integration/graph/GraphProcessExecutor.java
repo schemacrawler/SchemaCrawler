@@ -148,6 +148,22 @@ final class GraphProcessExecutor
     return successful;
   }
 
+  private List<String> createDiagramCommand()
+  {
+    final List<String> command = new ArrayList<>();
+    command.add("dot");
+
+    command.addAll(graphvizOpts);
+
+    command.add("-T");
+    command.add(graphOutputFormat.getFormat());
+    command.add("-o");
+    command.add(outputFile.toString());
+    command.add(dotFile.toString());
+
+    return command;
+  }
+
   private void showCommandline(final Path dotFile,
                                final Path outputFile,
                                final List<String> command)
@@ -171,22 +187,6 @@ final class GraphProcessExecutor
                String.format("%s%nGenerate your diagram manually, using:%n%s",
                              readResourceFully("/dot.error.txt"),
                              String.join(" ", command)));
-  }
-
-  private List<String> createDiagramCommand()
-  {
-    final List<String> command = new ArrayList<>();
-    command.add("dot");
-
-    command.addAll(graphvizOpts);
-
-    command.add("-T");
-    command.add(graphOutputFormat.getFormat());
-    command.add("-o");
-    command.add(outputFile.toString());
-    command.add(dotFile.toString());
-
-    return command;
   }
 
 }

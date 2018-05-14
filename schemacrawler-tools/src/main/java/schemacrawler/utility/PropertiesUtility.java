@@ -43,6 +43,7 @@ import sf.util.StringFormat;
 
 public class PropertiesUtility
 {
+
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(PropertiesUtility.class.getName());
 
@@ -86,6 +87,11 @@ public class PropertiesUtility
                  e);
       return new Properties();
     }
+  }
+
+  private PropertiesUtility()
+  {
+    // Prevent instantiation
   }
 
 }

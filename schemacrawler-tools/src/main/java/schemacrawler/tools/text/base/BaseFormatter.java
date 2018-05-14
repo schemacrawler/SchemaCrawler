@@ -125,8 +125,21 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
   protected String columnNullable(final String columnTypeName,
                                   final boolean isNullable)
   {
-    return isNullable? ""
-                     : isLowerCase(columnTypeName)? " not null": " NOT NULL";
+    final String columnNullable;
+    if (isNullable)
+    {
+      columnNullable = "";
+    }
+    else if (isLowerCase(columnTypeName))
+    {
+      columnNullable = " not null";
+    }
+    else
+    {
+      columnNullable = " NOT NULL";
+    }
+
+    return columnNullable;
   }
 
   protected String formatTimestamp(final TemporalAccessor timestamp)

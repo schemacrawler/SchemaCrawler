@@ -101,11 +101,6 @@ public class CompressedFileInputResource
   @Override
   public String toString()
   {
-    return getDescription();
-  }
-
-  private String getDescription()
-  {
     return inputFile.toString();
   }
 

@@ -39,8 +39,6 @@ public class GraphOptions
   extends SchemaTextOptions
 {
 
-  private static final long serialVersionUID = -5850945398335496207L;
-
   private List<String> graphvizOpts;
   private Map<String, String> graphvizAttributes;
   private boolean isShowForeignKeyCardinality;

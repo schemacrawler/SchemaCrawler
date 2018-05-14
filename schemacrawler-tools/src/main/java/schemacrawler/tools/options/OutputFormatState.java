@@ -80,6 +80,12 @@ public final class OutputFormatState
     return formatSpecifiers.get(0);
   }
 
+  @Override
+  public List<String> getFormats()
+  {
+    return new ArrayList<>(formatSpecifiers);
+  }
+
   /**
    * Checks if the provided format is supported.
    *
@@ -103,12 +109,6 @@ public final class OutputFormatState
   public String toString()
   {
     return String.format("%s %s", formatSpecifiers, description);
-  }
-
-  @Override
-  public List<String> getFormats()
-  {
-    return new ArrayList<>(formatSpecifiers);
   }
 
 }

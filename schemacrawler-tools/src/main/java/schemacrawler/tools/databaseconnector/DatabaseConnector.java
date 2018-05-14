@@ -54,12 +54,8 @@ public abstract class DatabaseConnector
   implements Options
 {
 
-  private static final long serialVersionUID = 6133330582637434099L;
-
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
-
-    private static final long serialVersionUID = 3057770737518232349L;
 
   };
 

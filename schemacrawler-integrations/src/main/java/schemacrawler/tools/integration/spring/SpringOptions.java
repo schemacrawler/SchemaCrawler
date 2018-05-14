@@ -39,8 +39,6 @@ public class SpringOptions
   implements Options
 {
 
-  private static final long serialVersionUID = 5125868244511892692L;
-
   private String executableName;
   private String dataSourceName;
   private String databaseSpecificOverrideOptionsName;

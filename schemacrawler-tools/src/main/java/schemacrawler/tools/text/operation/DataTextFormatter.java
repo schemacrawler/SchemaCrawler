@@ -68,7 +68,7 @@ final class DataTextFormatter
    * @param outputOptions
    *        Options for text formatting of data
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for identifier
    */
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
