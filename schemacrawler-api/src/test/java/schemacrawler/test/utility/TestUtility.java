@@ -104,6 +104,8 @@ public final class TestUtility
                                              Pattern
                                                .compile("\\s+<schemaCrawlerInfo>.*"),
                                              Pattern
+                                               .compile("\\s+<productName>.*"),
+                                             Pattern
                                                .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
                                              Pattern
                                                .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
