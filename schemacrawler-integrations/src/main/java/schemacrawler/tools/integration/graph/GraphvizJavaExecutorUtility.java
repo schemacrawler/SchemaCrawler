@@ -84,27 +84,29 @@ public final class GraphvizJavaExecutorUtility
     {
       return null;
     }
+    final Format format;
     switch (graphOutputFormat)
     {
       case svg:
-        return Format.SVG;
-      // break;
+        format = Format.SVG;
+        break;
       case png:
-        return Format.PNG;
-      // break;
+        format = Format.PNG;
+        break;
       case ps:
-        return Format.PS;
-      // break;
+        format = Format.PS;
+        break;
       case xdot:
-        return Format.XDOT;
-      // break;
+        format = Format.XDOT;
+        break;
       case plain:
-        return Format.PLAIN;
-      // break;
+        format = Format.PLAIN;
+        break;
       default:
+        format = null;
         break;
     }
-    return null;
+    return format;
   }
 
   private GraphvizJavaExecutorUtility()

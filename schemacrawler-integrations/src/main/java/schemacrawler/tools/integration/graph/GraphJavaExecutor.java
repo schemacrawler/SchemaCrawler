@@ -63,7 +63,7 @@ final class GraphJavaExecutor
     catch (final SchemaCrawlerException e)
     {
       LOGGER.log(Level.INFO,
-                 String.format("Could not generate diagram from:\n%s", dotFile),
+                 String.format("Could not generate diagram from:%n%s", dotFile),
                  e);
       return false;
     }

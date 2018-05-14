@@ -188,7 +188,6 @@ public final class GraphExecutable
     catch (final Exception e)
     {
       // Assume that all exceptions have been logged previously
-      graphGenerated = false;
     }
     return graphGenerated;
   }
