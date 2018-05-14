@@ -98,13 +98,9 @@ public final class TestUtility
                                              Pattern
                                                .compile("-- operating system:.*"),
                                              Pattern
-                                               .compile("\\s+<schemaCrawlerVersion>.*"),
+                                               .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
                                              Pattern
-                                               .compile("\\s+<schemaCrawlerAbout>.*"),
-                                             Pattern
-                                               .compile("\\s+<schemaCrawlerInfo>.*"),
-                                             Pattern
-                                               .compile("\\s+<productName>.*"),
+                                               .compile("\\s+<product(Name|Version)>.*"),
                                              Pattern
                                                .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
                                              Pattern
@@ -126,11 +122,7 @@ public final class TestUtility
                                                .compile("<text text-anchor.*"),
                                              Pattern.compile("<path fill=.*"),
                                              Pattern
-                                               .compile("<ellipse fill=.*"),
-                                             Pattern
-                                               .compile("<polyline fill=.*"),
-                                             Pattern
-                                               .compile("<polygon fill=.*"),
+                                               .compile("<(ellipse|polyline|polygon) fill=.*"),
                                              Pattern.compile(".*&#xd;"), };
 
   public static void clean(final String dirname)
