@@ -89,6 +89,40 @@ public class LinterConfig
     return comparison;
   }
 
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof LinterConfig))
+    {
+      return false;
+    }
+    final LinterConfig other = (LinterConfig) obj;
+    if (linterId == null)
+    {
+      if (other.linterId != null)
+      {
+        return false;
+      }
+    }
+    else if (!linterId.equals(other.linterId))
+    {
+      return false;
+    }
+    if (severity != other.severity)
+    {
+      return false;
+    }
+    return true;
+  }
+
   public InclusionRule getColumnInclusionRule()
   {
     return new RegularExpressionRule(columnInclusionPattern,
@@ -119,6 +153,16 @@ public class LinterConfig
   public int getThreshold()
   {
     return threshold;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + (linterId == null? 0: linterId.hashCode());
+    result = prime * result + (severity == null? 0: severity.hashCode());
+    return result;
   }
 
   public boolean isRunLinter()
