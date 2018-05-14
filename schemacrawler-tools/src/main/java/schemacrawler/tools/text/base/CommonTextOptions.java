@@ -32,6 +32,4 @@ public class CommonTextOptions
   extends BaseTextOptions
 {
 
-  private static final long serialVersionUID = 2376263945077668483L;
-
 }

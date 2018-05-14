@@ -37,8 +37,6 @@ public class ApplicationOptions
   implements Options
 {
 
-  private static final long serialVersionUID = -2497570007150087268L;
-
   private Level applicationLogLevel;
   private boolean showHelp;
   private boolean showVersionOnly;

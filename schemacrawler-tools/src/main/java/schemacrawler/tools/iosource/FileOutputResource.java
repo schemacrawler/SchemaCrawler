@@ -90,11 +90,6 @@ public class FileOutputResource
   @Override
   public String toString()
   {
-    return getDescription();
-  }
-
-  private String getDescription()
-  {
     return outputFile.toString();
   }
 

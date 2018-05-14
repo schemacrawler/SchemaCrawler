@@ -169,7 +169,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                        Alignment.inherit);
     formattingHelper.writeObjectEnd();
 
-    if (dbInfo.getProperties().size() > 0)
+    if (!dbInfo.getProperties().isEmpty())
     {
       formattingHelper.writeHeader(DocumentHeaderType.section,
                                    "Database Characteristics");
@@ -223,7 +223,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
 
     final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
       .getDriverProperties();
-    if (jdbcDriverProperties.size() > 0)
+    if (!jdbcDriverProperties.isEmpty())
     {
       formattingHelper.writeHeader(DocumentHeaderType.section,
                                    "JDBC Driver Properties");
@@ -298,7 +298,7 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                             + "required";
     String details = required;
     if (driverProperty.getChoices() != null
-        && driverProperty.getChoices().size() > 0)
+        && !driverProperty.getChoices().isEmpty())
     {
       details = details + "; choices " + driverProperty.getChoices();
     }

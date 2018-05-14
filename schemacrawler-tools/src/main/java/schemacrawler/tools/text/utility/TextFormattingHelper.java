@@ -231,7 +231,7 @@ public interface TextFormattingHelper
    * Create a name and description row.
    *
    * @param id
-   *        TODO
+   *        Unique identifier
    * @param name
    *        Name
    * @param description
@@ -274,7 +274,7 @@ public interface TextFormattingHelper
    * @param definition
    *        Definition
    * @param style
-   *        TODO
+   *        CSS style class
    * @return Row as a string
    */
   void writeWideRow(String definition, String style);

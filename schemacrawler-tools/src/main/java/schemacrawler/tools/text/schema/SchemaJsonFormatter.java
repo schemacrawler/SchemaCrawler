@@ -99,7 +99,7 @@ final class SchemaJsonFormatter
    * @param outputOptions
    *        Options for text formatting of schema
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for identifier
    * @throws SchemaCrawlerException
    *         On an exception
    */
@@ -444,59 +444,69 @@ final class SchemaJsonFormatter
   @Override
   public void handleColumnDataTypesEnd()
   {
+    // No output required
   }
 
   @Override
   public void handleColumnDataTypesStart()
   {
+    // No output required
   }
 
   @Override
   public void handleRoutinesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleRoutinesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSequencesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSequencesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSynonymsEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleSynonymsStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleTablesEnd()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public void handleTablesStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   private JSONArray handleColumnReferences(final BaseForeignKey<? extends ColumnReference> foreignKey)
@@ -613,10 +623,12 @@ final class SchemaJsonFormatter
     {
       if (index instanceof PrimaryKey && !options.isHidePrimaryKeyNames())
       {
+        // Add primary key to JSON
         jsonIndex.put("name", index.getName());
       }
       else if (!options.isHideIndexNames())
       {
+        // Add index to JSON
         jsonIndex.put("name", index.getName());
       }
 

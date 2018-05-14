@@ -148,7 +148,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       jsonDbInfo.put("databaseProductVersion", dbInfo.getProductVersion());
       jsonDbInfo.put("databaseUserName", dbInfo.getUserName());
 
-      if (printVerboseDatabaseInfo && dbInfo.getProperties().size() > 0)
+      if (printVerboseDatabaseInfo && !dbInfo.getProperties().isEmpty())
       {
         final JSONArray jsonDbProperties = new JSONArray();
         jsonDbInfo.put("databaseProperties", jsonDbProperties);
@@ -196,7 +196,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
 
       final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
         .getDriverProperties();
-      if (jdbcDriverProperties.size() > 0)
+      if (!jdbcDriverProperties.isEmpty())
       {
         final JSONArray jsonJdbcDriverProperties = new JSONArray();
         jsonDriverInfo.put("jdbcDriverProperties", jsonJdbcDriverProperties);
@@ -275,7 +275,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
     try
     {
       final Collection<String> choices = driverProperty.getChoices();
-      if (choices != null && choices.size() > 0)
+      if (choices != null && !choices.isEmpty())
       {
         jsonDriverProperty.put("choices", choices);
       }

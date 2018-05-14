@@ -36,8 +36,6 @@ public abstract class BaseTextOptions
   implements Options
 {
 
-  private static final long serialVersionUID = -8133661515343358712L;
-
   private boolean isAlphabeticalSortForRoutineColumns;
   private boolean isAlphabeticalSortForRoutines;
   private boolean isAlphabeticalSortForTableColumns;

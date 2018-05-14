@@ -32,8 +32,14 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+@FunctionalInterface
 public interface OutputResource
 {
+
+  default String getDescription()
+  {
+    return toString();
+  }
 
   Writer openNewOutputWriter(Charset charset, boolean appendOutput)
     throws IOException;

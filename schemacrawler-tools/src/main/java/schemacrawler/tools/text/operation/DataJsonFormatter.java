@@ -69,7 +69,7 @@ final class DataJsonFormatter
    * @param outputOptions
    *        Options for text formatting of data
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for identifier
    */
   DataJsonFormatter(final Operation operation,
                     final OperationOptions options,
@@ -147,14 +147,11 @@ final class DataJsonFormatter
 
   /**
    * Handles an aggregate operation, such as a count, for a given table.
-   *
-   * @param title
-   *        Title
+   * 
    * @param results
    *        Results
    */
-  private long handleAggregateOperationForTable(final String title,
-                                                final ResultSet results)
+  private long handleAggregateOperationForTable(final ResultSet results)
     throws SchemaCrawlerException
   {
     try
@@ -187,7 +184,7 @@ final class DataJsonFormatter
 
       if (operation == Operation.count)
       {
-        final long aggregate = handleAggregateOperationForTable(title, rows);
+        final long aggregate = handleAggregateOperationForTable(rows);
         jsonData.put("value", aggregate);
       }
       else

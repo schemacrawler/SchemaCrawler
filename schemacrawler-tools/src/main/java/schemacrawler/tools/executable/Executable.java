@@ -46,6 +46,7 @@ public interface Executable
    *        Database connection
    * @throws Exception
    *         On an exception
+   * @deprecated
    */
   @Deprecated
   void execute(Connection connection)

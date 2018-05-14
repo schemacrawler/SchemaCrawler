@@ -99,8 +99,8 @@ public class SchemaTextOptionsBuilder
     options.setHideTriggerNames(config.getBooleanValue(HIDE_TRIGGER_NAMES));
     options.setHideRoutineSpecificNames(config
       .getBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES));
-    options
-      .setHideConstraintNames(config.getBooleanValue(HIDE_CONSTRAINT_NAMES));
+    options.setHideTableConstraintNames(config
+      .getBooleanValue(HIDE_CONSTRAINT_NAMES));
     options.setHideRemarks(config.getBooleanValue(HIDE_REMARKS));
     options
       .setShowWeakAssociations(config.getBooleanValue(SHOW_WEAK_ASSOCIATIONS));
@@ -121,7 +121,7 @@ public class SchemaTextOptionsBuilder
 
   public SchemaTextOptionsBuilder portableNames(final boolean value)
   {
-    options.setHideConstraintNames(value);
+    options.setHideTableConstraintNames(value);
     options.setHideForeignKeyNames(value);
     options.setHideIndexNames(value);
     options.setHidePrimaryKeyNames(value);

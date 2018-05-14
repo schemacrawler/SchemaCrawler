@@ -64,6 +64,10 @@ public final class CommandDaisyChainExecutable
     for (final String command: commands)
     {
       final Executable executable = addNext(command);
+      if (executable == null)
+      {
+        continue;
+      }
 
       final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
       commonTextOptions.fromConfig(additionalConfiguration);

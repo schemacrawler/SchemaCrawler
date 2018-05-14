@@ -75,6 +75,7 @@ public abstract class BaseExecutable
    *        Database connection
    * @throws Exception
    *         On an exception
+   * @deprecated
    */
   @Deprecated
   @Override

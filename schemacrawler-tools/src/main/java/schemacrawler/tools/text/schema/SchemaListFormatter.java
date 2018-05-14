@@ -70,7 +70,7 @@ final class SchemaListFormatter
    * @param outputOptions
    *        Options for text formatting of schema
    * @param identifierQuoteString
-   *        TODO
+   *        Quote character for identifier
    * @throws SchemaCrawlerException
    *         On an exception
    */
@@ -189,11 +189,13 @@ final class SchemaListFormatter
   @Override
   public final void handle(final DatabaseInfo dbInfo)
   {
+    // No output required
   }
 
   @Override
   public void handle(final JdbcDriverInfo driverInfo)
   {
+    // No output required
   }
 
   /**
@@ -222,6 +224,7 @@ final class SchemaListFormatter
   @Override
   public void handle(final SchemaCrawlerInfo schemaCrawlerInfo)
   {
+    // No output required
   }
 
   /**
@@ -315,26 +318,28 @@ final class SchemaListFormatter
   public final void handleHeaderEnd()
     throws SchemaCrawlerException
   {
-
+    // No output required
   }
 
   @Override
   public final void handleHeaderStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   @Override
   public final void handleInfoEnd()
     throws SchemaCrawlerException
   {
-
+    // No output required
   }
 
   @Override
   public final void handleInfoStart()
     throws SchemaCrawlerException
   {
+    // No output required
   }
 
   /**

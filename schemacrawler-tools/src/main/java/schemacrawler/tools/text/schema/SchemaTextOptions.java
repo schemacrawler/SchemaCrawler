@@ -35,8 +35,6 @@ public class SchemaTextOptions
   extends BaseTextOptions
 {
 
-  private static final long serialVersionUID = -8133661515343358712L;
-
   private boolean isAlphabeticalSortForForeignKeys;
   private boolean isAlphabeticalSortForIndexes;
   private boolean isHideForeignKeyNames;
@@ -124,11 +122,6 @@ public class SchemaTextOptions
   public void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
   {
     this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
-  }
-
-  public void setHideConstraintNames(final boolean isHideTableConstraintNames)
-  {
-    this.isHideTableConstraintNames = isHideTableConstraintNames;
   }
 
   public void setHideForeignKeyNames(final boolean isHideForeignKeyNames)

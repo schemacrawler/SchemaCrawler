@@ -58,6 +58,49 @@ public class SchemaSerializationTest
 {
 
   @Test
+  public void schemaSerializationWithJava()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull("Could not obtain catalog", catalog);
+    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schema);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalog.getTables(schema).size());
+
+    final Path testOutputFile = IOUtility
+      .createTempFilePath("sc_java_serialization", "ser");
+    try (
+        final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(testOutputFile
+          .toFile()));)
+    {
+      out.writeObject(catalog);
+    }
+    assertTrue("Catalog was not serialized", Files.size(testOutputFile) > 0);
+
+    Catalog catalogDeserialized = null;
+    try (
+        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(testOutputFile
+          .toFile()));)
+    {
+      catalogDeserialized = (Catalog) in.readObject();
+    }
+
+    final Schema schemaDeserialized = catalogDeserialized
+      .lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schemaDeserialized);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalogDeserialized.getTables(schemaDeserialized).size());
+  }
+
+  @Test
   public void schemaSerializationWithXStream()
     throws Exception
   {
@@ -112,49 +155,6 @@ public class SchemaSerializationTest
      * PrintWriter("serialized-schema-2.xml", UTF_8.name())); }
      * assertEquals(xmlDiff.toString(), 0, allDifferences.size());
      **/
-  }
-
-  @Test
-  public void schemaSerializationWithJava()
-    throws Exception
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
-
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 catalog.getTables(schema).size());
-
-    final Path testOutputFile = IOUtility
-      .createTempFilePath("sc_java_serialization", "ser");
-    try (
-        final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(testOutputFile
-          .toFile()));)
-    {
-      out.writeObject(catalog);
-    }
-    assertTrue("Catalog was not serialized", Files.size(testOutputFile) > 0);
-
-    Catalog catalogDeserialized = null;
-    try (
-        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(testOutputFile
-          .toFile()));)
-    {
-      catalogDeserialized = (Catalog) in.readObject();
-    }
-
-    final Schema schemaDeserialized = catalogDeserialized
-      .lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertNotNull("Could not obtain schema", schemaDeserialized);
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 catalogDeserialized.getTables(schemaDeserialized).size());
   }
 
 }

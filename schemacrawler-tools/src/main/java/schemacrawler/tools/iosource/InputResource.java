@@ -36,6 +36,11 @@ import java.nio.charset.Charset;
 public interface InputResource
 {
 
+  default String getDescription()
+  {
+    return toString();
+  }
+
   Reader openNewInputReader(Charset charset)
     throws IOException;
 

@@ -175,7 +175,7 @@ public class SchemaCrawlerOutputTest
     textOptions.setHidePrimaryKeyNames(true);
     textOptions.setHideForeignKeyNames(true);
     textOptions.setHideIndexNames(true);
-    textOptions.setHideConstraintNames(true);
+    textOptions.setHideTableConstraintNames(true);
     textOptions.setNoSchemaCrawlerInfo(false);
     textOptions.setShowDatabaseInfo(true);
     textOptions.setShowJdbcDriverInfo(true);

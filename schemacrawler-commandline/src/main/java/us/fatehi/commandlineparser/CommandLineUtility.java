@@ -42,7 +42,6 @@ import java.util.logging.Level;
 
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;
@@ -165,7 +164,6 @@ public final class CommandLineUtility
    * Loads configuration from a number of command-line.
    */
   public static Config parseArgs(final String[] args)
-    throws SchemaCrawlerException
   {
     final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
     argsParser.parse();

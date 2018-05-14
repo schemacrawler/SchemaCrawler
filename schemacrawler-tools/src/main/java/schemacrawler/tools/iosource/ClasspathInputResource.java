@@ -83,11 +83,6 @@ public class ClasspathInputResource
   @Override
   public String toString()
   {
-    return getDescription();
-  }
-
-  private String getDescription()
-  {
     return InputReader.class.getResource(classpathResource).toExternalForm();
   }
 
