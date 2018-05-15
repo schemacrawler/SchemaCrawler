@@ -3,7 +3,8 @@
 <a name="a14.21.01"></a>
 ## Release 14.21.01 - 2018-05-02
 
-- Fixed issue #184 with checks for Oracle versions supported by SchemaCrawler Oracle plugin
+- Fixed issue #184 with with support for older Oracle versions in the SchemaCrawler Oracle plugin
+- Changed API for SchemaCrawler plugins
 
 <a name="a14.20.06"></a>
 ## Release 14.20.06 - 2018-05-02
