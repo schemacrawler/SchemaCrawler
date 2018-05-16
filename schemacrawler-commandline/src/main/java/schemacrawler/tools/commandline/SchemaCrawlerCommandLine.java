@@ -122,13 +122,12 @@ public final class SchemaCrawlerCommandLine
     {
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in
-      // from
-      // the command-line
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+      // from the command-line
       final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
         .getDatabaseSpecificOverrideOptionsBuilder(connection);
       databaseSpecificOverrideOptionsBuilder.fromConfig(config);
-      databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
+
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
         .toOptions();
 
       // Execute the command
