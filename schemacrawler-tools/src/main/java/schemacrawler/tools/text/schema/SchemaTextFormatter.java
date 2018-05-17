@@ -817,8 +817,7 @@ final class SchemaTextFormatter
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getColumnDataType().getJavaSqlType()
-          .getJavaSqlTypeName();
+        columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
       }
       else
       {
@@ -955,7 +954,7 @@ final class SchemaTextFormatter
         if (options.isShowStandardColumnTypeNames())
         {
           columnTypeName = column.getColumnDataType().getJavaSqlType()
-            .getJavaSqlTypeName();
+            .getName();
         }
         else
         {

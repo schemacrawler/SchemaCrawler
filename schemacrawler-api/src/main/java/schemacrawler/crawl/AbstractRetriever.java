@@ -227,7 +227,7 @@ abstract class AbstractRetriever
         }
         else
         {
-          mappedClass = typeMap.get(javaSqlType.getJavaSqlTypeName());
+          mappedClass = typeMap.get(javaSqlType.getName());
         }
         columnDataType.setTypeMappedClass(mappedClass);
       }

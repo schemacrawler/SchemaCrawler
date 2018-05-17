@@ -32,7 +32,7 @@ package schemacrawler.crawl;
 import schemacrawler.schema.BaseColumn;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.NamedObject;
 
 /**

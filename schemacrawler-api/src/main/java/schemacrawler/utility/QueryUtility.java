@@ -47,7 +47,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.InclusionRule;
