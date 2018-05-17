@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a14.21.02"></a>
+## Release 14.21.02 - 2018-05-20
+
+- Add support for java.sql.Types REF_CURSOR, TIME_WITH_TIMEZONE, and TIMESTAMP_WITH_TIMEZONE
+
 <a name="a14.21.01"></a>
 ## Release 14.21.01 - 2018-05-14
 
