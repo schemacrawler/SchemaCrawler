@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schema;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Serializable;
 import java.sql.SQLType;
 
@@ -40,23 +42,6 @@ public final class JavaSqlType
   implements SQLType, Serializable, Comparable<JavaSqlType>
 {
 
-  public enum JavaSqlTypeGroup
-  {
-   unknown,
-   binary,
-   bit,
-   character,
-   id,
-   integer,
-   real,
-   reference,
-   temporal,
-   url,
-   xml,
-   large_object,
-   object;
-  }
-
   private static final long serialVersionUID = 2614819974745473431L;
 
   /**
@@ -64,20 +49,27 @@ public final class JavaSqlType
    */
   public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
                                                             "<UNKNOWN>",
+                                                            java.lang.Object.class,
                                                             JavaSqlTypeGroup.unknown);
 
   private final SQLType sqlType;
+  private final Class<?> defaultMappedClass;
   private final JavaSqlTypeGroup javaSqlTypeGroup;
 
   public JavaSqlType(final SQLType sqlType,
+                     final Class<?> defaultMappedClass,
                      final JavaSqlTypeGroup javaSqlTypeGroup)
   {
-    this.sqlType = sqlType;
-    this.javaSqlTypeGroup = javaSqlTypeGroup;
+    this.sqlType = requireNonNull(sqlType, "No SQLType provided");
+    this.defaultMappedClass = requireNonNull(defaultMappedClass,
+                                             "Np default mapped class provided");
+    this.javaSqlTypeGroup = requireNonNull(javaSqlTypeGroup,
+                                           "No SQLType group provided");
   }
 
   private JavaSqlType(final int typeNumber,
                       final String typeName,
+                      final Class<?> defaultMappedClass,
                       final JavaSqlTypeGroup sqlTypeGroup)
   {
     this(new SQLType()
@@ -100,7 +92,7 @@ public final class JavaSqlType
       {
         return typeNumber;
       }
-    }, sqlTypeGroup);
+    }, defaultMappedClass, sqlTypeGroup);
   }
 
   @Override
@@ -140,14 +132,21 @@ public final class JavaSqlType
     return true;
   }
 
+  public Class<?> getDefaultMappedClass()
+  {
+    return defaultMappedClass;
+  }
+
   /**
    * The java.sql.Types type.
    *
    * @return java.sql.Types type
+   * @deprecated
    */
+  @Deprecated
   public int getJavaSqlType()
   {
-    return sqlType.getVendorTypeNumber();
+    return getVendorTypeNumber();
   }
 
   public JavaSqlTypeGroup getJavaSqlTypeGroup()
@@ -159,10 +158,12 @@ public final class JavaSqlType
    * The java.sql.Types type name.
    *
    * @return java.sql.Types type names
+   * @deprecated
    */
+  @Deprecated
   public String getJavaSqlTypeName()
   {
-    return sqlType.getName();
+    return getName();
   }
 
   @Override
@@ -180,7 +181,15 @@ public final class JavaSqlType
   @Override
   public Integer getVendorTypeNumber()
   {
-    return sqlType.getVendorTypeNumber();
+    final Integer vendorTypeNumber = sqlType.getVendorTypeNumber();
+    if (vendorTypeNumber != null)
+    {
+      return vendorTypeNumber;
+    }
+    else
+    {
+      return Integer.valueOf(Integer.MAX_VALUE);
+    }
   }
 
   @Override

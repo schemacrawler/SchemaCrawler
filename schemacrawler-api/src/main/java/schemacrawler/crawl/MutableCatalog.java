@@ -472,7 +472,7 @@ final class MutableCatalog
     MutableColumnDataType columnDataType = null;
     for (final MutableColumnDataType currentColumnDataType: columnDataTypes)
     {
-      if (type == currentColumnDataType.getJavaSqlType().getJavaSqlType())
+      if (type == currentColumnDataType.getJavaSqlType().getVendorTypeNumber())
       {
         columnDataType = currentColumnDataType;
         if (columnDataType.getSchema().equals(systemSchema))

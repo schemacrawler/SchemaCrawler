@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schemacrawler.schema.Column;
-import schemacrawler.schema.JavaSqlType.JavaSqlTypeGroup;
+import schemacrawler.schema.JavaSqlTypeGroup;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.lint.BaseLinter;

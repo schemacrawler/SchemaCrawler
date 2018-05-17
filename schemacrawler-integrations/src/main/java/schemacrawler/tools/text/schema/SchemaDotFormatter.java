@@ -567,8 +567,7 @@ public final class SchemaDotFormatter
       final String columnTypeName;
       if (options.isShowStandardColumnTypeNames())
       {
-        columnTypeName = column.getColumnDataType().getJavaSqlType()
-          .getJavaSqlTypeName();
+        columnTypeName = column.getColumnDataType().getJavaSqlType().getName();
       }
       else
       {

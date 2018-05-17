@@ -31,6 +31,8 @@ package schemacrawler.utility;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.JDBCType;
+import java.sql.SQLType;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,7 +44,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * The default mappings are from the JDBC Specification 4.1, Appendix B
+ * The default mappings are from the JDBC Specification 4.2, Appendix B
  * - Data Type Conversion Tables, Table B-3 - Mapping from JDBC Types to
  * Java Object Types. A JDBC driver may override these default mappings.
  */
@@ -53,55 +55,66 @@ public final class TypeMap
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TypeMap.class.getName());
 
-  private static Map<String, Class<?>> createDefaultTypeMap()
+  private static Map<SQLType, Class<?>> createDefaultTypeMap()
   {
-    final Map<String, Class<?>> sqlTypeMap = new HashMap<>();
+    final Map<SQLType, Class<?>> defaultTypeMap = new HashMap<>();
 
-    sqlTypeMap.put("ARRAY", java.sql.Array.class);
-    sqlTypeMap.put("BIGINT", Long.class);
-    sqlTypeMap.put("BINARY", byte[].class);
-    sqlTypeMap.put("BIT", Boolean.class);
-    sqlTypeMap.put("BLOB", java.sql.Blob.class);
-    sqlTypeMap.put("BOOLEAN", Boolean.class);
-    sqlTypeMap.put("CHAR", String.class);
-    sqlTypeMap.put("CLOB", java.sql.Clob.class);
-    sqlTypeMap.put("DATALINK", java.net.URL.class);
-    sqlTypeMap.put("DATE", java.sql.Date.class);
-    sqlTypeMap.put("DECIMAL", java.math.BigDecimal.class);
-    sqlTypeMap.put("DISTINCT", Object.class);
-    sqlTypeMap.put("DOUBLE", Double.class);
-    sqlTypeMap.put("FLOAT", Double.class);
-    sqlTypeMap.put("INTEGER", Integer.class);
-    sqlTypeMap.put("JAVA_OBJECT", Object.class);
-    sqlTypeMap.put("LONGNVARCHAR", String.class);
-    sqlTypeMap.put("LONGVARBINARY", byte[].class);
-    sqlTypeMap.put("LONGVARCHAR", String.class);
-    sqlTypeMap.put("NCHAR", String.class);
-    sqlTypeMap.put("NCLOB", java.sql.NClob.class);
-    sqlTypeMap.put("NULL", Void.class);
-    sqlTypeMap.put("NUMERIC", java.math.BigDecimal.class);
-    sqlTypeMap.put("NVARCHAR", String.class);
-    sqlTypeMap.put("OTHER", Object.class);
-    sqlTypeMap.put("REAL", Float.class);
-    sqlTypeMap.put("REF", java.sql.Ref.class);
-    sqlTypeMap.put("ROWID", java.sql.RowId.class);
-    sqlTypeMap.put("SMALLINT", Integer.class);
-    sqlTypeMap.put("SQLXML", java.sql.SQLXML.class);
-    sqlTypeMap.put("STRUCT", java.sql.Struct.class);
-    sqlTypeMap.put("TIME", java.sql.Time.class);
-    sqlTypeMap.put("TIMESTAMP", java.sql.Timestamp.class);
-    sqlTypeMap.put("TINYINT", Integer.class);
-    sqlTypeMap.put("VARBINARY", byte[].class);
-    sqlTypeMap.put("VARCHAR", String.class);
+    defaultTypeMap.put(JDBCType.ARRAY, java.sql.Array.class);
+    defaultTypeMap.put(JDBCType.BIGINT, Long.class);
+    defaultTypeMap.put(JDBCType.BINARY, byte[].class);
+    defaultTypeMap.put(JDBCType.BIT, Boolean.class);
+    defaultTypeMap.put(JDBCType.BLOB, java.sql.Blob.class);
+    defaultTypeMap.put(JDBCType.BOOLEAN, Boolean.class);
+    defaultTypeMap.put(JDBCType.CHAR, String.class);
+    defaultTypeMap.put(JDBCType.CLOB, java.sql.Clob.class);
+    defaultTypeMap.put(JDBCType.DATALINK, java.net.URL.class);
+    defaultTypeMap.put(JDBCType.DATE, java.sql.Date.class);
+    defaultTypeMap.put(JDBCType.DECIMAL, java.math.BigDecimal.class);
+    defaultTypeMap.put(JDBCType.DISTINCT, Object.class);
+    defaultTypeMap.put(JDBCType.DOUBLE, Double.class);
+    defaultTypeMap.put(JDBCType.FLOAT, Double.class);
+    defaultTypeMap.put(JDBCType.INTEGER, Integer.class);
+    defaultTypeMap.put(JDBCType.JAVA_OBJECT, Object.class);
+    defaultTypeMap.put(JDBCType.LONGNVARCHAR, String.class);
+    defaultTypeMap.put(JDBCType.LONGVARBINARY, byte[].class);
+    defaultTypeMap.put(JDBCType.LONGVARCHAR, String.class);
+    defaultTypeMap.put(JDBCType.NCHAR, String.class);
+    defaultTypeMap.put(JDBCType.NCLOB, java.sql.NClob.class);
+    defaultTypeMap.put(JDBCType.NULL, Void.class);
+    defaultTypeMap.put(JDBCType.NUMERIC, java.math.BigDecimal.class);
+    defaultTypeMap.put(JDBCType.NVARCHAR, String.class);
+    defaultTypeMap.put(JDBCType.OTHER, Object.class);
+    defaultTypeMap.put(JDBCType.REAL, Float.class);
+    defaultTypeMap.put(JDBCType.REF, java.sql.Ref.class);
+    defaultTypeMap.put(JDBCType.REF_CURSOR, java.lang.Object.class);
+    defaultTypeMap.put(JDBCType.ROWID, java.sql.RowId.class);
+    defaultTypeMap.put(JDBCType.SMALLINT, Integer.class);
+    defaultTypeMap.put(JDBCType.SQLXML, java.sql.SQLXML.class);
+    defaultTypeMap.put(JDBCType.STRUCT, java.sql.Struct.class);
+    defaultTypeMap.put(JDBCType.TIME, java.sql.Time.class);
+    defaultTypeMap.put(JDBCType.TIMESTAMP, java.sql.Timestamp.class);
+    defaultTypeMap.put(JDBCType.TIMESTAMP_WITH_TIMEZONE,
+                       java.time.OffsetDateTime.class);
+    defaultTypeMap.put(JDBCType.TIME_WITH_TIMEZONE, java.time.OffsetTime.class);
+    defaultTypeMap.put(JDBCType.TINYINT, Integer.class);
+    defaultTypeMap.put(JDBCType.VARBINARY, byte[].class);
+    defaultTypeMap.put(JDBCType.VARCHAR, String.class);
 
-    return sqlTypeMap;
+    return defaultTypeMap;
   }
 
   private final Map<String, Class<?>> sqlTypeMap;
 
   public TypeMap()
   {
-    sqlTypeMap = createDefaultTypeMap();
+    sqlTypeMap = new HashMap<>();
+
+    final Map<SQLType, Class<?>> defaultTypeMap = createDefaultTypeMap();
+    for (Entry<SQLType, Class<?>> sqlTypeMapping: defaultTypeMap.entrySet())
+    {
+      sqlTypeMap.put(sqlTypeMapping.getKey().getName(),
+                     sqlTypeMapping.getValue());
+    }
   }
 
   public TypeMap(final Connection connection)

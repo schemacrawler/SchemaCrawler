@@ -704,8 +704,8 @@ public class SchemaCrawlerTest
                                                             : "literal suffix "
                                                               + literalSuffix);
 
-    final String javaSqlType = "java.sql.Types: " + columnDataType
-      .getJavaSqlType().getJavaSqlTypeName();
+    final String javaSqlType = "java.sql.Types: "
+                               + columnDataType.getJavaSqlType().getName();
 
     final String precision = "precision " + columnDataType.getPrecision();
     final String minimumScale = "minimum scale "

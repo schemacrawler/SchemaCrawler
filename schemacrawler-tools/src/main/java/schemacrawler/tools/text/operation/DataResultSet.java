@@ -115,7 +115,7 @@ final class DataResultSet
     throws SQLException
   {
     final int javaSqlType = resultsColumns.get(i).getColumnDataType()
-      .getJavaSqlType().getJavaSqlType();
+      .getJavaSqlType().getVendorTypeNumber();
     Object columnData;
     if (javaSqlType == Types.CLOB)
     {
