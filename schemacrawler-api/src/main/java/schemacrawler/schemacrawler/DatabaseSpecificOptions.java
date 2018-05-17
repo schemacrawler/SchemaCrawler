@@ -38,6 +38,12 @@ import java.sql.SQLException;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
+/**
+ * Options that differ from database to database, obtained from the
+ * connection. Overridden with provided values.
+ * 
+ * @author Sualeh Fatehi
+ */
 public class DatabaseSpecificOptions
   implements Options
 {
