@@ -43,11 +43,6 @@ import java.util.logging.Level;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-/**
- * The default mappings are from the JDBC Specification 4.2, Appendix B
- * - Data Type Conversion Tables, Table B-3 - Mapping from JDBC Types to
- * Java Object Types. A JDBC driver may override these default mappings.
- */
 public final class TypeMap
   implements Map<String, Class<?>>
 {
@@ -55,6 +50,12 @@ public final class TypeMap
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(TypeMap.class.getName());
 
+  /**
+   * The default mappings are from the JDBC Specification 4.2, Appendix
+   * B - Data Type Conversion Tables, Table B-3 - Mapping from JDBC
+   * Types to Java Object Types. A JDBC driver may override these
+   * default mappings.
+   */
   private static Map<SQLType, Class<?>> createDefaultTypeMap()
   {
     final Map<SQLType, Class<?>> defaultTypeMap = new HashMap<>();
