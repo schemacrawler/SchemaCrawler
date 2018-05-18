@@ -45,7 +45,7 @@ public class SchemaCrawlerException
 
   public SchemaCrawlerException(final String message, final Throwable cause)
   {
-    super(message + ": " + cause.getMessage(), cause);
+    super(cause == null? message: message + ": " + cause.getMessage(), cause);
   }
 
 }

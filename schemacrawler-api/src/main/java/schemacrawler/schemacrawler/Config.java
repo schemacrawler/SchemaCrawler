@@ -419,6 +419,21 @@ public final class Config
     return config.size();
   }
 
+  /**
+   * Convert config to Properties
+   *
+   * @return Properties
+   */
+  public Properties toProperties()
+  {
+    final Properties properties = new Properties();
+    for (final Entry<String, String> entry: config.entrySet())
+    {
+      properties.put(entry.getKey(), entry.getValue());
+    }
+    return properties;
+  }
+
   @Override
   public String toString()
   {
