@@ -28,21 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.fail;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.assertThat;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static schemacrawler.test.utility.TestUtility.writeConfigToTempFile;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.contrib.java.lang.system.SystemErrRule;
+import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.Main;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.options.InfoLevel;
@@ -51,25 +56,35 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
-public class HideEmptyTablesCommandLineTest
+public class MetadataRetrievalStrategyTest
   extends BaseDatabaseTest
 {
 
-  private static final String HIDE_EMPTY_TABLES_OUTPUT = "hide_empty_tables_output/";
+  private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT = "metadata_retrieval_strategy_output/";
 
   @Rule
   public TestName testName = new TestName();
+  @Rule
+  public final SystemOutRule systemOutRule = new SystemOutRule().enableLog()
+    .mute();
+  @Rule
+  public final SystemErrRule systemErrRule = new SystemErrRule().enableLog();
 
   @Test
-  public void hideEmptyTables()
+  public void overrideMetadataRetrievalStrategy()
     throws Exception
   {
-    clean(HIDE_EMPTY_TABLES_OUTPUT);
+    clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
+    new ArrayList<>();
 
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
-    final InfoLevel infoLevel = InfoLevel.maximum;
+    final InfoLevel infoLevel = InfoLevel.minimum;
+
+    final Config config = new Config();
+    config.put("schemacrawler.schema.retrieval.strategy.tables",
+               MetadataRetrievalStrategy.data_dictionary_all.name());
+    final Path configFile = writeConfigToTempFile(config);
 
     final String referenceFile = testName.currentMethodName() + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
@@ -77,28 +92,24 @@ public class HideEmptyTablesCommandLineTest
 
     final OutputFormat outputFormat = TextOutputFormat.text;
 
-    final Map<String, String> args = new HashMap<>();
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
-    args.put("user", "sa");
-    args.put("password", "");
-    args.put("infolevel", infoLevel.name());
-    args.put("command", schemaTextDetailType.name());
-    args.put("outputformat", outputFormat.getFormat());
-    args.put("outputfile", testOutputFile.toString());
-    args.put("noinfo", "true");
-    args.put("routines", "");
-    args.put("hideemptytables", "true");
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    argsMap.put("user", "sa");
+    argsMap.put("password", "");
+    argsMap.put("g", configFile.toString());
+    argsMap.put("infolevel", infoLevel.name());
+    argsMap.put("command", schemaTextDetailType.name());
+    argsMap.put("outputformat", outputFormat.getFormat());
+    argsMap.put("outputfile", testOutputFile.toString());
+    argsMap.put("noinfo", "true");
+    argsMap.put("loglevel", Level.SEVERE.getName());
 
-    Main.main(flattenCommandlineArgs(args));
+    Main.main(flattenCommandlineArgs(argsMap));
 
-    failures.addAll(compareOutput(HIDE_EMPTY_TABLES_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
+    // Check that System.err has an error
+    final String errorLog = systemErrRule.getLog();
+    assertThat(errorLog, containsString("No tables SQL provided"));
 
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
   }
 
 }
