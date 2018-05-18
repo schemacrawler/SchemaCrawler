@@ -49,11 +49,13 @@ public final class JavaSqlTypes
   implements Iterable<JavaSqlType>
 {
 
-  private static Map<Integer, JavaSqlType> mapJavaSqlTypes()
+  private final Map<Integer, JavaSqlType> javaSqlTypeMap;
+
+  public JavaSqlTypes()
   {
     // Load default type mappings
     final TypeMap typeMap = new TypeMap();
-    final Map<Integer, JavaSqlType> javaSqlTypes = new HashMap<>();
+    javaSqlTypeMap = new HashMap<>();
     for (final SQLType sqlType: JDBCType.values())
     {
       final Integer sqlTypeInt = sqlType.getVendorTypeNumber();
@@ -63,17 +65,8 @@ public final class JavaSqlTypes
       final JavaSqlType javaSqlType = new JavaSqlType(sqlType,
                                                       mappedClass,
                                                       sqlTypeGroup);
-      javaSqlTypes.put(sqlTypeInt, javaSqlType);
+      javaSqlTypeMap.put(sqlTypeInt, javaSqlType);
     }
-
-    return javaSqlTypes;
-  }
-
-  private final Map<Integer, JavaSqlType> javaSqlTypeMap;
-
-  public JavaSqlTypes()
-  {
-    javaSqlTypeMap = mapJavaSqlTypes();
   }
 
   /**
