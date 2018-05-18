@@ -52,7 +52,8 @@ public class CommandLineHelpTest
   public TestName testName = new TestName();
 
   @Rule
-  public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+  public final SystemOutRule systemOutRule = new SystemOutRule().enableLog()
+    .mute();
 
   @Test
   public void commandLineHelpDefaults()
