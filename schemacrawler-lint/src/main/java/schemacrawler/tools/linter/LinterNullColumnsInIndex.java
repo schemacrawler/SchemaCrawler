@@ -75,7 +75,7 @@ public class LinterNullColumnsInIndex
         {
           try
           {
-            if (indexColumn.isNullable())
+            if (indexColumn.isNullable() && !indexColumn.isGenerated())
             {
               nullableColumnsInUniqueIndex.add(index);
               break;
