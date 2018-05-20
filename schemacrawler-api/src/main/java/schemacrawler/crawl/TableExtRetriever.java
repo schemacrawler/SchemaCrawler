@@ -315,10 +315,14 @@ final class TableExtRetriever
 
         final MutableIndexColumn indexColumn = indexColumnOptional.get();
 
+        final boolean isGenerated = results.getBoolean("IS_GENERATEDCOLUMN");
         final String definition = results.getString("INDEX_COLUMN_DEFINITION");
 
+        if (!indexColumn.isGenerated())
+        {
+          indexColumn.setGenerated(isGenerated);
+        }
         indexColumn.appendDefinition(definition);
-
         indexColumn.addAttributes(results.getAttributes());
       }
     }

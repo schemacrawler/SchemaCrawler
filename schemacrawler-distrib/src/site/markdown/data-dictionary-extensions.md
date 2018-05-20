@@ -228,6 +228,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | INDEX_NAME | The name of the index. |
 | TABLE_NAME | The name of the table which has the index. |
 | COLUMN_NAME | The name of the table column which has the index. |
+| IS_GENERATEDCOLUMN | Whether the columns is generated - that is, a functional index column, or a virtual column |
 | INDEX_COLUMN_DEFINITION | The definition of the index column . | 
 
 
