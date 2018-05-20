@@ -200,7 +200,9 @@ class MutableIndex
   @Override
   public final Optional<MutableIndexColumn> lookupColumn(final String name)
   {
-    return columns.lookup(this, name);
+    // NOTE: Index columns are still table columns, so they need to be
+    // looked up with a table lookup key
+    return columns.lookup(this.getParent(), name);
   }
 
   final void addColumn(final MutableIndexColumn column)
