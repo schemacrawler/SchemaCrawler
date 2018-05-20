@@ -300,6 +300,14 @@ final class MutableIndexColumn
     }
   }
 
+  void setGenerated(final boolean isGenerated)
+  {
+    if (column instanceof MutableColumn)
+    {
+      ((MutableColumn) column).setGenerated(isGenerated);
+    }
+  }
+
   void setIndexOrdinalPosition(final int indexOrdinalPosition)
   {
     this.indexOrdinalPosition = indexOrdinalPosition;
