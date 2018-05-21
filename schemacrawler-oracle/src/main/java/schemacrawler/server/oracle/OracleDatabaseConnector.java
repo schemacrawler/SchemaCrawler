@@ -52,43 +52,6 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static class OracleConnectionSupport
-    implements Predicate<Connection>
-  {
-
-    @Override
-    public boolean test(final Connection connection)
-    {
-      if (connection == null)
-      {
-        LOGGER.log(Level.FINE, "No Oracle database connection provided");
-        return false;
-      }
-
-      try
-      {
-        final DatabaseMetaData dbMetaData = connection.getMetaData();
-        final int oracleMajorVersion = dbMetaData.getDatabaseMajorVersion();
-        if (oracleMajorVersion < 12)
-        {
-          LOGGER.log(Level.INFO,
-                     new StringFormat("%s is not supported",
-                                      DatabaseUtility
-                                        .getDatabaseVersion(connection)));
-          return false;
-        }
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.FINE, e.getMessage(), e);
-        return false;
-      }
-
-      return true;
-    }
-
-  }
-
   private static class OracleInformationSchemaViewsBuilder
     implements BiConsumer<InformationSchemaViewsBuilder, Connection>
   {
