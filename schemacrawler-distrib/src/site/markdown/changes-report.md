@@ -1,12 +1,13 @@
 # SchemaCrawler Change History
 
 <a name="a14.21.02"></a>
-## Release 14.21.02 - 2018-05-20
+## Release 14.21.02 - 2018-05-21
 
 - Add support for java.sql.Types REF_CURSOR, TIME_WITH_TIMEZONE, and TIMESTAMP_WITH_TIMEZONE
+- Fixed issue with lint reporting "unique index with nullable columns" on computed columns
 
-<a name="a14.21.02"></a>
-## Release 14.21.02 - 2018-05-14
+<a name="a14.21.01"></a>
+## Release 14.21.01 - 2018-05-14
 
 - Fixed issue #184 with with support for older Oracle versions in the SchemaCrawler Oracle plugin
 - Changed API for SchemaCrawler plugins
