@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readResourceFully;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import schemacrawler.schemacrawler.Config;
@@ -74,6 +75,7 @@ public final class Main
 
     applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
     logSafeArguments(args);
+    logSystemClasspath();
     logSystemProperties();
 
     final SchemaCrawlerSpringCommandLine commandLine = new SchemaCrawlerSpringCommandLine(argsMap);

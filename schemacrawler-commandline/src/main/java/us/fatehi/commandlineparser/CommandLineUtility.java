@@ -127,6 +127,21 @@ public final class CommandLineUtility
                                 join(argsList, System.lineSeparator())));
   }
 
+  public static void logSystemClasspath()
+  {
+    if (!LOGGER.isLoggable(Level.CONFIG))
+    {
+      return;
+    }
+
+    LOGGER.log(Level.CONFIG,
+               String.format("Classpath: %n%s",
+                             printPath(System.getProperty("java.class.path"))));
+    LOGGER.log(Level.CONFIG,
+               String.format("LD_LIBRARY_PATH: %n%s",
+                             printPath(System.getenv("LD_LIBRARY_PATH"))));
+  }
+
   public static void logSystemProperties()
   {
     if (!LOGGER.isLoggable(Level.CONFIG))
@@ -146,18 +161,9 @@ public final class CommandLineUtility
       }
     }
 
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("System properties: %n%s",
-                              join(systemProperties, System.lineSeparator())));
-      LOGGER.log(Level.CONFIG,
-                 new StringFormat("Classpath: %n%s",
-                                  join(System.getProperty("java.class.path")
-                                    .split(File.pathSeparator),
-                                       System.lineSeparator())));
-    }
+    LOGGER.log(Level.CONFIG,
+               String.format("System properties: %n%s",
+                             join(systemProperties, System.lineSeparator())));
   }
 
   /**
@@ -169,6 +175,15 @@ public final class CommandLineUtility
     argsParser.parse();
     final Config optionsMap = argsParser.getOptionsMap();
     return optionsMap;
+  }
+
+  private static String printPath(final String path)
+  {
+    if (path == null)
+    {
+      return "";
+    }
+    return join(path.split(File.pathSeparator), System.lineSeparator());
   }
 
   private CommandLineUtility()

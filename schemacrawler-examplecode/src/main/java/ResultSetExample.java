@@ -1,4 +1,5 @@
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public final class ResultSetExample
     // Turn application logging on by applying the correct log level
     applyApplicationLogLevel(Level.OFF);
     // Log system properties and classpath
+    logSystemClasspath();
     logSystemProperties();
 
     final String query = "SELECT                                                      \n"
