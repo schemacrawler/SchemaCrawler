@@ -1,5 +1,6 @@
 import static sf.util.Utility.isBlank;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.nio.file.Path;
@@ -31,6 +32,7 @@ public final class ExecutableExample
     applyApplicationLogLevel(Level.OFF);
     // Log system properties and classpath
     logSystemProperties();
+    logSystemClasspath();
 
     // Create the options
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();

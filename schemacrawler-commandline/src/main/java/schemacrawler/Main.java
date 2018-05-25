@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.util.logging.Level;
@@ -69,6 +70,7 @@ public final class Main
       applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
 
       logSafeArguments(args);
+      logSystemClasspath();
       logSystemProperties();
 
       final boolean showHelp = args.length == 0
