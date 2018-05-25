@@ -225,7 +225,6 @@ public final class XmlSerializedCatalog
       final String[] immutable = new String[] {
                                                 "databaseProperty",
                                                 "jdbcDriverProperty",
-                                                "schemaCrawlerInfo",
                                                 "crawlInfo", };
       for (final String xmlElement: immutable)
       {
