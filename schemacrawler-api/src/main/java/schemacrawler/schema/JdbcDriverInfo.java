@@ -31,6 +31,8 @@ package schemacrawler.schema;
 
 import java.util.Collection;
 
+import schemacrawler.ProductVersion;
+
 /**
  * JDBC driver information.
  *

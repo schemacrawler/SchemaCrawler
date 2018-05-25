@@ -6,11 +6,11 @@ Copyright (c) 2000-2018, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
-SchemaCrawler is distributed in the hope that it will be useful, but
+OperatingSystem is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-SchemaCrawler and the accompanying materials are made available under
+OperatingSystem and the accompanying materials are made available under
 the terms of the Eclipse Public License v1.0, GNU General Public License
 v3 or GNU Lesser General Public License v3.
 
@@ -26,41 +26,24 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schema;
+package schemacrawler;
 
 
 /**
- * SchemaCrawler information.
+ * Operating system information.
  *
- * @author Sualeh Fatehi
+ * @author Sualeh Fatehi sualeh@hotmail.com
  */
-public interface SchemaCrawlerInfo
-  extends ProductVersion
+public final class OperatingSystemInfo
+  extends BaseProductVersion
 {
 
-  /**
-   * Gets the SchemaCrawler about text.
-   *
-   * @return SchemaCrawler about text
-   */
-  String getSchemaCrawlerAbout();
+  private static final long serialVersionUID = 4051323422934251828L;
 
-  /**
-   * Gets the name of the SchemaCrawler product.
-   *
-   * @return Name of the SchemaCrawler product
-   * @deprecated
-   */
-  @Deprecated
-  String getSchemaCrawlerProductName();
-
-  /**
-   * Gets the SchemaCrawler version.
-   *
-   * @return SchemaCrawler version
-   * @deprecated
-   */
-  @Deprecated
-  String getSchemaCrawlerVersion();
+  public OperatingSystemInfo()
+  {
+    super(System.getProperty("os.name", "<unknown>"),
+          System.getProperty("os.version", ""));
+  }
 
 }

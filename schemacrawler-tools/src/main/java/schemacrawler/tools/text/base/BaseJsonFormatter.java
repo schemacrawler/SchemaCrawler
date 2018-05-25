@@ -32,12 +32,12 @@ package schemacrawler.tools.text.base;
 import java.util.Collection;
 import java.util.logging.Level;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.JsonFormattingHelper;

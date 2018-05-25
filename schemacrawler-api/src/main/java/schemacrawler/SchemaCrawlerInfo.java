@@ -26,27 +26,31 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schema;
+package schemacrawler;
 
 
-import java.io.Serializable;
-
-public interface ProductVersion
-  extends Serializable
+/**
+ * SchemaCrawler information.
+ *
+ * @author Sualeh Fatehi sualeh@hotmail.com
+ */
+public final class SchemaCrawlerInfo
+  extends BaseProductVersion
 {
 
-  /**
-   * Gets the name of the product.
-   *
-   * @return Name of the product
-   */
-  String getProductName();
+  private static final long serialVersionUID = 4051323422934251828L;
 
-  /**
-   * Gets the version of the product.
-   *
-   * @return Version of the product
-   */
-  String getProductVersion();
+  private final String schemaCrawlerAbout;
+
+  public SchemaCrawlerInfo()
+  {
+    super(Version.getProductName(), Version.getVersion());
+    schemaCrawlerAbout = Version.about();
+  }
+
+  public String getSchemaCrawlerAbout()
+  {
+    return schemaCrawlerAbout;
+  }
 
 }

@@ -1,16 +1,16 @@
 /*
 ========================================================================
-OperatingSystem
+SchemaCrawler
 http://www.schemacrawler.com
 Copyright (c) 2000-2018, Sualeh Fatehi <sualeh@hotmail.com>.
 All rights reserved.
 ------------------------------------------------------------------------
 
-OperatingSystem is distributed in the hope that it will be useful, but
+SchemaCrawler is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-OperatingSystem and the accompanying materials are made available under
+SchemaCrawler and the accompanying materials are made available under
 the terms of the Eclipse Public License v1.0, GNU General Public License
 v3 or GNU Lesser General Public License v3.
 
@@ -26,27 +26,27 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
-import schemacrawler.schema.OperatingSystemInfo;
+import java.io.Serializable;
 
-/**
- * Operating system information.
- *
- * @author Sualeh Fatehi sualeh@hotmail.com
- */
-final class ImmutableOperatingSystemInfo
-  extends BaseProductVersion
-  implements OperatingSystemInfo
+public interface ProductVersion
+  extends Serializable
 {
 
-  private static final long serialVersionUID = 4051323422934251828L;
+  /**
+   * Gets the name of the product.
+   *
+   * @return Name of the product
+   */
+  String getProductName();
 
-  ImmutableOperatingSystemInfo()
-  {
-    super(System.getProperty("os.name", "<unknown>"),
-          System.getProperty("os.version", ""));
-  }
+  /**
+   * Gets the version of the product.
+   *
+   * @return Version of the product
+   */
+  String getProductVersion();
 
 }

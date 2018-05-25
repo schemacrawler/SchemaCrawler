@@ -37,6 +37,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
@@ -85,8 +88,9 @@ final class MutableCatalog
   private static final long serialVersionUID = 4051323422934251828L;
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
-  private final ImmutableSchemaCrawlerInfo schemaCrawlerInfo;
-  private final ImmutableOperatingSystemInfo osInfo;
+  private final SchemaCrawlerInfo schemaCrawlerInfo;
+  private final OperatingSystemInfo osInfo;
+  private final JvmSystemInfo jvmInfo;
   private ImmutableCrawlInfo crawlInfo;
   private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
@@ -101,8 +105,9 @@ final class MutableCatalog
     super(name);
     databaseInfo = new MutableDatabaseInfo();
     jdbcDriverInfo = new MutableJdbcDriverInfo();
-    schemaCrawlerInfo = new ImmutableSchemaCrawlerInfo();
-    osInfo = new ImmutableOperatingSystemInfo();
+    schemaCrawlerInfo = new SchemaCrawlerInfo();
+    osInfo = new OperatingSystemInfo();
+    jvmInfo = new JvmSystemInfo();
   }
 
   /**
@@ -153,9 +158,16 @@ final class MutableCatalog
     return jdbcDriverInfo;
   }
 
-  public ImmutableOperatingSystemInfo getOsInfo()
+  @Override
+  public OperatingSystemInfo getOperatingSystemInfo()
   {
     return osInfo;
+  }
+
+  @Override
+  public JvmSystemInfo getJvmSystemInfo()
+  {
+    return jvmInfo;
   }
 
   /**
@@ -189,7 +201,7 @@ final class MutableCatalog
    * {@inheritDoc}
    */
   @Override
-  public ImmutableSchemaCrawlerInfo getSchemaCrawlerInfo()
+  public SchemaCrawlerInfo getSchemaCrawlerInfo()
   {
     return schemaCrawlerInfo;
   }
@@ -491,11 +503,7 @@ final class MutableCatalog
 
   void setCrawlInfo(final String title)
   {
-    crawlInfo = new ImmutableCrawlInfo(schemaCrawlerInfo,
-                                       jdbcDriverInfo,
-                                       databaseInfo,
-                                       osInfo,
-                                       title);
+    crawlInfo = new ImmutableCrawlInfo(jdbcDriverInfo, databaseInfo, title);
   }
 
 }

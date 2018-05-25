@@ -40,6 +40,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import sf.util.SchemaCrawlerLogger;
@@ -84,9 +86,11 @@ public final class CommandLineUtility
     }
 
     LOGGER.log(Level.INFO,
-               new StringFormat("%s, v%s",
-                                Version.getProductName(),
-                                Version.getVersion()));
+               String.format("Environment:%n%s %s%n%s%n%s%n",
+                             Version.getProductName(),
+                             Version.getVersion(),
+                             new OperatingSystemInfo(),
+                             new JvmSystemInfo()));
 
     if (args == null)
     {

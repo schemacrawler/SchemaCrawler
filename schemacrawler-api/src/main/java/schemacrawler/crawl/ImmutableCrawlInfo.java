@@ -34,12 +34,14 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import schemacrawler.BaseProductVersion;
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
+import schemacrawler.ProductVersion;
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.OperatingSystemInfo;
-import schemacrawler.schema.ProductVersion;
-import schemacrawler.schema.SchemaCrawlerInfo;
 
 /**
  * SchemaCrawler crawl information.
@@ -56,30 +58,23 @@ final class ImmutableCrawlInfo
   private final ProductVersion jdbcDriverInfo;
   private final ProductVersion databaseInfo;
   private final ProductVersion osInfo;
+  private final ProductVersion jvmInfo;
   private final String title;
   private final LocalDateTime crawlTimestamp;
 
-  ImmutableCrawlInfo(final SchemaCrawlerInfo schemaCrawlerInfo,
-                     final JdbcDriverInfo jdbcDriverInfo,
+  ImmutableCrawlInfo(final JdbcDriverInfo jdbcDriverInfo,
                      final DatabaseInfo databaseInfo,
-                     final OperatingSystemInfo osInfo,
                      final String title)
   {
-    requireNonNull(schemaCrawlerInfo, "No SchemaCrawler information provided");
-    this.schemaCrawlerInfo = new BaseProductVersion(schemaCrawlerInfo
-      .getProductName(), schemaCrawlerInfo.getProductVersion());
+    this.schemaCrawlerInfo = new SchemaCrawlerInfo();
+    this.osInfo = new OperatingSystemInfo();
+    this.jvmInfo = new JvmSystemInfo();
 
     requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
-    this.jdbcDriverInfo = new BaseProductVersion(jdbcDriverInfo
-      .getProductName(), jdbcDriverInfo.getProductVersion());
+    this.jdbcDriverInfo = new BaseProductVersion(jdbcDriverInfo);
 
     requireNonNull(databaseInfo, "No database information provided");
-    this.databaseInfo = new BaseProductVersion(databaseInfo
-      .getProductName(), databaseInfo.getProductVersion());
-
-    requireNonNull(osInfo, "No database information provided");
-    this.osInfo = new BaseProductVersion(osInfo.getProductName(),
-                                         osInfo.getProductVersion());
+    this.databaseInfo = new BaseProductVersion(databaseInfo);
 
     this.title = title;
     crawlTimestamp = LocalDateTime.now();
@@ -103,6 +98,13 @@ final class ImmutableCrawlInfo
     return jdbcDriverInfo.toString();
   }
 
+  @Override
+  public String getJvmSystemInfo()
+  {
+    return jvmInfo.toString();
+  }
+
+  @Override
   public String getOperatingSystemInfo()
   {
     return osInfo.toString();
@@ -139,6 +141,9 @@ final class ImmutableCrawlInfo
       .append(System.lineSeparator());
     info.append("-- operating system: ").append(osInfo)
       .append(System.lineSeparator());
+    info.append("-- JVM system: ").append(jvmInfo)
+      .append(System.lineSeparator());
+
     return info.toString();
   }
 

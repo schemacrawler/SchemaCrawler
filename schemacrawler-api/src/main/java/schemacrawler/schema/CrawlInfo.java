@@ -57,6 +57,20 @@ public interface CrawlInfo
   String getJdbcDriverInfo();
 
   /**
+   * Get JVM system information.
+   *
+   * @return JVM system information
+   */
+  String getJvmSystemInfo();
+
+  /**
+   * Get operating system information.
+   *
+   * @return Operating system information
+   */
+  String getOperatingSystemInfo();
+
+  /**
    * Gets the SchemaCrawler version.
    *
    * @return SchemaCrawler version

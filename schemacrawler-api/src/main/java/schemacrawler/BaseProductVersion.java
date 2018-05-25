@@ -26,19 +26,17 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.crawl;
+package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-
-import schemacrawler.schema.ProductVersion;
 
 /**
  * Operating system information.
  *
  * @author Sualeh Fatehi sualeh@hotmail.com
  */
-class BaseProductVersion
+public class BaseProductVersion
   implements ProductVersion
 {
 
@@ -47,14 +45,14 @@ class BaseProductVersion
   private final String productName;
   private final String productVersion;
 
-  protected BaseProductVersion(final ProductVersion productVersion)
+  public BaseProductVersion(final ProductVersion productVersion)
   {
     this(requireNonNull(productVersion, "No product name provided")
       .getProductName(), productVersion.getProductVersion());
   }
 
-  protected BaseProductVersion(final String productName,
-                               final String productVersion)
+  public BaseProductVersion(final String productName,
+                            final String productVersion)
   {
     this.productName = requireNonNull(productName, "No product name provided");
     this.productVersion = requireNonNull(productVersion,
