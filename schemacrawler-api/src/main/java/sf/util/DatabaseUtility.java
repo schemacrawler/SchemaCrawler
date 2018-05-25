@@ -283,7 +283,8 @@ public final class DatabaseUtility
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set", e);
+      // NOTE: Do not show exception while logging warnings
+      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set");
     }
 
   }
@@ -306,7 +307,8 @@ public final class DatabaseUtility
     }
     catch (final SQLException e)
     {
-      LOGGER.log(Level.WARNING, "Could not log SQL warnings for result set", e);
+      // NOTE: Do not show exception while logging warnings
+      LOGGER.log(Level.WARNING, "Could not log SQL warnings for statement");
     }
 
   }

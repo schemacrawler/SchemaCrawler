@@ -445,11 +445,15 @@ final class RoutineRetriever
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getFunctions(catalogName, schemaName, "%"));)
       {
-        results.setDescription("retrieveFunctions");
+        results.setDescription("retrieveFunctionsFromMetadata");
+        int numFunctions = 0;
         while (results.next())
         {
+          numFunctions = numFunctions + 1;
           createFunction(results, schemas, functionFilter);
         }
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Processed %d functions", numFunctions));
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
@@ -471,11 +475,15 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getFunctions(null, null, "%"));)
     {
-      results.setDescription("retrieveFunctions");
+      results.setDescription("retrieveFunctionsFromMetadataForAllFunctions");
+      int numFunctions = 0;
       while (results.next())
       {
+        numFunctions = numFunctions + 1;
         createFunction(results, schemas, functionFilter);
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d functions", numFunctions));
     }
     catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
     {
@@ -514,11 +522,15 @@ final class RoutineRetriever
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getProcedures(catalogName, schemaName, "%"));)
       {
-        results.setDescription("retrieveProcedures");
+        results.setDescription("retrieveProceduresFromMetadata");
+        int numProcedures = 0;
         while (results.next())
         {
+          numProcedures = numProcedures + 1;
           createProcedure(results, schemas, procedureFilter);
         }
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Processed %d procedures", numProcedures));
       }
     }
   }
@@ -530,11 +542,15 @@ final class RoutineRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getProcedures(null, null, "%"));)
     {
-      results.setDescription("retrieveProcedures");
+      results.setDescription("retrieveProceduresFromMetadataForAllProcedures");
+      int numProcedures = 0;
       while (results.next())
       {
+        numProcedures = numProcedures + 1;
         createProcedure(results, schemas, procedureFilter);
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d procedures", numProcedures));
     }
   }
 

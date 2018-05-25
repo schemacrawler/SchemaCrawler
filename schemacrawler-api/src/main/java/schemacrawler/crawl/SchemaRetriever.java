@@ -127,9 +127,6 @@ final class SchemaRetriever
       catalog.addSchema(new SchemaReference(null, null));
     }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Retrieved %d schemas",
-                                catalog.getSchemas().size()));
   }
 
   /**
@@ -147,12 +144,16 @@ final class SchemaRetriever
     {
       try
       {
+        int numCatalogs = 0;
         final List<String> metaDataCatalogNames = DatabaseUtility
           .readResultsVector(getMetaData().getCatalogs());
         for (final String catalogName: metaDataCatalogNames)
         {
+          numCatalogs = numCatalogs + 1;
           catalogNames.add(catalogName);
         }
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Processed %d catalogs", numCatalogs));
       }
       catch (final SQLException e)
       {
@@ -174,12 +175,14 @@ final class SchemaRetriever
     final Set<String> allCatalogNames = retrieveAllCatalogs();
     if (supportsSchemas)
     {
+      int numSchemas = 0;
       try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
         .getSchemas());)
       {
         results.setDescription("retrieveAllSchemas");
         while (results.next())
         {
+          numSchemas = numSchemas + 1;
           final String catalogName = normalizeCatalogName(results
             .getString("TABLE_CATALOG"));
           final String schemaName = results.getString("TABLE_SCHEM");
@@ -208,6 +211,8 @@ final class SchemaRetriever
           }
         }
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d schemas", numSchemas));
     }
     else
 
@@ -246,8 +251,10 @@ final class SchemaRetriever
                                                                 getSchemaInclusionRule());)
     {
       results.setDescription("retrieveAllSchemasFromInformationSchemaViews");
+      int numSchemas = 0;
       while (results.next())
       {
+        numSchemas = numSchemas + 1;
         final String catalogName = results.getString("CATALOG_NAME");
         final String schemaName = results.getString("SCHEMA_NAME");
         LOGGER.log(Level.FINER,
@@ -256,6 +263,8 @@ final class SchemaRetriever
                                     schemaName));
         schemaRefs.add(new SchemaReference(catalogName, schemaName));
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d schemas", numSchemas));
     }
     catch (final Exception e)
     {

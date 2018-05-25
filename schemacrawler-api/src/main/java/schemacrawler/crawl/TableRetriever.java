@@ -204,10 +204,14 @@ final class TableRetriever
                                                                 getSchemaInclusionRule());)
     {
       results.setDescription("retrieveTablesFromDataDictionary");
+      int numTables = 0;
       while (results.next())
       {
+        numTables = numTables + 1;
         createTable(results, schemas, tableFilter, supportedTableTypes);
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d tables", numTables));
     }
   }
 
@@ -240,11 +244,15 @@ final class TableRetriever
                    tableNamePattern,
                    filteredTableTypes));)
       {
-        results.setDescription("retrieveTables");
+        results.setDescription("retrieveTablesFromMetadata");
+        int numTables = 0;
         while (results.next())
         {
+          numTables = numTables + 1;
           createTable(results, schemas, tableFilter, supportedTableTypes);
         }
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Processed %d tables", numTables));
       }
     }
   }
@@ -267,11 +275,15 @@ final class TableRetriever
     try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
       .getTables(null, null, tableNamePattern, filteredTableTypes));)
     {
-      results.setDescription("retrieveTables");
+      results.setDescription("retrieveTablesFromMetadataForAllTables");
+      int numTables = 0;
       while (results.next())
       {
+        numTables = numTables + 1;
         createTable(results, schemas, tableFilter, supportedTableTypes);
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d tables", numTables));
     }
   }
 
