@@ -91,6 +91,7 @@ public final class XmlSerializedCatalog
       xStream.allowTypeHierarchy(Collection.class);
       // allow any type from the same package
       xStream.allowTypesByWildcard(new String[] {
+                                                  "schemacrawler.**",
                                                   "schemacrawler.schema.**",
                                                   "schemacrawler.crawl.**",
                                                   "java.lang.**",
