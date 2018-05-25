@@ -369,6 +369,8 @@ public final class SchemaCrawler
       {
         throw new SchemaCrawlerException("No matching schemas found");
       }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Retrieved %d schemas", schemas.size()));
     }
     catch (final SchemaCrawlerSQLException e)
     {
