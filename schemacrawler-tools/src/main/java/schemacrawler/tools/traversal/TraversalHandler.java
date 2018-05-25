@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.traversal;
 
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 public interface TraversalHandler

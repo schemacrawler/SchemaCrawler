@@ -31,13 +31,13 @@ package schemacrawler.tools.text.schema;
 
 import static sf.util.Utility.isBlank;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.Routine;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;

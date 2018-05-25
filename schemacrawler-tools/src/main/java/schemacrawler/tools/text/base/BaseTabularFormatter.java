@@ -33,12 +33,12 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Collection;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;

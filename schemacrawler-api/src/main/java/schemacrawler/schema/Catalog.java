@@ -32,6 +32,10 @@ package schemacrawler.schema;
 import java.util.Collection;
 import java.util.Optional;
 
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
+import schemacrawler.SchemaCrawlerInfo;
+
 /**
  * Database and connection information.
  *
@@ -60,6 +64,10 @@ public interface Catalog
   DatabaseInfo getDatabaseInfo();
 
   JdbcDriverInfo getJdbcDriverInfo();
+
+  JvmSystemInfo getJvmSystemInfo();
+
+  OperatingSystemInfo getOperatingSystemInfo();
 
   /**
    * Gets the routine.

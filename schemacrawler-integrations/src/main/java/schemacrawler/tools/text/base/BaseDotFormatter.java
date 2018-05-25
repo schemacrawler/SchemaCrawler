@@ -35,10 +35,10 @@ import static sf.util.Utility.isBlank;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.CrawlInfo;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.options.OutputOptions;

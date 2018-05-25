@@ -35,6 +35,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
+import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.CrawlInfo;
@@ -45,7 +48,6 @@ import schemacrawler.schema.Reducer;
 import schemacrawler.schema.Reducible;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaCrawlerInfo;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
@@ -118,9 +120,21 @@ public abstract class BaseCatalogDecorator
   }
 
   @Override
+  public JvmSystemInfo getJvmSystemInfo()
+  {
+    return catalog.getJvmSystemInfo();
+  }
+
+  @Override
   public String getName()
   {
     return catalog.getName();
+  }
+
+  @Override
+  public OperatingSystemInfo getOperatingSystemInfo()
+  {
+    return catalog.getOperatingSystemInfo();
   }
 
   @Override
