@@ -102,6 +102,8 @@ public final class TestUtility
                                              Pattern
                                                .compile("-- operating system:.*"),
                                              Pattern
+                                               .compile("-- JVM system:.*"),
+                                             Pattern
                                                .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
                                              Pattern
                                                .compile("\\s+<product(Name|Version)>.*"),
