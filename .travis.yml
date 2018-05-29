@@ -22,6 +22,7 @@ addons:
   apt:
     packages:
       - graphviz
+      - libc6
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
