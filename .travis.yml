@@ -23,6 +23,7 @@ addons:
     update: true
     packages:
       - graphviz
+      - libc6
 before_install:
   - ldd --version
   - sudo /lib/x86_64-linux-gnu/libc.so.6
