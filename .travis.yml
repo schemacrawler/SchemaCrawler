@@ -22,13 +22,15 @@ addons:
   apt:
     packages:
       - graphviz
-      - libc6
+before-install:
+  - ldd --version
+  - sudo /lib/x86_64-linux-gnu/libc.so.6
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
   - mvn -Dcomplete clean package jacoco:report-aggregate coveralls:report
 after_success:
-  - bash <(curl -s https://codecov.io/bash)  
+  - bash <(curl -s https://codecov.io/bash)
 before_deploy:
   - cd $SC_BUILD_DIR
   - git fetch --tags
@@ -49,7 +51,7 @@ deploy:
       branch: master
       tags: true
     file_glob: true
-    file: 
+    file:
       - "$SC_BUILD_DIR/schemacrawler-distrib/target/schemacrawler-*-distribution.zip"
       - "$SC_BUILD_DIR/schemacrawler-distrib/target/schemacrawler-*-distribution.zip.SHA-512"
   - provider: pages
