@@ -29,35 +29,24 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
-import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
-import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
-import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import schemacrawler.schema.*;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.BaseExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseExecutable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.executable.StagedExecutable;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.filter.ReducerFactory.*;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -66,7 +55,6 @@ import sf.util.SchemaCrawlerLogger;
  */
 public class OfflineSnapshotExecutable
   extends BaseExecutable
-  implements StagedExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -98,8 +86,7 @@ public class OfflineSnapshotExecutable
     executeOn(catalog, connection);
   }
 
-  @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  private void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     loadOfflineSnapshotOptions();
