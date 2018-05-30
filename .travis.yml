@@ -20,9 +20,10 @@ cache:
     - $HOME/.m2
 addons:
   apt:
+    update: true
     packages:
       - graphviz
-before-install:
+before_install:
   - ldd --version
   - sudo /lib/x86_64-linux-gnu/libc.so.6
 script:
