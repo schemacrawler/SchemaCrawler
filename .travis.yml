@@ -20,13 +20,8 @@ cache:
     - $HOME/.m2
 addons:
   apt:
-    update: true
     packages:
       - graphviz
-      - libc6
-before_install:
-  - ldd --version
-  - sudo /lib/x86_64-linux-gnu/libc.so.6
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
