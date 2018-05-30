@@ -50,33 +50,54 @@ public class MonetDBTest
     extends BaseAdditionalDatabaseTest
 {
 
+  private boolean isDatabaseRunning;
+
   @After
   public void stopDatabaseServer()
       throws MonetDBEmbeddedException
   {
-    MonetDBEmbeddedDatabase.stopDatabase();
+    if (isDatabaseRunning)
+    {
+      MonetDBEmbeddedDatabase.stopDatabase();
+    }
   }
 
   @Before
   public void createDatabase()
       throws SchemaCrawlerException, SQLException, IOException
   {
-    // Set up native libraries, and load JDBC driver
-    final Path directoryPath = Files.createTempDirectory("monetdbjavalite");
-    MonetDBEmbeddedDatabase.startDatabase(directoryPath.toString());
-    if (MonetDBEmbeddedDatabase.isDatabaseRunning())
+    try
     {
-      MonetDBEmbeddedDatabase.stopDatabase();
-    }
+      // Set up native libraries, and load JDBC driver
+      final Path directoryPath = Files.createTempDirectory("monetdbjavalite");
+      MonetDBEmbeddedDatabase.startDatabase(directoryPath.toString());
+      if (MonetDBEmbeddedDatabase.isDatabaseRunning())
+      {
+        MonetDBEmbeddedDatabase.stopDatabase();
+      }
 
-    createDatabase("jdbc:monetdb:embedded::memory:",
-                   "/monetdb.scripts.txt");
+      createDatabase("jdbc:monetdb:embedded::memory:",
+                     "/monetdb.scripts.txt");
+
+      isDatabaseRunning = true;
+    }
+    catch (final UnsatisfiedLinkError e)
+    {
+      // Do not run if MonetDBLite cannot be loaded
+      isDatabaseRunning = false;
+    }
   }
 
   @Test
   public void testMonetDBWithConnection()
       throws Exception
   {
+    if (!isDatabaseRunning)
+    {
+      System.out.println("Did not run MonetDB test");
+      return;
+    }
+
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
     options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     // options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
