@@ -29,30 +29,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
-
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.integration.freemarker.FreeMarkerRenderer;
-import schemacrawler.tools.integration.thymeleaf.ThymeleafRenderer;
-import schemacrawler.tools.integration.velocity.VelocityRenderer;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+
 public class TemplatingIntegrationTest
-  extends BaseDatabaseTest
+    extends BaseDatabaseTest
 {
 
   @Test
   public void commandlineFreeMarker()
-    throws Exception
+      throws Exception
   {
     executeCommandlineAndCheckForOutputFile("freemarker",
                                             "plaintextschema.ftl",
@@ -61,7 +58,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void commandlineThymeleaf()
-    throws Exception
+      throws Exception
   {
     executeCommandlineAndCheckForOutputFile("thymeleaf",
                                             "plaintextschema.thymeleaf",
@@ -70,7 +67,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void commandlineVelocity()
-    throws Exception
+      throws Exception
   {
     executeCommandlineAndCheckForOutputFile("velocity",
                                             "plaintextschema.vm",
@@ -79,27 +76,27 @@ public class TemplatingIntegrationTest
 
   @Test
   public void executableFreeMarker()
-    throws Exception
+      throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new FreeMarkerRenderer(),
+    executeExecutableAndCheckForOutputFile("freemarker",
                                            "plaintextschema.ftl",
                                            "executableForFreeMarker");
   }
 
   @Test
   public void executableThymeleaf()
-    throws Exception
+      throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new ThymeleafRenderer(),
+    executeExecutableAndCheckForOutputFile("thymeleaf",
                                            "plaintextschema.thymeleaf",
                                            "executableForThymeleaf");
   }
 
   @Test
   public void executableVelocity()
-    throws Exception
+      throws Exception
   {
-    executeExecutableAndCheckForOutputFile(new VelocityRenderer(),
+    executeExecutableAndCheckForOutputFile("velocity",
                                            "plaintextschema.vm",
                                            "executableForVelocity");
   }
@@ -107,7 +104,7 @@ public class TemplatingIntegrationTest
   private void executeCommandlineAndCheckForOutputFile(final String command,
                                                        final String outputFormatValue,
                                                        final String referenceFileName)
-    throws Exception
+      throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -127,11 +124,12 @@ public class TemplatingIntegrationTest
     }
   }
 
-  private void executeExecutableAndCheckForOutputFile(final Executable executable,
+  private void executeExecutableAndCheckForOutputFile(final String command,
                                                       final String outputFormatValue,
                                                       final String referenceFileName)
-    throws Exception
+      throws Exception
   {
+    final Executable executable = new SchemaCrawlerExecutable(command);
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,

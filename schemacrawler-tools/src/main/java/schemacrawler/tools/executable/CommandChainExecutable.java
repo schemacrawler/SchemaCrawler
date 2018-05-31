@@ -28,16 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Allows chaining multiple executables together, that produce different
@@ -55,9 +55,9 @@ public final class CommandChainExecutable
     super(COMMAND);
   }
 
-  public final Executable addNext(final String command,
-                                  final OutputFormat outputFormat,
-                                  final Path outputFile)
+  public final StagedExecutable addNext(final String command,
+                                        final OutputFormat outputFormat,
+                                        final Path outputFile)
     throws SchemaCrawlerException
   {
     requireNonNull(command, "No command provided");
@@ -69,9 +69,9 @@ public final class CommandChainExecutable
                    outputFile.normalize().toAbsolutePath().toString());
   }
 
-  public final Executable addNext(final String command,
-                                  final String outputFormat,
-                                  final String outputFileName)
+  public final StagedExecutable addNext(final String command,
+                                        final String outputFormat,
+                                        final String outputFileName)
     throws SchemaCrawlerException
   {
     try
@@ -80,7 +80,7 @@ public final class CommandChainExecutable
                                                             Paths
                                                               .get(outputFileName));
 
-      final Executable executable = commandRegistry
+      final StagedExecutable executable = commandRegistry
         .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
       if (executable == null)
       {

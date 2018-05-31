@@ -29,11 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
-import static sf.util.IOUtility.readFully;
+import org.junit.Test;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import sf.util.IOUtility;
 
 import java.io.FileReader;
 import java.nio.file.Files;
@@ -41,18 +47,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.Test;
-
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.integration.scripting.ScriptExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.IOUtility;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
+import static sf.util.IOUtility.readFully;
 
 public class SchemaCrawlerExecutableChainTest
   extends BaseDatabaseTest
@@ -62,7 +61,7 @@ public class SchemaCrawlerExecutableChainTest
   public void chainJavaScript()
     throws Exception
   {
-    final Executable executable = new ScriptExecutable();
+    final Executable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility
       .createTempFilePath(executable.getCommand(), "data");
 

@@ -28,17 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static sf.util.Utility.isBlank;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextExecutable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static sf.util.Utility.isBlank;
 
 public final class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
@@ -63,9 +63,9 @@ public final class SchemaExecutableCommandProvider
   }
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public StagedExecutable configureNewExecutable(final String command,
+                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     final boolean supportsCommand = supportsCommand(command,
@@ -78,7 +78,7 @@ public final class SchemaExecutableCommandProvider
     }
 
     // Create and configure executable
-    final Executable executable = new SchemaTextExecutable(command);
+    final StagedExecutable executable = new SchemaTextExecutable(command);
     if (schemaCrawlerOptions != null)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

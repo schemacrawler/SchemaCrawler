@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
+
+import java.sql.Connection;
 
 /**
  * Allows chaining multiple executables together, that produce shared
@@ -63,7 +63,7 @@ public final class CommandDaisyChainExecutable
 
     for (final String command: commands)
     {
-      final Executable executable = addNext(command);
+      final StagedExecutable executable = addNext(command);
       if (executable == null)
       {
         continue;
@@ -112,12 +112,12 @@ public final class CommandDaisyChainExecutable
 
   }
 
-  private final Executable addNext(final String command)
+  private final StagedExecutable addNext(final String command)
     throws SchemaCrawlerException
   {
     try
     {
-      final Executable executable = commandRegistry
+      final StagedExecutable executable = commandRegistry
         .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
       if (executable == null)
       {

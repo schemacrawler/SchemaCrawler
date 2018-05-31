@@ -28,18 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static sf.util.Utility.isBlank;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.ExecutableCommandProvider;
+import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.ExecutableCommandProvider;
-import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import static sf.util.Utility.isBlank;
 
 public final class GraphExecutableCommandProvider
   extends ExecutableCommandProvider
@@ -64,9 +64,9 @@ public final class GraphExecutableCommandProvider
   }
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public StagedExecutable configureNewExecutable(final String command,
+                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     final boolean supportsCommand = supportsCommand(command,
@@ -85,7 +85,7 @@ public final class GraphExecutableCommandProvider
       .equalsIgnoreCase(outputFormatValue);
 
     // Create and configure executable
-    final Executable executable;
+    final StagedExecutable executable;
     if (isEmbeddedGraph)
     {
       executable = new EmbeddedGraphExecutable(command);

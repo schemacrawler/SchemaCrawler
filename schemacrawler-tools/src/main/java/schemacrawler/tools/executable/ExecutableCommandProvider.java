@@ -28,11 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.logging.Level;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -41,6 +36,11 @@ import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.Collection;
+import java.util.logging.Level;
 
 public abstract class ExecutableCommandProvider
   implements CommandProvider
@@ -60,16 +60,16 @@ public abstract class ExecutableCommandProvider
   }
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public StagedExecutable configureNewExecutable(final String command,
+                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
 
-    Class<? extends Executable> commandExecutableClass;
+    Class<? extends StagedExecutable> commandExecutableClass;
     try
     {
-      commandExecutableClass = (Class<? extends Executable>) Class
+      commandExecutableClass = (Class<? extends StagedExecutable>) Class
         .forName(executableClassName);
     }
     catch (final ClassNotFoundException e)
@@ -79,7 +79,7 @@ public abstract class ExecutableCommandProvider
                                        e);
     }
 
-    Executable executable;
+    StagedExecutable executable;
     try
     {
       executable = commandExecutableClass.newInstance();
@@ -92,7 +92,7 @@ public abstract class ExecutableCommandProvider
                               executableClassName));
       try
       {
-        final Constructor<? extends Executable> constructor = commandExecutableClass
+        final Constructor<? extends StagedExecutable> constructor = commandExecutableClass
           .getConstructor(new Class[] { String.class });
         executable = constructor.newInstance(command);
       }
