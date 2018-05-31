@@ -29,11 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.sql.Connection;
-import java.util.logging.Level;
-
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
@@ -41,6 +36,11 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -60,13 +60,14 @@ public abstract class BaseStagedExecutable
     super(command);
   }
 
+
   /**
    * {@inheritDoc}
    */
   @Override
   public final void execute(final Connection connection,
                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-    throws Exception
+      throws Exception
   {
     requireNonNull(connection, "No connection provided");
     requireNonNull(databaseSpecificOverrideOptions,

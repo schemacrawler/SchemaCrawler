@@ -28,14 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import schemacrawler.crawl.SchemaCrawler;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.DatabaseSpecificOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.text.operation.OperationExecutable;
+import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
+
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.text.operation.OperationExecutable;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Wrapper executable for any SchemaCrawler command. Looks up the
@@ -48,7 +54,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-  extends BaseStagedExecutable
+    extends BaseExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -60,8 +66,46 @@ public final class SchemaCrawlerExecutable
     super(command);
   }
 
+
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public final void execute(final Connection connection,
+                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+      throws Exception
+  {
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOverrideOptions,
+                   "No database specific overrides provided");
+
+    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
+                                                          databaseSpecificOverrideOptions);
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Executing SchemaCrawler command <%s>",
+                                getCommand()));
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG,
+                 String.format("Executable: %s", this.getClass().getName()));
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+      LOGGER.log(Level.CONFIG, databaseSpecificOptions.toString());
+    }
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+    }
+
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
+                                                          databaseSpecificOverrideOptions);
+    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+
+    executeOn(catalog, connection);
+  }
+
+  private void executeOn(final Catalog catalog, final Connection connection)
     throws Exception
   {
     final Commands commands = new Commands(getCommand());
