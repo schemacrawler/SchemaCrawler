@@ -28,14 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.SchemaCrawlerLogger;
 
 /**
  * Allows chaining multiple executables with the same configuration. The
@@ -43,23 +43,24 @@ import sf.util.SchemaCrawlerLogger;
  * executable for efficiency in execution.
  */
 abstract class BaseCommandChainExecutable
-  extends BaseStagedExecutable
+    extends BaseStagedExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(BaseCommandChainExecutable.class.getName());
+      .getLogger(BaseCommandChainExecutable.class.getName());
 
   private final List<Executable> executables;
   protected final CommandRegistry commandRegistry;
 
   protected BaseCommandChainExecutable(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     super(command);
 
     commandRegistry = new CommandRegistry();
     executables = new ArrayList<>();
   }
+
 
   public final Executable addNext(final Executable executable)
   {
@@ -72,7 +73,7 @@ abstract class BaseCommandChainExecutable
 
   protected final void executeChain(final Catalog catalog,
                                     final Connection connection)
-    throws Exception
+      throws Exception
   {
     if (executables.isEmpty())
     {
@@ -80,7 +81,7 @@ abstract class BaseCommandChainExecutable
       return;
     }
 
-    for (final Executable executable: executables)
+    for (final Executable executable : executables)
     {
       if (executable instanceof BaseStagedExecutable)
       {
