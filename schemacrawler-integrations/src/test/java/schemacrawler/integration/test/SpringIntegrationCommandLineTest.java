@@ -28,10 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import org.junit.Ignore;
+import org.junit.Test;
+import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.tools.integration.spring.Main;
+import schemacrawler.tools.options.TextOutputFormat;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,12 +41,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.*;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.integration.spring.Main;
-import schemacrawler.tools.options.TextOutputFormat;
-
+@Ignore
 public class SpringIntegrationCommandLineTest
   extends BaseDatabaseTest
 {

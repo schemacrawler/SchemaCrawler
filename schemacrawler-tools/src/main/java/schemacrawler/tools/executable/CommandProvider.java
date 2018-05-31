@@ -28,19 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
 
+import java.util.Collection;
+
 public interface CommandProvider
 {
 
-  Executable configureNewExecutable(String command,
-                                    SchemaCrawlerOptions schemaCrawlerOptions,
-                                    OutputOptions outputOptions)
+  StagedExecutable configureNewExecutable(String command,
+                                          SchemaCrawlerOptions schemaCrawlerOptions,
+                                          OutputOptions outputOptions)
     throws SchemaCrawlerException;
 
   InputResource getHelp();

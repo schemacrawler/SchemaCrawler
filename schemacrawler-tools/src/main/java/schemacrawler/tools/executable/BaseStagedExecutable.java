@@ -29,18 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
-import java.sql.Connection;
-import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -48,55 +44,123 @@ import static java.util.Objects.requireNonNull;
  * @author Sualeh Fatehi
  */
 public abstract class BaseStagedExecutable
-  extends BaseExecutable
-  implements StagedExecutable
+    implements StagedExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(BaseStagedExecutable.class.getName());
+      .getLogger(BaseStagedExecutable.class.getName());
+
+  protected final String command;
+  protected SchemaCrawlerOptions schemaCrawlerOptions;
+  protected OutputOptions outputOptions;
+  protected Config additionalConfiguration;
+  protected DatabaseSpecificOptions databaseSpecificOptions;
 
   protected BaseStagedExecutable(final String command)
   {
-    super(command);
+    if (isBlank(command))
+    {
+      throw new IllegalArgumentException("No command specified");
+    }
+    this.command = command;
+
+    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    outputOptions = new OutputOptions();
   }
 
+  @Override
+  public DatabaseSpecificOptions getDatabaseSpecificOptions()
+  {
+    return databaseSpecificOptions;
+  }
+
+
+  @Override
+  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
+  {
+    if (databaseSpecificOptions != null)
+    {
+      this.databaseSpecificOptions = databaseSpecificOptions;
+    }
+  }
+
+  @Override
+  public final Config getAdditionalConfiguration()
+  {
+    return additionalConfiguration;
+  }
+
+  @Override
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    if (additionalConfiguration == null)
+    {
+      this.additionalConfiguration = new Config();
+    }
+    else
+    {
+      this.additionalConfiguration = additionalConfiguration;
+    }
+  }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public final void execute(final Connection connection,
-                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-      throws Exception
+  public final String getCommand()
   {
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOverrideOptions,
-                   "No database specific overrides provided");
+    return command;
+  }
 
-    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
-                                                          databaseSpecificOverrideOptions);
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final OutputOptions getOutputOptions()
+  {
+    return outputOptions;
+  }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Executing SchemaCrawler command <%s>",
-                                getCommand()));
-    if (LOGGER.isLoggable(Level.CONFIG))
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void setOutputOptions(final OutputOptions outputOptions)
+  {
+    if (outputOptions != null)
     {
-      LOGGER.log(Level.CONFIG,
-                 String.format("Executable: %s", this.getClass().getName()));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER.log(Level.CONFIG, databaseSpecificOptions.toString());
+      this.outputOptions = outputOptions;
     }
-    if (LOGGER.isLoggable(Level.FINE))
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    if (schemaCrawlerOptions != null)
     {
-      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
     }
+  }
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          databaseSpecificOverrideOptions);
-    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
-
-    executeOn(catalog, connection);
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }

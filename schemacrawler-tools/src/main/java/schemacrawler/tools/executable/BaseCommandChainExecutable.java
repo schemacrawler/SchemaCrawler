@@ -49,7 +49,7 @@ abstract class BaseCommandChainExecutable
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
       .getLogger(BaseCommandChainExecutable.class.getName());
 
-  private final List<Executable> executables;
+  private final List<StagedExecutable> executables;
   protected final CommandRegistry commandRegistry;
 
   protected BaseCommandChainExecutable(final String command)
@@ -62,7 +62,7 @@ abstract class BaseCommandChainExecutable
   }
 
 
-  public final Executable addNext(final Executable executable)
+  public final StagedExecutable addNext(final StagedExecutable executable)
   {
     if (executable != null)
     {
@@ -81,7 +81,7 @@ abstract class BaseCommandChainExecutable
       return;
     }
 
-    for (final Executable executable : executables)
+    for (final StagedExecutable executable : executables)
     {
       if (executable instanceof BaseStagedExecutable)
       {

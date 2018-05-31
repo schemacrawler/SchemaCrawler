@@ -28,19 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Level;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.StagedExecutable;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Level;
 
 public class ThymeleafCommandProvider
   implements CommandProvider
@@ -50,9 +50,9 @@ public class ThymeleafCommandProvider
     .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public StagedExecutable configureNewExecutable(final String command,
+                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
   {
     final ThymeleafRenderer executable = new ThymeleafRenderer();
     if (schemaCrawlerOptions != null)

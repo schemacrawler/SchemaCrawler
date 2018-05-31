@@ -30,11 +30,12 @@ package schemacrawler.integration.test;
 
 
 import org.junit.Test;
-
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.tools.integration.scripting.ScriptExecutable;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 public class ScriptingTest
   extends BaseExecutableTest
@@ -76,13 +77,14 @@ public class ScriptingTest
                       "script_output_rb.txt");
   }
 
-  private ScriptExecutable createScriptExecutable()
+  private Executable createScriptExecutable()
+      throws SchemaCrawlerException
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    final ScriptExecutable scriptExecutable = new ScriptExecutable();
+    final Executable scriptExecutable = new SchemaCrawlerExecutable("script");
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return scriptExecutable;
   }

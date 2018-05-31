@@ -29,36 +29,32 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.file.Files.copy;
-import static java.nio.file.Files.createDirectories;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
-import schemacrawler.tools.integration.graph.GraphExecutable;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+import static java.nio.file.Files.copy;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static schemacrawler.test.utility.TestUtility.clean;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 public class GraphExecutableOptionsTest
   extends BaseExecutableTest
@@ -343,7 +339,7 @@ public class GraphExecutableOptionsTest
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     }
 
-    final GraphExecutable executable = new GraphExecutable(command);
+    final Executable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
@@ -372,7 +368,7 @@ public class GraphExecutableOptionsTest
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
   }
 
-  private Path executeGraphExecutable(final GraphExecutable executable)
+  private Path executeGraphExecutable(final Executable executable)
     throws Exception
   {
     final String outputFormatValue = GraphOutputFormat.png.getFormat();

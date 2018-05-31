@@ -28,26 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
-import static java.util.Objects.requireNonNull;
-import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.IOUtility.createTempFilePath;
-import static sf.util.IOUtility.isFileReadable;
+import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.ExcludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.integration.graph.GraphExecutable;
-import schemacrawler.tools.options.OutputOptions;
+import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.checkConnection;
+import static sf.util.IOUtility.createTempFilePath;
+import static sf.util.IOUtility.isFileReadable;
 
 public class SchemaCrawlerSQLiteUtility
 {
@@ -103,7 +97,7 @@ public class SchemaCrawlerSQLiteUtility
     final OutputOptions outputOptions = new OutputOptions(extension,
                                                           diagramFile);
 
-    final Executable executable = new GraphExecutable("schema");
+    final Executable executable = new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.execute(connection);

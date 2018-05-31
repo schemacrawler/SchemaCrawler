@@ -29,13 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.ServiceLoader;
-import java.util.logging.Level;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.iosource.InputResource;
@@ -43,6 +36,9 @@ import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+
+import java.util.*;
+import java.util.logging.Level;
 
 /**
  * Command registry for mapping commands to executable.
@@ -131,9 +127,9 @@ public final class CommandRegistry
     return false;
   }
 
-  Executable configureNewExecutable(final String command,
-                                    final SchemaCrawlerOptions schemaCrawlerOptions,
-                                    final OutputOptions outputOptions)
+  StagedExecutable configureNewExecutable(final String command,
+                                          final SchemaCrawlerOptions schemaCrawlerOptions,
+                                          final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     CommandProvider executableCommandProvider = null;

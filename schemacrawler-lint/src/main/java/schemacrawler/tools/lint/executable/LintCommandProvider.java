@@ -28,6 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.CommandProvider;
+import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.tools.iosource.StringInputResource;
+import schemacrawler.tools.lint.LinterHelp;
+import schemacrawler.tools.options.OutputOptions;
+import sf.util.IOUtility;
+import sf.util.SchemaCrawlerLogger;
+
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
@@ -39,18 +51,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.CommandProvider;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
-import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.iosource.StringInputResource;
-import schemacrawler.tools.lint.LinterHelp;
-import schemacrawler.tools.options.OutputOptions;
-import sf.util.IOUtility;
-import sf.util.SchemaCrawlerLogger;
-
 public class LintCommandProvider
   implements CommandProvider
 {
@@ -59,9 +59,9 @@ public class LintCommandProvider
     .getLogger(LintCommandProvider.class.getName());
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public StagedExecutable configureNewExecutable(final String command,
+                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                 final OutputOptions outputOptions)
   {
     final LintExecutable executable = new LintExecutable();
     if (schemaCrawlerOptions != null)
