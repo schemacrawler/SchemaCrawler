@@ -68,25 +68,6 @@ public abstract class BaseExecutable
     outputOptions = new OutputOptions();
   }
 
-  /**
-   * Executes main functionality for SchemaCrawler.
-   *
-   * @param connection
-   *        Database connection
-   * @throws Exception
-   *         On an exception
-   * @deprecated
-   */
-  @Deprecated
-  @Override
-  public final void execute(final Connection connection)
-    throws Exception
-  {
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-      .matchDatabaseSpecificOverrideOptions(connection);
-    execute(connection, databaseSpecificOverrideOptions);
-  }
-
   @Override
   public final Config getAdditionalConfiguration()
   {
