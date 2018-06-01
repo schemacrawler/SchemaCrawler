@@ -29,45 +29,40 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import static sf.util.IOUtility.getFileExtension;
-import static sf.util.Utility.isBlank;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.CommandChain;
+import sf.util.ObjectToString;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
+import javax.script.*;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
 
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
-
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.executable.CommandChainExecutable;
-import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import static sf.util.IOUtility.getFileExtension;
+import static sf.util.Utility.isBlank;
 
 /**
  * Main executor for the scripting engine integration.
  *
  * @author Sualeh Fatehi
  */
-public final class ScriptExecutable
-  extends BaseStagedExecutable
+public final class ScriptCommand
+    extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ScriptExecutable.class.getName());
+      .getLogger(ScriptCommand.class.getName());
 
   static final String COMMAND = "script";
 
-  public ScriptExecutable()
+  public ScriptCommand()
   {
     super(COMMAND);
   }
@@ -136,7 +131,7 @@ public final class ScriptExecutable
                                 .getExtensions())));
     }
 
-    final CommandChainExecutable chain = new CommandChainExecutable();
+    final CommandChain chain = new CommandChain();
     chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
     chain.setDatabaseSpecificOptions(databaseSpecificOptions);
     chain.setAdditionalConfiguration(additionalConfiguration);

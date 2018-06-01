@@ -38,17 +38,17 @@ import java.util.Collection;
 public interface CommandProvider
 {
 
-  StagedExecutable configureNewExecutable(String command,
-                                          SchemaCrawlerOptions schemaCrawlerOptions,
-                                          OutputOptions outputOptions)
+  SchemaCrawlerCommand configureNewSchemaCrawlerCommand(String command,
+                                                        SchemaCrawlerOptions schemaCrawlerOptions,
+                                                        OutputOptions outputOptions)
     throws SchemaCrawlerException;
 
   InputResource getHelp();
 
   Collection<String> getSupportedCommands();
 
-  boolean supportsCommand(String command,
-                          SchemaCrawlerOptions schemaCrawlerOptions,
-                          OutputOptions outputOptions);
+  boolean supportsSchemaCrawlerCommand(String command,
+                                       SchemaCrawlerOptions schemaCrawlerOptions,
+                                       OutputOptions outputOptions);
 
 }

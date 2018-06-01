@@ -28,17 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
-
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseStagedExecutable;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintedCatalog;
 import schemacrawler.tools.lint.LinterConfigs;
@@ -46,15 +39,22 @@ import schemacrawler.tools.lint.Linters;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.utility.NamedObjectSort;
 
-public class LintExecutable
-  extends BaseStagedExecutable
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
+
+public class LintCommand
+    extends BaseSchemaCrawlerCommand
 {
 
   public static final String COMMAND = "lint";
 
   private LintOptions lintOptions;
 
-  public LintExecutable()
+  public LintCommand()
   {
     super(COMMAND);
   }

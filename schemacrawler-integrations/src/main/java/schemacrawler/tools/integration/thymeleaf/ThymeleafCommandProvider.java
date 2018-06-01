@@ -30,7 +30,7 @@ package schemacrawler.tools.integration.thymeleaf;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
-import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.StringInputResource;
@@ -50,9 +50,10 @@ public class ThymeleafCommandProvider
     .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
   {
     final ThymeleafRenderer executable = new ThymeleafRenderer();
     if (schemaCrawlerOptions != null)
@@ -91,9 +92,9 @@ public class ThymeleafCommandProvider
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
     return ThymeleafRenderer.COMMAND.equals(command);
   }

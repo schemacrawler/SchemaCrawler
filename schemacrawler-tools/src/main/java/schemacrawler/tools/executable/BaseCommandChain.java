@@ -42,17 +42,17 @@ import java.util.logging.Level;
  * catalog is obtained just once, and passed on from executable to
  * executable for efficiency in execution.
  */
-abstract class BaseCommandChainExecutable
-    extends BaseStagedExecutable
+abstract class BaseCommandChain
+    extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(BaseCommandChainExecutable.class.getName());
+      .getLogger(BaseCommandChain.class.getName());
 
-  private final List<StagedExecutable> executables;
+  private final List<SchemaCrawlerCommand> executables;
   protected final CommandRegistry commandRegistry;
 
-  protected BaseCommandChainExecutable(final String command)
+  protected BaseCommandChain(final String command)
       throws SchemaCrawlerException
   {
     super(command);
@@ -62,7 +62,7 @@ abstract class BaseCommandChainExecutable
   }
 
 
-  public final StagedExecutable addNext(final StagedExecutable executable)
+  public final SchemaCrawlerCommand addNext(final SchemaCrawlerCommand executable)
   {
     if (executable != null)
     {
@@ -81,11 +81,11 @@ abstract class BaseCommandChainExecutable
       return;
     }
 
-    for (final StagedExecutable executable : executables)
+    for (final SchemaCrawlerCommand executable : executables)
     {
-      if (executable instanceof BaseStagedExecutable)
+      if (executable instanceof BaseSchemaCrawlerCommand)
       {
-        final BaseStagedExecutable stagedExecutable = (BaseStagedExecutable) executable;
+        final BaseSchemaCrawlerCommand stagedExecutable = (BaseSchemaCrawlerCommand) executable;
         executable.setDatabaseSpecificOptions(databaseSpecificOptions);
         stagedExecutable.executeOn(catalog, connection);
       }
