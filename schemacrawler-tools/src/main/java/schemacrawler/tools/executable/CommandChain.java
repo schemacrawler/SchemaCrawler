@@ -43,21 +43,21 @@ import static java.util.Objects.requireNonNull;
  * Allows chaining multiple executables together, that produce different
  * artifacts, such as an image and a HTML file.
  */
-public final class CommandChainExecutable
-  extends BaseCommandChainExecutable
+public final class CommandChain
+    extends BaseCommandChain
 {
 
   private static final String COMMAND = "chain";
 
-  public CommandChainExecutable()
+  public CommandChain()
     throws SchemaCrawlerException
   {
     super(COMMAND);
   }
 
-  public final StagedExecutable addNext(final String command,
-                                        final OutputFormat outputFormat,
-                                        final Path outputFile)
+  public final SchemaCrawlerCommand addNext(final String command,
+                                            final OutputFormat outputFormat,
+                                            final Path outputFile)
     throws SchemaCrawlerException
   {
     requireNonNull(command, "No command provided");
@@ -69,9 +69,9 @@ public final class CommandChainExecutable
                    outputFile.normalize().toAbsolutePath().toString());
   }
 
-  public final StagedExecutable addNext(final String command,
-                                        final String outputFormat,
-                                        final String outputFileName)
+  public final SchemaCrawlerCommand addNext(final String command,
+                                            final String outputFormat,
+                                            final String outputFileName)
     throws SchemaCrawlerException
   {
     try
@@ -80,7 +80,7 @@ public final class CommandChainExecutable
                                                             Paths
                                                               .get(outputFileName));
 
-      final StagedExecutable executable = commandRegistry
+      final SchemaCrawlerCommand executable = commandRegistry
         .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
       if (executable == null)
       {

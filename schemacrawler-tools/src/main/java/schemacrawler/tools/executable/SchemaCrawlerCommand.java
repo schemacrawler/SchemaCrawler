@@ -42,7 +42,7 @@ import java.sql.Connection;
  *
  * @author Sualeh Fatehi
  */
-public interface StagedExecutable
+public interface SchemaCrawlerCommand
 {
 
   /**

@@ -34,7 +34,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
-import sf.util.SchemaCrawlerLogger;
 
 import static sf.util.Utility.isBlank;
 
@@ -43,12 +42,9 @@ import static sf.util.Utility.isBlank;
  *
  * @author Sualeh Fatehi
  */
-public abstract class BaseStagedExecutable
-    implements StagedExecutable
+public abstract class BaseSchemaCrawlerCommand
+    implements SchemaCrawlerCommand
 {
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(BaseStagedExecutable.class.getName());
 
   protected final String command;
   protected SchemaCrawlerOptions schemaCrawlerOptions;
@@ -56,7 +52,7 @@ public abstract class BaseStagedExecutable
   protected Config additionalConfiguration;
   protected DatabaseSpecificOptions databaseSpecificOptions;
 
-  protected BaseStagedExecutable(final String command)
+  protected BaseSchemaCrawlerCommand(final String command)
   {
     if (isBlank(command))
     {

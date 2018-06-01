@@ -39,11 +39,11 @@ import java.sql.Connection;
  * Allows chaining multiple executables together, that produce shared
  * artifacts, such as a single HTML file.
  */
-public final class CommandDaisyChainExecutable
-  extends BaseCommandChainExecutable
+public final class CommandDaisyChain
+    extends BaseCommandChain
 {
 
-  public CommandDaisyChainExecutable(final String commands)
+  public CommandDaisyChain(final String commands)
     throws SchemaCrawlerException
   {
     super(commands);
@@ -63,7 +63,7 @@ public final class CommandDaisyChainExecutable
 
     for (final String command: commands)
     {
-      final StagedExecutable executable = addNext(command);
+      final SchemaCrawlerCommand executable = addNext(command);
       if (executable == null)
       {
         continue;
@@ -112,12 +112,12 @@ public final class CommandDaisyChainExecutable
 
   }
 
-  private final StagedExecutable addNext(final String command)
+  private final SchemaCrawlerCommand addNext(final String command)
     throws SchemaCrawlerException
   {
     try
     {
-      final StagedExecutable executable = commandRegistry
+      final SchemaCrawlerCommand executable = commandRegistry
         .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
       if (executable == null)
       {

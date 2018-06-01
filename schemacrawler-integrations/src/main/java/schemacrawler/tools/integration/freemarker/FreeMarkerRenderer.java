@@ -29,6 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.freemarker;
 
 
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import schemacrawler.schema.Catalog;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
+
 import java.io.File;
 import java.io.Writer;
 import java.sql.Connection;
@@ -37,24 +48,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import schemacrawler.schema.Catalog;
-import schemacrawler.tools.executable.BaseStagedExecutable;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-
 /**
  * Main executor for the FreeMarker integration.
  *
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends BaseStagedExecutable
+    extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger

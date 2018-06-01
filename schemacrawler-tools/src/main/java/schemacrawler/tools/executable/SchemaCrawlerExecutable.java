@@ -34,7 +34,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
-import schemacrawler.tools.text.operation.OperationExecutable;
+import schemacrawler.tools.text.operation.OperationCommand;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -139,7 +139,7 @@ public final class SchemaCrawlerExecutable
       throw new SchemaCrawlerException("No command specified");
     }
 
-    BaseStagedExecutable executable = null;
+    BaseSchemaCrawlerCommand executable = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
     for (final String command : commands)
@@ -154,7 +154,7 @@ public final class SchemaCrawlerExecutable
       {
         LOGGER.log(Level.INFO,
                    new StringFormat("Executing as a query <%s>", getCommand()));
-        executable = new OperationExecutable(getCommand());
+        executable = new OperationCommand(getCommand());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         break;
@@ -168,13 +168,13 @@ public final class SchemaCrawlerExecutable
         LOGGER.log(Level.INFO,
                    new StringFormat("Executing commands <%s> in sequence",
                                     commands));
-        executable = new CommandDaisyChainExecutable(getCommand());
+        executable = new CommandDaisyChain(getCommand());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
       }
       else
       {
-        executable = (BaseStagedExecutable) commandRegistry
+        executable = (BaseSchemaCrawlerCommand) commandRegistry
             .configureNewExecutable(getCommand(),
                                     schemaCrawlerOptions,
                                     outputOptions);

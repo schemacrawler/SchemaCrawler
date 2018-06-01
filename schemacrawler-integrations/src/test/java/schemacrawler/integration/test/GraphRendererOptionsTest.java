@@ -56,7 +56,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
-public class GraphExecutableOptionsTest
+public class GraphRendererOptionsTest
   extends BaseExecutableTest
 {
 
@@ -75,12 +75,12 @@ public class GraphExecutableOptionsTest
   public static void setupDirectory()
     throws Exception
   {
-    final Path codePath = Paths.get(GraphExecutableOptionsTest.class
+    final Path codePath = Paths.get(GraphRendererOptionsTest.class
       .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
-      .toAbsolutePath();
+                               .toAbsolutePath();
     directory = codePath
       .resolve("../../../schemacrawler-docs/graphs/"
-               + GraphExecutableOptionsTest.class.getSimpleName())
+                   + GraphRendererOptionsTest.class.getSimpleName())
       .normalize().toAbsolutePath();
     FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);

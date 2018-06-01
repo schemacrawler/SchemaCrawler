@@ -29,9 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
-import static schemacrawler.utility.QueryUtility.executeAgainstTable;
-import static sf.util.DatabaseUtility.createStatement;
-import static sf.util.DatabaseUtility.executeSql;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.traversal.DataTraversalHandler;
+import schemacrawler.utility.Identifiers;
+import schemacrawler.utility.NamedObjectSort;
+import schemacrawler.utility.Query;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -42,32 +50,24 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.executable.BaseStagedExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.traversal.DataTraversalHandler;
-import schemacrawler.utility.Identifiers;
-import schemacrawler.utility.NamedObjectSort;
-import schemacrawler.utility.Query;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import static schemacrawler.utility.QueryUtility.executeAgainstTable;
+import static sf.util.DatabaseUtility.createStatement;
+import static sf.util.DatabaseUtility.executeSql;
 
 /**
  * Basic SchemaCrawler executor.
  *
  * @author Sualeh Fatehi
  */
-public final class OperationExecutable
-  extends BaseStagedExecutable
+public final class OperationCommand
+    extends BaseSchemaCrawlerCommand
 {
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(OperationExecutable.class.getName());
+      .getLogger(OperationCommand.class.getName());
 
   private OperationOptions operationOptions;
 
-  public OperationExecutable(final String command)
+  public OperationCommand(final String command)
   {
     super(command);
   }

@@ -60,16 +60,17 @@ public abstract class ExecutableCommandProvider
   }
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
 
-    Class<? extends StagedExecutable> commandExecutableClass;
+    Class<? extends SchemaCrawlerCommand> commandExecutableClass;
     try
     {
-      commandExecutableClass = (Class<? extends StagedExecutable>) Class
+      commandExecutableClass = (Class<? extends SchemaCrawlerCommand>) Class
         .forName(executableClassName);
     }
     catch (final ClassNotFoundException e)
@@ -79,7 +80,7 @@ public abstract class ExecutableCommandProvider
                                        e);
     }
 
-    StagedExecutable executable;
+    SchemaCrawlerCommand executable;
     try
     {
       executable = commandExecutableClass.newInstance();
@@ -92,7 +93,7 @@ public abstract class ExecutableCommandProvider
                               executableClassName));
       try
       {
-        final Constructor<? extends StagedExecutable> constructor = commandExecutableClass
+        final Constructor<? extends SchemaCrawlerCommand> constructor = commandExecutableClass
           .getConstructor(new Class[] { String.class });
         executable = constructor.newInstance(command);
       }
@@ -129,9 +130,9 @@ public abstract class ExecutableCommandProvider
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
     return supportedCommands.contains(command);
   }

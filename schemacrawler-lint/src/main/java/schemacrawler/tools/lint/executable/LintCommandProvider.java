@@ -30,7 +30,7 @@ package schemacrawler.tools.lint.executable;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
-import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
@@ -59,11 +59,12 @@ public class LintCommandProvider
     .getLogger(LintCommandProvider.class.getName());
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
   {
-    final LintExecutable executable = new LintExecutable();
+    final LintCommand executable = new LintCommand();
     if (schemaCrawlerOptions != null)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -111,15 +112,15 @@ public class LintCommandProvider
   @Override
   public Collection<String> getSupportedCommands()
   {
-    return Arrays.asList(LintExecutable.COMMAND);
+    return Arrays.asList(LintCommand.COMMAND);
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
-    return LintExecutable.COMMAND.equals(command);
+    return LintCommand.COMMAND.equals(command);
   }
 
 }

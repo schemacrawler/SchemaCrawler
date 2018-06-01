@@ -30,11 +30,10 @@ package schemacrawler.test;
 
 
 import org.junit.Test;
-
 import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.tools.options.TextOutputFormat;
 
-public class LintExecutableTest
+public class LintCommandTest
   extends BaseLintExecutableTest
 {
 

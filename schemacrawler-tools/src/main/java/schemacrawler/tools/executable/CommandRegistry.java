@@ -119,7 +119,7 @@ public final class CommandRegistry
     for (final CommandProvider commandProvider: commandRegistry)
     {
       if (commandProvider
-        .supportsCommand(command, schemaCrawlerOptions, outputOptions))
+          .supportsSchemaCrawlerCommand(command, schemaCrawlerOptions, outputOptions))
       {
         return true;
       }
@@ -127,16 +127,16 @@ public final class CommandRegistry
     return false;
   }
 
-  StagedExecutable configureNewExecutable(final String command,
-                                          final SchemaCrawlerOptions schemaCrawlerOptions,
-                                          final OutputOptions outputOptions)
+  SchemaCrawlerCommand configureNewExecutable(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     CommandProvider executableCommandProvider = null;
     for (final CommandProvider commandProvider: commandRegistry)
     {
       if (commandProvider
-        .supportsCommand(command, schemaCrawlerOptions, outputOptions))
+          .supportsSchemaCrawlerCommand(command, schemaCrawlerOptions, outputOptions))
       {
         executableCommandProvider = commandProvider;
         break;
@@ -148,7 +148,7 @@ public final class CommandRegistry
     }
 
     return executableCommandProvider
-      .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
+        .configureNewSchemaCrawlerCommand(command, schemaCrawlerOptions, outputOptions);
   }
 
 }

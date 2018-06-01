@@ -29,30 +29,30 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import java.sql.Connection;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
-import schemacrawler.tools.executable.BaseStagedExecutable;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
+
+import java.sql.Connection;
 
 /**
  * Basic SchemaCrawler executor.
  *
  * @author Sualeh Fatehi
  */
-public final class SchemaTextExecutable
-  extends BaseStagedExecutable
+public final class SchemaTextRenderer
+    extends BaseSchemaCrawlerCommand
 {
 
   private SchemaTextOptions schemaTextOptions;
 
-  public SchemaTextExecutable(final String command)
+  public SchemaTextRenderer(final String command)
   {
     super(command);
   }

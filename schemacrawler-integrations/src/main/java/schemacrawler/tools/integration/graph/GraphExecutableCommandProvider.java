@@ -31,8 +31,8 @@ package schemacrawler.tools.integration.graph;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.ExecutableCommandProvider;
-import schemacrawler.tools.executable.StagedExecutable;
-import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
@@ -64,14 +64,15 @@ public final class GraphExecutableCommandProvider
   }
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    final boolean supportsCommand = supportsCommand(command,
-                                                    schemaCrawlerOptions,
-                                                    outputOptions);
+    final boolean supportsCommand = supportsSchemaCrawlerCommand(command,
+                                                                 schemaCrawlerOptions,
+                                                                 outputOptions);
     if (!supportsCommand)
     {
       throw new SchemaCrawlerException(String
@@ -85,14 +86,14 @@ public final class GraphExecutableCommandProvider
       .equalsIgnoreCase(outputFormatValue);
 
     // Create and configure executable
-    final StagedExecutable executable;
+    final SchemaCrawlerCommand executable;
     if (isEmbeddedGraph)
     {
-      executable = new EmbeddedGraphExecutable(command);
+      executable = new EmbeddedGraphRenderer(command);
     }
     else if (isGraph)
     {
-      executable = new GraphExecutable(command);
+      executable = new GraphRenderer(command);
     }
     else
     {
@@ -120,9 +121,9 @@ public final class GraphExecutableCommandProvider
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
     if (isBlank(command) || outputOptions == null)
     {

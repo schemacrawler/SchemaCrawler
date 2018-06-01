@@ -33,7 +33,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextExecutable;
+import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,14 +63,15 @@ public final class SchemaExecutableCommandProvider
   }
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
-    final boolean supportsCommand = supportsCommand(command,
-                                                    schemaCrawlerOptions,
-                                                    outputOptions);
+    final boolean supportsCommand = supportsSchemaCrawlerCommand(command,
+                                                                 schemaCrawlerOptions,
+                                                                 outputOptions);
     if (!supportsCommand)
     {
       throw new SchemaCrawlerException(String
@@ -78,7 +79,7 @@ public final class SchemaExecutableCommandProvider
     }
 
     // Create and configure executable
-    final StagedExecutable executable = new SchemaTextExecutable(command);
+    final SchemaCrawlerCommand executable = new SchemaTextRenderer(command);
     if (schemaCrawlerOptions != null)
     {
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -99,9 +100,9 @@ public final class SchemaExecutableCommandProvider
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
     if (isBlank(command) || outputOptions == null)
     {

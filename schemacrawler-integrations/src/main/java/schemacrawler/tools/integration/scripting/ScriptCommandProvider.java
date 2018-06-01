@@ -30,7 +30,7 @@ package schemacrawler.tools.integration.scripting;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
-import schemacrawler.tools.executable.StagedExecutable;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.StringInputResource;
@@ -50,11 +50,12 @@ public class ScriptCommandProvider
     .getLogger(ScriptCommandProvider.class.getName());
 
   @Override
-  public StagedExecutable configureNewExecutable(final String command,
-                                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                 final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions
+                                                                   schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
   {
-    final ScriptExecutable executable = new ScriptExecutable();
+    final ScriptCommand executable = new ScriptCommand();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     return executable;
@@ -81,15 +82,15 @@ public class ScriptCommandProvider
   @Override
   public Collection<String> getSupportedCommands()
   {
-    return Arrays.asList(ScriptExecutable.COMMAND);
+    return Arrays.asList(ScriptCommand.COMMAND);
   }
 
   @Override
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
-    return ScriptExecutable.COMMAND.equals(command);
+    return ScriptCommand.COMMAND.equals(command);
   }
 
 }
