@@ -52,37 +52,11 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-@Ignore
 public class SpringIntegrationTest
     extends BaseDatabaseTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
-
-  @Test
-  public void testExecutableForXMLSerialization()
-      throws Exception
-  {
-    final List<String> failures = new ArrayList<>();
-    final String beanDefinitionName = "executableForXMLSerialization";
-    final Object bean = appContext.getBean(beanDefinitionName);
-    if (bean instanceof Executable)
-    {
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
-          .getBean("databaseSpecificOverrideOptions");
-
-      final Executable executable = (Executable) bean;
-      executeAndCheckForOutputFile(beanDefinitionName,
-                                   executable,
-                                   databaseSpecificOverrideOptions,
-                                   failures,
-                                   true);
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
 
   @Test
   public void testExecutables()
@@ -91,10 +65,6 @@ public class SpringIntegrationTest
     final List<String> failures = new ArrayList<>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
-      if (beanDefinitionName.equals("executableForXMLSerialization"))
-      {
-        continue;
-      }
       final Object bean = appContext.getBean(beanDefinitionName);
       if (bean instanceof Executable)
       {

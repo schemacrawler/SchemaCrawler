@@ -44,7 +44,6 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.*;
 
-@Ignore
 public class SpringIntegrationCommandLineTest
   extends BaseDatabaseTest
 {
