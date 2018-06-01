@@ -25,12 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.databaseconnector;
+package schemacrawler.schemacrawler;
 
-
-import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
+
+import static sf.util.Utility.isBlank;
 
 public final class DatabaseServerType
   implements Serializable

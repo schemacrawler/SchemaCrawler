@@ -28,18 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
+import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.regex.Pattern;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.UserCredentials;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseServerType;
-import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector

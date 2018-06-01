@@ -28,15 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.db2;
 
 
+import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.regex.Pattern;
-
-import schemacrawler.crawl.MetadataRetrievalStrategy;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseServerType;
-import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
