@@ -28,25 +28,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.util.function.BiConsumer;
-import java.util.function.Predicate;
-import java.util.logging.Level;
-import java.util.regex.Pattern;
-
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseServerType;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.util.function.BiConsumer;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector

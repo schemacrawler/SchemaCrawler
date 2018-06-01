@@ -28,13 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static sf.util.Utility.isBlank;
+import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.utility.TypeMap;
 
 import java.util.Map;
 import java.util.Optional;
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
-import schemacrawler.utility.TypeMap;
+import static sf.util.Utility.isBlank;
 
 /**
  * Provides for database specific overrides for SchemaCrawler
@@ -45,9 +45,10 @@ import schemacrawler.utility.TypeMap;
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
 public final class DatabaseSpecificOverrideOptions
-  implements Options
+    implements Options
 {
 
+  private final DatabaseServerType dbServerType;
   private final Optional<Boolean> supportsSchemas;
   private final Optional<Boolean> supportsCatalogs;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
@@ -60,11 +61,12 @@ public final class DatabaseSpecificOverrideOptions
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
-
   protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
   {
-    final DatabaseSpecificOverrideOptionsBuilder bldr = builder == null? new DatabaseSpecificOverrideOptionsBuilder()
-                                                                       : builder;
+    final DatabaseSpecificOverrideOptionsBuilder bldr = builder == null ? new
+        DatabaseSpecificOverrideOptionsBuilder()
+        : builder;
+    dbServerType = bldr.getDatabaseServerType();
     supportsSchemas = bldr.getSupportsSchemas();
     supportsCatalogs = bldr.getSupportsCatalogs();
     tableRetrievalStrategy = bldr.getTableRetrievalStrategy();
@@ -76,7 +78,7 @@ public final class DatabaseSpecificOverrideOptions
     functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();
     informationSchemaViews = bldr.getInformationSchemaViewsBuilder()
-      .toOptions();
+                                 .toOptions();
 
     final Map<String, Class<?>> bldrTypeMap = bldr.getTypeMap();
     if (bldrTypeMap != null)
@@ -87,6 +89,11 @@ public final class DatabaseSpecificOverrideOptions
     {
       typeMap = null;
     }
+  }
+
+  public DatabaseServerType getDatabaseServerType()
+  {
+    return dbServerType;
   }
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()

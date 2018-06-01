@@ -28,11 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.crawl.SchemaCrawler;
-import schemacrawler.schema.Catalog;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.text.operation.OperationExecutable;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
@@ -42,6 +43,7 @@ import java.sql.Connection;
 import java.util.logging.Level;
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.filter.ReducerFactory.*;
 
 /**
  * Wrapper executable for any SchemaCrawler command. Looks up the
@@ -58,10 +60,10 @@ public final class SchemaCrawlerExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerExecutable.class.getName());
+      .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     super(command);
   }
@@ -98,16 +100,39 @@ public final class SchemaCrawlerExecutable
       LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
     }
 
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          databaseSpecificOverrideOptions);
-    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader
+        (databaseSpecificOverrideOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
+    LOGGER.log(Level.CONFIG,
+               new StringFormat("Catalog loader: %s", this.getClass().getName()));
 
+    catalogLoader.setAdditionalConfiguration(additionalConfiguration);
+    catalogLoader.setConnection(connection);
+    catalogLoader.setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
+    catalogLoader.setOutputOptions(outputOptions);
+    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    final Catalog catalog = catalogLoader.loadCatalog();
+    requireNonNull(catalog, "No catalog provided");
     executeOn(catalog, connection);
   }
 
   private void executeOn(final Catalog catalog, final Connection connection)
-    throws Exception
+      throws Exception
   {
+    // Reduce all once again, since the catalog may have been loaded from an
+    // offline or other source
+    ((Reducible) catalog).reduce(Schema.class,
+                                 getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class,
+                                 getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class,
+                                 getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class,
+                                 getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class,
+                                 getSequenceReducer(schemaCrawlerOptions));
+
     final Commands commands = new Commands(getCommand());
     if (commands.isEmpty())
     {
@@ -117,13 +142,13 @@ public final class SchemaCrawlerExecutable
     BaseStagedExecutable executable = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
-    for (final String command: commands)
+    for (final String command : commands)
     {
       final boolean isCommand = commandRegistry
-        .supportsCommand(command, schemaCrawlerOptions, outputOptions);
+          .supportsCommand(command, schemaCrawlerOptions, outputOptions);
       final boolean isConfiguredQuery = additionalConfiguration != null
-                                        && additionalConfiguration
-                                          .containsKey(command);
+          && additionalConfiguration
+          .containsKey(command);
       // If the command is a direct query
       if (!isCommand && !isConfiguredQuery)
       {
@@ -150,14 +175,14 @@ public final class SchemaCrawlerExecutable
       else
       {
         executable = (BaseStagedExecutable) commandRegistry
-          .configureNewExecutable(getCommand(),
-                                  schemaCrawlerOptions,
-                                  outputOptions);
+            .configureNewExecutable(getCommand(),
+                                    schemaCrawlerOptions,
+                                    outputOptions);
         LOGGER
-          .log(Level.INFO,
-               new StringFormat("Executing command <%s> using executable <%s>",
-                                getCommand(),
-                                executable.getClass().getName()));
+            .log(Level.INFO,
+                 new StringFormat("Executing command <%s> using executable <%s>",
+                                  getCommand(),
+                                  executable.getClass().getName()));
       }
     }
 
