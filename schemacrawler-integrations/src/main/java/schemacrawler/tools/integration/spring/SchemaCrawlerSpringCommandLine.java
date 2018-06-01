@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.Executable;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -104,7 +105,9 @@ public class SchemaCrawlerSpringCommandLine
           .getBean(springOptions.getExecutableName());
         if (databaseSpecificOverrideOptions == null)
         {
-          executable.execute(connection);
+          final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions1 = SchemaCrawlerUtility
+              .matchDatabaseSpecificOverrideOptions(connection);
+          executable.execute(connection, databaseSpecificOverrideOptions1);
         }
         else
         {

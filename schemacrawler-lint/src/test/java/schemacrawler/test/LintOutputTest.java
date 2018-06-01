@@ -34,16 +34,14 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
@@ -55,6 +53,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class LintOutputTest
@@ -113,7 +112,10 @@ public class LintOutputTest
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(getConnection());
+        final Connection connection = getConnection();
+        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+            .matchDatabaseSpecificOverrideOptions(connection);
+        executable.execute(connection, databaseSpecificOverrideOptions);
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -147,7 +149,10 @@ public class LintOutputTest
       final Executable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(JSON_OUTPUT + "lints.json");
     }
@@ -174,7 +179,10 @@ public class LintOutputTest
       final Executable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(TEXT_OUTPUT + "lint.txt");
     }

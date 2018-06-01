@@ -43,10 +43,12 @@ import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -380,7 +382,10 @@ public class GraphRendererOptionsTest
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    executable.execute(getConnection());
+    final Connection connection = getConnection();
+    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+        .matchDatabaseSpecificOverrideOptions(connection);
+    executable.execute(connection, databaseSpecificOverrideOptions);
 
     validateDiagram(testOutputFile);
 

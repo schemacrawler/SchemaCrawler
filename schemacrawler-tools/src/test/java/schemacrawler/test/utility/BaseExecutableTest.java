@@ -29,8 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
+
+import java.sql.Connection;
 
 public abstract class BaseExecutableTest
   extends BaseDatabaseTest
@@ -47,7 +51,10 @@ public abstract class BaseExecutableTest
                                                             out);
 
       executable.setOutputOptions(outputOptions);
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(referenceFileName);
     }

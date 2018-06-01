@@ -34,6 +34,7 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -42,14 +43,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
-import schemacrawler.schemacrawler.ExcludeAll;
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -63,6 +57,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.utility.IdentifierQuotingStrategy;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerOutputTest
@@ -274,7 +269,10 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -385,7 +383,10 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -438,7 +439,10 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -616,7 +620,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures
         .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
@@ -670,7 +677,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(TABLE_ROW_COUNT_OUTPUT + referenceFile,
                                     testOutputFile,

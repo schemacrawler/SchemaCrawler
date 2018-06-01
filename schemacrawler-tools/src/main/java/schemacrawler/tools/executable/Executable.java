@@ -35,22 +35,10 @@ import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 
 public interface Executable
 {
-
-  /**
-   * Executes main functionality for SchemaCrawler.
-   *
-   * @param connection
-   *        Database connection
-   * @throws Exception
-   *         On an exception
-   * @deprecated
-   */
-  @Deprecated
-  void execute(Connection connection)
-    throws Exception;
 
   /**
    * Executes main functionality for SchemaCrawler.

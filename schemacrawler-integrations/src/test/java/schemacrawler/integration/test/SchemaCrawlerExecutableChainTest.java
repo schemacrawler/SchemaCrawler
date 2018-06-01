@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 
 import org.junit.Test;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -39,12 +40,14 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -82,7 +85,10 @@ public class SchemaCrawlerExecutableChainTest
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());
-    executable.execute(getConnection());
+    final Connection connection = getConnection();
+    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+        .matchDatabaseSpecificOverrideOptions(connection);
+    executable.execute(connection, databaseSpecificOverrideOptions);
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\""
                  + System.lineSeparator(),

@@ -31,12 +31,15 @@ package schemacrawler.integration.test;
 
 import org.junit.Test;
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.SchemaCrawlerUtility;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,7 +141,10 @@ public class TemplatingIntegrationTest
       outputOptions.setOutputEncoding(UTF_8);
 
       executable.setOutputOptions(outputOptions);
-      executable.execute(getConnection());
+      final Connection connection = getConnection();
+      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
+          .matchDatabaseSpecificOverrideOptions(connection);
+      executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(referenceFileName + ".txt");
     }
