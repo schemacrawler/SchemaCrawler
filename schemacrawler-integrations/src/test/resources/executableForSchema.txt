@@ -229,10 +229,10 @@ SYS_CT_10097                                          [check constraint]
 
 
 
-PUBLIC.BOOKS.Global Counts                                       [table]
+PUBLIC.BOOKS."Global Counts"                                     [table]
 ------------------------------------------------------------------------
-1   Global Count                      INTEGER                     
-2   UPDATE                            VARCHAR(20)                 
+1   "Global Count"                    INTEGER                     
+2   "UPDATE"                          VARCHAR(20)                 
 
 
 
@@ -338,9 +338,9 @@ SYS_CT_10197                                          [check constraint]
 
 
 
-PUBLIC.FOR_LINT.Global Counts                                    [table]
+PUBLIC.FOR_LINT."Global Counts"                                  [table]
 ------------------------------------------------------------------------
-1   Global Count                      INTEGER                     
+1   "Global Count"                    INTEGER                     
 
 
 
@@ -353,7 +353,7 @@ PUBLIC.FOR_LINT.PUBLICATIONS                                     [table]
 4   WRITERID                          BIGINT NOT NULL             
 5   PUBLICATIONDATE                   DATE                        
 6   PRICE                             DOUBLE(64, 0)               
-7   UPDATE                            CLOB                        
+7   "UPDATE"                          CLOB                        
 8   PRESS_RELEASE                     CLOB                        
 
 Primary Key
@@ -535,7 +535,7 @@ SYS_CT_10168                                          [check constraint]
 
 
 
-PUBLIC.PUBLISHER SALES.REGIONS                                   [table]
+PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
 ------------------------------------------------------------------------
 1   CITY                              VARCHAR(50) NOT NULL        
 2   STATE                             VARCHAR(2) NOT NULL         
@@ -551,8 +551,8 @@ PK_CUSTOMERS                                               [primary key]
 Foreign Keys
 
 FK_SALES_REGIONS                           [foreign key, with no action]
- 1  POSTALCODE <--(0..many) PUBLIC.PUBLISHER SALES.SALES.POSTALCODE                              
- 2  COUNTRY <--(0..many) PUBLIC.PUBLISHER SALES.SALES.COUNTRY                              
+ 1  POSTALCODE <--(0..many) PUBLIC."PUBLISHER SALES".SALES.POSTALCODE                              
+ 2  COUNTRY <--(0..many) PUBLIC."PUBLISHER SALES".SALES.COUNTRY                              
 
 Indexes
 
@@ -572,7 +572,7 @@ SYS_CT_10227                                          [check constraint]
 
 
 
-PUBLIC.PUBLISHER SALES.SALES                                     [table]
+PUBLIC."PUBLISHER SALES".SALES                                   [table]
 ------------------------------------------------------------------------
 1   POSTALCODE                        VARCHAR(10) NOT NULL        
 2   COUNTRY                           VARCHAR(50) NOT NULL        
@@ -584,11 +584,11 @@ PUBLIC.PUBLISHER SALES.SALES                                     [table]
 Foreign Keys
 
 FK_SALES_SALESDATA                         [foreign key, with no action]
- 1  SALESDATAID (0..many)--> PUBLIC.PUBLISHER SALES.SALESDATA.SALESDATAID                              
+ 1  SALESDATAID (0..many)--> PUBLIC."PUBLISHER SALES".SALESDATA.SALESDATAID                              
 
 FK_SALES_REGIONS                           [foreign key, with no action]
- 1  POSTALCODE (0..many)--> PUBLIC.PUBLISHER SALES.REGIONS.POSTALCODE                              
- 2  COUNTRY (0..many)--> PUBLIC.PUBLISHER SALES.REGIONS.COUNTRY                              
+ 1  POSTALCODE (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.POSTALCODE                              
+ 2  COUNTRY (0..many)--> PUBLIC."PUBLISHER SALES".REGIONS.COUNTRY                              
 
 Indexes
 
@@ -607,7 +607,7 @@ SYS_CT_10236                                          [check constraint]
 
 
 
-PUBLIC.PUBLISHER SALES.SALESDATA                                 [table]
+PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
 ------------------------------------------------------------------------
 1   SALESDATAID                       INTEGER                     
 2   YEARLYAMOUNT                      DOUBLE(64, 0)               
@@ -615,7 +615,7 @@ PUBLIC.PUBLISHER SALES.SALESDATA                                 [table]
 Foreign Keys
 
 FK_SALES_SALESDATA                         [foreign key, with no action]
- 1  SALESDATAID <--(0..many) PUBLIC.PUBLISHER SALES.SALES.SALESDATAID                              
+ 1  SALESDATAID <--(0..many) PUBLIC."PUBLISHER SALES".SALES.SALESDATAID                              
 
 Indexes
 
