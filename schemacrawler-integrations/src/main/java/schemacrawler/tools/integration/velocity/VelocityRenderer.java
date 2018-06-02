@@ -29,6 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.velocity;
 
 
+import java.io.File;
+import java.io.Writer;
+import java.sql.Connection;
+import java.util.Properties;
+import java.util.logging.Level;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -37,17 +43,12 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.io.File;
-import java.io.Writer;
-import java.sql.Connection;
-import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * Main executor for the Velocity integration.
@@ -55,7 +56,7 @@ import java.util.logging.Level;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   static final String COMMAND = "velocity";

@@ -29,6 +29,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static java.nio.file.Files.move;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.createTempFilePath;
+import static sf.util.IOUtility.readResourceFully;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Level;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -43,27 +55,15 @@ import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.SchemaCrawlerLogger;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.util.List;
-import java.util.logging.Level;
-
-import static java.nio.file.Files.move;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.createTempFilePath;
-import static sf.util.IOUtility.readResourceFully;
-
 /**
  * Main executor for the graphing integration.
  */
 public final class GraphRenderer
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(GraphRenderer.class.getName());
+    .getLogger(GraphRenderer.class.getName());
 
   private GraphOptions graphOptions;
 

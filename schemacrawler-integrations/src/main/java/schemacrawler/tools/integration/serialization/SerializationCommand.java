@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-
 import java.io.Writer;
 import java.sql.Connection;
+
+import schemacrawler.schema.Catalog;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
 /**
  * Main executor for the graphing integration.
@@ -41,7 +41,7 @@ import java.sql.Connection;
  * @author Sualeh Fatehi
  */
 public final class SerializationCommand
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   static final String COMMAND = "serialize";

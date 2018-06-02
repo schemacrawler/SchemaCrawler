@@ -29,11 +29,29 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.file.Files.copy;
+import static java.nio.file.Files.createDirectories;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static schemacrawler.test.utility.TestUtility.clean;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.io.FileUtils;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import schemacrawler.schemacrawler.*;
+
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.Executable;
@@ -45,18 +63,6 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.nio.file.Files.copy;
-import static java.nio.file.Files.createDirectories;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 public class GraphRendererOptionsTest
   extends BaseExecutableTest
@@ -79,10 +85,10 @@ public class GraphRendererOptionsTest
   {
     final Path codePath = Paths.get(GraphRendererOptionsTest.class
       .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
-                               .toAbsolutePath();
+      .toAbsolutePath();
     directory = codePath
       .resolve("../../../schemacrawler-docs/graphs/"
-                   + GraphRendererOptionsTest.class.getSimpleName())
+               + GraphRendererOptionsTest.class.getSimpleName())
       .normalize().toAbsolutePath();
     FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);
@@ -384,7 +390,7 @@ public class GraphRendererOptionsTest
     executable.setOutputOptions(outputOptions);
     final Connection connection = getConnection();
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
+      .matchDatabaseSpecificOverrideOptions(connection);
     executable.execute(connection, databaseSpecificOverrideOptions);
 
     validateDiagram(testOutputFile);

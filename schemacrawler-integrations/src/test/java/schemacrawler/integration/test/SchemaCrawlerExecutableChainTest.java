@@ -29,7 +29,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static schemacrawler.test.utility.TestUtility.validateDiagram;
+import static sf.util.IOUtility.readFully;
+
+import java.io.FileReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.util.List;
+
 import org.junit.Test;
+
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -42,19 +56,6 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
-
-import java.io.FileReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
-import static sf.util.IOUtility.readFully;
 
 public class SchemaCrawlerExecutableChainTest
   extends BaseDatabaseTest
@@ -87,7 +88,7 @@ public class SchemaCrawlerExecutableChainTest
         .toConfig());
     final Connection connection = getConnection();
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
+      .matchDatabaseSpecificOverrideOptions(connection);
     executable.execute(connection, databaseSpecificOverrideOptions);
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\""

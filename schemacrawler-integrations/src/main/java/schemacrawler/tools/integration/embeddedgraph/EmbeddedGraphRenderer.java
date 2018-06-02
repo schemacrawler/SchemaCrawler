@@ -28,11 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.embeddedgraph;
 
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.newBufferedReader;
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
+import static sf.util.IOUtility.copy;
+import static sf.util.IOUtility.createTempFilePath;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,15 +45,14 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedReader;
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.*;
-import static sf.util.IOUtility.copy;
-import static sf.util.IOUtility.createTempFilePath;
+import schemacrawler.schema.Catalog;
+import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.executable.CommandChain;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedGraphRenderer
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static Pattern svgInsertionPoint = Pattern

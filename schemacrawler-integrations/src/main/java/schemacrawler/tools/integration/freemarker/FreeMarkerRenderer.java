@@ -29,6 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.freemarker;
 
 
+import java.io.File;
+import java.io.Writer;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Level;
+
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
@@ -40,21 +48,13 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-import java.io.File;
-import java.io.Writer;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.logging.Level;
-
 /**
  * Main executor for the FreeMarker integration.
  *
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger

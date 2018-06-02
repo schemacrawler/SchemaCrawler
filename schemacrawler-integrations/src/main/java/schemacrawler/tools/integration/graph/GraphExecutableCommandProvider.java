@@ -28,6 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static sf.util.Utility.isBlank;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.ExecutableCommandProvider;
@@ -35,11 +40,6 @@ import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static sf.util.Utility.isBlank;
 
 public final class GraphExecutableCommandProvider
   extends ExecutableCommandProvider
@@ -65,8 +65,7 @@ public final class GraphExecutableCommandProvider
 
   @Override
   public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions
-                                                                   schemaCrawlerOptions,
+                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                                                final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
