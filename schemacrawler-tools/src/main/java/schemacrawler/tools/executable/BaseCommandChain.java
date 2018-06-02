@@ -38,56 +38,52 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 
 /**
- * Allows chaining multiple executables with the same configuration. The
+ * Allows chaining multiple scCommands with the same configuration. The
  * catalog is obtained just once, and passed on from executable to
  * executable for efficiency in execution.
  */
 abstract class BaseCommandChain
-  extends BaseSchemaCrawlerCommand
+    extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(BaseCommandChain.class.getName());
+      .getLogger(BaseCommandChain.class.getName());
 
-  private final List<SchemaCrawlerCommand> executables;
+  private final List<SchemaCrawlerCommand> scCommands;
   protected final CommandRegistry commandRegistry;
 
   protected BaseCommandChain(final String command)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
     super(command);
 
     commandRegistry = new CommandRegistry();
-    executables = new ArrayList<>();
+    scCommands = new ArrayList<>();
   }
 
-  public final SchemaCrawlerCommand addNext(final SchemaCrawlerCommand executable)
+  public final SchemaCrawlerCommand addNext(final SchemaCrawlerCommand scCommand)
   {
-    if (executable != null)
+    if (scCommand != null)
     {
-      executables.add(executable);
+      scCommands.add(scCommand);
     }
-    return executable;
+    return scCommand;
   }
 
   protected final void executeChain(final Catalog catalog,
                                     final Connection connection)
-    throws Exception
+      throws Exception
   {
-    if (executables.isEmpty())
+    if (scCommands.isEmpty())
     {
       LOGGER.log(Level.INFO, "No commands to execute");
       return;
     }
 
-    for (final SchemaCrawlerCommand executable: executables)
+    for (final SchemaCrawlerCommand scCommand : scCommands)
     {
-      if (executable instanceof BaseSchemaCrawlerCommand)
-      {
-        final BaseSchemaCrawlerCommand stagedExecutable = (BaseSchemaCrawlerCommand) executable;
-        executable.setDatabaseSpecificOptions(databaseSpecificOptions);
-        stagedExecutable.executeOn(catalog, connection);
-      }
+      scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
+      scCommand.executeOn(catalog, connection);
     }
   }
 

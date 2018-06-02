@@ -187,9 +187,9 @@ public final class SchemaCrawlerExecutable
       else
       {
         executable = (BaseSchemaCrawlerCommand) commandRegistry
-          .configureNewExecutable(getCommand(),
-                                  schemaCrawlerOptions,
-                                  outputOptions);
+          .configureNewCommand(getCommand(),
+                               schemaCrawlerOptions,
+                               outputOptions);
         LOGGER
           .log(Level.INFO,
                new StringFormat("Executing command <%s> using executable <%s>",

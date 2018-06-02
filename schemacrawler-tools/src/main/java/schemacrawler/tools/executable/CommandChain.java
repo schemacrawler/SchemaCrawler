@@ -80,16 +80,16 @@ public final class CommandChain
                                                             Paths
                                                               .get(outputFileName));
 
-      final SchemaCrawlerCommand executable = commandRegistry
-        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
-      if (executable == null)
+      final SchemaCrawlerCommand scCommand = commandRegistry
+        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
+      if (scCommand == null)
       {
         return null;
       }
 
-      executable.setAdditionalConfiguration(additionalConfiguration);
+      scCommand.setAdditionalConfiguration(additionalConfiguration);
 
-      return addNext(executable);
+      return addNext(scCommand);
     }
     catch (final Exception e)
     {

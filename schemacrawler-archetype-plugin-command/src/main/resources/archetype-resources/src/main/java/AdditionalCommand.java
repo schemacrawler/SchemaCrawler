@@ -12,16 +12,16 @@ import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseStagedExecutable;
 import sf.util.StringFormat;
 
-public class AdditionalExecutable
-  extends BaseStagedExecutable
+public class AdditionalCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static final Logger LOGGER = Logger
-    .getLogger(AdditionalExecutable.class.getName());
+    .getLogger(AdditionalCommand.class.getName());
 
   static final String COMMAND = "additional";
 
-  protected AdditionalExecutable()
+  protected AdditionalCommand()
   {
     super(COMMAND);
   }
@@ -31,8 +31,7 @@ public class AdditionalExecutable
     throws Exception
   {
     // TODO: Possibly process command-line options, which are available
-    // in
-    // additionalConfiguration
+    // in additionalConfiguration
 
     try (final PrintWriter writer = new PrintWriter(outputOptions
       .openNewOutputWriter());)
