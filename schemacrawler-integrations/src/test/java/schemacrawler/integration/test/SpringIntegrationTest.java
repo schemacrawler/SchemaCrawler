@@ -28,10 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import org.junit.Ignore;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
@@ -43,24 +52,15 @@ import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-
 public class SpringIntegrationTest
-    extends BaseDatabaseTest
+  extends BaseDatabaseTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
   @Test
   public void testExecutables()
-      throws Exception
+    throws Exception
   {
     final List<String> failures = new ArrayList<>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
@@ -69,7 +69,7 @@ public class SpringIntegrationTest
       if (bean instanceof Executable)
       {
         final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
-            .getBean("databaseSpecificOverrideOptions");
+          .getBean("databaseSpecificOverrideOptions");
 
         final Executable executable = (Executable) bean;
         executeAndCheckForOutputFile(beanDefinitionName,
@@ -87,10 +87,10 @@ public class SpringIntegrationTest
 
   @Test
   public void testSchema()
-      throws Exception
+    throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
-        .getBean("schemaCrawlerOptions");
+      .getBean("schemaCrawlerOptions");
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -104,13 +104,13 @@ public class SpringIntegrationTest
                                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                             final List<String> failures,
                                             final boolean isCompressedOutput)
-      throws Exception
+    throws Exception
   {
     final Path testOutputFile = IOUtility.createTempFilePath(executableName,
                                                              "data");
 
     final SchemaCrawlerOptions schemaCrawlerOptions = executable
-        .getSchemaCrawlerOptions();
+      .getSchemaCrawlerOptions();
     schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 

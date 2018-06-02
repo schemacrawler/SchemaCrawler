@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 
 import org.junit.Test;
+
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -78,7 +79,7 @@ public class ScriptingTest
   }
 
   private Executable createScriptExecutable()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions

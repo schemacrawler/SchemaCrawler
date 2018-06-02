@@ -43,7 +43,15 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -271,7 +279,7 @@ public class SchemaCrawlerOutputTest
           .toConfig());
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
@@ -385,7 +393,7 @@ public class SchemaCrawlerOutputTest
           .toConfig());
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
@@ -441,7 +449,7 @@ public class SchemaCrawlerOutputTest
           .toConfig());
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
@@ -622,7 +630,7 @@ public class SchemaCrawlerOutputTest
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures
@@ -679,7 +687,7 @@ public class SchemaCrawlerOutputTest
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       failures.addAll(compareOutput(TABLE_ROW_COUNT_OUTPUT + referenceFile,

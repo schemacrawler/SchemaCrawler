@@ -29,6 +29,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import static sf.util.IOUtility.getFileExtension;
+import static sf.util.Utility.isBlank;
+
+import java.io.Reader;
+import java.io.Writer;
+import java.sql.Connection;
+import java.util.List;
+import java.util.logging.Level;
+
+import javax.script.Compilable;
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -38,27 +53,17 @@ import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-import javax.script.*;
-import java.io.Reader;
-import java.io.Writer;
-import java.sql.Connection;
-import java.util.List;
-import java.util.logging.Level;
-
-import static sf.util.IOUtility.getFileExtension;
-import static sf.util.Utility.isBlank;
-
 /**
  * Main executor for the scripting engine integration.
  *
  * @author Sualeh Fatehi
  */
 public final class ScriptCommand
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(ScriptCommand.class.getName());
+    .getLogger(ScriptCommand.class.getName());
 
   static final String COMMAND = "script";
 

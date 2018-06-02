@@ -29,7 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -39,20 +47,13 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
 public class TemplatingIntegrationTest
-    extends BaseDatabaseTest
+  extends BaseDatabaseTest
 {
 
   @Test
   public void commandlineFreeMarker()
-      throws Exception
+    throws Exception
   {
     executeCommandlineAndCheckForOutputFile("freemarker",
                                             "plaintextschema.ftl",
@@ -61,7 +62,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void commandlineThymeleaf()
-      throws Exception
+    throws Exception
   {
     executeCommandlineAndCheckForOutputFile("thymeleaf",
                                             "plaintextschema.thymeleaf",
@@ -70,7 +71,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void commandlineVelocity()
-      throws Exception
+    throws Exception
   {
     executeCommandlineAndCheckForOutputFile("velocity",
                                             "plaintextschema.vm",
@@ -79,7 +80,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void executableFreeMarker()
-      throws Exception
+    throws Exception
   {
     executeExecutableAndCheckForOutputFile("freemarker",
                                            "plaintextschema.ftl",
@@ -88,7 +89,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void executableThymeleaf()
-      throws Exception
+    throws Exception
   {
     executeExecutableAndCheckForOutputFile("thymeleaf",
                                            "plaintextschema.thymeleaf",
@@ -97,7 +98,7 @@ public class TemplatingIntegrationTest
 
   @Test
   public void executableVelocity()
-      throws Exception
+    throws Exception
   {
     executeExecutableAndCheckForOutputFile("velocity",
                                            "plaintextschema.vm",
@@ -107,7 +108,7 @@ public class TemplatingIntegrationTest
   private void executeCommandlineAndCheckForOutputFile(final String command,
                                                        final String outputFormatValue,
                                                        final String referenceFileName)
-      throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -130,7 +131,7 @@ public class TemplatingIntegrationTest
   private void executeExecutableAndCheckForOutputFile(final String command,
                                                       final String outputFormatValue,
                                                       final String referenceFileName)
-      throws Exception
+    throws Exception
   {
     final Executable executable = new SchemaCrawlerExecutable(command);
     try (final TestWriter out = new TestWriter(outputFormatValue);)
@@ -143,7 +144,7 @@ public class TemplatingIntegrationTest
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(referenceFileName + ".txt");

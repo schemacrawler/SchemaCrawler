@@ -106,7 +106,7 @@ public class SchemaCrawlerSpringCommandLine
         if (databaseSpecificOverrideOptions == null)
         {
           final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions1 = SchemaCrawlerUtility
-              .matchDatabaseSpecificOverrideOptions(connection);
+            .matchDatabaseSpecificOverrideOptions(connection);
           executable.execute(connection, databaseSpecificOverrideOptions1);
         }
         else
