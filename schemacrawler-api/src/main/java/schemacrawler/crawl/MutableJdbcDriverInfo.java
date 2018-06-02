@@ -78,18 +78,6 @@ final class MutableJdbcDriverInfo
 
   /**
    * {@inheritDoc}
-   *
-   * @deprecated
-   */
-  @Override
-  @Deprecated
-  public String getDriverName()
-  {
-    return getProductName();
-  }
-
-  /**
-   * {@inheritDoc}
    */
   @Override
   public Collection<JdbcDriverProperty> getDriverProperties()
@@ -97,18 +85,6 @@ final class MutableJdbcDriverInfo
     final List<JdbcDriverProperty> properties = new ArrayList<>(jdbcDriverProperties);
     Collections.sort(properties);
     return properties;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @deprecated
-   */
-  @Override
-  @Deprecated
-  public String getDriverVersion()
-  {
-    return getProductVersion();
   }
 
   /**

@@ -137,33 +137,9 @@ public final class JavaSqlType
     return defaultMappedClass;
   }
 
-  /**
-   * The java.sql.Types type.
-   *
-   * @return java.sql.Types type
-   * @deprecated
-   */
-  @Deprecated
-  public int getJavaSqlType()
-  {
-    return getVendorTypeNumber();
-  }
-
   public JavaSqlTypeGroup getJavaSqlTypeGroup()
   {
     return javaSqlTypeGroup;
-  }
-
-  /**
-   * The java.sql.Types type name.
-   *
-   * @return java.sql.Types type names
-   * @deprecated
-   */
-  @Deprecated
-  public String getJavaSqlTypeName()
-  {
-    return getName();
   }
 
   @Override
