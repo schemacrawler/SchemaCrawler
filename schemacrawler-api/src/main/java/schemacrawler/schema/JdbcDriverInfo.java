@@ -57,29 +57,11 @@ public interface JdbcDriverInfo
   String getDriverClassName();
 
   /**
-   * Gets the name of the JDBC driver.
-   *
-   * @return Driver name
-   * @deprecated
-   */
-  @Deprecated
-  String getDriverName();
-
-  /**
    * Gets all the JDBC driver properties, and their values.
    *
    * @return JDBC driver properties
    */
   Collection<JdbcDriverProperty> getDriverProperties();
-
-  /**
-   * Gets the JDBC driver version.
-   *
-   * @return Driver version.
-   * @deprecated
-   */
-  @Deprecated
-  String getDriverVersion();
 
   /**
    * Reports whether this JDBC driver is a genuine JDBC Compliant
