@@ -28,9 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import java.io.Serializable;
-
 import static sf.util.Utility.isBlank;
+
+import java.io.Serializable;
 
 public final class DatabaseServerType
   implements Serializable

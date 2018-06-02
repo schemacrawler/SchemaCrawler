@@ -695,14 +695,14 @@ public class SchemaCrawlerTest
                                                            : createParameters);
 
     final String literalPrefix = columnDataType.getLiteralPrefix();
-    final String literalPrefixText = (isBlank(literalPrefix)? "no literal prefix"
-                                                            : "literal prefix "
-                                                              + literalPrefix);
+    final String literalPrefixText = isBlank(literalPrefix)? "no literal prefix"
+                                                           : "literal prefix "
+                                                             + literalPrefix;
 
     final String literalSuffix = columnDataType.getLiteralSuffix();
-    final String literalSuffixText = (isBlank(literalSuffix)? "no literal suffix"
-                                                            : "literal suffix "
-                                                              + literalSuffix);
+    final String literalSuffixText = isBlank(literalSuffix)? "no literal suffix"
+                                                           : "literal suffix "
+                                                             + literalSuffix;
 
     final String javaSqlType = "java.sql.Types: "
                                + columnDataType.getJavaSqlType().getName();

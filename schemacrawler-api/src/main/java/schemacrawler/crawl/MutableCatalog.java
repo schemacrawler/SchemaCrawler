@@ -159,15 +159,15 @@ final class MutableCatalog
   }
 
   @Override
-  public OperatingSystemInfo getOperatingSystemInfo()
-  {
-    return osInfo;
-  }
-
-  @Override
   public JvmSystemInfo getJvmSystemInfo()
   {
     return jvmInfo;
+  }
+
+  @Override
+  public OperatingSystemInfo getOperatingSystemInfo()
+  {
+    return osInfo;
   }
 
   /**

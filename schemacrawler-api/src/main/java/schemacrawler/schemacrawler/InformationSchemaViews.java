@@ -54,7 +54,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
 import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 
 import java.sql.DatabaseMetaData;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import schemacrawler.utility.Query;
@@ -88,7 +88,7 @@ public final class InformationSchemaViews
    */
   InformationSchemaViews(final Map<InformationSchemaKey, String> informationSchemaViewsQueries)
   {
-    informationSchemaQueries = new HashMap<>();
+    informationSchemaQueries = new EnumMap<>(InformationSchemaKey.class);
     if (informationSchemaViewsQueries != null)
     {
       informationSchemaQueries.putAll(informationSchemaViewsQueries);

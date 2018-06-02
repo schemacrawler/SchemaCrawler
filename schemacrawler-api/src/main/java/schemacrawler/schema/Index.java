@@ -88,6 +88,6 @@ public interface Index
    *        Unqualified name
    * @return Column.
    */
-  Optional<? extends IndexColumn> lookupColumn(String name);
+  <C extends IndexColumn> Optional<C> lookupColumn(String name);
 
 }
