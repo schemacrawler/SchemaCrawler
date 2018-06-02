@@ -28,7 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.*;
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -37,10 +48,6 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.util.logging.Level;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.

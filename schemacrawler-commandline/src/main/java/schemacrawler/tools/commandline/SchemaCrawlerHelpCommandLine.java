@@ -28,6 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.util.Collection;
+import java.util.logging.Level;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -38,16 +48,6 @@ import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.util.Collection;
-import java.util.logging.Level;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
