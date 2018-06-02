@@ -64,14 +64,28 @@ public class SchemaCrawlerJsonOutputTest
 
   private static final String JSON_EXTRA_OUTPUT = "json_extra_output/";
 
-  @Rule
-  public TestName testName = new TestName();
-
   @BeforeClass
   public static void cleanOutput()
     throws Exception
   {
     clean(JSON_EXTRA_OUTPUT);
+  }
+
+  @Rule
+  public TestName testName = new TestName();
+
+  @Test
+  public void noTableJsonOutput()
+    throws Exception
+  {
+    jsonOutput(fullName -> false, "");
+  }
+
+  @Test
+  public void singleTableJsonOutput()
+    throws Exception
+  {
+    jsonOutput(fullName -> fullName.contains("Counts"), "%Counts");
   }
 
   private void jsonOutput(final InclusionRule tableInclusionRule,
@@ -121,20 +135,6 @@ public class SchemaCrawlerJsonOutputTest
     {
       fail(failures.toString());
     }
-  }
-
-  @Test
-  public void noTableJsonOutput()
-    throws Exception
-  {
-    jsonOutput(fullName -> false, "");
-  }
-
-  @Test
-  public void singleTableJsonOutput()
-    throws Exception
-  {
-    jsonOutput(fullName -> fullName.contains("Counts"), "%Counts");
   }
 
 }

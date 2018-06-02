@@ -89,51 +89,13 @@ public class JSONArray
       final int length = Array.getLength(array);
       for (int i = 0; i < length; i += 1)
       {
-        this.put(JSONObject.wrap(Array.get(array, i)));
+        put(JSONObject.wrap(Array.get(array, i)));
       }
     }
     else
     {
       throw new JSONException("JSONArray initial value should be a string or collection or array.");
     }
-  }
-
-  /**
-   * Make a string from the contents of this JSONArray. The
-   * <code>separator</code> string is inserted between each element.
-   * Warning: This method assumes that the data structure is acyclical.
-   *
-   * @param separator
-   *        A string that will be inserted between the elements.
-   * @return a string.
-   * @throws JSONException
-   *         If the array contains an invalid number.
-   */
-  private String join(final String separator)
-    throws JSONException
-  {
-    final int len = length();
-    final StringBuffer sb = new StringBuffer();
-
-    for (int i = 0; i < len; i += 1)
-    {
-      if (i > 0)
-      {
-        sb.append(separator);
-      }
-      sb.append(JSONObject.valueToString(myArrayList.get(i)));
-    }
-    return sb.toString();
-  }
-
-  /**
-   * Get the number of elements in the JSONArray, included nulls.
-   *
-   * @return The length (or size).
-   */
-  private int length()
-  {
-    return myArrayList.size();
   }
 
   /**
@@ -172,55 +134,6 @@ public class JSONArray
     catch (final Exception e)
     {
       return null;
-    }
-  }
-
-  /**
-   * Write the contents of the JSONArray as JSON text to a writer. For
-   * compactness, no whitespace is added.
-   * <p>
-   * Warning: This method assumes that the data structure is acyclical.
-   *
-   * @return The writer.
-   * @throws JSONException
-   */
-  Writer write(final Writer writer)
-    throws JSONException
-  {
-    try
-    {
-      boolean b = false;
-      final int len = length();
-
-      writer.write('[');
-
-      for (int i = 0; i < len; i += 1)
-      {
-        if (b)
-        {
-          writer.write(',');
-        }
-        final Object v = myArrayList.get(i);
-        if (v instanceof JSONObject)
-        {
-          ((JSONObject) v).write(writer);
-        }
-        else if (v instanceof JSONArray)
-        {
-          ((JSONArray) v).write(writer);
-        }
-        else
-        {
-          writer.write(JSONObject.valueToString(v));
-        }
-        b = true;
-      }
-      writer.write(']');
-      return writer;
-    }
-    catch (final IOException e)
-    {
-      throw new JSONException(e);
     }
   }
 
@@ -330,6 +243,93 @@ public class JSONArray
       }
     }
     writer.print(']');
+  }
+
+  /**
+   * Write the contents of the JSONArray as JSON text to a writer. For
+   * compactness, no whitespace is added.
+   * <p>
+   * Warning: This method assumes that the data structure is acyclical.
+   *
+   * @return The writer.
+   * @throws JSONException
+   */
+  Writer write(final Writer writer)
+    throws JSONException
+  {
+    try
+    {
+      boolean b = false;
+      final int len = length();
+
+      writer.write('[');
+
+      for (int i = 0; i < len; i += 1)
+      {
+        if (b)
+        {
+          writer.write(',');
+        }
+        final Object v = myArrayList.get(i);
+        if (v instanceof JSONObject)
+        {
+          ((JSONObject) v).write(writer);
+        }
+        else if (v instanceof JSONArray)
+        {
+          ((JSONArray) v).write(writer);
+        }
+        else
+        {
+          writer.write(JSONObject.valueToString(v));
+        }
+        b = true;
+      }
+      writer.write(']');
+      return writer;
+    }
+    catch (final IOException e)
+    {
+      throw new JSONException(e);
+    }
+  }
+
+  /**
+   * Make a string from the contents of this JSONArray. The
+   * <code>separator</code> string is inserted between each element.
+   * Warning: This method assumes that the data structure is acyclical.
+   *
+   * @param separator
+   *        A string that will be inserted between the elements.
+   * @return a string.
+   * @throws JSONException
+   *         If the array contains an invalid number.
+   */
+  private String join(final String separator)
+    throws JSONException
+  {
+    final int len = length();
+    final StringBuffer sb = new StringBuffer();
+
+    for (int i = 0; i < len; i += 1)
+    {
+      if (i > 0)
+      {
+        sb.append(separator);
+      }
+      sb.append(JSONObject.valueToString(myArrayList.get(i)));
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Get the number of elements in the JSONArray, included nulls.
+   *
+   * @return The length (or size).
+   */
+  private int length()
+  {
+    return myArrayList.size();
   }
 
 }

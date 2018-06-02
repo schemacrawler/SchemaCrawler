@@ -28,23 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
+import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 
-import static java.util.Objects.requireNonNull;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Allows chaining multiple executables together, that produce different
  * artifacts, such as an image and a HTML file.
  */
 public final class CommandChain
-    extends BaseCommandChain
+  extends BaseCommandChain
 {
 
   private static final String COMMAND = "chain";

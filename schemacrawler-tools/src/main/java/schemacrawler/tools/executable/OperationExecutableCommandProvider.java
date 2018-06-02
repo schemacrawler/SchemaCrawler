@@ -28,17 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.tools.text.operation.Operation;
-
 import java.util.ArrayList;
 import java.util.Collection;
+
+import schemacrawler.tools.text.operation.Operation;
 
 final class OperationExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static final String OPERATION_EXECUTABLE = "schemacrawler.tools.text.operation" +
-      ".OperationCommand";
+  private static final String OPERATION_EXECUTABLE = "schemacrawler.tools.text.operation"
+                                                     + ".OperationCommand";
 
   private static Collection<String> supportedCommands()
   {

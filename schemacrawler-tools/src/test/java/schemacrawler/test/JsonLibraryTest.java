@@ -37,21 +37,21 @@ public class JsonLibraryTest
   public TestName testName = new TestName();
 
   @Test
-  public void emptyJsonObject()
-    throws Exception
-  {
-    final JSONObject jsonObject = new JSONObject();
-    jsonObject.put("object", new JSONObject());
-
-    testJson(jsonObject);
-  }
-
-  @Test
   public void emptyJsonArray()
     throws Exception
   {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put("array", new JSONArray());
+
+    testJson(jsonObject);
+  }
+
+  @Test
+  public void emptyJsonObject()
+    throws Exception
+  {
+    final JSONObject jsonObject = new JSONObject();
+    jsonObject.put("object", new JSONObject());
 
     testJson(jsonObject);
   }

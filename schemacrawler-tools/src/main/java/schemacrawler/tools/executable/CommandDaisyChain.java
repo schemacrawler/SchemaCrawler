@@ -28,19 +28,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
-
-import java.sql.Connection;
 
 /**
  * Allows chaining multiple executables together, that produce shared
  * artifacts, such as a single HTML file.
  */
 public final class CommandDaisyChain
-    extends BaseCommandChain
+  extends BaseCommandChain
 {
 
   public CommandDaisyChain(final String commands)

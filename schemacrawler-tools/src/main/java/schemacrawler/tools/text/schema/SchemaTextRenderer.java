@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -39,15 +41,13 @@ import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
 
-import java.sql.Connection;
-
 /**
  * Basic SchemaCrawler executor.
  *
  * @author Sualeh Fatehi
  */
 public final class SchemaTextRenderer
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private SchemaTextOptions schemaTextOptions;

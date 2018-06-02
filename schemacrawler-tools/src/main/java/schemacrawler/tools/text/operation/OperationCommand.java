@@ -29,6 +29,19 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
+import static schemacrawler.utility.QueryUtility.executeAgainstTable;
+import static sf.util.DatabaseUtility.createStatement;
+import static sf.util.DatabaseUtility.executeSql;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.logging.Level;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -41,29 +54,16 @@ import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.logging.Level;
-
-import static schemacrawler.utility.QueryUtility.executeAgainstTable;
-import static sf.util.DatabaseUtility.createStatement;
-import static sf.util.DatabaseUtility.executeSql;
-
 /**
  * Basic SchemaCrawler executor.
  *
  * @author Sualeh Fatehi
  */
 public final class OperationCommand
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(OperationCommand.class.getName());
+    .getLogger(OperationCommand.class.getName());
 
   private OperationOptions operationOptions;
 

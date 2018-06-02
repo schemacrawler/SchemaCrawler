@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public interface Executable
 {
