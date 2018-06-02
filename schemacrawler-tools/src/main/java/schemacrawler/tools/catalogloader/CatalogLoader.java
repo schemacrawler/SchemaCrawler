@@ -35,7 +35,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
 
 public interface CatalogLoader
 {
@@ -48,8 +47,6 @@ public interface CatalogLoader
 
   String getDatabaseSystemIdentifier();
 
-  OutputOptions getOutputOptions();
-
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
   Catalog loadCatalog()
@@ -60,8 +57,6 @@ public interface CatalogLoader
   void setConnection(Connection connection);
 
   void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions);
-
-  void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 

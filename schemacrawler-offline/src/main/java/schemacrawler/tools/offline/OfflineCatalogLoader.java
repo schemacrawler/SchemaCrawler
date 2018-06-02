@@ -1,24 +1,29 @@
 package schemacrawler.tools.offline;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.sql.Connection;
 import java.util.logging.Level;
 
+import schemacrawler.schema.Catalog;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.catalogloader.CatalogLoader;
+import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import schemacrawler.tools.options.OutputOptions;
+import sf.util.SchemaCrawlerLogger;
+
 public final class OfflineCatalogLoader
-    implements CatalogLoader
+  implements CatalogLoader
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(OfflineCatalogLoader.class.getName());
+    .getLogger(OfflineCatalogLoader.class.getName());
 
   private final String databaseSystemIdentifier;
   private Connection connection;
@@ -50,13 +55,13 @@ public final class OfflineCatalogLoader
 
   @Override
   public Catalog loadCatalog()
-      throws Exception
+    throws Exception
   {
     checkConnection(connection);
 
     final OutputOptions inputOptions = new OutputOptions(additionalConfiguration);
     inputOptions.setCompressedInputFile(((OfflineConnection) connection)
-                                            .getOfflineDatabasePath());
+      .getOfflineDatabasePath());
 
     final Reader snapshotReader;
     try
@@ -84,14 +89,13 @@ public final class OfflineCatalogLoader
     // No-op
   }
 
-
   private void checkConnection(final Connection connection)
   {
     if (connection == null || !(connection instanceof OfflineConnection))
     {
       LOGGER
-          .log(Level.SEVERE,
-               "Offline database connection not provided for the offline snapshot");
+        .log(Level.SEVERE,
+             "Offline database connection not provided for the offline snapshot");
     }
   }
 
@@ -104,26 +108,13 @@ public final class OfflineCatalogLoader
   @Override
   public DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions()
   {
-    return new DatabaseSpecificOverrideOptionsBuilder().withDatabaseServerType
-        (OfflineDatabaseConnector.DB_SERVER_TYPE)
-                                                       .toOptions();
+    return new DatabaseSpecificOverrideOptionsBuilder()
+      .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
+      .toOptions();
   }
 
   @Override
-  public void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions
-                                                     databaseSpecificOverrideOptions)
-  {
-    // No-op
-  }
-
-  @Override
-  public OutputOptions getOutputOptions()
-  {
-    return new OutputOptions();
-  }
-
-  @Override
-  public void setOutputOptions(OutputOptions outputOptions)
+  public void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
   {
     // No-op
   }
