@@ -119,6 +119,6 @@ public interface Column
    *        Unqualified name
    * @return Privilege.
    */
-  Optional<? extends Privilege<Column>> lookupPrivilege(String name);
+  <P extends Privilege<Column>> Optional<P> lookupPrivilege(String name);
 
 }
