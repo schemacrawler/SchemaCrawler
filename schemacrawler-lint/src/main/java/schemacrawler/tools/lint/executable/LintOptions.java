@@ -34,8 +34,6 @@ public class LintOptions
   extends BaseTextOptions
 {
 
-  private static final long serialVersionUID = -5917925090616219096L;
-
   private String linterConfigs;
 
   /**

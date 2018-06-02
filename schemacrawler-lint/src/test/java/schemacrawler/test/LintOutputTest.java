@@ -41,7 +41,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.Executable;
@@ -114,7 +118,7 @@ public class LintOutputTest
         executable.setAdditionalConfiguration(queriesConfig);
         final Connection connection = getConnection();
         final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-            .matchDatabaseSpecificOverrideOptions(connection);
+          .matchDatabaseSpecificOverrideOptions(connection);
         executable.execute(connection, databaseSpecificOverrideOptions);
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
@@ -151,7 +155,7 @@ public class LintOutputTest
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(JSON_OUTPUT + "lints.json");
@@ -181,7 +185,7 @@ public class LintOutputTest
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
+        .matchDatabaseSpecificOverrideOptions(connection);
       executable.execute(connection, databaseSpecificOverrideOptions);
 
       out.assertEquals(TEXT_OUTPUT + "lint.txt");

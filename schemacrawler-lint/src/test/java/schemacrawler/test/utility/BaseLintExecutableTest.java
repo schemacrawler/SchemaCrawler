@@ -39,8 +39,6 @@ import java.util.Map;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
