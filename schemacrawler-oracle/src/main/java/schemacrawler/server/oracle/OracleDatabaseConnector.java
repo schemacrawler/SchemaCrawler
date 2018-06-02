@@ -28,16 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
-import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.SchemaCrawlerLogger;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -45,9 +35,19 @@ import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import sf.util.SchemaCrawlerLogger;
+
 public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
+
+  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle", "Oracle");
 
   private static class OracleInformationSchemaViewsBuilder
     implements BiConsumer<InformationSchemaViewsBuilder, Connection>
@@ -94,12 +94,10 @@ public final class OracleDatabaseConnector
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(OracleDatabaseConnector.class.getName());
 
-  private static final long serialVersionUID = 2877116088126348915L;
-
   public OracleDatabaseConnector()
     throws IOException
   {
-    super(new DatabaseServerType("oracle", "Oracle"),
+    super(DB_SERVER_TYPE,
           new ClasspathInputResource("/help/Connections.oracle.txt"),
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
           new OracleInformationSchemaViewsBuilder(),
@@ -109,7 +107,7 @@ public final class OracleDatabaseConnector
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(final Connection connection)
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
     databaseSpecificOverrideOptionsBuilder
@@ -117,13 +115,6 @@ public final class OracleDatabaseConnector
       .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return databaseSpecificOverrideOptionsBuilder;
-  }
-
-  @Override
-  public Executable newExecutable(final String command)
-    throws SchemaCrawlerException
-  {
-    return new OracleExecutable(command);
   }
 
 }

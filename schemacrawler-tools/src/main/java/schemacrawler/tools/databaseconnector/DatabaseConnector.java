@@ -46,8 +46,6 @@ import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
 
@@ -183,12 +181,6 @@ public abstract class DatabaseConnector
     }
 
     return connectionOptions;
-  }
-
-  public Executable newExecutable(final String command)
-    throws SchemaCrawlerException
-  {
-    return new SchemaCrawlerExecutable(command);
   }
 
   public final boolean supportsUrl(final String url)

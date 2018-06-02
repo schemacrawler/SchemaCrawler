@@ -11,9 +11,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
 
-public final class SchemaCrawlerCatalogLoader
+public class SchemaCrawlerCatalogLoader
   implements CatalogLoader
 {
 
@@ -25,7 +24,13 @@ public final class SchemaCrawlerCatalogLoader
 
   public SchemaCrawlerCatalogLoader()
   {
-    databaseSystemIdentifier = "default";
+    databaseSystemIdentifier = null;
+  }
+
+  protected SchemaCrawlerCatalogLoader(final String databaseSystemIdentifier)
+  {
+    this.databaseSystemIdentifier = requireNonNull(databaseSystemIdentifier,
+                                                   "No database system identifier provided");
   }
 
   @Override
