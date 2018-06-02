@@ -40,7 +40,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -127,7 +132,7 @@ public class SchemaCrawlerXmlOutputTest
     executable.setOutputOptions(outputOptions);
     final Connection connection = getConnection();
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
+      .matchDatabaseSpecificOverrideOptions(connection);
     executable.execute(connection, databaseSpecificOverrideOptions);
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,

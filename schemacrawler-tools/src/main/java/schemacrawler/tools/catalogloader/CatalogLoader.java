@@ -28,41 +28,41 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.catalogloader;
 
+
+import java.sql.Connection;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 
-import java.sql.Connection;
-
 public interface CatalogLoader
 {
 
-  SchemaCrawlerOptions getSchemaCrawlerOptions();
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  Catalog loadCatalog()
-      throws Exception;
-
-  String getDatabaseSystemIdentifier();
-
   Config getAdditionalConfiguration();
-
-  void setAdditionalConfiguration(Config config);
-
-  DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions();
-
-  void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions
-                                              databaseSpecificOverrideOptions);
-
-  OutputOptions getOutputOptions();
-
-  void setOutputOptions(OutputOptions outputOptions);
 
   Connection getConnection();
 
+  DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions();
+
+  String getDatabaseSystemIdentifier();
+
+  OutputOptions getOutputOptions();
+
+  SchemaCrawlerOptions getSchemaCrawlerOptions();
+
+  Catalog loadCatalog()
+    throws Exception;
+
+  void setAdditionalConfiguration(Config config);
+
   void setConnection(Connection connection);
+
+  void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions);
+
+  void setOutputOptions(OutputOptions outputOptions);
+
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
 }

@@ -28,21 +28,31 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
-import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.utility.PropertiesUtility;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.Options;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
+import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.iosource.InputResource;
+import schemacrawler.utility.PropertiesUtility;
 
 public abstract class DatabaseConnector
-    implements Options
+  implements Options
 {
 
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
@@ -53,15 +63,13 @@ public abstract class DatabaseConnector
   private final DatabaseServerType dbServerType;
   private final InputResource connectionHelpResource;
   private final InputResource configResource;
-  private final BiConsumer<InformationSchemaViewsBuilder, Connection>
-      informationSchemaViewsBuilderForConnection;
+  private final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection;
   private final Predicate<String> supportsUrlPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource connectionHelpResource,
                               final InputResource configResource,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection>
-                                  informationSchemaViewsBuilderForConnection,
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
                               final Predicate<String> supportsUrlPredicate)
   {
     this.dbServerType = requireNonNull(dbServerType,
@@ -119,17 +127,15 @@ public abstract class DatabaseConnector
    * Gets the complete bundled database specific configuration set,
    * including the SQL for information schema views.
    *
-   * @param connection Database connection
+   * @param connection
+   *        Database connection
    */
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(final
-                                                                                          Connection connection)
+  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(final Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new
-        DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder
-        .withDatabaseServerType(dbServerType)
-        .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
-                                                 connection);
+    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+    databaseSpecificOverrideOptionsBuilder.withDatabaseServerType(dbServerType)
+      .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
+                                               connection);
 
     return databaseSpecificOverrideOptionsBuilder;
   }
@@ -144,12 +150,13 @@ public abstract class DatabaseConnector
    * connection options are provided, from the command-line, and
    * configuration file.
    *
-   * @param additionalConfig Configuration from the command-line, and from configuration
-   *                         files.
+   * @param additionalConfig
+   *        Configuration from the command-line, and from configuration
+   *        files.
    */
   public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
                                                         final Config additionalConfig)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     requireNonNull(userCredentials,
                    "No database connection user credentials provided");
@@ -178,6 +185,12 @@ public abstract class DatabaseConnector
     return connectionOptions;
   }
 
+  public Executable newExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    return new SchemaCrawlerExecutable(command);
+  }
+
   public final boolean supportsUrl(final String url)
   {
     if (isBlank(url))
@@ -192,18 +205,13 @@ public abstract class DatabaseConnector
    * driver class can be loaded, and so on. Throws an exception if there
    * is a problem.
    *
-   * @throws SchemaCrawlerException If there is a problem with creating connection options.
+   * @throws SchemaCrawlerException
+   *         If there is a problem with creating connection options.
    */
   void checkDatabaseConnectionOptions()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     newDatabaseConnectionOptions(new SingleUseUserCredentials(), null);
-  }
-
-  public Executable newExecutable(final String command)
-      throws SchemaCrawlerException
-  {
-    return new SchemaCrawlerExecutable(command);
   }
 
 }

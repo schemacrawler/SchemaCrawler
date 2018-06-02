@@ -1,5 +1,10 @@
 package schemacrawler.tools.catalogloader;
 
+
+import static java.util.Objects.requireNonNull;
+
+import java.sql.Connection;
+
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
@@ -7,18 +12,10 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
-
-import java.sql.Connection;
-
-import static java.util.Objects.requireNonNull;
 
 public final class SchemaCrawlerCatalogLoader
-    implements CatalogLoader
+  implements CatalogLoader
 {
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(SchemaCrawlerCatalogLoader.class.getName());
 
   private final String databaseSystemIdentifier;
   private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
@@ -46,49 +43,9 @@ public final class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration)
+  public Connection getConnection()
   {
-    this.additionalConfiguration = additionalConfiguration;
-  }
-
-  @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    if (schemaCrawlerOptions == null)
-    {
-      return new SchemaCrawlerOptions();
-    }
-    else
-    {
-      return schemaCrawlerOptions;
-    }
-  }
-
-  @Override
-  public void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    this.schemaCrawlerOptions = schemaCrawlerOptions;
-  }
-
-  @Override
-  public Catalog loadCatalog()
-      throws Exception
-  {
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOverrideOptions,
-                   "No database specific overrides provided");
-
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          databaseSpecificOverrideOptions);
-    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
-
-    return catalog;
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return databaseSystemIdentifier;
+    return connection;
   }
 
   @Override
@@ -105,10 +62,9 @@ public final class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions
-                                                     databaseSpecificOverrideOptions)
+  public String getDatabaseSystemIdentifier()
   {
-    this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
+    return databaseSystemIdentifier;
   }
 
   @Override
@@ -125,20 +81,60 @@ public final class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public void setOutputOptions(OutputOptions outputOptions)
+  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    if (schemaCrawlerOptions == null)
+    {
+      return new SchemaCrawlerOptions();
+    }
+    else
+    {
+      return schemaCrawlerOptions;
+    }
+  }
+
+  @Override
+  public Catalog loadCatalog()
+    throws Exception
+  {
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOverrideOptions,
+                   "No database specific overrides provided");
+
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
+                                                          databaseSpecificOverrideOptions);
+    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+
+    return catalog;
+  }
+
+  @Override
+  public void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    this.additionalConfiguration = additionalConfiguration;
+  }
+
+  @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
+  }
+
+  @Override
+  public void setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  {
+    this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
+  }
+
+  @Override
+  public void setOutputOptions(final OutputOptions outputOptions)
   {
     this.outputOptions = outputOptions;
   }
 
   @Override
-  public Connection getConnection()
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    return connection;
-  }
-
-  @Override
-  public void setConnection(Connection connection)
-  {
-    this.connection = connection;
+    this.schemaCrawlerOptions = schemaCrawlerOptions;
   }
 }

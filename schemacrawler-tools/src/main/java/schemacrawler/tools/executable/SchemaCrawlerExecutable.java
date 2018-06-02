@@ -28,7 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import schemacrawler.schema.*;
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
+import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
+import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
+import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
+import static schemacrawler.filter.ReducerFactory.getTableReducer;
+
+import java.sql.Connection;
+import java.util.logging.Level;
+
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Reducible;
+import schemacrawler.schema.Routine;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.Sequence;
+import schemacrawler.schema.Synonym;
+import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -38,12 +54,6 @@ import schemacrawler.tools.text.operation.OperationCommand;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.sql.Connection;
-import java.util.logging.Level;
-
-import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.ReducerFactory.*;
 
 /**
  * Wrapper executable for any SchemaCrawler command. Looks up the
@@ -56,18 +66,17 @@ import static schemacrawler.filter.ReducerFactory.*;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-    extends BaseExecutable
+  extends BaseExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(SchemaCrawlerExecutable.class.getName());
+    .getLogger(SchemaCrawlerExecutable.class.getName());
 
   public SchemaCrawlerExecutable(final String command)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(command);
   }
-
 
   /**
    * {@inheritDoc}
@@ -75,7 +84,7 @@ public final class SchemaCrawlerExecutable
   @Override
   public final void execute(final Connection connection,
                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
-      throws Exception
+    throws Exception
   {
     requireNonNull(connection, "No connection provided");
     requireNonNull(databaseSpecificOverrideOptions,
@@ -101,14 +110,17 @@ public final class SchemaCrawlerExecutable
     }
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader
-        (databaseSpecificOverrideOptions.getDatabaseServerType().getDatabaseSystemIdentifier());
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Catalog loader: %s", this.getClass().getName()));
+    final CatalogLoader catalogLoader = catalogLoaderRegistry
+      .lookupCatalogLoader(databaseSpecificOverrideOptions
+        .getDatabaseServerType().getDatabaseSystemIdentifier());
+    LOGGER
+      .log(Level.CONFIG,
+           new StringFormat("Catalog loader: %s", this.getClass().getName()));
 
     catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
-    catalogLoader.setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
+    catalogLoader
+      .setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
     catalogLoader.setOutputOptions(outputOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
@@ -118,9 +130,10 @@ public final class SchemaCrawlerExecutable
   }
 
   private void executeOn(final Catalog catalog, final Connection connection)
-      throws Exception
+    throws Exception
   {
-    // Reduce all once again, since the catalog may have been loaded from an
+    // Reduce all once again, since the catalog may have been loaded
+    // from an
     // offline or other source
     ((Reducible) catalog).reduce(Schema.class,
                                  getSchemaReducer(schemaCrawlerOptions));
@@ -142,13 +155,13 @@ public final class SchemaCrawlerExecutable
     BaseSchemaCrawlerCommand executable = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
-    for (final String command : commands)
+    for (final String command: commands)
     {
       final boolean isCommand = commandRegistry
-          .supportsCommand(command, schemaCrawlerOptions, outputOptions);
+        .supportsCommand(command, schemaCrawlerOptions, outputOptions);
       final boolean isConfiguredQuery = additionalConfiguration != null
-          && additionalConfiguration
-          .containsKey(command);
+                                        && additionalConfiguration
+                                          .containsKey(command);
       // If the command is a direct query
       if (!isCommand && !isConfiguredQuery)
       {
@@ -175,14 +188,14 @@ public final class SchemaCrawlerExecutable
       else
       {
         executable = (BaseSchemaCrawlerCommand) commandRegistry
-            .configureNewExecutable(getCommand(),
-                                    schemaCrawlerOptions,
-                                    outputOptions);
+          .configureNewExecutable(getCommand(),
+                                  schemaCrawlerOptions,
+                                  outputOptions);
         LOGGER
-            .log(Level.INFO,
-                 new StringFormat("Executing command <%s> using executable <%s>",
-                                  getCommand(),
-                                  executable.getClass().getName()));
+          .log(Level.INFO,
+               new StringFormat("Executing command <%s> using executable <%s>",
+                                getCommand(),
+                                executable.getClass().getName()));
       }
     }
 

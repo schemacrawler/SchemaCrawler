@@ -29,14 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.catalogloader;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 /**
  * Registry for mapping database connectors from DatabaseConnector-line
@@ -48,17 +48,10 @@ public final class CatalogLoaderRegistry
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(CatalogLoaderRegistry.class.getName());
-  private final Map<String, CatalogLoader> catalogLoaderRegistry;
-
-  public CatalogLoaderRegistry()
-      throws SchemaCrawlerException
-  {
-    catalogLoaderRegistry = loadCatalogLoaderRegistry();
-  }
+    .getLogger(CatalogLoaderRegistry.class.getName());
 
   private static Map<String, CatalogLoader> loadCatalogLoaderRegistry()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
 
     final Map<String, CatalogLoader> catalogLoaderRegistry = new HashMap<>();
@@ -66,11 +59,11 @@ public final class CatalogLoaderRegistry
     try
     {
       final ServiceLoader<CatalogLoader> serviceLoader = ServiceLoader
-          .load(CatalogLoader.class);
-      for (final CatalogLoader catalogLoader : serviceLoader)
+        .load(CatalogLoader.class);
+      for (final CatalogLoader catalogLoader: serviceLoader)
       {
         final String databaseSystemIdentifier = catalogLoader
-            .getDatabaseSystemIdentifier();
+          .getDatabaseSystemIdentifier();
         try
         {
           LOGGER.log(Level.CONFIG,
@@ -78,17 +71,15 @@ public final class CatalogLoaderRegistry
                                       databaseSystemIdentifier,
                                       catalogLoader.getClass().getName()));
 
-          catalogLoaderRegistry.put(databaseSystemIdentifier,
-                                    catalogLoader);
+          catalogLoaderRegistry.put(databaseSystemIdentifier, catalogLoader);
         }
         catch (final Exception e)
         {
-          LOGGER
-              .log(Level.CONFIG,
-                   new StringFormat("Could not load catalog loader, %s=%s",
-                                    databaseSystemIdentifier,
-                                    catalogLoader.getClass().getName()),
-                   e);
+          LOGGER.log(Level.CONFIG,
+                     new StringFormat("Could not load catalog loader, %s=%s",
+                                      databaseSystemIdentifier,
+                                      catalogLoader.getClass().getName()),
+                     e);
         }
       }
     }
@@ -99,6 +90,14 @@ public final class CatalogLoaderRegistry
     }
 
     return catalogLoaderRegistry;
+  }
+
+  private final Map<String, CatalogLoader> catalogLoaderRegistry;
+
+  public CatalogLoaderRegistry()
+    throws SchemaCrawlerException
+  {
+    catalogLoaderRegistry = loadCatalogLoaderRegistry();
   }
 
   public boolean hasDatabaseSystemIdentifier(final String databaseSystemIdentifier)

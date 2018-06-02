@@ -28,6 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.util.Collection;
+import java.util.logging.Level;
+
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -36,11 +41,6 @@ import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.logging.Level;
 
 public abstract class ExecutableCommandProvider
   implements CommandProvider
@@ -61,8 +61,7 @@ public abstract class ExecutableCommandProvider
 
   @Override
   public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions
-                                                                   schemaCrawlerOptions,
+                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                                                final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
@@ -94,7 +93,7 @@ public abstract class ExecutableCommandProvider
       try
       {
         final Constructor<? extends SchemaCrawlerCommand> constructor = commandExecutableClass
-          .getConstructor(new Class[] { String.class });
+          .getConstructor(String.class);
         executable = constructor.newInstance(command);
       }
       catch (final Exception e1)

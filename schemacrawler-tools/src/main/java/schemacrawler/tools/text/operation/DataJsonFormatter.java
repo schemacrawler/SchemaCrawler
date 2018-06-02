@@ -147,7 +147,7 @@ final class DataJsonFormatter
 
   /**
    * Handles an aggregate operation, such as a count, for a given table.
-   * 
+   *
    * @param results
    *        Results
    */

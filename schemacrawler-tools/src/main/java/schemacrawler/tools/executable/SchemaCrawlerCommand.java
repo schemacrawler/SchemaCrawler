@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import java.sql.Connection;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-
-import java.sql.Connection;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -49,27 +49,29 @@ public interface SchemaCrawlerCommand
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
    *
-   * @param connection Database connection
-   * @throws Exception On an exception
+   * @param connection
+   *        Database connection
+   * @throws Exception
+   *         On an exception
    */
   void executeOn(Catalog catalog, Connection connection)
-      throws Exception;
-
-  DatabaseSpecificOptions getDatabaseSpecificOptions();
-
-  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
+    throws Exception;
 
   Config getAdditionalConfiguration();
 
-  void setAdditionalConfiguration(Config config);
-
   String getCommand();
+
+  DatabaseSpecificOptions getDatabaseSpecificOptions();
 
   OutputOptions getOutputOptions();
 
-  void setOutputOptions(OutputOptions outputOptions);
-
   SchemaCrawlerOptions getSchemaCrawlerOptions();
+
+  void setAdditionalConfiguration(Config config);
+
+  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
+
+  void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 

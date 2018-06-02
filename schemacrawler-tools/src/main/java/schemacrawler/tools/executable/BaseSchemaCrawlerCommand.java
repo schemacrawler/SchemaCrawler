@@ -29,13 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import static sf.util.Utility.isBlank;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
-
-import static sf.util.Utility.isBlank;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -43,7 +43,7 @@ import static sf.util.Utility.isBlank;
  * @author Sualeh Fatehi
  */
 public abstract class BaseSchemaCrawlerCommand
-    implements SchemaCrawlerCommand
+  implements SchemaCrawlerCommand
 {
 
   protected final String command;
@@ -65,38 +65,9 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public DatabaseSpecificOptions getDatabaseSpecificOptions()
-  {
-    return databaseSpecificOptions;
-  }
-
-
-  @Override
-  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
-  {
-    if (databaseSpecificOptions != null)
-    {
-      this.databaseSpecificOptions = databaseSpecificOptions;
-    }
-  }
-
-  @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;
-  }
-
-  @Override
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    if (additionalConfiguration == null)
-    {
-      this.additionalConfiguration = new Config();
-    }
-    else
-    {
-      this.additionalConfiguration = additionalConfiguration;
-    }
   }
 
   /**
@@ -106,6 +77,12 @@ public abstract class BaseSchemaCrawlerCommand
   public final String getCommand()
   {
     return command;
+  }
+
+  @Override
+  public DatabaseSpecificOptions getDatabaseSpecificOptions()
+  {
+    return databaseSpecificOptions;
   }
 
   /**
@@ -121,11 +98,30 @@ public abstract class BaseSchemaCrawlerCommand
    * {@inheritDoc}
    */
   @Override
-  public final void setOutputOptions(final OutputOptions outputOptions)
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
-    if (outputOptions != null)
+    return schemaCrawlerOptions;
+  }
+
+  @Override
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    if (additionalConfiguration == null)
     {
-      this.outputOptions = outputOptions;
+      this.additionalConfiguration = new Config();
+    }
+    else
+    {
+      this.additionalConfiguration = additionalConfiguration;
+    }
+  }
+
+  @Override
+  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
+  {
+    if (databaseSpecificOptions != null)
+    {
+      this.databaseSpecificOptions = databaseSpecificOptions;
     }
   }
 
@@ -133,9 +129,12 @@ public abstract class BaseSchemaCrawlerCommand
    * {@inheritDoc}
    */
   @Override
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  public final void setOutputOptions(final OutputOptions outputOptions)
   {
-    return schemaCrawlerOptions;
+    if (outputOptions != null)
+    {
+      this.outputOptions = outputOptions;
+    }
   }
 
   /**

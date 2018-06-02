@@ -31,14 +31,10 @@ package schemacrawler.tools.executable;
 
 import static sf.util.Utility.isBlank;
 
-import java.sql.Connection;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 
 /**

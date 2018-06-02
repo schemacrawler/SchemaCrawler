@@ -100,6 +100,209 @@ public class JSONObject
   private static final Object NULL = new Null();
 
   /**
+   * Throw an exception if the object is a NaN or infinite number.
+   *
+   * @param o
+   *        The object to test.
+   * @throws JSONException
+   *         If o is a non-finite number.
+   */
+  public static void testValidity(final Object o)
+    throws JSONException
+  {
+    if (o != null)
+    {
+      if (o instanceof Double)
+      {
+        if (((Double) o).isInfinite() || ((Double) o).isNaN())
+        {
+          throw new JSONException("JSON does not allow non-finite numbers.");
+        }
+      }
+      else if (o instanceof Float)
+      {
+        if (((Float) o).isInfinite() || ((Float) o).isNaN())
+        {
+          throw new JSONException("JSON does not allow non-finite numbers.");
+        }
+      }
+    }
+  }
+
+  /**
+   * Make a JSON text of an Object value. If the object has an
+   * value.toJSONString() method, then that method will be used to
+   * produce the JSON text. The method is required to produce a strictly
+   * conforming text. If the object does not contain a toJSONString
+   * method (which is the most common case), then a text will be
+   * produced by other means. If the value is an array or Collection,
+   * then a JSONArray will be made from it and its toJSONString method
+   * will be called. If the value is a MAP, then a JSONObject will be
+   * made from it and its toJSONString method will be called. Otherwise,
+   * the value's toString method will be called, and the result will be
+   * quoted.
+   * <p>
+   * Warning: This method assumes that the data structure is acyclical.
+   *
+   * @param value
+   *        The value to be serialized.
+   * @return a printable, displayable, transmittable representation of
+   *         the object, beginning with <code>{</code>&nbsp;<small>(left
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
+   * @throws JSONException
+   *         If the value is or contains an invalid number.
+   */
+  static String valueToString(final Object value)
+    throws JSONException
+  {
+    if (value == null || value.equals(null))
+    {
+      return "null";
+    }
+    if (value instanceof Number)
+    {
+      return numberToString((Number) value);
+    }
+    if (value instanceof Boolean || value instanceof JSONObject
+        || value instanceof JSONArray)
+    {
+      return value.toString();
+    }
+    if (value instanceof Map)
+    {
+      return new JSONObject(value).toString();
+    }
+    if (value instanceof Collection)
+    {
+      return new JSONArray((Collection) value).toString();
+    }
+    if (value.getClass().isArray())
+    {
+      return new JSONArray(value).toString();
+    }
+    return quote(value.toString());
+  }
+
+  /**
+   * Make a prettyprinted JSON text of an object value.
+   * <p>
+   * Warning: This method assumes that the data structure is acyclical.
+   *
+   * @param value
+   *        The value to be serialized.
+   * @param indentFactor
+   *        The number of spaces to add to each level of indentation.
+   * @param indent
+   *        The indentation of the top level.
+   * @return a printable, displayable, transmittable representation of
+   *         the object, beginning with <code>{</code>&nbsp;<small>(left
+   *         brace)</small> and ending with <code>}</code> &nbsp;
+   *         <small>(right brace)</small>.
+   * @throws JSONException
+   *         If the object contains an invalid number.
+   */
+  static String valueToString(final Object value,
+                              final int indentFactor,
+                              final int indent)
+    throws JSONException
+  {
+    if (value == null || value.equals(null))
+    {
+      return "null";
+    }
+    if (value instanceof Number)
+    {
+      return numberToString((Number) value);
+    }
+    if (value instanceof Boolean)
+    {
+      return value.toString();
+    }
+    if (value instanceof JSONObject)
+    {
+      return ((JSONObject) value).toString(indentFactor, indent);
+    }
+    if (value instanceof JSONArray)
+    {
+      return ((JSONArray) value).toString(indentFactor, indent);
+    }
+    if (value instanceof Map)
+    {
+      return new JSONObject(value).toString(indentFactor, indent);
+    }
+    if (value instanceof Collection)
+    {
+      return new JSONArray((Collection) value).toString(indentFactor, indent);
+    }
+    if (value.getClass().isArray())
+    {
+      return new JSONArray(value).toString(indentFactor, indent);
+    }
+    return quote(value.toString());
+  }
+
+  /**
+   * Wrap an object, if necessary. If the object is null, return the
+   * NULL object. If it is an array or collection, wrap it in a
+   * JSONArray. If it is a map, wrap it in a JSONObject. If it is a
+   * standard property (Double, String, et al) then it is already
+   * wrapped. Otherwise, if it comes from one of the java packages, turn
+   * it into a string. And if it doesn't, try to wrap it in a
+   * JSONObject. If the wrapping fails, then null is returned.
+   *
+   * @param object
+   *        The object to wrap
+   * @return The wrapped value
+   */
+  static Object wrap(final Object object)
+  {
+    try
+    {
+      if (object == null)
+      {
+        return NULL;
+      }
+      if (object instanceof JSONObject || object instanceof JSONArray
+          || NULL.equals(object) || object instanceof Byte
+          || object instanceof Character || object instanceof Short
+          || object instanceof Integer || object instanceof Long
+          || object instanceof Boolean || object instanceof Float
+          || object instanceof Double || object instanceof String)
+      {
+        return object;
+      }
+
+      if (object instanceof Collection)
+      {
+        return new JSONArray((Collection) object);
+      }
+      if (object.getClass().isArray())
+      {
+        return new JSONArray(object);
+      }
+      if (object instanceof Map)
+      {
+        return new JSONObject(object);
+      }
+      final Package objectPackage = object.getClass().getPackage();
+      final String objectPackageName = objectPackage != null? objectPackage
+        .getName(): "";
+      if (objectPackageName.startsWith("java.")
+          || objectPackageName.startsWith("javax.")
+          || object.getClass().getClassLoader() == null)
+      {
+        return object.toString();
+      }
+      return new JSONObject(object);
+    }
+    catch (final Exception exception)
+    {
+      return null;
+    }
+  }
+
+  /**
    * Produce a string from a Number.
    *
    * @param number
@@ -212,209 +415,6 @@ public class JSONObject
   }
 
   /**
-   * Throw an exception if the object is a NaN or infinite number.
-   *
-   * @param o
-   *        The object to test.
-   * @throws JSONException
-   *         If o is a non-finite number.
-   */
-  public static void testValidity(final Object o)
-    throws JSONException
-  {
-    if (o != null)
-    {
-      if (o instanceof Double)
-      {
-        if (((Double) o).isInfinite() || ((Double) o).isNaN())
-        {
-          throw new JSONException("JSON does not allow non-finite numbers.");
-        }
-      }
-      else if (o instanceof Float)
-      {
-        if (((Float) o).isInfinite() || ((Float) o).isNaN())
-        {
-          throw new JSONException("JSON does not allow non-finite numbers.");
-        }
-      }
-    }
-  }
-
-  /**
-   * Make a JSON text of an Object value. If the object has an
-   * value.toJSONString() method, then that method will be used to
-   * produce the JSON text. The method is required to produce a strictly
-   * conforming text. If the object does not contain a toJSONString
-   * method (which is the most common case), then a text will be
-   * produced by other means. If the value is an array or Collection,
-   * then a JSONArray will be made from it and its toJSONString method
-   * will be called. If the value is a MAP, then a JSONObject will be
-   * made from it and its toJSONString method will be called. Otherwise,
-   * the value's toString method will be called, and the result will be
-   * quoted.
-   * <p>
-   * Warning: This method assumes that the data structure is acyclical.
-   *
-   * @param value
-   *        The value to be serialized.
-   * @return a printable, displayable, transmittable representation of
-   *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code> &nbsp;
-   *         <small>(right brace)</small>.
-   * @throws JSONException
-   *         If the value is or contains an invalid number.
-   */
-  static String valueToString(final Object value)
-    throws JSONException
-  {
-    if (value == null || value.equals(null))
-    {
-      return "null";
-    }
-    if (value instanceof Number)
-    {
-      return numberToString((Number) value);
-    }
-    if (value instanceof Boolean || value instanceof JSONObject
-        || value instanceof JSONArray)
-    {
-      return value.toString();
-    }
-    if (value instanceof Map)
-    {
-      return new JSONObject((Map) value).toString();
-    }
-    if (value instanceof Collection)
-    {
-      return new JSONArray((Collection) value).toString();
-    }
-    if (value.getClass().isArray())
-    {
-      return new JSONArray(value).toString();
-    }
-    return quote(value.toString());
-  }
-
-  /**
-   * Wrap an object, if necessary. If the object is null, return the
-   * NULL object. If it is an array or collection, wrap it in a
-   * JSONArray. If it is a map, wrap it in a JSONObject. If it is a
-   * standard property (Double, String, et al) then it is already
-   * wrapped. Otherwise, if it comes from one of the java packages, turn
-   * it into a string. And if it doesn't, try to wrap it in a
-   * JSONObject. If the wrapping fails, then null is returned.
-   *
-   * @param object
-   *        The object to wrap
-   * @return The wrapped value
-   */
-  static Object wrap(final Object object)
-  {
-    try
-    {
-      if (object == null)
-      {
-        return NULL;
-      }
-      if (object instanceof JSONObject || object instanceof JSONArray
-          || NULL.equals(object) || object instanceof Byte
-          || object instanceof Character || object instanceof Short
-          || object instanceof Integer || object instanceof Long
-          || object instanceof Boolean || object instanceof Float
-          || object instanceof Double || object instanceof String)
-      {
-        return object;
-      }
-
-      if (object instanceof Collection)
-      {
-        return new JSONArray((Collection) object);
-      }
-      if (object.getClass().isArray())
-      {
-        return new JSONArray(object);
-      }
-      if (object instanceof Map)
-      {
-        return new JSONObject((Map) object);
-      }
-      final Package objectPackage = object.getClass().getPackage();
-      final String objectPackageName = objectPackage != null? objectPackage
-        .getName(): "";
-      if (objectPackageName.startsWith("java.")
-          || objectPackageName.startsWith("javax.")
-          || object.getClass().getClassLoader() == null)
-      {
-        return object.toString();
-      }
-      return new JSONObject(object);
-    }
-    catch (final Exception exception)
-    {
-      return null;
-    }
-  }
-
-  /**
-   * Make a prettyprinted JSON text of an object value.
-   * <p>
-   * Warning: This method assumes that the data structure is acyclical.
-   *
-   * @param value
-   *        The value to be serialized.
-   * @param indentFactor
-   *        The number of spaces to add to each level of indentation.
-   * @param indent
-   *        The indentation of the top level.
-   * @return a printable, displayable, transmittable representation of
-   *         the object, beginning with <code>{</code>&nbsp;<small>(left
-   *         brace)</small> and ending with <code>}</code> &nbsp;
-   *         <small>(right brace)</small>.
-   * @throws JSONException
-   *         If the object contains an invalid number.
-   */
-  static String valueToString(final Object value,
-                              final int indentFactor,
-                              final int indent)
-    throws JSONException
-  {
-    if (value == null || value.equals(null))
-    {
-      return "null";
-    }
-    if (value instanceof Number)
-    {
-      return numberToString((Number) value);
-    }
-    if (value instanceof Boolean)
-    {
-      return value.toString();
-    }
-    if (value instanceof JSONObject)
-    {
-      return ((JSONObject) value).toString(indentFactor, indent);
-    }
-    if (value instanceof JSONArray)
-    {
-      return ((JSONArray) value).toString(indentFactor, indent);
-    }
-    if (value instanceof Map)
-    {
-      return new JSONObject((Map) value).toString(indentFactor, indent);
-    }
-    if (value instanceof Collection)
-    {
-      return new JSONArray((Collection) value).toString(indentFactor, indent);
-    }
-    if (value.getClass().isArray())
-    {
-      return new JSONArray(value).toString(indentFactor, indent);
-    }
-    return quote(value.toString());
-  }
-
-  /**
    * The map where the JSONObject's properties are kept.
    */
   private final Map map;
@@ -491,16 +491,6 @@ public class JSONObject
   }
 
   /**
-   * Get an enumeration of the keys of the JSONObject.
-   *
-   * @return An iterator of the keys.
-   */
-  private Iterator keys()
-  {
-    return map.keySet().iterator();
-  }
-
-  /**
    * Get the number of keys stored in the JSONObject.
    *
    * @return The number of keys in the JSONObject.
@@ -508,18 +498,6 @@ public class JSONObject
   public int length()
   {
     return map.size();
-  }
-
-  /**
-   * Get an optional value associated with a key.
-   *
-   * @param key
-   *        A key string.
-   * @return An object which is the value, or null if there is no value.
-   */
-  private Object opt(final String key)
-  {
-    return key == null? null: map.get(key);
   }
 
   /**
@@ -646,19 +624,6 @@ public class JSONObject
   }
 
   /**
-   * Remove a name and its value, if present.
-   *
-   * @param key
-   *        The name to be removed.
-   * @return The value that was associated with the name, or null if
-   *         there was no value.
-   */
-  private Object remove(final String key)
-  {
-    return map.remove(key);
-  }
-
-  /**
    * Make a JSON text of this JSONObject. For compactness, no whitespace
    * is added. If this would not result in a syntactically correct JSON
    * text, then null will be returned instead.
@@ -696,6 +661,12 @@ public class JSONObject
     {
       return null;
     }
+  }
+
+  public void write(final Writer writer, final int indentFactor)
+    throws JSONException
+  {
+    write(new PrintWriter(writer), indentFactor, 0);
   }
 
   /**
@@ -749,10 +720,98 @@ public class JSONObject
     }
   }
 
-  public void write(final Writer writer, final int indentFactor)
-    throws JSONException
+  /**
+   * Get an enumeration of the keys of the JSONObject.
+   *
+   * @return An iterator of the keys.
+   */
+  private Iterator keys()
   {
-    write(new PrintWriter(writer), indentFactor, 0);
+    return map.keySet().iterator();
+  }
+
+  /**
+   * Get an optional value associated with a key.
+   *
+   * @param key
+   *        A key string.
+   * @return An object which is the value, or null if there is no value.
+   */
+  private Object opt(final String key)
+  {
+    return key == null? null: map.get(key);
+  }
+
+  private void populateMap(final Object bean)
+  {
+    final Class klass = bean.getClass();
+
+    // If klass is a System class then set includeSuperClass to false.
+
+    final boolean includeSuperClass = klass.getClassLoader() != null;
+
+    final Method[] methods = includeSuperClass? klass.getMethods()
+                                              : klass.getDeclaredMethods();
+    for (final Method method: methods)
+    {
+      try
+      {
+        if (Modifier.isPublic(method.getModifiers()))
+        {
+          final String name = method.getName();
+          String key = "";
+          if (name.startsWith("get"))
+          {
+            if (name.equals("getClass") || name.equals("getDeclaringClass"))
+            {
+              key = "";
+            }
+            else
+            {
+              key = name.substring(3);
+            }
+          }
+          else if (name.startsWith("is"))
+          {
+            key = name.substring(2);
+          }
+          if (key.length() > 0 && Character.isUpperCase(key.charAt(0))
+              && method.getParameterTypes().length == 0)
+          {
+            if (key.length() == 1)
+            {
+              key = key.toLowerCase();
+            }
+            else if (!Character.isUpperCase(key.charAt(1)))
+            {
+              key = key.substring(0, 1).toLowerCase() + key.substring(1);
+            }
+
+            final Object result = method.invoke(bean, (Object[]) null);
+            if (result != null)
+            {
+              map.put(key, wrap(result));
+            }
+          }
+        }
+      }
+      catch (final Exception ignore)
+      {
+      }
+    }
+  }
+
+  /**
+   * Remove a name and its value, if present.
+   *
+   * @param key
+   *        The name to be removed.
+   * @return The value that was associated with the name, or null if
+   *         there was no value.
+   */
+  private Object remove(final String key)
+  {
+    return map.remove(key);
   }
 
   /**
@@ -921,65 +980,6 @@ public class JSONObject
       }
     }
     writer.print('}');
-  }
-
-  private void populateMap(final Object bean)
-  {
-    final Class klass = bean.getClass();
-
-    // If klass is a System class then set includeSuperClass to false.
-
-    final boolean includeSuperClass = klass.getClassLoader() != null;
-
-    final Method[] methods = includeSuperClass? klass.getMethods()
-                                              : klass.getDeclaredMethods();
-    for (final Method method: methods)
-    {
-      try
-      {
-        if (Modifier.isPublic(method.getModifiers()))
-        {
-          final String name = method.getName();
-          String key = "";
-          if (name.startsWith("get"))
-          {
-            if (name.equals("getClass") || name.equals("getDeclaringClass"))
-            {
-              key = "";
-            }
-            else
-            {
-              key = name.substring(3);
-            }
-          }
-          else if (name.startsWith("is"))
-          {
-            key = name.substring(2);
-          }
-          if (key.length() > 0 && Character.isUpperCase(key.charAt(0))
-              && method.getParameterTypes().length == 0)
-          {
-            if (key.length() == 1)
-            {
-              key = key.toLowerCase();
-            }
-            else if (!Character.isUpperCase(key.charAt(1)))
-            {
-              key = key.substring(0, 1).toLowerCase() + key.substring(1);
-            }
-
-            final Object result = method.invoke(bean, (Object[]) null);
-            if (result != null)
-            {
-              map.put(key, wrap(result));
-            }
-          }
-        }
-      }
-      catch (final Exception ignore)
-      {
-      }
-    }
   }
 
 }
