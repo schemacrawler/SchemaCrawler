@@ -20,7 +20,6 @@ public final class SchemaCrawlerCatalogLoader
   private final String databaseSystemIdentifier;
   private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
-  private OutputOptions outputOptions;
   private Connection connection;
   private Config additionalConfiguration;
 
@@ -68,19 +67,6 @@ public final class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public OutputOptions getOutputOptions()
-  {
-    if (outputOptions == null)
-    {
-      return new OutputOptions();
-    }
-    else
-    {
-      return outputOptions;
-    }
-  }
-
-  @Override
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     if (schemaCrawlerOptions == null)
@@ -124,12 +110,6 @@ public final class SchemaCrawlerCatalogLoader
   public void setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
   {
     this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
-  }
-
-  @Override
-  public void setOutputOptions(final OutputOptions outputOptions)
-  {
-    this.outputOptions = outputOptions;
   }
 
   @Override

@@ -121,7 +121,6 @@ public final class SchemaCrawlerExecutable
     catalogLoader.setConnection(connection);
     catalogLoader
       .setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
-    catalogLoader.setOutputOptions(outputOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final Catalog catalog = catalogLoader.loadCatalog();
