@@ -132,9 +132,9 @@ public final class CommandRegistry
     return false;
   }
 
-  SchemaCrawlerCommand configureNewExecutable(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final OutputOptions outputOptions)
+  SchemaCrawlerCommand configureNewCommand(final String command,
+                                           final SchemaCrawlerOptions schemaCrawlerOptions,
+                                           final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     CommandProvider executableCommandProvider = null;

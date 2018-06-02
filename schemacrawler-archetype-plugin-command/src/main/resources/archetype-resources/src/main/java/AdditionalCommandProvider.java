@@ -23,24 +23,24 @@ public class AdditionalCommandProvider
 {
 
   @Override
-  public Executable configureNewExecutable(final String command,
-                                           final SchemaCrawlerOptions schemaCrawlerOptions,
-                                           final OutputOptions outputOptions)
+  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
+                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
+                                                               final OutputOptions outputOptions)
   {
-    if (!AdditionalExecutable.COMMAND.equals(command)) {
+    if (!AdditionalCommand.COMMAND.equals(command)) {
       throw new IllegalArgumentException("Cannot support command, " + command);
     }
     
-    final AdditionalExecutable executable = new AdditionalExecutable();
+    final AdditionalCommand scCommand = new AdditionalCommand();
     if (schemaCrawlerOptions != null)
     {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     }
     if (outputOptions != null)
     {
-      executable.setOutputOptions(outputOptions);
+      scCommand.setOutputOptions(outputOptions);
     }
-    return executable;
+    return scCommand;
   }
 
   @Override
@@ -61,7 +61,7 @@ public class AdditionalCommandProvider
   @Override
   public Collection<String> getSupportedCommands()
   {
-    return Arrays.asList(AdditionalExecutable.COMMAND);
+    return Arrays.asList(AdditionalCommand.COMMAND);
   }
 
   @Override
@@ -69,7 +69,7 @@ public class AdditionalCommandProvider
                                  final SchemaCrawlerOptions schemaCrawlerOptions,
                                  final OutputOptions outputOptions)
   {
-    return AdditionalExecutable.COMMAND.equals(command);
+    return AdditionalCommand.COMMAND.equals(command);
   }
 
 }

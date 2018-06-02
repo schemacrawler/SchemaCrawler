@@ -63,8 +63,8 @@ public final class CommandDaisyChain
 
     for (final String command: commands)
     {
-      final SchemaCrawlerCommand executable = addNext(command);
-      if (executable == null)
+      final SchemaCrawlerCommand scCommand = addNext(command);
+      if (scCommand == null)
       {
         continue;
       }
@@ -98,13 +98,13 @@ public final class CommandDaisyChain
         }
       }
 
-      final Config executableAdditionalConfig = new Config();
+      final Config commandAdditionalConfig = new Config();
       if (additionalConfiguration != null)
       {
-        executableAdditionalConfig.putAll(additionalConfiguration);
+        commandAdditionalConfig.putAll(additionalConfiguration);
       }
-      executableAdditionalConfig.putAll(commonTextOptions.toConfig());
-      executable.setAdditionalConfiguration(executableAdditionalConfig);
+      commandAdditionalConfig.putAll(commonTextOptions.toConfig());
+      scCommand.setAdditionalConfiguration(commandAdditionalConfig);
 
     }
 
@@ -117,21 +117,21 @@ public final class CommandDaisyChain
   {
     try
     {
-      final SchemaCrawlerCommand executable = commandRegistry
-        .configureNewExecutable(command, schemaCrawlerOptions, outputOptions);
-      if (executable == null)
+      final SchemaCrawlerCommand scCommand = commandRegistry
+        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
+      if (scCommand == null)
       {
-        return executable;
+        return scCommand;
       }
 
-      executable.setAdditionalConfiguration(additionalConfiguration);
+      scCommand.setAdditionalConfiguration(additionalConfiguration);
 
-      return addNext(executable);
+      return addNext(scCommand);
     }
     catch (final Exception e)
     {
       throw new SchemaCrawlerException(String
-        .format("Cannot chain executable, unknown command <%s>", command));
+        .format("Cannot chain commands, unknown command <%s>", command));
     }
   }
 
