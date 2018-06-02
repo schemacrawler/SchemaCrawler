@@ -169,11 +169,7 @@ final class MutableForeignKey
   @Override
   public boolean isDeferrable()
   {
-    if (deferrability == null)
-    {
-      throw new NotLoadedException(this);
-    }
-    return deferrability == ForeignKeyDeferrability.initiallyDeferred;
+    return isInitiallyDeferred();
   }
 
   @Override

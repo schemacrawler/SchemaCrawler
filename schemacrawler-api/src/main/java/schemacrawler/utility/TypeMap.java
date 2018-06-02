@@ -111,7 +111,8 @@ public final class TypeMap
     sqlTypeMap = new HashMap<>();
 
     final Map<SQLType, Class<?>> defaultTypeMap = createDefaultTypeMap();
-    for (Entry<SQLType, Class<?>> sqlTypeMapping: defaultTypeMap.entrySet())
+    for (final Entry<SQLType, Class<?>> sqlTypeMapping: defaultTypeMap
+      .entrySet())
     {
       sqlTypeMap.put(sqlTypeMapping.getKey().getName(),
                      sqlTypeMapping.getValue());

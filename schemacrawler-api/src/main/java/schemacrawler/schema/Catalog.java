@@ -148,8 +148,8 @@ public interface Catalog
    *        Name
    * @return Column data types
    */
-  Optional<? extends ColumnDataType> lookupColumnDataType(Schema schema,
-                                                          String name);
+  <C extends ColumnDataType> Optional<C> lookupColumnDataType(Schema schema,
+                                                              String name);
 
   /**
    * Gets a routine by unqualified name.
@@ -158,7 +158,7 @@ public interface Catalog
    *        Name
    * @return Routine.
    */
-  Optional<? extends Routine> lookupRoutine(Schema schema, String name);
+  <R extends Routine> Optional<R> lookupRoutine(Schema schema, String name);
 
   /**
    * Gets a schema by name.
@@ -167,7 +167,7 @@ public interface Catalog
    *        Schema name
    * @return Schema.
    */
-  Optional<? extends Schema> lookupSchema(String name);
+  <S extends Schema> Optional<S> lookupSchema(String name);
 
   /**
    * Gets the sequence by unqualified name.
@@ -176,7 +176,7 @@ public interface Catalog
    *        Name
    * @return Sequence.
    */
-  Optional<? extends Sequence> lookupSequence(Schema schema, String name);
+  <S extends Sequence> Optional<S> lookupSequence(Schema schema, String name);
 
   /**
    * Gets the synonym by unqualified name.
@@ -185,7 +185,7 @@ public interface Catalog
    *        Name
    * @return Synonym.
    */
-  Optional<? extends Synonym> lookupSynonym(Schema schema, String name);
+  <S extends Synonym> Optional<S> lookupSynonym(Schema schema, String name);
 
   /**
    * Gets the column data types defined by the RDBMS system, by name.
@@ -194,7 +194,7 @@ public interface Catalog
    *        Column data type name
    * @return Column data type
    */
-  Optional<? extends ColumnDataType> lookupSystemColumnDataType(String name);
+  <C extends ColumnDataType> Optional<C> lookupSystemColumnDataType(String name);
 
   /**
    * Gets a table by unqualified name.
@@ -203,6 +203,6 @@ public interface Catalog
    *        Name
    * @return Table.
    */
-  Optional<? extends Table> lookupTable(Schema schema, String name);
+  <T extends Table> Optional<T> lookupTable(Schema schema, String name);
 
 }

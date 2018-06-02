@@ -62,6 +62,6 @@ public interface ResultsColumns
    *        Name
    * @return Column.
    */
-  Optional<? extends ResultsColumn> lookupColumn(String name);
+  <C extends ResultsColumn> Optional<C> lookupColumn(String name);
 
 }

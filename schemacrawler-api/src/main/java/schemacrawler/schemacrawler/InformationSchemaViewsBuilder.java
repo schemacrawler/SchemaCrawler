@@ -53,7 +53,7 @@ import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
 import java.sql.DatabaseMetaData;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 import sf.util.ObjectToString;
@@ -72,7 +72,7 @@ public final class InformationSchemaViewsBuilder
 
   public InformationSchemaViewsBuilder()
   {
-    informationSchemaQueries = new HashMap<>();
+    informationSchemaQueries = new EnumMap<>(InformationSchemaKey.class);
   }
 
   /**

@@ -202,7 +202,7 @@ class MutableIndex
   {
     // NOTE: Index columns are still table columns, so they need to be
     // looked up with a table lookup key
-    return columns.lookup(this.getParent(), name);
+    return columns.lookup(getParent(), name);
   }
 
   final void addColumn(final MutableIndexColumn column)

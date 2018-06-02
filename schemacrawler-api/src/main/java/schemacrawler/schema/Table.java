@@ -148,7 +148,7 @@ public interface Table
    *        Unqualified name
    * @return Column.
    */
-  Optional<? extends Column> lookupColumn(String name);
+  <C extends Column> Optional<C> lookupColumn(String name);
 
   /**
    * Gets a foreign key by name.
@@ -157,7 +157,7 @@ public interface Table
    *        Name
    * @return Foreign key.
    */
-  Optional<? extends ForeignKey> lookupForeignKey(String name);
+  <F extends ForeignKey> Optional<F> lookupForeignKey(String name);
 
   /**
    * Gets an index by unqualified name.
@@ -166,7 +166,7 @@ public interface Table
    *        Name
    * @return Index.
    */
-  Optional<? extends Index> lookupIndex(String name);
+  <I extends Index> Optional<I> lookupIndex(String name);
 
   /**
    * Gets a privilege by unqualified name.
@@ -175,7 +175,7 @@ public interface Table
    *        Name
    * @return Privilege.
    */
-  Optional<? extends Privilege<Table>> lookupPrivilege(String name);
+  <P extends Privilege<Table>> Optional<P> lookupPrivilege(String name);
 
   /**
    * Gets a trigger by unqualified name.
@@ -184,6 +184,6 @@ public interface Table
    *        Name
    * @return Trigger.
    */
-  Optional<? extends Trigger> lookupTrigger(String name);
+  <T extends Trigger> Optional<T> lookupTrigger(String name);
 
 }

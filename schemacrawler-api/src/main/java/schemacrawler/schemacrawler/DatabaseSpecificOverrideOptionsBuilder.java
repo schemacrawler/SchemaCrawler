@@ -28,32 +28,29 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import schemacrawler.crawl.MetadataRetrievalStrategy;
-
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+import schemacrawler.crawl.MetadataRetrievalStrategy;
+
 public final class DatabaseSpecificOverrideOptionsBuilder
-    implements OptionsBuilder<DatabaseSpecificOverrideOptions>
+  implements OptionsBuilder<DatabaseSpecificOverrideOptions>
 {
 
-  private static final String SC_RETRIEVAL_TABLES = "schemacrawler.schema.retrieval.strategy" +
-      ".tables";
-  private static final String SC_RETRIEVAL_TABLE_COLUMNS = "schemacrawler.schema.retrieval" +
-      ".strategy.tablecolumns";
-  private static final String SC_RETRIEVAL_PRIMARY_KEYS = "schemacrawler.schema.retrieval" +
-      ".strategy.primarykeys";
-  private static final String SC_RETRIEVAL_INDEXES = "schemacrawler.schema.retrieval.strategy" +
-      ".indexes";
-  private static final String SC_RETRIEVAL_FOREIGN_KEYS = "schemacrawler.schema.retrieval" +
-      ".strategy.foreignkeys";
-  private static final String SC_RETRIEVAL_PROCEDURES = "schemacrawler.schema.retrieval.strategy" +
-      ".procedures";
-  private static final String SC_RETRIEVAL_FUNCTIONS = "schemacrawler.schema.retrieval.strategy" +
-      ".functions";
+  private static final String prefix = "schemacrawler.schema.retrieval.strategy";
+  private static final String SC_RETRIEVAL_TABLES = prefix + ".tables";
+  private static final String SC_RETRIEVAL_TABLE_COLUMNS = prefix
+                                                           + ".tablecolumns";
+  private static final String SC_RETRIEVAL_PRIMARY_KEYS = prefix
+                                                          + ".primarykeys";
+  private static final String SC_RETRIEVAL_INDEXES = prefix + ".indexes";
+  private static final String SC_RETRIEVAL_FOREIGN_KEYS = prefix
+                                                          + ".foreignkeys";
+  private static final String SC_RETRIEVAL_PROCEDURES = prefix + ".procedures";
+  private static final String SC_RETRIEVAL_FUNCTIONS = prefix + ".functions";
 
   private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
   private DatabaseServerType dbServerType;
@@ -130,21 +127,26 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     informationSchemaViewsBuilder.fromConfig(configProperties);
 
     tableRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_TABLES, tableRetrievalStrategy);
     tableColumnRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_TABLE_COLUMNS, tableColumnRetrievalStrategy);
     pkRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_PRIMARY_KEYS, pkRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_PRIMARY_KEYS, pkRetrievalStrategy);
     indexRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_INDEXES, indexRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_INDEXES, indexRetrievalStrategy);
     fkRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
     procedureRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_PROCEDURES, procedureRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_PROCEDURES, procedureRetrievalStrategy);
     functionRetrievalStrategy = configProperties
-        .getEnumValue(SC_RETRIEVAL_FUNCTIONS, functionRetrievalStrategy);
+      .getEnumValue(SC_RETRIEVAL_FUNCTIONS, functionRetrievalStrategy);
 
     return this;
+  }
+
+  public DatabaseServerType getDatabaseServerType()
+  {
+    return dbServerType;
   }
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
@@ -160,11 +162,6 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   public String getIdentifierQuoteString()
   {
     return identifierQuoteString;
-  }
-
-  public DatabaseServerType getDatabaseServerType()
-  {
-    return dbServerType;
   }
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
@@ -216,10 +213,10 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * Overrides the JDBC driver provided information about the identifier
    * quote string.
    *
-   * @param identifierQuoteString Value for the override
+   * @param identifierQuoteString
+   *        Value for the override
    */
-  public DatabaseSpecificOverrideOptionsBuilder identifierQuoteString(final String
-                                                                          identifierQuoteString)
+  public DatabaseSpecificOverrideOptionsBuilder identifierQuoteString(final String identifierQuoteString)
   {
     this.identifierQuoteString = identifierQuoteString;
     return this;
@@ -257,23 +254,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return new DatabaseSpecificOverrideOptions(this);
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withForeignKeyRetrievalStrategy(final
-                                                                                MetadataRetrievalStrategy fkRetrievalStrategy)
-  {
-    if (fkRetrievalStrategy == null)
-    {
-      this.fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    }
-    else
-    {
-      this.fkRetrievalStrategy = fkRetrievalStrategy;
-    }
-    return this;
-  }
-
-  public DatabaseSpecificOverrideOptionsBuilder withDatabaseServerType(final
-                                                                       DatabaseServerType
-                                                                           dbServerType)
+  public DatabaseSpecificOverrideOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
   {
     if (dbServerType == null)
     {
@@ -286,8 +267,20 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withFunctionRetrievalStrategy(final
-                                                                              MetadataRetrievalStrategy functionRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy fkRetrievalStrategy)
+  {
+    if (fkRetrievalStrategy == null)
+    {
+      this.fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.fkRetrievalStrategy = fkRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy functionRetrievalStrategy)
   {
     if (functionRetrievalStrategy == null)
     {
@@ -300,8 +293,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final
-                                                                           MetadataRetrievalStrategy indexRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
   {
     if (indexRetrievalStrategy == null)
     {
@@ -319,15 +311,13 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return informationSchemaViewsBuilder;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViewsForConnection(final
-                                                                                        BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-                                                                                        final
-                                                                                        Connection connection)
+  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+                                                                                        final Connection connection)
   {
     if (informationSchemaViewsBuilderForConnection != null)
     {
       informationSchemaViewsBuilderForConnection
-          .accept(informationSchemaViewsBuilder, connection);
+        .accept(informationSchemaViewsBuilder, connection);
     }
     return this;
   }
@@ -350,8 +340,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withPrimaryKeyRetrievalStrategy(final
-                                                                                MetadataRetrievalStrategy pkRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy pkRetrievalStrategy)
   {
     if (pkRetrievalStrategy == null)
     {
@@ -364,8 +353,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withProcedureRetrievalStrategy(final
-                                                                               MetadataRetrievalStrategy procedureRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy procedureRetrievalStrategy)
   {
     if (procedureRetrievalStrategy == null)
     {
@@ -378,8 +366,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final
-                                                                                 MetadataRetrievalStrategy tableColumnRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy tableColumnRetrievalStrategy)
   {
     if (tableColumnRetrievalStrategy == null)
     {
@@ -392,8 +379,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTableRetrievalStrategy(final
-                                                                           MetadataRetrievalStrategy tableRetrievalStrategy)
+  public DatabaseSpecificOverrideOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy tableRetrievalStrategy)
   {
     if (tableRetrievalStrategy == null)
     {

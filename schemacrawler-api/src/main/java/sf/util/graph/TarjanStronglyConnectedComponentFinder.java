@@ -28,12 +28,13 @@ http://www.gnu.org/licenses/
 package sf.util.graph;
 
 
+import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Stack;
 
 /**
  * Implementation of <a href=
@@ -52,14 +53,14 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
 
   private final DirectedGraph<T> graph;
   private final Collection<List<T>> stronglyConnectedComponents;
-  private final Stack<Vertex<T>> stack;
+  private final Deque<Vertex<T>> stack;
 
   public TarjanStronglyConnectedComponentFinder(final DirectedGraph<T> graph)
   {
     this.graph = Objects.requireNonNull(graph, "No graph provided");
 
     stronglyConnectedComponents = new HashSet<>();
-    stack = new Stack<>();
+    stack = new ArrayDeque<>();
   }
 
   /**

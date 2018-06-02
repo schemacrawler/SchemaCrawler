@@ -66,9 +66,9 @@ final class ImmutableCrawlInfo
                      final DatabaseInfo databaseInfo,
                      final String title)
   {
-    this.schemaCrawlerInfo = new SchemaCrawlerInfo();
-    this.osInfo = new OperatingSystemInfo();
-    this.jvmInfo = new JvmSystemInfo();
+    schemaCrawlerInfo = new SchemaCrawlerInfo();
+    osInfo = new OperatingSystemInfo();
+    jvmInfo = new JvmSystemInfo();
 
     requireNonNull(jdbcDriverInfo, "No JDBC driver information provided");
     this.jdbcDriverInfo = new BaseProductVersion(jdbcDriverInfo);
