@@ -28,6 +28,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.logging.Level;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
@@ -40,17 +51,6 @@ import schemacrawler.tools.options.OutputOptions;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
 
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.logging.Level;
-
 public class LintCommandProvider
   implements CommandProvider
 {
@@ -60,8 +60,7 @@ public class LintCommandProvider
 
   @Override
   public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions
-                                                                   schemaCrawlerOptions,
+                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                                                final OutputOptions outputOptions)
   {
     final LintCommand executable = new LintCommand();

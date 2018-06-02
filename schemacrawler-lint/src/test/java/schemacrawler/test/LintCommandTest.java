@@ -30,6 +30,7 @@ package schemacrawler.test;
 
 
 import org.junit.Test;
+
 import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.tools.options.TextOutputFormat;
 
