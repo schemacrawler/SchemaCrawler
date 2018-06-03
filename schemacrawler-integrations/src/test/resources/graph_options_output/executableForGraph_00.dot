@@ -29,11 +29,11 @@ digraph "SchemaCrawler_Diagram" {
 	</tr>
 	<tr>
 		<td align='right'>generated on</td>
-		<td align='left'>2018-05-01 22:35:44</td>
+		<td align='left'>2018-06-03 07:37:15</td>
 	</tr>
 	<tr>
 		<td align='right'>database version</td>
-		<td align='left'>HSQL Database Engine 2.4.0</td>
+		<td align='left'>HSQL Database Engine 2.4.1</td>
 	</tr>
       </table>
     >
