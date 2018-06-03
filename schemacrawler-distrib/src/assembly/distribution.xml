@@ -16,7 +16,7 @@
 
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
   <available file="bnd-1.50.0.jar" property="available.bnd.jar" />
-  <available file="ivy-2.4.0.jar" property="available.ivy.jar" />
+  <available file="ivy-2.4.1.jar" property="available.ivy.jar" />
 
   <target name="make-distribution"
     depends="
@@ -44,8 +44,8 @@
 
   <target name="download-ivy" unless="available.ivy.jar">
     <get
-      src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.0/ivy-2.4.0.jar"
-      dest="ivy-2.4.0.jar" usetimestamp="true" />
+      src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.1/ivy-2.4.1.jar"
+      dest="ivy-2.4.1.jar" usetimestamp="true" />
   </target>
 
   <target name="make-super-jar">
@@ -144,7 +144,7 @@
     <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
 
     <!-- Copy Apache Ant Ivy -->
-    <copy file="ivy-2.4.0.jar" todir="${main-distribution.staging.dir}/_downloader" />
+    <copy file="ivy-2.4.1.jar" todir="${main-distribution.staging.dir}/_downloader" />
 
     <!-- Stage examples -->
     <copy todir="${main-distribution.staging.dir}">

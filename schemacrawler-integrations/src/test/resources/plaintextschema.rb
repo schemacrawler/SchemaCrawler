@@ -1,7 +1,7 @@
 # encoding: utf-8
-puts $catalog.crawlInfo
+puts catalog.crawlInfo
 
-for table in $catalog.tables
+for table in catalog.tables
   # $stderr.puts table.schema
   if table.schema.to_s == "PUBLIC.FOR_LINT"
     next
