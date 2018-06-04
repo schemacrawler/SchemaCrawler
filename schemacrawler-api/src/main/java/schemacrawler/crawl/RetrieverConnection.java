@@ -67,6 +67,7 @@ final class RetrieverConnection
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final MetadataRetrievalStrategy procedureRetrievalStrategy;
   private final MetadataRetrievalStrategy functionRetrievalStrategy;
+  private final TypeMap typeMap;
   private final InformationSchemaViews informationSchemaViews;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
@@ -84,6 +85,15 @@ final class RetrieverConnection
 
     informationSchemaViews = databaseSpecificOverrideOptions
       .getInformationSchemaViews();
+
+    if (databaseSpecificOverrideOptions.hasOverrideForTypeMap())
+    {
+      typeMap = databaseSpecificOverrideOptions.getTypeMap();
+    }
+    else
+    {
+      typeMap = new TypeMap(connection);
+    }
 
     databaseSpecificOptions = new DatabaseSpecificOptions(connection,
                                                           databaseSpecificOverrideOptions);
@@ -178,7 +188,7 @@ final class RetrieverConnection
 
   TypeMap getTypeMap()
   {
-    return databaseSpecificOptions.getTypeMap();
+    return typeMap;
   }
 
   boolean isSupportsCatalogs()
