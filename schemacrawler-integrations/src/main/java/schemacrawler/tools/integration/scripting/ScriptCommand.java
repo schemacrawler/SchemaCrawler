@@ -29,12 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
-import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -44,7 +44,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -76,10 +75,13 @@ public final class ScriptCommand
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+  public final void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (isBlank(scriptFileName))
@@ -136,10 +138,7 @@ public final class ScriptCommand
                                 .getExtensions())));
     }
 
-    final CommandChain chain = new CommandChain();
-    chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    chain.setDatabaseSpecificOptions(databaseSpecificOptions);
-    chain.setAdditionalConfiguration(additionalConfiguration);
+    final CommandChain chain = new CommandChain(this);
 
     final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     try (final Reader reader = outputOptions.openNewInputReader();

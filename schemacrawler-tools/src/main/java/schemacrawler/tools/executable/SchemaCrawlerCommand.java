@@ -49,12 +49,13 @@ public interface SchemaCrawlerCommand
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
    *
-   * @param connection
-   *        Database connection
    * @throws Exception
    *         On an exception
    */
-  void executeOn(Catalog catalog, Connection connection)
+  void execute()
+    throws Exception;
+
+  void beforeExecute()
     throws Exception;
 
   Config getAdditionalConfiguration();
@@ -67,6 +68,10 @@ public interface SchemaCrawlerCommand
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
+  Catalog getCatalog();
+
+  Connection getConnection();
+
   void setAdditionalConfiguration(Config config);
 
   void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
@@ -74,5 +79,9 @@ public interface SchemaCrawlerCommand
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
+
+  void setConnection(Connection connection);
+
+  void setCatalog(Catalog catalog);
 
 }

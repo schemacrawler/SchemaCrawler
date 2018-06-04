@@ -28,13 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 
 /**
@@ -43,17 +42,17 @@ import sf.util.SchemaCrawlerLogger;
  * executable for efficiency in execution.
  */
 abstract class BaseCommandChain
-    extends BaseSchemaCrawlerCommand
+  extends BaseSchemaCrawlerCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-      .getLogger(BaseCommandChain.class.getName());
+    .getLogger(BaseCommandChain.class.getName());
 
   private final List<SchemaCrawlerCommand> scCommands;
-  protected final CommandRegistry commandRegistry;
+  private final CommandRegistry commandRegistry;
 
   protected BaseCommandChain(final String command)
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     super(command);
 
@@ -61,18 +60,37 @@ abstract class BaseCommandChain
     scCommands = new ArrayList<>();
   }
 
-  public final SchemaCrawlerCommand addNext(final SchemaCrawlerCommand scCommand)
+  protected final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
+                                                                       final OutputOptions outputOptions)
+    throws SchemaCrawlerException
   {
-    if (scCommand != null)
+    try
     {
+      final SchemaCrawlerCommand scCommand = commandRegistry
+        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
+      if (scCommand == null)
+      {
+        return null;
+      }
+
+      scCommand.setAdditionalConfiguration(additionalConfiguration);
+      scCommand.setCatalog(catalog);
+      scCommand.setConnection(connection);
+      scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
+
       scCommands.add(scCommand);
+
+      return scCommand;
     }
-    return scCommand;
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException(String
+        .format("Cannot chain commands, unknown command <%s>", command));
+    }
   }
 
-  protected final void executeChain(final Catalog catalog,
-                                    final Connection connection)
-      throws Exception
+  protected final void executeChain()
+    throws Exception
   {
     if (scCommands.isEmpty())
     {
@@ -80,10 +98,9 @@ abstract class BaseCommandChain
       return;
     }
 
-    for (final SchemaCrawlerCommand scCommand : scCommands)
+    for (final SchemaCrawlerCommand scCommand: scCommands)
     {
-      scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
-      scCommand.executeOn(catalog, connection);
+      scCommand.execute();
     }
   }
 

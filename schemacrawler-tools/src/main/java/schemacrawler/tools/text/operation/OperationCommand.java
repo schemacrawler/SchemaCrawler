@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.QueryUtility.executeAgainstTable;
 import static sf.util.DatabaseUtility.createStatement;
 import static sf.util.DatabaseUtility.executeSql;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -73,9 +73,14 @@ public final class OperationCommand
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
+
     loadOperationOptions();
 
     if (!isOutputFormatSupported())

@@ -37,7 +37,6 @@ import static sf.util.IOUtility.readResourceFully;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -76,23 +75,25 @@ public final class GraphRenderer
    * {@inheritDoc}
    */
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+
     loadGraphOptions();
 
     // Determine what decorators to apply to the database
-    Catalog catalog = db;
+    Catalog aCatalog = catalog;
     if (graphOptions.isShowWeakAssociations())
     {
-      catalog = new CatalogWithAssociations(catalog);
+      aCatalog = new CatalogWithAssociations(aCatalog);
     }
     if (graphOptions.isShowRowCounts()
         || schemaCrawlerOptions.isHideEmptyTables())
     {
-      catalog = new CatalogWithCounts(catalog,
-                                      connection,
-                                      schemaCrawlerOptions);
+      aCatalog = new CatalogWithCounts(aCatalog,
+                                       connection,
+                                       schemaCrawlerOptions);
     }
 
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
@@ -115,7 +116,7 @@ public final class GraphRenderer
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(catalog);
+    traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort
       .getNamedObjectSort(getGraphOptions().isAlphabeticalSortForTables()));

@@ -29,10 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.Writer;
-import java.sql.Connection;
+import static java.util.Objects.requireNonNull;
 
-import schemacrawler.schema.Catalog;
+import java.io.Writer;
+
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
 /**
@@ -60,14 +60,16 @@ public final class SerializationCommand
    * {@inheritDoc}
    */
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void execute()
     throws Exception
   {
-    final SerializableCatalog catalog = new XmlSerializedCatalog(db);
+    requireNonNull(catalog, "No catalog provided");
+
+    final SerializableCatalog serializableCatalof = new XmlSerializedCatalog(catalog);
     outputOptions.forceCompressedOutputFile();
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
-      catalog.save(writer);
+      serializableCatalof.save(writer);
     }
   }
 

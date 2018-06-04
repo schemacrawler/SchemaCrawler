@@ -34,6 +34,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
+import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -42,10 +43,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.regex.Pattern;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -65,22 +64,21 @@ public class EmbeddedGraphRenderer
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
-    final CommandChain chain = new CommandChain();
-    chain.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    chain.setDatabaseSpecificOptions(databaseSpecificOptions);
-    chain.setAdditionalConfiguration(additionalConfiguration);
-
+    // Create chain, and set all options from the current command
+    final CommandChain chain = new CommandChain(this);
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
     chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);
 
-    chain.executeOn(catalog, connection);
+    chain.execute();
 
     // Interleave HTML and SVG
     try (

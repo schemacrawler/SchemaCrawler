@@ -132,8 +132,7 @@ public final class SchemaCrawlerExecutable
     throws Exception
   {
     // Reduce all once again, since the catalog may have been loaded
-    // from an
-    // offline or other source
+    // from an offline or other source
     ((Reducible) catalog).reduce(Schema.class,
                                  getSchemaReducer(schemaCrawlerOptions));
     ((Reducible) catalog).reduce(Table.class,
@@ -151,7 +150,7 @@ public final class SchemaCrawlerExecutable
       throw new SchemaCrawlerException("No command specified");
     }
 
-    BaseSchemaCrawlerCommand executable = null;
+    SchemaCrawlerCommand scCommand = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
     for (final String command: commands)
@@ -166,27 +165,27 @@ public final class SchemaCrawlerExecutable
       {
         LOGGER.log(Level.INFO,
                    new StringFormat("Executing as a query <%s>", getCommand()));
-        executable = new OperationCommand(getCommand());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
+        scCommand = new OperationCommand(getCommand());
+        scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        scCommand.setOutputOptions(outputOptions);
         break;
       }
     }
 
-    if (executable == null)
+    if (scCommand == null)
     {
       if (commands.hasMultipleCommands())
       {
         LOGGER.log(Level.INFO,
                    new StringFormat("Executing commands <%s> in sequence",
                                     commands));
-        executable = new CommandDaisyChain(getCommand());
-        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
+        scCommand = new CommandDaisyChain(getCommand());
+        scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        scCommand.setOutputOptions(outputOptions);
       }
       else
       {
-        executable = (BaseSchemaCrawlerCommand) commandRegistry
+        scCommand = (BaseSchemaCrawlerCommand) commandRegistry
           .configureNewCommand(getCommand(),
                                schemaCrawlerOptions,
                                outputOptions);
@@ -194,14 +193,16 @@ public final class SchemaCrawlerExecutable
           .log(Level.INFO,
                new StringFormat("Executing command <%s> using executable <%s>",
                                 getCommand(),
-                                executable.getClass().getName()));
+                                scCommand.getClass().getName()));
       }
     }
 
-    executable.setDatabaseSpecificOptions(databaseSpecificOptions);
-    executable.setAdditionalConfiguration(additionalConfiguration);
+    scCommand.setAdditionalConfiguration(additionalConfiguration);
+    scCommand.setCatalog(catalog);
+    scCommand.setConnection(connection);
+    scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
 
-    executable.executeOn(catalog, connection);
+    scCommand.execute();
   }
 
 }
