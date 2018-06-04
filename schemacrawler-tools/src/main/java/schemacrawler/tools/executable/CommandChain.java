@@ -32,9 +32,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -49,10 +47,29 @@ public final class CommandChain
 
   private static final String COMMAND = "chain";
 
-  public CommandChain()
+  /**
+   * Copy configuration settings from another command.
+   * 
+   * @param scCommand
+   *        Other command
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  public CommandChain(final SchemaCrawlerCommand scCommand)
     throws SchemaCrawlerException
   {
     super(COMMAND);
+
+    requireNonNull(scCommand, "No command provided, for settings");
+
+    // Copy all configuration
+    setSchemaCrawlerOptions(scCommand.getSchemaCrawlerOptions());
+    setAdditionalConfiguration(scCommand.getAdditionalConfiguration());
+    setOutputOptions(scCommand.getOutputOptions());
+
+    setCatalog(scCommand.getCatalog());
+    setConnection(scCommand.getConnection());
+    setDatabaseSpecificOptions(scCommand.getDatabaseSpecificOptions());
   }
 
   public final SchemaCrawlerCommand addNext(final String command,
@@ -74,38 +91,22 @@ public final class CommandChain
                                             final String outputFileName)
     throws SchemaCrawlerException
   {
-    try
-    {
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            Paths
-                                                              .get(outputFileName));
+    requireNonNull(command, "No command provided");
+    requireNonNull(outputFormat, "No output format provided");
+    requireNonNull(outputFileName, "No output file name provided");
 
-      final SchemaCrawlerCommand scCommand = commandRegistry
-        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
-      if (scCommand == null)
-      {
-        return null;
-      }
+    final Path outputFile = Paths.get(outputFileName);
+    final OutputOptions outputOptions = new OutputOptions(outputFormat,
+                                                          outputFile);
 
-      scCommand.setAdditionalConfiguration(additionalConfiguration);
-
-      return addNext(scCommand);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(String
-        .format("Cannot chain executable, unknown command, %s - %s - %s",
-                command,
-                outputFormat,
-                outputFileName));
-    }
+    return addNextAndConfigureForExecution(command, outputOptions);
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void execute()
     throws Exception
   {
-    executeChain(catalog, connection);
+    executeChain();
   }
 
 }

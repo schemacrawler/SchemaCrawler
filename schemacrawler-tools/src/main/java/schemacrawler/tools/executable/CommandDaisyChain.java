@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.sql.Connection;
-
-import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
@@ -50,7 +47,7 @@ public final class CommandDaisyChain
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void execute()
     throws Exception
   {
     // Commands are processed at execution time. That is, after
@@ -63,7 +60,8 @@ public final class CommandDaisyChain
 
     for (final String command: commands)
     {
-      final SchemaCrawlerCommand scCommand = addNext(command);
+      final SchemaCrawlerCommand scCommand = addNextAndConfigureForExecution(command,
+                                                                             outputOptions);
       if (scCommand == null)
       {
         continue;
@@ -108,31 +106,8 @@ public final class CommandDaisyChain
 
     }
 
-    executeChain(catalog, connection);
+    executeChain();
 
-  }
-
-  private final SchemaCrawlerCommand addNext(final String command)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      final SchemaCrawlerCommand scCommand = commandRegistry
-        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
-      if (scCommand == null)
-      {
-        return scCommand;
-      }
-
-      scCommand.setAdditionalConfiguration(additionalConfiguration);
-
-      return addNext(scCommand);
-    }
-    catch (final Exception e)
-    {
-      throw new SchemaCrawlerException(String
-        .format("Cannot chain commands, unknown command <%s>", command));
-    }
   }
 
 }

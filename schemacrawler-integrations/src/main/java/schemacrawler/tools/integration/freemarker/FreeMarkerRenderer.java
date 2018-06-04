@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.freemarker;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.Writer;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,7 +44,6 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -59,6 +59,7 @@ public final class FreeMarkerRenderer
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(FreeMarkerRenderer.class.getName());
+
   static final String COMMAND = "freemarker";
 
   public FreeMarkerRenderer()
@@ -70,10 +71,12 @@ public final class FreeMarkerRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+  public final void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);

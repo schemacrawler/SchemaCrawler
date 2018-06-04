@@ -31,6 +31,9 @@ package schemacrawler.tools.executable;
 
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
+
+import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -47,10 +50,13 @@ public abstract class BaseSchemaCrawlerCommand
 {
 
   protected final String command;
+
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
   protected DatabaseSpecificOptions databaseSpecificOptions;
+  protected Connection connection;
+  protected Catalog catalog;
 
   protected BaseSchemaCrawlerCommand(final String command)
   {
@@ -62,12 +68,26 @@ public abstract class BaseSchemaCrawlerCommand
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
+    additionalConfiguration = new Config();
+  }
+
+  @Override
+  public void beforeExecute()
+    throws Exception
+  {
+    // Can be overrridden by sub-classes
   }
 
   @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;
+  }
+
+  @Override
+  public Catalog getCatalog()
+  {
+    return catalog;
   }
 
   /**
@@ -77,6 +97,12 @@ public abstract class BaseSchemaCrawlerCommand
   public final String getCommand()
   {
     return command;
+  }
+
+  @Override
+  public Connection getConnection()
+  {
+    return connection;
   }
 
   @Override
@@ -117,12 +143,21 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
+  public void setCatalog(final Catalog catalog)
+  {
+    this.catalog = catalog;
+  }
+
+  @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
+  }
+
+  @Override
   public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
   {
-    if (databaseSpecificOptions != null)
-    {
-      this.databaseSpecificOptions = databaseSpecificOptions;
-    }
+    this.databaseSpecificOptions = databaseSpecificOptions;
   }
 
   /**
@@ -135,6 +170,10 @@ public abstract class BaseSchemaCrawlerCommand
     {
       this.outputOptions = outputOptions;
     }
+    else
+    {
+      this.outputOptions = new OutputOptions();
+    }
   }
 
   /**
@@ -146,6 +185,10 @@ public abstract class BaseSchemaCrawlerCommand
     if (schemaCrawlerOptions != null)
     {
       this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+    else
+    {
+      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
     }
   }
 

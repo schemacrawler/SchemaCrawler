@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import java.sql.Connection;
+import static java.util.Objects.requireNonNull;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -58,29 +58,34 @@ public final class SchemaTextRenderer
   }
 
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
+
     loadSchemaTextOptions();
 
     // Determine what decorators to apply to the database
-    Catalog catalog = db;
+    Catalog aCatalog = catalog;
     if (schemaTextOptions.isShowWeakAssociations())
     {
-      catalog = new CatalogWithAssociations(catalog);
+      aCatalog = new CatalogWithAssociations(aCatalog);
     }
     if (schemaTextOptions.isShowRowCounts()
         || schemaCrawlerOptions.isHideEmptyTables())
     {
-      catalog = new CatalogWithCounts(catalog,
-                                      connection,
-                                      schemaCrawlerOptions);
+      aCatalog = new CatalogWithCounts(aCatalog,
+                                       connection,
+                                       schemaCrawlerOptions);
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler();
 
     final SchemaTraverser traverser = new SchemaTraverser();
-    traverser.setCatalog(catalog);
+    traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort
       .getNamedObjectSort(getSchemaTextOptions()

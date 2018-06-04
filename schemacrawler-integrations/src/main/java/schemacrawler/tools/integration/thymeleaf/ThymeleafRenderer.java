@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.sql.Connection;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -41,7 +42,6 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 
 /**
@@ -64,10 +64,14 @@ public final class ThymeleafRenderer
    * {@inheritDoc}
    */
   @Override
-  public final void executeOn(final Catalog catalog,
-                              final Connection connection)
+  public final void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
+
     final Context context = new Context();
     context.setVariable("catalog", catalog);
     context.setVariable("identifiers",

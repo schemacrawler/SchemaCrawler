@@ -28,14 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -60,9 +59,14 @@ public class LintCommand
   }
 
   @Override
-  public void executeOn(final Catalog db, final Connection connection)
+  public void execute()
     throws Exception
   {
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
+
     // Read lint options from the config
     lintOptions = getLintOptions();
 
@@ -70,9 +74,11 @@ public class LintCommand
                                                           additionalConfiguration);
     final Linters linters = new Linters(linterConfigs);
 
-    final LintedCatalog catalog = new LintedCatalog(db, connection, linters);
+    final LintedCatalog lintedCatalog = new LintedCatalog(catalog,
+                                                          connection,
+                                                          linters);
 
-    generateReport(catalog);
+    generateReport(lintedCatalog);
 
     dispatch(linters);
   }
