@@ -78,10 +78,6 @@ public final class SchemaCrawlerExecutable
     super(command);
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final void execute(final Connection connection,
                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
     throws Exception

@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
@@ -112,7 +111,7 @@ public class LintOutputTest
         schemaTextOptionsBuilder.showInfo();
         queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
 
-        final Executable executable = new SchemaCrawlerExecutable(command);
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
@@ -150,7 +149,7 @@ public class LintOutputTest
         .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
-      final Executable executable = new SchemaCrawlerExecutable("lint");
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
@@ -180,7 +179,7 @@ public class LintOutputTest
         .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
       schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
-      final Executable executable = new SchemaCrawlerExecutable("lint");
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();

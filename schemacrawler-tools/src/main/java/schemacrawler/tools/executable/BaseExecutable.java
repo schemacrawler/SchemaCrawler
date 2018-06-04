@@ -43,7 +43,6 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public abstract class BaseExecutable
-  implements Executable
 {
 
   protected final String command;
@@ -64,46 +63,31 @@ public abstract class BaseExecutable
     outputOptions = new OutputOptions();
   }
 
-  @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final String getCommand()
   {
     return command;
   }
 
-  @Override
   public DatabaseSpecificOptions getDatabaseSpecificOptions()
   {
     return databaseSpecificOptions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
   }
 
-  @Override
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
     if (additionalConfiguration == null)
@@ -116,7 +100,6 @@ public abstract class BaseExecutable
     }
   }
 
-  @Override
   public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
   {
     if (databaseSpecificOptions != null)
@@ -125,10 +108,6 @@ public abstract class BaseExecutable
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
     if (outputOptions != null)
@@ -137,10 +116,6 @@ public abstract class BaseExecutable
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     if (schemaCrawlerOptions != null)

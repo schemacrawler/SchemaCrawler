@@ -54,7 +54,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestName;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
@@ -347,7 +346,7 @@ public class GraphRendererOptionsTest
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     }
 
-    final Executable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
@@ -376,7 +375,7 @@ public class GraphRendererOptionsTest
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
   }
 
-  private Path executeGraphExecutable(final Executable executable)
+  private Path executeGraphExecutable(final SchemaCrawlerExecutable executable)
     throws Exception
   {
     final String outputFormatValue = GraphOutputFormat.png.getFormat();

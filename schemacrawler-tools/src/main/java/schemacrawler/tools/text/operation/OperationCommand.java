@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.QueryUtility.executeAgainstTable;
 import static sf.util.DatabaseUtility.createStatement;
 import static sf.util.DatabaseUtility.executeSql;
@@ -76,10 +75,7 @@ public final class OperationCommand
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     loadOperationOptions();
 

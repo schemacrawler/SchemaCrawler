@@ -42,7 +42,6 @@ import schemacrawler.Main;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -133,7 +132,7 @@ public class TemplatingIntegrationTest
                                                       final String referenceFileName)
     throws Exception
   {
-    final Executable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,

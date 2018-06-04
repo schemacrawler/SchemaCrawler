@@ -47,7 +47,7 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.tools.commandline.CommandLine;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -101,7 +101,7 @@ public class SchemaCrawlerSpringCommandLine
 
       try (Connection connection = dataSource.getConnection();)
       {
-        final Executable executable = (Executable) appContext
+        final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) appContext
           .getBean(springOptions.getExecutableName());
         if (databaseSpecificOverrideOptions == null)
         {

@@ -53,7 +53,6 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
@@ -332,7 +331,7 @@ public class SchemaCrawlerOutputTest
 
       final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder(textOptions);
 
-      final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);

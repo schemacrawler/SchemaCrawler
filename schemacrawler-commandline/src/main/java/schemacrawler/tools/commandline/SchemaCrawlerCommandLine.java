@@ -41,7 +41,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
@@ -114,7 +113,7 @@ public final class SchemaCrawlerCommandLine
       throw new SchemaCrawlerException("No connection options provided");
     }
 
-    final Executable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     // Configure
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

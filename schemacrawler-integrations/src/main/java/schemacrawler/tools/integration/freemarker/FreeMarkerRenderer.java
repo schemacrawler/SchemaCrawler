@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.freemarker;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.File;
 import java.io.Writer;
 import java.util.HashMap;
@@ -74,8 +72,7 @@ public final class FreeMarkerRenderer
   public final void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
+    // Null checks are done before execution
 
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";

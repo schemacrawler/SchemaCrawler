@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
@@ -50,7 +49,6 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 /**
  * Main executor for the scripting engine integration.
@@ -78,10 +76,7 @@ public final class ScriptCommand
   public final void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (isBlank(scriptFileName))
@@ -97,12 +92,8 @@ public final class ScriptCommand
     ScriptEngineFactory javaScriptEngineFactory = null;
     for (final ScriptEngineFactory engineFactory: engineFactories)
     {
-      LOGGER.log(Level.FINER,
-                 new StringFormat("Evaluating script engine: %s %s (%s %s)",
-                                  engineFactory.getEngineName(),
-                                  engineFactory.getEngineVersion(),
-                                  engineFactory.getLanguageName(),
-                                  engineFactory.getLanguageVersion()));
+      logScriptEngineDetails(Level.FINER, engineFactory);
+
       final List<String> extensions = engineFactory.getExtensions();
       if (extensions.contains(getFileExtension(scriptFileName)))
       {
@@ -122,21 +113,7 @@ public final class ScriptCommand
     {
       throw new SchemaCrawlerException("Script engine not found");
     }
-
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER
-        .log(Level.CONFIG,
-             new StringFormat("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                              scriptEngineFactory.getEngineName(),
-                              scriptEngineFactory.getEngineVersion(),
-                              scriptEngineFactory.getLanguageName(),
-                              scriptEngineFactory.getLanguageVersion(),
-                              ObjectToString
-                                .toString(scriptEngineFactory.getNames()),
-                              ObjectToString.toString(scriptEngineFactory
-                                .getExtensions())));
-    }
+    logScriptEngineDetails(Level.CONFIG, scriptEngineFactory);
 
     final CommandChain chain = new CommandChain(this);
 
@@ -163,6 +140,27 @@ public final class ScriptCommand
       }
     }
 
+  }
+
+  private void logScriptEngineDetails(Level level,
+                                      ScriptEngineFactory scriptEngineFactory)
+  {
+    if (!LOGGER.isLoggable(level))
+    {
+      return;
+    }
+
+    LOGGER
+      .log(level,
+           String
+             .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                     scriptEngineFactory.getEngineName(),
+                     scriptEngineFactory.getEngineVersion(),
+                     scriptEngineFactory.getLanguageName(),
+                     scriptEngineFactory.getLanguageVersion(),
+                     ObjectToString.toString(scriptEngineFactory.getNames()),
+                     ObjectToString
+                       .toString(scriptEngineFactory.getExtensions())));
   }
 
 }

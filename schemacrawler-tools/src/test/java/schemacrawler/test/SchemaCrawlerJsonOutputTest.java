@@ -49,7 +49,6 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputOptions;
@@ -120,7 +119,7 @@ public class SchemaCrawlerJsonOutputTest
     schemaCrawlerOptions.setTableInclusionRule(tableInclusionRule);
     schemaCrawlerOptions.setTableNamePattern(tableName);
 
-    final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
       .name());
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);

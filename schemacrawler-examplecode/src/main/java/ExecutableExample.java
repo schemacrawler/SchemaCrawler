@@ -11,8 +11,13 @@ import java.util.logging.Level;
 
 import javax.sql.DataSource;
 
-import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -44,12 +49,12 @@ public final class ExecutableExample
                                                           outputFile);
     final String command = "schema";
 
-    final Executable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     final Connection connection = getConnection();
     final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
+      .matchDatabaseSpecificOverrideOptions(connection);
     executable.execute(connection, databaseSpecificOverrideOptions);
 
     System.out.println("Created output file, " + outputFile);
