@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -61,10 +59,7 @@ public final class SchemaTextRenderer
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     loadSchemaTextOptions();
 

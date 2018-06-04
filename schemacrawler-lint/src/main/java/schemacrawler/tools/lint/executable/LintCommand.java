@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
-import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
 import java.util.ArrayList;
@@ -62,10 +61,7 @@ public class LintCommand
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     // Read lint options from the config
     lintOptions = getLintOptions();

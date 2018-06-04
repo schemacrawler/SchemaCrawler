@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Writer;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
@@ -63,7 +61,7 @@ public final class SerializationCommand
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
+    // Null checks are done before execution
 
     final SerializableCatalog serializableCatalof = new XmlSerializedCatalog(catalog);
     outputOptions.forceCompressedOutputFile();

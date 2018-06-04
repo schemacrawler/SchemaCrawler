@@ -46,7 +46,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.testdb.SqlScript;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
@@ -109,7 +109,7 @@ public abstract class BaseSqliteTest
   }
 
   protected void executeExecutable(final Path sqliteDbFile,
-                                   final Executable executable,
+                                   final SchemaCrawlerExecutable executable,
                                    final String referenceFileName)
     throws Exception
   {
@@ -124,7 +124,7 @@ public abstract class BaseSqliteTest
         .getConnection();)
       {
         final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-            .matchDatabaseSpecificOverrideOptions(connection);
+          .matchDatabaseSpecificOverrideOptions(connection);
         executable.execute(connection, databaseSpecificOverrideOptions);
       }
 

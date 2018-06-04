@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -75,7 +76,14 @@ public abstract class BaseSchemaCrawlerCommand
   public void beforeExecute()
     throws Exception
   {
-    // Can be overrridden by sub-classes
+    requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
+    requireNonNull(additionalConfiguration,
+                   "No additional configuration provided");
+    requireNonNull(outputOptions, "No output options provided");
+    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(connection, "No connection provided");
+    requireNonNull(databaseSpecificOptions,
+                   "No database specific options provided");
   }
 
   @Override

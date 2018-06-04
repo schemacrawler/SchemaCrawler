@@ -33,6 +33,7 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
+import java.lang.reflect.Executable;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
@@ -71,7 +72,7 @@ public class SpringIntegrationTest
         final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
           .getBean("databaseSpecificOverrideOptions");
 
-        final Executable executable = (Executable) bean;
+        final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) bean;
         executeAndCheckForOutputFile(beanDefinitionName,
                                      executable,
                                      databaseSpecificOverrideOptions,
@@ -100,7 +101,7 @@ public class SpringIntegrationTest
   }
 
   private void executeAndCheckForOutputFile(final String executableName,
-                                            final Executable executable,
+                                            final SchemaCrawlerExecutable executable,
                                             final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
                                             final List<String> failures,
                                             final boolean isCompressedOutput)

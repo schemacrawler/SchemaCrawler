@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.Writer;
 import java.nio.charset.Charset;
 
@@ -67,10 +65,7 @@ public final class ThymeleafRenderer
   public final void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     final Context context = new Context();
     context.setVariable("catalog", catalog);

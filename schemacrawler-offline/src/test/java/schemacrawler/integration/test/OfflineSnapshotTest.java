@@ -28,23 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import org.junit.Before;
-import org.junit.Test;
-import schemacrawler.Main;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.*;
-import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.executable.Executable;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.iosource.CompressedFileOutputResource;
-import schemacrawler.tools.offline.OfflineDatabaseConnector;
-import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.IOUtility;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.size;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -54,13 +44,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.size;
-import static org.junit.Assert.*;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import org.junit.Before;
+import org.junit.Test;
+
+import schemacrawler.Main;
+import schemacrawler.schema.Catalog;
+import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.offline.OfflineDatabaseConnector;
+import schemacrawler.tools.offline.jdbc.OfflineConnection;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import sf.util.IOUtility;
 
 public class OfflineSnapshotTest
-    extends BaseDatabaseTest
+  extends BaseDatabaseTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
@@ -68,7 +75,7 @@ public class OfflineSnapshotTest
 
   @Test
   public void offlineSnapshotCommandLine()
-      throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -91,7 +98,7 @@ public class OfflineSnapshotTest
 
   @Test
   public void offlineSnapshotCommandLineWithFilters()
-      throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -116,7 +123,7 @@ public class OfflineSnapshotTest
 
   @Test
   public void offlineSnapshotCommandLineWithSchemaFilters()
-      throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter("text");)
     {
@@ -133,7 +140,7 @@ public class OfflineSnapshotTest
       argsMap.put("outputfile", out.toString());
 
       final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg : argsMap.entrySet())
+      for (final Map.Entry<String, String> arg: argsMap.entrySet())
       {
         argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
       }
@@ -141,13 +148,13 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
 
       out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT
-                           + "offlineWithSchemaFilters.txt");
+                       + "offlineWithSchemaFilters.txt");
     }
   }
 
   @Test
   public void offlineSnapshotExecutable()
-      throws Exception
+    throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -161,7 +168,7 @@ public class OfflineSnapshotTest
     final OutputOptions inputOptions = new OutputOptions();
     inputOptions.setCompressedInputFile(serializedDatabaseFile);
 
-    final Executable executable = new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(inputOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
@@ -173,7 +180,7 @@ public class OfflineSnapshotTest
 
   @Before
   public void serializeCatalog()
-      throws SchemaCrawlerException, IOException
+    throws SchemaCrawlerException, IOException
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -197,8 +204,8 @@ public class OfflineSnapshotTest
     final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
     final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
                                                            "schemacrawler.data")
-        .openNewOutputWriter(UTF_8,
-                             false);
+                                                             .openNewOutputWriter(UTF_8,
+                                                                                  false);
     xmlDatabase.save(writer);
     writer.close();
     assertNotSame("Database was not serialized to XML",
@@ -207,24 +214,22 @@ public class OfflineSnapshotTest
 
   }
 
-  protected void executeExecutable(final Executable executable,
+  protected void executeExecutable(final SchemaCrawlerExecutable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
-      throws Exception
+    throws Exception
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                             out);
-      final DatabaseSpecificOverrideOptionsBuilder dbSpecificOverrideOptionsBuilder = new
-          DatabaseSpecificOverrideOptionsBuilder();
-      dbSpecificOverrideOptionsBuilder.withDatabaseServerType(OfflineDatabaseConnector
-                                                                  .DB_SERVER_TYPE);
+      final DatabaseSpecificOverrideOptionsBuilder dbSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      dbSpecificOverrideOptionsBuilder
+        .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 
       executable.setOutputOptions(outputOptions);
       executable.execute(new OfflineConnection(serializedDatabaseFile),
-                         dbSpecificOverrideOptionsBuilder
-                             .toOptions());
+                         dbSpecificOverrideOptionsBuilder.toOptions());
 
       out.assertEquals(referenceFileName);
     }

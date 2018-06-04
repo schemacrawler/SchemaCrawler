@@ -51,7 +51,6 @@ import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
@@ -133,7 +132,7 @@ public class SpinThroughTest
           final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
           schemaTextOptionsBuilder.showInfo();
 
-          final Executable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+          final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
           executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
           executable.setOutputOptions(outputOptions);

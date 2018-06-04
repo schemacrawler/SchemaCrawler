@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -65,7 +64,7 @@ public class SchemaCrawlerExecutableChainTest
   public void chainJavaScript()
     throws Exception
   {
-    final Executable executable = new SchemaCrawlerExecutable("script");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility
       .createTempFilePath(executable.getCommand(), "data");
 

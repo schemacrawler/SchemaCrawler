@@ -34,7 +34,6 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -67,17 +66,16 @@ public class EmbeddedGraphRenderer
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
+    // Null checks are done before execution
 
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseSvgFile = createTempFilePath("schemacrawler", "svg");
 
-    // Create chain, and set all options from the current command
+    // Execute chain, after setting all options from the current command
     final CommandChain chain = new CommandChain(this);
     chain.addNext(command, TextOutputFormat.html, baseHtmlFile);
     chain.addNext(command, GraphOutputFormat.svg, baseSvgFile);
-
     chain.execute();
 
     // Interleave HTML and SVG

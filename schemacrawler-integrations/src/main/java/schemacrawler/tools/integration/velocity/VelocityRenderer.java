@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.velocity;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.io.File;
 import java.io.Writer;
 import java.util.Properties;
@@ -86,10 +84,7 @@ public final class VelocityRenderer
   public final void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    // Null checks are done before execution
 
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory

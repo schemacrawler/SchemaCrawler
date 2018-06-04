@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.tools.executable.Executable;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 public class ScriptingTest
@@ -78,14 +77,14 @@ public class ScriptingTest
                       "script_output_rb.txt");
   }
 
-  private Executable createScriptExecutable()
+  private SchemaCrawlerExecutable createScriptExecutable()
     throws SchemaCrawlerException
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-    final Executable scriptExecutable = new SchemaCrawlerExecutable("script");
+    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable("script");
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return scriptExecutable;
   }

@@ -32,7 +32,7 @@ package schemacrawler.test.utility;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.tools.executable.Executable;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -40,7 +40,7 @@ public abstract class BaseExecutableTest
   extends BaseDatabaseTest
 {
 
-  protected void executeExecutable(final Executable executable,
+  protected void executeExecutable(final SchemaCrawlerExecutable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
     throws Exception

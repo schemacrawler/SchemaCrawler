@@ -78,8 +78,6 @@ public final class GraphRenderer
   public void execute()
     throws Exception
   {
-    requireNonNull(catalog, "No catalog provided");
-
     loadGraphOptions();
 
     // Determine what decorators to apply to the database
