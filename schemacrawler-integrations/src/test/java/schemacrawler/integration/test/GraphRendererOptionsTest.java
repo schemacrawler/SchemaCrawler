@@ -46,7 +46,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -388,9 +388,9 @@ public class GraphRendererOptionsTest
 
     executable.setOutputOptions(outputOptions);
     final Connection connection = getConnection();
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-      .matchDatabaseSpecificOverrideOptions(connection);
-    executable.execute(connection, databaseSpecificOverrideOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+      .matchSchemaRetrievalOptions(connection);
+    executable.execute(connection, schemaRetrievalOptions);
 
     validateDiagram(testOutputFile);
 

@@ -37,7 +37,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
@@ -58,22 +58,22 @@ final class RetrieverConnection
 
   private final Connection connection;
   private final DatabaseMetaData metaData;
-  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+  private final SchemaRetrievalOptions schemaRetrievalOptions;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
 
   RetrieverConnection(final Connection connection,
-                      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                      final SchemaRetrievalOptions schemaRetrievalOptions)
     throws SQLException
   {
 
     this.connection = checkConnection(connection);
     metaData = connection.getMetaData();
-    this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
+    this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
                                                           "No database specific overrides provided");
 
     LOGGER.log(Level.CONFIG,
-               new StringFormat("%s", databaseSpecificOverrideOptions));
+               new StringFormat("%s", schemaRetrievalOptions));
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
@@ -84,32 +84,32 @@ final class RetrieverConnection
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getForeignKeyRetrievalStrategy();
+    return schemaRetrievalOptions.getForeignKeyRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getFunctionRetrievalStrategy();
+    return schemaRetrievalOptions.getFunctionRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getIndexRetrievalStrategy();
+    return schemaRetrievalOptions.getIndexRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getPrimaryKeyRetrievalStrategy();
+    return schemaRetrievalOptions.getPrimaryKeyRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getProcedureRetrievalStrategy();
+    return schemaRetrievalOptions.getProcedureRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getTableRetrievalStrategy();
+    return schemaRetrievalOptions.getTableRetrievalStrategy();
   }
 
   Connection getConnection()
@@ -124,7 +124,7 @@ final class RetrieverConnection
    */
   InformationSchemaViews getInformationSchemaViews()
   {
-    return databaseSpecificOverrideOptions.getInformationSchemaViews();
+    return schemaRetrievalOptions.getInformationSchemaViews();
   }
 
   JavaSqlTypes getJavaSqlTypes()
@@ -139,7 +139,7 @@ final class RetrieverConnection
 
   MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
-    return databaseSpecificOverrideOptions.getTableColumnRetrievalStrategy();
+    return schemaRetrievalOptions.getTableColumnRetrievalStrategy();
   }
 
   TableTypes getTableTypes()
@@ -149,17 +149,17 @@ final class RetrieverConnection
 
   TypeMap getTypeMap()
   {
-    return databaseSpecificOverrideOptions.getTypeMap();
+    return schemaRetrievalOptions.getTypeMap();
   }
 
   boolean isSupportsCatalogs()
   {
-    return databaseSpecificOverrideOptions.isSupportsCatalogs();
+    return schemaRetrievalOptions.isSupportsCatalogs();
   }
 
   boolean isSupportsSchemas()
   {
-    return databaseSpecificOverrideOptions.isSupportsSchemas();
+    return schemaRetrievalOptions.isSupportsSchemas();
   }
 
 }

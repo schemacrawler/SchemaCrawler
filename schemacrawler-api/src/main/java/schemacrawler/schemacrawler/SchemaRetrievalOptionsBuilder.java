@@ -41,8 +41,8 @@ import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
-public final class DatabaseSpecificOverrideOptionsBuilder
-  implements OptionsBuilder<DatabaseSpecificOverrideOptions>
+public final class SchemaRetrievalOptionsBuilder
+  implements OptionsBuilder<SchemaRetrievalOptions>
 {
 
   private static final String prefix = "schemacrawler.schema.retrieval.strategy";
@@ -74,7 +74,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   private MetadataRetrievalStrategy functionRetrievalStrategy;
   private Optional<TypeMap> overridesTypeMap;
 
-  public DatabaseSpecificOverrideOptionsBuilder()
+  public SchemaRetrievalOptionsBuilder()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
     informationSchemaViewsBuilder = new InformationSchemaViewsBuilder();
@@ -95,7 +95,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder fromConfig(final Config config)
+  public SchemaRetrievalOptionsBuilder fromConfig(final Config config)
   {
     final Config configProperties;
     if (config == null)
@@ -127,7 +127,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder fromConnnection(final Connection connection)
+  public SchemaRetrievalOptionsBuilder fromConnnection(final Connection connection)
   {
     if (connection == null)
     {
@@ -237,12 +237,12 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   }
 
   @Override
-  public DatabaseSpecificOverrideOptions toOptions()
+  public SchemaRetrievalOptions toOptions()
   {
-    return new DatabaseSpecificOverrideOptions(this);
+    return new SchemaRetrievalOptions(this);
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
+  public SchemaRetrievalOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
   {
     if (dbServerType == null)
     {
@@ -259,7 +259,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * Overrides the JDBC driver provided information about whether the
    * database supports catalogs.
    */
-  public DatabaseSpecificOverrideOptionsBuilder withDoesNotSupportCatalogs()
+  public SchemaRetrievalOptionsBuilder withDoesNotSupportCatalogs()
   {
     overridesSupportsCatalogs = Optional.of(false);
     return this;
@@ -269,13 +269,13 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * Overrides the JDBC driver provided information about whether the
    * database supports schema.
    */
-  public DatabaseSpecificOverrideOptionsBuilder withDoesNotSupportSchemas()
+  public SchemaRetrievalOptionsBuilder withDoesNotSupportSchemas()
   {
     overridesSupportSchemas = Optional.of(false);
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy fkRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withForeignKeyRetrievalStrategy(final MetadataRetrievalStrategy fkRetrievalStrategy)
   {
     if (fkRetrievalStrategy == null)
     {
@@ -288,7 +288,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy functionRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withFunctionRetrievalStrategy(final MetadataRetrievalStrategy functionRetrievalStrategy)
   {
     if (functionRetrievalStrategy == null)
     {
@@ -308,7 +308,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * @param identifierQuoteString
    *        Value for the override
    */
-  public DatabaseSpecificOverrideOptionsBuilder withIdentifierQuoteString(final String identifierQuoteString)
+  public SchemaRetrievalOptionsBuilder withIdentifierQuoteString(final String identifierQuoteString)
   {
     if (isBlank(identifierQuoteString))
     {
@@ -321,7 +321,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
   {
     if (indexRetrievalStrategy == null)
     {
@@ -339,7 +339,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return informationSchemaViewsBuilder;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
+  public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
   {
 
     informationSchemaViewsBuilder
@@ -347,7 +347,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
+  public SchemaRetrievalOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
                                                                                         final Connection connection)
   {
     if (informationSchemaViewsBuilderForConnection != null)
@@ -358,25 +358,25 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withoutIdentifierQuoteString()
+  public SchemaRetrievalOptionsBuilder withoutIdentifierQuoteString()
   {
     identifierQuoteString = "";
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withoutSupportsCatalogs()
+  public SchemaRetrievalOptionsBuilder withoutSupportsCatalogs()
   {
     overridesSupportsCatalogs = Optional.empty();
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
+  public SchemaRetrievalOptionsBuilder withoutSupportsSchemas()
   {
     overridesSupportSchemas = Optional.empty();
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy pkRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withPrimaryKeyRetrievalStrategy(final MetadataRetrievalStrategy pkRetrievalStrategy)
   {
     if (pkRetrievalStrategy == null)
     {
@@ -389,7 +389,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy procedureRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withProcedureRetrievalStrategy(final MetadataRetrievalStrategy procedureRetrievalStrategy)
   {
     if (procedureRetrievalStrategy == null)
     {
@@ -406,7 +406,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * Overrides the JDBC driver provided information about whether the
    * database supports catalogs.
    */
-  public DatabaseSpecificOverrideOptionsBuilder withSupportsCatalogs()
+  public SchemaRetrievalOptionsBuilder withSupportsCatalogs()
   {
     overridesSupportsCatalogs = Optional.of(true);
     return this;
@@ -416,13 +416,13 @@ public final class DatabaseSpecificOverrideOptionsBuilder
    * Overrides the JDBC driver provided information about whether the
    * database supports schema.
    */
-  public DatabaseSpecificOverrideOptionsBuilder withSupportsSchemas()
+  public SchemaRetrievalOptionsBuilder withSupportsSchemas()
   {
     overridesSupportSchemas = Optional.of(true);
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy tableColumnRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withTableColumnRetrievalStrategy(final MetadataRetrievalStrategy tableColumnRetrievalStrategy)
   {
     if (tableColumnRetrievalStrategy == null)
     {
@@ -435,7 +435,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy tableRetrievalStrategy)
+  public SchemaRetrievalOptionsBuilder withTableRetrievalStrategy(final MetadataRetrievalStrategy tableRetrievalStrategy)
   {
     if (tableRetrievalStrategy == null)
     {
@@ -448,7 +448,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public DatabaseSpecificOverrideOptionsBuilder withTypeMap(final Map<String, Class<?>> typeMap)
+  public SchemaRetrievalOptionsBuilder withTypeMap(final Map<String, Class<?>> typeMap)
   {
     if (typeMap == null)
     {

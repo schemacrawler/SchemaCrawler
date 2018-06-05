@@ -50,7 +50,7 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -223,7 +223,7 @@ public class OfflineSnapshotTest
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                             out);
-      final DatabaseSpecificOverrideOptionsBuilder dbSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
+      final SchemaRetrievalOptionsBuilder dbSpecificOverrideOptionsBuilder = new SchemaRetrievalOptionsBuilder();
       dbSpecificOverrideOptionsBuilder
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 

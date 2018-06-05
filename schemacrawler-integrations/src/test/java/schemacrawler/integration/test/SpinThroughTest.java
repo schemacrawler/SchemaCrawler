@@ -46,7 +46,7 @@ import org.junit.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -118,8 +118,8 @@ public class SpinThroughTest
 
           final Config config = loadHsqldbConfig();
 
-          final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-          databaseSpecificOverrideOptionsBuilder.fromConfig(config);
+          final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
+          schemaRetrievalOptionsBuilder.fromConfig(config);
 
           final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
           schemaCrawlerOptions
@@ -140,7 +140,7 @@ public class SpinThroughTest
             .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
           executable
             .execute(getConnection(),
-                     databaseSpecificOverrideOptionsBuilder.toOptions());
+                     schemaRetrievalOptionsBuilder.toOptions());
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
                                         testOutputFile,

@@ -42,7 +42,7 @@ import javax.sql.DataSource;
 import org.junit.BeforeClass;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.testdb.SqlScript;
@@ -123,9 +123,9 @@ public abstract class BaseSqliteTest
       try (Connection connection = createDataSource(sqliteDbFile)
         .getConnection();)
       {
-        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
-        executable.execute(connection, databaseSpecificOverrideOptions);
+        final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+          .matchSchemaRetrievalOptions(connection);
+        executable.execute(connection, schemaRetrievalOptions);
       }
 
       out.assertEquals(referenceFileName);

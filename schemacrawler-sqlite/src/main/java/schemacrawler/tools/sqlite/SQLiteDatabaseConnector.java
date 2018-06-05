@@ -55,11 +55,11 @@ public final class SQLiteDatabaseConnector
   }
 
   @Override
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
+  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
-    databaseSpecificOverrideOptionsBuilder.withIdentifierQuoteString("\"");
-    return databaseSpecificOverrideOptionsBuilder;
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
+    schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
+    return schemaRetrievalOptionsBuilder;
   }
 
   /**

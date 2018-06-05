@@ -42,7 +42,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -105,7 +105,7 @@ public class SchemaCrawlerJsonOutputTest
 
     final Config config = loadHsqldbConfig();
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
       .fromConfig(config);
 
     final Config schemaTextOptions = new SchemaTextOptionsBuilder().noInfo()
@@ -125,7 +125,7 @@ public class SchemaCrawlerJsonOutputTest
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(schemaTextOptions);
     executable.execute(getConnection(),
-                       databaseSpecificOverrideOptionsBuilder.toOptions());
+                       schemaRetrievalOptionsBuilder.toOptions());
 
     failures.addAll(compareOutput(JSON_EXTRA_OUTPUT + referenceFile,
                                   testOutputFile,

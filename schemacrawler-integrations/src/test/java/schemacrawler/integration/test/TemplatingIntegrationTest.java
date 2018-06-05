@@ -39,7 +39,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -142,9 +142,9 @@ public class TemplatingIntegrationTest
 
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       out.assertEquals(referenceFileName + ".txt");
     }

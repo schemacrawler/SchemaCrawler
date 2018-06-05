@@ -8,8 +8,8 @@ import java.sql.Connection;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public class SchemaCrawlerCatalogLoader
@@ -17,7 +17,7 @@ public class SchemaCrawlerCatalogLoader
 {
 
   private final String databaseSystemIdentifier;
-  private DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+  private SchemaRetrievalOptions schemaRetrievalOptions;
   private SchemaCrawlerOptions schemaCrawlerOptions;
   private Connection connection;
   private Config additionalConfiguration;
@@ -53,15 +53,15 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions()
+  public SchemaRetrievalOptions getSchemaRetrievalOptions()
   {
-    if (databaseSpecificOverrideOptions == null)
+    if (schemaRetrievalOptions == null)
     {
-      return new DatabaseSpecificOverrideOptionsBuilder().toOptions();
+      return new SchemaRetrievalOptionsBuilder().toOptions();
     }
     else
     {
-      return databaseSpecificOverrideOptions;
+      return schemaRetrievalOptions;
     }
   }
 
@@ -89,11 +89,11 @@ public class SchemaCrawlerCatalogLoader
     throws Exception
   {
     requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOverrideOptions,
+    requireNonNull(schemaRetrievalOptions,
                    "No database specific overrides provided");
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          databaseSpecificOverrideOptions);
+                                                          schemaRetrievalOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     return catalog;
@@ -112,9 +112,9 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public void setDatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
   {
-    this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
   @Override

@@ -60,7 +60,7 @@ public class TestOracleDistribution
     final Connection connection = null;
     assertEquals("",
                  dbConnector
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getIdentifierQuoteString());
   }
 

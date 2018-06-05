@@ -45,7 +45,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -69,13 +69,13 @@ public class SpringIntegrationTest
       final Object bean = appContext.getBean(beanDefinitionName);
       if (bean instanceof Executable)
       {
-        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
-          .getBean("databaseSpecificOverrideOptions");
+        final SchemaRetrievalOptions schemaRetrievalOptions = (SchemaRetrievalOptions) appContext
+          .getBean("schemaRetrievalOptions");
 
         final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) bean;
         executeAndCheckForOutputFile(beanDefinitionName,
                                      executable,
-                                     databaseSpecificOverrideOptions,
+                                     schemaRetrievalOptions,
                                      failures,
                                      false);
       }
@@ -102,7 +102,7 @@ public class SpringIntegrationTest
 
   private void executeAndCheckForOutputFile(final String executableName,
                                             final SchemaCrawlerExecutable executable,
-                                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+                                            final SchemaRetrievalOptions schemaRetrievalOptions,
                                             final List<String> failures,
                                             final boolean isCompressedOutput)
     throws Exception
@@ -116,7 +116,7 @@ public class SpringIntegrationTest
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     executable.getOutputOptions().setOutputFile(testOutputFile);
-    executable.execute(getConnection(), databaseSpecificOverrideOptions);
+    executable.execute(getConnection(), schemaRetrievalOptions);
 
     if (isCompressedOutput)
     {

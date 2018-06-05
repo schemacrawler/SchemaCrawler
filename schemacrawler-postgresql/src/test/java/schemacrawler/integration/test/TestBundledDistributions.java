@@ -52,7 +52,7 @@ public class TestBundledDistributions
       .lookupDatabaseConnector("postgresql");
     assertEquals(7,
                  databaseSystemIdentifier
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getInformationSchemaViews().size());
   }
 

@@ -40,7 +40,7 @@ import java.sql.SQLException;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -107,9 +107,9 @@ public class SchemaCrawlerSQLiteUtility
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-      .matchDatabaseSpecificOverrideOptions(connection);
-    executable.execute(connection, databaseSpecificOverrideOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+      .matchSchemaRetrievalOptions(connection);
+    executable.execute(connection, schemaRetrievalOptions);
 
     return diagramFile;
   }

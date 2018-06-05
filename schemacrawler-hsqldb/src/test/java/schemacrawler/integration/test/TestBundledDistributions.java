@@ -53,7 +53,7 @@ public class TestBundledDistributions
     final Connection connection = null;
     assertEquals(10,
                  databaseSystemIdentifier
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getInformationSchemaViews().size());
   }
 

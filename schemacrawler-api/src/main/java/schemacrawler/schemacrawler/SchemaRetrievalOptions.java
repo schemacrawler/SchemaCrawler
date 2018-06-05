@@ -42,7 +42,7 @@ import schemacrawler.utility.TypeMap;
  *
  * @author Sualeh Fatehi <sualeh@hotmail.com>
  */
-public final class DatabaseSpecificOverrideOptions
+public final class SchemaRetrievalOptions
   implements Options
 {
 
@@ -61,9 +61,9 @@ public final class DatabaseSpecificOverrideOptions
   private final TypeMap typeMap;
   private final Identifiers identifiers;
 
-  protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
+  protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
-    final DatabaseSpecificOverrideOptionsBuilder bldr = builder == null? new DatabaseSpecificOverrideOptionsBuilder()
+    final SchemaRetrievalOptionsBuilder bldr = builder == null? new SchemaRetrievalOptionsBuilder()
                                                                        : builder;
     dbServerType = bldr.getDatabaseServerType();
     supportsSchemas = bldr.isSupportsSchemas();

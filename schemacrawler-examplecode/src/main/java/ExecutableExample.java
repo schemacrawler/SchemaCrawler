@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -53,9 +53,9 @@ public final class ExecutableExample
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     final Connection connection = getConnection();
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-      .matchDatabaseSpecificOverrideOptions(connection);
-    executable.execute(connection, databaseSpecificOverrideOptions);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+      .matchSchemaRetrievalOptions(connection);
+    executable.execute(connection, schemaRetrievalOptions);
 
     System.out.println("Created output file, " + outputFile);
   }

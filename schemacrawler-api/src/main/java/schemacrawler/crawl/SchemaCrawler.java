@@ -49,7 +49,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -708,23 +708,23 @@ public final class SchemaCrawler
   }
 
   private final Connection connection;
-  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+  private final SchemaRetrievalOptions schemaRetrievalOptions;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
    *
    * @param connection
    *        An database connection.
-   * @param databaseSpecificOverrideOptions
+   * @param schemaRetrievalOptions
    *        Database specific overrides
    * @throws SchemaCrawlerException
    *         On a SchemaCrawler exception
    */
   public SchemaCrawler(final Connection connection,
-                       final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                       final SchemaRetrievalOptions schemaRetrievalOptions)
   {
     this.connection = requireNonNull(connection, "No connection specified");
-    this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
+    this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
                                                           "No database specific overrides provided");
   }
 
@@ -753,7 +753,7 @@ public final class SchemaCrawler
         schemaCrawlerOptions = options;
       }
       final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
-                                                                              databaseSpecificOverrideOptions);
+                                                                              schemaRetrievalOptions);
 
       crawlDatabaseInfo(catalog, retrieverConnection, schemaCrawlerOptions);
       LOGGER.log(Level.INFO, String.format("%n%s", catalog.getCrawlInfo()));

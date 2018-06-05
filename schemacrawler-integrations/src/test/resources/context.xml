@@ -111,15 +111,15 @@
     </constructor-arg>
   </bean>
 
-  <bean id="databaseSpecificOverrideOptionsBuilderBase"
-    class="schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder" />
-  <bean id="databaseSpecificOverrideOptionsBuilder"
-    factory-bean="databaseSpecificOverrideOptionsBuilderBase"
+  <bean id="schemaRetrievalOptionsBuilderBase"
+    class="schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder" />
+  <bean id="schemaRetrievalOptionsBuilder"
+    factory-bean="schemaRetrievalOptionsBuilderBase"
     factory-method="withInformationSchemaViews">
     <constructor-arg ref="information_schema" />
   </bean>
-  <bean id="databaseSpecificOverrideOptions"
-    factory-bean="databaseSpecificOverrideOptionsBuilder"
+  <bean id="schemaRetrievalOptions"
+    factory-bean="schemaRetrievalOptionsBuilder"
     factory-method="toOptions" />
 
   <bean id="schemaCrawlerOptions"

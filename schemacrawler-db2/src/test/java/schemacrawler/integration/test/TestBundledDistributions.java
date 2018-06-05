@@ -52,7 +52,7 @@ public class TestBundledDistributions
       .lookupDatabaseConnector("db2");
     assertEquals(11,
                  databaseSystemIdentifier
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getInformationSchemaViews().size());
   }
 

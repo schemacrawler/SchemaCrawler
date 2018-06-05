@@ -64,7 +64,7 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -92,7 +92,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -100,7 +100,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
@@ -143,7 +143,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -151,7 +151,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
@@ -223,7 +223,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -231,7 +231,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
@@ -326,7 +326,7 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
       .fromConfig(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -334,7 +334,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
-    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
@@ -390,7 +390,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
@@ -400,7 +400,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions.setSchemaInfoLevel(minimum);
       schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
@@ -429,7 +429,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
@@ -439,7 +439,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions.setSchemaInfoLevel(minimum);
       schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
@@ -466,13 +466,13 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 6, schemas.length);
@@ -516,7 +516,7 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -524,7 +524,7 @@ public class SchemaCrawlerTest
       schemaCrawlerOptions
         .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
-      final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
@@ -625,13 +625,13 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
       .fromConfig(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
-    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
@@ -658,7 +658,7 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
       .fromConfig(config);
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
@@ -666,7 +666,7 @@ public class SchemaCrawlerTest
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
-    final Catalog catalog = getCatalog(databaseSpecificOverrideOptionsBuilder
+    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
       .toOptions(), schemaCrawlerOptionsBuilder.toOptions());
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();

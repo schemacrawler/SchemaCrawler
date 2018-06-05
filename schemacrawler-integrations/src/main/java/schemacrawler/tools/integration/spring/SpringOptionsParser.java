@@ -66,8 +66,8 @@ final class SpringOptionsParser
       .setExecutableName(config.getStringValue("executable", "executable"));
     options
       .setDataSourceName(config.getStringValue("datasource", "datasource"));
-    options.setDatabaseSpecificOverrideOptionsName(config
-      .getStringValue("databaseoverrides", "databaseSpecificOverrideOptions"));
+    options.setSchemaRetrievalOptionsName(config
+      .getStringValue("databaseoverrides", "schemaRetrievalOptions"));
 
     consumeOption("context-file");
     consumeOption("executable");

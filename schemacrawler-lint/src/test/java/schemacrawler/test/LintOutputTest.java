@@ -42,7 +42,7 @@ import java.util.List;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -116,9 +116,9 @@ public class LintOutputTest
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
         final Connection connection = getConnection();
-        final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-          .matchDatabaseSpecificOverrideOptions(connection);
-        executable.execute(connection, databaseSpecificOverrideOptions);
+        final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+          .matchSchemaRetrievalOptions(connection);
+        executable.execute(connection, schemaRetrievalOptions);
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -153,9 +153,9 @@ public class LintOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       out.assertEquals(JSON_OUTPUT + "lints.json");
     }
@@ -183,9 +183,9 @@ public class LintOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       out.assertEquals(TEXT_OUTPUT + "lint.txt");
     }
