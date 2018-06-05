@@ -58,7 +58,7 @@ public final class SQLiteDatabaseConnector
   public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(Connection connection)
   {
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = super.getDatabaseSpecificOverrideOptionsBuilder(connection);
-    databaseSpecificOverrideOptionsBuilder.identifierQuoteString("\"");
+    databaseSpecificOverrideOptionsBuilder.withIdentifierQuoteString("\"");
     return databaseSpecificOverrideOptionsBuilder;
   }
 

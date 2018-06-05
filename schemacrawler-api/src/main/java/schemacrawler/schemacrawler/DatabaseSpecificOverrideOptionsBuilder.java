@@ -28,13 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.sql.Connection;
-import java.util.HashMap;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.utility.Identifiers;
+import schemacrawler.utility.TypeMap;
 
 public final class DatabaseSpecificOverrideOptionsBuilder
   implements OptionsBuilder<DatabaseSpecificOverrideOptions>
@@ -52,10 +57,14 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   private static final String SC_RETRIEVAL_PROCEDURES = prefix + ".procedures";
   private static final String SC_RETRIEVAL_FUNCTIONS = prefix + ".functions";
 
-  private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
   private DatabaseServerType dbServerType;
-  private Optional<Boolean> supportsSchemas;
-  private Optional<Boolean> supportsCatalogs;
+  private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
+  private Optional<Boolean> overridesSupportSchemas;
+  private Optional<Boolean> overridesSupportsCatalogs;
+  private boolean supportsCatalogs;
+  private boolean supportsSchemas;
+  private String identifierQuoteString;
+  private Identifiers identifiers;
   private MetadataRetrievalStrategy tableRetrievalStrategy;
   private MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private MetadataRetrievalStrategy pkRetrievalStrategy;
@@ -63,16 +72,18 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   private MetadataRetrievalStrategy fkRetrievalStrategy;
   private MetadataRetrievalStrategy procedureRetrievalStrategy;
   private MetadataRetrievalStrategy functionRetrievalStrategy;
-  private String identifierQuoteString;
-  private Map<String, Class<?>> typeMap;
+  private Optional<TypeMap> overridesTypeMap;
 
   public DatabaseSpecificOverrideOptionsBuilder()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
     informationSchemaViewsBuilder = new InformationSchemaViewsBuilder();
-    supportsSchemas = Optional.empty();
-    supportsCatalogs = Optional.empty();
+    overridesSupportSchemas = Optional.empty();
+    overridesSupportsCatalogs = Optional.empty();
+    supportsCatalogs = true;
+    supportsSchemas = true;
     identifierQuoteString = "";
+    identifiers = Identifiers.STANDARD;
     tableRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     tableColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     pkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
@@ -80,35 +91,7 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
-    typeMap = null;
-  }
-
-  public DatabaseSpecificOverrideOptionsBuilder(final Config map)
-  {
-    this();
-    // NOTE: Not all values are read from the config. The type map is
-    // not read from the config.
-    fromConfig(map);
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports catalogs.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportCatalogs()
-  {
-    supportsCatalogs = Optional.of(false);
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports schema.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder doesNotSupportSchemas()
-  {
-    supportsSchemas = Optional.of(false);
-    return this;
+    overridesTypeMap = Optional.empty();
   }
 
   @Override
@@ -144,6 +127,39 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
+  public DatabaseSpecificOverrideOptionsBuilder fromConnnection(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return this;
+    }
+
+    DatabaseMetaData metaData;
+    try
+    {
+      metaData = connection.getMetaData();
+    }
+    catch (final SQLException e)
+    {
+      // Ignore
+      metaData = null;
+    }
+
+    identifierQuoteString = lookupIdentifierQuoteString(metaData);
+    identifiers = Identifiers.identifiers().withConnectionIfPossible(connection)
+      .withIdentifierQuoteString(identifierQuoteString).build();
+
+    supportsCatalogs = lookupSupportsCatalogs(metaData);
+    supportsSchemas = lookupSupportsSchemas(metaData);
+
+    if (!overridesTypeMap.isPresent())
+    {
+      overridesTypeMap = Optional.of(new TypeMap(connection));
+    }
+
+    return this;
+  }
+
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
@@ -164,14 +180,19 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return identifierQuoteString;
   }
 
+  public Identifiers getIdentifiers()
+  {
+    return identifiers;
+  }
+
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
     return indexRetrievalStrategy;
   }
 
-  public InformationSchemaViewsBuilder getInformationSchemaViewsBuilder()
+  public InformationSchemaViews getInformationSchemaViews()
   {
-    return informationSchemaViewsBuilder;
+    return informationSchemaViewsBuilder.toOptions();
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
@@ -184,16 +205,6 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return procedureRetrievalStrategy;
   }
 
-  public Optional<Boolean> getSupportsCatalogs()
-  {
-    return supportsCatalogs;
-  }
-
-  public Optional<Boolean> getSupportsSchemas()
-  {
-    return supportsSchemas;
-  }
-
   public MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return tableColumnRetrievalStrategy;
@@ -204,42 +215,19 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return tableRetrievalStrategy;
   }
 
-  public Map<String, Class<?>> getTypeMap()
+  public TypeMap getTypeMap()
   {
-    return typeMap;
+    return overridesTypeMap.orElse(new TypeMap());
   }
 
-  /**
-   * Overrides the JDBC driver provided information about the identifier
-   * quote string.
-   *
-   * @param identifierQuoteString
-   *        Value for the override
-   */
-  public DatabaseSpecificOverrideOptionsBuilder identifierQuoteString(final String identifierQuoteString)
+  public boolean isSupportsCatalogs()
   {
-    this.identifierQuoteString = identifierQuoteString;
-    return this;
+    return supportsCatalogs;
   }
 
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports catalogs.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder supportsCatalogs()
+  public boolean isSupportsSchemas()
   {
-    supportsCatalogs = Optional.of(true);
-    return this;
-  }
-
-  /**
-   * Overrides the JDBC driver provided information about whether the
-   * database supports schema.
-   */
-  public DatabaseSpecificOverrideOptionsBuilder supportsSchemas()
-  {
-    supportsSchemas = Optional.of(true);
-    return this;
+    return supportsSchemas;
   }
 
   @Override
@@ -264,6 +252,26 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     {
       this.dbServerType = dbServerType;
     }
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports catalogs.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder withDoesNotSupportCatalogs()
+  {
+    overridesSupportsCatalogs = Optional.of(false);
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports schema.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder withDoesNotSupportSchemas()
+  {
+    overridesSupportSchemas = Optional.of(false);
     return this;
   }
 
@@ -293,6 +301,26 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
+  /**
+   * Overrides the JDBC driver provided information about the identifier
+   * quote string.
+   *
+   * @param identifierQuoteString
+   *        Value for the override
+   */
+  public DatabaseSpecificOverrideOptionsBuilder withIdentifierQuoteString(final String identifierQuoteString)
+  {
+    if (isBlank(identifierQuoteString))
+    {
+      this.identifierQuoteString = "";
+    }
+    else
+    {
+      this.identifierQuoteString = identifierQuoteString;
+    }
+    return this;
+  }
+
   public DatabaseSpecificOverrideOptionsBuilder withIndexRetrievalStrategy(final MetadataRetrievalStrategy indexRetrievalStrategy)
   {
     if (indexRetrievalStrategy == null)
@@ -306,9 +334,17 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     return this;
   }
 
-  public InformationSchemaViewsBuilder withInformationSchemaViews()
+  public InformationSchemaViewsBuilder withInformationSchemaViewsBuilder()
   {
     return informationSchemaViewsBuilder;
+  }
+
+  public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
+  {
+
+    informationSchemaViewsBuilder
+      .fromConfig(new Config(informationSchemaViews));
+    return this;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
@@ -324,19 +360,19 @@ public final class DatabaseSpecificOverrideOptionsBuilder
 
   public DatabaseSpecificOverrideOptionsBuilder withoutIdentifierQuoteString()
   {
-    identifierQuoteString = null;
+    identifierQuoteString = "";
     return this;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsCatalogs()
   {
-    supportsCatalogs = Optional.empty();
+    overridesSupportsCatalogs = Optional.empty();
     return this;
   }
 
   public DatabaseSpecificOverrideOptionsBuilder withoutSupportsSchemas()
   {
-    supportsSchemas = Optional.empty();
+    overridesSupportSchemas = Optional.empty();
     return this;
   }
 
@@ -363,6 +399,26 @@ public final class DatabaseSpecificOverrideOptionsBuilder
     {
       this.procedureRetrievalStrategy = procedureRetrievalStrategy;
     }
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports catalogs.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder withSupportsCatalogs()
+  {
+    overridesSupportsCatalogs = Optional.of(true);
+    return this;
+  }
+
+  /**
+   * Overrides the JDBC driver provided information about whether the
+   * database supports schema.
+   */
+  public DatabaseSpecificOverrideOptionsBuilder withSupportsSchemas()
+  {
+    overridesSupportSchemas = Optional.of(true);
     return this;
   }
 
@@ -396,13 +452,85 @@ public final class DatabaseSpecificOverrideOptionsBuilder
   {
     if (typeMap == null)
     {
-      this.typeMap = null;
+      overridesTypeMap = Optional.empty();
     }
     else
     {
-      this.typeMap = new HashMap<>(typeMap);
+      overridesTypeMap = Optional.of(new TypeMap(typeMap));
     }
     return this;
+  }
+
+  private String lookupIdentifierQuoteString(final DatabaseMetaData metaData)
+  {
+    // Default to SQL standard default
+    String identifierQuoteString = "\"";
+
+    if (!isBlank(this.identifierQuoteString))
+    {
+      identifierQuoteString = this.identifierQuoteString;
+    }
+    else if (metaData != null)
+    {
+      try
+      {
+        identifierQuoteString = metaData.getIdentifierQuoteString();
+      }
+      catch (final SQLException e)
+      {
+        // Ignore
+      }
+    }
+
+    if (isBlank(identifierQuoteString))
+    {
+      identifierQuoteString = "";
+    }
+
+    return identifierQuoteString;
+  }
+
+  private boolean lookupSupportsCatalogs(final DatabaseMetaData metaData)
+  {
+    boolean supportsCatalogs = true;
+    if (overridesSupportsCatalogs.isPresent())
+    {
+      supportsCatalogs = overridesSupportsCatalogs.get();
+    }
+    else if (metaData != null)
+    {
+      try
+      {
+        supportsCatalogs = metaData.supportsCatalogsInTableDefinitions();
+      }
+      catch (final SQLException e)
+      {
+        // Ignore
+      }
+    }
+    return supportsCatalogs;
+  }
+
+  private boolean lookupSupportsSchemas(final DatabaseMetaData metaData)
+  {
+    boolean supportsSchemas = true;
+    if (overridesSupportSchemas.isPresent())
+    {
+      supportsSchemas = overridesSupportSchemas.get();
+    }
+    else if (metaData != null)
+    {
+      try
+      {
+        supportsSchemas = metaData.supportsSchemasInTableDefinitions();
+      }
+      catch (final SQLException e)
+      {
+        // Ignore
+      }
+    }
+
+    return supportsSchemas;
   }
 
 }

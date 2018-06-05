@@ -45,7 +45,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -86,8 +85,7 @@ public final class SchemaCrawlerExecutable
     requireNonNull(databaseSpecificOverrideOptions,
                    "No database specific overrides provided");
 
-    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
-                                                          databaseSpecificOverrideOptions);
+    this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
 
     LOGGER.log(Level.INFO,
                new StringFormat("Executing SchemaCrawler command <%s>",
@@ -98,7 +96,7 @@ public final class SchemaCrawlerExecutable
                  String.format("Executable: %s", this.getClass().getName()));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER.log(Level.CONFIG, databaseSpecificOptions.toString());
+      LOGGER.log(Level.CONFIG, databaseSpecificOverrideOptions.toString());
     }
     if (LOGGER.isLoggable(Level.FINE))
     {
@@ -196,7 +194,7 @@ public final class SchemaCrawlerExecutable
     scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
-    scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
+    scCommand.setIdentifiers(databaseSpecificOverrideOptions.getIdentifiers());
 
     scCommand.execute();
   }

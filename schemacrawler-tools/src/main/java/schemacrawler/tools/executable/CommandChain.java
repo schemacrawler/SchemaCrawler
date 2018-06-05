@@ -69,7 +69,7 @@ public final class CommandChain
 
     setCatalog(scCommand.getCatalog());
     setConnection(scCommand.getConnection());
-    setDatabaseSpecificOptions(scCommand.getDatabaseSpecificOptions());
+    setIdentifiers(scCommand.getIdentifiers());
   }
 
   public final SchemaCrawlerCommand addNext(final String command,

@@ -62,18 +62,6 @@ public final class SchemaCrawlerUtility
     .getLogger(SchemaCrawlerUtility.class.getName());
 
   /**
-   * Allows building of database specific options programatically.
-   *
-   * @return DatabaseSpecificOverrideOptionsBuilder
-   * @throws SchemaCrawlerException
-   *         On an exception.
-   */
-  public static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions()
-  {
-    return new DatabaseSpecificOverrideOptionsBuilder();
-  }
-
-  /**
    * Allows building of database specific options programatically, using
    * an existing SchemaCrawler database plugin as a starting point.
    *
@@ -81,7 +69,7 @@ public final class SchemaCrawlerUtility
    * @throws SchemaCrawlerException
    *         On an exception.
    */
-  public static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions(final Connection connection)
+  private static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions(final Connection connection)
     throws SchemaCrawlerException
   {
     checkConnection(connection);

@@ -32,7 +32,7 @@ package schemacrawler.tools.executable;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
+import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
@@ -49,7 +49,7 @@ public abstract class BaseExecutable
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
-  protected DatabaseSpecificOptions databaseSpecificOptions;
+  protected DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
 
   protected BaseExecutable(final String command)
   {
@@ -73,11 +73,6 @@ public abstract class BaseExecutable
     return command;
   }
 
-  public DatabaseSpecificOptions getDatabaseSpecificOptions()
-  {
-    return databaseSpecificOptions;
-  }
-
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
@@ -97,14 +92,6 @@ public abstract class BaseExecutable
     else
     {
       this.additionalConfiguration = additionalConfiguration;
-    }
-  }
-
-  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
-  {
-    if (databaseSpecificOptions != null)
-    {
-      this.databaseSpecificOptions = databaseSpecificOptions;
     }
   }
 

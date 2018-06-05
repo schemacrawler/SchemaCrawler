@@ -33,9 +33,9 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.Identifiers;
 
 /**
  * A SchemaCrawler tools executable unit.
@@ -62,7 +62,7 @@ public interface SchemaCrawlerCommand
 
   String getCommand();
 
-  DatabaseSpecificOptions getDatabaseSpecificOptions();
+  Identifiers getIdentifiers();
 
   OutputOptions getOutputOptions();
 
@@ -74,7 +74,7 @@ public interface SchemaCrawlerCommand
 
   void setAdditionalConfiguration(Config config);
 
-  void setDatabaseSpecificOptions(DatabaseSpecificOptions databaseSpecificOptions);
+  void setIdentifiers(Identifiers identifiers);
 
   void setOutputOptions(OutputOptions outputOptions);
 

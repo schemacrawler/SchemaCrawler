@@ -37,7 +37,6 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.utility.JavaSqlTypes;
@@ -59,16 +58,7 @@ final class RetrieverConnection
 
   private final Connection connection;
   private final DatabaseMetaData metaData;
-  private final DatabaseSpecificOptions databaseSpecificOptions;
-  private final MetadataRetrievalStrategy tableRetrievalStrategy;
-  private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
-  private final MetadataRetrievalStrategy pkRetrievalStrategy;
-  private final MetadataRetrievalStrategy indexRetrievalStrategy;
-  private final MetadataRetrievalStrategy fkRetrievalStrategy;
-  private final MetadataRetrievalStrategy procedureRetrievalStrategy;
-  private final MetadataRetrievalStrategy functionRetrievalStrategy;
-  private final TypeMap typeMap;
-  private final InformationSchemaViews informationSchemaViews;
+  private final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
   private final TableTypes tableTypes;
   private final JavaSqlTypes javaSqlTypes;
 
@@ -79,40 +69,11 @@ final class RetrieverConnection
 
     this.connection = checkConnection(connection);
     metaData = connection.getMetaData();
+    this.databaseSpecificOverrideOptions = requireNonNull(databaseSpecificOverrideOptions,
+                                                          "No database specific overrides provided");
 
-    requireNonNull(databaseSpecificOverrideOptions,
-                   "No database specific overrides provided");
-
-    informationSchemaViews = databaseSpecificOverrideOptions
-      .getInformationSchemaViews();
-
-    if (databaseSpecificOverrideOptions.hasOverrideForTypeMap())
-    {
-      typeMap = databaseSpecificOverrideOptions.getTypeMap();
-    }
-    else
-    {
-      typeMap = new TypeMap(connection);
-    }
-
-    databaseSpecificOptions = new DatabaseSpecificOptions(connection,
-                                                          databaseSpecificOverrideOptions);
-    LOGGER.log(Level.CONFIG, new StringFormat("%s", databaseSpecificOptions));
-
-    tableRetrievalStrategy = databaseSpecificOverrideOptions
-      .getTableRetrievalStrategy();
-    tableColumnRetrievalStrategy = databaseSpecificOverrideOptions
-      .getTableColumnRetrievalStrategy();
-    pkRetrievalStrategy = databaseSpecificOverrideOptions
-      .getPrimaryKeyRetrievalStrategy();
-    indexRetrievalStrategy = databaseSpecificOverrideOptions
-      .getIndexRetrievalStrategy();
-    fkRetrievalStrategy = databaseSpecificOverrideOptions
-      .getForeignKeyRetrievalStrategy();
-    procedureRetrievalStrategy = databaseSpecificOverrideOptions
-      .getProcedureRetrievalStrategy();
-    functionRetrievalStrategy = databaseSpecificOverrideOptions
-      .getFunctionRetrievalStrategy();
+    LOGGER.log(Level.CONFIG,
+               new StringFormat("%s", databaseSpecificOverrideOptions));
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,
@@ -123,32 +84,32 @@ final class RetrieverConnection
 
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
-    return fkRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getForeignKeyRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
   {
-    return functionRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getFunctionRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
-    return indexRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getIndexRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
-    return pkRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getPrimaryKeyRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
   {
-    return procedureRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getProcedureRetrievalStrategy();
   }
 
   public MetadataRetrievalStrategy getTableRetrievalStrategy()
   {
-    return tableRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getTableRetrievalStrategy();
   }
 
   Connection getConnection()
@@ -163,7 +124,7 @@ final class RetrieverConnection
    */
   InformationSchemaViews getInformationSchemaViews()
   {
-    return informationSchemaViews;
+    return databaseSpecificOverrideOptions.getInformationSchemaViews();
   }
 
   JavaSqlTypes getJavaSqlTypes()
@@ -178,7 +139,7 @@ final class RetrieverConnection
 
   MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
-    return tableColumnRetrievalStrategy;
+    return databaseSpecificOverrideOptions.getTableColumnRetrievalStrategy();
   }
 
   TableTypes getTableTypes()
@@ -188,17 +149,17 @@ final class RetrieverConnection
 
   TypeMap getTypeMap()
   {
-    return typeMap;
+    return databaseSpecificOverrideOptions.getTypeMap();
   }
 
   boolean isSupportsCatalogs()
   {
-    return databaseSpecificOptions.isSupportsCatalogs();
+    return databaseSpecificOverrideOptions.isSupportsCatalogs();
   }
 
   boolean isSupportsSchemas()
   {
-    return databaseSpecificOptions.isSupportsSchemas();
+    return databaseSpecificOverrideOptions.isSupportsSchemas();
   }
 
 }

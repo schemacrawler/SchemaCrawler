@@ -154,7 +154,7 @@ public class LintCommand
   {
     final LintTraversalHandler formatter;
 
-    final String identifierQuoteString = databaseSpecificOptions
+    final String identifierQuoteString = identifiers
       .getIdentifierQuoteString();
 
     final TextOutputFormat outputFormat = TextOutputFormat

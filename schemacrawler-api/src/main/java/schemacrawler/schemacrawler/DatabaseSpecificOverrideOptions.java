@@ -30,10 +30,8 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.Map;
-import java.util.Optional;
-
 import schemacrawler.crawl.MetadataRetrievalStrategy;
+import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
 /**
@@ -49,8 +47,8 @@ public final class DatabaseSpecificOverrideOptions
 {
 
   private final DatabaseServerType dbServerType;
-  private final Optional<Boolean> supportsSchemas;
-  private final Optional<Boolean> supportsCatalogs;
+  private final boolean supportsSchemas;
+  private final boolean supportsCatalogs;
   private final MetadataRetrievalStrategy tableRetrievalStrategy;
   private final MetadataRetrievalStrategy tableColumnRetrievalStrategy;
   private final MetadataRetrievalStrategy pkRetrievalStrategy;
@@ -61,14 +59,15 @@ public final class DatabaseSpecificOverrideOptions
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
+  private final Identifiers identifiers;
 
   protected DatabaseSpecificOverrideOptions(final DatabaseSpecificOverrideOptionsBuilder builder)
   {
     final DatabaseSpecificOverrideOptionsBuilder bldr = builder == null? new DatabaseSpecificOverrideOptionsBuilder()
                                                                        : builder;
     dbServerType = bldr.getDatabaseServerType();
-    supportsSchemas = bldr.getSupportsSchemas();
-    supportsCatalogs = bldr.getSupportsCatalogs();
+    supportsSchemas = bldr.isSupportsSchemas();
+    supportsCatalogs = bldr.isSupportsCatalogs();
     tableRetrievalStrategy = bldr.getTableRetrievalStrategy();
     tableColumnRetrievalStrategy = bldr.getTableColumnRetrievalStrategy();
     pkRetrievalStrategy = bldr.getPrimaryKeyRetrievalStrategy();
@@ -77,18 +76,14 @@ public final class DatabaseSpecificOverrideOptions
     procedureRetrievalStrategy = bldr.getProcedureRetrievalStrategy();
     functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();
-    informationSchemaViews = bldr.getInformationSchemaViewsBuilder()
-      .toOptions();
+    informationSchemaViews = bldr.getInformationSchemaViews();
+    identifiers = bldr.getIdentifiers();
+    typeMap = bldr.getTypeMap();
+  }
 
-    final Map<String, Class<?>> bldrTypeMap = bldr.getTypeMap();
-    if (bldrTypeMap != null)
-    {
-      typeMap = new TypeMap(bldrTypeMap);
-    }
-    else
-    {
-      typeMap = null;
-    }
+  public Identifiers getIdentifiers()
+  {
+    return identifiers;
   }
 
   public DatabaseServerType getDatabaseServerType()
@@ -155,16 +150,6 @@ public final class DatabaseSpecificOverrideOptions
     return !isBlank(identifierQuoteString);
   }
 
-  public boolean hasOverrideForSupportsCatalogs()
-  {
-    return supportsCatalogs.isPresent();
-  }
-
-  public boolean hasOverrideForSupportsSchemas()
-  {
-    return supportsSchemas.isPresent();
-  }
-
   public boolean hasOverrideForTypeMap()
   {
     return typeMap != null;
@@ -172,12 +157,12 @@ public final class DatabaseSpecificOverrideOptions
 
   public boolean isSupportsCatalogs()
   {
-    return supportsCatalogs.orElse(true);
+    return supportsCatalogs;
   }
 
   public boolean isSupportsSchemas()
   {
-    return supportsSchemas.orElse(true);
+    return supportsSchemas;
   }
 
 }
