@@ -133,7 +133,8 @@ public abstract class DatabaseConnector
     final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
     databaseSpecificOverrideOptionsBuilder.withDatabaseServerType(dbServerType)
       .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
-                                               connection);
+                                               connection)
+      .fromConnnection(connection);
 
     return databaseSpecificOverrideOptionsBuilder;
   }

@@ -76,7 +76,7 @@ abstract class BaseCommandChain
       scCommand.setAdditionalConfiguration(additionalConfiguration);
       scCommand.setCatalog(catalog);
       scCommand.setConnection(connection);
-      scCommand.setDatabaseSpecificOptions(databaseSpecificOptions);
+      scCommand.setIdentifiers(identifiers);
 
       scCommands.add(scCommand);
 

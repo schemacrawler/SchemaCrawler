@@ -112,7 +112,7 @@ public final class FreeMarkerRenderer
     // Create the root hash
     final Map<String, Object> context = new HashMap<>();
     context.put("catalog", catalog);
-    context.put("identifiers", databaseSpecificOptions.getIdentifiers());
+    context.put("identifiers", identifiers);
 
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {

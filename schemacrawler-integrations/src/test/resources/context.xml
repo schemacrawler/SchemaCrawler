@@ -1,14 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<beans
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://www.springframework.org/schema/beans"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.springframework.org/schema/beans"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-  <bean
-    id="datasource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-  >
+  <bean id="datasource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
     <property name="driverClassName">
       <value>org.hsqldb.jdbcDriver</value>
     </property>
@@ -25,9 +21,9 @@
 
   <bean id="information_schema" class="java.util.HashMap">
     <constructor-arg>
-        <map key-type="java.lang.String" value-type="java.lang.String">
-          <entry key="select.INFORMATION_SCHEMA.ROUTINES">
-            <value>
+      <map key-type="java.lang.String" value-type="java.lang.String">
+        <entry key="select.INFORMATION_SCHEMA.ROUTINES">
+          <value>
               <![CDATA[              
                   SELECT 
                     *
@@ -38,10 +34,10 @@
                     ROUTINE_SCHEMA, 
                     ROUTINE_NAME
                   ]]>
-            </value>
-          </entry>
-          <entry key="select.INFORMATION_SCHEMA.VIEWS">
-            <value>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.VIEWS">
+          <value>
               <![CDATA[
                   SELECT 
                     * 
@@ -52,10 +48,10 @@
                     TABLE_SCHEMA, 
                     TABLE_NAME
                   ]]>
-            </value>
-          </entry>
-          <entry key="select.INFORMATION_SCHEMA.TRIGGERS">
-            <value>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.TRIGGERS">
+          <value>
               <![CDATA[
                   SELECT 
                     * 
@@ -66,10 +62,10 @@
                     TRIGGER_SCHEMA,
                     TRIGGER_NAME
                   ]]>
-            </value>
-          </entry>
-          <entry key="select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
-            <value>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.TABLE_CONSTRAINTS">
+          <value>
               <![CDATA[
                   SELECT 
                     * 
@@ -80,10 +76,11 @@
                     CONSTRAINT_SCHEMA,
                     CONSTRAINT_NAME
                   ]]>
-            </value>
-          </entry>
-          <entry key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
-            <value>
+          </value>
+        </entry>
+        <entry
+          key="select.INFORMATION_SCHEMA.EXT_TABLE_CONSTRAINTS">
+          <value>
               <![CDATA[
                   SELECT 
                     * 
@@ -94,10 +91,10 @@
                     CONSTRAINT_SCHEMA,
                     CONSTRAINT_NAME
                   ]]>
-            </value>
-          </entry>
-          <entry key="select.INFORMATION_SCHEMA.SEQUENCES">
-            <value>
+          </value>
+        </entry>
+        <entry key="select.INFORMATION_SCHEMA.SEQUENCES">
+          <value>
               <![CDATA[              
                   SELECT 
                     *
@@ -108,33 +105,34 @@
                     SEQUENCE_SCHEMA, 
                     SEQUENCE_NAME
                   ]]>
-            </value>
-          </entry>    
-        </map>
+          </value>
+        </entry>
+      </map>
     </constructor-arg>
   </bean>
 
+  <bean id="databaseSpecificOverrideOptionsBuilderBase"
+    class="schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder" />
   <bean id="databaseSpecificOverrideOptionsBuilder"
-        class="schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder">
-     <constructor-arg ref="information_schema"/>
+    factory-bean="databaseSpecificOverrideOptionsBuilderBase"
+    factory-method="withInformationSchemaViews">
+    <constructor-arg ref="information_schema" />
   </bean>
-  <bean id="databaseSpecificOverrideOptions" 
-        factory-bean="databaseSpecificOverrideOptionsBuilder"
-        factory-method="toOptions" />
-    
-  <bean
-    id="schemaCrawlerOptions"
-    class="schemacrawler.schemacrawler.SchemaCrawlerOptions"
-  >
+  <bean id="databaseSpecificOverrideOptions"
+    factory-bean="databaseSpecificOverrideOptionsBuilder"
+    factory-method="toOptions" />
+
+  <bean id="schemaCrawlerOptions"
+    class="schemacrawler.schemacrawler.SchemaCrawlerOptions">
     <property name="sequenceInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
+      <bean class="schemacrawler.schemacrawler.IncludeAll" />
     </property>
     <property name="routineInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
+      <bean class="schemacrawler.schemacrawler.IncludeAll" />
     </property>
     <property name="routineColumnInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll"/>
-    </property>        
+      <bean class="schemacrawler.schemacrawler.IncludeAll" />
+    </property>
     <property name="tableTypes">
       <set>
         <value>TABLE</value>
@@ -142,16 +140,18 @@
       </set>
     </property>
     <property name="schemaInfoLevel">
-      <bean
-        factory-method="maximum"
+      <bean factory-method="maximum"
         class="schemacrawler.schemacrawler.SchemaInfoLevelBuilder" />
     </property>
   </bean>
-  
-  <bean id="outputOptions" class="schemacrawler.tools.options.OutputOptions">
-    <constructor-arg name="outputFormatValue" value="text" />
+
+  <bean id="outputOptions"
+    class="schemacrawler.tools.options.OutputOptions">
+    <constructor-arg name="outputFormatValue"
+      value="text" />
     <constructor-arg>
-      <bean id="outputFile" class="java.nio.file.Paths" factory-method="get">  
+      <bean id="outputFile" class="java.nio.file.Paths"
+        factory-method="get">
         <constructor-arg value="." />
         <constructor-arg value="scOutput.txt" />
       </bean>
@@ -159,44 +159,24 @@
   </bean>
 
   <bean id="schemaTextOptions"
-        class="schemacrawler.tools.text.schema.SchemaTextOptions">
-    <property
-        name="showOrdinalNumbers"
-        value="true" />
-    <property
-        name="showStandardColumnTypeNames"
-        value="true" />
-    <property
-        name="hidePrimaryKeyNames"
-        value="false" />
-    <property
-        name="hideIndexNames"
-        value="false" />
-    <property
-        name="hideForeignKeyNames"
-        value="false" />
-    <property
-        name="hideTableConstraintNames"
-        value="false" />
-    <property
-        name="noSchemaCrawlerInfo"
-        value="true" />
+    class="schemacrawler.tools.text.schema.SchemaTextOptions">
+    <property name="showOrdinalNumbers" value="true" />
+    <property name="showStandardColumnTypeNames" value="true" />
+    <property name="hidePrimaryKeyNames" value="false" />
+    <property name="hideIndexNames" value="false" />
+    <property name="hideForeignKeyNames" value="false" />
+    <property name="hideTableConstraintNames" value="false" />
+    <property name="noSchemaCrawlerInfo" value="true" />
   </bean>
 
-  <bean
-      id="executableForSchema"
-      class="schemacrawler.tools.executable.SchemaCrawlerExecutable"
-  >
+  <bean id="executableForSchema"
+    class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
     <constructor-arg value="schema" />
-    <property
-      name="schemaCrawlerOptions"
+    <property name="schemaCrawlerOptions"
       ref="schemaCrawlerOptions" />
-    <property
-        name="additionalConfiguration"
-        value="#{ new schemacrawler.tools.text.schema.SchemaTextOptionsBuilder(schemaTextOptions).toConfig() }" />
-    <property
-      name="outputOptions"
-      ref="outputOptions" />
+    <property name="additionalConfiguration"
+      value="#{ new schemacrawler.tools.text.schema.SchemaTextOptionsBuilder(schemaTextOptions).toConfig() }" />
+    <property name="outputOptions" ref="outputOptions" />
   </bean>
 
 </beans>

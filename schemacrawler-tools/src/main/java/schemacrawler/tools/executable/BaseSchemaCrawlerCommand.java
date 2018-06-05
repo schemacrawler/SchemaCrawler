@@ -36,9 +36,9 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.utility.Identifiers;
 import sf.util.ObjectToString;
 
 /**
@@ -55,7 +55,7 @@ public abstract class BaseSchemaCrawlerCommand
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
-  protected DatabaseSpecificOptions databaseSpecificOptions;
+  protected Identifiers identifiers;
   protected Connection connection;
   protected Catalog catalog;
 
@@ -82,8 +82,7 @@ public abstract class BaseSchemaCrawlerCommand
     requireNonNull(outputOptions, "No output options provided");
     requireNonNull(catalog, "No catalog provided");
     requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOptions,
-                   "No database specific options provided");
+    requireNonNull(identifiers, "No database identifiers provided");
   }
 
   @Override
@@ -114,9 +113,9 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public DatabaseSpecificOptions getDatabaseSpecificOptions()
+  public Identifiers getIdentifiers()
   {
-    return databaseSpecificOptions;
+    return identifiers;
   }
 
   /**
@@ -163,9 +162,9 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public void setDatabaseSpecificOptions(final DatabaseSpecificOptions databaseSpecificOptions)
+  public void setIdentifiers(final Identifiers identifiers)
   {
-    this.databaseSpecificOptions = databaseSpecificOptions;
+    this.identifiers = identifiers;
   }
 
   /**

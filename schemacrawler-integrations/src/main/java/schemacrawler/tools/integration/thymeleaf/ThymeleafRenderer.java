@@ -69,8 +69,7 @@ public final class ThymeleafRenderer
 
     final Context context = new Context();
     context.setVariable("catalog", catalog);
-    context.setVariable("identifiers",
-                        databaseSpecificOptions.getIdentifiers());
+    context.setVariable("identifiers", identifiers);
 
     final TemplateEngine templateEngine = new TemplateEngine();
     final Charset inputCharset = outputOptions.getInputCharset();

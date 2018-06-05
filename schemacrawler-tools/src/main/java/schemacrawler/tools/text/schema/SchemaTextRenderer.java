@@ -124,7 +124,7 @@ public final class SchemaTextRenderer
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
     final SchemaTraversalHandler formatter;
 
-    final String identifierQuoteString = databaseSpecificOptions
+    final String identifierQuoteString = identifiers
       .getIdentifierQuoteString();
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());

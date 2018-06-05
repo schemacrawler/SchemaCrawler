@@ -110,7 +110,7 @@ public final class OperationCommand
         // properties file, since the database always needs identifiers
         // to be quoted in SQL queries if they contain spaces in the
         // name
-        final String identifierQuoteString = databaseSpecificOptions
+        final String identifierQuoteString = identifiers
           .getIdentifierQuoteString();
         final Identifiers identifiers = Identifiers.identifiers()
           .withIdentifierQuoteString(identifierQuoteString).build();
@@ -178,7 +178,7 @@ public final class OperationCommand
     final DataTraversalHandler formatter;
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
-    final String identifierQuoteString = databaseSpecificOptions
+    final String identifierQuoteString = identifiers
       .getIdentifierQuoteString();
     if (outputFormat == TextOutputFormat.json)
     {

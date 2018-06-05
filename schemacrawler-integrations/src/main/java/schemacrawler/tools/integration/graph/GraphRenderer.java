@@ -212,7 +212,7 @@ public final class GraphRenderer
     final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
-    final String identifierQuoteString = databaseSpecificOptions
+    final String identifierQuoteString = identifiers
       .getIdentifierQuoteString();
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,

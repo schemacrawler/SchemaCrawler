@@ -29,7 +29,6 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
@@ -105,20 +104,6 @@ public class TestSqliteDistribution
 
       out.assertEquals("sqlite.main" + "." + outputFormat.getFormat());
     }
-  }
-
-  @Test
-  public void testSupports()
-    throws Exception
-  {
-
-    final Connection connection = null;
-    assertTrue(!dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
-      .hasOverrideForSupportsCatalogs());
-    assertTrue(!dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions()
-      .hasOverrideForSupportsSchemas());
   }
 
 }
