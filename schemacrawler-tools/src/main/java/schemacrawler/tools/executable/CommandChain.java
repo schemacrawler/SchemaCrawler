@@ -49,7 +49,7 @@ public final class CommandChain
 
   /**
    * Copy configuration settings from another command.
-   * 
+   *
    * @param scCommand
    *        Other command
    * @throws SchemaCrawlerException

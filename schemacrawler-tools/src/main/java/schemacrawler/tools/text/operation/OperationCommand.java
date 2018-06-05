@@ -178,8 +178,7 @@ public final class OperationCommand
     final DataTraversalHandler formatter;
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
-    final String identifierQuoteString = identifiers
-      .getIdentifierQuoteString();
+    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new DataJsonFormatter(operation,

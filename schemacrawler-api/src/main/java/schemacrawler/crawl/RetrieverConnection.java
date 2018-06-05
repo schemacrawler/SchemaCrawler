@@ -37,8 +37,8 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.InformationSchemaViews;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.utility.JavaSqlTypes;
 import schemacrawler.utility.TableTypes;
 import schemacrawler.utility.TypeMap;
@@ -70,10 +70,9 @@ final class RetrieverConnection
     this.connection = checkConnection(connection);
     metaData = connection.getMetaData();
     this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
-                                                          "No database specific overrides provided");
+                                                 "No database specific overrides provided");
 
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("%s", schemaRetrievalOptions));
+    LOGGER.log(Level.CONFIG, new StringFormat("%s", schemaRetrievalOptions));
 
     tableTypes = new TableTypes(connection);
     LOGGER.log(Level.CONFIG,

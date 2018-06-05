@@ -64,7 +64,7 @@ public final class SchemaRetrievalOptions
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
     final SchemaRetrievalOptionsBuilder bldr = builder == null? new SchemaRetrievalOptionsBuilder()
-                                                                       : builder;
+                                                              : builder;
     dbServerType = bldr.getDatabaseServerType();
     supportsSchemas = bldr.isSupportsSchemas();
     supportsCatalogs = bldr.isSupportsCatalogs();
@@ -79,11 +79,6 @@ public final class SchemaRetrievalOptions
     informationSchemaViews = bldr.getInformationSchemaViews();
     identifiers = bldr.getIdentifiers();
     typeMap = bldr.getTypeMap();
-  }
-
-  public Identifiers getIdentifiers()
-  {
-    return identifiers;
   }
 
   public DatabaseServerType getDatabaseServerType()
@@ -108,6 +103,11 @@ public final class SchemaRetrievalOptions
       return "";
     }
     return identifierQuoteString;
+  }
+
+  public Identifiers getIdentifiers()
+  {
+    return identifiers;
   }
 
   public MetadataRetrievalStrategy getIndexRetrievalStrategy()
