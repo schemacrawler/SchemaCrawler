@@ -39,12 +39,10 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -53,7 +51,6 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerExecutableChainTest
@@ -85,10 +82,8 @@ public class SchemaCrawlerExecutableChainTest
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());
-    final Connection connection = getConnection();
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-      .matchSchemaRetrievalOptions(connection);
-    executable.execute(connection, schemaRetrievalOptions);
+    executable.setConnection(getConnection());
+    executable.execute();
 
     assertEquals("Created files \"schema.txt\" and \"schema.png\""
                  + System.lineSeparator(),

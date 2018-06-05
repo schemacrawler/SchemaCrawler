@@ -32,19 +32,16 @@ package schemacrawler.integration.test;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
 
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class TemplatingIntegrationTest
   extends BaseDatabaseTest
@@ -141,10 +138,8 @@ public class TemplatingIntegrationTest
       outputOptions.setOutputEncoding(UTF_8);
 
       executable.setOutputOptions(outputOptions);
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       out.assertEquals(referenceFileName + ".txt");
     }

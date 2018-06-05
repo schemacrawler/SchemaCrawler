@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -21,7 +20,6 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ExecutableExample
 {
@@ -52,10 +50,8 @@ public final class ExecutableExample
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
-    final Connection connection = getConnection();
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-      .matchSchemaRetrievalOptions(connection);
-    executable.execute(connection, schemaRetrievalOptions);
+    executable.setConnection(getConnection());
+    executable.execute();
 
     System.out.println("Created output file, " + outputFile);
   }

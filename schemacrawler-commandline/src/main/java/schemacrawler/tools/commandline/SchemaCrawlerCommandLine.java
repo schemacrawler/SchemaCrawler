@@ -34,11 +34,11 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -131,7 +131,9 @@ public final class SchemaCrawlerCommandLine
         .toOptions();
 
       // Execute the command
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(connection);
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      executable.execute();
     }
   }
 

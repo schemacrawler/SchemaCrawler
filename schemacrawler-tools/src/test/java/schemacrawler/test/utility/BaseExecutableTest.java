@@ -29,12 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import java.sql.Connection;
-
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public abstract class BaseExecutableTest
   extends BaseDatabaseTest
@@ -51,10 +47,8 @@ public abstract class BaseExecutableTest
                                                             out);
 
       executable.setOutputOptions(outputOptions);
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       out.assertEquals(referenceFileName);
     }

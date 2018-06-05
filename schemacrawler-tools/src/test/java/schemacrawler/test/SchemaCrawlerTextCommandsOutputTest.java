@@ -31,13 +31,10 @@ package schemacrawler.test;
 
 import static schemacrawler.test.utility.TestUtility.clean;
 
-import java.sql.Connection;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -49,7 +46,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class SchemaCrawlerTextCommandsOutputTest
   extends BaseDatabaseTest
@@ -172,10 +168,8 @@ public class SchemaCrawlerTextCommandsOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(config);
       executable.setOutputOptions(outputOptions);
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }

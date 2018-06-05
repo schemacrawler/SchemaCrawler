@@ -45,9 +45,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -116,7 +116,9 @@ public class SpringIntegrationTest
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
     executable.getOutputOptions().setOutputFile(testOutputFile);
-    executable.execute(getConnection(), schemaRetrievalOptions);
+    executable.setConnection(getConnection());
+    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    executable.execute();
 
     if (isCompressedOutput)
     {
