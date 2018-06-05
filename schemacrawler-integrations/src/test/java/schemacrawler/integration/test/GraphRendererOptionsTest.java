@@ -37,7 +37,6 @@ import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +45,6 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -60,7 +58,6 @@ import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class GraphRendererOptionsTest
@@ -387,10 +384,8 @@ public class GraphRendererOptionsTest
                                                           testOutputFile);
 
     executable.setOutputOptions(outputOptions);
-    final Connection connection = getConnection();
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-      .matchSchemaRetrievalOptions(connection);
-    executable.execute(connection, schemaRetrievalOptions);
+    executable.setConnection(getConnection());
+    executable.execute();
 
     validateDiagram(testOutputFile);
 

@@ -34,7 +34,6 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -44,14 +43,13 @@ import java.util.Set;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -64,7 +62,6 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.utility.IdentifierQuotingStrategy;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerOutputTest
@@ -149,8 +146,10 @@ public class SchemaCrawlerOutputTest
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.execute(getConnection(),
-                           schemaRetrievalOptionsBuilder.toOptions());
+        executable.setConnection(getConnection());
+        executable
+          .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+        executable.execute();
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -218,8 +217,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection(),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(getConnection());
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       failures
         .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
@@ -276,10 +277,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -337,8 +336,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection(),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(getConnection());
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -390,10 +391,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -446,10 +445,8 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -511,8 +508,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection(),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(getConnection());
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -572,8 +571,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection(),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(getConnection());
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -627,10 +628,8 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       failures
         .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
@@ -684,10 +683,8 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      final Connection connection = getConnection();
-      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-        .matchSchemaRetrievalOptions(connection);
-      executable.execute(connection, schemaRetrievalOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
 
       failures.addAll(compareOutput(TABLE_ROW_COUNT_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -749,8 +746,10 @@ public class SchemaCrawlerOutputTest
       executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.execute(getConnection(),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(getConnection());
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
                                     testOutputFile,

@@ -50,11 +50,11 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -228,8 +228,10 @@ public class OfflineSnapshotTest
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 
       executable.setOutputOptions(outputOptions);
-      executable.execute(new OfflineConnection(serializedDatabaseFile),
-                         schemaRetrievalOptionsBuilder.toOptions());
+      executable.setConnection(new OfflineConnection(serializedDatabaseFile));
+      executable
+        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+      executable.execute();
 
       out.assertEquals(referenceFileName);
     }

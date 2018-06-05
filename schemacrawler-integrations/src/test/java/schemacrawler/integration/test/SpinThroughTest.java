@@ -46,9 +46,9 @@ import org.junit.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -138,9 +138,10 @@ public class SpinThroughTest
           executable.setOutputOptions(outputOptions);
           executable
             .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-          executable
-            .execute(getConnection(),
-                     schemaRetrievalOptionsBuilder.toOptions());
+          executable.setConnection(getConnection());
+          executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder
+            .toOptions());
+          executable.execute();
 
           failures.addAll(compareOutput(SPIN_THROUGH_OUTPUT + referenceFile,
                                         testOutputFile,

@@ -42,11 +42,11 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -124,8 +124,10 @@ public class SchemaCrawlerJsonOutputTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(schemaTextOptions);
-    executable.execute(getConnection(),
-                       schemaRetrievalOptionsBuilder.toOptions());
+    executable.setConnection(getConnection());
+    executable
+      .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+    executable.execute();
 
     failures.addAll(compareOutput(JSON_EXTRA_OUTPUT + referenceFile,
                                   testOutputFile,

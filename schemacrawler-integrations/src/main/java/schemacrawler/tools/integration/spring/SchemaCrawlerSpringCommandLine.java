@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -103,16 +102,12 @@ public class SchemaCrawlerSpringCommandLine
       {
         final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) appContext
           .getBean(springOptions.getExecutableName());
-        if (schemaRetrievalOptions == null)
+        if (schemaRetrievalOptions != null)
         {
-          final SchemaRetrievalOptions schemaRetrievalOptions1 = SchemaCrawlerUtility
-            .matchSchemaRetrievalOptions(connection);
-          executable.execute(connection, schemaRetrievalOptions1);
+          executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
         }
-        else
-        {
-          executable.execute(connection, schemaRetrievalOptions);
-        }
+        executable.setConnection(connection);
+        executable.execute();
       }
     }
     finally

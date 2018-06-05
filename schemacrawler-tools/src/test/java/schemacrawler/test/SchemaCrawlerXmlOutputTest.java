@@ -34,13 +34,11 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -54,7 +52,6 @@ import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
 public class SchemaCrawlerXmlOutputTest
@@ -130,10 +127,8 @@ public class SchemaCrawlerXmlOutputTest
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());
     executable.setOutputOptions(outputOptions);
-    final Connection connection = getConnection();
-    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
-      .matchSchemaRetrievalOptions(connection);
-    executable.execute(connection, schemaRetrievalOptions);
+    executable.setConnection(getConnection());
+    executable.execute();
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
                                   testOutputFile,

@@ -54,6 +54,7 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.OperationCommand;
+import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -79,6 +80,7 @@ public final class SchemaCrawlerExecutable
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
   protected SchemaRetrievalOptions schemaRetrievalOptions;
+  protected Connection connection;
 
   public SchemaCrawlerExecutable(final String command)
     throws SchemaCrawlerException
@@ -91,17 +93,19 @@ public final class SchemaCrawlerExecutable
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
     outputOptions = new OutputOptions();
+    additionalConfiguration = new Config();
   }
 
-  public final void execute(final Connection connection,
-                            final SchemaRetrievalOptions schemaRetrievalOptions)
+  public final void execute()
     throws Exception
   {
     requireNonNull(connection, "No connection provided");
-    requireNonNull(schemaRetrievalOptions,
-                   "No database specific overrides provided");
 
-    this.schemaRetrievalOptions = schemaRetrievalOptions;
+    if (schemaRetrievalOptions == null)
+    {
+      schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+    }
 
     LOGGER.log(Level.INFO,
                new StringFormat("Executing SchemaCrawler command <%s>",
@@ -134,7 +138,7 @@ public final class SchemaCrawlerExecutable
 
     final Catalog catalog = catalogLoader.loadCatalog();
     requireNonNull(catalog, "No catalog provided");
-    executeOn(catalog, connection);
+    executeOn(catalog);
   }
 
   public final Config getAdditionalConfiguration()
@@ -147,6 +151,11 @@ public final class SchemaCrawlerExecutable
     return command;
   }
 
+  public Connection getConnection()
+  {
+    return connection;
+  }
+
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
@@ -155,6 +164,11 @@ public final class SchemaCrawlerExecutable
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
+  }
+
+  public SchemaRetrievalOptions getSchemaRetrievalOptions()
+  {
+    return schemaRetrievalOptions;
   }
 
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
@@ -169,9 +183,18 @@ public final class SchemaCrawlerExecutable
     }
   }
 
+  public void setConnection(final Connection connection)
+  {
+    this.connection = requireNonNull(connection, "No connection provided");
+  }
+
   public final void setOutputOptions(final OutputOptions outputOptions)
   {
-    if (outputOptions != null)
+    if (outputOptions == null)
+    {
+      this.outputOptions = new OutputOptions();
+    }
+    else
     {
       this.outputOptions = outputOptions;
     }
@@ -179,10 +202,19 @@ public final class SchemaCrawlerExecutable
 
   public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    if (schemaCrawlerOptions != null)
+    if (schemaCrawlerOptions == null)
+    {
+      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
+    }
+    else
     {
       this.schemaCrawlerOptions = schemaCrawlerOptions;
     }
+  }
+
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
+  {
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 
   /**
@@ -194,7 +226,7 @@ public final class SchemaCrawlerExecutable
     return ObjectToString.toString(this);
   }
 
-  private void executeOn(final Catalog catalog, final Connection connection)
+  private void executeOn(final Catalog catalog)
     throws Exception
   {
     // Reduce all once again, since the catalog may have been loaded
