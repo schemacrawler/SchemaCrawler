@@ -40,7 +40,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -128,15 +128,15 @@ public abstract class DatabaseConnector
    * @param connection
    *        Database connection
    */
-  public DatabaseSpecificOverrideOptionsBuilder getDatabaseSpecificOverrideOptionsBuilder(final Connection connection)
+  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder();
-    databaseSpecificOverrideOptionsBuilder.withDatabaseServerType(dbServerType)
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
+    schemaRetrievalOptionsBuilder.withDatabaseServerType(dbServerType)
       .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
                                                connection)
       .fromConnnection(connection);
 
-    return databaseSpecificOverrideOptionsBuilder;
+    return schemaRetrievalOptionsBuilder;
   }
 
   public boolean isUnknownDatabaseSystem()

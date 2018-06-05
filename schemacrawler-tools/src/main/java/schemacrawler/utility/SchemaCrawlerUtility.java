@@ -37,8 +37,8 @@ import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -65,11 +65,11 @@ public final class SchemaCrawlerUtility
    * Allows building of database specific options programatically, using
    * an existing SchemaCrawler database plugin as a starting point.
    *
-   * @return DatabaseSpecificOverrideOptionsBuilder
+   * @return SchemaRetrievalOptionsBuilder
    * @throws SchemaCrawlerException
    *         On an exception.
    */
-  private static DatabaseSpecificOverrideOptionsBuilder buildDatabaseSpecificOverrideOptions(final Connection connection)
+  private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(final Connection connection)
     throws SchemaCrawlerException
   {
     checkConnection(connection);
@@ -80,9 +80,9 @@ public final class SchemaCrawlerUtility
       .log(Level.INFO,
            "Using database plugin for " + dbConnector.getDatabaseServerType());
 
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
-      .getDatabaseSpecificOverrideOptionsBuilder(connection);
-    return databaseSpecificOverrideOptionsBuilder;
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
+      .getSchemaRetrievalOptionsBuilder(connection);
+    return schemaRetrievalOptionsBuilder;
   }
 
   /**
@@ -106,7 +106,7 @@ public final class SchemaCrawlerUtility
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
     }
 
-    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = matchDatabaseSpecificOverrideOptions(connection);
+    final SchemaRetrievalOptions dbSpecificOverrideOptions = matchSchemaRetrievalOptions(connection);
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           dbSpecificOverrideOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
@@ -138,16 +138,16 @@ public final class SchemaCrawlerUtility
    * Returns database specific options using an existing SchemaCrawler
    * database plugin.
    *
-   * @return DatabaseSpecificOverrideOptions
+   * @return SchemaRetrievalOptions
    * @throws SchemaCrawlerException
    *         On an exception.
    */
-  public static DatabaseSpecificOverrideOptions matchDatabaseSpecificOverrideOptions(final Connection connection)
+  public static SchemaRetrievalOptions matchSchemaRetrievalOptions(final Connection connection)
     throws SchemaCrawlerException
   {
-    final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = buildDatabaseSpecificOverrideOptions(connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = buildSchemaRetrievalOptions(connection);
 
-    final DatabaseSpecificOverrideOptions dbSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
+    final SchemaRetrievalOptions dbSpecificOverrideOptions = schemaRetrievalOptionsBuilder
       .toOptions();
 
     return dbSpecificOverrideOptions;

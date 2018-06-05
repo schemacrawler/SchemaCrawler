@@ -34,8 +34,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -123,15 +123,15 @@ public final class SchemaCrawlerCommandLine
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in
       // from the command-line
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = dbConnector
-        .getDatabaseSpecificOverrideOptionsBuilder(connection);
-      databaseSpecificOverrideOptionsBuilder.fromConfig(config);
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
+        .getSchemaRetrievalOptionsBuilder(connection);
+      schemaRetrievalOptionsBuilder.fromConfig(config);
 
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = databaseSpecificOverrideOptionsBuilder
+      final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
         .toOptions();
 
       // Execute the command
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      executable.execute(connection, schemaRetrievalOptions);
     }
   }
 

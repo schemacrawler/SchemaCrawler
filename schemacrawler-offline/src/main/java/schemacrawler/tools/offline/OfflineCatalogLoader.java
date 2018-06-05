@@ -8,8 +8,8 @@ import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -106,15 +106,15 @@ public final class OfflineCatalogLoader
   }
 
   @Override
-  public DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions()
+  public SchemaRetrievalOptions getSchemaRetrievalOptions()
   {
-    return new DatabaseSpecificOverrideOptionsBuilder()
+    return new SchemaRetrievalOptionsBuilder()
       .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
       .toOptions();
   }
 
   @Override
-  public void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+  public void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions)
   {
     // No-op
   }

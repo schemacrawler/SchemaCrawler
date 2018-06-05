@@ -37,7 +37,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -173,9 +173,9 @@ public class SchemaCrawlerTextCommandsOutputTest
       executable.setAdditionalConfiguration(config);
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }

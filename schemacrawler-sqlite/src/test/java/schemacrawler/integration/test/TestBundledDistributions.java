@@ -52,7 +52,7 @@ public class TestBundledDistributions
       .lookupDatabaseConnector("sqlite");
     assertEquals(3,
                  databaseSystemIdentifier
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getInformationSchemaViews().size());
   }
 

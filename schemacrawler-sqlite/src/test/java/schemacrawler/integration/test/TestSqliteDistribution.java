@@ -71,7 +71,7 @@ public class TestSqliteDistribution
     final Connection connection = null;
     assertEquals("\"",
                  dbConnector
-                   .getDatabaseSpecificOverrideOptionsBuilder(connection)
+                   .getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getIdentifierQuoteString());
   }
 

@@ -32,7 +32,7 @@ package schemacrawler.tools.executable;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.ObjectToString;
@@ -49,7 +49,7 @@ public abstract class BaseExecutable
   protected SchemaCrawlerOptions schemaCrawlerOptions;
   protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
-  protected DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions;
+  protected SchemaRetrievalOptions schemaRetrievalOptions;
 
   protected BaseExecutable(final String command)
   {

@@ -33,7 +33,7 @@ import java.sql.Connection;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 
 public interface CatalogLoader
@@ -43,7 +43,7 @@ public interface CatalogLoader
 
   Connection getConnection();
 
-  DatabaseSpecificOverrideOptions getDatabaseSpecificOverrideOptions();
+  SchemaRetrievalOptions getSchemaRetrievalOptions();
 
   String getDatabaseSystemIdentifier();
 
@@ -56,7 +56,7 @@ public interface CatalogLoader
 
   void setConnection(Connection connection);
 
-  void setDatabaseSpecificOverrideOptions(DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions);
+  void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 

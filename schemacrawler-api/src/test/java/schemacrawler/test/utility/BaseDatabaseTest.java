@@ -53,8 +53,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
@@ -83,14 +83,14 @@ public abstract class BaseDatabaseTest
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
-  protected Catalog getCatalog(final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions,
+  protected Catalog getCatalog(final SchemaRetrievalOptions schemaRetrievalOptions,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
     createDataSource();
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          databaseSpecificOverrideOptions);
+                                                          schemaRetrievalOptions);
     final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
 
     return catalog;
@@ -99,7 +99,7 @@ public abstract class BaseDatabaseTest
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    return getCatalog(new DatabaseSpecificOverrideOptionsBuilder().toOptions(),
+    return getCatalog(new SchemaRetrievalOptionsBuilder().toOptions(),
                       schemaCrawlerOptions);
   }
 

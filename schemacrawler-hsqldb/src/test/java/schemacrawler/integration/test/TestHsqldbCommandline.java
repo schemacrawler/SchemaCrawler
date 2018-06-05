@@ -54,7 +54,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -120,17 +120,17 @@ public class TestHsqldbCommandline
     final Connection connection = checkConnection(getConnection());
     final DatabaseConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector();
 
-    final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = hsqldbSystemConnector
-      .getDatabaseSpecificOverrideOptionsBuilder(connection).toOptions();
+    final SchemaRetrievalOptions schemaRetrievalOptions = hsqldbSystemConnector
+      .getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
       .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
-    requireNonNull(databaseSpecificOverrideOptions,
+    requireNonNull(schemaRetrievalOptions,
                    "No database specific override options provided");
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          databaseSpecificOverrideOptions);
+                                                          schemaRetrievalOptions);
     final Catalog catalog1 = schemaCrawler.crawl(schemaCrawlerOptions);
 
     final Catalog catalog = catalog1;

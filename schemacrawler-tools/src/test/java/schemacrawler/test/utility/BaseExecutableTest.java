@@ -31,7 +31,7 @@ package schemacrawler.test.utility;
 
 import java.sql.Connection;
 
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -52,9 +52,9 @@ public abstract class BaseExecutableTest
 
       executable.setOutputOptions(outputOptions);
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       out.assertEquals(referenceFileName);
     }

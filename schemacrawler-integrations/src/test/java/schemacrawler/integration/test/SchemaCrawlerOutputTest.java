@@ -44,8 +44,8 @@ import java.util.Set;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -130,7 +130,7 @@ public class SchemaCrawlerOutputTest
 
         final Config config = loadHsqldbConfig();
 
-        final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
           .fromConfig(config);
 
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -150,7 +150,7 @@ public class SchemaCrawlerOutputTest
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
         executable.execute(getConnection(),
-                           databaseSpecificOverrideOptionsBuilder.toOptions());
+                           schemaRetrievalOptionsBuilder.toOptions());
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
                                       testOutputFile,
@@ -195,7 +195,7 @@ public class SchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -219,7 +219,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
-                         databaseSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       failures
         .addAll(compareOutput(HIDE_CONSTRAINT_NAMES_OUTPUT + referenceFile,
@@ -277,9 +277,9 @@ public class SchemaCrawlerOutputTest
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -318,7 +318,7 @@ public class SchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -338,7 +338,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
-                         databaseSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -391,9 +391,9 @@ public class SchemaCrawlerOutputTest
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -447,9 +447,9 @@ public class SchemaCrawlerOutputTest
         .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
           .toConfig());
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -488,7 +488,7 @@ public class SchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -512,7 +512,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
-                         databaseSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -550,7 +550,7 @@ public class SchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -573,7 +573,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
-                         databaseSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -628,9 +628,9 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       failures
         .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
@@ -685,9 +685,9 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       final Connection connection = getConnection();
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = SchemaCrawlerUtility
-        .matchDatabaseSpecificOverrideOptions(connection);
-      executable.execute(connection, databaseSpecificOverrideOptions);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaCrawlerUtility
+        .matchSchemaRetrievalOptions(connection);
+      executable.execute(connection, schemaRetrievalOptions);
 
       failures.addAll(compareOutput(TABLE_ROW_COUNT_OUTPUT + referenceFile,
                                     testOutputFile,
@@ -726,7 +726,7 @@ public class SchemaCrawlerOutputTest
 
       final Config config = loadHsqldbConfig();
 
-      final DatabaseSpecificOverrideOptionsBuilder databaseSpecificOverrideOptionsBuilder = new DatabaseSpecificOverrideOptionsBuilder()
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
@@ -750,7 +750,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
       executable.execute(getConnection(),
-                         databaseSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
                                     testOutputFile,

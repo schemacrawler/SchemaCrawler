@@ -45,7 +45,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -78,14 +78,14 @@ public final class SchemaCrawlerExecutable
   }
 
   public final void execute(final Connection connection,
-                            final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions)
+                            final SchemaRetrievalOptions schemaRetrievalOptions)
     throws Exception
   {
     requireNonNull(connection, "No connection provided");
-    requireNonNull(databaseSpecificOverrideOptions,
+    requireNonNull(schemaRetrievalOptions,
                    "No database specific overrides provided");
 
-    this.databaseSpecificOverrideOptions = databaseSpecificOverrideOptions;
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
 
     LOGGER.log(Level.INFO,
                new StringFormat("Executing SchemaCrawler command <%s>",
@@ -96,7 +96,7 @@ public final class SchemaCrawlerExecutable
                  String.format("Executable: %s", this.getClass().getName()));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
       LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER.log(Level.CONFIG, databaseSpecificOverrideOptions.toString());
+      LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
     }
     if (LOGGER.isLoggable(Level.FINE))
     {
@@ -105,7 +105,7 @@ public final class SchemaCrawlerExecutable
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry
-      .lookupCatalogLoader(databaseSpecificOverrideOptions
+      .lookupCatalogLoader(schemaRetrievalOptions
         .getDatabaseServerType().getDatabaseSystemIdentifier());
     LOGGER
       .log(Level.CONFIG,
@@ -114,7 +114,7 @@ public final class SchemaCrawlerExecutable
     catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
     catalogLoader
-      .setDatabaseSpecificOverrideOptions(databaseSpecificOverrideOptions);
+      .setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final Catalog catalog = catalogLoader.loadCatalog();
@@ -194,7 +194,7 @@ public final class SchemaCrawlerExecutable
     scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
-    scCommand.setIdentifiers(databaseSpecificOverrideOptions.getIdentifiers());
+    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
     scCommand.execute();
   }

@@ -45,7 +45,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseSpecificOverrideOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.utility.SchemaCrawlerUtility;
@@ -96,22 +96,22 @@ public class SchemaCrawlerSpringCommandLine
     {
       final DataSource dataSource = (DataSource) appContext
         .getBean(springOptions.getDataSourceName());
-      final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions = (DatabaseSpecificOverrideOptions) appContext
-        .getBean(springOptions.getDatabaseSpecificOverrideOptionsName());
+      final SchemaRetrievalOptions schemaRetrievalOptions = (SchemaRetrievalOptions) appContext
+        .getBean(springOptions.getSchemaRetrievalOptionsName());
 
       try (Connection connection = dataSource.getConnection();)
       {
         final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) appContext
           .getBean(springOptions.getExecutableName());
-        if (databaseSpecificOverrideOptions == null)
+        if (schemaRetrievalOptions == null)
         {
-          final DatabaseSpecificOverrideOptions databaseSpecificOverrideOptions1 = SchemaCrawlerUtility
-            .matchDatabaseSpecificOverrideOptions(connection);
-          executable.execute(connection, databaseSpecificOverrideOptions1);
+          final SchemaRetrievalOptions schemaRetrievalOptions1 = SchemaCrawlerUtility
+            .matchSchemaRetrievalOptions(connection);
+          executable.execute(connection, schemaRetrievalOptions1);
         }
         else
         {
-          executable.execute(connection, databaseSpecificOverrideOptions);
+          executable.execute(connection, schemaRetrievalOptions);
         }
       }
     }
