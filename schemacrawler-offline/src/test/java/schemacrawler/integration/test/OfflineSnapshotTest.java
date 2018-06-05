@@ -223,13 +223,13 @@ public class OfflineSnapshotTest
     {
       final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
                                                             out);
-      final SchemaRetrievalOptionsBuilder dbSpecificOverrideOptionsBuilder = new SchemaRetrievalOptionsBuilder();
-      dbSpecificOverrideOptionsBuilder
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
+      schemaRetrievalOptionsBuilder
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 
       executable.setOutputOptions(outputOptions);
       executable.execute(new OfflineConnection(serializedDatabaseFile),
-                         dbSpecificOverrideOptionsBuilder.toOptions());
+                         schemaRetrievalOptionsBuilder.toOptions());
 
       out.assertEquals(referenceFileName);
     }

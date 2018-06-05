@@ -54,8 +54,8 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
@@ -130,8 +130,9 @@ public class TestHsqldbCommandline
                    "No database specific override options provided");
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          schemaRetrievalOptions);
-    final Catalog catalog1 = schemaCrawler.crawl(schemaCrawlerOptions);
+                                                          schemaRetrievalOptions,
+                                                          schemaCrawlerOptions);
+    final Catalog catalog1 = schemaCrawler.crawl();
 
     final Catalog catalog = catalog1;
     assertNotNull(catalog);
