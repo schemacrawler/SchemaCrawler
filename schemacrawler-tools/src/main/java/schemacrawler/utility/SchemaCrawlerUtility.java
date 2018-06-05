@@ -37,11 +37,11 @@ import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import sf.util.DatabaseUtility;
@@ -106,10 +106,11 @@ public final class SchemaCrawlerUtility
       LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
     }
 
-    final SchemaRetrievalOptions dbSpecificOverrideOptions = matchSchemaRetrievalOptions(connection);
+    final SchemaRetrievalOptions schemaRetrievalOptions = matchSchemaRetrievalOptions(connection);
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
-                                                          dbSpecificOverrideOptions);
-    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+                                                          schemaRetrievalOptions,
+                                                          schemaCrawlerOptions);
+    final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
   }
@@ -147,10 +148,10 @@ public final class SchemaCrawlerUtility
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = buildSchemaRetrievalOptions(connection);
 
-    final SchemaRetrievalOptions dbSpecificOverrideOptions = schemaRetrievalOptionsBuilder
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
       .toOptions();
 
-    return dbSpecificOverrideOptions;
+    return schemaRetrievalOptions;
   }
 
   private static void checkConnection(final Connection connection)

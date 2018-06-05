@@ -53,10 +53,10 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
@@ -90,8 +90,9 @@ public abstract class BaseDatabaseTest
     createDataSource();
 
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
-                                                          schemaRetrievalOptions);
-    final Catalog catalog = schemaCrawler.crawl(schemaCrawlerOptions);
+                                                          schemaRetrievalOptions,
+                                                          schemaCrawlerOptions);
+    final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
   }

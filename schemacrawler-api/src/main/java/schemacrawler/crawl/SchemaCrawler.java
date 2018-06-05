@@ -49,11 +49,11 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StopWatch;
 import sf.util.StringFormat;
@@ -709,6 +709,7 @@ public final class SchemaCrawler
 
   private final Connection connection;
   private final SchemaRetrievalOptions schemaRetrievalOptions;
+  private final SchemaCrawlerOptions schemaCrawlerOptions;
 
   /**
    * Constructs a SchemaCrawler object, from a connection.
@@ -716,16 +717,21 @@ public final class SchemaCrawler
    * @param connection
    *        An database connection.
    * @param schemaRetrievalOptions
-   *        Database specific overrides
+   *        Database-specific schema retrieval overrides
+   * @param schemaCrawlerOptions
+   *        SchemaCrawler options
    * @throws SchemaCrawlerException
    *         On a SchemaCrawler exception
    */
   public SchemaCrawler(final Connection connection,
-                       final SchemaRetrievalOptions schemaRetrievalOptions)
+                       final SchemaRetrievalOptions schemaRetrievalOptions,
+                       final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.connection = requireNonNull(connection, "No connection specified");
     this.schemaRetrievalOptions = requireNonNull(schemaRetrievalOptions,
-                                                          "No database specific overrides provided");
+                                                 "No database-specific schema retrieval overrides provided");
+    this.schemaCrawlerOptions = requireNonNull(schemaCrawlerOptions,
+                                               "No SchemaCrawler options provided");
   }
 
   /**
@@ -737,21 +743,12 @@ public final class SchemaCrawler
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  public Catalog crawl(final SchemaCrawlerOptions options)
+  public Catalog crawl()
     throws SchemaCrawlerException
   {
     final MutableCatalog catalog = new MutableCatalog("catalog");
     try
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions;
-      if (options == null)
-      {
-        schemaCrawlerOptions = new SchemaCrawlerOptions();
-      }
-      else
-      {
-        schemaCrawlerOptions = options;
-      }
       final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,
                                                                               schemaRetrievalOptions);
 
