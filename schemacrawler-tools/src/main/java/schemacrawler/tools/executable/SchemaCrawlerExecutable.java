@@ -34,6 +34,7 @@ import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
 import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
 import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
 import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -45,10 +46,13 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.operation.OperationCommand;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
@@ -65,16 +69,28 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerExecutable
-  extends BaseExecutable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
+  protected final String command;
+  protected SchemaCrawlerOptions schemaCrawlerOptions;
+  protected OutputOptions outputOptions;
+  protected Config additionalConfiguration;
+  protected SchemaRetrievalOptions schemaRetrievalOptions;
+
   public SchemaCrawlerExecutable(final String command)
     throws SchemaCrawlerException
   {
-    super(command);
+    if (isBlank(command))
+    {
+      throw new IllegalArgumentException("No command specified");
+    }
+    this.command = command;
+
+    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    outputOptions = new OutputOptions();
   }
 
   public final void execute(final Connection connection,
@@ -105,21 +121,77 @@ public final class SchemaCrawlerExecutable
 
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry
-      .lookupCatalogLoader(schemaRetrievalOptions
-        .getDatabaseServerType().getDatabaseSystemIdentifier());
+      .lookupCatalogLoader(schemaRetrievalOptions.getDatabaseServerType()
+        .getDatabaseSystemIdentifier());
     LOGGER
       .log(Level.CONFIG,
            new StringFormat("Catalog loader: %s", this.getClass().getName()));
 
     catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
-    catalogLoader
-      .setSchemaRetrievalOptions(schemaRetrievalOptions);
+    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final Catalog catalog = catalogLoader.loadCatalog();
     requireNonNull(catalog, "No catalog provided");
     executeOn(catalog, connection);
+  }
+
+  public final Config getAdditionalConfiguration()
+  {
+    return additionalConfiguration;
+  }
+
+  public final String getCommand()
+  {
+    return command;
+  }
+
+  public final OutputOptions getOutputOptions()
+  {
+    return outputOptions;
+  }
+
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
+  }
+
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    if (additionalConfiguration == null)
+    {
+      this.additionalConfiguration = new Config();
+    }
+    else
+    {
+      this.additionalConfiguration = additionalConfiguration;
+    }
+  }
+
+  public final void setOutputOptions(final OutputOptions outputOptions)
+  {
+    if (outputOptions != null)
+    {
+      this.outputOptions = outputOptions;
+    }
+  }
+
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    if (schemaCrawlerOptions != null)
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
   private void executeOn(final Catalog catalog, final Connection connection)
@@ -179,10 +251,9 @@ public final class SchemaCrawlerExecutable
       }
       else
       {
-        scCommand = (BaseSchemaCrawlerCommand) commandRegistry
-          .configureNewCommand(getCommand(),
-                               schemaCrawlerOptions,
-                               outputOptions);
+        scCommand = commandRegistry.configureNewCommand(getCommand(),
+                                                        schemaCrawlerOptions,
+                                                        outputOptions);
         LOGGER
           .log(Level.INFO,
                new StringFormat("Executing command <%s> using executable <%s>",

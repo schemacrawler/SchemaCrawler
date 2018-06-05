@@ -62,30 +62,6 @@ public final class SchemaCrawlerUtility
     .getLogger(SchemaCrawlerUtility.class.getName());
 
   /**
-   * Allows building of database specific options programatically, using
-   * an existing SchemaCrawler database plugin as a starting point.
-   *
-   * @return SchemaRetrievalOptionsBuilder
-   * @throws SchemaCrawlerException
-   *         On an exception.
-   */
-  private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(final Connection connection)
-    throws SchemaCrawlerException
-  {
-    checkConnection(connection);
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector dbConnector = registry
-      .lookupDatabaseConnector(connection);
-    LOGGER
-      .log(Level.INFO,
-           "Using database plugin for " + dbConnector.getDatabaseServerType());
-
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
-      .getSchemaRetrievalOptionsBuilder(connection);
-    return schemaRetrievalOptionsBuilder;
-  }
-
-  /**
    * Crawls a database, and returns a catalog.
    *
    * @param connection
@@ -152,6 +128,30 @@ public final class SchemaCrawlerUtility
       .toOptions();
 
     return schemaRetrievalOptions;
+  }
+
+  /**
+   * Allows building of database specific options programatically, using
+   * an existing SchemaCrawler database plugin as a starting point.
+   *
+   * @return SchemaRetrievalOptionsBuilder
+   * @throws SchemaCrawlerException
+   *         On an exception.
+   */
+  private static SchemaRetrievalOptionsBuilder buildSchemaRetrievalOptions(final Connection connection)
+    throws SchemaCrawlerException
+  {
+    checkConnection(connection);
+    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
+    final DatabaseConnector dbConnector = registry
+      .lookupDatabaseConnector(connection);
+    LOGGER
+      .log(Level.INFO,
+           "Using database plugin for " + dbConnector.getDatabaseServerType());
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
+      .getSchemaRetrievalOptionsBuilder(connection);
+    return schemaRetrievalOptionsBuilder;
   }
 
   private static void checkConnection(final Connection connection)

@@ -334,11 +334,6 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public InformationSchemaViewsBuilder withInformationSchemaViewsBuilder()
-  {
-    return informationSchemaViewsBuilder;
-  }
-
   public SchemaRetrievalOptionsBuilder withInformationSchemaViews(final Map<String, String> informationSchemaViews)
   {
 
@@ -347,8 +342,13 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
+  public InformationSchemaViewsBuilder withInformationSchemaViewsBuilder()
+  {
+    return informationSchemaViewsBuilder;
+  }
+
   public SchemaRetrievalOptionsBuilder withInformationSchemaViewsForConnection(final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-                                                                                        final Connection connection)
+                                                                               final Connection connection)
   {
     if (informationSchemaViewsBuilderForConnection != null)
     {

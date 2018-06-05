@@ -45,6 +45,9 @@ import schemacrawler.utility.Identifiers;
 public interface SchemaCrawlerCommand
 {
 
+  void beforeExecute()
+    throws Exception;
+
   /**
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
@@ -55,12 +58,13 @@ public interface SchemaCrawlerCommand
   void execute()
     throws Exception;
 
-  void beforeExecute()
-    throws Exception;
-
   Config getAdditionalConfiguration();
 
+  Catalog getCatalog();
+
   String getCommand();
+
+  Connection getConnection();
 
   Identifiers getIdentifiers();
 
@@ -68,20 +72,16 @@ public interface SchemaCrawlerCommand
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
 
-  Catalog getCatalog();
-
-  Connection getConnection();
-
   void setAdditionalConfiguration(Config config);
+
+  void setCatalog(Catalog catalog);
+
+  void setConnection(Connection connection);
 
   void setIdentifiers(Identifiers identifiers);
 
   void setOutputOptions(OutputOptions outputOptions);
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
-
-  void setConnection(Connection connection);
-
-  void setCatalog(Catalog catalog);
 
 }

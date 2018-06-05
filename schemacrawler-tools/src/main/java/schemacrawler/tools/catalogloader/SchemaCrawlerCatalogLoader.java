@@ -53,19 +53,6 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions()
-  {
-    if (schemaRetrievalOptions == null)
-    {
-      return new SchemaRetrievalOptionsBuilder().toOptions();
-    }
-    else
-    {
-      return schemaRetrievalOptions;
-    }
-  }
-
-  @Override
   public String getDatabaseSystemIdentifier()
   {
     return databaseSystemIdentifier;
@@ -81,6 +68,19 @@ public class SchemaCrawlerCatalogLoader
     else
     {
       return schemaCrawlerOptions;
+    }
+  }
+
+  @Override
+  public SchemaRetrievalOptions getSchemaRetrievalOptions()
+  {
+    if (schemaRetrievalOptions == null)
+    {
+      return new SchemaRetrievalOptionsBuilder().toOptions();
+    }
+    else
+    {
+      return schemaRetrievalOptions;
     }
   }
 
@@ -113,14 +113,14 @@ public class SchemaCrawlerCatalogLoader
   }
 
   @Override
-  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
-  {
-    this.schemaRetrievalOptions = schemaRetrievalOptions;
-  }
-
-  @Override
   public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
     this.schemaCrawlerOptions = schemaCrawlerOptions;
+  }
+
+  @Override
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
+  {
+    this.schemaRetrievalOptions = schemaRetrievalOptions;
   }
 }
