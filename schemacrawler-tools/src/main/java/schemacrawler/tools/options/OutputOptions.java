@@ -31,7 +31,6 @@ package schemacrawler.tools.options;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -41,18 +40,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
-import schemacrawler.tools.iosource.ConsoleOutputResource;
-import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
-import schemacrawler.tools.iosource.WriterOutputResource;
 import sf.util.ObjectToString;
 
 /**
@@ -60,136 +53,32 @@ import sf.util.ObjectToString;
  *
  * @author Sualeh Fatehi
  */
-public class OutputOptions
+public final class OutputOptions
   implements Options
 {
 
-  private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";
+  private final OutputResource outputResource;
+  private final InputResource inputResource;
+  private final String outputFormatValue;
+  private final Charset inputEncodingCharset;
+  private final Charset outputEncodingCharset;
 
-  private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
-  private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
-
-  private OutputResource outputResource;
-  private InputResource inputResource;
-  private String outputFormatValue;
-  private Charset inputEncodingCharset;
-  private Charset outputEncodingCharset;
-
-  /**
-   * Creates default OutputOptions.
-   */
-  public OutputOptions()
+  OutputOptions(final InputResource inputResource,
+                final Charset inputEncodingCharset,
+                final OutputResource outputResource,
+                final Charset outputEncodingCharset,
+                final String outputFormatValue)
   {
-
-  }
-
-  public OutputOptions(final Config config)
-  {
-    final Config configProperties;
-    if (config == null)
-    {
-      configProperties = new Config();
-    }
-    else
-    {
-      configProperties = config;
-    }
-
-    setInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
-                                                     UTF_8.name()));
-    setOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                      UTF_8.name()));
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormat
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
-  public OutputOptions(final OutputFormat outputFormat, final Path outputFile)
-  {
-    this(requireNonNull(outputFormat, "No output format provided").getFormat(),
-         outputFile);
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
-  public OutputOptions(final OutputFormat outputFormat, final Writer writer)
-  {
-    this(requireNonNull(outputFormat, "No output format provided").getFormat(),
-         writer);
-  }
-
-  /**
-   * Output options, given the type and the output to the console.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   */
-  public OutputOptions(final String outputFormatValue)
-  {
+    this.inputResource = requireNonNull(inputResource,
+                                        "No input resource provided");
+    this.inputEncodingCharset = requireNonNull(inputEncodingCharset,
+                                               "No input encoding provided");
+    this.outputResource = requireNonNull(outputResource,
+                                         "No output resource provided");
+    this.outputEncodingCharset = requireNonNull(outputEncodingCharset,
+                                                "No output encoding provided");
     this.outputFormatValue = requireNonNull(outputFormatValue,
                                             "No output format value provided");
-    setConsoleOutput();
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
-  public OutputOptions(final String outputFormatValue, final Path outputFile)
-  {
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
-    setOutputFile(outputFile);
-  }
-
-  /**
-   * Output options, given the type and the output filename.
-   *
-   * @param outputFormatValue
-   *        Type of output, which is dependent on the executor
-   * @param outputFile
-   *        Output file
-   */
-  public OutputOptions(final String outputFormatValue, final Writer writer)
-  {
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "No output format value provided");
-    setWriter(writer);
-  }
-
-  public void forceCompressedOutputFile()
-    throws IOException
-  {
-    if (!(outputResource instanceof CompressedFileOutputResource))
-    {
-      final Path outputFile = getOutputFile();
-      outputResource = new CompressedFileOutputResource(outputFile,
-                                                        SCHEMACRAWLER_DATA);
-    }
-  }
-
-  public void forceOutputFile()
-  {
-    if (!(outputResource instanceof FileOutputResource))
-    {
-      final Path outputFile = getOutputFile();
-      outputResource = new FileOutputResource(outputFile);
-    }
   }
 
   /**
@@ -274,12 +163,7 @@ public class OutputOptions
   public Reader openNewInputReader()
     throws IOException
   {
-    obtainInputResource();
-    if (inputResource == null)
-    {
-      throw new IOException("Cannot read " + outputFormatValue);
-    }
-    return inputResource.openNewInputReader(getInputCharset());
+    return inputResource.openNewInputReader(inputEncodingCharset);
   }
 
   /**
@@ -303,187 +187,7 @@ public class OutputOptions
   public Writer openNewOutputWriter(final boolean appendOutput)
     throws IOException
   {
-    obtainOutputResource();
     return outputResource.openNewOutputWriter(getOutputCharset(), appendOutput);
-  }
-
-  /**
-   * Sets the name of the input file for compressed input. It is
-   * important to note that the input encoding should be available at
-   * this point.
-   *
-   * @param outputFileName
-   *        Output file name.
-   * @throws IOException
-   *         When file cannot be read
-   */
-  public void setCompressedInputFile(final Path inputFile)
-    throws IOException
-  {
-    requireNonNull(inputFile, "No input file provided");
-    inputResource = new CompressedFileInputResource(inputFile,
-                                                    SCHEMACRAWLER_DATA);
-  }
-
-  /**
-   * Sets the name of the output file for compressed output. It is
-   * important to note that the output encoding should be available at
-   * this point.
-   *
-   * @param outputFileName
-   *        Output file name.
-   * @throws IOException
-   */
-  public void setCompressedOutputFile(final Path outputFile)
-    throws IOException
-  {
-    requireNonNull(outputFile, "No output file provided");
-    outputResource = new CompressedFileOutputResource(outputFile,
-                                                      SCHEMACRAWLER_DATA);
-  }
-
-  public void setConsoleOutput()
-  {
-    outputResource = new ConsoleOutputResource();
-  }
-
-  public void setInputEncoding(final Charset inputCharset)
-  {
-    if (inputCharset == null)
-    {
-      inputEncodingCharset = UTF_8;
-    }
-    else
-    {
-      inputEncodingCharset = inputCharset;
-    }
-  }
-
-  /**
-   * Set character encoding for input files, such as scripts and
-   * templates.
-   *
-   * @param inputEncoding
-   *        Input encoding
-   */
-  public void setInputEncoding(final String inputEncoding)
-  {
-    if (isBlank(inputEncoding))
-    {
-      inputEncodingCharset = UTF_8;
-    }
-    else
-    {
-      inputEncodingCharset = Charset.forName(inputEncoding);
-    }
-  }
-
-  /**
-   * Sets the name of the input file. It is important to note that the
-   * input encoding should be available at this point.
-   *
-   * @param inputFileName
-   *        Input file name.
-   * @throws IOException
-   *         When file cannot be read
-   */
-  public void setInputFile(final Path inputFile)
-    throws IOException
-  {
-    requireNonNull(inputFile, "No input file provided");
-    inputResource = new FileInputResource(inputFile);
-  }
-
-  public void setInputResource(final InputResource inputResource)
-  {
-    this.inputResource = inputResource;
-  }
-
-  /**
-   * Sets the name of the input resource, first from a file, failing
-   * which from the classpath. It is important to note that the input
-   * encoding should be available at this point.
-   *
-   * @param inputResourceName
-   *        Input resource name, which could be a file path, or a
-   *        classpath resource.
-   * @throws IOException
-   *         When the resource cannot be accessed
-   */
-  public void setInputResourceName(final String inputResourceName)
-    throws IOException
-  {
-    requireNonNull(inputResourceName, "No input resource name provided");
-    try
-    {
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      inputResource = new ClasspathInputResource(inputResourceName);
-    }
-  }
-
-  public void setOutputEncoding(final Charset outputCharset)
-  {
-    if (outputCharset == null)
-    {
-      outputEncodingCharset = UTF_8;
-    }
-    else
-    {
-      outputEncodingCharset = outputCharset;
-    }
-  }
-
-  /**
-   * Set character encoding for output files.
-   *
-   * @param outputEncoding
-   *        Output encoding
-   */
-  public void setOutputEncoding(final String outputEncoding)
-  {
-    if (isBlank(outputEncoding))
-    {
-      outputEncodingCharset = UTF_8;
-    }
-    else
-    {
-      outputEncodingCharset = Charset.forName(outputEncoding);
-    }
-  }
-
-  /**
-   * Sets the name of the output file. It is important to note that the
-   * output encoding should be available at this point.
-   *
-   * @param outputFileName
-   *        Output file name.
-   */
-  public void setOutputFile(final Path outputFile)
-  {
-    requireNonNull(outputFile, "No output file provided");
-    outputResource = new FileOutputResource(outputFile);
-  }
-
-  /**
-   * Sets output format value.
-   *
-   * @param outputFormatValue
-   *        Output format value
-   */
-  public void setOutputFormatValue(final String outputFormatValue)
-  {
-    this.outputFormatValue = requireNonNull(outputFormatValue,
-                                            "Cannot use null value in a setter");
-  }
-
-  public void setWriter(final Writer writer)
-  {
-    requireNonNull(writer, "No output writer provided");
-    outputResource = new WriterOutputResource(writer);
   }
 
   @Override
@@ -492,35 +196,14 @@ public class OutputOptions
     return ObjectToString.toString(this);
   }
 
-  /**
-   * Gets the input resource. If the input resource is null, first set
-   * it to a value based off the output format value.
-   */
-  private void obtainInputResource()
+  InputResource getInputResource()
   {
-    if (inputResource == null)
-    {
-      try
-      {
-        setInputResourceName(outputFormatValue);
-      }
-      catch (final IOException e)
-      {
-        inputResource = null;
-      }
-    }
+    return inputResource;
   }
 
-  /**
-   * Gets the output resource. If the output resource is null, first set
-   * it to console output.
-   */
-  private void obtainOutputResource()
+  OutputResource getOutputResource()
   {
-    if (outputResource == null)
-    {
-      outputResource = new ConsoleOutputResource();
-    }
+    return outputResource;
   }
 
 }

@@ -47,6 +47,7 @@ import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaDotFormatter;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
@@ -97,7 +98,9 @@ public final class GraphRenderer
     final GraphOutputFormat graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
     // Set the format, in case we are using the default
-    outputOptions.setOutputFormatValue(graphOutputFormat.getFormat());
+    outputOptions = new OutputOptionsBuilder(outputOptions)
+      .withOutputFormat(graphOutputFormat)
+      .withOutputFormatValue(graphOutputFormat.getFormat()).toOptions();
 
     // Create dot file
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
@@ -108,7 +111,8 @@ public final class GraphRenderer
     }
     else
     {
-      dotFileOutputOptions = new OutputOptions(GraphOutputFormat.dot, dotFile);
+      dotFileOutputOptions = OutputOptionsBuilder
+        .newOutputOptions(GraphOutputFormat.dot, dotFile);
     }
 
     final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
@@ -212,8 +216,7 @@ public final class GraphRenderer
     final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
-    final String identifierQuoteString = identifiers
-      .getIdentifierQuoteString();
+    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
     formatter = new SchemaDotFormatter(schemaTextDetailType,
                                        graphOptions,
                                        outputOptions,

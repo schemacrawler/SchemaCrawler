@@ -31,6 +31,7 @@ package schemacrawler.test.utility;
 
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public abstract class BaseExecutableTest
   extends BaseDatabaseTest
@@ -43,8 +44,8 @@ public abstract class BaseExecutableTest
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                            out);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormatValue, out);
 
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());

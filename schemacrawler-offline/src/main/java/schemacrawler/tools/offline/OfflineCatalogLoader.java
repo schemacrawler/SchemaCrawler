@@ -3,19 +3,21 @@ package schemacrawler.tools.offline;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
 public final class OfflineCatalogLoader
@@ -59,9 +61,11 @@ public final class OfflineCatalogLoader
   {
     checkConnection(connection);
 
-    final OutputOptions inputOptions = new OutputOptions(additionalConfiguration);
-    inputOptions.setCompressedInputFile(((OfflineConnection) connection)
-      .getOfflineDatabasePath());
+    final Path offlineDatabasePath = ((OfflineConnection) connection)
+      .getOfflineDatabasePath();
+    final OutputOptions inputOptions = new OutputOptionsBuilder()
+      .fromConfig(additionalConfiguration)
+      .withCompressedInputFile(offlineDatabasePath).toOptions();
 
     final Reader snapshotReader;
     try

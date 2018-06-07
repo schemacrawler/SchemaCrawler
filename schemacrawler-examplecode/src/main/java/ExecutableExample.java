@@ -19,6 +19,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public final class ExecutableExample
@@ -43,8 +44,8 @@ public final class ExecutableExample
       .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
 
     final Path outputFile = getOutputFile(args);
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html,
-                                                          outputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

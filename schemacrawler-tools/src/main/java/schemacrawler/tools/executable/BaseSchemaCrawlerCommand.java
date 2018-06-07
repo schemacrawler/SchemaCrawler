@@ -38,6 +38,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.Identifiers;
 import sf.util.ObjectToString;
 
@@ -68,7 +69,7 @@ public abstract class BaseSchemaCrawlerCommand
     this.command = command;
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
-    outputOptions = new OutputOptions();
+    outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
 
@@ -179,7 +180,7 @@ public abstract class BaseSchemaCrawlerCommand
     }
     else
     {
-      this.outputOptions = new OutputOptions();
+      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
     }
   }
 

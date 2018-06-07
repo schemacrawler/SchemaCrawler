@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.util.HashMap;
@@ -42,6 +41,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class TemplatingIntegrationTest
   extends BaseDatabaseTest
@@ -132,10 +132,8 @@ public class TemplatingIntegrationTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                            out);
-      outputOptions.setInputEncoding(UTF_8);
-      outputOptions.setOutputEncoding(UTF_8);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormatValue, out);
 
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());

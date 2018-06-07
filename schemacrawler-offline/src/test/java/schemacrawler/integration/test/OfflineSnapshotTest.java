@@ -63,6 +63,7 @@ import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
@@ -165,8 +166,8 @@ public class OfflineSnapshotTest
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
     schemaTextOptionsBuilder.showInfo();
 
-    final OutputOptions inputOptions = new OutputOptions();
-    inputOptions.setCompressedInputFile(serializedDatabaseFile);
+    final OutputOptions inputOptions = new OutputOptionsBuilder()
+      .withCompressedInputFile(serializedDatabaseFile).toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -221,8 +222,8 @@ public class OfflineSnapshotTest
   {
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                            out);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormatValue, out);
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
       schemaRetrievalOptionsBuilder
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);

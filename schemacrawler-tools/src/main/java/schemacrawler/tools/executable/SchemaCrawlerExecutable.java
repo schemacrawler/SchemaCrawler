@@ -53,6 +53,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.operation.OperationCommand;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
@@ -83,7 +84,6 @@ public final class SchemaCrawlerExecutable
   protected Connection connection;
 
   public SchemaCrawlerExecutable(final String command)
-    throws SchemaCrawlerException
   {
     if (isBlank(command))
     {
@@ -92,7 +92,7 @@ public final class SchemaCrawlerExecutable
     this.command = command;
 
     schemaCrawlerOptions = new SchemaCrawlerOptions();
-    outputOptions = new OutputOptions();
+    outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
 
@@ -192,7 +192,7 @@ public final class SchemaCrawlerExecutable
   {
     if (outputOptions == null)
     {
-      this.outputOptions = new OutputOptions();
+      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
     }
     else
     {

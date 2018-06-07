@@ -42,6 +42,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
@@ -153,8 +154,8 @@ public class SchemaCrawlerTextCommandsOutputTest
       schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
       schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
-      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                            writer);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(TextOutputFormat.text, writer);
 
       final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
       commonTextOptions.fromConfig(config);

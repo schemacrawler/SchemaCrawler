@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -104,8 +105,8 @@ public class SchemaCrawlerXmlOutputTest
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.html.getFormat());
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.html,
-                                                          testOutputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(TextOutputFormat.html, testOutputFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 

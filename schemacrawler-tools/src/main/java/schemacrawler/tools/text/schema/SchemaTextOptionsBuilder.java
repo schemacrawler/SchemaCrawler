@@ -113,13 +113,13 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public SchemaTextOptionsBuilder noRemarks(final boolean value)
+  public final SchemaTextOptionsBuilder noRemarks(final boolean value)
   {
     options.setHideRemarks(value);
     return this;
   }
 
-  public SchemaTextOptionsBuilder portableNames(final boolean value)
+  public final SchemaTextOptionsBuilder portableNames(final boolean value)
   {
     options.setHideTableConstraintNames(value);
     options.setHideForeignKeyNames(value);
@@ -132,7 +132,7 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public SchemaTextOptionsBuilder sortInOut(final boolean value)
+  public final SchemaTextOptionsBuilder sortInOut(final boolean value)
   {
     options.setAlphabeticalSortForRoutineColumns(value);
     return this;
@@ -171,7 +171,7 @@ public class SchemaTextOptionsBuilder
     return config;
   }
 
-  public SchemaTextOptionsBuilder weakAssociations(final boolean value)
+  public final SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
     options.setShowWeakAssociations(value);
     return this;

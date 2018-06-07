@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
@@ -114,8 +115,8 @@ public abstract class BaseSqliteTest
     final String outputFormatValue = TextOutputFormat.text.name();
     try (final TestWriter out = new TestWriter(outputFormatValue);)
     {
-      final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                            out);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormatValue, out);
 
       executable.setOutputOptions(outputOptions);
       try (Connection connection = createDataSource(sqliteDbFile)

@@ -50,6 +50,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
@@ -115,7 +117,10 @@ public class SpringIntegrationTest
     schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
     schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
 
-    executable.getOutputOptions().setOutputFile(testOutputFile);
+    // Force output to test output file
+    executable.setOutputOptions(forceOutputToTestOutputFile(executable
+      .getOutputOptions(), testOutputFile));
+
     executable.setConnection(getConnection());
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
     executable.execute();
@@ -132,6 +137,13 @@ public class SpringIntegrationTest
                                     testOutputFile,
                                     TextOutputFormat.text.name()));
     }
+  }
+
+  private OutputOptions forceOutputToTestOutputFile(final OutputOptions outputOptions,
+                                                    final Path testOutputFile)
+  {
+    return new OutputOptionsBuilder(outputOptions)
+      .withOutputFile(testOutputFile).toOptions();
   }
 
 }

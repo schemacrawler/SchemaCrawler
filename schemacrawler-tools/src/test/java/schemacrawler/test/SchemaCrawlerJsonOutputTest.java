@@ -52,6 +52,7 @@ import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -100,8 +101,8 @@ public class SchemaCrawlerJsonOutputTest
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());
 
-    final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
-                                                          testOutputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(TextOutputFormat.json, testOutputFile);
 
     final Config config = loadHsqldbConfig();
 

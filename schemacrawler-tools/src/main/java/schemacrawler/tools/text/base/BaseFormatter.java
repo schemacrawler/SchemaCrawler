@@ -103,7 +103,6 @@ public abstract class BaseFormatter<O extends BaseTextOptions>
       case html:
         formattingHelper = new HtmlFormattingHelper(out, outputFormat);
         break;
-
       case json:
         formattingHelper = new JsonFormattingHelper(out, outputFormat);
         break;

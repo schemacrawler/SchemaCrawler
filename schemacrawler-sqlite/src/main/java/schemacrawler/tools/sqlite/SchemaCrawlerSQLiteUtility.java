@@ -47,6 +47,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class SchemaCrawlerSQLiteUtility
 {
@@ -99,8 +100,8 @@ public class SchemaCrawlerSQLiteUtility
     options.setRoutineInclusionRule(new ExcludeAll());
 
     final Path diagramFile = createTempFilePath("schemacrawler", extension);
-    final OutputOptions outputOptions = new OutputOptions(extension,
-                                                          diagramFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(extension, diagramFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
     executable.setSchemaCrawlerOptions(options);

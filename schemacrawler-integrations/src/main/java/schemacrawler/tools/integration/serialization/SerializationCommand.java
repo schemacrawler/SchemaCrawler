@@ -29,9 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
+import java.io.IOException;
 import java.io.Writer;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
  * Main executor for the graphing integration.
@@ -63,12 +66,20 @@ public final class SerializationCommand
   {
     // Null checks are done before execution
 
-    final SerializableCatalog serializableCatalof = new XmlSerializedCatalog(catalog);
-    outputOptions.forceCompressedOutputFile();
+    final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
+    // Force output to a compressed file
+    outputOptions = forceCompressedFileOutput();
     try (final Writer writer = outputOptions.openNewOutputWriter();)
     {
-      serializableCatalof.save(writer);
+      serializableCatalog.save(writer);
     }
+  }
+
+  private OutputOptions forceCompressedFileOutput()
+    throws IOException
+  {
+    return new OutputOptionsBuilder(outputOptions)
+      .withCompressedOutputFile(outputOptions.getOutputFile()).toOptions();
   }
 
 }
