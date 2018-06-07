@@ -49,7 +49,7 @@ import java.util.zip.ZipOutputStream;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public class CompressedFileOutputResource
+public final class CompressedFileOutputResource
   implements OutputResource
 {
 

@@ -37,6 +37,7 @@ import java.nio.file.Paths;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
 /**
@@ -51,7 +52,7 @@ public final class OutputOptionsParser
   private static final String OUTPUT_FILE = "outputfile";
   private static final String OUTPUT_FORMAT = "outputformat";
 
-  final OutputOptions outputOptions;
+  final OutputOptionsBuilder outputOptionsBuilder;
 
   public OutputOptionsParser(final Config config)
   {
@@ -59,7 +60,7 @@ public final class OutputOptionsParser
     normalizeOptionName(OUTPUT_FORMAT, "fmt");
     normalizeOptionName(OUTPUT_FILE, "o");
 
-    outputOptions = new OutputOptions(config);
+    outputOptionsBuilder = new OutputOptionsBuilder().fromConfig(config);
   }
 
   @Override
@@ -71,7 +72,7 @@ public final class OutputOptionsParser
     if (!isBlank(outputFileName))
     {
       final Path outputFile = Paths.get(outputFileName).toAbsolutePath();
-      outputOptions.setOutputFile(outputFile);
+      outputOptionsBuilder.withOutputFile(outputFile);
       fileExtension = getFileExtension(outputFile);
     }
     else
@@ -87,9 +88,9 @@ public final class OutputOptionsParser
     final String outputFormatValue = config
       .getStringValue(OUTPUT_FORMAT, defaultOutputFormatValue);
     consumeOption(OUTPUT_FORMAT);
-    outputOptions.setOutputFormatValue(outputFormatValue);
+    outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
 
-    return outputOptions;
+    return outputOptionsBuilder.toOptions();
   }
 
 }

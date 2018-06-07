@@ -44,7 +44,7 @@ public final class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static Collection<String> supportedCommands = supportedCommands();
+  private static final Collection<String> supportedCommands = supportedCommands();
 
   private static Collection<String> supportedCommands()
   {

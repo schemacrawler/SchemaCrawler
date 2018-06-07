@@ -56,6 +56,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -122,8 +123,8 @@ public class SchemaCrawlerOutputTest
         final Path testOutputFile = IOUtility
           .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                              testOutputFile);
+        final OutputOptions outputOptions = OutputOptionsBuilder
+          .newOutputOptions(outputFormat, testOutputFile);
 
         final Config config = loadHsqldbConfig();
 
@@ -189,8 +190,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -259,8 +260,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
@@ -312,8 +313,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(TextOutputFormat.json, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -373,8 +374,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
@@ -427,8 +428,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
@@ -480,8 +481,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -544,8 +545,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -608,8 +609,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
@@ -664,8 +665,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
@@ -718,8 +719,8 @@ public class SchemaCrawlerOutputTest
       final Path testOutputFile = IOUtility
         .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-      final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                            testOutputFile);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 

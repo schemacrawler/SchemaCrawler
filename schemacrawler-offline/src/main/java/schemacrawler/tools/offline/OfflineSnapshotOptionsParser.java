@@ -37,6 +37,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.commandline.BaseOptionsParser;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
  * Parses the command-line.
@@ -49,12 +50,12 @@ public final class OfflineSnapshotOptionsParser
 
   private static final String DATABASE = "database";
 
-  final OutputOptions options;
+  final OutputOptionsBuilder outputOptionsBuilder;
 
   public OfflineSnapshotOptionsParser(final Config config)
   {
     super(config);
-    options = new OutputOptions(config);
+    outputOptionsBuilder = new OutputOptionsBuilder().fromConfig(config);
   }
 
   @Override
@@ -66,7 +67,7 @@ public final class OfflineSnapshotOptionsParser
     try
     {
       final Path databaseFile = Paths.get(inputSource);
-      options.setCompressedInputFile(databaseFile);
+      outputOptionsBuilder.withCompressedInputFile(databaseFile);
     }
     catch (final IOException e)
     {
@@ -74,7 +75,7 @@ public final class OfflineSnapshotOptionsParser
         .format("Unable to read database snapshot from %s", inputSource), e);
     }
 
-    return options;
+    return outputOptionsBuilder.toOptions();
   }
 
 }

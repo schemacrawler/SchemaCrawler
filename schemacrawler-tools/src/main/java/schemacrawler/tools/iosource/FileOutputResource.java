@@ -45,7 +45,7 @@ import java.util.logging.Level;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public class FileOutputResource
+public final class FileOutputResource
   implements OutputResource
 {
 

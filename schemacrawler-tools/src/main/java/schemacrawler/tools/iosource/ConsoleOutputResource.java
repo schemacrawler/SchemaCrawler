@@ -37,7 +37,7 @@ import java.util.logging.Level;
 
 import sf.util.SchemaCrawlerLogger;
 
-public class ConsoleOutputResource
+public final class ConsoleOutputResource
   implements OutputResource
 {
 

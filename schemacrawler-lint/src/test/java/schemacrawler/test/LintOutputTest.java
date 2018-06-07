@@ -50,6 +50,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -95,8 +96,8 @@ public class LintOutputTest
         final Path testOutputFile = IOUtility
           .createTempFilePath(referenceFile, outputFormat.getFormat());
 
-        final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                              testOutputFile);
+        final OutputOptions outputOptions = OutputOptionsBuilder
+          .newOutputOptions(outputFormat, testOutputFile);
 
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
         schemaCrawlerOptions
@@ -136,8 +137,8 @@ public class LintOutputTest
     try (final TestWriter out = new TestWriter(TextOutputFormat.json
       .getFormat());)
     {
-      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.json,
-                                                            out);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(TextOutputFormat.json, out);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
@@ -164,8 +165,8 @@ public class LintOutputTest
     try (final TestWriter out = new TestWriter(TextOutputFormat.text
       .getFormat());)
     {
-      final OutputOptions outputOptions = new OutputOptions(TextOutputFormat.text,
-                                                            out);
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(TextOutputFormat.text, out);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions

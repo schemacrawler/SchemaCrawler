@@ -57,6 +57,7 @@ import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
@@ -380,8 +381,8 @@ public class GraphRendererOptionsTest
     final Path testOutputFile = IOUtility
       .createTempFilePath(executable.getCommand(), outputFormatValue);
 
-    final OutputOptions outputOptions = new OutputOptions(outputFormatValue,
-                                                          testOutputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(outputFormatValue, testOutputFile);
 
     executable.setOutputOptions(outputOptions);
     executable.setConnection(getConnection());

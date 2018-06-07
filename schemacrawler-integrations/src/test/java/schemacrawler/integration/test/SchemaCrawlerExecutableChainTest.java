@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -74,8 +75,8 @@ public class SchemaCrawlerExecutableChainTest
     textOptions.setShowDatabaseInfo(true);
     textOptions.setShowJdbcDriverInfo(true);
 
-    final OutputOptions outputOptions = new OutputOptions("/chain.js",
-                                                          testOutputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions("/chain.js", testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);

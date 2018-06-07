@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
  * Allows chaining multiple executables together, that produce different
@@ -96,8 +97,8 @@ public final class CommandChain
     requireNonNull(outputFileName, "No output file name provided");
 
     final Path outputFile = Paths.get(outputFileName);
-    final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                          outputFile);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(outputFormat, outputFile);
 
     return addNextAndConfigureForExecution(command, outputOptions);
   }

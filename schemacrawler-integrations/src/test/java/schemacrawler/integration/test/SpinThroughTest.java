@@ -56,6 +56,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -113,8 +114,8 @@ public class SpinThroughTest
                                                      infoLevel,
                                                      outputFormat);
 
-          final OutputOptions outputOptions = new OutputOptions(outputFormat,
-                                                                testOutputFile);
+          final OutputOptions outputOptions = OutputOptionsBuilder
+            .newOutputOptions(outputFormat, testOutputFile);
 
           final Config config = loadHsqldbConfig();
 

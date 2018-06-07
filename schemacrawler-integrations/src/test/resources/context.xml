@@ -146,7 +146,8 @@
   </bean>
 
   <bean id="outputOptions"
-    class="schemacrawler.tools.options.OutputOptions">
+    class="schemacrawler.tools.options.OutputOptionsBuilder"
+    factory-method="newOutputOptions">
     <constructor-arg name="outputFormatValue"
       value="text" />
     <constructor-arg>
