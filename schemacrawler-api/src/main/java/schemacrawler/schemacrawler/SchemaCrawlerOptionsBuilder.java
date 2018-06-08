@@ -519,38 +519,26 @@ public class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-
-    options.setSchemaInfoLevel(schemaInfoLevel);
-
-    options.setTitle(title);
-
-    options.setSchemaInclusionRule(schemaInclusionRule);
-    options.setSynonymInclusionRule(synonymInclusionRule);
-    options.setSequenceInclusionRule(sequenceInclusionRule);
-
-    options.setTableTypes(tableTypes);
-    options.setTableNamePattern(tableNamePattern);
-    options.setTableInclusionRule(tableInclusionRule);
-    options.setColumnInclusionRule(columnInclusionRule);
-
-    options.setRoutineTypes(routineTypes);
-    options.setRoutineInclusionRule(routineInclusionRule);
-    options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
-
-    options.setGrepColumnInclusionRule(grepColumnInclusionRule.orElse(null));
-    options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule
-      .orElse(null));
-    options
-      .setGrepDefinitionInclusionRule(grepDefinitionInclusionRule.orElse(null));
-    options.setGrepInvertMatch(grepInvertMatch);
-    options.setGrepOnlyMatching(grepOnlyMatching);
-
-    options.setHideEmptyTables(hideEmptyTables);
-
-    options.setChildTableFilterDepth(childTableFilterDepth);
-    options.setParentTableFilterDepth(parentTableFilterDepth);
-    return options;
+    return new SchemaCrawlerOptions(schemaInfoLevel,
+                                    title,
+                                    schemaInclusionRule,
+                                    synonymInclusionRule,
+                                    sequenceInclusionRule,
+                                    tableTypes,
+                                    tableNamePattern,
+                                    tableInclusionRule,
+                                    columnInclusionRule,
+                                    routineTypes,
+                                    routineInclusionRule,
+                                    routineColumnInclusionRule,
+                                    grepColumnInclusionRule.orElse(null),
+                                    grepRoutineColumnInclusionRule.orElse(null),
+                                    grepDefinitionInclusionRule.orElse(null),
+                                    grepInvertMatch,
+                                    grepOnlyMatching,
+                                    hideEmptyTables,
+                                    childTableFilterDepth,
+                                    parentTableFilterDepth);
   }
 
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
