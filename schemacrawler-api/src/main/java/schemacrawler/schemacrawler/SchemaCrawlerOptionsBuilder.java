@@ -92,12 +92,12 @@ public class SchemaCrawlerOptionsBuilder
 
   private InclusionRule synonymInclusionRule;
   private InclusionRule sequenceInclusionRule;
-  private Collection<String> tableTypes;
+  private Optional<Collection<String>> tableTypes;
   private String tableNamePattern;
 
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
-  private Collection<RoutineType> routineTypes;
+  private Optional<Collection<RoutineType>> routineTypes;
 
   private InclusionRule routineInclusionRule;
   private InclusionRule routineColumnInclusionRule;
@@ -130,11 +130,11 @@ public class SchemaCrawlerOptionsBuilder
 
     // Note: Of the database objects, only tables are included by
     // default
-    tableTypes = defaultTableTypes();
+    tableTypes = Optional.of(defaultTableTypes());
     tableInclusionRule = new IncludeAll();
     columnInclusionRule = new IncludeAll();
 
-    routineTypes = allRoutineTypes();
+    routineTypes = Optional.of(allRoutineTypes());
     routineInclusionRule = new ExcludeAll();
     routineColumnInclusionRule = new ExcludeAll();
 
@@ -155,12 +155,12 @@ public class SchemaCrawlerOptionsBuilder
     synonymInclusionRule = options.getSynonymInclusionRule();
     sequenceInclusionRule = options.getSequenceInclusionRule();
 
-    tableTypes = options.getTableTypes();
+    tableTypes = Optional.ofNullable(options.getTableTypes());
     tableNamePattern = options.getTableNamePattern();
     tableInclusionRule = options.getTableInclusionRule();
     columnInclusionRule = options.getColumnInclusionRule();
 
-    routineTypes = options.getRoutineTypes();
+    routineTypes = Optional.ofNullable(options.getRoutineTypes());
     routineInclusionRule = options.getRoutineInclusionRule();
     routineColumnInclusionRule = options.getRoutineColumnInclusionRule();
 
@@ -394,15 +394,15 @@ public class SchemaCrawlerOptionsBuilder
     if (routineTypes == null)
     {
       // null signifies include all routine types
-      this.routineTypes = allRoutineTypes();
+      this.routineTypes = Optional.empty();
     }
     else if (routineTypes.isEmpty())
     {
-      this.routineTypes = Collections.emptySet();
+      this.routineTypes = Optional.of(Collections.emptySet());
     }
     else
     {
-      this.routineTypes = new HashSet<>(routineTypes);
+      this.routineTypes = Optional.of(new HashSet<>(routineTypes));
     }
     return this;
   }
@@ -415,9 +415,9 @@ public class SchemaCrawlerOptionsBuilder
    */
   public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
   {
-    final Collection<RoutineType> routineTypes = new HashSet<>();
     if (routineTypesString != null)
     {
+      final Collection<RoutineType> routineTypes = new HashSet<>();
       final String[] routineTypeStrings = routineTypesString.split(",");
       if (routineTypeStrings != null && routineTypeStrings.length > 0)
       {
@@ -428,9 +428,12 @@ public class SchemaCrawlerOptionsBuilder
           routineTypes.add(routineType);
         }
       }
+      this.routineTypes = Optional.of(routineTypes);
     }
-
-    this.routineTypes = routineTypes;
+    else
+    {
+      this.routineTypes = Optional.empty();
+    }
     return this;
   }
 
@@ -451,15 +454,15 @@ public class SchemaCrawlerOptionsBuilder
   {
     if (tableTypes == null)
     {
-      this.tableTypes = null;
+      this.tableTypes = Optional.empty();
     }
     else if (tableTypes.isEmpty())
     {
-      this.tableTypes = Collections.emptySet();
+      this.tableTypes = Optional.of(Collections.emptySet());
     }
     else
     {
-      this.tableTypes = new HashSet<>(tableTypes);
+      this.tableTypes = Optional.of(new HashSet<>(tableTypes));
     }
     return this;
   }
@@ -475,9 +478,9 @@ public class SchemaCrawlerOptionsBuilder
    */
   public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
   {
-    final Collection<String> tableTypes;
     if (tableTypesString != null)
     {
+      final Collection<String> tableTypes;
       tableTypes = new HashSet<>();
       final String[] tableTypeStrings = tableTypesString.split(",");
       if (tableTypeStrings != null && tableTypeStrings.length > 0)
@@ -487,13 +490,13 @@ public class SchemaCrawlerOptionsBuilder
           tableTypes.add(tableTypeString.trim());
         }
       }
+      this.tableTypes = Optional.of(tableTypes);
     }
     else
     {
-      tableTypes = null;
+      this.tableTypes = Optional.empty();
     }
 
-    this.tableTypes = tableTypes;
     return this;
   }
 
@@ -524,11 +527,11 @@ public class SchemaCrawlerOptionsBuilder
                                     schemaInclusionRule,
                                     synonymInclusionRule,
                                     sequenceInclusionRule,
-                                    tableTypes,
+                                    tableTypes.orElse(null),
                                     tableNamePattern,
                                     tableInclusionRule,
                                     columnInclusionRule,
-                                    routineTypes,
+                                    routineTypes.orElse(null),
                                     routineInclusionRule,
                                     routineColumnInclusionRule,
                                     grepColumnInclusionRule.orElse(null),
