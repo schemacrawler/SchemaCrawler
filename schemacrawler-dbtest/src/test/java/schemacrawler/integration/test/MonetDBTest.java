@@ -99,7 +99,7 @@ public class MonetDBTest
     }
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    options.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     // options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();

@@ -64,7 +64,6 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -72,6 +71,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
@@ -95,10 +95,12 @@ public class SchemaCrawlerTest
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
         .fromConfig(config);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-      schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-      schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .includeRoutines(new IncludeAll())
+        .includeRoutineColumns(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+        .toOptions();
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -147,9 +149,10 @@ public class SchemaCrawlerTest
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -227,9 +230,10 @@ public class SchemaCrawlerTest
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -268,9 +272,9 @@ public class SchemaCrawlerTest
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
-        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
@@ -298,9 +302,9 @@ public class SchemaCrawlerTest
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
-        .setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
       schemaCrawlerOptions
-        .setTableInclusionRule(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
+        .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
@@ -329,10 +333,11 @@ public class SchemaCrawlerTest
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
       .fromConfig(config);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeRoutines(new IncludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
       .toOptions(), schemaCrawlerOptions);
@@ -352,10 +357,11 @@ public class SchemaCrawlerTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.detailed());
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
+      .includeRoutines(new IncludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
@@ -396,9 +402,10 @@ public class SchemaCrawlerTest
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSequenceInformation(true);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-      schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+        .withSchemaInfoLevel(minimum).includeSequences(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+        .toOptions();
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -435,9 +442,10 @@ public class SchemaCrawlerTest
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum();
       minimum.setRetrieveSynonymInformation(true);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(minimum);
-      schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+        .withSchemaInfoLevel(minimum).includeSynonyms(new IncludeAll());
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+        .toOptions();
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -470,7 +478,8 @@ public class SchemaCrawlerTest
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -520,9 +529,10 @@ public class SchemaCrawlerTest
         .fromConfig(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
         .toOptions(), schemaCrawlerOptions);
@@ -572,7 +582,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
@@ -629,7 +639,7 @@ public class SchemaCrawlerTest
       .fromConfig(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
       .toOptions(), schemaCrawlerOptions);

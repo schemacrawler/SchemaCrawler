@@ -43,6 +43,7 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -95,16 +96,18 @@ public class SchemaCrawlerSQLiteUtility
   {
     checkConnection(connection);
 
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    options.setRoutineInclusionRule(new ExcludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .includeRoutines(new ExcludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Path diagramFile = createTempFilePath("schemacrawler", extension);
     final OutputOptions outputOptions = OutputOptionsBuilder
       .newOutputOptions(extension, diagramFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
-    executable.setSchemaCrawlerOptions(options);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);
     executable.execute();

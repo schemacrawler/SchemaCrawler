@@ -82,7 +82,7 @@ public class ScriptingTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
     final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable("script");
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);

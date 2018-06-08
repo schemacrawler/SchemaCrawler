@@ -47,6 +47,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -112,10 +113,9 @@ public class SpringIntegrationTest
     final Path testOutputFile = IOUtility.createTempFilePath(executableName,
                                                              "data");
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = executable
-      .getSchemaCrawlerOptions();
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(executable
+      .getSchemaCrawlerOptions()).includeRoutines(new IncludeAll());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     // Force output to test output file
     executable.setOutputOptions(forceOutputToTestOutputFile(executable

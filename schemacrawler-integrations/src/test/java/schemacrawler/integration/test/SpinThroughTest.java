@@ -48,6 +48,7 @@ import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestUtility;
@@ -122,13 +123,13 @@ public class SpinThroughTest
           final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
           schemaRetrievalOptionsBuilder.fromConfig(config);
 
-          final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-          schemaCrawlerOptions
-            .setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
-          schemaCrawlerOptions.setSequenceInclusionRule(new IncludeAll());
-          schemaCrawlerOptions.setSynonymInclusionRule(new IncludeAll());
-          schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-          schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+          final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+            .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+            .includeSequences(new IncludeAll())
+            .includeSynonyms(new IncludeAll())
+            .includeRoutines(new IncludeAll());
+          final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+            .toOptions();
 
           final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
           schemaTextOptionsBuilder.showInfo();
