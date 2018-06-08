@@ -29,11 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
+import static sf.util.Utility.isBlank;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
 
 import schemacrawler.schema.RoutineType;
 
@@ -70,21 +76,119 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
-  private final SchemaCrawlerOptions options;
+  private static Collection<RoutineType> allRoutineTypes()
+  {
+    return EnumSet.of(RoutineType.procedure, RoutineType.function);
+  }
 
+  private static Collection<String> defaultTableTypes()
+  {
+    return Arrays.asList("BASE TABLE", "TABLE", "VIEW");
+  }
+
+  private SchemaInfoLevel schemaInfoLevel;
+  private String title;
+  private InclusionRule schemaInclusionRule;
+
+  private InclusionRule synonymInclusionRule;
+  private InclusionRule sequenceInclusionRule;
+  private Collection<String> tableTypes;
+  private String tableNamePattern;
+
+  private InclusionRule tableInclusionRule;
+  private InclusionRule columnInclusionRule;
+  private Collection<RoutineType> routineTypes;
+
+  private InclusionRule routineInclusionRule;
+  private InclusionRule routineColumnInclusionRule;
+
+  private Optional<InclusionRule> grepColumnInclusionRule;
+  private Optional<InclusionRule> grepRoutineColumnInclusionRule;
+  private Optional<InclusionRule> grepDefinitionInclusionRule;
+  private boolean grepInvertMatch;
+  private boolean grepOnlyMatching;
+
+  private boolean hideEmptyTables;
+
+  private int childTableFilterDepth;
+  private int parentTableFilterDepth;
+
+  /**
+   * Default options.
+   */
   public SchemaCrawlerOptionsBuilder()
   {
-    this(new SchemaCrawlerOptions());
+    schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+
+    title = "";
+
+    // All schemas are included by default
+    schemaInclusionRule = new IncludeAll();
+
+    synonymInclusionRule = new ExcludeAll();
+    sequenceInclusionRule = new ExcludeAll();
+
+    // Note: Of the database objects, only tables are included by
+    // default
+    tableTypes = defaultTableTypes();
+    tableInclusionRule = new IncludeAll();
+    columnInclusionRule = new IncludeAll();
+
+    routineTypes = allRoutineTypes();
+    routineInclusionRule = new ExcludeAll();
+    routineColumnInclusionRule = new ExcludeAll();
+
+    grepColumnInclusionRule = Optional.empty();
+    grepRoutineColumnInclusionRule = Optional.empty();
+    grepDefinitionInclusionRule = Optional.empty();
   }
 
   public SchemaCrawlerOptionsBuilder(final SchemaCrawlerOptions options)
   {
-    this.options = options;
+    requireNonNull(options, "No SchemaCrawler options provided");
+
+    schemaInfoLevel = options.getSchemaInfoLevel();
+
+    title = options.getTitle();
+
+    schemaInclusionRule = options.getSchemaInclusionRule();
+    synonymInclusionRule = options.getSynonymInclusionRule();
+    sequenceInclusionRule = options.getSequenceInclusionRule();
+
+    tableTypes = options.getTableTypes();
+    tableNamePattern = options.getTableNamePattern();
+    tableInclusionRule = options.getTableInclusionRule();
+    columnInclusionRule = options.getColumnInclusionRule();
+
+    routineTypes = options.getRoutineTypes();
+    routineInclusionRule = options.getRoutineInclusionRule();
+    routineColumnInclusionRule = options.getRoutineColumnInclusionRule();
+
+    grepColumnInclusionRule = Optional
+      .ofNullable(options.getGrepColumnInclusionRule());
+    grepRoutineColumnInclusionRule = Optional
+      .ofNullable(options.getGrepRoutineColumnInclusionRule());
+    grepDefinitionInclusionRule = Optional
+      .ofNullable(options.getGrepDefinitionInclusionRule());
+    grepInvertMatch = options.isGrepInvertMatch();
+    grepOnlyMatching = options.isGrepOnlyMatching();
+
+    hideEmptyTables = options.isHideEmptyTables();
+
+    childTableFilterDepth = options.getChildTableFilterDepth();
+    parentTableFilterDepth = options.getParentTableFilterDepth();
   }
 
   public SchemaCrawlerOptionsBuilder childTableFilterDepth(final int childTableFilterDepth)
   {
-    options.setChildTableFilterDepth(childTableFilterDepth);
+    if (childTableFilterDepth < 0)
+    {
+      this.childTableFilterDepth = 0;
+    }
+    else
+    {
+      this.childTableFilterDepth = childTableFilterDepth;
+    }
     return this;
   }
 
@@ -107,34 +211,34 @@ public class SchemaCrawlerOptionsBuilder
       configProperties = new Config(config);
     }
 
-    options.setSchemaInclusionRule(configProperties
-      .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE));
-    options.setSynonymInclusionRule(configProperties
+    schemaInclusionRule = configProperties
+      .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE);
+    synonymInclusionRule = configProperties
       .getInclusionRuleDefaultExclude(SC_SYNONYM_PATTERN_INCLUDE,
-                                      SC_SYNONYM_PATTERN_EXCLUDE));
-    options.setSequenceInclusionRule(configProperties
+                                      SC_SYNONYM_PATTERN_EXCLUDE);
+    sequenceInclusionRule = configProperties
       .getInclusionRuleDefaultExclude(SC_SEQUENCE_PATTERN_INCLUDE,
-                                      SC_SEQUENCE_PATTERN_EXCLUDE));
+                                      SC_SEQUENCE_PATTERN_EXCLUDE);
 
-    options.setTableInclusionRule(configProperties
-      .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE));
-    options.setColumnInclusionRule(configProperties
-      .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE));
+    tableInclusionRule = configProperties
+      .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE);
+    columnInclusionRule = configProperties
+      .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE);
 
-    options.setRoutineInclusionRule(configProperties
+    routineInclusionRule = configProperties
       .getInclusionRuleDefaultExclude(SC_ROUTINE_PATTERN_INCLUDE,
-                                      SC_ROUTINE_PATTERN_EXCLUDE));
-    options.setRoutineColumnInclusionRule(configProperties
+                                      SC_ROUTINE_PATTERN_EXCLUDE);
+    routineColumnInclusionRule = configProperties
       .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                        SC_ROUTINE_COLUMN_PATTERN_EXCLUDE));
+                        SC_ROUTINE_COLUMN_PATTERN_EXCLUDE);
 
-    options.setGrepColumnInclusionRule(configProperties
+    grepColumnInclusionRule = Optional.ofNullable(configProperties
       .getInclusionRuleOrNull(SC_GREP_COLUMN_PATTERN_INCLUDE,
                               SC_GREP_COLUMN_PATTERN_EXCLUDE));
-    options.setGrepRoutineColumnInclusionRule(configProperties
+    grepRoutineColumnInclusionRule = Optional.ofNullable(configProperties
       .getInclusionRuleOrNull(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
                               SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE));
-    options.setGrepDefinitionInclusionRule(configProperties
+    grepDefinitionInclusionRule = Optional.ofNullable(configProperties
       .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
                               SC_GREP_DEFINITION_PATTERN_EXCLUDE));
 
@@ -143,92 +247,163 @@ public class SchemaCrawlerOptionsBuilder
 
   public SchemaCrawlerOptionsBuilder grepOnlyMatching(final boolean grepOnlyMatching)
   {
-    options.setGrepOnlyMatching(grepOnlyMatching);
+    this.grepOnlyMatching = grepOnlyMatching;
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder hideEmptyTables()
   {
-    options.setHideEmptyTables(true);
+    hideEmptyTables = true;
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeColumns(final InclusionRule columnInclusionRule)
   {
-    options.setColumnInclusionRule(columnInclusionRule);
+    if (columnInclusionRule == null)
+    {
+      this.columnInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.columnInclusionRule = columnInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final InclusionRule grepColumnInclusionRule)
   {
-    options.setGrepColumnInclusionRule(grepColumnInclusionRule);
+    this.grepColumnInclusionRule = Optional.ofNullable(grepColumnInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
-    options.setGrepDefinitionInclusionRule(grepDefinitionInclusionRule);
+    this.grepDefinitionInclusionRule = Optional
+      .ofNullable(grepDefinitionInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineColumns(final InclusionRule grepRoutineColumnInclusionRule)
   {
-    options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule);
+    this.grepRoutineColumnInclusionRule = Optional
+      .ofNullable(grepRoutineColumnInclusionRule);
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeRoutineColumns(final InclusionRule routineColumnInclusionRule)
   {
-    options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
+    if (routineColumnInclusionRule == null)
+    {
+      this.routineColumnInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.routineColumnInclusionRule = routineColumnInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeRoutines(final InclusionRule routineInclusionRule)
   {
-    options.setRoutineInclusionRule(routineInclusionRule);
-    options.setRoutineColumnInclusionRule(new IncludeAll());
+    if (routineInclusionRule == null)
+    {
+      this.routineInclusionRule = new ExcludeAll();
+      routineColumnInclusionRule = new ExcludeAll();
+    }
+    else
+    {
+      this.routineInclusionRule = routineInclusionRule;
+      routineColumnInclusionRule = new IncludeAll();
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSchemas(final InclusionRule schemaInclusionRule)
   {
-    options.setSchemaInclusionRule(schemaInclusionRule);
+    if (schemaInclusionRule == null)
+    {
+      this.schemaInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.schemaInclusionRule = schemaInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSequences(final InclusionRule sequenceInclusionRule)
   {
-    options.setSequenceInclusionRule(sequenceInclusionRule);
+    if (sequenceInclusionRule == null)
+    {
+      this.sequenceInclusionRule = new ExcludeAll();
+    }
+    else
+    {
+      this.sequenceInclusionRule = sequenceInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeSynonyms(final InclusionRule synonymInclusionRule)
   {
-    options.setSynonymInclusionRule(synonymInclusionRule);
+    if (synonymInclusionRule == null)
+    {
+      this.synonymInclusionRule = new ExcludeAll();
+    }
+    else
+    {
+      this.synonymInclusionRule = synonymInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder includeTables(final InclusionRule tableInclusionRule)
   {
-    options.setTableInclusionRule(tableInclusionRule);
+    if (tableInclusionRule == null)
+    {
+      this.tableInclusionRule = new IncludeAll();
+    }
+    else
+    {
+      this.tableInclusionRule = tableInclusionRule;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder invertGrepMatch(final boolean grepInvertMatch)
   {
-    options.setGrepInvertMatch(grepInvertMatch);
+    this.grepInvertMatch = grepInvertMatch;
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder parentTableFilterDepth(final int parentTableFilterDepth)
   {
-    options.setParentTableFilterDepth(parentTableFilterDepth);
+    if (parentTableFilterDepth < 0)
+    {
+      this.parentTableFilterDepth = 0;
+    }
+    else
+    {
+      this.parentTableFilterDepth = parentTableFilterDepth;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder routineTypes(final Collection<RoutineType> routineTypes)
   {
-    options.setRoutineTypes(routineTypes);
+    if (routineTypes == null)
+    {
+      // null signifies include all routine types
+      this.routineTypes = allRoutineTypes();
+    }
+    else if (routineTypes.isEmpty())
+    {
+      this.routineTypes = Collections.emptySet();
+    }
+    else
+    {
+      this.routineTypes = new HashSet<>(routineTypes);
+    }
     return this;
   }
 
@@ -255,19 +430,37 @@ public class SchemaCrawlerOptionsBuilder
       }
     }
 
-    options.setRoutineTypes(routineTypes);
+    this.routineTypes = routineTypes;
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder tableNamePattern(final String tableNamePattern)
   {
-    options.setTableNamePattern(tableNamePattern);
+    if (isBlank(tableNamePattern))
+    {
+      this.tableNamePattern = null;
+    }
+    else
+    {
+      this.tableNamePattern = tableNamePattern;
+    }
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder tableTypes(final Collection<String> tableTypes)
   {
-    options.setTableTypes(tableTypes);
+    if (tableTypes == null)
+    {
+      this.tableTypes = null;
+    }
+    else if (tableTypes.isEmpty())
+    {
+      this.tableTypes = Collections.emptySet();
+    }
+    else
+    {
+      this.tableTypes = new HashSet<>(tableTypes);
+    }
     return this;
   }
 
@@ -300,13 +493,20 @@ public class SchemaCrawlerOptionsBuilder
       tableTypes = null;
     }
 
-    options.setTableTypes(tableTypes);
+    this.tableTypes = tableTypes;
     return this;
   }
 
   public SchemaCrawlerOptionsBuilder title(final String title)
   {
-    options.setTitle(title);
+    if (isBlank(title))
+    {
+      this.title = "";
+    }
+    else
+    {
+      this.title = title;
+    }
     return this;
   }
 
@@ -319,12 +519,50 @@ public class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptions toOptions()
   {
+    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
+
+    options.setSchemaInfoLevel(schemaInfoLevel);
+
+    options.setTitle(title);
+
+    options.setSchemaInclusionRule(schemaInclusionRule);
+    options.setSynonymInclusionRule(synonymInclusionRule);
+    options.setSequenceInclusionRule(sequenceInclusionRule);
+
+    options.setTableTypes(tableTypes);
+    options.setTableNamePattern(tableNamePattern);
+    options.setTableInclusionRule(tableInclusionRule);
+    options.setColumnInclusionRule(columnInclusionRule);
+
+    options.setRoutineTypes(routineTypes);
+    options.setRoutineInclusionRule(routineInclusionRule);
+    options.setRoutineColumnInclusionRule(routineColumnInclusionRule);
+
+    options.setGrepColumnInclusionRule(grepColumnInclusionRule.orElse(null));
+    options.setGrepRoutineColumnInclusionRule(grepRoutineColumnInclusionRule
+      .orElse(null));
+    options
+      .setGrepDefinitionInclusionRule(grepDefinitionInclusionRule.orElse(null));
+    options.setGrepInvertMatch(grepInvertMatch);
+    options.setGrepOnlyMatching(grepOnlyMatching);
+
+    options.setHideEmptyTables(hideEmptyTables);
+
+    options.setChildTableFilterDepth(childTableFilterDepth);
+    options.setParentTableFilterDepth(parentTableFilterDepth);
     return options;
   }
 
   public SchemaCrawlerOptionsBuilder withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
-    options.setSchemaInfoLevel(schemaInfoLevel);
+    if (schemaInfoLevel == null)
+    {
+      this.schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+    }
+    else
+    {
+      this.schemaInfoLevel = schemaInfoLevel;
+    }
     return this;
   }
 
