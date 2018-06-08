@@ -29,7 +29,6 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -60,7 +59,7 @@ public final class SchemaCrawlerOptions
 
   private SchemaInfoLevel schemaInfoLevel;
 
-  private String title;
+  private final String title;
 
   private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
@@ -71,7 +70,7 @@ public final class SchemaCrawlerOptions
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
 
-  private Collection<RoutineType> routineTypes;
+  private final Collection<RoutineType> routineTypes;
   private InclusionRule routineInclusionRule;
   private InclusionRule routineColumnInclusionRule;
 
@@ -228,7 +227,14 @@ public final class SchemaCrawlerOptions
 
   public Collection<RoutineType> getRoutineTypes()
   {
-    return new HashSet<>(routineTypes);
+    if (routineTypes == null)
+    {
+      return null;
+    }
+    else
+    {
+      return new HashSet<>(routineTypes);
+    }
   }
 
   /**
@@ -361,11 +367,6 @@ public final class SchemaCrawlerOptions
     return hideEmptyTables;
   }
 
-  public void setChildTableFilterDepth(final int childTableFilterDepth)
-  {
-    this.childTableFilterDepth = childTableFilterDepth;
-  }
-
   /**
    * Sets the column inclusion rule.
    *
@@ -401,17 +402,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Set whether to invert matches.
-   *
-   * @param grepInvertMatch
-   *        Whether to invert matches.
-   */
-  public void setGrepInvertMatch(final boolean grepInvertMatch)
-  {
-    this.grepInvertMatch = grepInvertMatch;
-  }
-
-  /**
    * Whether grep includes show foreign keys that reference other
    * non-matching tables.
    *
@@ -433,18 +423,6 @@ public final class SchemaCrawlerOptions
   public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
   {
     this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
-  }
-
-  /**
-   * If infolevel=maximum, this option will remove empty tables (that
-   * is, tables with no rows of data) from the catalog.
-   *
-   * @param hideEmptyTables
-   *        Whether to hide empty tables
-   */
-  public void setHideEmptyTables(final boolean hideEmptyTables)
-  {
-    this.hideEmptyTables = hideEmptyTables;
   }
 
   public void setParentTableFilterDepth(final int parentTableFilterDepth)
@@ -474,23 +452,6 @@ public final class SchemaCrawlerOptions
   {
     this.routineInclusionRule = requireNonNull(routineInclusionRule,
                                                "Cannot use null value in a setter");
-  }
-
-  public void setRoutineTypes(final Collection<RoutineType> routineTypes)
-  {
-    if (routineTypes == null)
-    {
-      // null signifies include all routine types
-      this.routineTypes = allRoutineTypes();
-    }
-    else if (routineTypes.isEmpty())
-    {
-      this.routineTypes = Collections.emptySet();
-    }
-    else
-    {
-      this.routineTypes = new HashSet<>(routineTypes);
-    }
   }
 
   /**
@@ -594,11 +555,6 @@ public final class SchemaCrawlerOptions
     {
       this.tableTypes = new HashSet<>(tableTypes);
     }
-  }
-
-  public void setTitle(final String title)
-  {
-    this.title = isBlank(title)? "": title;
   }
 
   /**
