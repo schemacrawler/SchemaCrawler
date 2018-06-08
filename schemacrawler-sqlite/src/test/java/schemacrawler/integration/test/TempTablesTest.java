@@ -45,10 +45,11 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.testdb.SqlScript;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
@@ -64,16 +65,18 @@ public class TempTablesTest
       .normalize().toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
-                                      "jdbc:sqlite:" + sqliteDbFile,
-                                      null,
-                                      null,
-                                      "/sqlite.scripts.txt" });
+                                          "jdbc:sqlite:" + sqliteDbFile,
+                                          null,
+                                          null,
+                                          "/sqlite.scripts.txt" });
     final Connection connection = executeSqlInTestDatabase(sqliteDbFile,
                                                            "db/books/05_temp_tables_01_B.sql");
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    schemaCrawlerOptions.setTableTypes(Arrays.asList("GLOBAL TEMPORARY"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+      .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(connection, schemaCrawlerOptions);

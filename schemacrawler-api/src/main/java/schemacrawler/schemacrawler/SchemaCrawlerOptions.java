@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 
 import schemacrawler.schema.RoutineType;
@@ -65,10 +64,10 @@ public final class SchemaCrawlerOptions
   private InclusionRule synonymInclusionRule;
   private InclusionRule sequenceInclusionRule;
 
-  private Collection<String> tableTypes;
+  private final Collection<String> tableTypes;
   private String tableNamePattern;
   private InclusionRule tableInclusionRule;
-  private InclusionRule columnInclusionRule;
+  private final InclusionRule columnInclusionRule;
 
   private final Collection<RoutineType> routineTypes;
   private InclusionRule routineInclusionRule;
@@ -368,69 +367,6 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the column inclusion rule.
-   *
-   * @param columnInclusionRule
-   *        Column inclusion rule
-   */
-  public void setColumnInclusionRule(final InclusionRule columnInclusionRule)
-  {
-    this.columnInclusionRule = requireNonNull(columnInclusionRule,
-                                              "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets the column inclusion rule for grep.
-   *
-   * @param grepColumnInclusionRule
-   *        Column inclusion rule for grep
-   */
-  public void setGrepColumnInclusionRule(final InclusionRule grepColumnInclusionRule)
-  {
-    this.grepColumnInclusionRule = grepColumnInclusionRule;
-  }
-
-  /**
-   * Sets the definition inclusion rule for grep.
-   *
-   * @param grepDefinitionInclusionRule
-   *        Definition inclusion rule for grep
-   */
-  public void setGrepDefinitionInclusionRule(final InclusionRule grepDefinitionInclusionRule)
-  {
-    this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
-  }
-
-  /**
-   * Whether grep includes show foreign keys that reference other
-   * non-matching tables.
-   *
-   * @param grepOnlyMatching
-   *        Whether grep includes show foreign keys that reference other
-   *        non-matching tables.
-   */
-  public void setGrepOnlyMatching(final boolean grepOnlyMatching)
-  {
-    this.grepOnlyMatching = grepOnlyMatching;
-  }
-
-  /**
-   * Sets the routine column inclusion rule for grep.
-   *
-   * @param grepRoutineColumnInclusionRule
-   *        Routine column inclusion rule for grep
-   */
-  public void setGrepRoutineColumnInclusionRule(final InclusionRule grepRoutineColumnInclusionRule)
-  {
-    this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
-  }
-
-  public void setParentTableFilterDepth(final int parentTableFilterDepth)
-  {
-    this.parentTableFilterDepth = parentTableFilterDepth;
-  }
-
-  /**
    * Sets the routine column inclusion rule.
    *
    * @param routineColumnInclusionRule
@@ -513,48 +449,6 @@ public final class SchemaCrawlerOptions
   {
     this.tableInclusionRule = requireNonNull(tableInclusionRule,
                                              "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets the table name pattern, using the JDBC syntax for wildcards (_
-   * and *). The table name pattern is case-sensitive, and matches just
-   * the table name - not the fully qualified table name. The table name
-   * pattern restricts the tables retrieved at an early stage in the
-   * retrieval process, so it must be used only when performance needs
-   * to be tuned. A null value indicates do not take table pattern into
-   * account.
-   *
-   * @param tableNamePattern
-   *        Table name pattern, null is allowed
-   */
-  public void setTableNamePattern(final String tableNamePattern)
-  {
-    this.tableNamePattern = tableNamePattern;
-  }
-
-  /**
-   * Sets table types requested for output from a collection of table
-   * types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL
-   * TEMPORARY,ALIAS,SYNONYM
-   *
-   * @param tableTypes
-   *        Collection of table types. Can be null if all supported
-   *        table types are requested.
-   */
-  public void setTableTypes(final Collection<String> tableTypes)
-  {
-    if (tableTypes == null)
-    {
-      this.tableTypes = null;
-    }
-    else if (tableTypes.isEmpty())
-    {
-      this.tableTypes = Collections.emptySet();
-    }
-    else
-    {
-      this.tableTypes = new HashSet<>(tableTypes);
-    }
   }
 
   /**

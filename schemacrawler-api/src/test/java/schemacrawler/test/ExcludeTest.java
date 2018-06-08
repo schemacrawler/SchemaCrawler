@@ -43,6 +43,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
@@ -65,11 +66,11 @@ public class ExcludeTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-      schemaCrawlerOptions
-        .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+        .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+        .toOptions();
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
