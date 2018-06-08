@@ -43,21 +43,6 @@ IDX_A_AUTHORS                                         [non-unique index]
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
 
-Triggers
-
-TRG_AUTHORS                             [trigger, after delete, per row]
-UPDATE BOOKS.PUBLISHERS SET PUBLISHER='Jacob'WHERE PUBLISHER='John'
-
-Table Constraints
-
-CHECK_UPPERCASE_STATE                                 [check constraint]
-
-SYS_CT_10108                                          [check constraint]
-
-SYS_CT_10109                                          [check constraint]
-
-SYS_CT_10110                                          [check constraint]
-
 
 
 PUBLIC.BOOKS.AUTHORSLIST                                          [view]
@@ -95,12 +80,6 @@ SYS_IDX_SYS_FK_10128_10132                            [non-unique index]
 UIDX_BOOKAUTHORS                                          [unique index]
 1   BOOKID                            ascending                   
 2   AUTHORID                          ascending                   
-
-Table Constraints
-
-SYS_CT_10126                                          [check constraint]
-
-SYS_CT_10127                                          [check constraint]
 
 
 
@@ -146,16 +125,6 @@ SYS_IDX_U_PREVIOUSEDITION_10125                           [unique index]
 SYS_IDX_FK_PREVIOUSEDITION_10123                      [non-unique index]
 7   PREVIOUSEDITIONID                 ascending                   
 
-Table Constraints
-
-U_PREVIOUSEDITION                                    [unique constraint]
-
-SYS_CT_10116                                          [check constraint]
-
-SYS_CT_10117                                          [check constraint]
-
-SYS_CT_10118                                          [check constraint]
-
 
 
 PUBLIC.BOOKS.COUPONS                                             [table]
@@ -175,10 +144,6 @@ Indexes
 SYS_IDX_PK_COUPONS_10093                                  [unique index]
 1   ID                                ascending                   
 
-Table Constraints
-
-SYS_CT_10092                                          [check constraint]
-
 
 
 PUBLIC.BOOKS.CUSTOMERDATA                                        [table]
@@ -196,18 +161,14 @@ Indexes
 SYS_IDX_PK_CUSTOMERDATA_10104                             [unique index]
 1   ID                                ascending                   
 
-Table Constraints
-
-SYS_CT_10103                                          [check constraint]
-
 
 
 PUBLIC.BOOKS.CUSTOMERS                                           [table]
 ------------------------------------------------------------------------
 1   ID                                INTEGER NOT NULL            
-2   FIRSTNAME                         DISTINCT NOT NULL           
-3   LASTNAME                          DISTINCT NOT NULL           
-4   AGE                               DISTINCT                    
+2   FIRSTNAME                         VARCHAR(100) NOT NULL       
+3   LASTNAME                          VARCHAR(100) NOT NULL       
+4   AGE                               SMALLINT                    
 
 Primary Key
 
@@ -218,14 +179,6 @@ Indexes
 
 SYS_IDX_PK_CUSTOMERS_10098                                [unique index]
 1   ID                                ascending                   
-
-Table Constraints
-
-SYS_CT_10095                                          [check constraint]
-
-SYS_CT_10096                                          [check constraint]
-
-SYS_CT_10097                                          [check constraint]
 
 
 
@@ -287,14 +240,6 @@ SYS_IDX_FK_ΒΙΒΛΊΑ_PUBLISHERS_10144                    [non-unique index]
 SYS_IDX_PK_ΒΙΒΛΊΑ_10140                                   [unique index]
 1   ΜΟΝΑΔΙΚΌΣ                         ascending                   
 
-Table Constraints
-
-SYS_CT_10137                                          [check constraint]
-
-SYS_CT_10138                                          [check constraint]
-
-SYS_CT_10139                                          [check constraint]
-
 
 
 PUBLIC.FOR_LINT.EXTRA_PK                                         [table]
@@ -327,14 +272,6 @@ SYS_IDX_PK_EXTRA_PK_10198                                 [unique index]
 
 SYS_IDX_FK_PUBLICATION_JOIN_10204                     [non-unique index]
 2   PUBLICATIONID                     ascending                   
-
-Table Constraints
-
-SYS_CT_10195                                          [check constraint]
-
-SYS_CT_10196                                          [check constraint]
-
-SYS_CT_10197                                          [check constraint]
 
 
 
@@ -383,14 +320,6 @@ SYS_IDX_FK_PUBLICATIONS_WRITER_10183                  [non-unique index]
 SYS_IDX_PK_PUBLICATIONS_10179                             [unique index]
 1   ID                                ascending                   
 
-Table Constraints
-
-SYS_CT_10176                                          [check constraint]
-
-SYS_CT_10177                                          [check constraint]
-
-SYS_CT_10178                                          [check constraint]
-
 
 
 PUBLIC.FOR_LINT.PUBLICATIONWRITERS                               [table]
@@ -413,12 +342,6 @@ SYS_IDX_FK_WRITER_10190                               [non-unique index]
 
 SYS_IDX_FK_PUBLICATION_10192                          [non-unique index]
 1   PUBLICATIONID                     ascending                   
-
-Table Constraints
-
-SYS_CT_10185                                          [check constraint]
-
-SYS_CT_10186                                          [check constraint]
 
 
 
@@ -444,12 +367,6 @@ SYS_IDX_PK_SELFREFERENCE_10208                            [unique index]
 
 SYS_IDX_FK_SELFREFERENCE_10211                        [non-unique index]
 1   ID                                ascending                   
-
-Table Constraints
-
-SYS_CT_10206                                          [check constraint]
-
-SYS_CT_10207                                          [check constraint]
 
 
 
@@ -519,20 +436,6 @@ IDX_A_WRITERS                                         [non-unique index]
 8   POSTALCODE                        ascending                   
 9   COUNTRY                           ascending                   
 
-Table Constraints
-
-CHECK_UPPERCASE_STATE                                 [check constraint]
-
-SYS_CT_10164                                          [check constraint]
-
-SYS_CT_10165                                          [check constraint]
-
-SYS_CT_10166                                          [check constraint]
-
-SYS_CT_10167                                          [check constraint]
-
-SYS_CT_10168                                          [check constraint]
-
 
 
 PUBLIC."PUBLISHER SALES".REGIONS                                 [table]
@@ -559,16 +462,6 @@ Indexes
 SYS_IDX_PK_CUSTOMERS_10228                                [unique index]
 3   POSTALCODE                        ascending                   
 4   COUNTRY                           ascending                   
-
-Table Constraints
-
-SYS_CT_10224                                          [check constraint]
-
-SYS_CT_10225                                          [check constraint]
-
-SYS_CT_10226                                          [check constraint]
-
-SYS_CT_10227                                          [check constraint]
 
 
 
@@ -599,12 +492,6 @@ SYS_IDX_FK_SALES_REGIONS_10240                        [non-unique index]
 1   POSTALCODE                        ascending                   
 2   COUNTRY                           ascending                   
 
-Table Constraints
-
-SYS_CT_10235                                          [check constraint]
-
-SYS_CT_10236                                          [check constraint]
-
 
 
 PUBLIC."PUBLISHER SALES".SALESDATA                               [table]
@@ -621,135 +508,4 @@ Indexes
 
 SYS_IDX_UQ_CUSTOMERS_10234                                [unique index]
 1   SALESDATAID                       ascending                   
-
-Table Constraints
-
-UQ_CUSTOMERS                                         [unique constraint]
-
-
-
-Routines
-========================================================================
-
-
-
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
-------------------------------------------------------------------------
-1   NEWPUBLISHER                      VARCHAR, in                 
-2   PUBLISHER                         VARCHAR, out                
-
-
-
-PUBLIC.BOOKS.NEW_PUBLISHER                        [procedure, no result]
-------------------------------------------------------------------------
-1   PUBLISHER                         VARCHAR, out                
-
-
-
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-1   ONE                               INTEGER, in                 
-2   TWO                               INTEGER, in                 
-
-
-
-PUBLIC.BOOKS.CUSTOMADD               [function, does not return a table]
-------------------------------------------------------------------------
-1   ONE                               INTEGER, in                 
-
-
-
-PUBLIC.SYSTEM_LOBS.ALLOC_BLOCKS                   [procedure, no result]
-------------------------------------------------------------------------
-1   B_COUNT                           INTEGER, in                 
-2   B_OFFSET                          INTEGER, in                 
-3   L_ID                              BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.ALLOC_SINGLE_BLOCK             [procedure, no result]
-------------------------------------------------------------------------
-1   B_COUNT                           INTEGER, in                 
-2   B_OFFSET                          INTEGER, in                 
-3   L_ID                              BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.CONVERT_BLOCK                  [procedure, no result]
-------------------------------------------------------------------------
-1   B_ADDR                            INTEGER, in                 
-2   B_COUNT                           INTEGER, in                 
-3   B_OFFSET                          INTEGER, in                 
-4   L_ID                              BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.CREATE_EMPTY_BLOCK             [procedure, no result]
-------------------------------------------------------------------------
-1   B_ADDR                            INTEGER, in/ out            
-2   B_COUNT                           INTEGER, in                 
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_BLOCKS                  [procedure, no result]
-------------------------------------------------------------------------
-1   L_ID                              BIGINT, in                  
-2   B_OFFSET                          INTEGER, in                 
-3   B_LIMIT                           INTEGER, in                 
-4   TX_ID                             BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_LOB                     [procedure, no result]
-------------------------------------------------------------------------
-1   L_ID                              BIGINT, in                  
-2   TX_ID                             BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED                  [procedure, no result]
-------------------------------------------------------------------------
-1   L_IDS                             ARRAY, in                   
-
-
-
-PUBLIC.SYSTEM_LOBS.DELETE_UNUSED_LOBS             [procedure, no result]
-------------------------------------------------------------------------
-1   LIMIT_ID                          BIGINT, in                  
-2   TOTAL_COUNT                       INTEGER, out                
-
-
-
-PUBLIC.SYSTEM_LOBS.DIVIDE_BLOCK                   [procedure, no result]
-------------------------------------------------------------------------
-1   B_OFFSET                          INTEGER, in                 
-2   L_ID                              BIGINT, in                  
-
-
-
-PUBLIC.SYSTEM_LOBS.MERGE_EMPTY_BLOCKS             [procedure, no result]
-------------------------------------------------------------------------
-
-
-
-Sequences
-========================================================================
-
-
-
-PUBLIC.BOOKS.PUBLISHER_ID_SEQ                                 [sequence]
-------------------------------------------------------------------------
-  increment                         1                           
-  minimum value                     -2147483648                 
-  maximum value                     2147483647                  
-  cycle                             false                       
-
-
-
-PUBLIC.SYSTEM_LOBS.LOB_ID                                     [sequence]
-------------------------------------------------------------------------
-  increment                         1                           
-  minimum value                     -9223372036854775808        
-  maximum value                     9223372036854775807         
-  cycle                             false                       
 

@@ -46,6 +46,7 @@ import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
@@ -112,13 +113,13 @@ public class SchemaCrawlerJsonOutputTest
     final Config schemaTextOptions = new SchemaTextOptionsBuilder().noInfo()
       .toConfig();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
-    schemaCrawlerOptions.setRoutineInclusionRule(new ExcludeAll());
-    schemaCrawlerOptions.setTableInclusionRule(tableInclusionRule);
-    schemaCrawlerOptions.setTableNamePattern(tableName);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+      .includeRoutines(new ExcludeAll()).includeTables(tableInclusionRule)
+      .tableNamePattern(tableName);
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
       .name());

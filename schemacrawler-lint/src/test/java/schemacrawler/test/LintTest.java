@@ -42,6 +42,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
@@ -61,11 +62,11 @@ public class LintTest
   public void lints()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
-      .setTableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"));
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull(catalog);
@@ -111,13 +112,12 @@ public class LintTest
   public void lintsWithExcludedColumns()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
-      .setTableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"));
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-    schemaCrawlerOptions
-      .setColumnInclusionRule(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+      .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull(catalog);

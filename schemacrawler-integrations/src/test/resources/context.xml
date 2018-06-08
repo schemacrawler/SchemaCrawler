@@ -122,28 +122,11 @@
     factory-bean="schemaRetrievalOptionsBuilder"
     factory-method="toOptions" />
 
+  <bean id="schemaCrawlerOptionsBuilder"
+    class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder" />
   <bean id="schemaCrawlerOptions"
-    class="schemacrawler.schemacrawler.SchemaCrawlerOptions">
-    <property name="sequenceInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll" />
-    </property>
-    <property name="routineInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll" />
-    </property>
-    <property name="routineColumnInclusionRule">
-      <bean class="schemacrawler.schemacrawler.IncludeAll" />
-    </property>
-    <property name="tableTypes">
-      <set>
-        <value>TABLE</value>
-        <value>VIEW</value>
-      </set>
-    </property>
-    <property name="schemaInfoLevel">
-      <bean factory-method="maximum"
-        class="schemacrawler.schemacrawler.SchemaInfoLevelBuilder" />
-    </property>
-  </bean>
+    factory-bean="schemaCrawlerOptionsBuilder"
+    factory-method="toOptions" />
 
   <bean id="outputOptions"
     class="schemacrawler.tools.options.OutputOptionsBuilder"
