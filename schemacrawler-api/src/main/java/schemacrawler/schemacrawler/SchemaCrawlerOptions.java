@@ -113,6 +113,49 @@ public final class SchemaCrawlerOptions
 
   }
 
+  SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
+                       final String title,
+                       final InclusionRule schemaInclusionRule,
+                       final InclusionRule synonymInclusionRule,
+                       final InclusionRule sequenceInclusionRule,
+                       final Collection<String> tableTypes,
+                       final String tableNamePattern,
+                       final InclusionRule tableInclusionRule,
+                       final InclusionRule columnInclusionRule,
+                       final Collection<RoutineType> routineTypes,
+                       final InclusionRule routineInclusionRule,
+                       final InclusionRule routineColumnInclusionRule,
+                       final InclusionRule grepColumnInclusionRule,
+                       final InclusionRule grepRoutineColumnInclusionRule,
+                       final InclusionRule grepDefinitionInclusionRule,
+                       final boolean grepInvertMatch,
+                       final boolean grepOnlyMatching,
+                       final boolean hideEmptyTables,
+                       final int childTableFilterDepth,
+                       final int parentTableFilterDepth)
+  {
+    this.schemaInfoLevel = schemaInfoLevel;
+    this.title = title;
+    this.schemaInclusionRule = schemaInclusionRule;
+    this.synonymInclusionRule = synonymInclusionRule;
+    this.sequenceInclusionRule = sequenceInclusionRule;
+    this.tableTypes = tableTypes;
+    this.tableNamePattern = tableNamePattern;
+    this.tableInclusionRule = tableInclusionRule;
+    this.columnInclusionRule = columnInclusionRule;
+    this.routineTypes = routineTypes;
+    this.routineInclusionRule = routineInclusionRule;
+    this.routineColumnInclusionRule = routineColumnInclusionRule;
+    this.grepColumnInclusionRule = grepColumnInclusionRule;
+    this.grepRoutineColumnInclusionRule = grepRoutineColumnInclusionRule;
+    this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
+    this.grepInvertMatch = grepInvertMatch;
+    this.grepOnlyMatching = grepOnlyMatching;
+    this.hideEmptyTables = hideEmptyTables;
+    this.childTableFilterDepth = childTableFilterDepth;
+    this.parentTableFilterDepth = parentTableFilterDepth;
+  }
+
   public int getChildTableFilterDepth()
   {
     return childTableFilterDepth;
