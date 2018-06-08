@@ -60,8 +60,8 @@ public class DerbyTest
     throws Exception
   {
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
+    options.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    options.includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);

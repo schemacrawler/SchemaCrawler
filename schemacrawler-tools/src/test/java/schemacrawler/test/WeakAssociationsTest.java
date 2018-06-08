@@ -68,9 +68,9 @@ public class WeakAssociationsTest
     {
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
 
       final Catalog baseCatalog = getCatalog(schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);

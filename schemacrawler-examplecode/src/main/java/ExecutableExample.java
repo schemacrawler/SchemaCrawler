@@ -12,10 +12,10 @@ import java.util.logging.Level;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -35,13 +35,12 @@ public final class ExecutableExample
     logSystemClasspath();
 
     // Create the options
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    // Set what details are required in the schema - this affects the
-    // time taken to crawl the schema
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    options.setRoutineInclusionRule(new ExcludeAll());
-    options
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+      // Set what details are required in the schema - this affects the
+      // time taken to crawl the schema
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
 
     final Path outputFile = getOutputFile(args);
     final OutputOptions outputOptions = OutputOptionsBuilder

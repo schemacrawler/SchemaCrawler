@@ -53,8 +53,8 @@ public class TestSqlServerCatalog
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule("SCHEMACRAWLER.dbo"));
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      .includeSchemas(new RegularExpressionInclusionRule("SCHEMACRAWLER.dbo"));
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(connection, schemaCrawlerOptions);

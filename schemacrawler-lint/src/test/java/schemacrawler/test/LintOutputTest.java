@@ -101,9 +101,9 @@ public class LintOutputTest
 
         final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
         schemaCrawlerOptions
-          .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
+          .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
         schemaCrawlerOptions
-          .setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
         final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
         schemaTextOptionsBuilder.showInfo();
@@ -142,8 +142,8 @@ public class LintOutputTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -170,8 +170,8 @@ public class LintOutputTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*FOR_LINT"));
-      schemaCrawlerOptions.setSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
+        .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+      schemaCrawlerOptions.withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel());
 
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

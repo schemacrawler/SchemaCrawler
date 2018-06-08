@@ -37,6 +37,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -58,12 +59,12 @@ public class H2Test
   public void testH2WithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    options
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.BOOKS"));
-    options
-      .setSequenceInclusionRule(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+      .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
@@ -71,7 +72,7 @@ public class H2Test
     textOptions.setShowJdbcDriverInfo(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());

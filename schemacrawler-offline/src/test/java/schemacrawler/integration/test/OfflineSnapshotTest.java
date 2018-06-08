@@ -53,6 +53,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -158,10 +159,11 @@ public class OfflineSnapshotTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeRoutines(new IncludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
     schemaTextOptionsBuilder.showInfo();
@@ -184,10 +186,11 @@ public class OfflineSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeRoutines(new IncludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

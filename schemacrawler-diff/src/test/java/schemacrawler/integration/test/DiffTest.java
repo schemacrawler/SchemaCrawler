@@ -133,7 +133,7 @@ public class DiffTest
     config.put("database", sqliteDbFile.toString());
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
       .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);

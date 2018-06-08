@@ -83,7 +83,7 @@ public class SQLiteExecuableTest
     config.put("database", sqliteDbFile.toString());
 
     final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    options.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
 

@@ -100,7 +100,7 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -170,7 +170,7 @@ public class GraphRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -184,7 +184,7 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(SchemaTextDetailType.brief.name(),
@@ -198,7 +198,7 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -213,7 +213,7 @@ public class GraphRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setTableInclusionRule(new RegularExpressionInclusionRule(".*BOOKS"));
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
 
     final GraphOptions graphOptions = new GraphOptions();
     graphOptions.setShowUnqualifiedNames(true);
@@ -285,7 +285,7 @@ public class GraphRendererOptionsTest
     graphOptions.setShowRowCounts(true);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
@@ -309,7 +309,7 @@ public class GraphRendererOptionsTest
     graphOptions.setGraphvizAttributes(graphvizAttributes);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
@@ -322,9 +322,9 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
+      .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
     final GraphOptions graphOptions = new GraphOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -342,7 +342,7 @@ public class GraphRendererOptionsTest
     if (schemaCrawlerOptions.getSchemaInclusionRule().equals(new IncludeAll()))
     {
       schemaCrawlerOptions
-        .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
+        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"));
     }
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

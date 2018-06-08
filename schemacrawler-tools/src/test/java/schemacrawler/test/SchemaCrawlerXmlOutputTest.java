@@ -42,7 +42,7 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -110,13 +110,14 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = executable
-      .getSchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.minimum());
-    schemaCrawlerOptions
-      .setSchemaInclusionRule(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    schemaCrawlerOptions.setRoutineInclusionRule(new IncludeAll());
-    schemaCrawlerOptions.setRoutineColumnInclusionRule(new IncludeAll());
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(executable
+      .getSchemaCrawlerOptions());
+    schemaCrawlerOptionsBuilder
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeRoutines(new IncludeAll())
+      .includeRoutineColumns(new IncludeAll());
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setAlphabeticalSortForTables(true);

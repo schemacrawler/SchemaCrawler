@@ -99,7 +99,7 @@ public class PrimaryKeyWeakAssociationsTest
     try (final TestWriter out = new TestWriter("text");)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-      schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
       final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
         .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);

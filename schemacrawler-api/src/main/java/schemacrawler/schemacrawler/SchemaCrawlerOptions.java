@@ -367,36 +367,12 @@ public final class SchemaCrawlerOptions
   }
 
   /**
-   * Sets the routine column inclusion rule.
-   *
-   * @param routineColumnInclusionRule
-   *        Routine column inclusion rule
-   */
-  public void setRoutineColumnInclusionRule(final InclusionRule routineColumnInclusionRule)
-  {
-    this.routineColumnInclusionRule = requireNonNull(routineColumnInclusionRule,
-                                                     "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets the routine inclusion rule.
-   *
-   * @param routineInclusionRule
-   *        Routine inclusion rule
-   */
-  public void setRoutineInclusionRule(final InclusionRule routineInclusionRule)
-  {
-    this.routineInclusionRule = requireNonNull(routineInclusionRule,
-                                               "Cannot use null value in a setter");
-  }
-
-  /**
    * Sets the schema inclusion rule.
    *
    * @param schemaInclusionRule
    *        Schema inclusion rule
    */
-  public void setSchemaInclusionRule(final InclusionRule schemaInclusionRule)
+  public void includeSchemas(final InclusionRule schemaInclusionRule)
   {
     this.schemaInclusionRule = requireNonNull(schemaInclusionRule,
                                               "Cannot use null value in a setter");
@@ -409,34 +385,10 @@ public final class SchemaCrawlerOptions
    * @param schemaInfoLevel
    *        Schema information level.
    */
-  public void setSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
+  public void withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
   {
     this.schemaInfoLevel = requireNonNull(schemaInfoLevel,
                                           "No schema information level provided");
-  }
-
-  /**
-   * Sets the sequence inclusion rule.
-   *
-   * @param sequenceInclusionRule
-   *        Sequence inclusion rule
-   */
-  public void setSequenceInclusionRule(final InclusionRule sequenceInclusionRule)
-  {
-    this.sequenceInclusionRule = requireNonNull(sequenceInclusionRule,
-                                                "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets the synonym inclusion rule.
-   *
-   * @param synonymInclusionRule
-   *        Synonym inclusion rule
-   */
-  public void setSynonymInclusionRule(final InclusionRule synonymInclusionRule)
-  {
-    this.synonymInclusionRule = requireNonNull(synonymInclusionRule,
-                                               "Cannot use null value in a setter");
   }
 
   /**
@@ -445,7 +397,7 @@ public final class SchemaCrawlerOptions
    * @param tableInclusionRule
    *        Table inclusion rule
    */
-  public void setTableInclusionRule(final InclusionRule tableInclusionRule)
+  public void includeTables(final InclusionRule tableInclusionRule)
   {
     this.tableInclusionRule = requireNonNull(tableInclusionRule,
                                              "Cannot use null value in a setter");

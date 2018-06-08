@@ -60,7 +60,7 @@ public class SchemaCrawlerReferenceTest
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.setSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(schemaCrawlerOptions);

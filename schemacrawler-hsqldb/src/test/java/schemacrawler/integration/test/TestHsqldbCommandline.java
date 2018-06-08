@@ -125,7 +125,7 @@ public class TestHsqldbCommandline
 
     final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
     schemaCrawlerOptions
-      .setSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
+      .withSchemaInfoLevel(InfoLevel.maximum.buildSchemaInfoLevel());
     requireNonNull(schemaRetrievalOptions,
                    "No database specific override options provided");
 
