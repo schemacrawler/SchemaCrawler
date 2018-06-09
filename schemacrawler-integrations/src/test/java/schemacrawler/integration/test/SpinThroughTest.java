@@ -125,9 +125,9 @@ public class SpinThroughTest
 
           final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
             .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
-            .includeSequences(new IncludeAll())
-            .includeSynonyms(new IncludeAll())
-            .includeRoutines(new IncludeAll());
+            .includeAllSequences()
+            .includeAllSynonyms()
+            .includeAllRoutines();
           final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
             .toOptions();
 

@@ -151,7 +151,7 @@ public class SchemaCrawlerTextCommandsOutputTest
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeRoutines(new IncludeAll());
+        .includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 

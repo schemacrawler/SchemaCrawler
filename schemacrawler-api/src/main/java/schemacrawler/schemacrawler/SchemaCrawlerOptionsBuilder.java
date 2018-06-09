@@ -76,15 +76,15 @@ public final class SchemaCrawlerOptionsBuilder
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
+  public static SchemaCrawlerOptions newSchemaCrawlerOptions()
+  {
+    return new SchemaCrawlerOptionsBuilder().toOptions();
+  }
+
   public static SchemaCrawlerOptions withMaximumSchemaInfoLevel()
   {
     return new SchemaCrawlerOptionsBuilder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum()).toOptions();
-  }
-
-  public static SchemaCrawlerOptions newSchemaCrawlerOptions()
-  {
-    return new SchemaCrawlerOptionsBuilder().toOptions();
   }
 
   private static Collection<RoutineType> allRoutineTypes()
@@ -266,6 +266,24 @@ public final class SchemaCrawlerOptionsBuilder
   public SchemaCrawlerOptionsBuilder hideEmptyTables()
   {
     hideEmptyTables = true;
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeAllRoutines()
+  {
+    includeRoutines(new IncludeAll());
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeAllSequences()
+  {
+    includeSequences(new IncludeAll());
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeAllSynonyms()
+  {
+    includeSynonyms(new IncludeAll());
     return this;
   }
 

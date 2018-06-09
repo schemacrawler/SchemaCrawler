@@ -114,7 +114,7 @@ public class SpringIntegrationTest
                                                              "data");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(executable
-      .getSchemaCrawlerOptions()).includeRoutines(new IncludeAll());
+      .getSchemaCrawlerOptions()).includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     // Force output to test output file

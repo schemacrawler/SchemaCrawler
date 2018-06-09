@@ -43,33 +43,33 @@ public final class SchemaCrawlerOptions
   implements Options
 {
 
-  private SchemaInfoLevel schemaInfoLevel;
+  private final SchemaInfoLevel schemaInfoLevel;
 
   private final String title;
 
-  private InclusionRule schemaInclusionRule;
-  private InclusionRule synonymInclusionRule;
-  private InclusionRule sequenceInclusionRule;
+  private final InclusionRule schemaInclusionRule;
+  private final InclusionRule synonymInclusionRule;
+  private final InclusionRule sequenceInclusionRule;
 
   private final Collection<String> tableTypes;
-  private String tableNamePattern;
-  private InclusionRule tableInclusionRule;
+  private final String tableNamePattern;
+  private final InclusionRule tableInclusionRule;
   private final InclusionRule columnInclusionRule;
 
   private final Collection<RoutineType> routineTypes;
-  private InclusionRule routineInclusionRule;
-  private InclusionRule routineColumnInclusionRule;
+  private final InclusionRule routineInclusionRule;
+  private final InclusionRule routineColumnInclusionRule;
 
-  private InclusionRule grepColumnInclusionRule;
-  private InclusionRule grepRoutineColumnInclusionRule;
-  private InclusionRule grepDefinitionInclusionRule;
-  private boolean grepInvertMatch;
-  private boolean grepOnlyMatching;
+  private final InclusionRule grepColumnInclusionRule;
+  private final InclusionRule grepRoutineColumnInclusionRule;
+  private final InclusionRule grepDefinitionInclusionRule;
+  private final boolean grepInvertMatch;
+  private final boolean grepOnlyMatching;
 
-  private boolean hideEmptyTables;
+  private final boolean hideEmptyTables;
 
-  private int childTableFilterDepth;
-  private int parentTableFilterDepth;
+  private final int childTableFilterDepth;
+  private final int parentTableFilterDepth;
 
   SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
                        final String title,
