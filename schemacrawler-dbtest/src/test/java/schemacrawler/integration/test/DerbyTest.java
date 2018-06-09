@@ -36,6 +36,7 @@ import org.junit.Test;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -59,9 +60,11 @@ public class DerbyTest
   public void testDerbyWithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    options.includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
@@ -69,7 +72,7 @@ public class DerbyTest
     textOptions.setShowJdbcDriverInfo(true);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
-    executable.setSchemaCrawlerOptions(options);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
         .toConfig());

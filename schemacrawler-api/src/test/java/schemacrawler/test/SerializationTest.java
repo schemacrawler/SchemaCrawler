@@ -39,7 +39,7 @@ import org.junit.Test;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 
 public class SerializationTest
@@ -50,8 +50,8 @@ public class SerializationTest
   public void catalogSerialization()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .withMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

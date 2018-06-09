@@ -47,7 +47,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
@@ -82,8 +82,8 @@ public class LoadSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .withMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

@@ -48,7 +48,7 @@ import schemacrawler.schema.RoutineType;
  *
  * @author Sualeh Fatehi
  */
-public class SchemaCrawlerOptionsBuilder
+public final class SchemaCrawlerOptionsBuilder
   implements OptionsBuilder<SchemaCrawlerOptions>
 {
 
@@ -76,6 +76,17 @@ public class SchemaCrawlerOptionsBuilder
   private static final String SC_GREP_DEFINITION_PATTERN_EXCLUDE = "schemacrawler.grep.definition.pattern.exclude";
   private static final String SC_GREP_DEFINITION_PATTERN_INCLUDE = "schemacrawler.grep.definition.pattern.include";
 
+  public static SchemaCrawlerOptions withMaximumSchemaInfoLevel()
+  {
+    return new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum()).toOptions();
+  }
+
+  public static SchemaCrawlerOptions newSchemaCrawlerOptions()
+  {
+    return new SchemaCrawlerOptionsBuilder().toOptions();
+  }
+
   private static Collection<RoutineType> allRoutineTypes()
   {
     return EnumSet.of(RoutineType.procedure, RoutineType.function);
@@ -88,29 +99,30 @@ public class SchemaCrawlerOptionsBuilder
 
   private SchemaInfoLevel schemaInfoLevel;
   private String title;
-  private InclusionRule schemaInclusionRule;
 
+  private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
   private InclusionRule sequenceInclusionRule;
   private Optional<Collection<String>> tableTypes;
-  private String tableNamePattern;
 
+  private String tableNamePattern;
   private InclusionRule tableInclusionRule;
   private InclusionRule columnInclusionRule;
+
   private Optional<Collection<RoutineType>> routineTypes;
-
   private InclusionRule routineInclusionRule;
-  private InclusionRule routineColumnInclusionRule;
 
+  private InclusionRule routineColumnInclusionRule;
   private Optional<InclusionRule> grepColumnInclusionRule;
   private Optional<InclusionRule> grepRoutineColumnInclusionRule;
   private Optional<InclusionRule> grepDefinitionInclusionRule;
   private boolean grepInvertMatch;
+
   private boolean grepOnlyMatching;
 
   private boolean hideEmptyTables;
-
   private int childTableFilterDepth;
+
   private int parentTableFilterDepth;
 
   /**
@@ -432,7 +444,7 @@ public class SchemaCrawlerOptionsBuilder
     }
     else
     {
-      this.routineTypes = Optional.empty();
+      routineTypes = Optional.empty();
     }
     return this;
   }
@@ -494,7 +506,7 @@ public class SchemaCrawlerOptionsBuilder
     }
     else
     {
-      this.tableTypes = Optional.empty();
+      tableTypes = Optional.empty();
     }
 
     return this;

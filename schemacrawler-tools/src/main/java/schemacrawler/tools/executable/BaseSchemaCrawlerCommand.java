@@ -37,6 +37,7 @@ import java.sql.Connection;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.utility.Identifiers;
@@ -68,7 +69,8 @@ public abstract class BaseSchemaCrawlerCommand
     }
     this.command = command;
 
-    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
@@ -196,7 +198,8 @@ public abstract class BaseSchemaCrawlerCommand
     }
     else
     {
-      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .newSchemaCrawlerOptions();
     }
   }
 

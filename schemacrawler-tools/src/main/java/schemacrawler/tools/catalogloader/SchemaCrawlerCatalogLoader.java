@@ -9,6 +9,7 @@ import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 
@@ -63,7 +64,7 @@ public class SchemaCrawlerCatalogLoader
   {
     if (schemaCrawlerOptions == null)
     {
-      return new SchemaCrawlerOptions();
+      return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     }
     else
     {

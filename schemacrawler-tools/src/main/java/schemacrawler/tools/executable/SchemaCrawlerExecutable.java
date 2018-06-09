@@ -49,6 +49,7 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
@@ -91,7 +92,8 @@ public final class SchemaCrawlerExecutable
     }
     this.command = command;
 
-    schemaCrawlerOptions = new SchemaCrawlerOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
@@ -204,7 +206,8 @@ public final class SchemaCrawlerExecutable
   {
     if (schemaCrawlerOptions == null)
     {
-      this.schemaCrawlerOptions = new SchemaCrawlerOptions();
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .newSchemaCrawlerOptions();
     }
     else
     {

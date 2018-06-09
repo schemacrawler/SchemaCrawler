@@ -38,6 +38,7 @@ import schemacrawler.schema.Routine;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -51,10 +52,11 @@ public class TestSqlServerCatalog
     final Connection connection = dataSource.getConnection("schemacrawler",
                                                            "schemacrawler");
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptions();
-    schemaCrawlerOptions
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("SCHEMACRAWLER.dbo"));
-    schemaCrawlerOptions.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(connection, schemaCrawlerOptions);

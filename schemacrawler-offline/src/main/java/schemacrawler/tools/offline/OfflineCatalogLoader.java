@@ -11,6 +11,7 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
@@ -84,7 +85,7 @@ public final class OfflineCatalogLoader
   @Override
   public SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
-    return new SchemaCrawlerOptions();
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
   }
 
   @Override

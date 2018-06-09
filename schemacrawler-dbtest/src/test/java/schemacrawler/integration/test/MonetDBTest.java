@@ -28,33 +28,34 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
+import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+
 public class MonetDBTest
-    extends BaseAdditionalDatabaseTest
+  extends BaseAdditionalDatabaseTest
 {
 
   private boolean isDatabaseRunning;
 
   @After
   public void stopDatabaseServer()
-      throws MonetDBEmbeddedException
+    throws MonetDBEmbeddedException
   {
     if (isDatabaseRunning)
     {
@@ -64,7 +65,7 @@ public class MonetDBTest
 
   @Before
   public void createDatabase()
-      throws SchemaCrawlerException, SQLException, IOException
+    throws SchemaCrawlerException, SQLException, IOException
   {
     try
     {
@@ -76,8 +77,7 @@ public class MonetDBTest
         MonetDBEmbeddedDatabase.stopDatabase();
       }
 
-      createDatabase("jdbc:monetdb:embedded::memory:",
-                     "/monetdb.scripts.txt");
+      createDatabase("jdbc:monetdb:embedded::memory:", "/monetdb.scripts.txt");
 
       isDatabaseRunning = true;
     }
@@ -90,7 +90,7 @@ public class MonetDBTest
 
   @Test
   public void testMonetDBWithConnection()
-      throws Exception
+    throws Exception
   {
     if (!isDatabaseRunning)
     {
@@ -98,9 +98,8 @@ public class MonetDBTest
       return;
     }
 
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    options.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-    // options.setSchemaInclusionRule(new RegularExpressionInclusionRule("BOOKS"));
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
+      .withMaximumSchemaInfoLevel();
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();
     textOptions.setHideIndexNames(true);
@@ -110,8 +109,8 @@ public class MonetDBTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
     executable
-        .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-                                        .toConfig());
+      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
+        .toConfig());
 
     executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
   }

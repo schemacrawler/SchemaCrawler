@@ -28,9 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -45,16 +42,6 @@ import sf.util.ObjectToString;
 public final class SchemaCrawlerOptions
   implements Options
 {
-
-  private static Collection<RoutineType> allRoutineTypes()
-  {
-    return Arrays.asList(RoutineType.procedure, RoutineType.function);
-  }
-
-  private static Collection<String> defaultTableTypes()
-  {
-    return Arrays.asList("BASE TABLE", "TABLE", "VIEW");
-  }
 
   private SchemaInfoLevel schemaInfoLevel;
 
@@ -83,33 +70,6 @@ public final class SchemaCrawlerOptions
 
   private int childTableFilterDepth;
   private int parentTableFilterDepth;
-
-  /**
-   * Default options.
-   */
-  public SchemaCrawlerOptions()
-  {
-    schemaInfoLevel = SchemaInfoLevelBuilder.standard();
-
-    title = "";
-
-    // All schemas are included by default
-    schemaInclusionRule = new IncludeAll();
-
-    synonymInclusionRule = new ExcludeAll();
-    sequenceInclusionRule = new ExcludeAll();
-
-    // Note: Of the database objects, only tables are included by
-    // default
-    tableTypes = defaultTableTypes();
-    tableInclusionRule = new IncludeAll();
-    columnInclusionRule = new IncludeAll();
-
-    routineTypes = allRoutineTypes();
-    routineInclusionRule = new ExcludeAll();
-    routineColumnInclusionRule = new ExcludeAll();
-
-  }
 
   SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
                        final String title,
@@ -364,43 +324,6 @@ public final class SchemaCrawlerOptions
   public boolean isHideEmptyTables()
   {
     return hideEmptyTables;
-  }
-
-  /**
-   * Sets the schema inclusion rule.
-   *
-   * @param schemaInclusionRule
-   *        Schema inclusion rule
-   */
-  public void includeSchemas(final InclusionRule schemaInclusionRule)
-  {
-    this.schemaInclusionRule = requireNonNull(schemaInclusionRule,
-                                              "Cannot use null value in a setter");
-  }
-
-  /**
-   * Sets the schema information level, identifying to what level the
-   * schema should be crawled.
-   *
-   * @param schemaInfoLevel
-   *        Schema information level.
-   */
-  public void withSchemaInfoLevel(final SchemaInfoLevel schemaInfoLevel)
-  {
-    this.schemaInfoLevel = requireNonNull(schemaInfoLevel,
-                                          "No schema information level provided");
-  }
-
-  /**
-   * Sets the table inclusion rule.
-   *
-   * @param tableInclusionRule
-   *        Table inclusion rule
-   */
-  public void includeTables(final InclusionRule tableInclusionRule)
-  {
-    this.tableInclusionRule = requireNonNull(tableInclusionRule,
-                                             "Cannot use null value in a setter");
   }
 
   /**
