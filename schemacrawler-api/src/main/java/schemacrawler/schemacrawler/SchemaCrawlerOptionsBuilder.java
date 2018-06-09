@@ -176,12 +176,11 @@ public final class SchemaCrawlerOptionsBuilder
     routineInclusionRule = options.getRoutineInclusionRule();
     routineColumnInclusionRule = options.getRoutineColumnInclusionRule();
 
-    grepColumnInclusionRule = Optional
-      .ofNullable(options.getGrepColumnInclusionRule());
+    grepColumnInclusionRule = options.getGrepColumnInclusionRule();
     grepRoutineColumnInclusionRule = Optional
-      .ofNullable(options.getGrepRoutineColumnInclusionRule());
+      .ofNullable(options.getGrepRoutineColumnInclusionRule()).orElse(null);
     grepDefinitionInclusionRule = Optional
-      .ofNullable(options.getGrepDefinitionInclusionRule());
+      .ofNullable(options.getGrepDefinitionInclusionRule()).orElse(null);
     grepInvertMatch = options.isGrepInvertMatch();
     grepOnlyMatching = options.isGrepOnlyMatching();
 

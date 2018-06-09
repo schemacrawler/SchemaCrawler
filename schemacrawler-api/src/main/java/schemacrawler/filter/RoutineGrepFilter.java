@@ -53,8 +53,10 @@ class RoutineGrepFilter
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepRoutineColumnInclusionRule();
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule();
+    grepColumnInclusionRule = options.getGrepRoutineColumnInclusionRule()
+      .orElse(null);
+    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
+      .orElse(null);
   }
 
   /**
