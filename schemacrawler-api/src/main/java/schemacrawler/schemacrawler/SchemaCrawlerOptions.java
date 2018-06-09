@@ -30,6 +30,7 @@ package schemacrawler.schemacrawler;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 
 import schemacrawler.schema.RoutineType;
 import sf.util.ObjectToString;
@@ -134,9 +135,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Column inclusion rule for grep.
    */
-  public InclusionRule getGrepColumnInclusionRule()
+  public Optional<InclusionRule> getGrepColumnInclusionRule()
   {
-    return grepColumnInclusionRule;
+    return Optional.ofNullable(grepColumnInclusionRule);
   }
 
   /**
@@ -144,9 +145,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Definitions inclusion rule for grep.
    */
-  public InclusionRule getGrepDefinitionInclusionRule()
+  public Optional<InclusionRule> getGrepDefinitionInclusionRule()
   {
-    return grepDefinitionInclusionRule;
+    return Optional.ofNullable(grepDefinitionInclusionRule);
   }
 
   /**
@@ -154,9 +155,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Routine column rule for grep.
    */
-  public InclusionRule getGrepRoutineColumnInclusionRule()
+  public Optional<InclusionRule> getGrepRoutineColumnInclusionRule()
   {
-    return grepRoutineColumnInclusionRule;
+    return Optional.ofNullable(grepRoutineColumnInclusionRule);
   }
 
   public int getParentTableFilterDepth()

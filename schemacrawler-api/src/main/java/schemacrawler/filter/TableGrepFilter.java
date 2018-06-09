@@ -54,8 +54,9 @@ class TableGrepFilter
   {
     invertMatch = options.isGrepInvertMatch();
 
-    grepColumnInclusionRule = options.getGrepColumnInclusionRule();
-    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule();
+    grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
+    grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
+      .orElse(null);
   }
 
   /**
