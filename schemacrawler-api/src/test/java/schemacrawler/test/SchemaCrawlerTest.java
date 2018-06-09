@@ -64,7 +64,6 @@ import schemacrawler.schema.TableRelationshipType;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -97,8 +96,7 @@ public class SchemaCrawlerTest
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-        .includeRoutines(new IncludeAll())
-        .includeRoutineColumns(new IncludeAll());
+        .includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
@@ -334,7 +332,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeRoutines(new IncludeAll());
+      .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -358,7 +356,7 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
-      .includeRoutines(new IncludeAll());
+      .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -402,7 +400,7 @@ public class SchemaCrawlerTest
       minimum.setRetrieveSequenceInformation(true);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(minimum).includeSequences(new IncludeAll());
+        .withSchemaInfoLevel(minimum).includeAllSequences();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
@@ -442,7 +440,7 @@ public class SchemaCrawlerTest
       minimum.setRetrieveSynonymInformation(true);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(minimum).includeSynonyms(new IncludeAll());
+        .withSchemaInfoLevel(minimum).includeAllSynonyms();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 

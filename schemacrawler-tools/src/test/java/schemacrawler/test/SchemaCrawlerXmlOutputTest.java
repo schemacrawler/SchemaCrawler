@@ -39,7 +39,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -115,8 +114,7 @@ public class SchemaCrawlerXmlOutputTest
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeRoutines(new IncludeAll())
-      .includeRoutineColumns(new IncludeAll());
+      .includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     final SchemaTextOptions textOptions = new SchemaTextOptions();

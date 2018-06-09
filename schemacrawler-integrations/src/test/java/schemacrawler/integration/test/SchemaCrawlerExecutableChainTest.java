@@ -43,7 +43,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -68,8 +67,7 @@ public class SchemaCrawlerExecutableChainTest
       .createTempFilePath(executable.getCommand(), "data");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .includeRoutines(new IncludeAll())
-      .includeRoutineColumns(new IncludeAll());
+      .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
