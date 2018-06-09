@@ -44,7 +44,7 @@
 
   <target name="download-ivy" unless="available.ivy.jar">
     <get
-      src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.1/ivy-2.4.0.jar"
+      src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/2.4.0/ivy-2.4.0.jar"
       dest="ivy-2.4.0.jar" usetimestamp="true" />
   </target>
 
