@@ -69,7 +69,7 @@ public class WeakAssociationsTest
     {
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();

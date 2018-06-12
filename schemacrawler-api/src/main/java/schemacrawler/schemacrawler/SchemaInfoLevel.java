@@ -38,35 +38,94 @@ public final class SchemaInfoLevel
   implements Options
 {
 
-  private String tag;
+  private final String tag;
 
-  private boolean retrieveTables;
-  private boolean retrieveRoutines;
-  private boolean retrieveColumnDataTypes;
-  private boolean retrieveDatabaseInfo;
-  private boolean retrieveAdditionalDatabaseInfo;
-  private boolean retrieveAdditionalJdbcDriverInfo;
-  private boolean retrieveUserDefinedColumnDataTypes;
-  private boolean retrieveRoutineColumns;
-  private boolean retrieveRoutineInformation;
-  private boolean retrieveTableConstraintInformation;
-  private boolean retrieveTableConstraintDefinitions;
-  private boolean retrieveViewInformation;
-  private boolean retrieveIndexInformation;
-  private boolean retrieveIndexColumnInformation;
-  private boolean retrievePrimaryKeyDefinitions;
-  private boolean retrieveForeignKeys;
-  private boolean retrieveForeignKeyDefinitions;
-  private boolean retrieveIndexes;
-  private boolean retrieveTablePrivileges;
-  private boolean retrieveTableColumnPrivileges;
-  private boolean retrieveTriggerInformation;
-  private boolean retrieveSynonymInformation;
-  private boolean retrieveSequenceInformation;
-  private boolean retrieveTableColumns;
-  private boolean retrieveAdditionalTableAttributes;
-  private boolean retrieveAdditionalColumnAttributes;
-  private boolean retrieveTableDefinitionsInformation;
+  private final boolean retrieveTables;
+  private final boolean retrieveRoutines;
+  private final boolean retrieveColumnDataTypes;
+  private final boolean retrieveDatabaseInfo;
+  private final boolean retrieveAdditionalDatabaseInfo;
+  private final boolean retrieveAdditionalJdbcDriverInfo;
+  private final boolean retrieveUserDefinedColumnDataTypes;
+  private final boolean retrieveRoutineColumns;
+  private final boolean retrieveRoutineInformation;
+  private final boolean retrieveTableConstraintInformation;
+  private final boolean retrieveTableConstraintDefinitions;
+  private final boolean retrieveViewInformation;
+  private final boolean retrieveIndexInformation;
+  private final boolean retrieveIndexColumnInformation;
+  private final boolean retrievePrimaryKeyDefinitions;
+  private final boolean retrieveForeignKeys;
+  private final boolean retrieveForeignKeyDefinitions;
+  private final boolean retrieveIndexes;
+  private final boolean retrieveTablePrivileges;
+  private final boolean retrieveTableColumnPrivileges;
+  private final boolean retrieveTriggerInformation;
+  private final boolean retrieveSynonymInformation;
+  private final boolean retrieveSequenceInformation;
+  private final boolean retrieveTableColumns;
+  private final boolean retrieveAdditionalTableAttributes;
+  private final boolean retrieveAdditionalColumnAttributes;
+  private final boolean retrieveTableDefinitionsInformation;
+
+  SchemaInfoLevel(final String tag,
+                  final boolean retrieveTables,
+                  final boolean retrieveRoutines,
+                  final boolean retrieveColumnDataTypes,
+                  final boolean retrieveDatabaseInfo,
+                  final boolean retrieveAdditionalDatabaseInfo,
+                  final boolean retrieveAdditionalJdbcDriverInfo,
+                  final boolean retrieveUserDefinedColumnDataTypes,
+                  final boolean retrieveRoutineColumns,
+                  final boolean retrieveRoutineInformation,
+                  final boolean retrieveTableConstraintInformation,
+                  final boolean retrieveTableConstraintDefinitions,
+                  final boolean retrieveViewInformation,
+                  final boolean retrieveIndexInformation,
+                  final boolean retrieveIndexColumnInformation,
+                  final boolean retrievePrimaryKeyDefinitions,
+                  final boolean retrieveForeignKeys,
+                  final boolean retrieveForeignKeyDefinitions,
+                  final boolean retrieveIndexes,
+                  final boolean retrieveTablePrivileges,
+                  final boolean retrieveTableColumnPrivileges,
+                  final boolean retrieveTriggerInformation,
+                  final boolean retrieveSynonymInformation,
+                  final boolean retrieveSequenceInformation,
+                  final boolean retrieveTableColumns,
+                  final boolean retrieveAdditionalTableAttributes,
+                  final boolean retrieveAdditionalColumnAttributes,
+                  final boolean retrieveTableDefinitionsInformation)
+  {
+    this.tag = tag;
+    this.retrieveTables = retrieveTables;
+    this.retrieveRoutines = retrieveRoutines;
+    this.retrieveColumnDataTypes = retrieveColumnDataTypes;
+    this.retrieveDatabaseInfo = retrieveDatabaseInfo;
+    this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
+    this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
+    this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
+    this.retrieveRoutineColumns = retrieveRoutineColumns;
+    this.retrieveRoutineInformation = retrieveRoutineInformation;
+    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
+    this.retrieveTableConstraintDefinitions = retrieveTableConstraintDefinitions;
+    this.retrieveViewInformation = retrieveViewInformation;
+    this.retrieveIndexInformation = retrieveIndexInformation;
+    this.retrieveIndexColumnInformation = retrieveIndexColumnInformation;
+    this.retrievePrimaryKeyDefinitions = retrievePrimaryKeyDefinitions;
+    this.retrieveForeignKeys = retrieveForeignKeys;
+    this.retrieveForeignKeyDefinitions = retrieveForeignKeyDefinitions;
+    this.retrieveIndexes = retrieveIndexes;
+    this.retrieveTablePrivileges = retrieveTablePrivileges;
+    this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
+    this.retrieveTriggerInformation = retrieveTriggerInformation;
+    this.retrieveSynonymInformation = retrieveSynonymInformation;
+    this.retrieveSequenceInformation = retrieveSequenceInformation;
+    this.retrieveTableColumns = retrieveTableColumns;
+    this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
+    this.retrieveAdditionalColumnAttributes = retrieveAdditionalColumnAttributes;
+    this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
+  }
 
   public String getTag()
   {
@@ -206,146 +265,6 @@ public final class SchemaInfoLevel
   public boolean isRetrieveViewInformation()
   {
     return retrieveViewInformation;
-  }
-
-  public void setRetrieveAdditionalColumnAttributes(final boolean retrieveAdditionalColumnAttributes)
-  {
-    this.retrieveAdditionalColumnAttributes = retrieveAdditionalColumnAttributes;
-  }
-
-  public void setRetrieveAdditionalDatabaseInfo(final boolean retrieveAdditionalDatabaseInfo)
-  {
-    this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
-  }
-
-  public void setRetrieveAdditionalJdbcDriverInfo(final boolean retrieveAdditionalJdbcDriverInfo)
-  {
-    this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
-  }
-
-  public void setRetrieveAdditionalTableAttributes(final boolean retrieveAdditionalTableAttributes)
-  {
-    this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
-  }
-
-  public void setRetrieveColumnDataTypes(final boolean retrieveColumnDataTypes)
-  {
-    this.retrieveColumnDataTypes = retrieveColumnDataTypes;
-  }
-
-  public void setRetrieveDatabaseInfo(final boolean retrieveDatabaseInfo)
-  {
-    this.retrieveDatabaseInfo = retrieveDatabaseInfo;
-  }
-
-  public void setRetrieveForeignKeyDefinitions(final boolean retrieveForeignKeyDefinitions)
-  {
-    this.retrieveForeignKeyDefinitions = retrieveForeignKeyDefinitions;
-  }
-
-  public void setRetrieveForeignKeys(final boolean retrieveForeignKeys)
-  {
-    this.retrieveForeignKeys = retrieveForeignKeys;
-  }
-
-  public void setRetrieveIndexColumnInformation(final boolean retrieveIndexColumnInformation)
-  {
-    this.retrieveIndexColumnInformation = retrieveIndexColumnInformation;
-  }
-
-  public void setRetrieveIndexes(final boolean retrieveIndexes)
-  {
-    this.retrieveIndexes = retrieveIndexes;
-  }
-
-  public void setRetrieveIndexInformation(final boolean retrieveIndexInformation)
-  {
-    this.retrieveIndexInformation = retrieveIndexInformation;
-  }
-
-  public void setRetrievePrimaryKeyDefinitions(final boolean retrievePrimaryKeyDefinitions)
-  {
-    this.retrievePrimaryKeyDefinitions = retrievePrimaryKeyDefinitions;
-  }
-
-  public void setRetrieveRoutineColumns(final boolean retrieveRoutineColumns)
-  {
-    this.retrieveRoutineColumns = retrieveRoutineColumns;
-  }
-
-  public void setRetrieveRoutineInformation(final boolean retrieveRoutineInformation)
-  {
-    this.retrieveRoutineInformation = retrieveRoutineInformation;
-  }
-
-  public void setRetrieveRoutines(final boolean retrieveRoutines)
-  {
-    this.retrieveRoutines = retrieveRoutines;
-  }
-
-  public void setRetrieveSequenceInformation(final boolean retrieveSequenceInformation)
-  {
-    this.retrieveSequenceInformation = retrieveSequenceInformation;
-  }
-
-  public void setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
-  {
-    this.retrieveSynonymInformation = retrieveSynonymInformation;
-  }
-
-  public void setRetrieveTableColumnPrivileges(final boolean retrieveTableColumnPrivileges)
-  {
-    this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
-  }
-
-  public void setRetrieveTableColumns(final boolean retrieveTableColumns)
-  {
-    this.retrieveTableColumns = retrieveTableColumns;
-  }
-
-  public void setRetrieveTableConstraintDefinitions(final boolean retrieveTableConstraintDefinitions)
-  {
-    this.retrieveTableConstraintDefinitions = retrieveTableConstraintDefinitions;
-  }
-
-  public void setRetrieveTableConstraintInformation(final boolean retrieveTableConstraintInformation)
-  {
-    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
-  }
-
-  public void setRetrieveTableDefinitionsInformation(final boolean retrieveTableDefinitionsInformation)
-  {
-    this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
-  }
-
-  public void setRetrieveTablePrivileges(final boolean retrieveTablePrivileges)
-  {
-    this.retrieveTablePrivileges = retrieveTablePrivileges;
-  }
-
-  public void setRetrieveTables(final boolean retrieveTables)
-  {
-    this.retrieveTables = retrieveTables;
-  }
-
-  public void setRetrieveTriggerInformation(final boolean retrieveTriggerInformation)
-  {
-    this.retrieveTriggerInformation = retrieveTriggerInformation;
-  }
-
-  public void setRetrieveUserDefinedColumnDataTypes(final boolean retrieveUserDefinedColumnDataTypes)
-  {
-    this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
-  }
-
-  public void setRetrieveViewInformation(final boolean retrieveViewInformation)
-  {
-    this.retrieveViewInformation = retrieveViewInformation;
-  }
-
-  public void setTag(final String tag)
-  {
-    this.tag = tag;
   }
 
   @Override
