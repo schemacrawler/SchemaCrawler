@@ -67,22 +67,21 @@ public enum InfoLevel
     switch (this)
     {
       case minimum:
-        schemaInfoLevel = SchemaInfoLevelBuilder.minimum();
+        schemaInfoLevel = SchemaInfoLevelBuilder.minimum().toOptions();
         break;
       case standard:
-        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+        schemaInfoLevel = SchemaInfoLevelBuilder.standard().toOptions();
         break;
       case detailed:
-        schemaInfoLevel = SchemaInfoLevelBuilder.detailed();
+        schemaInfoLevel = SchemaInfoLevelBuilder.detailed().toOptions();
         break;
       case maximum:
-        schemaInfoLevel = SchemaInfoLevelBuilder.maximum();
+        schemaInfoLevel = SchemaInfoLevelBuilder.maximum().toOptions();
         break;
       default:
-        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
+        schemaInfoLevel = SchemaInfoLevelBuilder.standard().toOptions();
         break;
     }
-    schemaInfoLevel.setTag(name());
     return schemaInfoLevel;
   }
 
