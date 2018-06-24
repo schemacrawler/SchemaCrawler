@@ -210,7 +210,7 @@ public final class Color
   {
     final int rgb = (r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF) << 0;
 
-    final String htmlColor = "#" + Integer.toHexString(rgb).toUpperCase();
+    final String htmlColor = "#" + String.format("%06x", rgb).toUpperCase();
     return htmlColor;
   }
 
