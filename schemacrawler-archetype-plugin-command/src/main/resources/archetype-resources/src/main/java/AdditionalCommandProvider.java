@@ -76,3 +76,5 @@ public class AdditionalCommandProvider
   {
     return AdditionalCommand.COMMAND.equals(command);
   }
+
+}
