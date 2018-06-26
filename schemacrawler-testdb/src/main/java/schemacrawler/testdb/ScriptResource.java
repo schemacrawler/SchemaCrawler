@@ -30,6 +30,7 @@ package schemacrawler.testdb;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -41,16 +42,7 @@ public final class ScriptResource
   private final String delimiter;
   private final boolean skip;
 
-  public ScriptResource(final String scriptName,
-                        final String delimiter,
-                        final boolean skip)
-  {
-    this.scriptName = scriptName;
-    this.delimiter = delimiter;
-    this.skip = skip;
-  }
-
-  ScriptResource(final String scriptResourceLine)
+  public ScriptResource(final String scriptResourceLine)
   {
     if (scriptResourceLine == null || scriptResourceLine.trim().isEmpty())
     {
@@ -88,7 +80,7 @@ public final class ScriptResource
     return scriptName;
   }
 
-  public Reader openReader()
+  public BufferedReader openReader()
     throws IOException
   {
     if (skip)
@@ -97,7 +89,7 @@ public final class ScriptResource
     }
     final Reader reader = new InputStreamReader(TestSchemaCreator.class
       .getResourceAsStream(scriptName), UTF_8);
-    return reader;
+    return new BufferedReader(reader);
   }
 
   public boolean skip()
