@@ -51,31 +51,45 @@ public class SqlScript
   private static final boolean debug = Boolean.valueOf(System
     .getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
 
-  private final String scriptName;
+  private final ScriptResource scriptResource;
   private final Connection connection;
   private final Reader reader;
-  private final String delimiter;
 
   public SqlScript(final String scriptName,
                    final Connection connection,
                    final Reader reader,
                    final String delimiter)
   {
-    this.scriptName = scriptName;
     this.connection = requireNonNull(connection,
                                      "No database connection provided");
     this.reader = requireNonNull(reader, "No reader provided");
-    this.delimiter = delimiter;
+    scriptResource = new ScriptResource(scriptName, delimiter, debug);
+  }
+
+  public SqlScript(final ScriptResource scriptResource,
+                   final Connection connection,
+                   final Reader reader)
+  {
+    this.connection = requireNonNull(connection,
+                                     "No database connection provided");
+    this.reader = requireNonNull(reader, "No reader provided");
+    this.scriptResource = requireNonNull(scriptResource,
+                                         "No script resource provided");
   }
 
   public String getScriptName()
   {
-    return scriptName;
+    return scriptResource.getScriptName();
   }
 
   @Override
   public void run()
   {
+    if (scriptResource.skip())
+    {
+      return;
+    }
+
     try
     {
       // NOTE: Do not close reader or connection, since we did not open
@@ -116,6 +130,7 @@ public class SqlScript
       final String trimmedLine = line.trim();
       final boolean isComment = trimmedLine.startsWith("--")
                                 || trimmedLine.startsWith("//");
+      final String delimiter = scriptResource.getDelimiter();
       if (!isComment && trimmedLine.endsWith(delimiter))
       {
         sql.append(line.substring(0, line.lastIndexOf(delimiter)));
