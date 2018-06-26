@@ -50,13 +50,6 @@ public class TestSchemaCreator
   implements Runnable
 {
 
-  enum ProcessCode
-  {
-   process,
-   skip,
-   delimit;
-  }
-
   private static final Logger LOGGER = Logger
     .getLogger(TestSchemaCreator.class.getName());
 
@@ -80,7 +73,6 @@ public class TestSchemaCreator
   }
 
   private final Connection connection;
-
   private final String scriptsResource;
 
   public TestSchemaCreator(final Connection connection,
@@ -99,54 +91,21 @@ public class TestSchemaCreator
     final Set<String> scriptResources = getBooksSchemaFiles();
 
     String scriptResourceLine = null;
-    String scriptResource = null;
-    ProcessCode processCode = null;
+    ScriptResource scriptResource = null;
     try (
         final BufferedReader scriptsReader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
           .getResourceAsStream(scriptsResource), UTF_8));)
     {
       while ((scriptResourceLine = scriptsReader.readLine()) != null)
       {
-        if (scriptResourceLine.trim().isEmpty())
+        scriptResource = new ScriptResource(scriptResourceLine);
+        scriptResources.remove(scriptResource.getScriptName());
+
+        if (scriptResource.skip())
         {
           continue;
         }
-
-        if (scriptResourceLine.startsWith("#"))
-        {
-          processCode = ProcessCode.skip;
-          scriptResource = scriptResourceLine.substring(1);
-        }
-        else if (scriptResourceLine.startsWith("~"))
-        {
-          processCode = ProcessCode.delimit;
-          scriptResource = scriptResourceLine.substring(1);
-        }
-        else
-        {
-          processCode = ProcessCode.process;
-          scriptResource = scriptResourceLine;
-        }
-
-        scriptResources.remove(scriptResource);
-
-        final String delimiter;
-        switch (processCode)
-        {
-          case process:
-            delimiter = ";";
-            break;
-
-          case delimit:
-            delimiter = "@";
-            break;
-          case skip:
-          default:
-            continue;
-        }
-
-        try (final Reader reader = new InputStreamReader(TestSchemaCreator.class
-          .getResourceAsStream(scriptResource), UTF_8);)
+        try (final Reader reader = scriptResource.openReader();)
         {
           if (debug)
           {
@@ -154,8 +113,7 @@ public class TestSchemaCreator
           }
           final SqlScript sqlScript = new SqlScript(scriptResource,
                                                     connection,
-                                                    reader,
-                                                    delimiter);
+                                                    reader);
           sqlScript.run();
         }
 
