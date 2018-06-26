@@ -30,9 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static schemacrawler.test.utility.TestUtility.readerForResource;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.Arrays;
@@ -70,7 +68,7 @@ public class TempTablesTest
                                           null,
                                           "/sqlite.scripts.txt" });
     final Connection connection = executeSqlInTestDatabase(sqliteDbFile,
-                                                           "db/books/05_temp_tables_01_B.sql");
+                                                           "/db/books/05_temp_tables_01_B.sql");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
@@ -99,11 +97,7 @@ public class TempTablesTest
     final Connection connection = dataSource.getConnection();
     connection.setAutoCommit(false);
 
-    final SqlScript sqlScript = new SqlScript(databaseSqlResource,
-                                              connection,
-                                              readerForResource(databaseSqlResource,
-                                                                StandardCharsets.UTF_8),
-                                              ";");
+    final SqlScript sqlScript = new SqlScript(databaseSqlResource, connection);
     sqlScript.run();
 
     return connection;

@@ -54,15 +54,17 @@ public class AdditionalCasesTest
   public void advancedUsage()
     throws Exception
   {
-    run(testName.currentMethodFullName(), "advanced_usage.sql", "details");
+    run(testName.currentMethodFullName(), "/advanced_usage.sql", "details");
   }
 
   @Test
   public void quotedCreateScript()
     throws Exception
   {
-    run(testName.currentMethodFullName(), "identifiers_unquoted.sql", "schema");
-    run(testName.currentMethodFullName(), "identifiers_quoted.sql", "schema");
+    run(testName.currentMethodFullName(),
+        "/identifiers_unquoted.sql",
+        "schema");
+    run(testName.currentMethodFullName(), "/identifiers_quoted.sql", "schema");
   }
 
   private void run(final String currentMethodFullName,

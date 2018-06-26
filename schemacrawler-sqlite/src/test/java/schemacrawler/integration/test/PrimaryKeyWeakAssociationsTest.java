@@ -69,21 +69,21 @@ public class PrimaryKeyWeakAssociationsTest
   public void weakAssociations1()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "pk_test_1.sql");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_1.sql");
   }
 
   @Test
   public void weakAssociations2()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "pk_test_2.sql");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_2.sql");
   }
 
   @Test
   public void weakAssociations3()
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "pk_test_3.sql");
+    weakAssociations(testName.currentMethodFullName(), "/pk_test_3.sql");
   }
 
   private void weakAssociations(final String currentMethodFullName,

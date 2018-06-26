@@ -28,11 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static schemacrawler.test.utility.TestUtility.readerForResource;
 import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
@@ -97,10 +95,7 @@ public abstract class BaseSqliteTest
       connection.setAutoCommit(false);
 
       final SqlScript sqlScript = new SqlScript(databaseSqlResource,
-                                                connection,
-                                                readerForResource(databaseSqlResource,
-                                                                  StandardCharsets.UTF_8),
-                                                ";");
+                                                connection);
       sqlScript.run();
     }
 

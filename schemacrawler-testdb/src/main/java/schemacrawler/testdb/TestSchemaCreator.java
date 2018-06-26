@@ -33,28 +33,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TestSchemaCreator
   implements Runnable
 {
-
-  private static final Logger LOGGER = Logger
-    .getLogger(TestSchemaCreator.class.getName());
-
-  private static final boolean debug = Boolean.valueOf(System
-    .getProperty("schemacrawler.testdb.TestSchemaCreator.debug", "false"));
 
   public static void main(final String[] args)
     throws Exception
@@ -87,100 +72,20 @@ public class TestSchemaCreator
   @Override
   public void run()
   {
-
-    final Set<String> scriptResources = getBooksSchemaFiles();
-
-    String scriptResourceLine = null;
-    ScriptResource scriptResource = null;
     try (
         final BufferedReader scriptsReader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
           .getResourceAsStream(scriptsResource), UTF_8));)
     {
-      while ((scriptResourceLine = scriptsReader.readLine()) != null)
-      {
-        scriptResource = new ScriptResource(scriptResourceLine);
-        scriptResources.remove(scriptResource.getScriptName());
-
-        if (scriptResource.skip())
-        {
-          continue;
-        }
-        try (final Reader reader = scriptResource.openReader();)
-        {
-          if (debug)
-          {
-            LOGGER.log(Level.INFO, "Executing: " + scriptResource);
-          }
-          final SqlScript sqlScript = new SqlScript(scriptResource,
-                                                    connection,
-                                                    reader);
-          sqlScript.run();
-        }
-
-        if (debug)
-        {
-          LOGGER.log(Level.INFO, "Complete");
-        }
-      }
-    }
-    catch (final Exception e)
-    {
-      final Throwable throwable = getCause(e);
-      final String message = String
-        .format("Script: %s -- %s", scriptResource, throwable.getMessage());
-
-      System.err.println(message);
-      LOGGER.log(Level.WARNING, message, throwable);
-
-      throw new RuntimeException(message, throwable);
-    }
-
-    if (!scriptResources.isEmpty())
-    {
-      final List<String> scriptResourcesList = new ArrayList<>(scriptResources);
-      Collections.sort(scriptResourcesList);
-      throw new RuntimeException("Did not process\n"
-                                 + String.join("\n", scriptResourcesList));
-    }
-  }
-
-  private Set<String> getBooksSchemaFiles()
-  {
-    final String DB_BOOKS = "/db/books/";
-    final Set<String> filenames = new HashSet<>();
-
-    try (
-        final InputStream in = TestSchemaCreator.class
-          .getResourceAsStream(DB_BOOKS);
-        final BufferedReader br = new BufferedReader(new InputStreamReader(in)))
-    {
-      String resource;
-      while ((resource = br.readLine()) != null)
-      {
-        if (!resource.contains("drop"))
-        {
-          filenames.add(DB_BOOKS + resource);
-        }
-      }
+      scriptsReader.lines().forEach(scriptResourceLine -> {
+        final SqlScript sqlScript = new SqlScript(scriptResourceLine,
+                                                  connection);
+        sqlScript.run();
+      });
     }
     catch (final IOException e)
     {
-      throw new RuntimeException("Cannot read resource " + DB_BOOKS, e);
+      throw new RuntimeException(e.getMessage(), e);
     }
-
-    return filenames;
-  }
-
-  private Throwable getCause(final Throwable e)
-  {
-    Throwable cause = null;
-    Throwable result = e;
-
-    while (null != (cause = result.getCause()) && result != cause)
-    {
-      result = cause;
-    }
-    return result;
   }
 
 }

@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -53,28 +52,19 @@ public class SqlScript
 
   private final ScriptResource scriptResource;
   private final Connection connection;
-  private final Reader reader;
 
-  public SqlScript(final String scriptName,
-                   final Connection connection,
-                   final Reader reader,
-                   final String delimiter)
+  public SqlScript(final String scriptResource, final Connection connection)
   {
-    this.connection = requireNonNull(connection,
-                                     "No database connection provided");
-    this.reader = requireNonNull(reader, "No reader provided");
-    scriptResource = new ScriptResource(scriptName, delimiter, debug);
+    this(new ScriptResource(scriptResource), connection);
   }
 
-  public SqlScript(final ScriptResource scriptResource,
-                   final Connection connection,
-                   final Reader reader)
+  private SqlScript(final ScriptResource scriptResource,
+                    final Connection connection)
   {
-    this.connection = requireNonNull(connection,
-                                     "No database connection provided");
-    this.reader = requireNonNull(reader, "No reader provided");
     this.scriptResource = requireNonNull(scriptResource,
                                          "No script resource provided");
+    this.connection = requireNonNull(connection,
+                                     "No database connection provided");
   }
 
   public String getScriptName()
@@ -89,12 +79,15 @@ public class SqlScript
     {
       return;
     }
-
+    if (debug)
+    {
+      LOGGER.log(Level.INFO, "Executing: " + scriptResource);
+    }
     try
     {
       // NOTE: Do not close reader or connection, since we did not open
       // them
-      final BufferedReader lineReader = new BufferedReader(reader);
+      final BufferedReader lineReader = scriptResource.openReader();
       final List<String> sqlList = readSql(lineReader);
       for (final String sql: sqlList)
       {
@@ -115,8 +108,26 @@ public class SqlScript
     }
     catch (final Exception e)
     {
+      final Throwable throwable = getCause(e);
+      final String message = String
+        .format("Script: %s -- %s", scriptResource, throwable.getMessage());
+      System.err.println(message);
+      LOGGER.log(Level.WARNING, message, throwable);
       throw new RuntimeException(e);
     }
+
+  }
+
+  private Throwable getCause(final Throwable e)
+  {
+    Throwable cause = null;
+    Throwable result = e;
+
+    while (null != (cause = result.getCause()) && result != cause)
+    {
+      result = cause;
+    }
+    return result;
   }
 
   private List<String> readSql(final BufferedReader lineReader)
