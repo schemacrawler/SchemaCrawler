@@ -302,6 +302,7 @@ public final class SchemaCrawlerExecutable
     scCommand.setConnection(connection);
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
+    scCommand.beforeExecute();
     scCommand.execute();
   }
 
