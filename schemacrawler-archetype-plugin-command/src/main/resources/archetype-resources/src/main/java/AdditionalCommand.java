@@ -1,4 +1,8 @@
-#set($symbol_pound='#')#set($symbol_dollar='$')#set($symbol_escape='\')package ${package};
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+package ${package};
+
 
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -34,7 +38,7 @@ public class AdditionalCommand
   }
 
   @Override
-  public void executeOn(final Catalog catalog, final Connection connection)
+  public void execute()
     throws Exception
   {
     // TODO: Possibly process command-line options, which are available
