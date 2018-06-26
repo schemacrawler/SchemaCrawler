@@ -32,10 +32,17 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,8 +50,15 @@ public class TestSchemaCreator
   implements Runnable
 {
 
+  enum ProcessCode
+  {
+   process,
+   skip,
+   delimit;
+  }
+
   private static final Logger LOGGER = Logger
-    .getLogger(TestDatabase.class.getName());
+    .getLogger(TestSchemaCreator.class.getName());
 
   private static final boolean debug = Boolean.valueOf(System
     .getProperty("schemacrawler.testdb.TestSchemaCreator.debug", "false"));
@@ -66,6 +80,7 @@ public class TestSchemaCreator
   }
 
   private final Connection connection;
+
   private final String scriptsResource;
 
   public TestSchemaCreator(final Connection connection,
@@ -80,34 +95,57 @@ public class TestSchemaCreator
   @Override
   public void run()
   {
+
+    final Set<String> scriptResources = getBooksSchemaFiles();
+
+    String scriptResourceLine = null;
     String scriptResource = null;
+    ProcessCode processCode = null;
     try (
-        final BufferedReader hsqlScriptsReader = new BufferedReader(new InputStreamReader(TestDatabase.class
+        final BufferedReader scriptsReader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
           .getResourceAsStream(scriptsResource), UTF_8));)
     {
-      while ((scriptResource = hsqlScriptsReader.readLine()) != null)
+      while ((scriptResourceLine = scriptsReader.readLine()) != null)
       {
-        if (scriptResource.trim().isEmpty())
-        {
-          continue;
-        }
-        if (scriptResource.startsWith("#"))
+        if (scriptResourceLine.trim().isEmpty())
         {
           continue;
         }
 
-        final String delimiter;
-        if (scriptResource.startsWith("~"))
+        if (scriptResourceLine.startsWith("#"))
         {
-          scriptResource = scriptResource.substring(1);
-          delimiter = "@";
+          processCode = ProcessCode.skip;
+          scriptResource = scriptResourceLine.substring(1);
+        }
+        else if (scriptResourceLine.startsWith("~"))
+        {
+          processCode = ProcessCode.delimit;
+          scriptResource = scriptResourceLine.substring(1);
         }
         else
         {
-          delimiter = ";";
+          processCode = ProcessCode.process;
+          scriptResource = scriptResourceLine;
         }
 
-        try (final Reader reader = new InputStreamReader(TestDatabase.class
+        scriptResources.remove(scriptResource);
+
+        final String delimiter;
+        switch (processCode)
+        {
+          case process:
+            delimiter = ";";
+            break;
+
+          case delimit:
+            delimiter = "@";
+            break;
+          case skip:
+          default:
+            continue;
+        }
+
+        try (final Reader reader = new InputStreamReader(TestSchemaCreator.class
           .getResourceAsStream(scriptResource), UTF_8);)
         {
           if (debug)
@@ -138,6 +176,41 @@ public class TestSchemaCreator
 
       throw new RuntimeException(message, throwable);
     }
+
+    if (!scriptResources.isEmpty())
+    {
+      final List<String> scriptResourcesList = new ArrayList<>(scriptResources);
+      Collections.sort(scriptResourcesList);
+      throw new RuntimeException("Did not process\n"
+                                 + String.join("\n", scriptResourcesList));
+    }
+  }
+
+  private Set<String> getBooksSchemaFiles()
+  {
+    final String DB_BOOKS = "/db/books/";
+    final Set<String> filenames = new HashSet<>();
+
+    try (
+        final InputStream in = TestSchemaCreator.class
+          .getResourceAsStream(DB_BOOKS);
+        final BufferedReader br = new BufferedReader(new InputStreamReader(in)))
+    {
+      String resource;
+      while ((resource = br.readLine()) != null)
+      {
+        if (!resource.contains("drop"))
+        {
+          filenames.add(DB_BOOKS + resource);
+        }
+      }
+    }
+    catch (final IOException e)
+    {
+      throw new RuntimeException("Cannot read resource " + DB_BOOKS, e);
+    }
+
+    return filenames;
   }
 
   private Throwable getCause(final Throwable e)
