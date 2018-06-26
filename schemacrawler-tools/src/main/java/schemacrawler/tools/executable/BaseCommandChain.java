@@ -100,6 +100,7 @@ abstract class BaseCommandChain
 
     for (final SchemaCrawlerCommand scCommand: scCommands)
     {
+      scCommand.beforeExecute();
       scCommand.execute();
     }
   }
