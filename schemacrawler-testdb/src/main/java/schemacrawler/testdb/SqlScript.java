@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -50,44 +52,59 @@ public class SqlScript
   private static final boolean debug = Boolean.valueOf(System
     .getProperty("schemacrawler.testdb.SqlScript.debug", "false"));
 
-  private final ScriptResource scriptResource;
+  private final String scriptResource;
+  private final String delimiter;
   private final Connection connection;
 
-  public SqlScript(final String scriptResource, final Connection connection)
+  public SqlScript(final String scriptResourceLine, final Connection connection)
   {
-    this(new ScriptResource(scriptResource), connection);
-  }
+    requireNonNull(scriptResourceLine, "No script resource line provided");
+    final String[] split = scriptResourceLine.split(",");
+    if (split.length == 1)
+    {
+      delimiter = ";";
+      scriptResource = scriptResourceLine.trim();
+    }
+    else if (split.length == 2)
+    {
+      delimiter = split[0].trim();
+      scriptResource = split[1].trim();
+    }
+    else
+    {
+      throw new RuntimeException("Too many fields in " + scriptResourceLine);
+    }
 
-  private SqlScript(final ScriptResource scriptResource,
-                    final Connection connection)
-  {
-    this.scriptResource = requireNonNull(scriptResource,
-                                         "No script resource provided");
     this.connection = requireNonNull(connection,
                                      "No database connection provided");
-  }
-
-  public String getScriptName()
-  {
-    return scriptResource.getScriptName();
   }
 
   @Override
   public void run()
   {
-    if (scriptResource.skip())
+
+    final boolean skip = delimiter.equals("#");
+
+    if (debug)
+    {
+      LOGGER.log(Level.INFO,
+                 String.format("%s -- delimiter %s -- %s",
+                               scriptResource,
+                               delimiter,
+                               skip? "skip": "execute"));
+    }
+
+    if (skip)
     {
       return;
     }
-    if (debug)
+
+    try (
+        final BufferedReader lineReader = new BufferedReader(new InputStreamReader(this
+          .getClass().getResourceAsStream(scriptResource), UTF_8));
+    // NOTE: Do not close connection, since we did not open it
+    )
     {
-      LOGGER.log(Level.INFO, "Executing: " + scriptResource);
-    }
-    try
-    {
-      // NOTE: Do not close reader or connection, since we did not open
-      // them
-      final BufferedReader lineReader = scriptResource.openReader();
       final List<String> sqlList = readSql(lineReader);
       for (final String sql: sqlList)
       {
@@ -141,7 +158,6 @@ public class SqlScript
       final String trimmedLine = line.trim();
       final boolean isComment = trimmedLine.startsWith("--")
                                 || trimmedLine.startsWith("//");
-      final String delimiter = scriptResource.getDelimiter();
       if (!isComment && trimmedLine.endsWith(delimiter))
       {
         sql.append(line.substring(0, line.lastIndexOf(delimiter)));
