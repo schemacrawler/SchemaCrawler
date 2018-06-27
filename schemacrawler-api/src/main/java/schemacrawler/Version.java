@@ -54,10 +54,10 @@ public final class Version
     ABOUT = readResourceFully("/help/SchemaCrawler.txt");
 
     String[] productLine;
-    try
+    try (
+        final BufferedReader reader = new BufferedReader(new StringReader(ABOUT)))
     {
-      final String readLine = new BufferedReader(new StringReader(ABOUT))
-        .readLine();
+      final String readLine = reader.readLine();
       if (readLine != null)
       {
         productLine = readLine.split(" ");
