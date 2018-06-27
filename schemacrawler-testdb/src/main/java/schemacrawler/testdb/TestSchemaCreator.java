@@ -73,14 +73,11 @@ public class TestSchemaCreator
   public void run()
   {
     try (
-        final BufferedReader scriptsReader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
           .getResourceAsStream(scriptsResource), UTF_8));)
     {
-      scriptsReader.lines().forEach(scriptResourceLine -> {
-        final SqlScript sqlScript = new SqlScript(scriptResourceLine,
-                                                  connection);
-        sqlScript.run();
-      });
+      reader.lines()
+        .forEach(line -> new SqlScript(line, connection).run());
     }
     catch (final IOException e)
     {
