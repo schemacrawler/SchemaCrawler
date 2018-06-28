@@ -50,14 +50,10 @@ public class ScriptCommandProvider
     .getLogger(ScriptCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final ScriptCommand executable = new ScriptCommand();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-    return executable;
+    final ScriptCommand scCommand = new ScriptCommand();
+    return scCommand;
   }
 
   @Override

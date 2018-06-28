@@ -1,4 +1,5 @@
-schemacrawler.tools.integration.graph.GraphExecutableCommandProvider
+schemacrawler.tools.integration.graph.GraphCommandProvider
+schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphCommandProvider
 schemacrawler.tools.integration.scripting.ScriptCommandProvider
 schemacrawler.tools.integration.freemarker.FreeMarkerCommandProvider
 schemacrawler.tools.integration.velocity.VelocityCommandProvider

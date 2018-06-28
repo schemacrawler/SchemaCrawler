@@ -60,9 +60,7 @@ public abstract class ExecutableCommandProvider
   }
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
     throws SchemaCrawlerException
   {
 
@@ -79,10 +77,10 @@ public abstract class ExecutableCommandProvider
                                        e);
     }
 
-    SchemaCrawlerCommand executable;
+    SchemaCrawlerCommand scCommand;
     try
     {
-      executable = commandExecutableClass.newInstance();
+      scCommand = commandExecutableClass.newInstance();
     }
     catch (final Exception e)
     {
@@ -94,7 +92,7 @@ public abstract class ExecutableCommandProvider
       {
         final Constructor<? extends SchemaCrawlerCommand> constructor = commandExecutableClass
           .getConstructor(String.class);
-        executable = constructor.newInstance(command);
+        scCommand = constructor.newInstance(command);
       }
       catch (final Exception e1)
       {
@@ -104,10 +102,7 @@ public abstract class ExecutableCommandProvider
       }
     }
 
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(outputOptions);
-
-    return executable;
+    return scCommand;
   }
 
   @Override

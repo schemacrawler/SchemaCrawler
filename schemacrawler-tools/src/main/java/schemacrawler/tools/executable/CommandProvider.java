@@ -38,9 +38,7 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
-  SchemaCrawlerCommand configureNewSchemaCrawlerCommand(String command,
-                                                        SchemaCrawlerOptions schemaCrawlerOptions,
-                                                        OutputOptions outputOptions)
+  SchemaCrawlerCommand newSchemaCrawlerCommand(String command)
     throws SchemaCrawlerException;
 
   InputResource getHelp();

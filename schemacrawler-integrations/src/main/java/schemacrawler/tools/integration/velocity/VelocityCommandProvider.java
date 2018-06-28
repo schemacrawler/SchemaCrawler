@@ -50,20 +50,10 @@ public class VelocityCommandProvider
     .getLogger(VelocityCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final VelocityRenderer executable = new VelocityRenderer();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    return executable;
+    final VelocityRenderer scCommand = new VelocityRenderer();
+    return scCommand;
   }
 
   @Override

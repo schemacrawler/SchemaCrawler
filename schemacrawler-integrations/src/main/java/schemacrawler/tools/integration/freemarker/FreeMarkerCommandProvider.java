@@ -50,20 +50,10 @@ public class FreeMarkerCommandProvider
     .getLogger(FreeMarkerCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final FreeMarkerRenderer executable = new FreeMarkerRenderer();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    return executable;
+    final FreeMarkerRenderer scCommand = new FreeMarkerRenderer();
+    return scCommand;
   }
 
   @Override
