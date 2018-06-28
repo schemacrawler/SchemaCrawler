@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.executable;
+package schemacrawler.tools.integration.embeddedgraph;
 
 
 import static sf.util.Utility.isBlank;
@@ -35,16 +35,17 @@ import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.ExecutableCommandProvider;
+import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
-public final class SchemaExecutableCommandProvider
+public final class EmbeddedGraphCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static final Collection<String> supportedCommands = supportedCommands();
+  private static Collection<String> supportedCommands = supportedCommands();
 
   private static Collection<String> supportedCommands()
   {
@@ -57,7 +58,7 @@ public final class SchemaExecutableCommandProvider
     return supportedCommands;
   }
 
-  public SchemaExecutableCommandProvider()
+  public EmbeddedGraphCommandProvider()
   {
     super(supportedCommands, "");
   }
@@ -66,9 +67,8 @@ public final class SchemaExecutableCommandProvider
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
     throws SchemaCrawlerException
   {
-    final SchemaCrawlerCommand scCommand = new SchemaTextRenderer(command);
+    final SchemaCrawlerCommand scCommand = new EmbeddedGraphRenderer(command);
     return scCommand;
-
   }
 
   @Override
@@ -86,10 +86,12 @@ public final class SchemaExecutableCommandProvider
     {
       return false;
     }
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    return supportedCommands.contains(command)
-           && (isBlank(outputFormatValue)
-               || TextOutputFormat.isSupportedFormat(outputFormatValue));
+    final String format = outputOptions.getOutputFormatValue();
+    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
+      .fromFormat(format);
+    final boolean supportsSchemaCrawlerCommand = supportedCommands
+      .contains(command) && graphOutputFormat == GraphOutputFormat.htmlx;
+    return supportsSchemaCrawlerCommand;
   }
 
 }

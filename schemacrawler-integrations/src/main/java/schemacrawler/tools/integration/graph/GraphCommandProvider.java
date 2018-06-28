@@ -37,11 +37,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.ExecutableCommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.integration.embeddedgraph.EmbeddedGraphRenderer;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
-public final class GraphExecutableCommandProvider
+public final class GraphCommandProvider
   extends ExecutableCommandProvider
 {
 
@@ -58,65 +57,24 @@ public final class GraphExecutableCommandProvider
     return supportedCommands;
   }
 
-  public GraphExecutableCommandProvider()
+  public GraphCommandProvider()
   {
     super(supportedCommands, "");
-  }
-
-  @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
-    throws SchemaCrawlerException
-  {
-    final boolean supportsCommand = supportsSchemaCrawlerCommand(command,
-                                                                 schemaCrawlerOptions,
-                                                                 outputOptions);
-    if (!supportsCommand)
-    {
-      throw new SchemaCrawlerException(String
-        .format("Command <%s> not supported", command));
-    }
-
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final boolean isGraph = GraphOutputFormat
-      .isSupportedFormat(outputFormatValue);
-    final boolean isEmbeddedGraph = GraphOutputFormat.htmlx.getFormat()
-      .equalsIgnoreCase(outputFormatValue);
-
-    // Create and configure executable
-    final SchemaCrawlerCommand executable;
-    if (isEmbeddedGraph)
-    {
-      executable = new EmbeddedGraphRenderer(command);
-    }
-    else if (isGraph)
-    {
-      executable = new GraphRenderer(command);
-    }
-    else
-    {
-      throw new SchemaCrawlerException(String
-        .format("Command <%s> not supported", command));
-    }
-
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-
-    return executable;
-
   }
 
   @Override
   public Collection<String> getSupportedCommands()
   {
     return supportedCommands();
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+    throws SchemaCrawlerException
+  {
+    final SchemaCrawlerCommand scCommand = new GraphRenderer(command);
+    return scCommand;
+
   }
 
   @Override
@@ -128,10 +86,12 @@ public final class GraphExecutableCommandProvider
     {
       return false;
     }
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    return supportedCommands.contains(command)
-           && (isBlank(outputFormatValue)
-               || GraphOutputFormat.isSupportedFormat(outputFormatValue));
+    final String format = outputOptions.getOutputFormatValue();
+    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
+      .fromFormat(format);
+    final boolean supportsSchemaCrawlerCommand = supportedCommands
+      .contains(command) && (isBlank(format) || GraphOutputFormat.isSupportedFormat(format) && graphOutputFormat != GraphOutputFormat.htmlx);
+    return supportsSchemaCrawlerCommand;
   }
 
 }

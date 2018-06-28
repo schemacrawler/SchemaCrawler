@@ -153,10 +153,12 @@ public final class CommandRegistry
       executableCommandProvider = new OperationExecutableCommandProvider();
     }
 
-    return executableCommandProvider
-      .configureNewSchemaCrawlerCommand(command,
-                                        schemaCrawlerOptions,
-                                        outputOptions);
+    final SchemaCrawlerCommand scCommand = executableCommandProvider
+      .newSchemaCrawlerCommand(command);
+    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    scCommand.setOutputOptions(outputOptions);
+
+    return scCommand;
   }
 
 }

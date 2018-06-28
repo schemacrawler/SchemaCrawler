@@ -59,20 +59,10 @@ public class LintCommandProvider
     .getLogger(LintCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final LintCommand executable = new LintCommand();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    return executable;
+    final LintCommand scCommand = new LintCommand();
+    return scCommand;
   }
 
   @Override

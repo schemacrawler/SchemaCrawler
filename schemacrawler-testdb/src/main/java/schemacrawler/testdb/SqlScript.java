@@ -62,8 +62,15 @@ public class SqlScript
     final String[] split = scriptResourceLine.split(",");
     if (split.length == 1)
     {
-      delimiter = ";";
       scriptResource = scriptResourceLine.trim();
+      if (scriptResource == null || scriptResource.isEmpty())
+      {
+        delimiter = "#";
+      }
+      else
+      {
+        delimiter = ";";
+      }
     }
     else if (split.length == 2)
     {

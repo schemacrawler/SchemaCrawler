@@ -50,20 +50,10 @@ public class ThymeleafCommandProvider
     .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final ThymeleafRenderer executable = new ThymeleafRenderer();
-    if (schemaCrawlerOptions != null)
-    {
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      executable.setOutputOptions(outputOptions);
-    }
-    return executable;
+    final ThymeleafRenderer scCommand = new ThymeleafRenderer();
+    return scCommand;
   }
 
   @Override
