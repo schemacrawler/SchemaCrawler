@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Please review the [SchemaCrawler website](http://www.schemacrawler.com/) for FAQs, how-tos, and so on. 
+Please review the [SchemaCrawler website](https://www.schemacrawler.com/) for FAQs, how-tos, and so on. 
 This download contains the main SchemaCrawler distribution, as well as examples. You can extend the 
 SchemaCrawler distribution by downloading additional libraries that SchemaCrawler integrates with, such 
 as the pure Java Graphviz library, Spring Framework, Groovy, Ruby, Python and so on. You can also 
