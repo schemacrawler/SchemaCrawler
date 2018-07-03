@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SchemaCrawler Output</title>
+  <meta charset="utf-8"/>
+  <style>%s  </style>
+</head>
+<body>
