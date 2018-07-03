@@ -19,4 +19,4 @@ below to run SchemaCrawler Lint.
   1. Copy the `schemacrawler-linter-configs.xml` file to the SchemaCrawler distribution directory, that is, the `_schemacrawler` directory.
   2. To find schema design issues, run with an additional command-line option,
   `-linterconfigs=schemacrawler-linter-configs.xml`
-3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](http://www.schemacrawler.com/lint.html). 
+3. Try creating your own database lints in a new jar - see [SchemaCrawler Lint](https://www.schemacrawler.com/lint.html). 

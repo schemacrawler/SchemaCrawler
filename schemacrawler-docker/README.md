@@ -1,6 +1,6 @@
 ## Docker Image for SchemaCrawler
 
-> Please see the [SchemaCrawler website](http://www.schemacrawler.com/).
+> Please see the [SchemaCrawler website](https://www.schemacrawler.com/).
 
 ### Run
 

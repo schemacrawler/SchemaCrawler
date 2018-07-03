@@ -42,4 +42,4 @@ schemacrawler.graph.graphviz_opts=-Gdpi=300
 
 ## SchemaCrawler Web Application
 
-Take a look at the [SchemaCrawler Web Application](http://www.schemacrawler.com/webapp.html).
+Take a look at the [SchemaCrawler Web Application](https://www.schemacrawler.com/webapp.html).

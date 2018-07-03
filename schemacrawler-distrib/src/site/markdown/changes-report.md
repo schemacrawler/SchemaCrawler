@@ -128,7 +128,7 @@
 
 * Better protection of user credentials in memory.
 * Support for index remarks.
-* Organize metadata views for extensibility. Please refer to http://sualeh.github.io/SchemaCrawler/data-dictionary-extensions.html
+* Organize metadata views for extensibility. Please refer to https://www.schemacrawler.com/data-dictionary-extensions.html
 * Remove reliance on Java 8 features where they add an overhaead.
 
 ## Release 14.15.04 - 2017-04-02

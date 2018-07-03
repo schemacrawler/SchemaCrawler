@@ -1,7 +1,7 @@
 --- Connection Options ---
 
 For database connections, please read
-http://www.SchemaCrawler.com/database-support.html
+https://www.schemacrawler.com/database-support.html
 first, before running SchemaCrawler.
 
 For connecting to specific databases, use

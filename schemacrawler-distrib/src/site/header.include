@@ -10,8 +10,8 @@
       <meta property="og:locale" content="en_US" />
       <meta name="description" content="Free database schema discovery and comprehension tool" />
       <meta property="og:description" content="Free database schema discovery and comprehension tool" />
-      <link rel="canonical" href="https://sualeh.github.io/SchemaCrawler/" />
-      <meta property="og:url" content="https://www.SchemaCrawler.com" />
+      <link rel="canonical" href="https://www.schemacrawler.com/" />
+      <meta property="og:url" content="https://www.schemacrawler.com/" />
       <meta property="og:site_name" content="SchemaCrawler" />
       <script type="application/ld+json">
          {
@@ -19,8 +19,8 @@
          "description":"Free database schema discovery and comprehension tool","
          author":"Sualeh Fatehi",
          "@type":"WebSite",
-         "url":"https://www.SchemaCrawler.com",
-         "logo":"https://sualeh.github.io/SchemaCrawler/images/schemacrawler_logo.svg",
+         "url":"https://www.schemacrawler.com",
+         "logo":"https://www.schemacrawler.com/images/schemacrawler_logo.svg",
          "headline":"SchemaCrawler",
          "sameAs": [
              "https://www.facebook.com/schemacrawler/",

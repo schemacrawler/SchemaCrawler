@@ -22,5 +22,5 @@
   -urlx=applicationName=SchemaCrawler;readOnly=true
  
 Please refer to
-http://sualeh.github.io/SchemaCrawler/database-support.html
+https://www.schemacrawler.com/database-support.html
 for more information.
