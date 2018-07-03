@@ -1,0 +1,2 @@
+-- MySQL syntax
+DROP DATABASE BOOKS;
