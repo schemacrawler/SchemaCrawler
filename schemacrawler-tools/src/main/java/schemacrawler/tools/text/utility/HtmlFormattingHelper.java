@@ -59,13 +59,9 @@ public final class HtmlFormattingHelper
       .append(readResourceFully("/sc_output.css"))
       .append(System.lineSeparator());
 
-    return "<!DOCTYPE html>" + System.lineSeparator() + "<html lang=\"en\">"
-           + System.lineSeparator() + "<head>" + System.lineSeparator()
-           + "  <title>SchemaCrawler Output</title>" + System.lineSeparator()
-           + "  <meta charset=\"utf-8\"/>" + System.lineSeparator()
-           + "  <style>" + styleSheet + "  </style>" + System.lineSeparator()
-           + "</head>" + System.lineSeparator() + "<body>"
-           + System.lineSeparator();
+    final String htmlHeaderTemplate = readResourceFully("/html.header.txt");
+    final String htmlHeader = String.format(htmlHeaderTemplate, styleSheet);
+    return htmlHeader;
   }
 
   public HtmlFormattingHelper(final PrintWriter out,
