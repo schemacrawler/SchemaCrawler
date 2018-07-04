@@ -93,9 +93,9 @@
    
 -grepinout=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified 
-  inout names, in the form "SCHEMANAME.TABLENAME.INOUTNAME" - for example,
+  inout names, in the form "SCHEMANAME.ROUTINENAME.INOUTNAME" - for example,
   -grepinout=.*\.STREET|.*\.PRICE
-  matches inouts named STREET or PRICE in any table
+  matches inouts named STREET or PRICE in any routine
   Optional, default is no grep
   
 -grepdef=<regular-expression>
