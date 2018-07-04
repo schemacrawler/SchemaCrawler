@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a15.01.01"></a>
+## Release 15.01.01 - 2018-07-10
+
+- Output files by default, except for text output format
+- Make executable work in two phases, to load schema, and then to run a command
+
+
 <a name="a14.21.03"></a>
 ## Release 14.21.03 - 2018-06-10
 
