@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.options;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
@@ -86,14 +85,7 @@ public final class OutputOptions
    */
   public Charset getInputCharset()
   {
-    if (inputEncodingCharset == null)
-    {
-      return UTF_8;
-    }
-    else
-    {
-      return inputEncodingCharset;
-    }
+    return inputEncodingCharset;
   }
 
   /**
@@ -101,14 +93,7 @@ public final class OutputOptions
    */
   public Charset getOutputCharset()
   {
-    if (outputEncodingCharset == null)
-    {
-      return UTF_8;
-    }
-    else
-    {
-      return outputEncodingCharset;
-    }
+    return outputEncodingCharset;
   }
 
   public Path getOutputFile()
@@ -125,20 +110,11 @@ public final class OutputOptions
     }
     else
     {
-      // Tacky hack for htmlx format
-      final String extension;
-      if ("htmlx".equals(outputFormatValue))
-      {
-        extension = "svg.html";
-      }
-      else
-      {
-        extension = outputFormatValue;
-      }
       // Create output file path
-      outputFile = Paths
-        .get(".",
-             String.format("schemacrawler-%s.%s", UUID.randomUUID(), extension))
+      outputFile = Paths.get(".",
+                             String.format("schemacrawler-%s.%s",
+                                           UUID.randomUUID(),
+                                           outputFormatValue))
         .normalize().toAbsolutePath();
     }
     return outputFile;
