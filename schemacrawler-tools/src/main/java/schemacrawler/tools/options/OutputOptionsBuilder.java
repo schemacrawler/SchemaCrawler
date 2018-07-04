@@ -3,13 +3,13 @@ package schemacrawler.tools.options;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
@@ -213,13 +213,13 @@ public final class OutputOptionsBuilder
    */
   public OutputOptionsBuilder withInputEncoding(final String inputEncoding)
   {
-    if (isBlank(inputEncoding))
-    {
-      inputEncodingCharset = UTF_8;
-    }
-    else
+    try
     {
       inputEncodingCharset = Charset.forName(inputEncoding);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      inputEncodingCharset = UTF_8;
     }
     return this;
   }
@@ -293,13 +293,13 @@ public final class OutputOptionsBuilder
    */
   public OutputOptionsBuilder withOutputEncoding(final String outputEncoding)
   {
-    if (isBlank(outputEncoding))
-    {
-      outputEncodingCharset = UTF_8;
-    }
-    else
+    try
     {
       outputEncodingCharset = Charset.forName(outputEncoding);
+    }
+    catch (final IllegalArgumentException e)
+    {
+      outputEncodingCharset = UTF_8;
     }
     return this;
   }
@@ -348,7 +348,31 @@ public final class OutputOptionsBuilder
   {
     if (outputResource == null)
     {
-      this.outputResource = new ConsoleOutputResource();
+      if (outputFormatValue == null
+          || TextOutputFormat.text.name().equals(outputFormatValue))
+      {
+        this.outputResource = new ConsoleOutputResource();
+      }
+      else
+      {
+        // Tacky hack for htmlx format
+        final String extension;
+        if ("htmlx".equals(outputFormatValue))
+        {
+          extension = "svg.html";
+        }
+        else
+        {
+          extension = outputFormatValue;
+        }
+
+        final Path randomOutputFile = Paths
+          .get(".",
+               String
+                 .format("schemacrawler-%s.%s", UUID.randomUUID(), extension))
+          .normalize().toAbsolutePath();
+        this.outputResource = new FileOutputResource(randomOutputFile);
+      }
     }
     else
     {
