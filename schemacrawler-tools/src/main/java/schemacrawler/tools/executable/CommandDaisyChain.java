@@ -50,7 +50,8 @@ public final class CommandDaisyChain
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     // Commands are processed at execution time. That is, after
     // all configuration settings are made.

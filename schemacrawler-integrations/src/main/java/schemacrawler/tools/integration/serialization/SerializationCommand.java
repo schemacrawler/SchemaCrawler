@@ -68,7 +68,8 @@ public final class SerializationCommand
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
     // Force output to a compressed file

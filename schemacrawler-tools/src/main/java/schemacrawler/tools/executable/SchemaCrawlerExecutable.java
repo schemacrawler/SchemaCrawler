@@ -114,10 +114,35 @@ public final class SchemaCrawlerExecutable
     // Fail early (before loading the catalog) if the command is not
     // available
     final SchemaCrawlerCommand scCommand = loadCommand();
+    scCommand.checkAvailibility();
 
     final Catalog catalog = loadCatalog();
+    // Reduce all once again, since the catalog may have been loaded
+    // from an offline or other source
+    reduceCatalog(catalog);
 
-    executeCommand(scCommand, catalog);
+    scCommand.setCatalog(catalog);
+    scCommand.setConnection(connection);
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Executing command <%s> using <%s>",
+                                command,
+                                scCommand.getClass().getName()));
+    scCommand.execute();
+  }
+
+  private void reduceCatalog(final Catalog catalog)
+  {
+    ((Reducible) catalog).reduce(Schema.class,
+                                 getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class,
+                                 getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class,
+                                 getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class,
+                                 getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class,
+                                 getSequenceReducer(schemaCrawlerOptions));
   }
 
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
@@ -168,34 +193,6 @@ public final class SchemaCrawlerExecutable
   public final String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  private void executeCommand(final SchemaCrawlerCommand scCommand,
-                              final Catalog catalog)
-    throws Exception
-  {
-    // Reduce all once again, since the catalog may have been loaded
-    // from an offline or other source
-    ((Reducible) catalog).reduce(Schema.class,
-                                 getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class,
-                                 getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class,
-                                 getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class,
-                                 getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class,
-                                 getSequenceReducer(schemaCrawlerOptions));
-
-    scCommand.setCatalog(catalog);
-    scCommand.setConnection(connection);
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Executing command <%s> using <%s>",
-                                command,
-                                scCommand.getClass().getName()));
-    scCommand.beforeExecute();
-    scCommand.execute();
   }
 
   private Catalog loadCatalog()

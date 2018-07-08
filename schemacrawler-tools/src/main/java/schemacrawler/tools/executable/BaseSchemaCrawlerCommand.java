@@ -76,16 +76,25 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public void beforeExecute()
+  public void checkAvailibility()
     throws Exception
+  {
+    // Assume that the command is available
+  }
+
+  protected void checkOptions()
   {
     requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
     requireNonNull(additionalConfiguration,
                    "No additional configuration provided");
     requireNonNull(outputOptions, "No output options provided");
-    requireNonNull(catalog, "No catalog provided");
-    requireNonNull(connection, "No connection provided");
     requireNonNull(identifiers, "No database identifiers provided");
+  }
+
+  protected void checkCatalog()
+  {
+    requireNonNull(catalog, "No database catalog provided");
+    requireNonNull(connection, "No database connection provided");
   }
 
   @Override

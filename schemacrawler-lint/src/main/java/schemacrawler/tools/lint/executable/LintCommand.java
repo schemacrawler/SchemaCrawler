@@ -61,7 +61,8 @@ public class LintCommand
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     // Read lint options from the config
     lintOptions = getLintOptions();

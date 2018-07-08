@@ -45,7 +45,7 @@ import schemacrawler.utility.Identifiers;
 public interface SchemaCrawlerCommand
 {
 
-  void beforeExecute()
+  void checkAvailibility()
     throws Exception;
 
   /**

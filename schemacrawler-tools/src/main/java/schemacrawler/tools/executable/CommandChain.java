@@ -107,7 +107,8 @@ public final class CommandChain
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     executeChain();
   }

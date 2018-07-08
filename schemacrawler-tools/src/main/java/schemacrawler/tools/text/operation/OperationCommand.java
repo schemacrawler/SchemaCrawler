@@ -75,7 +75,8 @@ public final class OperationCommand
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     loadOperationOptions();
 
