@@ -31,6 +31,7 @@ package schemacrawler.tools.integration.thymeleaf;
 
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.logging.Level;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -41,6 +42,8 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.integration.serialization.SerializationCommand;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the Thymeleaf integration.
@@ -50,6 +53,9 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 public final class ThymeleafRenderer
   extends BaseSchemaCrawlerCommand
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SerializationCommand.class.getName());
 
   static final String COMMAND = "thymeleaf";
 
@@ -92,6 +98,22 @@ public final class ThymeleafRenderer
     {
       templateEngine.process(templateLocation, context, writer);
     }
+  }
+
+  @Override
+  public boolean isAvailable()
+  {
+    try
+    {
+      new TemplateEngine();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.SEVERE, "Cannot load ThymeLeaf", e);
+      return false;
+    }
+
+    return true;
   }
 
   private ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,

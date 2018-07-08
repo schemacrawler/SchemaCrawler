@@ -31,10 +31,14 @@ package schemacrawler.tools.integration.serialization;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.logging.Level;
+
+import com.thoughtworks.xstream.XStream;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the graphing integration.
@@ -44,6 +48,9 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 public final class SerializationCommand
   extends BaseSchemaCrawlerCommand
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SerializationCommand.class.getName());
 
   static final String COMMAND = "serialize";
 
@@ -73,6 +80,22 @@ public final class SerializationCommand
     {
       serializableCatalog.save(writer);
     }
+  }
+
+  @Override
+  public boolean isAvailable()
+  {
+    try
+    {
+      new XStream();
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.SEVERE, "Cannot load serialize command", e);
+      return false;
+    }
+
+    return true;
   }
 
   private OutputOptions forceCompressedFileOutput()

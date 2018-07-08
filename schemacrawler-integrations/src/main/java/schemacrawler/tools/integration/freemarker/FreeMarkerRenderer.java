@@ -42,6 +42,7 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.Version;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -63,6 +64,22 @@ public final class FreeMarkerRenderer
   public FreeMarkerRenderer()
   {
     super(COMMAND);
+  }
+
+  @Override
+  public boolean isAvailable()
+  {
+    try
+    {
+      final Version freeMarkerVersion = Configuration.VERSION_2_3_28;
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.SEVERE, "Cannot load FreeMarker", e);
+      return false;
+    }
+
+    return true;
   }
 
   /**
@@ -92,7 +109,7 @@ public final class FreeMarkerRenderer
                                 + Configuration.getVersion().toString()));
 
     // Create a new instance of the configuration
-    final Configuration cfg = new Configuration();
+    final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
 
     final TemplateLoader ctl = new ClassTemplateLoader(FreeMarkerRenderer.class,
                                                        "/");

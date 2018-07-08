@@ -171,6 +171,12 @@ public final class GraphRenderer
     return graphOptions;
   }
 
+  @Override
+  public boolean isAvailable()
+  {
+    return GraphUtility.isGraphvizAvailable();
+  }
+
   public final void setGraphOptions(final GraphOptions graphOptions)
   {
     this.graphOptions = graphOptions;
