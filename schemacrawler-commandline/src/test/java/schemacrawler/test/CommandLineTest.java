@@ -77,7 +77,7 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(args, config);
+    run(args, config, "brief");
   }
 
   @Test
@@ -91,7 +91,7 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -105,7 +105,7 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -119,7 +119,7 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -133,7 +133,7 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -146,7 +146,7 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -159,7 +159,7 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -172,7 +172,7 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -185,7 +185,7 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -206,7 +206,7 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(args, config);
+    run(args, config, "brief");
   }
 
   @Test
@@ -218,7 +218,7 @@ public class CommandLineTest
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(args, null);
+    run(args, null, "brief");
   }
 
   @Test
@@ -232,7 +232,47 @@ public class CommandLineTest
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
 
-    run(args, null);
+    run(args, null, "brief");
+  }
+
+  @Test
+  public void commandLineWithQueryCommand()
+    throws Exception
+  {
+
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+
+    run(args, config, "SELECT * FROM BOOKS.Authors");
+  }
+
+  @Test
+  public void commandLineWithQueryInConfig()
+    throws Exception
+  {
+    final String command = "query1";
+
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put(command, "SELECT * FROM BOOKS.Books");
+
+    run(args, config, command);
+  }
+
+  @Test
+  public void commandLineWithQueryOverInConfig()
+    throws Exception
+  {
+    final String command = "query2";
+
+    final Map<String, String> args = new HashMap<>();
+
+    final Map<String, String> config = new HashMap<>();
+    config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
+
+    run(args, config, command);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -247,7 +287,8 @@ public class CommandLineTest
   }
 
   private void run(final Map<String, String> argsMap,
-                   final Map<String, String> config)
+                   final Map<String, String> config,
+                   final String command)
     throws Exception
   {
 
@@ -259,7 +300,7 @@ public class CommandLineTest
       argsMap.put("noinfo", Boolean.TRUE.toString());
       argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
       argsMap.put("infolevel", "maximum");
-      argsMap.put("command", "brief");
+      argsMap.put("command", command);
       argsMap.put("outputformat", "text");
       argsMap.put("outputfile", out.toString());
 
