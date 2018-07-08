@@ -38,6 +38,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -45,7 +46,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -113,13 +113,17 @@ public class SpringIntegrationTest
     final Path testOutputFile = IOUtility.createTempFilePath(executableName,
                                                              "data");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(executable
-      .getSchemaCrawlerOptions()).includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
+      .readField(executable, "schemaCrawlerOptions", true);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(schemaCrawlerOptions)
+      .includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     // Force output to test output file
-    executable.setOutputOptions(forceOutputToTestOutputFile(executable
-      .getOutputOptions(), testOutputFile));
+    final OutputOptions outputOptions = (OutputOptions) FieldUtils
+      .readField(executable, "outputOptions", true);
+    executable.setOutputOptions(forceOutputToTestOutputFile(outputOptions,
+                                                            testOutputFile));
 
     executable.setConnection(getConnection());
     executable.setSchemaRetrievalOptions(schemaRetrievalOptions);

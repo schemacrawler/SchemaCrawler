@@ -76,12 +76,12 @@ public final class SchemaCrawlerExecutable
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
-  protected final String command;
-  protected SchemaCrawlerOptions schemaCrawlerOptions;
-  protected OutputOptions outputOptions;
-  protected Config additionalConfiguration;
-  protected SchemaRetrievalOptions schemaRetrievalOptions;
-  protected Connection connection;
+  private final String command;
+  private SchemaCrawlerOptions schemaCrawlerOptions;
+  private OutputOptions outputOptions;
+  private Config additionalConfiguration;
+  private SchemaRetrievalOptions schemaRetrievalOptions;
+  private Connection connection;
 
   public SchemaCrawlerExecutable(final String command)
   {
@@ -120,46 +120,10 @@ public final class SchemaCrawlerExecutable
     executeCommand(scCommand, catalog);
   }
 
-  public final Config getAdditionalConfiguration()
-  {
-    return additionalConfiguration;
-  }
-
-  public final String getCommand()
-  {
-    return command;
-  }
-
-  public Connection getConnection()
-  {
-    return connection;
-  }
-
-  public final OutputOptions getOutputOptions()
-  {
-    return outputOptions;
-  }
-
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
-  public SchemaRetrievalOptions getSchemaRetrievalOptions()
-  {
-    return schemaRetrievalOptions;
-  }
-
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
-    if (additionalConfiguration == null)
-    {
-      this.additionalConfiguration = new Config();
-    }
-    else
-    {
-      this.additionalConfiguration = additionalConfiguration;
-    }
+    // Make a defensive copy
+    this.additionalConfiguration = new Config(additionalConfiguration);
   }
 
   public void setConnection(final Connection connection)
@@ -228,7 +192,7 @@ public final class SchemaCrawlerExecutable
 
     LOGGER.log(Level.INFO,
                new StringFormat("Executing command <%s> using <%s>",
-                                getCommand(),
+                                command,
                                 scCommand.getClass().getName()));
     scCommand.beforeExecute();
     scCommand.execute();
@@ -259,7 +223,7 @@ public final class SchemaCrawlerExecutable
   private SchemaCrawlerCommand loadCommand()
     throws SchemaCrawlerException
   {
-    final Commands commands = new Commands(getCommand());
+    final Commands commands = new Commands(command);
     if (commands.isEmpty())
     {
       throw new SchemaCrawlerException("No command specified");
@@ -271,14 +235,14 @@ public final class SchemaCrawlerExecutable
     {
       // NOTE: The daisy chain command may change the provided output
       // options for each chained command
-      scCommand = new CommandDaisyChain(getCommand());
+      scCommand = new CommandDaisyChain(command);
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     }
     else
     {
       scCommand = commandRegistry
-        .configureNewCommand(getCommand(), schemaCrawlerOptions, outputOptions);
+        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
     }
 
     scCommand.setAdditionalConfiguration(additionalConfiguration);
@@ -289,20 +253,26 @@ public final class SchemaCrawlerExecutable
 
   private void logExecution()
   {
-    LOGGER.log(Level.INFO,
-               new StringFormat("Executing SchemaCrawler command <%s>",
-                                getCommand()));
-    if (LOGGER.isLoggable(Level.CONFIG))
+    if (LOGGER.isLoggable(Level.INFO))
     {
-      LOGGER.log(Level.CONFIG,
-                 String.format("Executable: %s", this.getClass().getName()));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
-    }
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+      LOGGER
+        .log(Level.INFO,
+             String.format("Executing SchemaCrawler command <%s>", command));
+
+      if (LOGGER.isLoggable(Level.CONFIG))
+      {
+        LOGGER.log(Level.CONFIG,
+                   String.format("Executable: %s", this.getClass().getName()));
+        LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+        LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+        LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
+
+        if (LOGGER.isLoggable(Level.FINE))
+        {
+          LOGGER.log(Level.FINE,
+                     ObjectToString.toString(additionalConfiguration));
+        }
+      }
     }
   }
 

@@ -386,8 +386,8 @@ public class GraphRendererOptionsTest
   {
     final String outputFormatValue = GraphOutputFormat.png.getFormat();
 
-    final Path testOutputFile = IOUtility
-      .createTempFilePath(executable.getCommand(), outputFormatValue);
+    final Path testOutputFile = IOUtility.createTempFilePath("sc",
+                                                             outputFormatValue);
 
     final OutputOptions outputOptions = OutputOptionsBuilder
       .newOutputOptions(outputFormatValue, testOutputFile);
