@@ -199,7 +199,7 @@ public final class SchemaCrawlerExecutable
   }
 
   private Catalog loadCatalog()
-    throws SchemaCrawlerException, Exception
+    throws Exception
   {
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry

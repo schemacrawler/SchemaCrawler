@@ -142,14 +142,8 @@ public abstract class BaseSchemaCrawlerCommand
   @Override
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
-    if (additionalConfiguration == null)
-    {
-      this.additionalConfiguration = new Config();
-    }
-    else
-    {
-      this.additionalConfiguration = additionalConfiguration;
-    }
+    this.additionalConfiguration = requireNonNull(additionalConfiguration,
+                                                  "No additional configuration provided");
   }
 
   @Override
