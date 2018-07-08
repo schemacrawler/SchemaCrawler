@@ -63,8 +63,7 @@ public class SchemaCrawlerExecutableChainTest
     throws Exception
   {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
-    final Path testOutputFile = IOUtility
-      .createTempFilePath(executable.getCommand(), "data");
+    final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
       .includeAllRoutines();

@@ -37,10 +37,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -109,8 +111,9 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(executable
-      .getSchemaCrawlerOptions());
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
+      .readField(executable, "schemaCrawlerOptions", true);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(schemaCrawlerOptions);
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum().toOptions())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
