@@ -60,7 +60,6 @@ public final class OfflineSnapshotOptionsParser
 
   @Override
   public OutputOptions getOptions()
-    throws SchemaCrawlerCommandLineException
   {
     final String inputSource = config.getStringValue(DATABASE, null);
     consumeOption(DATABASE);

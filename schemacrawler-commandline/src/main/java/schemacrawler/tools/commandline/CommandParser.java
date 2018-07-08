@@ -33,7 +33,6 @@ import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.Command;
 
 /**
@@ -55,7 +54,6 @@ public final class CommandParser
 
   @Override
   public Command getOptions()
-    throws SchemaCrawlerException
   {
     final String command = config.getStringValue(COMMAND, null);
     if (!isBlank(command))

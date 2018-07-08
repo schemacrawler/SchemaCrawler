@@ -33,7 +33,7 @@ package schemacrawler.schemacrawler;
  * Exception for the SchemaCrawler.
  */
 public class SchemaCrawlerCommandLineException
-  extends SchemaCrawlerException
+  extends SchemaCrawlerRuntimeException
 {
 
   private static final long serialVersionUID = 3592960063630720921L;
