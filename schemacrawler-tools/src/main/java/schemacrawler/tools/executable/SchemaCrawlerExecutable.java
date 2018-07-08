@@ -55,7 +55,6 @@ import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.text.operation.OperationCommand;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
@@ -111,8 +110,14 @@ public final class SchemaCrawlerExecutable
 
     logExecution();
 
+    // Load the command to see if it is available
+    // Fail early (before loading the catalog) if the command is not
+    // available
+    final SchemaCrawlerCommand scCommand = loadCommand();
+
     final Catalog catalog = loadCatalog();
-    executeOn(catalog);
+
+    executeCommand(scCommand, catalog);
   }
 
   public final Config getAdditionalConfiguration()
@@ -201,7 +206,8 @@ public final class SchemaCrawlerExecutable
     return ObjectToString.toString(this);
   }
 
-  private void executeOn(final Catalog catalog)
+  private void executeCommand(final SchemaCrawlerCommand scCommand,
+                              final Catalog catalog)
     throws Exception
   {
     // Reduce all once again, since the catalog may have been loaded
@@ -217,65 +223,13 @@ public final class SchemaCrawlerExecutable
     ((Reducible) catalog).reduce(Sequence.class,
                                  getSequenceReducer(schemaCrawlerOptions));
 
-    final Commands commands = new Commands(getCommand());
-    if (commands.isEmpty())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
-
-    SchemaCrawlerCommand scCommand = null;
-    final CommandRegistry commandRegistry = new CommandRegistry();
-
-    /* TODO
-    for (final String command: commands)
-    {
-      final boolean isCommand = commandRegistry
-        .supportsCommand(command, schemaCrawlerOptions, outputOptions);
-      final boolean isConfiguredQuery = additionalConfiguration != null
-                                        && additionalConfiguration
-                                          .containsKey(command);
-      // If the command is a direct query
-      if (!isCommand && !isConfiguredQuery)
-      {
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Executing as a query <%s>", getCommand()));
-        scCommand = new OperationCommand(getCommand());
-        scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        scCommand.setOutputOptions(outputOptions);
-        break;
-      }
-    }
-    */
-
-    if (scCommand == null)
-    {
-      if (commands.hasMultipleCommands())
-      {
-        LOGGER.log(Level.INFO,
-                   new StringFormat("Executing commands <%s> in sequence",
-                                    commands));
-        scCommand = new CommandDaisyChain(getCommand());
-        scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        scCommand.setOutputOptions(outputOptions);
-      }
-      else
-      {
-        scCommand = commandRegistry.configureNewCommand(getCommand(),
-                                                        schemaCrawlerOptions,
-                                                        outputOptions);
-        LOGGER
-          .log(Level.INFO,
-               new StringFormat("Executing command <%s> using executable <%s>",
-                                getCommand(),
-                                scCommand.getClass().getName()));
-      }
-    }
-
-    scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
-    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
+    LOGGER.log(Level.INFO,
+               new StringFormat("Executing command <%s> using <%s>",
+                                getCommand(),
+                                scCommand.getClass().getName()));
     scCommand.beforeExecute();
     scCommand.execute();
   }
@@ -297,8 +251,40 @@ public final class SchemaCrawlerExecutable
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
     final Catalog catalog = catalogLoader.loadCatalog();
-    requireNonNull(catalog, "No catalog provided");
+    requireNonNull(catalog, "Catalog could not be retrieved");
+
     return catalog;
+  }
+
+  private SchemaCrawlerCommand loadCommand()
+    throws SchemaCrawlerException
+  {
+    final Commands commands = new Commands(getCommand());
+    if (commands.isEmpty())
+    {
+      throw new SchemaCrawlerException("No command specified");
+    }
+
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    final SchemaCrawlerCommand scCommand;
+    if (commands.hasMultipleCommands())
+    {
+      // NOTE: The daisy chain command may change the provided output
+      // options for each chained command
+      scCommand = new CommandDaisyChain(getCommand());
+      scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      scCommand.setOutputOptions(outputOptions);
+    }
+    else
+    {
+      scCommand = commandRegistry
+        .configureNewCommand(getCommand(), schemaCrawlerOptions, outputOptions);
+    }
+
+    scCommand.setAdditionalConfiguration(additionalConfiguration);
+    scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
+
+    return scCommand;
   }
 
   private void logExecution()
