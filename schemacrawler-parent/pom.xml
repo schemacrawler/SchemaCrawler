@@ -81,7 +81,6 @@
     <module>../schemacrawler-offline</module>
 
     <module>../schemacrawler-examplecode</module>
-    <module>../schemacrawler-dbtest</module>
 
   </modules>
   <profiles>
@@ -93,7 +92,10 @@
         </property>
       </activation>
       <modules>
-        <module>../schemacrawler-diff</module>
+
+        <module>../schemacrawler-dbtest</module>			
+        
+				<module>../schemacrawler-diff</module>
 
         <module>../schemacrawler-archetype-maven-project</module>
         <module>../schemacrawler-archetype-plugin-command</module>
