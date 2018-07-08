@@ -60,12 +60,6 @@ abstract class BaseCommandChain
     scCommands = new ArrayList<>();
   }
 
-  @Override
-  public final boolean isAvailable()
-  {
-    return true;
-  }
-
   protected final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
                                                                        final OutputOptions outputOptions)
     throws SchemaCrawlerException

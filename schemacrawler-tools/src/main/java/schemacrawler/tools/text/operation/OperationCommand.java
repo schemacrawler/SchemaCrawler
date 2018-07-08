@@ -156,12 +156,6 @@ public final class OperationCommand
     return operationOptions;
   }
 
-  @Override
-  public boolean isAvailable()
-  {
-    return true;
-  }
-
   public boolean isOutputFormatSupported()
   {
     final String outputFormatValue = outputOptions.getOutputFormatValue();
