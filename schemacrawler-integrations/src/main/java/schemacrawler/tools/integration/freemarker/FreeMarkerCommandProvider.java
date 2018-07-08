@@ -37,8 +37,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 
@@ -70,7 +70,7 @@ public class FreeMarkerCommandProvider
                  String.format("Could not load help resource <%s>",
                                helpResource),
                  e);
-      return new StringInputResource("");
+      return new EmptyInputResource();
     }
   }
 

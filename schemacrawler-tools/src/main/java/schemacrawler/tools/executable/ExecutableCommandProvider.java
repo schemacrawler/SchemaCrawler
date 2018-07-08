@@ -36,8 +36,8 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -119,7 +119,7 @@ public abstract class ExecutableCommandProvider
                  String.format("Could not load help resource <%s>",
                                helpResource),
                  e);
-      return new StringInputResource("");
+      return new EmptyInputResource();
     }
   }
 

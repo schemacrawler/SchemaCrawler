@@ -34,7 +34,6 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
-import java.util.List;
 import java.util.logging.Level;
 
 import javax.script.Compilable;
@@ -83,41 +82,12 @@ public final class ScriptCommand
     {
       throw new SchemaCrawlerCommandLineException("Please specify a script to execute");
     }
+    final String scriptExtension = getFileExtension(scriptFileName);
 
-    // Create a new instance of the engine
-    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    final List<ScriptEngineFactory> engineFactories = scriptEngineManager
-      .getEngineFactories();
-    ScriptEngineFactory scriptEngineFactory = null;
-    ScriptEngineFactory javaScriptEngineFactory = null;
-    for (final ScriptEngineFactory engineFactory: engineFactories)
-    {
-      logScriptEngineDetails(Level.FINER, engineFactory);
-
-      final List<String> extensions = engineFactory.getExtensions();
-      if (extensions.contains(getFileExtension(scriptFileName)))
-      {
-        scriptEngineFactory = engineFactory;
-        break;
-      }
-      if (engineFactory.getLanguageName().equalsIgnoreCase("JavaScript"))
-      {
-        javaScriptEngineFactory = engineFactory;
-      }
-    }
-    if (scriptEngineFactory == null)
-    {
-      scriptEngineFactory = javaScriptEngineFactory;
-    }
-    if (scriptEngineFactory == null)
-    {
-      throw new SchemaCrawlerException("Script engine not found");
-    }
-    logScriptEngineDetails(Level.CONFIG, scriptEngineFactory);
+    final ScriptEngine scriptEngine = getScriptEngine(scriptExtension);
 
     final CommandChain chain = new CommandChain(this);
 
-    final ScriptEngine scriptEngine = scriptEngineFactory.getScriptEngine();
     try (final Reader reader = outputOptions.openNewInputReader();
         final Writer writer = outputOptions.openNewOutputWriter();)
     {
@@ -140,6 +110,30 @@ public final class ScriptCommand
       }
     }
 
+  }
+
+  private ScriptEngine getScriptEngine(final String scriptExtension)
+    throws SchemaCrawlerException
+  {
+
+    final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+    final ScriptEngine scriptEngine;
+    if (isBlank(scriptExtension))
+    {
+      scriptEngine = scriptEngineManager.getEngineByName("nashorn");
+    }
+    else
+    {
+      scriptEngine = scriptEngineManager.getEngineByExtension(scriptExtension);
+    }
+    if (scriptEngine == null)
+    {
+      throw new SchemaCrawlerException("Script engine not found");
+    }
+
+    logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
+
+    return scriptEngine;
   }
 
   private void logScriptEngineDetails(final Level level,

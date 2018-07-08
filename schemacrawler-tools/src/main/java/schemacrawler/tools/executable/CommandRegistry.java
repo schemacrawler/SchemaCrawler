@@ -39,8 +39,8 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -104,7 +104,7 @@ public final class CommandRegistry
         return commandProvider.getHelp();
       }
     }
-    return new StringInputResource("");
+    return new EmptyInputResource();
   }
 
   public Collection<String> getSupportedCommands()

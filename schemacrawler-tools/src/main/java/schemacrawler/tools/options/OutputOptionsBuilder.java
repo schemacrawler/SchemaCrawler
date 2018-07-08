@@ -17,11 +17,11 @@ import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
-import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.iosource.WriterOutputResource;
 
 public final class OutputOptionsBuilder
@@ -245,7 +245,7 @@ public final class OutputOptionsBuilder
   {
     if (inputResource == null)
     {
-      this.inputResource = new StringInputResource("");
+      this.inputResource = new EmptyInputResource();
     }
     else
     {
@@ -355,11 +355,16 @@ public final class OutputOptionsBuilder
       }
       else
       {
-        // Tacky hack for htmlx format
         final String extension;
         if ("htmlx".equals(outputFormatValue))
         {
+          // Tacky hack for htmlx format
           extension = "svg.html";
+        }
+        else if (!(inputResource instanceof EmptyInputResource))
+        {
+          // Tacky hack for script
+          extension = "txt";
         }
         else
         {
@@ -413,7 +418,7 @@ public final class OutputOptionsBuilder
     }
     if (inputResource == null)
     {
-      inputResource = new StringInputResource("");
+      inputResource = new EmptyInputResource();
     }
     return inputResource;
   }
