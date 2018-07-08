@@ -161,7 +161,7 @@ public final class CommandRegistry
       scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
       scCommand.setOutputOptions(outputOptions);
     }
-    catch (final Exception e)
+    catch (final Throwable e)
     {
       throw new SchemaCrawlerCommandLineException(String
         .format("Cannot run command <%s>", command), e);
