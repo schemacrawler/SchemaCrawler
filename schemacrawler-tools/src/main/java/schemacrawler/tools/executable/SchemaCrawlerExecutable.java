@@ -109,37 +109,9 @@ public final class SchemaCrawlerExecutable
         .matchSchemaRetrievalOptions(connection);
     }
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Executing SchemaCrawler command <%s>",
-                                getCommand()));
-    if (LOGGER.isLoggable(Level.CONFIG))
-    {
-      LOGGER.log(Level.CONFIG,
-                 String.format("Executable: %s", this.getClass().getName()));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
-      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
-      LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
-    }
-    if (LOGGER.isLoggable(Level.FINE))
-    {
-      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
-    }
+    logExecution();
 
-    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-    final CatalogLoader catalogLoader = catalogLoaderRegistry
-      .lookupCatalogLoader(schemaRetrievalOptions.getDatabaseServerType()
-        .getDatabaseSystemIdentifier());
-    LOGGER
-      .log(Level.CONFIG,
-           new StringFormat("Catalog loader: %s", this.getClass().getName()));
-
-    catalogLoader.setAdditionalConfiguration(additionalConfiguration);
-    catalogLoader.setConnection(connection);
-    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
-    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    final Catalog catalog = catalogLoader.loadCatalog();
-    requireNonNull(catalog, "No catalog provided");
+    final Catalog catalog = loadCatalog();
     executeOn(catalog);
   }
 
@@ -254,6 +226,7 @@ public final class SchemaCrawlerExecutable
     SchemaCrawlerCommand scCommand = null;
     final CommandRegistry commandRegistry = new CommandRegistry();
 
+    /* TODO
     for (final String command: commands)
     {
       final boolean isCommand = commandRegistry
@@ -272,6 +245,7 @@ public final class SchemaCrawlerExecutable
         break;
       }
     }
+    */
 
     if (scCommand == null)
     {
@@ -304,6 +278,46 @@ public final class SchemaCrawlerExecutable
 
     scCommand.beforeExecute();
     scCommand.execute();
+  }
+
+  private Catalog loadCatalog()
+    throws SchemaCrawlerException, Exception
+  {
+    final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
+    final CatalogLoader catalogLoader = catalogLoaderRegistry
+      .lookupCatalogLoader(schemaRetrievalOptions.getDatabaseServerType()
+        .getDatabaseSystemIdentifier());
+    LOGGER
+      .log(Level.CONFIG,
+           new StringFormat("Catalog loader: %s", this.getClass().getName()));
+
+    catalogLoader.setAdditionalConfiguration(additionalConfiguration);
+    catalogLoader.setConnection(connection);
+    catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
+    catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    final Catalog catalog = catalogLoader.loadCatalog();
+    requireNonNull(catalog, "No catalog provided");
+    return catalog;
+  }
+
+  private void logExecution()
+  {
+    LOGGER.log(Level.INFO,
+               new StringFormat("Executing SchemaCrawler command <%s>",
+                                getCommand()));
+    if (LOGGER.isLoggable(Level.CONFIG))
+    {
+      LOGGER.log(Level.CONFIG,
+                 String.format("Executable: %s", this.getClass().getName()));
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
+      LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
+      LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
+    }
+    if (LOGGER.isLoggable(Level.FINE))
+    {
+      LOGGER.log(Level.FINE, ObjectToString.toString(additionalConfiguration));
+    }
   }
 
 }
