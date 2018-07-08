@@ -31,7 +31,6 @@ package schemacrawler.tools.integration.thymeleaf;
 
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.util.logging.Level;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -71,7 +70,8 @@ public final class ThymeleafRenderer
   public final void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     final Context context = new Context();
     context.setVariable("catalog", catalog);

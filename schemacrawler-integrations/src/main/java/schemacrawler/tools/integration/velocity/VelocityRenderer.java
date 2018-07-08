@@ -84,7 +84,8 @@ public final class VelocityRenderer
   public final void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory

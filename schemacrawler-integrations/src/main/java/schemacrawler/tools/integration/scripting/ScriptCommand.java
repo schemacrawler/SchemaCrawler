@@ -68,6 +68,16 @@ public final class ScriptCommand
     super(COMMAND);
   }
 
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    super.checkAvailibility();
+    checkOptions();
+    // Check if script engine is available
+    getScriptEngine();
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -75,22 +85,15 @@ public final class ScriptCommand
   public final void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
-    final String scriptFileName = outputOptions.getOutputFormatValue();
-    if (isBlank(scriptFileName))
-    {
-      throw new SchemaCrawlerCommandLineException("Please specify a script to execute");
-    }
-    final String scriptExtension = getFileExtension(scriptFileName);
-
-    final ScriptEngine scriptEngine = getScriptEngine(scriptExtension);
-
-    final CommandChain chain = new CommandChain(this);
-
+    final ScriptEngine scriptEngine = getScriptEngine();
     try (final Reader reader = outputOptions.openNewInputReader();
         final Writer writer = outputOptions.openNewOutputWriter();)
     {
+      final CommandChain chain = new CommandChain(this);
+
       // Set up the context
       scriptEngine.getContext().setWriter(writer);
       scriptEngine.put("catalog", catalog);
@@ -112,9 +115,15 @@ public final class ScriptCommand
 
   }
 
-  private ScriptEngine getScriptEngine(final String scriptExtension)
+  private ScriptEngine getScriptEngine()
     throws SchemaCrawlerException
   {
+    final String scriptFileName = outputOptions.getOutputFormatValue();
+    if (isBlank(scriptFileName))
+    {
+      throw new SchemaCrawlerCommandLineException("Please specify a script to execute");
+    }
+    final String scriptExtension = getFileExtension(scriptFileName);
 
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     final ScriptEngine scriptEngine;

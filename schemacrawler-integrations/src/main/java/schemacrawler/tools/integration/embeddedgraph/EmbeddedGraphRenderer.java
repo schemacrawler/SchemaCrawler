@@ -66,7 +66,8 @@ public class EmbeddedGraphRenderer
   public void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");
     final Path baseHtmlFile = createTempFilePath("schemacrawler", "html");

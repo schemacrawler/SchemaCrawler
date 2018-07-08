@@ -79,6 +79,9 @@ public final class GraphRenderer
   public void execute()
     throws Exception
   {
+    checkOptions();
+    checkCatalog();
+
     loadGraphOptions();
 
     // Determine what decorators to apply to the database

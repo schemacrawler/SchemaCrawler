@@ -72,7 +72,8 @@ public final class FreeMarkerRenderer
   public final void execute()
     throws Exception
   {
-    // Null checks are done before execution
+    checkOptions();
+    checkCatalog();
 
     String templateLocation = outputOptions.getOutputFormatValue();
     String templatePath = ".";
