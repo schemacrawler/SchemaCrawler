@@ -84,6 +84,4 @@ public interface SchemaCrawlerCommand
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
-  boolean isAvailable();
-
 }

@@ -100,22 +100,6 @@ public final class ThymeleafRenderer
     }
   }
 
-  @Override
-  public boolean isAvailable()
-  {
-    try
-    {
-      new TemplateEngine();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.SEVERE, "Cannot load ThymeLeaf", e);
-      return false;
-    }
-
-    return true;
-  }
-
   private ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
                                       final Charset inputEncoding)
   {

@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
@@ -154,16 +154,17 @@ public final class CommandRegistry
       executableCommandProvider = new OperationExecutableCommandProvider();
     }
 
-    final SchemaCrawlerCommand scCommand = executableCommandProvider
-      .newSchemaCrawlerCommand(command);
-    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    scCommand.setOutputOptions(outputOptions);
-
-    final boolean available = scCommand.isAvailable();
-    if (!available)
+    final SchemaCrawlerCommand scCommand;
+    try
     {
-      throw new SchemaCrawlerRuntimeException(String
-        .format("<%s> is not available", command));
+      scCommand = executableCommandProvider.newSchemaCrawlerCommand(command);
+      scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+      scCommand.setOutputOptions(outputOptions);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerCommandLineException(String
+        .format("Cannot run command <%s>", command), e);
     }
 
     return scCommand;

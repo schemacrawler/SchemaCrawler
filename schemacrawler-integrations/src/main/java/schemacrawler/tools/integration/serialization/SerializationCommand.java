@@ -31,9 +31,6 @@ package schemacrawler.tools.integration.serialization;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.logging.Level;
-
-import com.thoughtworks.xstream.XStream;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
@@ -80,22 +77,6 @@ public final class SerializationCommand
     {
       serializableCatalog.save(writer);
     }
-  }
-
-  @Override
-  public boolean isAvailable()
-  {
-    try
-    {
-      new XStream();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.SEVERE, "Cannot load serialize command", e);
-      return false;
-    }
-
-    return true;
   }
 
   private OutputOptions forceCompressedFileOutput()

@@ -152,20 +152,4 @@ public final class VelocityRenderer
 
   }
 
-  @Override
-  public boolean isAvailable()
-  {
-    try
-    {
-      new VelocityEngine();
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.SEVERE, "Cannot load Apache Velocity", e);
-      return false;
-    }
-
-    return true;
-  }
-
 }

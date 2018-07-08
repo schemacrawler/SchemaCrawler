@@ -94,12 +94,6 @@ public class LintCommand
     return lintOptions;
   }
 
-  @Override
-  public boolean isAvailable()
-  {
-    return true;
-  }
-
   public final void setLintOptions(final LintOptions lintOptions)
   {
     this.lintOptions = lintOptions;
