@@ -94,6 +94,12 @@ public class LintCommand
     return lintOptions;
   }
 
+  @Override
+  public boolean isAvailable()
+  {
+    return true;
+  }
+
   public final void setLintOptions(final LintOptions lintOptions)
   {
     this.lintOptions = lintOptions;
@@ -154,8 +160,7 @@ public class LintCommand
   {
     final LintTraversalHandler formatter;
 
-    final String identifierQuoteString = identifiers
-      .getIdentifierQuoteString();
+    final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());

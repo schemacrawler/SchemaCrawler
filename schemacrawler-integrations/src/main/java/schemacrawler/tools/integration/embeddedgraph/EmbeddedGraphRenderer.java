@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.graph.GraphUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedGraphRenderer
@@ -105,6 +106,12 @@ public class EmbeddedGraphRenderer
     {
       copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
     }
+  }
+
+  @Override
+  public boolean isAvailable()
+  {
+    return GraphUtility.isGraphvizAvailable();
   }
 
   private void insertSvg(final BufferedWriter finalHtmlFileWriter,

@@ -38,6 +38,7 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.options.OutputOptions;
@@ -157,6 +158,13 @@ public final class CommandRegistry
       .newSchemaCrawlerCommand(command);
     scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
     scCommand.setOutputOptions(outputOptions);
+
+    final boolean available = scCommand.isAvailable();
+    if (!available)
+    {
+      throw new SchemaCrawlerRuntimeException(String
+        .format("<%s> is not available", command));
+    }
 
     return scCommand;
   }

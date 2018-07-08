@@ -99,6 +99,12 @@ public final class SchemaTextRenderer
     return schemaTextOptions;
   }
 
+  @Override
+  public boolean isAvailable()
+  {
+    return true;
+  }
+
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
     this.schemaTextOptions = schemaTextOptions;
