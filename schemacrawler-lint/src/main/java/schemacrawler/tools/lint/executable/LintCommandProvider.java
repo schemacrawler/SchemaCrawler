@@ -43,9 +43,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.tools.iosource.StringInputResource;
 import schemacrawler.tools.lint.LinterHelp;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.IOUtility;
@@ -94,7 +94,7 @@ public class LintCommandProvider
     catch (final Exception e)
     {
       LOGGER.log(Level.WARNING, "Could not generate lint command help", e);
-      return new StringInputResource("");
+      return new EmptyInputResource();
     }
   }
 
