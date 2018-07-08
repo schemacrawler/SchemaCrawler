@@ -56,7 +56,6 @@ public final class ApplicationOptionsParser
 
   @Override
   public ApplicationOptions getOptions()
-    throws SchemaCrawlerCommandLineException
   {
     final ApplicationOptions options = new ApplicationOptions();
 
