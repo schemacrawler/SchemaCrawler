@@ -132,15 +132,15 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> noFooter(final boolean value)
+  public BaseTextOptionsBuilder<O> noFooter()
   {
-    options.setNoFooter(value);
+    options.setNoFooter(true);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> noHeader(final boolean value)
+  public BaseTextOptionsBuilder<O> noHeader()
   {
-    options.setNoHeader(value);
+    options.setNoHeader(true);
     return this;
   }
 
@@ -155,14 +155,6 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public BaseTextOptionsBuilder<O> overwriteOutput()
   {
     options.setAppendOutput(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> showInfo()
-  {
-    options.setNoSchemaCrawlerInfo(false);
-    options.setShowDatabaseInfo(true);
-    options.setShowJdbcDriverInfo(true);
     return this;
   }
 
@@ -224,6 +216,26 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public String toString()
   {
     return options.toString();
+  }
+
+  public BaseTextOptionsBuilder<O> withFooter()
+  {
+    options.setNoFooter(false);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> withHeader()
+  {
+    options.setNoHeader(false);
+    return this;
+  }
+
+  public BaseTextOptionsBuilder<O> withInfo()
+  {
+    options.setNoSchemaCrawlerInfo(false);
+    options.setShowDatabaseInfo(true);
+    options.setShowJdbcDriverInfo(true);
+    return this;
   }
 
 }

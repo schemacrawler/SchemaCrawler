@@ -113,9 +113,9 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public final SchemaTextOptionsBuilder noRemarks(final boolean value)
+  public final SchemaTextOptionsBuilder noRemarks()
   {
-    options.setHideRemarks(value);
+    options.setHideRemarks(true);
     return this;
   }
 
@@ -174,6 +174,12 @@ public class SchemaTextOptionsBuilder
   public final SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
     options.setShowWeakAssociations(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder withRemarks()
+  {
+    options.setHideRemarks(false);
     return this;
   }
 

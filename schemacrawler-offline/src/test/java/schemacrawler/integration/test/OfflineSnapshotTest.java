@@ -166,7 +166,7 @@ public class OfflineSnapshotTest
       .toOptions();
 
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
-    schemaTextOptionsBuilder.showInfo();
+    schemaTextOptionsBuilder.withInfo();
 
     final OutputOptions inputOptions = new OutputOptionsBuilder()
       .withCompressedInputFile(serializedDatabaseFile).toOptions();
