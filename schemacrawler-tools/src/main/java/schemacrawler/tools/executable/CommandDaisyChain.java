@@ -78,12 +78,12 @@ public final class CommandDaisyChain
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          commonTextOptions.noFooter(true);
+          commonTextOptions.noFooter();
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          commonTextOptions.noHeader(true);
+          commonTextOptions.noHeader();
           commonTextOptions.noInfo();
 
           commonTextOptions.appendOutput();
@@ -91,9 +91,9 @@ public final class CommandDaisyChain
         else
         {
           // Middle command - no header, footer, or info
-          commonTextOptions.noHeader(true);
+          commonTextOptions.noHeader();
           commonTextOptions.noInfo();
-          commonTextOptions.noFooter(true);
+          commonTextOptions.noFooter();
 
           commonTextOptions.appendOutput();
         }

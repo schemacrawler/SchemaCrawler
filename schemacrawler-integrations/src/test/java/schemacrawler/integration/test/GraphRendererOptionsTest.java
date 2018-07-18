@@ -359,7 +359,7 @@ public class GraphRendererOptionsTest
     graphOptionsBuilder.sortTables(true);
     if (!graphOptions.isNoInfo())
     {
-      graphOptionsBuilder.showInfo();
+      graphOptionsBuilder.withInfo();
     }
     if (!"maximum".equals(options.getSchemaInfoLevel().getTag()))
     {

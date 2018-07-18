@@ -62,14 +62,21 @@ public final class AdditionalConfigOptionsParser
       }
       else
       {
-        textOptionsBuilder.showInfo();
+        textOptionsBuilder.withInfo();
       }
       consumeOption("noinfo");
     }
     if (config.hasValue("noremarks"))
     {
       final boolean value = config.getBooleanValue("noremarks", true);
-      textOptionsBuilder.noRemarks(value);
+      if (value)
+      {
+        textOptionsBuilder.noRemarks();
+      }
+      else
+      {
+        textOptionsBuilder.withRemarks();
+      }
       consumeOption("noremarks");
     }
     if (config.hasValue("weakassociations"))

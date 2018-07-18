@@ -132,7 +132,7 @@ public class SpinThroughTest
             .toOptions();
 
           final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
-          schemaTextOptionsBuilder.showInfo();
+          schemaTextOptionsBuilder.withInfo();
 
           final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());
