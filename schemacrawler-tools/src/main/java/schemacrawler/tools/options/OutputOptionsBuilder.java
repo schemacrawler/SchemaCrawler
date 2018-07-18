@@ -353,6 +353,11 @@ public final class OutputOptionsBuilder
       {
         this.outputResource = new ConsoleOutputResource();
       }
+      else if (!(inputResource instanceof EmptyInputResource))
+      {
+        // Tacky hack for script
+        this.outputResource = new ConsoleOutputResource();
+      }
       else
       {
         final String extension;
@@ -360,11 +365,6 @@ public final class OutputOptionsBuilder
         {
           // Tacky hack for htmlx format
           extension = "svg.html";
-        }
-        else if (!(inputResource instanceof EmptyInputResource))
-        {
-          // Tacky hack for script
-          extension = "txt";
         }
         else
         {
