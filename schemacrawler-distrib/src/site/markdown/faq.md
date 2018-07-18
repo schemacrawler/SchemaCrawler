@@ -111,7 +111,8 @@ Yes, the SchemaCrawler command-line can be called from ant, using the exec task.
 Yes SchemaCrawler can be used in a Apache Maven project as an API, or to generate Apache Maven reports in your projects. In order to use SchemaCrawler in your Apache Maven projects, simply add a dependency to SchemaCrawler in your pom.xml.
 _For more details, see the [plugins](plugins.html) page._
 
-Using the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) , you can generate a SchemaCrawler report along with other reports for your Apache Maven generated site.
+Using the [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin), 
+you can generate a SchemaCrawler report along with other reports for your Apache Maven generated site.
 
 ----------
 

@@ -267,7 +267,8 @@ Call the SchemaCrawler command-line from ant, using the exec task.
 
 ### <a name="maven-report">How to use SchemaCrawler To Produce an Apache Maven Report</a>
 
-[SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) is a SourceForge project that provides an Apache Maven plugin that can generate database documentation for an Apache Maven-generated website.
+The [SchemaCrawler Report Maven Plugin](https://github.com/schemacrawler/SchemaCrawler-Report-Maven-Plugin) 
+can generate database documentation for an Apache Maven-generated website.
 
 ----------
 
