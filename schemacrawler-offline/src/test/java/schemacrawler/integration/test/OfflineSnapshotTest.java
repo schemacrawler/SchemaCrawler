@@ -50,7 +50,6 @@ import org.junit.Test;
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -166,7 +165,7 @@ public class OfflineSnapshotTest
       .toOptions();
 
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
-    schemaTextOptionsBuilder.withInfo();
+    schemaTextOptionsBuilder.noInfo(false);
 
     final OutputOptions inputOptions = new OutputOptionsBuilder()
       .withCompressedInputFile(serializedDatabaseFile).toOptions();

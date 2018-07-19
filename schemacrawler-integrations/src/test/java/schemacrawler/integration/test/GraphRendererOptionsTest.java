@@ -357,10 +357,7 @@ public class GraphRendererOptionsTest
 
     final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder(graphOptions);
     graphOptionsBuilder.sortTables(true);
-    if (!graphOptions.isNoInfo())
-    {
-      graphOptionsBuilder.withInfo();
-    }
+    graphOptionsBuilder.noInfo(graphOptions.isNoInfo());
     if (!"maximum".equals(options.getSchemaInfoLevel().getTag()))
     {
       graphOptionsBuilder.weakAssociations(true);

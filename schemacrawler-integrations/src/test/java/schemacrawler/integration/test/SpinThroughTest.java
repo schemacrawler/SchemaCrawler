@@ -46,7 +46,6 @@ import org.junit.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
@@ -125,14 +124,12 @@ public class SpinThroughTest
 
           final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
             .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
-            .includeAllSequences()
-            .includeAllSynonyms()
-            .includeAllRoutines();
+            .includeAllSequences().includeAllSynonyms().includeAllRoutines();
           final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
             .toOptions();
 
           final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
-          schemaTextOptionsBuilder.withInfo();
+          schemaTextOptionsBuilder.noInfo(false);
 
           final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
             .name());

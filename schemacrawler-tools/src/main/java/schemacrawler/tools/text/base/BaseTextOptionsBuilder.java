@@ -144,11 +144,22 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
+  /**
+   * Corresponds to the -noinfo command-line argument.
+   */
   public BaseTextOptionsBuilder<O> noInfo()
   {
-    options.setNoSchemaCrawlerInfo(true);
-    options.setShowDatabaseInfo(false);
-    options.setShowJdbcDriverInfo(false);
+    return noInfo(true);
+  }
+
+  /**
+   * Corresponds to the -noinfo=<boolean> command-line argument.
+   */
+  public BaseTextOptionsBuilder<O> noInfo(final boolean value)
+  {
+    options.setNoSchemaCrawlerInfo(value);
+    options.setShowDatabaseInfo(!value);
+    options.setShowJdbcDriverInfo(!value);
     return this;
   }
 
@@ -216,26 +227,6 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public String toString()
   {
     return options.toString();
-  }
-
-  public BaseTextOptionsBuilder<O> withFooter()
-  {
-    options.setNoFooter(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> withHeader()
-  {
-    options.setNoHeader(false);
-    return this;
-  }
-
-  public BaseTextOptionsBuilder<O> withInfo()
-  {
-    options.setNoSchemaCrawlerInfo(false);
-    options.setShowDatabaseInfo(true);
-    options.setShowJdbcDriverInfo(true);
-    return this;
   }
 
 }

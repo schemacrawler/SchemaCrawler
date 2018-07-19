@@ -113,12 +113,47 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public final SchemaTextOptionsBuilder noRemarks()
+  public final SchemaTextOptionsBuilder noPortableNames()
   {
-    options.setHideRemarks(true);
+    options.setHideTableConstraintNames(false);
+    options.setHideForeignKeyNames(false);
+    options.setHideIndexNames(false);
+    options.setHidePrimaryKeyNames(false);
+    options.setHideTriggerNames(false);
+    options.setHideRoutineSpecificNames(false);
+    options.setShowUnqualifiedNames(false);
+
     return this;
   }
 
+  /**
+   * Corresponds to the -noremarks command-line argument.
+   */
+  public final SchemaTextOptionsBuilder noRemarks()
+  {
+    return noRemarks(true);
+  }
+
+  /**
+   * Corresponds to the -noremarks=<boolean> command-line argument.
+   */
+  public final SchemaTextOptionsBuilder noRemarks(final boolean value)
+  {
+    options.setHideRemarks(value);
+    return this;
+  }
+
+  /**
+   * Corresponds to the -portablenames command-line argument.
+   */
+  public final SchemaTextOptionsBuilder portableNames()
+  {
+    return portableNames(true);
+  }
+
+  /**
+   * Corresponds to the -portablenames=<boolean> command-line argument.
+   */
   public final SchemaTextOptionsBuilder portableNames(final boolean value)
   {
     options.setHideTableConstraintNames(value);
@@ -174,12 +209,6 @@ public class SchemaTextOptionsBuilder
   public final SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
     options.setShowWeakAssociations(value);
-    return this;
-  }
-
-  public final SchemaTextOptionsBuilder withRemarks()
-  {
-    options.setHideRemarks(false);
     return this;
   }
 
