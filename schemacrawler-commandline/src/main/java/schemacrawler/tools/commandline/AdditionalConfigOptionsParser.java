@@ -56,27 +56,13 @@ public final class AdditionalConfigOptionsParser
     if (config.hasValue("noinfo"))
     {
       final boolean noinfo = config.getBooleanValue("noinfo", true);
-      if (noinfo)
-      {
-        textOptionsBuilder.noInfo();
-      }
-      else
-      {
-        textOptionsBuilder.withInfo();
-      }
+      textOptionsBuilder.noInfo(noinfo);
       consumeOption("noinfo");
     }
     if (config.hasValue("noremarks"))
     {
-      final boolean value = config.getBooleanValue("noremarks", true);
-      if (value)
-      {
-        textOptionsBuilder.noRemarks();
-      }
-      else
-      {
-        textOptionsBuilder.withRemarks();
-      }
+      final boolean noremarks = config.getBooleanValue("noremarks", true);
+      textOptionsBuilder.noRemarks(noremarks);
       consumeOption("noremarks");
     }
     if (config.hasValue("weakassociations"))
@@ -107,8 +93,9 @@ public final class AdditionalConfigOptionsParser
     }
     if (config.hasValue("portablenames"))
     {
-      final boolean value = config.getBooleanValue("portablenames", true);
-      textOptionsBuilder.portableNames(value);
+      final boolean portablenames = config.getBooleanValue("portablenames",
+                                                           true);
+      textOptionsBuilder.portableNames(portablenames);
       consumeOption("portablenames");
     }
 

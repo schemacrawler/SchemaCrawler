@@ -107,7 +107,7 @@ public class LintOutputTest
           .toOptions();
 
         final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
-        schemaTextOptionsBuilder.withInfo();
+        schemaTextOptionsBuilder.noInfo(false);
         queriesConfig.putAll(schemaTextOptionsBuilder.toConfig());
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);

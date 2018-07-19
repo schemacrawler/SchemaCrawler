@@ -67,21 +67,24 @@ public final class OperationOptionsBuilder
     return this;
   }
 
-  /**
-   * Whether to show LOBs.
-   */
-  public OperationOptionsBuilder showLobs(final boolean value)
-  {
-    options.setShowLobs(value);
-    return this;
-  }
-
   @Override
   public Config toConfig()
   {
     final Config config = super.toConfig();
     config.setBooleanValue(SHOW_LOBS, options.isShowLobs());
     return config;
+  }
+
+  /**
+   * Show LOB data, or not.
+   * 
+   * @param Whether
+   *        to show LOB data.
+   */
+  public OperationOptionsBuilder lobs(boolean value)
+  {
+    options.setShowLobs(value);
+    return this;
   }
 
 }
