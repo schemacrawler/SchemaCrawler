@@ -100,8 +100,23 @@ abstract class BaseCommandChain
 
     for (final SchemaCrawlerCommand scCommand: scCommands)
     {
-      scCommand.checkAvailibility();
       scCommand.execute();
+    }
+  }
+
+  @Override
+  public final void checkAvailibility()
+    throws Exception
+  {
+    if (scCommands.isEmpty())
+    {
+      LOGGER.log(Level.INFO, "No commands to execute");
+      return;
+    }
+
+    for (final SchemaCrawlerCommand scCommand: scCommands)
+    {
+      scCommand.checkAvailibility();
     }
   }
 
