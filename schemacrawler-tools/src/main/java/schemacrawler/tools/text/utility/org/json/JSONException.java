@@ -2,8 +2,8 @@ package schemacrawler.tools.text.utility.org.json;
 
 
 /**
- * {@link https://github.com/stleary/JSON-java}
- *
+ * @see <a href=
+ *      "https://github.com/stleary/JSON-java">stleary/JSON-java</a>
  * @author JSON.org
  * @version 2010-12-24
  */
