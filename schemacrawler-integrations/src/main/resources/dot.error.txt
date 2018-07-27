@@ -1,5 +1,7 @@
 Graphviz was not available to create the requested diagram.
  
 Please reinstall Graphviz, and make it available on the 
-system PATH. Meanwhile, a Graphviz DOT file has been 
-created instead. 
+system PATH. If you are unable to install Graphviz, make
+https://github.com/nidi3/graphviz-java jar files available
+to SchemaCrawler, in the lib/ folder. Otherwise, consider 
+generating a DOT file in scdot format.

@@ -29,16 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static java.nio.file.Files.move;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
@@ -53,7 +50,6 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.traversal.SchemaTraversalHandler;
 import schemacrawler.tools.traversal.SchemaTraverser;
 import schemacrawler.utility.NamedObjectSort;
-import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the graphing integration.
@@ -62,14 +58,24 @@ public final class GraphRenderer
   extends BaseSchemaCrawlerCommand
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphRenderer.class.getName());
-
   private GraphOptions graphOptions;
 
   public GraphRenderer(final String command)
   {
     super(command);
+  }
+
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    super.checkAvailibility();
+    checkOptions();
+    loadGraphOptions();
+    // Check if graph executor is available
+    final Path dotFile = createTempFilePath("schemacrawler.", "dot");
+    Files.write(dotFile, "TEMP".getBytes());
+    getGraphExecutor(dotFile);
   }
 
   /**
@@ -124,54 +130,14 @@ public final class GraphRenderer
     traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort
-      .getNamedObjectSort(getGraphOptions().isAlphabeticalSortForTables()));
+      .getNamedObjectSort(graphOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(NamedObjectSort
-      .getNamedObjectSort(getGraphOptions().isAlphabeticalSortForRoutines()));
+      .getNamedObjectSort(graphOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
-    if (graphOutputFormat != GraphOutputFormat.scdot)
-    {
-      final Path outputFile = outputOptions.getOutputFile();
-
-      // Create graph image
-      final GraphOptions graphOptions = getGraphOptions();
-      final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
-      boolean graphGenerated = false;
-
-      if (!graphGenerated)
-      {
-        graphGenerated = generateGraph(new GraphProcessExecutor(dotFile,
-                                                                outputFile,
-                                                                graphOutputFormat,
-                                                                graphvizOpts));
-      }
-
-      if (!graphGenerated)
-      {
-        graphGenerated = generateGraph(new GraphJavaExecutor(dotFile,
-                                                             outputFile,
-                                                             graphOutputFormat));
-      }
-
-      if (!graphGenerated)
-      {
-        final Path movedDotFile = moveDotFile(dotFile, outputFile);
-
-        final String message = readResourceFully("/dot.error.txt");
-        throw new SchemaCrawlerCommandLineException(String
-          .format("%s%nGenerated DOT file:%n%s",
-                  message,
-                  movedDotFile == null? "<failed>": movedDotFile));
-      }
-
-    }
-  }
-
-  public final GraphOptions getGraphOptions()
-  {
-    loadGraphOptions();
-    return graphOptions;
+    final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
+    graphExecutor.call();
   }
 
   public final void setGraphOptions(final GraphOptions graphOptions)
@@ -179,23 +145,53 @@ public final class GraphRenderer
     this.graphOptions = graphOptions;
   }
 
-  private boolean generateGraph(final GraphExecutor graphExecutor)
+  private GraphExecutor getGraphExecutor(final Path dotFile)
+    throws SchemaCrawlerException, IOException
   {
-    requireNonNull(graphExecutor, "No graph executor provided");
+    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
+    // Set the format, in case we are using the default
+    outputOptions = new OutputOptionsBuilder(outputOptions)
+      .withOutputFormat(graphOutputFormat)
+      .withOutputFormatValue(graphOutputFormat.getFormat()).toOptions();
 
-    boolean graphGenerated = false;
-    try
+    final Path outputFile = outputOptions.getOutputFile();
+
+    GraphExecutor graphExecutor;
+    if (graphOutputFormat != GraphOutputFormat.scdot)
     {
-      if (graphExecutor.canGenerate())
+      final List<String> graphvizOpts = graphOptions.getGraphvizOpts();
+      boolean graphExecutorAvailable = false;
+
+      // Try 1: Use Graphviz
+      graphExecutor = new GraphProcessExecutor(dotFile,
+                                               outputFile,
+                                               graphOutputFormat,
+                                               graphvizOpts);
+      graphExecutorAvailable = graphExecutor.canGenerate();
+
+      // Try 2: Use Java library for Graphviz
+      if (!graphExecutorAvailable)
       {
-        graphGenerated = graphExecutor.call();
+        graphExecutor = new GraphJavaExecutor(dotFile,
+                                              outputFile,
+                                              graphOutputFormat);
+        graphExecutorAvailable = graphExecutor.canGenerate();
       }
+
+      if (!graphExecutorAvailable)
+      {
+        final String message = readResourceFully("/dot.error.txt");
+        throw new SchemaCrawlerCommandLineException(message);
+      }
+
     }
-    catch (final Exception e)
+    else
     {
-      // Assume that all exceptions have been logged previously
+      graphExecutor = new GraphNoOpExecutor(graphOutputFormat);
     }
-    return graphGenerated;
+
+    return graphExecutor;
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()
@@ -216,7 +212,6 @@ public final class GraphRenderer
     throws SchemaCrawlerException
   {
     final SchemaTraversalHandler formatter;
-    final GraphOptions graphOptions = getGraphOptions();
     final SchemaTextDetailType schemaTextDetailType = getSchemaTextDetailType();
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
@@ -235,28 +230,6 @@ public final class GraphRenderer
       graphOptions = new GraphOptionsBuilder()
         .fromConfig(additionalConfiguration).toOptions();
     }
-  }
-
-  private Path moveDotFile(final Path dotFile, final Path outputFile)
-  {
-    // Move DOT file to current directory
-    final Path movedDotFile = outputFile.normalize().getParent()
-      .resolve(outputFile.getFileName() + ".dot");
-
-    try
-    {
-      move(dotFile, movedDotFile, REPLACE_EXISTING);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.INFO,
-                 String
-                   .format("Could not move %s to %s", dotFile, movedDotFile),
-                 e);
-      return null;
-    }
-
-    return movedDotFile;
   }
 
 }

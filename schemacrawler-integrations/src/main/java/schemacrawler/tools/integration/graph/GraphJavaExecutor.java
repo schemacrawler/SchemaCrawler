@@ -67,6 +67,10 @@ final class GraphJavaExecutor
                  e);
       return false;
     }
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Generated diagram <%s>", outputFile));
+
     return true;
   }
 

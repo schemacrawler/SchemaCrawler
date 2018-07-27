@@ -6,16 +6,24 @@ import static java.util.Objects.requireNonNull;
 import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
+import guru.nidi.graphviz.engine.GraphvizEngine;
 import guru.nidi.graphviz.engine.GraphvizJdkEngine;
 import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.IOUtility;
+import sf.util.SchemaCrawlerLogger;
 
 public final class GraphvizJavaExecutorUtility
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(GraphvizJavaExecutorUtility.class.getName());
 
   public static boolean canMap(final GraphOutputFormat graphOutputFormat)
   {
@@ -51,11 +59,13 @@ public final class GraphvizJavaExecutorUtility
       String dotSource = IOUtility.readFully(new FileReader(dotFile.toFile()));
       dotSource = dotSource.replaceAll("\\R", " ");
 
-      Graphviz.useEngine(new GraphvizV8Engine(), new GraphvizJdkEngine());
+      final List<GraphvizEngine> engines = loadGraphvizEngines();
+      Graphviz.useEngine(engines);
+
       final Format format = map(graphOutputFormat);
       Graphviz.fromString(dotSource).render(format).toFile(outputFile.toFile());
     }
-    catch (final Exception e)
+    catch (final Throwable e)
     {
       throw new SchemaCrawlerException("Cannot generate graph from " + dotFile,
                                        e);
@@ -76,6 +86,32 @@ public final class GraphvizJavaExecutorUtility
     final Path outputFile = Paths.get(args[2]).normalize().toAbsolutePath();
 
     generateGraph(dotFile, outputFile, graphOutputFormat);
+  }
+
+  private static List<GraphvizEngine> loadGraphvizEngines()
+  {
+    final List<GraphvizEngine> engines = new ArrayList<>();
+    try
+    {
+      final GraphvizEngine engine = new GraphvizV8Engine();
+      engines.add(engine);
+    }
+    catch (final NoClassDefFoundError e)
+    {
+      LOGGER.log(Level.INFO, "Cannot load GraphvizV8Engine");
+    }
+
+    try
+    {
+      final GraphvizEngine engine = new GraphvizJdkEngine();
+      engines.add(engine);
+    }
+    catch (final NoClassDefFoundError e)
+    {
+      LOGGER.log(Level.INFO, "Cannot load GraphvizJdkEngine");
+    }
+
+    return engines;
   }
 
   private static Format map(final GraphOutputFormat graphOutputFormat)
