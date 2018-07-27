@@ -34,8 +34,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * {@link https://github.com/stleary/JSON-java}
- *
+ * @see <a href=
+ *      "https://github.com/stleary/JSON-java">stleary/JSON-java</a>
  * @author JSON.org
  * @version 2011-08-25
  */

@@ -153,7 +153,7 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   }
 
   /**
-   * Corresponds to the -noinfo=<boolean> command-line argument.
+   * Corresponds to the -noinfo=&lt;boolean&gt; command-line argument.
    */
   public BaseTextOptionsBuilder<O> noInfo(final boolean value)
   {

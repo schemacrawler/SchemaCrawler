@@ -135,7 +135,8 @@ public class SchemaTextOptionsBuilder
   }
 
   /**
-   * Corresponds to the -noremarks=<boolean> command-line argument.
+   * Corresponds to the -noremarks=&lt;boolean&gt; command-line
+   * argument.
    */
   public final SchemaTextOptionsBuilder noRemarks(final boolean value)
   {
@@ -152,7 +153,8 @@ public class SchemaTextOptionsBuilder
   }
 
   /**
-   * Corresponds to the -portablenames=<boolean> command-line argument.
+   * Corresponds to the -portablenames=&lt;boolean&gt; command-line
+   * argument.
    */
   public final SchemaTextOptionsBuilder portableNames(final boolean value)
   {
