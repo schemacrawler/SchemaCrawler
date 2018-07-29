@@ -75,10 +75,7 @@ public final class OperationCommand
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
-
-    loadOperationOptions();
 
     if (!isOutputFormatSupported())
     {
@@ -151,10 +148,12 @@ public final class OperationCommand
     }
   }
 
-  public final OperationOptions getOperationOptions()
+  @Override
+  public void initialize()
+    throws Exception
   {
+    super.initialize();
     loadOperationOptions();
-    return operationOptions;
   }
 
   public boolean isOutputFormatSupported()
@@ -175,7 +174,6 @@ public final class OperationCommand
   {
     final Operation operation = getOperation();
 
-    final OperationOptions operationOptions = getOperationOptions();
     final DataTraversalHandler formatter;
     final TextOutputFormat outputFormat = TextOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());
@@ -244,7 +242,7 @@ public final class OperationCommand
   {
     final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
     Collections.sort(tables,
-                     NamedObjectSort.getNamedObjectSort(getOperationOptions()
+                     NamedObjectSort.getNamedObjectSort(operationOptions
                        .isAlphabeticalSortForTables()));
     return tables;
   }

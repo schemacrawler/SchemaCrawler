@@ -66,7 +66,6 @@ public class EmbeddedGraphRenderer
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     final Path finalHtmlFile = createTempFilePath("schemacrawler", "html");

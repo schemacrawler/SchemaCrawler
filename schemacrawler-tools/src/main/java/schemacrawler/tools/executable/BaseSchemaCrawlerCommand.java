@@ -82,21 +82,6 @@ public abstract class BaseSchemaCrawlerCommand
     // Assume that the command is available
   }
 
-  protected void checkOptions()
-  {
-    requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
-    requireNonNull(additionalConfiguration,
-                   "No additional configuration provided");
-    requireNonNull(outputOptions, "No output options provided");
-    requireNonNull(identifiers, "No database identifiers provided");
-  }
-
-  protected void checkCatalog()
-  {
-    requireNonNull(catalog, "No database catalog provided");
-    requireNonNull(connection, "No database connection provided");
-  }
-
   @Override
   public final Config getAdditionalConfiguration()
   {
@@ -146,6 +131,13 @@ public abstract class BaseSchemaCrawlerCommand
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
+  }
+
+  @Override
+  public void initialize()
+    throws Exception
+  {
+    checkOptions();
   }
 
   @Override
@@ -213,6 +205,21 @@ public abstract class BaseSchemaCrawlerCommand
   public final String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  protected void checkCatalog()
+  {
+    requireNonNull(catalog, "No database catalog provided");
+    requireNonNull(connection, "No database connection provided");
+  }
+
+  private void checkOptions()
+  {
+    requireNonNull(schemaCrawlerOptions, "No SchemaCrawler options provided");
+    requireNonNull(additionalConfiguration,
+                   "No additional configuration provided");
+    requireNonNull(outputOptions, "No output options provided");
+    requireNonNull(identifiers, "No database identifiers provided");
   }
 
 }

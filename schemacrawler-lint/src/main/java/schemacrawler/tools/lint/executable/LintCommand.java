@@ -61,7 +61,6 @@ public class LintCommand
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     // Read lint options from the config

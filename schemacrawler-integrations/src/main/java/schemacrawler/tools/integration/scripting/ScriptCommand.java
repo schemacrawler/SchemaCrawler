@@ -73,7 +73,6 @@ public final class ScriptCommand
     throws Exception
   {
     super.checkAvailibility();
-    checkOptions();
     // Check if script engine is available
     getScriptEngine();
   }
@@ -85,7 +84,6 @@ public final class ScriptCommand
   public final void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     final ScriptEngine scriptEngine = getScriptEngine();

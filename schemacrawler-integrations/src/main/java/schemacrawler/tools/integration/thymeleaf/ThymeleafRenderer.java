@@ -70,7 +70,6 @@ public final class ThymeleafRenderer
   public final void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     final Context context = new Context();

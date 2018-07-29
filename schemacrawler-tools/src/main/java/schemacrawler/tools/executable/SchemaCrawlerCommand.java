@@ -45,6 +45,13 @@ import schemacrawler.utility.Identifiers;
 public interface SchemaCrawlerCommand
 {
 
+  /**
+   * Checks whether a command is available, and throws an exception if
+   * it is not available.
+   *
+   * @throws Exception
+   *         On an exception
+   */
   void checkAvailibility()
     throws Exception;
 
@@ -71,6 +78,15 @@ public interface SchemaCrawlerCommand
   OutputOptions getOutputOptions();
 
   SchemaCrawlerOptions getSchemaCrawlerOptions();
+
+  /**
+   * Initializes the command for execution.
+   *
+   * @throws Exception
+   *         On an exception
+   */
+  void initialize()
+    throws Exception;
 
   void setAdditionalConfiguration(Config config);
 
