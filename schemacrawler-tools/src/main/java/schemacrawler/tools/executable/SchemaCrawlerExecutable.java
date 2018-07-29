@@ -114,6 +114,7 @@ public final class SchemaCrawlerExecutable
     // Fail early (before loading the catalog) if the command is not
     // available
     final SchemaCrawlerCommand scCommand = loadCommand();
+    scCommand.initialize();
     scCommand.checkAvailibility();
 
     final Catalog catalog = loadCatalog();

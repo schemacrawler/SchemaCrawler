@@ -84,7 +84,6 @@ public final class VelocityRenderer
   public final void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     // Set the file path, in case the template is a file template

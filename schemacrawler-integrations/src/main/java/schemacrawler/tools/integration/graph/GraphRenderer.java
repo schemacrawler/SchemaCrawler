@@ -70,8 +70,6 @@ public final class GraphRenderer
     throws Exception
   {
     super.checkAvailibility();
-    checkOptions();
-    loadGraphOptions();
     // Check if graph executor is available
     final Path dotFile = createTempFilePath("schemacrawler.", "dot");
     Files.write(dotFile, "TEMP".getBytes());
@@ -85,10 +83,7 @@ public final class GraphRenderer
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
-
-    loadGraphOptions();
 
     // Determine what decorators to apply to the database
     Catalog aCatalog = catalog;
@@ -138,6 +133,14 @@ public final class GraphRenderer
 
     final GraphExecutor graphExecutor = getGraphExecutor(dotFile);
     graphExecutor.call();
+  }
+
+  @Override
+  public void initialize()
+    throws Exception
+  {
+    super.initialize();
+    loadGraphOptions();
   }
 
   public final void setGraphOptions(final GraphOptions graphOptions)

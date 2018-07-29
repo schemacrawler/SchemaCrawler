@@ -89,6 +89,21 @@ abstract class BaseCommandChain
     }
   }
 
+  protected final void checkAvailibilityChain()
+    throws Exception
+  {
+    if (scCommands.isEmpty())
+    {
+      LOGGER.log(Level.INFO, "No commands to execute");
+      return;
+    }
+
+    for (final SchemaCrawlerCommand scCommand: scCommands)
+    {
+      scCommand.checkAvailibility();
+    }
+  }
+
   protected final void executeChain()
     throws Exception
   {
@@ -104,19 +119,18 @@ abstract class BaseCommandChain
     }
   }
 
-  @Override
-  public final void checkAvailibility()
+  protected final void initializeChain()
     throws Exception
   {
     if (scCommands.isEmpty())
     {
-      LOGGER.log(Level.INFO, "No commands to execute");
+      LOGGER.log(Level.INFO, "No commands to initialize");
       return;
     }
 
     for (final SchemaCrawlerCommand scCommand: scCommands)
     {
-      scCommand.checkAvailibility();
+      scCommand.initialize();
     }
   }
 

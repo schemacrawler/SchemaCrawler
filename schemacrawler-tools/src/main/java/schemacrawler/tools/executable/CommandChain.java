@@ -107,9 +107,10 @@ public final class CommandChain
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
+    initializeChain();
+    checkAvailibilityChain();
     executeChain();
   }
 

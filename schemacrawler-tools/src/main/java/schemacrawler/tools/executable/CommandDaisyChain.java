@@ -50,7 +50,6 @@ public final class CommandDaisyChain
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     // Commands are processed at execution time. That is, after
@@ -109,6 +108,8 @@ public final class CommandDaisyChain
 
     }
 
+    initializeChain();
+    checkAvailibilityChain();
     executeChain();
 
   }

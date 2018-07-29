@@ -59,10 +59,7 @@ public final class SchemaTextRenderer
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
-
-    loadSchemaTextOptions();
 
     // Determine what decorators to apply to the database
     Catalog aCatalog = catalog;
@@ -84,20 +81,20 @@ public final class SchemaTextRenderer
     traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort
-      .getNamedObjectSort(getSchemaTextOptions()
-        .isAlphabeticalSortForTables()));
+      .getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(NamedObjectSort
-      .getNamedObjectSort(getSchemaTextOptions()
-        .isAlphabeticalSortForRoutines()));
+      .getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
   }
 
-  public final SchemaTextOptions getSchemaTextOptions()
+  @Override
+  public void initialize()
+    throws Exception
   {
+    super.initialize();
     loadSchemaTextOptions();
-    return schemaTextOptions;
   }
 
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)

@@ -72,7 +72,6 @@ public final class FreeMarkerRenderer
   public final void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     String templateLocation = outputOptions.getOutputFormatValue();

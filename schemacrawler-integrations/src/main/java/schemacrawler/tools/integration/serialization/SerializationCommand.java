@@ -68,7 +68,6 @@ public final class SerializationCommand
   public void execute()
     throws Exception
   {
-    checkOptions();
     checkCatalog();
 
     final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
