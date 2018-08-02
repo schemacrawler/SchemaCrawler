@@ -32,8 +32,6 @@ package schemacrawler.tools.integration.graph;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -59,6 +57,7 @@ public final class GraphRenderer
 {
 
   private GraphOptions graphOptions;
+  private GraphOutputFormat graphOutputFormat;
 
   public GraphRenderer(final String command)
   {
@@ -69,11 +68,25 @@ public final class GraphRenderer
   public void checkAvailibility()
     throws Exception
   {
-    super.checkAvailibility();
-    // Check if graph executor is available
-    final Path dotFile = createTempFilePath("schemacrawler.", "dot");
-    Files.write(dotFile, "TEMP".getBytes());
-    getGraphExecutor(dotFile);
+    if (graphOutputFormat == GraphOutputFormat.scdot)
+    {
+      return;
+    }
+    else if (GraphvizUtility.isGraphvizAvailable())
+    {
+      return;
+    }
+    else if (GraphvizJavaExecutorUtility
+      .isGraphvizJavaAvailable(graphOutputFormat))
+    {
+      return;
+    }
+    else
+    {
+      throw new SchemaCrawlerException(String
+        .format("Cannot generate graph in %s output format",
+                graphOutputFormat));
+    }
   }
 
   /**
@@ -99,8 +112,6 @@ public final class GraphRenderer
                                        schemaCrawlerOptions);
     }
 
-    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
     // Set the format, in case we are using the default
     outputOptions = new OutputOptionsBuilder(outputOptions)
       .withOutputFormat(graphOutputFormat)
@@ -149,10 +160,8 @@ public final class GraphRenderer
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile)
-    throws SchemaCrawlerException, IOException
+    throws SchemaCrawlerException
   {
-    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
     // Set the format, in case we are using the default
     outputOptions = new OutputOptionsBuilder(outputOptions)
       .withOutputFormat(graphOutputFormat)
@@ -233,6 +242,8 @@ public final class GraphRenderer
       graphOptions = new GraphOptionsBuilder()
         .fromConfig(additionalConfiguration).toOptions();
     }
+    graphOutputFormat = GraphOutputFormat
+      .fromFormat(outputOptions.getOutputFormatValue());
   }
 
 }
