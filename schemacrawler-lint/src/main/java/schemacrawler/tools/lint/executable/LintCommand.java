@@ -58,6 +58,13 @@ public class LintCommand
   }
 
   @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Lint is always available
+  }
+
+  @Override
   public void execute()
     throws Exception
   {

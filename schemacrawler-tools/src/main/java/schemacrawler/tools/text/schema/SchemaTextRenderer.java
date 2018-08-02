@@ -56,6 +56,13 @@ public final class SchemaTextRenderer
   }
 
   @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Text rendering is always available
+  }
+
+  @Override
   public void execute()
     throws Exception
   {

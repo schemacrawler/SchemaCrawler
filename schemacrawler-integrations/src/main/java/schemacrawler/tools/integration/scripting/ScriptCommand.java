@@ -72,8 +72,6 @@ public final class ScriptCommand
   public void checkAvailibility()
     throws Exception
   {
-    super.checkAvailibility();
-    // Check if script engine is available
     getScriptEngine();
   }
 
