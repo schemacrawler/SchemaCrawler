@@ -72,6 +72,13 @@ public final class OperationCommand
   }
 
   @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Operations are always available
+  }
+
+  @Override
   public void execute()
     throws Exception
   {

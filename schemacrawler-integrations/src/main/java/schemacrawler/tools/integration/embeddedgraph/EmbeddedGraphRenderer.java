@@ -44,9 +44,12 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility;
+import schemacrawler.tools.integration.graph.GraphvizUtility;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class EmbeddedGraphRenderer
@@ -60,6 +63,25 @@ public class EmbeddedGraphRenderer
   public EmbeddedGraphRenderer(final String command)
   {
     super(command);
+  }
+
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    if (GraphvizUtility.isGraphvizAvailable())
+    {
+      return;
+    }
+    else if (GraphvizJavaExecutorUtility
+      .isGraphvizJavaAvailable(GraphOutputFormat.svg))
+    {
+      return;
+    }
+    else
+    {
+      throw new SchemaCrawlerException("Cannot generate graph in SVG format");
+    }
   }
 
   @Override
