@@ -10,11 +10,11 @@ import sf.util.FileContents;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public final class GraphUtility
+public final class GraphvizUtility
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(GraphUtility.class.getName());
+    .getLogger(GraphvizUtility.class.getName());
 
   public static boolean isGraphvizAvailable()
   {
@@ -50,7 +50,7 @@ public final class GraphUtility
     return successful;
   }
 
-  private GraphUtility()
+  private GraphvizUtility()
   {
     // Prevent instantiation
   }

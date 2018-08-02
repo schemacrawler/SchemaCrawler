@@ -18,6 +18,7 @@ import guru.nidi.graphviz.engine.GraphvizV8Engine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public final class GraphvizJavaExecutorUtility
 {
@@ -70,6 +71,40 @@ public final class GraphvizJavaExecutorUtility
       throw new SchemaCrawlerException("Cannot generate graph from " + dotFile,
                                        e);
     }
+  }
+
+  public static boolean isGraphvizJavaAvailable(final GraphOutputFormat graphOutputFormat)
+  {
+
+    final String className = "guru.nidi.graphviz.engine.Graphviz";
+
+    boolean hasClass;
+    boolean supportsFormat;
+    try
+    {
+      Class.forName(className);
+      hasClass = true;
+      supportsFormat = hasClass && canMap(graphOutputFormat);
+    }
+    catch (final Exception e)
+    {
+      LOGGER
+        .log(Level.INFO, new StringFormat("Could not load <%s>", className), e);
+      hasClass = false;
+      supportsFormat = false;
+    }
+
+    LOGGER.log(Level.INFO,
+               new StringFormat("Checking if diagram can be generated - "
+                                + " can load <%s> = <%b>, "
+                                + " can generate format <%s> = <%b>",
+                                className,
+                                hasClass,
+                                graphOutputFormat.getDescription(),
+                                supportsFormat));
+
+    return hasClass && supportsFormat;
+
   }
 
   public static void main(final String[] args)

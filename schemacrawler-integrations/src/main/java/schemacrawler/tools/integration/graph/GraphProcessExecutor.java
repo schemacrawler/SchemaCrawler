@@ -116,7 +116,7 @@ final class GraphProcessExecutor
   @Override
   public boolean canGenerate()
   {
-    return GraphUtility.isGraphvizAvailable();
+    return GraphvizUtility.isGraphvizAvailable();
   }
 
   private List<String> createDiagramCommand()

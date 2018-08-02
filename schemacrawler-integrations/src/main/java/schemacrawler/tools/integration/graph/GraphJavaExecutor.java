@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import static schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility.canMap;
 import static schemacrawler.tools.integration.graph.GraphvizJavaExecutorUtility.generateGraph;
 
 import java.nio.file.Path;
@@ -77,35 +76,8 @@ final class GraphJavaExecutor
   @Override
   public boolean canGenerate()
   {
-
-    final String className = "guru.nidi.graphviz.engine.Graphviz";
-
-    boolean hasClass;
-    boolean supportsFormat;
-    try
-    {
-      Class.forName(className);
-      hasClass = true;
-      supportsFormat = hasClass && canMap(graphOutputFormat);
-    }
-    catch (final Exception e)
-    {
-      LOGGER
-        .log(Level.INFO, new StringFormat("Could not load <%s>", className), e);
-      hasClass = false;
-      supportsFormat = false;
-    }
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Checking if diagram can be generated - "
-                                + " can load <%s> = <%b>, "
-                                + " can generate format <%s> = <%b>",
-                                className,
-                                hasClass,
-                                graphOutputFormat.getDescription(),
-                                supportsFormat));
-
-    return hasClass && supportsFormat;
+    return GraphvizJavaExecutorUtility
+      .isGraphvizJavaAvailable(graphOutputFormat);
 
   }
 
