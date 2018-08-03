@@ -76,13 +76,6 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public void checkAvailibility()
-    throws Exception
-  {
-    // Assume that the command is available
-  }
-
-  @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;

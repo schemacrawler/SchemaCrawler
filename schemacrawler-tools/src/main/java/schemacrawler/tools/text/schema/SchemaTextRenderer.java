@@ -96,6 +96,11 @@ public final class SchemaTextRenderer
 
   }
 
+  public SchemaTextOptions getSchemaTextOptions()
+  {
+    return schemaTextOptions;
+  }
+
   @Override
   public void initialize()
     throws Exception

@@ -155,6 +155,11 @@ public final class OperationCommand
     }
   }
 
+  public OperationOptions getOperationOptions()
+  {
+    return operationOptions;
+  }
+
   @Override
   public void initialize()
     throws Exception

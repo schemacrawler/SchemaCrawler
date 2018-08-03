@@ -224,6 +224,26 @@ public final class Utility
   }
 
   /**
+   * Checks if a class is available on the classpath.
+   *
+   * @param className
+   *        Class to check
+   * @return True if the class is available, false otherwise
+   */
+  public static boolean isClassAvailable(final String className)
+  {
+    try
+    {
+      Class.forName(className, false, Utility.class.getClassLoader());
+      return true;
+    }
+    catch (final Exception e)
+    {
+      return false;
+    }
+  }
+
+  /**
    * Checks if the text contains an integer only.
    *
    * @param text

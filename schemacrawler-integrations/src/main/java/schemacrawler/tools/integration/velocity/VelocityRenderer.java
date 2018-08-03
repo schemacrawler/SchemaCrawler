@@ -77,6 +77,14 @@ public final class VelocityRenderer
     super(COMMAND);
   }
 
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Nothing to check at this point. The Command should be available
+    // after the class is loaded, and imports are resolved.
+  }
+
   /**
    * {@inheritDoc}
    */

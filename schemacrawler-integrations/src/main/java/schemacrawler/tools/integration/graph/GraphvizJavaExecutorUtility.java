@@ -19,6 +19,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.IOUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+import sf.util.Utility;
 
 public final class GraphvizJavaExecutorUtility
 {
@@ -75,24 +76,9 @@ public final class GraphvizJavaExecutorUtility
 
   public static boolean isGraphvizJavaAvailable(final GraphOutputFormat graphOutputFormat)
   {
-
     final String className = "guru.nidi.graphviz.engine.Graphviz";
-
-    boolean hasClass;
-    boolean supportsFormat;
-    try
-    {
-      Class.forName(className);
-      hasClass = true;
-      supportsFormat = hasClass && canMap(graphOutputFormat);
-    }
-    catch (final Exception e)
-    {
-      LOGGER
-        .log(Level.INFO, new StringFormat("Could not load <%s>", className), e);
-      hasClass = false;
-      supportsFormat = false;
-    }
+    final boolean hasClass = Utility.isClassAvailable(className);
+    final boolean supportsFormat = canMap(graphOutputFormat);
 
     LOGGER.log(Level.INFO,
                new StringFormat("Checking if diagram can be generated - "
@@ -104,7 +90,6 @@ public final class GraphvizJavaExecutorUtility
                                 supportsFormat));
 
     return hasClass && supportsFormat;
-
   }
 
   public static void main(final String[] args)
