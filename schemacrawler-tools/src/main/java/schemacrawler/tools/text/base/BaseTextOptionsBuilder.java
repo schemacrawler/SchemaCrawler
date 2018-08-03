@@ -132,22 +132,32 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> noFooter()
+  public final BaseTextOptionsBuilder<O> noFooter()
   {
-    options.setNoFooter(true);
+    return noFooter(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> noFooter(final boolean value)
+  {
+    options.setNoFooter(value);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> noHeader()
+  public final BaseTextOptionsBuilder<O> noHeader()
   {
-    options.setNoHeader(true);
+    return noHeader(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> noHeader(final boolean value)
+  {
+    options.setNoHeader(value);
     return this;
   }
 
   /**
    * Corresponds to the -noinfo command-line argument.
    */
-  public BaseTextOptionsBuilder<O> noInfo()
+  public final BaseTextOptionsBuilder<O> noInfo()
   {
     return noInfo(true);
   }
@@ -155,7 +165,7 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   /**
    * Corresponds to the -noinfo=&lt;boolean&gt; command-line argument.
    */
-  public BaseTextOptionsBuilder<O> noInfo(final boolean value)
+  public final BaseTextOptionsBuilder<O> noInfo(final boolean value)
   {
     options.setNoSchemaCrawlerInfo(value);
     options.setShowDatabaseInfo(!value);
@@ -163,19 +173,127 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> overwriteOutput()
+  public final BaseTextOptionsBuilder<O> noSchemaColors()
+  {
+    return noSchemaColors(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> noSchemaColors(final boolean value)
+  {
+    options.setNoSchemaColors(value);
+    return this;
+  }
+
+  public final BaseTextOptionsBuilder<O> noSchemaCrawlerInfo()
+  {
+    return noSchemaCrawlerInfo(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> noSchemaCrawlerInfo(final boolean value)
+  {
+    options.setNoSchemaCrawlerInfo(value);
+    return this;
+  }
+
+  public final BaseTextOptionsBuilder<O> overwriteOutput()
   {
     options.setAppendOutput(false);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> sortTableColumns(final boolean value)
+  public final BaseTextOptionsBuilder<O> showDatabaseInfo()
+  {
+    return showDatabaseInfo(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> showDatabaseInfo(final boolean value)
+  {
+    options.setShowDatabaseInfo(value);
+    return this;
+  }
+
+  public final BaseTextOptionsBuilder<O> showJdbcInfo()
+  {
+    return showJdbcInfo(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> showJdbcInfo(final boolean value)
+  {
+    options.setShowJdbcDriverInfo(value);
+    return this;
+  }
+
+  public final BaseTextOptionsBuilder<O> showUnqualifiedNames()
+  {
+    return showUnqualifiedNames(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> showUnqualifiedNames(final boolean value)
+  {
+    options.setShowUnqualifiedNames(value);
+    return this;
+  }
+
+  /**
+   * Corresponds to the -sortinout command-line argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortInOut()
+  {
+    return sortInOut(true);
+  }
+
+  /**
+   * Corresponds to the -sortinout=&lt;boolean&gt; command-line
+   * argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortInOut(final boolean value)
+  {
+    options.setAlphabeticalSortForRoutineColumns(value);
+    return this;
+  }
+
+  public final BaseTextOptionsBuilder<O> sortRoutines()
+  {
+    return sortRoutines(true);
+  }
+
+  public final BaseTextOptionsBuilder<O> sortRoutines(final boolean value)
+  {
+    options.setAlphabeticalSortForRoutines(value);
+    return this;
+  }
+
+  /**
+   * Corresponds to the -sortcolumns command-line argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortTableColumns()
+  {
+    return sortTableColumns(true);
+  }
+
+  /**
+   * Corresponds to the -sortcolumns=&lt;boolean&gt; command-line
+   * argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortTableColumns(final boolean value)
   {
     options.setAlphabeticalSortForTableColumns(value);
     return this;
   }
 
-  public BaseTextOptionsBuilder<O> sortTables(final boolean value)
+  /**
+   * Corresponds to the -sorttables command-line argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortTables()
+  {
+    return sortTables(true);
+  }
+
+  /**
+   * Corresponds to the -sorttables=&lt;boolean&gt; command-line
+   * argument.
+   */
+  public final BaseTextOptionsBuilder<O> sortTables(final boolean value)
   {
     options.setAlphabeticalSortForTables(value);
     return this;
@@ -227,6 +345,12 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
   public String toString()
   {
     return options.toString();
+  }
+
+  public final BaseTextOptionsBuilder<O> withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
+  {
+    options.setIdentifierQuotingStrategy(identifierQuotingStrategy);
+    return this;
   }
 
 }

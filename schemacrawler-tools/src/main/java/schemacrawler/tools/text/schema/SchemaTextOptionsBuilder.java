@@ -113,19 +113,6 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public final SchemaTextOptionsBuilder noPortableNames()
-  {
-    options.setHideTableConstraintNames(false);
-    options.setHideForeignKeyNames(false);
-    options.setHideIndexNames(false);
-    options.setHidePrimaryKeyNames(false);
-    options.setHideTriggerNames(false);
-    options.setHideRoutineSpecificNames(false);
-    options.setShowUnqualifiedNames(false);
-
-    return this;
-  }
-
   /**
    * Corresponds to the -noremarks command-line argument.
    */
@@ -169,12 +156,6 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public final SchemaTextOptionsBuilder sortInOut(final boolean value)
-  {
-    options.setAlphabeticalSortForRoutineColumns(value);
-    return this;
-  }
-
   @Override
   public Config toConfig()
   {
@@ -208,6 +189,18 @@ public class SchemaTextOptionsBuilder
     return config;
   }
 
+  /**
+   * Corresponds to the -weakassociations command-line argument.
+   */
+  public final SchemaTextOptionsBuilder weakAssociations()
+  {
+    return weakAssociations(true);
+  }
+
+  /**
+   * Corresponds to the -weakassociations=&lt;boolean&gt; command-line
+   * argument.
+   */
   public final SchemaTextOptionsBuilder weakAssociations(final boolean value)
   {
     options.setShowWeakAssociations(value);
