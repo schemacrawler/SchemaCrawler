@@ -165,8 +165,9 @@ public final class CommandRegistry
     {
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
+      LOGGER.log(Level.CONFIG, e.getMessage(), e);
       throw new SchemaCrawlerCommandLineException(String
-        .format("Cannot run command <%s>", command), e);
+        .format("Cannot run command <%s>", command));
     }
 
     return scCommand;

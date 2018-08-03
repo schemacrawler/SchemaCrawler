@@ -146,6 +146,11 @@ public final class GraphRenderer
     graphExecutor.call();
   }
 
+  public GraphOptions getGraphOptions()
+  {
+    return graphOptions;
+  }
+
   @Override
   public void initialize()
     throws Exception

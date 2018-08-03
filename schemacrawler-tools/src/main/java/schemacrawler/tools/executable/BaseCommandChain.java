@@ -60,6 +60,15 @@ abstract class BaseCommandChain
     scCommands = new ArrayList<>();
   }
 
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Check the availability of the chain, even though there may be no
+    // commands in the chain until the actual point of execution
+    checkAvailibilityChain();
+  }
+
   protected final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
                                                                        final OutputOptions outputOptions)
     throws SchemaCrawlerException

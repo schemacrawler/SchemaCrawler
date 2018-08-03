@@ -32,10 +32,12 @@ package schemacrawler.tools.integration.serialization;
 import java.io.IOException;
 import java.io.Writer;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -59,6 +61,16 @@ public final class SerializationCommand
   public SerializationCommand(final String command)
   {
     super(command);
+  }
+
+  @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    if (!Utility.isClassAvailable("com.thoughtworks.xstream.XStream"))
+    {
+      throw new SchemaCrawlerException("Cannot use offline databases");
+    }
   }
 
   /**
