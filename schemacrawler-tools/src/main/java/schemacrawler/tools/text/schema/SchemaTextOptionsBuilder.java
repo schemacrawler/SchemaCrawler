@@ -113,6 +113,50 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
+  public final SchemaTextOptionsBuilder noConstraintNames()
+  {
+    return noConstraintNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noConstraintNames(final boolean value)
+  {
+    options.setHideTableConstraintNames(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder noForeignKeyNames()
+  {
+    return noForeignKeyNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noForeignKeyNames(final boolean value)
+  {
+    options.setHideForeignKeyNames(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder noIndexNames()
+  {
+    return noIndexNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noIndexNames(final boolean value)
+  {
+    options.setHideIndexNames(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder noPrimaryKeyNames()
+  {
+    return noPrimaryKeyNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noPrimaryKeyNames(final boolean value)
+  {
+    options.setHidePrimaryKeyNames(value);
+    return this;
+  }
+
   /**
    * Corresponds to the -noremarks command-line argument.
    */
@@ -128,6 +172,28 @@ public class SchemaTextOptionsBuilder
   public final SchemaTextOptionsBuilder noRemarks(final boolean value)
   {
     options.setHideRemarks(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder noRoutineSpecificNames()
+  {
+    return noRoutineSpecificNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noRoutineSpecificNames(final boolean value)
+  {
+    options.setHideRoutineSpecificNames(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder noTriggerNames()
+  {
+    return noTriggerNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder noTriggerNames(final boolean value)
+  {
+    options.setHideTriggerNames(value);
     return this;
   }
 
@@ -153,6 +219,72 @@ public class SchemaTextOptionsBuilder
     options.setHideRoutineSpecificNames(value);
     options.setShowUnqualifiedNames(value);
 
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder showOrdinalNumbers()
+  {
+    return showOrdinalNumbers(true);
+  }
+
+  public final SchemaTextOptionsBuilder showOrdinalNumbers(final boolean value)
+  {
+    options.setShowOrdinalNumbers(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder showRowCounts()
+  {
+    return showRowCounts(true);
+  }
+
+  public final SchemaTextOptionsBuilder showRowCounts(final boolean value)
+  {
+    options.setShowRowCounts(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder showStandardColumnTypeNames()
+  {
+    return showStandardColumnTypeNames(true);
+  }
+
+  public final SchemaTextOptionsBuilder showStandardColumnTypeNames(final boolean value)
+  {
+    options.setShowStandardColumnTypeNames(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder showWeakAssociations()
+  {
+    return showWeakAssociations(true);
+  }
+
+  public final SchemaTextOptionsBuilder showWeakAssociations(final boolean value)
+  {
+    options.setShowWeakAssociations(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder sortForeignKeys()
+  {
+    return sortForeignKeys(true);
+  }
+
+  public final SchemaTextOptionsBuilder sortForeignKeys(final boolean value)
+  {
+    options.setAlphabeticalSortForForeignKeys(value);
+    return this;
+  }
+
+  public final SchemaTextOptionsBuilder sortIndexes()
+  {
+    return sortIndexes(true);
+  }
+
+  public final SchemaTextOptionsBuilder sortIndexes(final boolean value)
+  {
+    options.setAlphabeticalSortForIndexes(value);
     return this;
   }
 
