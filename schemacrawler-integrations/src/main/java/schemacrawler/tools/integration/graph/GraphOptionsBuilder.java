@@ -31,6 +31,7 @@ package schemacrawler.tools.integration.graph;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.join;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,25 @@ public class GraphOptionsBuilder
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOptions.class.getName());
+
+  protected static Map<String, String> makeDefaultGraphvizAttributes()
+  {
+    final Map<String, String> graphvizAttributes = new HashMap<>();
+
+    final String GRAPH = "graph.";
+    graphvizAttributes.put(GRAPH + "rankdir", "RL");
+    graphvizAttributes.put(GRAPH + "labeljust", "r");
+    graphvizAttributes.put(GRAPH + "fontname", "Helvetica");
+
+    final String NODE = "node.";
+    graphvizAttributes.put(NODE + "shape", "none");
+    graphvizAttributes.put(NODE + "fontname", "Helvetica");
+
+    final String EDGE = "edge.";
+    graphvizAttributes.put(EDGE + "fontname", "Helvetica");
+
+    return graphvizAttributes;
+  }
 
   public GraphOptionsBuilder()
   {
@@ -90,6 +110,30 @@ public class GraphOptionsBuilder
     return this;
   }
 
+  public GraphOptionsBuilder showForeignKeyCardinality()
+  {
+    return showForeignKeyCardinality(true);
+  }
+
+  public GraphOptionsBuilder showForeignKeyCardinality(final boolean value)
+  {
+    final GraphOptions options = (GraphOptions) this.options;
+    options.setShowForeignKeyCardinality(value);
+    return this;
+  }
+
+  public GraphOptionsBuilder showPrimaryKeyCardinality()
+  {
+    return showPrimaryKeyCardinality(true);
+  }
+
+  public GraphOptionsBuilder showPrimaryKeyCardinality(final boolean value)
+  {
+    final GraphOptions options = (GraphOptions) this.options;
+    options.setShowPrimaryKeyCardinality(value);
+    return this;
+  }
+
   @Override
   public Config toConfig()
   {
@@ -114,6 +158,34 @@ public class GraphOptionsBuilder
   public GraphOptions toOptions()
   {
     return (GraphOptions) super.toOptions();
+  }
+
+  public GraphOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)
+  {
+    final GraphOptions options = (GraphOptions) this.options;
+    if (graphvizAttributes == null)
+    {
+      options.setGraphvizAttributes(makeDefaultGraphvizAttributes());
+    }
+    else
+    {
+      options.setGraphvizAttributes(graphvizAttributes);
+    }
+    return this;
+  }
+
+  public GraphOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts)
+  {
+    final GraphOptions options = (GraphOptions) this.options;
+    if (graphvizOpts == null)
+    {
+      options.setGraphvizOpts(new ArrayList<>());
+    }
+    else
+    {
+      options.setGraphvizOpts(graphvizOpts);
+    }
+    return this;
   }
 
   private void graphvizAttributesToConfig(final Map<String, String> graphvizAttributes,

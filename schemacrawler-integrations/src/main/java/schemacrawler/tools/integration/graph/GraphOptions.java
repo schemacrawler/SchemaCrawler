@@ -29,7 +29,6 @@ package schemacrawler.tools.integration.graph;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class GraphOptions
   public GraphOptions()
   {
     graphvizOpts = new ArrayList<>();
-    graphvizAttributes = makeDefaultGraphvizAttributes();
+    graphvizAttributes = GraphOptionsBuilder.makeDefaultGraphvizAttributes();
     isShowForeignKeyCardinality = true;
     isShowPrimaryKeyCardinality = true;
   }
@@ -72,11 +71,12 @@ public class GraphOptions
     return isShowPrimaryKeyCardinality;
   }
 
-  public void setGraphvizAttributes(final Map<String, String> graphvizAttributes)
+  protected void setGraphvizAttributes(final Map<String, String> graphvizAttributes)
   {
     if (graphvizAttributes == null)
     {
-      this.graphvizAttributes = makeDefaultGraphvizAttributes();
+      this.graphvizAttributes = GraphOptionsBuilder
+        .makeDefaultGraphvizAttributes();
     }
     else
     {
@@ -84,45 +84,19 @@ public class GraphOptions
     }
   }
 
-  public void setGraphvizOpts(final List<String> graphvizOpts)
+  protected void setGraphvizOpts(final List<String> graphvizOpts)
   {
-    if (graphvizOpts == null)
-    {
-      this.graphvizOpts = new ArrayList<>();
-    }
-    else
-    {
-      this.graphvizOpts = graphvizOpts;
-    }
+    this.graphvizOpts = graphvizOpts;
   }
 
-  public void setShowForeignKeyCardinality(final boolean isShowForeignKeyCardinality)
+  protected void setShowForeignKeyCardinality(final boolean isShowForeignKeyCardinality)
   {
     this.isShowForeignKeyCardinality = isShowForeignKeyCardinality;
   }
 
-  public void setShowPrimaryKeyCardinality(final boolean isShowPrimaryKeyCardinality)
+  protected void setShowPrimaryKeyCardinality(final boolean isShowPrimaryKeyCardinality)
   {
     this.isShowPrimaryKeyCardinality = isShowPrimaryKeyCardinality;
-  }
-
-  private Map<String, String> makeDefaultGraphvizAttributes()
-  {
-    final Map<String, String> graphvizAttributes = new HashMap<>();
-
-    final String GRAPH = "graph.";
-    graphvizAttributes.put(GRAPH + "rankdir", "RL");
-    graphvizAttributes.put(GRAPH + "labeljust", "r");
-    graphvizAttributes.put(GRAPH + "fontname", "Helvetica");
-
-    final String NODE = "node.";
-    graphvizAttributes.put(NODE + "shape", "none");
-    graphvizAttributes.put(NODE + "fontname", "Helvetica");
-
-    final String EDGE = "edge.";
-    graphvizAttributes.put(EDGE + "fontname", "Helvetica");
-
-    return graphvizAttributes;
   }
 
 }

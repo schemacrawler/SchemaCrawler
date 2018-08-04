@@ -308,8 +308,9 @@ public class GraphRendererOptionsTest
     final String NODE = "node.";
     graphvizAttributes.put(NODE + "shape", "none");
 
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setGraphvizAttributes(graphvizAttributes);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .withMaximumSchemaInfoLevel();
