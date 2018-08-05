@@ -29,7 +29,7 @@ package schemacrawler.tools.text.base;
 
 
 public class CommonTextOptionsBuilder
-  extends BaseTextOptionsBuilder<CommonTextOptions>
+  extends BaseTextOptionsBuilder<CommonTextOptionsBuilder, CommonTextOptions>
 {
 
   public CommonTextOptionsBuilder()

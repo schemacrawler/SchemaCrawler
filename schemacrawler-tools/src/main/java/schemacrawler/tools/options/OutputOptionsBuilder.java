@@ -25,7 +25,7 @@ import schemacrawler.tools.iosource.OutputResource;
 import schemacrawler.tools.iosource.WriterOutputResource;
 
 public final class OutputOptionsBuilder
-  implements OptionsBuilder<OutputOptions>
+  implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>
 {
 
   private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";

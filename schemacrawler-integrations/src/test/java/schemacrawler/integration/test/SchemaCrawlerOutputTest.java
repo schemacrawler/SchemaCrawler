@@ -111,7 +111,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     final List<String> failures = new ArrayList<>();
     for (final OutputFormat outputFormat: getOutputFormats())
@@ -172,11 +173,11 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noHeader(false).noFooter(false)
       .noSchemaCrawlerInfo(false).showDatabaseInfo(true)
-      .showJdbcDriverInfo(true);
-    textOptionsBuilder.noPrimaryKeyNames().noForeignKeyNames().noIndexNames()
-      .noConstraintNames();
+      .showJdbcDriverInfo(true).noPrimaryKeyNames().noForeignKeyNames()
+      .noIndexNames().noConstraintNames();
     textOptionsBuilder.noConstraintNames();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -247,7 +248,8 @@ public class SchemaCrawlerOutputTest
       final OutputFormat outputFormat = TextOutputFormat.text;
       textOptionsBuilder
         .withIdentifierQuotingStrategy(identifierQuotingStrategy);
-      final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+      final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+        .toOptions();
 
       final String referenceFile = "schema_" + identifierQuotingStrategy.name()
                                    + "." + outputFormat.getFormat();
@@ -294,7 +296,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.maximum;
@@ -356,7 +359,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -407,7 +411,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
       .showJdbcDriverInfo(false).noSchemaColors();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -459,7 +464,8 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.showOrdinalNumbers();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -522,7 +528,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo().showUnqualifiedNames();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -583,7 +590,8 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.weakAssociations();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -638,7 +646,8 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
     textOptionsBuilder.showRowCounts();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {
@@ -691,7 +700,8 @@ public class SchemaCrawlerOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo().showUnqualifiedNames();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     for (final OutputFormat outputFormat: getOutputFormats())
     {

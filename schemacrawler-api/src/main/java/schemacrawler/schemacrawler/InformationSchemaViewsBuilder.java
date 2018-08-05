@@ -65,7 +65,8 @@ import sf.util.ObjectToString;
  * @author Sualeh Fatehi
  */
 public final class InformationSchemaViewsBuilder
-  implements OptionsBuilder<InformationSchemaViews>
+  implements
+  OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
 {
 
   private final Map<InformationSchemaKey, String> informationSchemaQueries;

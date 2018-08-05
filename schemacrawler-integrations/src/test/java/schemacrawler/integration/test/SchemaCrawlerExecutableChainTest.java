@@ -73,7 +73,8 @@ public class SchemaCrawlerExecutableChainTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     final OutputOptions outputOptions = OutputOptionsBuilder
       .newOutputOptions("/chain.js", testOutputFile);
