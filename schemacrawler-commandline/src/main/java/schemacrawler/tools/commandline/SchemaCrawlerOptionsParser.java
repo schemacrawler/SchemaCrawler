@@ -258,7 +258,7 @@ public final class SchemaCrawlerOptionsParser
                                                              true);
       if (hideEmptyTables)
       {
-        optionsBuilder.hideEmptyTables();
+        optionsBuilder.noEmptyTables();
       }
       consumeOption("hideemptytables");
     }

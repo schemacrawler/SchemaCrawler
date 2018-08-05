@@ -52,7 +52,7 @@ public class LintOptions
    * @param linterConfigs
    *        Path to the linter configs file.
    */
-  public void setLinterConfigs(final String linterConfigs)
+  protected void setLinterConfigs(final String linterConfigs)
   {
     this.linterConfigs = linterConfigs;
   }

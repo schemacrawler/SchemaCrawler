@@ -120,11 +120,10 @@ public class SchemaCrawlerXmlOutputTest
       .includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setAlphabeticalSortForTables(true);
-    textOptions.setNoSchemaCrawlerInfo(false);
-    textOptions.setShowDatabaseInfo(true);
-    textOptions.setShowJdbcDriverInfo(true);
+    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    textOptionsBuilder.sortTables().noSchemaCrawlerInfo(false)
+      .showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)

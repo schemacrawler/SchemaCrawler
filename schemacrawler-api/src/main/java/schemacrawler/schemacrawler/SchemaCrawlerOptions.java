@@ -67,7 +67,7 @@ public final class SchemaCrawlerOptions
   private final boolean grepInvertMatch;
   private final boolean grepOnlyMatching;
 
-  private final boolean hideEmptyTables;
+  private final boolean isNoEmptyTables;
 
   private final int childTableFilterDepth;
   private final int parentTableFilterDepth;
@@ -89,7 +89,7 @@ public final class SchemaCrawlerOptions
                        final InclusionRule grepDefinitionInclusionRule,
                        final boolean grepInvertMatch,
                        final boolean grepOnlyMatching,
-                       final boolean hideEmptyTables,
+                       final boolean isNoEmptyTables,
                        final int childTableFilterDepth,
                        final int parentTableFilterDepth)
   {
@@ -110,7 +110,7 @@ public final class SchemaCrawlerOptions
     this.grepDefinitionInclusionRule = grepDefinitionInclusionRule;
     this.grepInvertMatch = grepInvertMatch;
     this.grepOnlyMatching = grepOnlyMatching;
-    this.hideEmptyTables = hideEmptyTables;
+    this.isNoEmptyTables = isNoEmptyTables;
     this.childTableFilterDepth = childTableFilterDepth;
     this.parentTableFilterDepth = parentTableFilterDepth;
   }
@@ -322,9 +322,9 @@ public final class SchemaCrawlerOptions
    *
    * @return Whether to hide empty tables
    */
-  public boolean isHideEmptyTables()
+  public boolean isNoEmptyTables()
   {
-    return hideEmptyTables;
+    return isNoEmptyTables;
   }
 
   /**

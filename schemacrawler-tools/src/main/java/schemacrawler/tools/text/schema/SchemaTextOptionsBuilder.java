@@ -255,17 +255,6 @@ public class SchemaTextOptionsBuilder
     return this;
   }
 
-  public final SchemaTextOptionsBuilder showWeakAssociations()
-  {
-    return showWeakAssociations(true);
-  }
-
-  public final SchemaTextOptionsBuilder showWeakAssociations(final boolean value)
-  {
-    options.setShowWeakAssociations(value);
-    return this;
-  }
-
   public final SchemaTextOptionsBuilder sortForeignKeys()
   {
     return sortForeignKeys(true);

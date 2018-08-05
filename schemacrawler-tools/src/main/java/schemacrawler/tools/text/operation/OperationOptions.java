@@ -58,7 +58,7 @@ public final class OperationOptions
    * @param showLobs
    *        Whether to show LOBs
    */
-  public void setShowLobs(final boolean showLobs)
+  protected void setShowLobs(final boolean showLobs)
   {
     isShowLobs = showLobs;
   }

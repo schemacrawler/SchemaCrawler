@@ -114,67 +114,67 @@ public class SchemaTextOptions
     return isShowWeakAssociations;
   }
 
-  public void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
+  protected void setAlphabeticalSortForForeignKeys(final boolean isAlphabeticalSortForForeignKeys)
   {
     this.isAlphabeticalSortForForeignKeys = isAlphabeticalSortForForeignKeys;
   }
 
-  public void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
+  protected void setAlphabeticalSortForIndexes(final boolean isAlphabeticalSortForIndexes)
   {
     this.isAlphabeticalSortForIndexes = isAlphabeticalSortForIndexes;
   }
 
-  public void setHideForeignKeyNames(final boolean isHideForeignKeyNames)
+  protected void setHideForeignKeyNames(final boolean isHideForeignKeyNames)
   {
     this.isHideForeignKeyNames = isHideForeignKeyNames;
   }
 
-  public void setHideIndexNames(final boolean isHideIndexNames)
+  protected void setHideIndexNames(final boolean isHideIndexNames)
   {
     this.isHideIndexNames = isHideIndexNames;
   }
 
-  public void setHidePrimaryKeyNames(final boolean isHidePrimaryKeyNames)
+  protected void setHidePrimaryKeyNames(final boolean isHidePrimaryKeyNames)
   {
     this.isHidePrimaryKeyNames = isHidePrimaryKeyNames;
   }
 
-  public void setHideRemarks(final boolean isHideRemarks)
+  protected void setHideRemarks(final boolean isHideRemarks)
   {
     this.isHideRemarks = isHideRemarks;
   }
 
-  public void setHideRoutineSpecificNames(final boolean isHideRoutineSpecificNames)
+  protected void setHideRoutineSpecificNames(final boolean isHideRoutineSpecificNames)
   {
     this.isHideRoutineSpecificNames = isHideRoutineSpecificNames;
   }
 
-  public void setHideTableConstraintNames(final boolean isHideTableConstraintNames)
+  protected void setHideTableConstraintNames(final boolean isHideTableConstraintNames)
   {
     this.isHideTableConstraintNames = isHideTableConstraintNames;
   }
 
-  public void setHideTriggerNames(final boolean isHideTriggerNames)
+  protected void setHideTriggerNames(final boolean isHideTriggerNames)
   {
     this.isHideTriggerNames = isHideTriggerNames;
   }
 
-  public void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)
+  protected void setShowOrdinalNumbers(final boolean isShowOrdinalNumbers)
   {
     this.isShowOrdinalNumbers = isShowOrdinalNumbers;
   }
 
-  public void setShowRowCounts(final boolean isShowRowCounts)
+  protected void setShowRowCounts(final boolean isShowRowCounts)
   {
     this.isShowRowCounts = isShowRowCounts;
   }
 
-  public void setShowStandardColumnTypeNames(final boolean isShowStandardColumnTypeNames)
+  protected void setShowStandardColumnTypeNames(final boolean isShowStandardColumnTypeNames)
   {
     this.isShowStandardColumnTypeNames = isShowStandardColumnTypeNames;
   }
 
-  public void setShowWeakAssociations(final boolean isShowWeakAssociations)
+  protected void setShowWeakAssociations(final boolean isShowWeakAssociations)
   {
     this.isShowWeakAssociations = isShowWeakAssociations;
   }

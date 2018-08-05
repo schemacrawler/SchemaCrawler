@@ -45,7 +45,7 @@ class TableCountFilter
   {
     hideEmptyTables = requireNonNull(options,
                                      "No SchemaCrawlerOptions provided")
-                                       .isHideEmptyTables();
+                                       .isNoEmptyTables();
   }
 
   /**
