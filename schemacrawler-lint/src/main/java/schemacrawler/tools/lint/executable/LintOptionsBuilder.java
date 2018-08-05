@@ -31,7 +31,7 @@ package schemacrawler.tools.lint.executable;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
-public class LintOptionsBuilder
+public final class LintOptionsBuilder
   extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions>
 {
 
