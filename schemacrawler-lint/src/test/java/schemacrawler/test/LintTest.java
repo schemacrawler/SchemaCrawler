@@ -62,8 +62,8 @@ public class LintTest
   public void lints()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
       .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -112,8 +112,8 @@ public class LintTest
   public void lintsWithExcludedColumns()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().tableTypes(Arrays.asList("TABLE", "VIEW", "GLOBAL TEMPORARY"))
       .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
       .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\..*[123]"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder

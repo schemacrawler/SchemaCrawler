@@ -158,16 +158,17 @@ public class OfflineSnapshotTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
     schemaTextOptionsBuilder.noInfo(false);
 
-    final OutputOptions inputOptions = new OutputOptionsBuilder()
+    final OutputOptions inputOptions = OutputOptionsBuilder.builder()
       .withCompressedInputFile(serializedDatabaseFile).toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
@@ -185,8 +186,8 @@ public class OfflineSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -226,7 +227,8 @@ public class OfflineSnapshotTest
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(outputFormatValue, out);
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+        .builder();
       schemaRetrievalOptionsBuilder
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 

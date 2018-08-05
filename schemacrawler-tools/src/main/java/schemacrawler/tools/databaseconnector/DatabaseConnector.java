@@ -130,8 +130,8 @@ public abstract class DatabaseConnector
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
-    schemaRetrievalOptionsBuilder.withDatabaseServerType(dbServerType)
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+      .builder().withDatabaseServerType(dbServerType)
       .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
                                                connection)
       .fromConnnection(connection);

@@ -112,7 +112,8 @@
   </bean>
 
   <bean id="schemaRetrievalOptionsBuilderBase"
-    class="schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder" />
+    class="schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder"
+    factory-method="builder" />
   <bean id="schemaRetrievalOptionsBuilder"
     factory-bean="schemaRetrievalOptionsBuilderBase"
     factory-method="withInformationSchemaViews">
@@ -123,7 +124,8 @@
     factory-method="toOptions" />
 
   <bean id="schemaCrawlerOptionsBuilder"
-    class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder" />
+    class="schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder"
+    factory-method="builder" />
   <bean id="schemaCrawlerOptions"
     factory-bean="schemaCrawlerOptionsBuilder"
     factory-method="toOptions" />
@@ -143,7 +145,8 @@
   </bean>
 
   <bean id="schemaTextOptionsBuilder"
-    class="schemacrawler.tools.text.schema.SchemaTextOptionsBuilder" />
+    class="schemacrawler.tools.text.schema.SchemaTextOptionsBuilder"
+    factory-method="builder" />
   <bean
     class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetObject"
@@ -157,7 +160,8 @@
     class="org.springframework.beans.factory.config.MethodInvokingBean">
     <property name="targetObject"
       ref="schemaTextOptionsBuilder" />
-    <property name="targetMethod" value="showStandardColumnTypeNames" />
+    <property name="targetMethod"
+      value="showStandardColumnTypeNames" />
     <property name="arguments">
       <value type="boolean">true</value>
     </property>
@@ -171,8 +175,6 @@
       <value type="boolean">true</value>
     </property>
   </bean>
-  <bean id="schemaTextOptions"
-    factory-bean="schemaTextOptionsBuilder" factory-method="toOptions" />
 
   <bean id="executableForSchema"
     class="schemacrawler.tools.executable.SchemaCrawlerExecutable">
@@ -180,7 +182,7 @@
     <property name="schemaCrawlerOptions"
       ref="schemaCrawlerOptions" />
     <property name="additionalConfiguration"
-      value="#{ new schemacrawler.tools.text.schema.SchemaTextOptionsBuilder(schemaTextOptions).toConfig() }" />
+      value="#{ schemaTextOptionsBuilder.toConfig() }" />
     <property name="outputOptions" ref="outputOptions" />
   </bean>
 

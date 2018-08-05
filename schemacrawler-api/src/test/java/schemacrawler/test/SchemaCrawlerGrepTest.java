@@ -63,7 +63,8 @@ public class SchemaCrawlerGrepTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"))
         .toOptions();
 
@@ -95,7 +96,8 @@ public class SchemaCrawlerGrepTest
     throws Exception
   {
 
-    SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+    SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"))
       .toOptions();
 
@@ -110,8 +112,8 @@ public class SchemaCrawlerGrepTest
     table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
     assertNotNull("Table BOOKAUTHORS not found", table);
 
-    schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder(schemaCrawlerOptions)
-      .parentTableFilterDepth(1).toOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder(schemaCrawlerOptions).parentTableFilterDepth(1).toOptions();
     catalog = getCatalog(schemaCrawlerOptions);
     schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);
@@ -131,7 +133,8 @@ public class SchemaCrawlerGrepTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\..*\\.BOOKID"))
         .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"))
         .toOptions();
@@ -165,7 +168,8 @@ public class SchemaCrawlerGrepTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeGreppedDefinitions(new RegularExpressionInclusionRule(".*book author.*"))
         .toOptions();
 
@@ -198,8 +202,8 @@ public class SchemaCrawlerGrepTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .includeAllRoutines()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder().includeAllRoutines()
         .includeGreppedRoutineColumns(new RegularExpressionInclusionRule(".*\\.B_COUNT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();

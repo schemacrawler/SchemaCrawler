@@ -96,8 +96,8 @@ public class SchemaCrawlerSQLiteUtility
   {
     checkConnection(connection);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
       .includeRoutines(new ExcludeAll());
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

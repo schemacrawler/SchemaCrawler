@@ -100,7 +100,7 @@ public abstract class BaseDatabaseTest
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    return getCatalog(new SchemaRetrievalOptionsBuilder().toOptions(),
+    return getCatalog(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
                       schemaCrawlerOptions);
   }
 

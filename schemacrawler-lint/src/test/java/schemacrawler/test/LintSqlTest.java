@@ -59,7 +59,7 @@ public class LintSqlTest
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
 
     final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-sql.xml");
-    final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
+    final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
     optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
     lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());

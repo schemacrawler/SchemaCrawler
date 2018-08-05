@@ -29,19 +29,42 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import schemacrawler.schemacrawler.Config;
+
 public final class SchemaTextOptionsBuilder
   extends
   BaseSchemaTextOptionsBuilder<SchemaTextOptionsBuilder, SchemaTextOptions>
 {
 
-  public SchemaTextOptionsBuilder()
+  public static SchemaTextOptionsBuilder builder()
   {
-    this(new SchemaTextOptions());
+    return new SchemaTextOptionsBuilder();
   }
 
-  public SchemaTextOptionsBuilder(final SchemaTextOptions options)
+  public static SchemaTextOptionsBuilder builder(final SchemaTextOptions options)
   {
-    super(options);
+    return new SchemaTextOptionsBuilder().fromOptions(options);
+  }
+
+  public static SchemaTextOptions newSchemaTextOptions()
+  {
+    return new SchemaTextOptionsBuilder().toOptions();
+  }
+
+  public static SchemaTextOptions newSchemaTextOptions(final Config config)
+  {
+    return new SchemaTextOptionsBuilder().fromConfig(config).toOptions();
+  }
+
+  private SchemaTextOptionsBuilder()
+  {
+    // Set default values, if any
+  }
+
+  @Override
+  public SchemaTextOptions toOptions()
+  {
+    return new SchemaTextOptions(this);
   }
 
 }

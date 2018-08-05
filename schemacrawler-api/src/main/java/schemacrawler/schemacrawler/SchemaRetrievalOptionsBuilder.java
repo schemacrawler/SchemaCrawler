@@ -47,9 +47,12 @@ public final class SchemaRetrievalOptionsBuilder
 {
 
   private static final String prefix = "schemacrawler.schema.retrieval.strategy";
+
   private static final String SC_RETRIEVAL_TABLES = prefix + ".tables";
+
   private static final String SC_RETRIEVAL_TABLE_COLUMNS = prefix
                                                            + ".tablecolumns";
+
   private static final String SC_RETRIEVAL_PRIMARY_KEYS = prefix
                                                           + ".primarykeys";
   private static final String SC_RETRIEVAL_INDEXES = prefix + ".indexes";
@@ -58,8 +61,28 @@ public final class SchemaRetrievalOptionsBuilder
   private static final String SC_RETRIEVAL_PROCEDURES = prefix + ".procedures";
   private static final String SC_RETRIEVAL_FUNCTIONS = prefix + ".functions";
 
+  public static SchemaRetrievalOptionsBuilder builder()
+  {
+    return new SchemaRetrievalOptionsBuilder();
+  }
+
+  public static SchemaRetrievalOptionsBuilder builder(final SchemaRetrievalOptions options)
+  {
+    return new SchemaRetrievalOptionsBuilder().fromOptions(options);
+  }
+
+  public static SchemaRetrievalOptions newSchemaRetrievalOptions()
+  {
+    return new SchemaRetrievalOptionsBuilder().toOptions();
+  }
+
+  public static SchemaRetrievalOptions newSchemaRetrievalOptions(Config config)
+  {
+    return new SchemaRetrievalOptionsBuilder().fromConfig(config).toOptions();
+  }
+
   private DatabaseServerType dbServerType;
-  private final InformationSchemaViewsBuilder informationSchemaViewsBuilder;
+  private InformationSchemaViewsBuilder informationSchemaViewsBuilder;
   private Optional<Boolean> overridesSupportSchemas;
   private Optional<Boolean> overridesSupportsCatalogs;
   private boolean supportsCatalogs;
@@ -75,10 +98,10 @@ public final class SchemaRetrievalOptionsBuilder
   private MetadataRetrievalStrategy functionRetrievalStrategy;
   private Optional<TypeMap> overridesTypeMap;
 
-  public SchemaRetrievalOptionsBuilder()
+  private SchemaRetrievalOptionsBuilder()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
-    informationSchemaViewsBuilder = new InformationSchemaViewsBuilder();
+    informationSchemaViewsBuilder = InformationSchemaViewsBuilder.builder();
     overridesSupportSchemas = Optional.empty();
     overridesSupportsCatalogs = Optional.empty();
     supportsCatalogs = true;
@@ -157,6 +180,35 @@ public final class SchemaRetrievalOptionsBuilder
     {
       overridesTypeMap = Optional.of(new TypeMap(connection));
     }
+
+    return this;
+  }
+
+  @Override
+  public SchemaRetrievalOptionsBuilder fromOptions(final SchemaRetrievalOptions options)
+  {
+    if (options == null)
+    {
+      return this;
+    }
+
+    dbServerType = options.getDatabaseServerType();
+    informationSchemaViewsBuilder = InformationSchemaViewsBuilder
+      .builder(options.getInformationSchemaViews());
+    overridesSupportSchemas = Optional.empty();
+    overridesSupportsCatalogs = Optional.empty();
+    supportsCatalogs = options.isSupportsCatalogs();
+    supportsSchemas = options.isSupportsSchemas();
+    identifierQuoteString = options.getIdentifierQuoteString();
+    identifiers = options.getIdentifiers();
+    tableRetrievalStrategy = options.getTableRetrievalStrategy();
+    tableColumnRetrievalStrategy = options.getTableColumnRetrievalStrategy();
+    pkRetrievalStrategy = options.getPrimaryKeyRetrievalStrategy();
+    indexRetrievalStrategy = options.getIndexRetrievalStrategy();
+    fkRetrievalStrategy = options.getForeignKeyRetrievalStrategy();
+    procedureRetrievalStrategy = options.getProcedureRetrievalStrategy();
+    functionRetrievalStrategy = options.getFunctionRetrievalStrategy();
+    overridesTypeMap = Optional.empty();
 
     return this;
   }

@@ -263,7 +263,7 @@ public final class OperationCommand
   {
     if (operationOptions == null)
     {
-      operationOptions = new OperationOptionsBuilder()
+      operationOptions = OperationOptionsBuilder.builder()
         .fromConfig(additionalConfiguration).toOptions();
     }
   }

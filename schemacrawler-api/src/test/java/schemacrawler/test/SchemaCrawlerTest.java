@@ -70,6 +70,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
@@ -91,17 +92,18 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
         .includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
       assertEquals("ColumnDataType count does not match",
@@ -144,17 +146,18 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -225,17 +228,18 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -269,7 +273,8 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
@@ -298,7 +303,8 @@ public class SchemaCrawlerTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
@@ -327,17 +333,18 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+      .newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-      .toOptions(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                       schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
       .toArray(new Routine[0]);
@@ -354,7 +361,8 @@ public class SchemaCrawlerTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed().toOptions())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
@@ -393,19 +401,19 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum()
         .setRetrieveSequenceInformation(true).toOptions();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(minimum).includeAllSequences();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder().withSchemaInfoLevel(minimum).includeAllSequences();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Sequence[] sequences = catalog.getSequences(schema)
@@ -433,19 +441,19 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
       final SchemaInfoLevel minimum = SchemaInfoLevelBuilder.minimum()
         .setRetrieveSynonymInformation(true).toOptions();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(minimum).includeAllSynonyms();
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder().withSchemaInfoLevel(minimum).includeAllSynonyms();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertNotNull("BOOKS Schema not found", schema);
       final Synonym[] synonyms = catalog.getSynonyms(schema)
@@ -471,14 +479,14 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .withMaximumSchemaInfoLevel();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 6, schemas.length);
       for (final Schema schema: schemas)
@@ -521,17 +529,18 @@ public class SchemaCrawlerTest
     {
       final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-        .fromConfig(config);
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-        .toOptions(), schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertEquals("Schema count does not match", 5, schemas.length);
       for (final Schema schema: schemas)
@@ -576,7 +585,8 @@ public class SchemaCrawlerTest
                                   "AUTHORSLIST" };
     final Random rnd = new Random();
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -632,14 +642,14 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+      .newSchemaRetrievalOptions(config);
 
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .withMaximumSchemaInfoLevel();
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-      .toOptions(), schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                       schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     boolean foundTrigger = false;
@@ -665,16 +675,17 @@ public class SchemaCrawlerTest
   {
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+      .newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder();
     schemaCrawlerOptionsBuilder.tableTypes("VIEW");
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions());
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptionsBuilder
-      .toOptions(), schemaCrawlerOptionsBuilder.toOptions());
+    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                       schemaCrawlerOptionsBuilder.toOptions());
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();
     assertNotNull("View not found", view);

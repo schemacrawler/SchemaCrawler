@@ -83,7 +83,7 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
-    optionsBuilder = new SchemaCrawlerOptionsBuilder().fromConfig(config);
+    optionsBuilder = SchemaCrawlerOptionsBuilder.builder().fromConfig(config);
   }
 
   @Override

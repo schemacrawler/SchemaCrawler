@@ -57,7 +57,27 @@ public final class GraphOptionsBuilder
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOptions.class.getName());
 
-  protected static Map<String, String> makeDefaultGraphvizAttributes()
+  public static GraphOptionsBuilder builder()
+  {
+    return new GraphOptionsBuilder();
+  }
+
+  public static GraphOptionsBuilder builder(final GraphOptions options)
+  {
+    return new GraphOptionsBuilder().fromOptions(options);
+  }
+
+  public static GraphOptions newGraphOptions()
+  {
+    return new GraphOptionsBuilder().toOptions();
+  }
+
+  public static GraphOptions newGraphOptions(final Config config)
+  {
+    return new GraphOptionsBuilder().fromConfig(config).toOptions();
+  }
+
+  private static Map<String, String> makeDefaultGraphvizAttributes()
   {
     final Map<String, String> graphvizAttributes = new HashMap<>();
 
@@ -76,36 +96,59 @@ public final class GraphOptionsBuilder
     return graphvizAttributes;
   }
 
-  public GraphOptionsBuilder()
-  {
-    this(new GraphOptions());
-  }
+  protected List<String> graphvizOpts;
+  protected Map<String, String> graphvizAttributes;
+  protected boolean isShowForeignKeyCardinality;
+  protected boolean isShowPrimaryKeyCardinality;
 
-  public GraphOptionsBuilder(final GraphOptions options)
+  private GraphOptionsBuilder()
   {
-    super(options);
+    // Default values
+    graphvizOpts = new ArrayList<>();
+    graphvizAttributes = makeDefaultGraphvizAttributes();
+    isShowForeignKeyCardinality = true;
+    isShowPrimaryKeyCardinality = true;
   }
 
   @Override
-  public GraphOptionsBuilder fromConfig(final Config map)
+  public GraphOptionsBuilder fromConfig(final Config config)
   {
-    if (map == null)
+    if (config == null)
     {
       return this;
     }
-    super.fromConfig(map);
+    super.fromConfig(config);
 
-    final Config config = new Config(map);
+    isShowPrimaryKeyCardinality = config
+      .getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true);
+    isShowForeignKeyCardinality = config
+      .getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true);
 
-    final GraphOptions options = (GraphOptions) this.options;
+    graphvizOpts = listGraphvizOpts(readGraphvizOpts(config));
 
-    options.setShowPrimaryKeyCardinality(config
-      .getBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY, true));
-    options.setShowForeignKeyCardinality(config
-      .getBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY, true));
+    final Map<String, String> graphvizAttributes = readGraphvizAttributes(config);
+    if (graphvizAttributes != null)
+    {
+      this.graphvizAttributes = graphvizAttributes;
+    }
 
-    options.setGraphvizOpts(listGraphvizOpts(readGraphvizOpts(config)));
-    options.setGraphvizAttributes(readGraphvizAttributes(config));
+    return this;
+  }
+
+  @Override
+  public GraphOptionsBuilder fromOptions(final GraphOptions options)
+  {
+    if (options == null)
+    {
+      return this;
+    }
+    super.fromOptions(options);
+
+    isShowPrimaryKeyCardinality = options.isShowPrimaryKeyCardinality();
+    isShowForeignKeyCardinality = options.isShowForeignKeyCardinality();
+
+    graphvizOpts = options.getGraphvizOpts();
+    graphvizAttributes = options.getGraphvizAttributes();
 
     return this;
   }
@@ -117,8 +160,7 @@ public final class GraphOptionsBuilder
 
   public GraphOptionsBuilder showForeignKeyCardinality(final boolean value)
   {
-    final GraphOptions options = (GraphOptions) this.options;
-    options.setShowForeignKeyCardinality(value);
+    isShowForeignKeyCardinality = value;
     return this;
   }
 
@@ -129,8 +171,7 @@ public final class GraphOptionsBuilder
 
   public GraphOptionsBuilder showPrimaryKeyCardinality(final boolean value)
   {
-    final GraphOptions options = (GraphOptions) this.options;
-    options.setShowPrimaryKeyCardinality(value);
+    isShowPrimaryKeyCardinality = value;
     return this;
   }
 
@@ -139,17 +180,14 @@ public final class GraphOptionsBuilder
   {
     final Config config = super.toConfig();
 
-    final GraphOptions options = (GraphOptions) this.options;
-
     config.setBooleanValue(GRAPH_SHOW_PRIMARY_KEY_CARDINALITY,
-                           options.isShowPrimaryKeyCardinality());
+                           isShowPrimaryKeyCardinality);
     config.setBooleanValue(GRAPH_SHOW_FOREIGN_KEY_CARDINALITY,
-                           options.isShowForeignKeyCardinality());
+                           isShowForeignKeyCardinality);
 
-    config.setStringValue(GRAPH_GRAPHVIZ_OPTS,
-                          join(options.getGraphvizOpts(), " "));
+    config.setStringValue(GRAPH_GRAPHVIZ_OPTS, join(graphvizOpts, " "));
 
-    graphvizAttributesToConfig(options.getGraphvizAttributes(), config);
+    graphvizAttributesToConfig(graphvizAttributes, config);
 
     return config;
   }
@@ -157,33 +195,31 @@ public final class GraphOptionsBuilder
   @Override
   public GraphOptions toOptions()
   {
-    return (GraphOptions) super.toOptions();
+    return new GraphOptions(this);
   }
 
   public GraphOptionsBuilder withGraphvizAttributes(final Map<String, String> graphvizAttributes)
   {
-    final GraphOptions options = (GraphOptions) this.options;
     if (graphvizAttributes == null)
     {
-      options.setGraphvizAttributes(makeDefaultGraphvizAttributes());
+      this.graphvizAttributes = makeDefaultGraphvizAttributes();
     }
     else
     {
-      options.setGraphvizAttributes(graphvizAttributes);
+      this.graphvizAttributes = graphvizAttributes;
     }
     return this;
   }
 
   public GraphOptionsBuilder withGraphvizOpts(final List<String> graphvizOpts)
   {
-    final GraphOptions options = (GraphOptions) this.options;
     if (graphvizOpts == null)
     {
-      options.setGraphvizOpts(new ArrayList<>());
+      this.graphvizOpts = new ArrayList<>();
     }
     else
     {
-      options.setGraphvizOpts(graphvizOpts);
+      this.graphvizOpts = graphvizOpts;
     }
     return this;
   }
@@ -210,6 +246,11 @@ public final class GraphOptionsBuilder
 
   private Map<String, String> readGraphvizAttributes(final Config config)
   {
+    if (config == null)
+    {
+      return null;
+    }
+
     final Map<String, String> graphvizAttributes = new HashMap<>();
     for (final Entry<String, String> configEntry: config.entrySet())
     {

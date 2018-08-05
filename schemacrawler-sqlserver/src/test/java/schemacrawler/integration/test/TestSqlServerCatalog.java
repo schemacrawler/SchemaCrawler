@@ -52,8 +52,8 @@ public class TestSqlServerCatalog
     final Connection connection = dataSource.getConnection("schemacrawler",
                                                            "schemacrawler");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("SCHEMACRAWLER.dbo"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

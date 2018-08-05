@@ -55,6 +55,7 @@ import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.utility.Query;
@@ -484,6 +485,11 @@ public final class InformationSchemaViews
   public String toString()
   {
     return ObjectToString.toString(informationSchemaQueries);
+  }
+
+  protected Map<InformationSchemaKey, String> getInformationSchemaQueries()
+  {
+    return new HashMap<>(informationSchemaQueries);
   }
 
 }

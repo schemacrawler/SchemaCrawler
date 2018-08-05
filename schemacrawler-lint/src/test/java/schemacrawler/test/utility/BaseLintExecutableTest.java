@@ -93,7 +93,7 @@ public abstract class BaseLintExecutableTest
     if (!isBlank(linterConfigsResource))
     {
       final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
-      final LintOptionsBuilder optionsBuilder = new LintOptionsBuilder();
+      final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
       final Config config = optionsBuilder.toConfig();

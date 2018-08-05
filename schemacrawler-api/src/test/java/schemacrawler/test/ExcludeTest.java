@@ -66,7 +66,8 @@ public class ExcludeTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
         .includeColumns(new RegularExpressionExclusionRule(".*\\..*\\.ID"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder

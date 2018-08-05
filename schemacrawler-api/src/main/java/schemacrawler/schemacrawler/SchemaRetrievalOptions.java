@@ -63,8 +63,8 @@ public final class SchemaRetrievalOptions
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
-    final SchemaRetrievalOptionsBuilder bldr = builder == null? new SchemaRetrievalOptionsBuilder()
-                                                              : builder;
+    final SchemaRetrievalOptionsBuilder bldr = builder == null? SchemaRetrievalOptionsBuilder
+      .builder(): builder;
     dbServerType = bldr.getDatabaseServerType();
     supportsSchemas = bldr.isSupportsSchemas();
     supportsCatalogs = bldr.isSupportsCatalogs();

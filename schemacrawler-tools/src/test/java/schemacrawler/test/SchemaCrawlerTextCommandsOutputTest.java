@@ -35,7 +35,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -149,7 +148,8 @@ public class SchemaCrawlerTextCommandsOutputTest
     try (final TestWriter writer = new TestWriter(TextOutputFormat.text
       .getFormat());)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
         .includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
@@ -158,7 +158,8 @@ public class SchemaCrawlerTextCommandsOutputTest
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(TextOutputFormat.text, writer);
 
-      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
+      final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder
+        .builder();
       commonTextOptions.fromConfig(config);
       commonTextOptions.noInfo();
       commonTextOptions.noHeader();

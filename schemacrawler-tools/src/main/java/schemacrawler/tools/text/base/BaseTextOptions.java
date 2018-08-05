@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.utility.IdentifierQuotingStrategy;
 
@@ -36,19 +38,38 @@ public abstract class BaseTextOptions
   implements Options
 {
 
-  private boolean isAlphabeticalSortForRoutineColumns;
-  private boolean isAlphabeticalSortForRoutines;
-  private boolean isAlphabeticalSortForTableColumns;
-  private boolean isAlphabeticalSortForTables = true;
-  private boolean isAppendOutput;
-  private boolean isNoFooter;
-  private boolean isNoHeader;
-  private boolean isNoSchemaCrawlerInfo;
-  private boolean isShowDatabaseInfo;
-  private boolean isShowJdbcDriverInfo;
-  private boolean isShowUnqualifiedNames;
-  private boolean isNoSchemaColors;
-  private IdentifierQuotingStrategy identifierQuotingStrategy;
+  private final boolean isAlphabeticalSortForTables;
+  private final boolean isAlphabeticalSortForTableColumns;
+  private final boolean isAlphabeticalSortForRoutines;
+  private final boolean isAlphabeticalSortForRoutineColumns;
+  private final boolean isAppendOutput;
+  private final boolean isNoFooter;
+  private final boolean isNoHeader;
+  private final boolean isNoSchemaCrawlerInfo;
+  private final boolean isShowDatabaseInfo;
+  private final boolean isShowJdbcDriverInfo;
+  private final boolean isShowUnqualifiedNames;
+  private final boolean isNoSchemaColors;
+  private final IdentifierQuotingStrategy identifierQuotingStrategy;
+
+  protected BaseTextOptions(final BaseTextOptionsBuilder<?, ? extends BaseTextOptions> builder)
+  {
+    requireNonNull(builder, "No builder provided");
+
+    isAlphabeticalSortForTables = builder.isAlphabeticalSortForTables;
+    isAlphabeticalSortForTableColumns = builder.isAlphabeticalSortForTableColumns;
+    isAlphabeticalSortForRoutines = builder.isAlphabeticalSortForRoutines;
+    isAlphabeticalSortForRoutineColumns = builder.isAlphabeticalSortForRoutineColumns;
+    isAppendOutput = builder.isAppendOutput;
+    isNoFooter = builder.isNoFooter;
+    isNoHeader = builder.isNoHeader;
+    isNoSchemaCrawlerInfo = builder.isNoSchemaCrawlerInfo;
+    isShowDatabaseInfo = builder.isShowDatabaseInfo;
+    isShowJdbcDriverInfo = builder.isShowJdbcDriverInfo;
+    isShowUnqualifiedNames = builder.isShowUnqualifiedNames;
+    isNoSchemaColors = builder.isNoSchemaColors;
+    identifierQuotingStrategy = builder.identifierQuotingStrategy;
+  }
 
   public IdentifierQuotingStrategy getIdentifierQuotingStrategy()
   {
@@ -119,78 +140,6 @@ public abstract class BaseTextOptions
   public boolean isShowUnqualifiedNames()
   {
     return isShowUnqualifiedNames;
-  }
-
-  protected void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
-  {
-    this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
-  }
-
-  protected void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
-  {
-    this.isAlphabeticalSortForRoutines = isAlphabeticalSortForRoutines;
-  }
-
-  protected void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
-  {
-    this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
-  }
-
-  protected void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
-  {
-    this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
-  }
-
-  protected void setAppendOutput(final boolean isAppendOutput)
-  {
-    this.isAppendOutput = isAppendOutput;
-  }
-
-  protected void setIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
-  {
-    if (identifierQuotingStrategy == null)
-    {
-      this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
-    }
-    else
-    {
-      this.identifierQuotingStrategy = identifierQuotingStrategy;
-    }
-  }
-
-  protected void setNoFooter(final boolean isNoFooter)
-  {
-    this.isNoFooter = isNoFooter;
-  }
-
-  protected void setNoHeader(final boolean isNoHeader)
-  {
-    this.isNoHeader = isNoHeader;
-  }
-
-  protected void setNoSchemaColors(final boolean isNoSchemaColors)
-  {
-    this.isNoSchemaColors = isNoSchemaColors;
-  }
-
-  protected void setNoSchemaCrawlerInfo(final boolean isNoSchemaCrawlerInfo)
-  {
-    this.isNoSchemaCrawlerInfo = isNoSchemaCrawlerInfo;
-  }
-
-  protected void setShowDatabaseInfo(final boolean isShowDatabaseInfo)
-  {
-    this.isShowDatabaseInfo = isShowDatabaseInfo;
-  }
-
-  protected void setShowJdbcDriverInfo(final boolean isShowJdbcDriverInfo)
-  {
-    this.isShowJdbcDriverInfo = isShowJdbcDriverInfo;
-  }
-
-  public void setShowUnqualifiedNames(final boolean isShowUnqualifiedNames)
-  {
-    this.isShowUnqualifiedNames = isShowUnqualifiedNames;
   }
 
 }

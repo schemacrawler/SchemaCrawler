@@ -119,16 +119,18 @@ public class SpinThroughTest
 
           final Config config = loadHsqldbConfig();
 
-          final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder();
+          final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+            .builder();
           schemaRetrievalOptionsBuilder.fromConfig(config);
 
-          final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-            .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+          final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+            .builder().withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
             .includeAllSequences().includeAllSynonyms().includeAllRoutines();
           final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
             .toOptions();
 
-          final SchemaTextOptionsBuilder schemaTextOptionsBuilder = new SchemaTextOptionsBuilder();
+          final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+            .builder();
           schemaTextOptionsBuilder.noInfo(false);
 
           final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType

@@ -40,7 +40,13 @@ public final class OperationOptions
   extends BaseTextOptions
 {
 
-  private boolean isShowLobs;
+  private final boolean isShowLobs;
+
+  protected OperationOptions(final OperationOptionsBuilder builder)
+  {
+    super(builder);
+    isShowLobs = builder.isShowLobs;
+  }
 
   /**
    * Whether to show LOBs.
@@ -51,16 +57,4 @@ public final class OperationOptions
   {
     return isShowLobs;
   }
-
-  /**
-   * Whether to show LOBs.
-   *
-   * @param showLobs
-   *        Whether to show LOBs
-   */
-  protected void setShowLobs(final boolean showLobs)
-  {
-    isShowLobs = showLobs;
-  }
-
 }

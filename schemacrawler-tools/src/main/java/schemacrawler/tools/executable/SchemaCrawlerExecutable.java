@@ -132,20 +132,6 @@ public final class SchemaCrawlerExecutable
     scCommand.execute();
   }
 
-  private void reduceCatalog(final Catalog catalog)
-  {
-    ((Reducible) catalog).reduce(Schema.class,
-                                 getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class,
-                                 getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class,
-                                 getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class,
-                                 getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class,
-                                 getSequenceReducer(schemaCrawlerOptions));
-  }
-
   public final void setAdditionalConfiguration(final Config additionalConfiguration)
   {
     // Make a defensive copy
@@ -272,6 +258,20 @@ public final class SchemaCrawlerExecutable
         }
       }
     }
+  }
+
+  private void reduceCatalog(final Catalog catalog)
+  {
+    ((Reducible) catalog).reduce(Schema.class,
+                                 getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Table.class,
+                                 getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Routine.class,
+                                 getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Synonym.class,
+                                 getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog).reduce(Sequence.class,
+                                 getSequenceReducer(schemaCrawlerOptions));
   }
 
 }

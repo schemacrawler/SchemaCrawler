@@ -33,6 +33,16 @@ public final class OutputOptionsBuilder
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
+  public static OutputOptionsBuilder builder()
+  {
+    return new OutputOptionsBuilder();
+  }
+
+  public static OutputOptionsBuilder builder(final OutputOptions outputOptions)
+  {
+    return new OutputOptionsBuilder().fromOptions(outputOptions);
+  }
+
   public static OutputOptions newOutputOptions()
   {
     return new OutputOptionsBuilder().toOptions();
@@ -77,21 +87,11 @@ public final class OutputOptionsBuilder
   private Charset inputEncodingCharset;
   private Charset outputEncodingCharset;
 
-  public OutputOptionsBuilder()
+  private OutputOptionsBuilder()
   {
     // Default values are set at the time of building options
-  }
-
-  public OutputOptionsBuilder(final OutputOptions outputOptions)
-  {
-    if (outputOptions != null)
-    {
-      inputResource = outputOptions.getInputResource();
-      outputResource = outputOptions.getOutputResource();
-      inputEncodingCharset = outputOptions.getInputCharset();
-      outputEncodingCharset = outputOptions.getOutputCharset();
-      outputFormatValue = outputOptions.getOutputFormatValue();
-    }
+    // All values are set to null, and corrected at the time of
+    // converting to options
   }
 
   @Override
@@ -112,6 +112,23 @@ public final class OutputOptionsBuilder
                                                          UTF_8.name()))
       .withOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
                                                           UTF_8.name()));
+
+    return this;
+  }
+
+  @Override
+  public OutputOptionsBuilder fromOptions(final OutputOptions options)
+  {
+    if (options == null)
+    {
+      return this;
+    }
+
+    this.withInputEncoding(options.getInputCharset())
+      .withOutputEncoding(options.getOutputCharset())
+      .withOutputFormatValue(options.getOutputFormatValue());
+    inputResource = options.getInputResource();
+    outputResource = options.getOutputResource();
 
     return this;
   }

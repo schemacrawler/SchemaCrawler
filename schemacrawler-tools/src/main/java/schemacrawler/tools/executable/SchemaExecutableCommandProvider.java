@@ -63,18 +63,18 @@ public final class SchemaExecutableCommandProvider
   }
 
   @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return supportedCommands();
+  }
+
+  @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
     throws SchemaCrawlerException
   {
     final SchemaCrawlerCommand scCommand = new SchemaTextRenderer(command);
     return scCommand;
 
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return supportedCommands();
   }
 
   @Override

@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static sf.util.Utility.isBlank;
+
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
@@ -39,9 +41,31 @@ public final class LintOptionsBuilder
   private static final String LINTER_CONFIGS = SCHEMACRAWLER_FORMAT_PREFIX
                                                + CLI_LINTER_CONFIGS;
 
-  public LintOptionsBuilder()
+  public static LintOptionsBuilder builder()
   {
-    super(new LintOptions());
+    return new LintOptionsBuilder();
+  }
+
+  public static LintOptionsBuilder builder(final LintOptions options)
+  {
+    return new LintOptionsBuilder().fromOptions(options);
+  }
+
+  public static LintOptions newLintOptions()
+  {
+    return new LintOptionsBuilder().toOptions();
+  }
+
+  public static LintOptions newLintOptions(final Config config)
+  {
+    return new LintOptionsBuilder().fromConfig(config).toOptions();
+  }
+
+  protected String linterConfigs;
+
+  private LintOptionsBuilder()
+  {
+    linterConfigs = "";
   }
 
   @Override
@@ -57,13 +81,27 @@ public final class LintOptionsBuilder
     if (config.containsKey(CLI_LINTER_CONFIGS))
     {
       // Honor command-line option first
-      options.setLinterConfigs(config.getStringValue(CLI_LINTER_CONFIGS, ""));
+      linterConfigs = config.getStringValue(CLI_LINTER_CONFIGS, "");
     }
     else
     {
       // Otherwise, take option from SchemaCrawler configuration file
-      options.setLinterConfigs(config.getStringValue(LINTER_CONFIGS, ""));
+      linterConfigs = config.getStringValue(LINTER_CONFIGS, "");
     }
+
+    return this;
+  }
+
+  @Override
+  public LintOptionsBuilder fromOptions(final LintOptions options)
+  {
+    if (options == null)
+    {
+      return this;
+    }
+    super.fromOptions(options);
+
+    linterConfigs = options.getLinterConfigs();
 
     return this;
   }
@@ -72,8 +110,14 @@ public final class LintOptionsBuilder
   public Config toConfig()
   {
     final Config config = super.toConfig();
-    config.setStringValue(LINTER_CONFIGS, options.getLinterConfigs());
+    config.setStringValue(LINTER_CONFIGS, linterConfigs);
     return config;
+  }
+
+  @Override
+  public LintOptions toOptions()
+  {
+    return new LintOptions(this);
   }
 
   /**
@@ -81,7 +125,14 @@ public final class LintOptionsBuilder
    */
   public LintOptionsBuilder withLinterConfigs(final String linterConfigs)
   {
-    options.setLinterConfigs(linterConfigs);
+    if (isBlank(linterConfigs))
+    {
+      this.linterConfigs = "";
+    }
+    else
+    {
+      this.linterConfigs = linterConfigs;
+    }
     return this;
   }
 

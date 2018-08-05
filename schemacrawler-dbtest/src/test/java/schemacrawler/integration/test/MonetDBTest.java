@@ -101,16 +101,16 @@ public class MonetDBTest
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
       .withMaximumSchemaInfoLevel();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
       .toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-        .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
   }

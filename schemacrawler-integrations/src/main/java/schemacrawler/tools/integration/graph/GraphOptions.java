@@ -28,27 +28,28 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import schemacrawler.tools.text.schema.SchemaTextOptions;
+import schemacrawler.tools.text.schema.BaseSchemaTextOptions;
 
 public class GraphOptions
-  extends SchemaTextOptions
+  extends BaseSchemaTextOptions
 {
 
-  private List<String> graphvizOpts;
-  private Map<String, String> graphvizAttributes;
-  private boolean isShowForeignKeyCardinality;
-  private boolean isShowPrimaryKeyCardinality;
+  private final List<String> graphvizOpts;
+  private final Map<String, String> graphvizAttributes;
+  private final boolean isShowForeignKeyCardinality;
+  private final boolean isShowPrimaryKeyCardinality;
 
-  public GraphOptions()
+  protected GraphOptions(final GraphOptionsBuilder graphOptionsBuilder)
   {
-    graphvizOpts = new ArrayList<>();
-    graphvizAttributes = GraphOptionsBuilder.makeDefaultGraphvizAttributes();
-    isShowForeignKeyCardinality = true;
-    isShowPrimaryKeyCardinality = true;
+    super(graphOptionsBuilder);
+
+    graphvizOpts = graphOptionsBuilder.graphvizOpts;
+    graphvizAttributes = graphOptionsBuilder.graphvizAttributes;
+    isShowForeignKeyCardinality = graphOptionsBuilder.isShowForeignKeyCardinality;
+    isShowPrimaryKeyCardinality = graphOptionsBuilder.isShowPrimaryKeyCardinality;
   }
 
   public Map<String, String> getGraphvizAttributes()
@@ -69,34 +70,6 @@ public class GraphOptions
   public boolean isShowPrimaryKeyCardinality()
   {
     return isShowPrimaryKeyCardinality;
-  }
-
-  protected void setGraphvizAttributes(final Map<String, String> graphvizAttributes)
-  {
-    if (graphvizAttributes == null)
-    {
-      this.graphvizAttributes = GraphOptionsBuilder
-        .makeDefaultGraphvizAttributes();
-    }
-    else
-    {
-      this.graphvizAttributes = graphvizAttributes;
-    }
-  }
-
-  protected void setGraphvizOpts(final List<String> graphvizOpts)
-  {
-    this.graphvizOpts = graphvizOpts;
-  }
-
-  protected void setShowForeignKeyCardinality(final boolean isShowForeignKeyCardinality)
-  {
-    this.isShowForeignKeyCardinality = isShowForeignKeyCardinality;
-  }
-
-  protected void setShowPrimaryKeyCardinality(final boolean isShowPrimaryKeyCardinality)
-  {
-    this.isShowPrimaryKeyCardinality = isShowPrimaryKeyCardinality;
   }
 
 }

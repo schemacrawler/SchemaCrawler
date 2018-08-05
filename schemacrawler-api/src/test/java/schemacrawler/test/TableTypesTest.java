@@ -120,10 +120,9 @@ public class TableTypesTest
   {
     try (final TestWriter out = new TestWriter("text");)
     {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder();
-      schemaCrawlerOptionsBuilder
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard().toOptions());
-      schemaCrawlerOptionsBuilder
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       if (!"default".equals(tableTypes))
       {
