@@ -35,7 +35,8 @@ public final class ExecutableExample
     logSystemClasspath();
 
     // Create the options
-    final SchemaCrawlerOptionsBuilder optionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder optionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())

@@ -38,8 +38,8 @@ public final class OracleCatalogLoader
     executeScriptFromResource(connection, "/schemacrawler-oracle.before.sql");
 
     final Config additionalConfiguration = getAdditionalConfiguration();
-    final SchemaTextOptions schemaTextOptions = (SchemaTextOptions) new SchemaTextOptionsBuilder()
-      .fromConfig(additionalConfiguration).toOptions();
+    final SchemaTextOptions schemaTextOptions = (SchemaTextOptions) SchemaTextOptionsBuilder
+      .builder().fromConfig(additionalConfiguration).toOptions();
     if (schemaTextOptions.isShowUnqualifiedNames())
     {
       executeScriptFromResource(connection,

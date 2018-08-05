@@ -40,16 +40,34 @@ import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 public final class OperationOptionsBuilder
   extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions>
 {
-
   private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX
                                           + "data.show_lobs";
 
-  /**
-   * Operator options, defaults.
-   */
-  public OperationOptionsBuilder()
+  public static OperationOptionsBuilder builder()
   {
-    super(new OperationOptions());
+    return new OperationOptionsBuilder();
+  }
+
+  public static OperationOptionsBuilder builder(final OperationOptions options)
+  {
+    return new OperationOptionsBuilder().fromOptions(options);
+  }
+
+  public static OperationOptions newOperationOptions()
+  {
+    return new OperationOptionsBuilder().toOptions();
+  }
+
+  public static OperationOptions newOperationOptions(final Config config)
+  {
+    return new OperationOptionsBuilder().fromConfig(config).toOptions();
+  }
+
+  protected boolean isShowLobs;
+
+  private OperationOptionsBuilder()
+  {
+    // Set default values, if any
   }
 
   @Override
@@ -62,7 +80,21 @@ public final class OperationOptionsBuilder
     super.fromConfig(map);
 
     final Config config = new Config(map);
-    options.setShowLobs(config.getBooleanValue(SHOW_LOBS, false));
+    isShowLobs = config.getBooleanValue(SHOW_LOBS, false);
+
+    return this;
+  }
+
+  @Override
+  public OperationOptionsBuilder fromOptions(final OperationOptions options)
+  {
+    if (options == null)
+    {
+      return this;
+    }
+    super.fromOptions(options);
+
+    isShowLobs = options.isShowLobs();
 
     return this;
   }
@@ -80,7 +112,7 @@ public final class OperationOptionsBuilder
    */
   public OperationOptionsBuilder showLobs(final boolean value)
   {
-    options.setShowLobs(value);
+    isShowLobs = value;
     return this;
   }
 
@@ -88,8 +120,14 @@ public final class OperationOptionsBuilder
   public Config toConfig()
   {
     final Config config = super.toConfig();
-    config.setBooleanValue(SHOW_LOBS, options.isShowLobs());
+    config.setBooleanValue(SHOW_LOBS, isShowLobs);
     return config;
+  }
+
+  @Override
+  public OperationOptions toOptions()
+  {
+    return new OperationOptions(this);
   }
 
 }

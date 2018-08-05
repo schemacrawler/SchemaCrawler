@@ -91,8 +91,8 @@ public class LintCommand
     final LintOptions lintOptions;
     if (this.lintOptions == null)
     {
-      lintOptions = new LintOptionsBuilder().fromConfig(additionalConfiguration)
-        .toOptions();
+      lintOptions = LintOptionsBuilder.builder()
+        .fromConfig(additionalConfiguration).toOptions();
     }
     else
     {

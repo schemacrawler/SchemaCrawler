@@ -55,7 +55,7 @@ public final class OfflineSnapshotOptionsParser
   public OfflineSnapshotOptionsParser(final Config config)
   {
     super(config);
-    outputOptionsBuilder = new OutputOptionsBuilder().fromConfig(config);
+    outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
   }
 
   @Override

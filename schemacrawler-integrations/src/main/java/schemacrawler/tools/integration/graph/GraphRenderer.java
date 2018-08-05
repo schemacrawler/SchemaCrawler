@@ -113,7 +113,7 @@ public final class GraphRenderer
     }
 
     // Set the format, in case we are using the default
-    outputOptions = new OutputOptionsBuilder(outputOptions)
+    outputOptions = OutputOptionsBuilder.builder(outputOptions)
       .withOutputFormat(graphOutputFormat)
       .withOutputFormatValue(graphOutputFormat.getFormat()).toOptions();
 
@@ -168,7 +168,7 @@ public final class GraphRenderer
     throws SchemaCrawlerException
   {
     // Set the format, in case we are using the default
-    outputOptions = new OutputOptionsBuilder(outputOptions)
+    outputOptions = OutputOptionsBuilder.builder(outputOptions)
       .withOutputFormat(graphOutputFormat)
       .withOutputFormatValue(graphOutputFormat.getFormat()).toOptions();
 
@@ -244,8 +244,8 @@ public final class GraphRenderer
   {
     if (graphOptions == null)
     {
-      graphOptions = new GraphOptionsBuilder()
-        .fromConfig(additionalConfiguration).toOptions();
+      graphOptions = GraphOptionsBuilder
+        .newGraphOptions(additionalConfiguration);
     }
     graphOutputFormat = GraphOutputFormat
       .fromFormat(outputOptions.getOutputFormatValue());

@@ -94,7 +94,7 @@ public final class SerializationCommand
   private OutputOptions forceCompressedFileOutput()
     throws IOException
   {
-    return new OutputOptionsBuilder(outputOptions)
+    return OutputOptionsBuilder.builder(outputOptions)
       .withCompressedOutputFile(outputOptions.getOutputFile()).toOptions();
   }
 

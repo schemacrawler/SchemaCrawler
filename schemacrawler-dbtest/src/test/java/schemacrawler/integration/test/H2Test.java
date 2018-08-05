@@ -59,23 +59,23 @@ public class H2Test
   public void testH2WithConnection()
     throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
       .includeSequences(new RegularExpressionExclusionRule(".*\\.BOOKS\\.SYSTEM_SEQUENCE.*"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
       .toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable
-      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-        .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testH2WithConnection.txt");
   }

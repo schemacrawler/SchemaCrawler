@@ -113,22 +113,22 @@ public class SchemaCrawlerXmlOutputTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
       .readField(executable, "schemaCrawlerOptions", true);
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(schemaCrawlerOptions);
-    schemaCrawlerOptionsBuilder
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder(schemaCrawlerOptions)
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum().toOptions())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
       .includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
     textOptionsBuilder.sortTables().noSchemaCrawlerInfo(false)
       .showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
       .toOptions();
 
-    executable
-      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-        .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
     executable.setOutputOptions(outputOptions);
     executable.setConnection(getConnection());
     executable.execute();

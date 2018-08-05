@@ -31,7 +31,7 @@ package schemacrawler.schemacrawler;
 /**
  * Convoluted interface to allow for subclasses builders, while
  * maintaining a fluent interface.
- * 
+ *
  * @see <a href=
  *      "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing
  *      a Java Builder class</a>
@@ -45,6 +45,8 @@ public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Option
 {
 
   OptionsBuilder<B, O> fromConfig(Config config);
+
+  OptionsBuilder<B, O> fromOptions(O options);
 
   Config toConfig();
 

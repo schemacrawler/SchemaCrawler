@@ -65,12 +65,13 @@ public class SchemaCrawlerExecutableChainTest
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .includeAllRoutines();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
@@ -81,9 +82,8 @@ public class SchemaCrawlerExecutableChainTest
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable
-      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-        .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
     executable.setConnection(getConnection());
     executable.execute();
 

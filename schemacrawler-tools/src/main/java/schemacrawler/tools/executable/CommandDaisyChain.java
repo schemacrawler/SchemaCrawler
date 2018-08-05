@@ -69,32 +69,32 @@ public final class CommandDaisyChain
         continue;
       }
 
-      final CommonTextOptionsBuilder commonTextOptions = new CommonTextOptionsBuilder();
-      commonTextOptions.fromConfig(additionalConfiguration);
+      final CommonTextOptionsBuilder commonTextOptionsBuilder = CommonTextOptionsBuilder
+        .builder().fromConfig(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {
         if (commands.isFirstCommand(command))
         {
           // First command - no footer
-          commonTextOptions.noFooter();
+          commonTextOptionsBuilder.noFooter();
         }
         else if (commands.isLastCommand(command))
         {
           // Last command - no header, or info
-          commonTextOptions.noHeader();
-          commonTextOptions.noInfo();
+          commonTextOptionsBuilder.noHeader();
+          commonTextOptionsBuilder.noInfo();
 
-          commonTextOptions.appendOutput();
+          commonTextOptionsBuilder.appendOutput();
         }
         else
         {
           // Middle command - no header, footer, or info
-          commonTextOptions.noHeader();
-          commonTextOptions.noInfo();
-          commonTextOptions.noFooter();
+          commonTextOptionsBuilder.noHeader();
+          commonTextOptionsBuilder.noInfo();
+          commonTextOptionsBuilder.noFooter();
 
-          commonTextOptions.appendOutput();
+          commonTextOptionsBuilder.appendOutput();
         }
       }
 
@@ -103,7 +103,7 @@ public final class CommandDaisyChain
       {
         commandAdditionalConfig.putAll(additionalConfiguration);
       }
-      commandAdditionalConfig.putAll(commonTextOptions.toConfig());
+      commandAdditionalConfig.putAll(commonTextOptionsBuilder.toConfig());
       scCommand.setAdditionalConfiguration(commandAdditionalConfig);
 
     }

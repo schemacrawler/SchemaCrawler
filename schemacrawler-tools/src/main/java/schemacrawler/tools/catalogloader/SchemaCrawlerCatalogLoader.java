@@ -77,7 +77,7 @@ public class SchemaCrawlerCatalogLoader
   {
     if (schemaRetrievalOptions == null)
     {
-      return new SchemaRetrievalOptionsBuilder().toOptions();
+      return SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions();
     }
     else
     {

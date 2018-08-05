@@ -107,14 +107,14 @@ public class SchemaCrawlerJsonOutputTest
 
     final Config config = loadHsqldbConfig();
 
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = new SchemaRetrievalOptionsBuilder()
-      .fromConfig(config);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+      .builder().fromConfig(config);
 
-    final Config schemaTextOptions = new SchemaTextOptionsBuilder().noInfo()
+    final Config schemaTextOptions = SchemaTextOptionsBuilder.builder().noInfo()
       .toConfig();
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
       .includeRoutines(new ExcludeAll()).includeTables(tableInclusionRule)
       .tableNamePattern(tableName);

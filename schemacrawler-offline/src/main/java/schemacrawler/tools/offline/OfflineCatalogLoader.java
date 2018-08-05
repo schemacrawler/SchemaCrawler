@@ -64,7 +64,7 @@ public final class OfflineCatalogLoader
 
     final Path offlineDatabasePath = ((OfflineConnection) connection)
       .getOfflineDatabasePath();
-    final OutputOptions inputOptions = new OutputOptionsBuilder()
+    final OutputOptions inputOptions = OutputOptionsBuilder.builder()
       .fromConfig(additionalConfiguration)
       .withCompressedInputFile(offlineDatabasePath).toOptions();
 
@@ -113,7 +113,7 @@ public final class OfflineCatalogLoader
   @Override
   public SchemaRetrievalOptions getSchemaRetrievalOptions()
   {
-    return new SchemaRetrievalOptionsBuilder()
+    return SchemaRetrievalOptionsBuilder.builder()
       .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
       .toOptions();
   }

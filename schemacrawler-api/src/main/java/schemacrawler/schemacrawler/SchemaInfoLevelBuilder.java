@@ -111,7 +111,6 @@ public final class SchemaInfoLevelBuilder
   private String tag;
 
   private boolean retrieveTables;
-
   private boolean retrieveRoutines;
   private boolean retrieveColumnDataTypes;
   private boolean retrieveDatabaseInfo;
@@ -148,6 +147,60 @@ public final class SchemaInfoLevelBuilder
   public SchemaInfoLevelBuilder fromConfig(final Config config)
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public SchemaInfoLevelBuilder fromOptions(final SchemaInfoLevel schemaInfoLevel)
+  {
+    if (schemaInfoLevel == null)
+    {
+      return this;
+    }
+
+    tag = schemaInfoLevel.getTag();
+
+    retrieveTables = schemaInfoLevel.isRetrieveTables();
+    retrieveRoutines = schemaInfoLevel.isRetrieveRoutines();
+    retrieveColumnDataTypes = schemaInfoLevel.isRetrieveColumnDataTypes();
+    retrieveDatabaseInfo = schemaInfoLevel.isRetrieveDatabaseInfo();
+    retrieveAdditionalDatabaseInfo = schemaInfoLevel
+      .isRetrieveAdditionalDatabaseInfo();
+    retrieveAdditionalJdbcDriverInfo = schemaInfoLevel
+      .isRetrieveAdditionalJdbcDriverInfo();
+    retrieveUserDefinedColumnDataTypes = schemaInfoLevel
+      .isRetrieveUserDefinedColumnDataTypes();
+    retrieveRoutineColumns = schemaInfoLevel.isRetrieveRoutineColumns();
+    retrieveRoutineInformation = schemaInfoLevel.isRetrieveRoutineInformation();
+    retrieveTableConstraintInformation = schemaInfoLevel
+      .isRetrieveTableConstraintInformation();
+    retrieveTableConstraintDefinitions = schemaInfoLevel
+      .isRetrieveTableConstraintDefinitions();
+    retrieveViewInformation = schemaInfoLevel.isRetrieveViewInformation();
+    retrieveIndexInformation = schemaInfoLevel.isRetrieveIndexInformation();
+    retrieveIndexColumnInformation = schemaInfoLevel
+      .isRetrieveIndexColumnInformation();
+    retrievePrimaryKeyDefinitions = schemaInfoLevel
+      .isRetrievePrimaryKeyDefinitions();
+    retrieveForeignKeys = schemaInfoLevel.isRetrieveForeignKeys();
+    retrieveForeignKeyDefinitions = schemaInfoLevel
+      .isRetrieveForeignKeyDefinitions();
+    retrieveIndexes = schemaInfoLevel.isRetrieveIndexes();
+    retrieveTablePrivileges = schemaInfoLevel.isRetrieveTablePrivileges();
+    retrieveTableColumnPrivileges = schemaInfoLevel
+      .isRetrieveTableColumnPrivileges();
+    retrieveTriggerInformation = schemaInfoLevel.isRetrieveTriggerInformation();
+    retrieveSynonymInformation = schemaInfoLevel.isRetrieveSynonymInformation();
+    retrieveSequenceInformation = schemaInfoLevel
+      .isRetrieveSequenceInformation();
+    retrieveTableColumns = schemaInfoLevel.isRetrieveTableColumns();
+    retrieveAdditionalTableAttributes = schemaInfoLevel
+      .isRetrieveAdditionalTableAttributes();
+    retrieveAdditionalColumnAttributes = schemaInfoLevel
+      .isRetrieveAdditionalColumnAttributes();
+    retrieveTableDefinitionsInformation = schemaInfoLevel
+      .isRetrieveTableDefinitionsInformation();
+
+    return this;
   }
 
   public String getTag()

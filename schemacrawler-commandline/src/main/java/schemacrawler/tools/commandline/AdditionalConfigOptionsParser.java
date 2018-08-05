@@ -51,8 +51,8 @@ public final class AdditionalConfigOptionsParser
   public void loadConfig()
     throws SchemaCrawlerException
   {
-    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder()
-      .fromConfig(config);
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder().fromConfig(config);
     if (config.hasValue("noinfo"))
     {
       final boolean noinfo = config.getBooleanValue("noinfo", true);

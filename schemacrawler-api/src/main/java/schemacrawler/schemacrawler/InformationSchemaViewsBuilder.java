@@ -69,9 +69,30 @@ public final class InformationSchemaViewsBuilder
   OptionsBuilder<InformationSchemaViewsBuilder, InformationSchemaViews>
 {
 
+  public static InformationSchemaViewsBuilder builder()
+  {
+    return new InformationSchemaViewsBuilder();
+  }
+
+  public static InformationSchemaViewsBuilder builder(final InformationSchemaViews informationSchemaViews)
+  {
+    return new InformationSchemaViewsBuilder()
+      .fromOptions(informationSchemaViews);
+  }
+
+  public static InformationSchemaViews newInformationSchemaViews()
+  {
+    return new InformationSchemaViewsBuilder().toOptions();
+  }
+
+  public static InformationSchemaViews newInformationSchemaViews(final Config config)
+  {
+    return new InformationSchemaViewsBuilder().fromConfig(config).toOptions();
+  }
+
   private final Map<InformationSchemaKey, String> informationSchemaQueries;
 
-  public InformationSchemaViewsBuilder()
+  private InformationSchemaViewsBuilder()
   {
     informationSchemaQueries = new EnumMap<>(InformationSchemaKey.class);
   }
@@ -105,6 +126,20 @@ public final class InformationSchemaViewsBuilder
         }
       }
     }
+
+    return this;
+  }
+
+  @Override
+  public InformationSchemaViewsBuilder fromOptions(final InformationSchemaViews informationSchemaViews)
+  {
+    if (informationSchemaViews == null)
+    {
+      return this;
+    }
+
+    informationSchemaQueries
+      .putAll(informationSchemaViews.getInformationSchemaQueries());
 
     return this;
   }

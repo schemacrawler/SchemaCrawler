@@ -60,7 +60,7 @@ public final class OutputOptionsParser
     normalizeOptionName(OUTPUT_FORMAT, "fmt");
     normalizeOptionName(OUTPUT_FILE, "o");
 
-    outputOptionsBuilder = new OutputOptionsBuilder().fromConfig(config);
+    outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
   }
 
   @Override

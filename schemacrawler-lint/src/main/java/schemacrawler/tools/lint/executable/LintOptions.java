@@ -34,7 +34,13 @@ public class LintOptions
   extends BaseTextOptions
 {
 
-  private String linterConfigs;
+  private final String linterConfigs;
+
+  public LintOptions(final LintOptionsBuilder builder)
+  {
+    super(builder);
+    linterConfigs = builder.linterConfigs;
+  }
 
   /**
    * Gets the path to the linter configs file.
@@ -44,17 +50,6 @@ public class LintOptions
   public String getLinterConfigs()
   {
     return linterConfigs;
-  }
-
-  /**
-   * Sets the path to the linter configs file.
-   *
-   * @param linterConfigs
-   *        Path to the linter configs file.
-   */
-  protected void setLinterConfigs(final String linterConfigs)
-  {
-    this.linterConfigs = linterConfigs;
   }
 
 }

@@ -89,7 +89,8 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeTables(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS"))
       .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
@@ -124,7 +125,8 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeTables(new RegularExpressionInclusionRule(".*\\.AUTHORS"))
       .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
@@ -159,7 +161,8 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.BOOKAUTHORS\\..*"))
       .toOptions();
 
@@ -192,7 +195,8 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = new SchemaCrawlerOptionsBuilder()
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .builder()
       .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.AUTHORS\\..*"))
       .toOptions();
 

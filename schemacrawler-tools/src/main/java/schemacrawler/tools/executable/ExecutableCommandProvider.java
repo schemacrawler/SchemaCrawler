@@ -60,6 +60,24 @@ public abstract class ExecutableCommandProvider
   }
 
   @Override
+  public InputResource getHelp()
+  {
+    final String helpResource = "/help/DefaultExecutable.txt";
+    try
+    {
+      return new ClasspathInputResource(helpResource);
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.WARNING,
+                 String.format("Could not load help resource <%s>",
+                               helpResource),
+                 e);
+      return new EmptyInputResource();
+    }
+  }
+
+  @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
     throws SchemaCrawlerException
   {
@@ -103,24 +121,6 @@ public abstract class ExecutableCommandProvider
     }
 
     return scCommand;
-  }
-
-  @Override
-  public InputResource getHelp()
-  {
-    final String helpResource = "/help/DefaultExecutable.txt";
-    try
-    {
-      return new ClasspathInputResource(helpResource);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 String.format("Could not load help resource <%s>",
-                               helpResource),
-                 e);
-      return new EmptyInputResource();
-    }
   }
 
   @Override

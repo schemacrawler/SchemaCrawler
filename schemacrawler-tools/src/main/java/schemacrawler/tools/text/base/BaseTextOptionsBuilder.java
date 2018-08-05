@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.base;
 
 
-import static java.util.Objects.requireNonNull;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
 import schemacrawler.utility.IdentifierQuotingStrategy;
@@ -73,16 +71,28 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   private static final String IDENTIFIER_QUOTING_STRATEGY = SCHEMACRAWLER_FORMAT_PREFIX
                                                             + "identifier_quoting_strategy";
 
-  protected final O options;
+  protected boolean isAlphabeticalSortForRoutineColumns;
+  protected boolean isAlphabeticalSortForRoutines;
+  protected boolean isAlphabeticalSortForTableColumns;
+  protected boolean isAlphabeticalSortForTables = true;
+  protected boolean isAppendOutput;
+  protected boolean isNoFooter;
+  protected boolean isNoHeader;
+  protected boolean isNoSchemaCrawlerInfo;
+  protected boolean isShowDatabaseInfo;
+  protected boolean isShowJdbcDriverInfo;
+  protected boolean isShowUnqualifiedNames;
+  protected boolean isNoSchemaColors;
+  protected IdentifierQuotingStrategy identifierQuotingStrategy;
 
-  protected BaseTextOptionsBuilder(final O options)
+  protected BaseTextOptionsBuilder()
   {
-    this.options = requireNonNull(options, "No options provided");
+    // All fields are set to the defaults
   }
 
   public final B appendOutput()
   {
-    options.setAppendOutput(true);
+    isAppendOutput = true;
     return (B) this;
   }
 
@@ -96,38 +106,65 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     final Config config = new Config(map);
 
-    options.setNoFooter(config.getBooleanValue(NO_FOOTER));
-    options.setNoHeader(config.getBooleanValue(NO_HEADER));
-    options.setShowDatabaseInfo(config.getBooleanValue(SHOW_DATABASE_INFO));
-    options
-      .setShowJdbcDriverInfo(config.getBooleanValue(SHOW_JDBC_DRIVER_INFO));
-    options
-      .setNoSchemaCrawlerInfo(config.getBooleanValue(NO_SCHEMACRAWLER_INFO));
-    options.setAppendOutput(config.getBooleanValue(APPEND_OUTPUT));
+    isNoFooter = config.getBooleanValue(NO_FOOTER);
+    isNoHeader = config.getBooleanValue(NO_HEADER);
+    isShowDatabaseInfo = config.getBooleanValue(SHOW_DATABASE_INFO);
+    isShowJdbcDriverInfo = config.getBooleanValue(SHOW_JDBC_DRIVER_INFO);
+    isNoSchemaCrawlerInfo = config.getBooleanValue(NO_SCHEMACRAWLER_INFO);
+    isAppendOutput = config.getBooleanValue(APPEND_OUTPUT);
 
-    options
-      .setShowUnqualifiedNames(config.getBooleanValue(SHOW_UNQUALIFIED_NAMES));
+    isShowUnqualifiedNames = config.getBooleanValue(SHOW_UNQUALIFIED_NAMES);
 
-    options.setAlphabeticalSortForTables(config
-      .getBooleanValue(SORT_ALPHABETICALLY_TABLES,
-                       options.isAlphabeticalSortForTables()));
-    options.setAlphabeticalSortForTableColumns(config
+    isAlphabeticalSortForTables = config
+      .getBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
+    isAlphabeticalSortForTableColumns = config
       .getBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                       options.isAlphabeticalSortForTableColumns()));
+                       isAlphabeticalSortForTableColumns);
 
-    options.setAlphabeticalSortForRoutines(config
+    isAlphabeticalSortForRoutines = config
       .getBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
-                       options.isAlphabeticalSortForRoutines()));
-
-    options.setAlphabeticalSortForRoutineColumns(config
+                       isAlphabeticalSortForRoutines);
+    isAlphabeticalSortForRoutineColumns = config
       .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                       options.isAlphabeticalSortForRoutineColumns()));
+                       isAlphabeticalSortForRoutineColumns);
 
-    options.setNoSchemaColors(config.getBooleanValue(NO_SCHEMA_COLORS));
+    isNoSchemaColors = config.getBooleanValue(NO_SCHEMA_COLORS);
 
-    options.setIdentifierQuotingStrategy(config
+    identifierQuotingStrategy = config
       .getEnumValue(IDENTIFIER_QUOTING_STRATEGY,
-                    IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words));
+                    IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words);
+
+    return (B) this;
+  }
+
+  @Override
+  public B fromOptions(final O options)
+  {
+    if (options == null)
+    {
+      return (B) this;
+    }
+
+    isNoFooter = options.isNoFooter();
+    isNoHeader = options.isNoHeader();
+    isShowDatabaseInfo = options.isShowDatabaseInfo();
+    isShowJdbcDriverInfo = options.isShowJdbcDriverInfo();
+    isNoSchemaCrawlerInfo = options.isNoSchemaCrawlerInfo();
+    isAppendOutput = options.isAppendOutput();
+
+    isShowUnqualifiedNames = options.isShowUnqualifiedNames();
+
+    isAlphabeticalSortForTables = options.isAlphabeticalSortForTables();
+    isAlphabeticalSortForTableColumns = options
+      .isAlphabeticalSortForTableColumns();
+
+    isAlphabeticalSortForRoutines = options.isAlphabeticalSortForRoutines();
+    isAlphabeticalSortForRoutineColumns = options
+      .isAlphabeticalSortForRoutineColumns();
+
+    isNoSchemaColors = options.isNoSchemaColors();
+
+    identifierQuotingStrategy = options.getIdentifierQuotingStrategy();
 
     return (B) this;
   }
@@ -139,7 +176,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B noFooter(final boolean value)
   {
-    options.setNoFooter(value);
+    isNoFooter = value;
     return (B) this;
   }
 
@@ -150,7 +187,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B noHeader(final boolean value)
   {
-    options.setNoHeader(value);
+    isNoHeader = value;
     return (B) this;
   }
 
@@ -167,9 +204,9 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
    */
   public final B noInfo(final boolean value)
   {
-    options.setNoSchemaCrawlerInfo(value);
-    options.setShowDatabaseInfo(!value);
-    options.setShowJdbcDriverInfo(!value);
+    isNoSchemaCrawlerInfo = value;
+    isShowDatabaseInfo = !value;
+    isShowJdbcDriverInfo = !value;
     return (B) this;
   }
 
@@ -180,7 +217,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B noSchemaColors(final boolean value)
   {
-    options.setNoSchemaColors(value);
+    isNoSchemaColors = value;
     return (B) this;
   }
 
@@ -191,13 +228,13 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B noSchemaCrawlerInfo(final boolean value)
   {
-    options.setNoSchemaCrawlerInfo(value);
+    isNoSchemaCrawlerInfo = value;
     return (B) this;
   }
 
   public final B overwriteOutput()
   {
-    options.setAppendOutput(false);
+    isAppendOutput = false;
     return (B) this;
   }
 
@@ -208,7 +245,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B showDatabaseInfo(final boolean value)
   {
-    options.setShowDatabaseInfo(value);
+    isShowDatabaseInfo = value;
     return (B) this;
   }
 
@@ -219,7 +256,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B showJdbcDriverInfo(final boolean value)
   {
-    options.setShowJdbcDriverInfo(value);
+    isShowJdbcDriverInfo = value;
     return (B) this;
   }
 
@@ -230,7 +267,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B showUnqualifiedNames(final boolean value)
   {
-    options.setShowUnqualifiedNames(value);
+    isShowUnqualifiedNames = value;
     return (B) this;
   }
 
@@ -248,7 +285,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
    */
   public final B sortInOut(final boolean value)
   {
-    options.setAlphabeticalSortForRoutineColumns(value);
+    isAlphabeticalSortForRoutineColumns = value;
     return (B) this;
   }
 
@@ -259,7 +296,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   public final B sortRoutines(final boolean value)
   {
-    options.setAlphabeticalSortForRoutines(value);
+    isAlphabeticalSortForRoutines = value;
     return (B) this;
   }
 
@@ -277,7 +314,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
    */
   public final B sortTableColumns(final boolean value)
   {
-    options.setAlphabeticalSortForTableColumns(value);
+    isAlphabeticalSortForTableColumns = value;
     return (B) this;
   }
 
@@ -295,7 +332,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
    */
   public final B sortTables(final boolean value)
   {
-    options.setAlphabeticalSortForTables(value);
+    isAlphabeticalSortForTables = value;
     return (B) this;
   }
 
@@ -304,52 +341,43 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   {
     final Config config = new Config();
 
-    config.setBooleanValue(NO_FOOTER, options.isNoFooter());
-    config.setBooleanValue(NO_HEADER, options.isNoHeader());
-    config.setBooleanValue(NO_SCHEMACRAWLER_INFO,
-                           options.isNoSchemaCrawlerInfo());
-    config.setBooleanValue(SHOW_DATABASE_INFO, options.isShowDatabaseInfo());
-    config.setBooleanValue(SHOW_JDBC_DRIVER_INFO,
-                           options.isShowJdbcDriverInfo());
-    config.setBooleanValue(APPEND_OUTPUT, options.isAppendOutput());
+    config.setBooleanValue(NO_FOOTER, isNoFooter);
+    config.setBooleanValue(NO_HEADER, isNoHeader);
+    config.setBooleanValue(NO_SCHEMACRAWLER_INFO, isNoSchemaCrawlerInfo);
+    config.setBooleanValue(SHOW_DATABASE_INFO, isShowDatabaseInfo);
+    config.setBooleanValue(SHOW_JDBC_DRIVER_INFO, isShowJdbcDriverInfo);
+    config.setBooleanValue(APPEND_OUTPUT, isAppendOutput);
 
-    config.setBooleanValue(SHOW_UNQUALIFIED_NAMES,
-                           options.isShowUnqualifiedNames());
+    config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
 
     config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
-                           options.isAlphabeticalSortForTables());
+                           isAlphabeticalSortForTables);
     config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                           options.isAlphabeticalSortForTableColumns());
+                           isAlphabeticalSortForTableColumns);
 
     config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
-                           options.isAlphabeticalSortForRoutines());
+                           isAlphabeticalSortForRoutines);
 
     config.setBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                           options.isAlphabeticalSortForRoutineColumns());
+                           isAlphabeticalSortForRoutineColumns);
 
-    config.setBooleanValue(NO_SCHEMA_COLORS, options.isNoSchemaColors());
+    config.setBooleanValue(NO_SCHEMA_COLORS, isNoSchemaColors);
 
-    config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY,
-                        options.getIdentifierQuotingStrategy());
+    config.setEnumValue(IDENTIFIER_QUOTING_STRATEGY, identifierQuotingStrategy);
 
     return config;
   }
 
-  @Override
-  public O toOptions()
-  {
-    return (O) options;
-  }
-
-  @Override
-  public String toString()
-  {
-    return options.toString();
-  }
-
   public final B withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
   {
-    options.setIdentifierQuotingStrategy(identifierQuotingStrategy);
+    if (identifierQuotingStrategy == null)
+    {
+      this.identifierQuotingStrategy = IdentifierQuotingStrategy.quote_none;
+    }
+    else
+    {
+      this.identifierQuotingStrategy = identifierQuotingStrategy;
+    }
     return (B) this;
   }
 

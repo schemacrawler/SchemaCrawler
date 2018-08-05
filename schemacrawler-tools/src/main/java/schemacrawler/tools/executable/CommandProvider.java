@@ -38,12 +38,12 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
-  SchemaCrawlerCommand newSchemaCrawlerCommand(String command)
-    throws SchemaCrawlerException;
-
   InputResource getHelp();
 
   Collection<String> getSupportedCommands();
+
+  SchemaCrawlerCommand newSchemaCrawlerCommand(String command)
+    throws SchemaCrawlerException;
 
   boolean supportsSchemaCrawlerCommand(String command,
                                        SchemaCrawlerOptions schemaCrawlerOptions,

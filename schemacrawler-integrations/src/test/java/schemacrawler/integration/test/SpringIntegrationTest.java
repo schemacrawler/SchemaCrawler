@@ -115,8 +115,8 @@ public class SpringIntegrationTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
       .readField(executable, "schemaCrawlerOptions", true);
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = new SchemaCrawlerOptionsBuilder(schemaCrawlerOptions)
-      .includeAllRoutines();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder(schemaCrawlerOptions).includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
 
     // Force output to test output file
@@ -146,7 +146,7 @@ public class SpringIntegrationTest
   private OutputOptions forceOutputToTestOutputFile(final OutputOptions outputOptions,
                                                     final Path testOutputFile)
   {
-    return new OutputOptionsBuilder(outputOptions)
+    return OutputOptionsBuilder.builder(outputOptions)
       .withOutputFile(testOutputFile).toOptions();
   }
 

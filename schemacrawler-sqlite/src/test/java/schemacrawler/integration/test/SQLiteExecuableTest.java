@@ -85,13 +85,13 @@ public class SQLiteExecuableTest
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
       .withMaximumSchemaInfoLevel();
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
+    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder
+      .newSchemaTextOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
     executable.setSchemaCrawlerOptions(options);
-    executable
-      .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)
-        .toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
 
     executeExecutable(sqliteDbFile, executable, currentMethodFullName);
   }
