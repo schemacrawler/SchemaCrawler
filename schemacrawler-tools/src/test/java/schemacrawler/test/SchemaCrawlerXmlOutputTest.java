@@ -123,7 +123,8 @@ public class SchemaCrawlerXmlOutputTest
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.sortTables().noSchemaCrawlerInfo(false)
       .showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     executable
       .setAdditionalConfiguration(new SchemaTextOptionsBuilder(textOptions)

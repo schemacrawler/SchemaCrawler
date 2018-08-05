@@ -68,7 +68,8 @@ public class DerbyTest
 
     final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
+      .toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

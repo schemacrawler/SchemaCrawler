@@ -38,7 +38,7 @@ import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class OperationOptionsBuilder
-  extends BaseTextOptionsBuilder<OperationOptions>
+  extends BaseTextOptionsBuilder<OperationOptionsBuilder, OperationOptions>
 {
 
   private static final String SHOW_LOBS = SCHEMACRAWLER_FORMAT_PREFIX

@@ -166,7 +166,7 @@ public final class SchemaTextRenderer
   {
     if (schemaTextOptions == null)
     {
-      schemaTextOptions = new SchemaTextOptionsBuilder()
+      schemaTextOptions = (SchemaTextOptions) new SchemaTextOptionsBuilder()
         .fromConfig(additionalConfiguration).toOptions();
     }
   }

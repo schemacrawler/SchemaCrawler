@@ -32,7 +32,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public class LintOptionsBuilder
-  extends BaseTextOptionsBuilder<LintOptions>
+  extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions>
 {
 
   private static final String CLI_LINTER_CONFIGS = "linterconfigs";

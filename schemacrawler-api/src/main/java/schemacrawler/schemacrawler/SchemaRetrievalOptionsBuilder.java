@@ -42,7 +42,8 @@ import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
 
 public final class SchemaRetrievalOptionsBuilder
-  implements OptionsBuilder<SchemaRetrievalOptions>
+  implements
+  OptionsBuilder<SchemaRetrievalOptionsBuilder, SchemaRetrievalOptions>
 {
 
   private static final String prefix = "schemacrawler.schema.retrieval.strategy";

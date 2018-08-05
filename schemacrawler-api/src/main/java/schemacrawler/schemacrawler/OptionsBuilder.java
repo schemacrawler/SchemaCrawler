@@ -28,10 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-public interface OptionsBuilder<O extends Options>
+/**
+ * Convoluted interface to allow for subclasses builders, while
+ * maintaining a fluent interface.
+ * 
+ * @see <a href=
+ *      "https://stackoverflow.com/questions/17164375/subclassing-a-java-builder-class">Subclassing
+ *      a Java Builder class</a>
+ * @author Sualeh Fatehi
+ * @param <B>
+ *        Builder
+ * @param <O>
+ *        Options to be built
+ */
+public interface OptionsBuilder<B extends OptionsBuilder<B, O>, O extends Options>
 {
 
-  OptionsBuilder<O> fromConfig(Config config);
+  OptionsBuilder<B, O> fromConfig(Config config);
 
   Config toConfig();
 

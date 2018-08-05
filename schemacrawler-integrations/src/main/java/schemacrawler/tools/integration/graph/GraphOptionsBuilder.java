@@ -40,12 +40,12 @@ import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.tools.text.schema.BaseSchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public class GraphOptionsBuilder
-  extends SchemaTextOptionsBuilder
+public final class GraphOptionsBuilder
+  extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, GraphOptions>
 {
 
   private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = "schemacrawler.graph.show.primarykey.cardinality";

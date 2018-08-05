@@ -30,7 +30,7 @@ package schemacrawler.schemacrawler;
 
 
 public final class SchemaInfoLevelBuilder
-  implements OptionsBuilder<SchemaInfoLevel>
+  implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
 {
 
   /**
@@ -145,7 +145,7 @@ public final class SchemaInfoLevelBuilder
   }
 
   @Override
-  public OptionsBuilder<SchemaInfoLevel> fromConfig(final Config config)
+  public SchemaInfoLevelBuilder fromConfig(final Config config)
   {
     throw new UnsupportedOperationException();
   }

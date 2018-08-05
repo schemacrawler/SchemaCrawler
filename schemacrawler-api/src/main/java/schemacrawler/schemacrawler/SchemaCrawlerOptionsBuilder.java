@@ -49,7 +49,7 @@ import schemacrawler.schema.RoutineType;
  * @author Sualeh Fatehi
  */
 public final class SchemaCrawlerOptionsBuilder
-  implements OptionsBuilder<SchemaCrawlerOptions>
+  implements OptionsBuilder<SchemaCrawlerOptionsBuilder, SchemaCrawlerOptions>
 {
 
   private static final String SC_SCHEMA_PATTERN_EXCLUDE = "schemacrawler.schema.pattern.exclude";
