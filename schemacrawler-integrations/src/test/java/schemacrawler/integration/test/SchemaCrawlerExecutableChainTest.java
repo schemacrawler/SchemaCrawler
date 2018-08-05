@@ -70,10 +70,10 @@ public class SchemaCrawlerExecutableChainTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaTextOptions textOptions = new SchemaTextOptions();
-    textOptions.setNoSchemaCrawlerInfo(false);
-    textOptions.setShowDatabaseInfo(true);
-    textOptions.setShowJdbcDriverInfo(true);
+    final SchemaTextOptionsBuilder textOptionsBuilder = new SchemaTextOptionsBuilder();
+    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
+      .showJdbcDriverInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final OutputOptions outputOptions = OutputOptionsBuilder
       .newOutputOptions("/chain.js", testOutputFile);

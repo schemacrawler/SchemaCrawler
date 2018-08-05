@@ -142,16 +142,37 @@
     </constructor-arg>
   </bean>
 
-  <bean id="schemaTextOptions"
-    class="schemacrawler.tools.text.schema.SchemaTextOptions">
-    <property name="showOrdinalNumbers" value="true" />
-    <property name="showStandardColumnTypeNames" value="true" />
-    <property name="hidePrimaryKeyNames" value="false" />
-    <property name="hideIndexNames" value="false" />
-    <property name="hideForeignKeyNames" value="false" />
-    <property name="hideTableConstraintNames" value="false" />
-    <property name="noSchemaCrawlerInfo" value="true" />
+  <bean id="schemaTextOptionsBuilder"
+    class="schemacrawler.tools.text.schema.SchemaTextOptionsBuilder" />
+  <bean
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
+    <property name="targetObject"
+      ref="schemaTextOptionsBuilder" />
+    <property name="targetMethod" value="showOrdinalNumbers" />
+    <property name="arguments">
+      <value type="boolean">true</value>
+    </property>
   </bean>
+  <bean
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
+    <property name="targetObject"
+      ref="schemaTextOptionsBuilder" />
+    <property name="targetMethod" value="showStandardColumnTypeNames" />
+    <property name="arguments">
+      <value type="boolean">true</value>
+    </property>
+  </bean>
+  <bean
+    class="org.springframework.beans.factory.config.MethodInvokingBean">
+    <property name="targetObject"
+      ref="schemaTextOptionsBuilder" />
+    <property name="targetMethod" value="noSchemaCrawlerInfo" />
+    <property name="arguments">
+      <value type="boolean">true</value>
+    </property>
+  </bean>
+  <bean id="schemaTextOptions"
+    factory-bean="schemaTextOptionsBuilder" factory-method="toOptions" />
 
   <bean id="executableForSchema"
     class="schemacrawler.tools.executable.SchemaCrawlerExecutable">

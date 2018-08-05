@@ -113,9 +113,10 @@ public class GraphRendererOptionsTest
   public void executableForGraph_01()
     throws Exception
   {
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setAlphabeticalSortForTableColumns(true);
-    graphOptions.setShowOrdinalNumbers(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.sortTableColumns();
+    graphOptionsBuilder.showOrdinalNumbers();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
@@ -127,8 +128,9 @@ public class GraphRendererOptionsTest
   public void executableForGraph_02()
     throws Exception
   {
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setHideForeignKeyNames(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.noForeignKeyNames();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
@@ -140,10 +142,11 @@ public class GraphRendererOptionsTest
   public void executableForGraph_03()
     throws Exception
   {
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setNoSchemaCrawlerInfo(true);
-    graphOptions.setShowDatabaseInfo(false);
-    graphOptions.setShowJdbcDriverInfo(false);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.noSchemaCrawlerInfo(true);
+    graphOptionsBuilder.showDatabaseInfo(false);
+    graphOptionsBuilder.showJdbcDriverInfo(false);
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
@@ -155,8 +158,9 @@ public class GraphRendererOptionsTest
   public void executableForGraph_04()
     throws Exception
   {
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setShowUnqualifiedNames(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.showUnqualifiedNames();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
@@ -218,9 +222,9 @@ public class GraphRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setShowUnqualifiedNames(true);
-    graphOptions.setHideForeignKeyNames(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
@@ -238,9 +242,9 @@ public class GraphRendererOptionsTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setShowUnqualifiedNames(true);
-    graphOptions.setHideForeignKeyNames(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
@@ -284,8 +288,9 @@ public class GraphRendererOptionsTest
   public void executableForGraph_12()
     throws Exception
   {
-    final GraphOptions graphOptions = new GraphOptions();
-    graphOptions.setShowRowCounts(true);
+    final GraphOptionsBuilder graphOptionsBuilder = new GraphOptionsBuilder();
+    graphOptionsBuilder.showRowCounts();
+    final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .withMaximumSchemaInfoLevel();

@@ -105,7 +105,7 @@ public final class GraphRenderer
       aCatalog = new CatalogWithAssociations(aCatalog);
     }
     if (graphOptions.isShowRowCounts()
-        || schemaCrawlerOptions.isHideEmptyTables())
+        || schemaCrawlerOptions.isNoEmptyTables())
     {
       aCatalog = new CatalogWithCounts(aCatalog,
                                        connection,

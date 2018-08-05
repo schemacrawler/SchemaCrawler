@@ -75,7 +75,7 @@ public final class SchemaTextRenderer
       aCatalog = new CatalogWithAssociations(aCatalog);
     }
     if (schemaTextOptions.isShowRowCounts()
-        || schemaCrawlerOptions.isHideEmptyTables())
+        || schemaCrawlerOptions.isNoEmptyTables())
     {
       aCatalog = new CatalogWithCounts(aCatalog,
                                        connection,

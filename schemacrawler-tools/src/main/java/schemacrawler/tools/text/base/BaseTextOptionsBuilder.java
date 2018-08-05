@@ -212,12 +212,12 @@ public abstract class BaseTextOptionsBuilder<O extends BaseTextOptions>
     return this;
   }
 
-  public final BaseTextOptionsBuilder<O> showJdbcInfo()
+  public final BaseTextOptionsBuilder<O> showJdbcDriverInfo()
   {
-    return showJdbcInfo(true);
+    return showJdbcDriverInfo(true);
   }
 
-  public final BaseTextOptionsBuilder<O> showJdbcInfo(final boolean value)
+  public final BaseTextOptionsBuilder<O> showJdbcDriverInfo(final boolean value)
   {
     options.setShowJdbcDriverInfo(value);
     return this;

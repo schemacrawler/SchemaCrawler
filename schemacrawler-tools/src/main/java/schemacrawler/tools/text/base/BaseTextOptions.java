@@ -121,32 +121,32 @@ public abstract class BaseTextOptions
     return isShowUnqualifiedNames;
   }
 
-  public void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
+  protected void setAlphabeticalSortForRoutineColumns(final boolean isAlphabeticalSortForRoutineColumns)
   {
     this.isAlphabeticalSortForRoutineColumns = isAlphabeticalSortForRoutineColumns;
   }
 
-  public void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
+  protected void setAlphabeticalSortForRoutines(final boolean isAlphabeticalSortForRoutines)
   {
     this.isAlphabeticalSortForRoutines = isAlphabeticalSortForRoutines;
   }
 
-  public void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
+  protected void setAlphabeticalSortForTableColumns(final boolean isAlphabeticalSortForTableColumns)
   {
     this.isAlphabeticalSortForTableColumns = isAlphabeticalSortForTableColumns;
   }
 
-  public void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
+  protected void setAlphabeticalSortForTables(final boolean isAlphabeticalSortForTables)
   {
     this.isAlphabeticalSortForTables = isAlphabeticalSortForTables;
   }
 
-  public void setAppendOutput(final boolean isAppendOutput)
+  protected void setAppendOutput(final boolean isAppendOutput)
   {
     this.isAppendOutput = isAppendOutput;
   }
 
-  public void setIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
+  protected void setIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
   {
     if (identifierQuotingStrategy == null)
     {
@@ -158,32 +158,32 @@ public abstract class BaseTextOptions
     }
   }
 
-  public void setNoFooter(final boolean isNoFooter)
+  protected void setNoFooter(final boolean isNoFooter)
   {
     this.isNoFooter = isNoFooter;
   }
 
-  public void setNoHeader(final boolean isNoHeader)
+  protected void setNoHeader(final boolean isNoHeader)
   {
     this.isNoHeader = isNoHeader;
   }
 
-  public void setNoSchemaColors(final boolean isNoSchemaColors)
+  protected void setNoSchemaColors(final boolean isNoSchemaColors)
   {
     this.isNoSchemaColors = isNoSchemaColors;
   }
 
-  public void setNoSchemaCrawlerInfo(final boolean isNoSchemaCrawlerInfo)
+  protected void setNoSchemaCrawlerInfo(final boolean isNoSchemaCrawlerInfo)
   {
     this.isNoSchemaCrawlerInfo = isNoSchemaCrawlerInfo;
   }
 
-  public void setShowDatabaseInfo(final boolean isShowDatabaseInfo)
+  protected void setShowDatabaseInfo(final boolean isShowDatabaseInfo)
   {
     this.isShowDatabaseInfo = isShowDatabaseInfo;
   }
 
-  public void setShowJdbcDriverInfo(final boolean isShowJdbcDriverInfo)
+  protected void setShowJdbcDriverInfo(final boolean isShowJdbcDriverInfo)
   {
     this.isShowJdbcDriverInfo = isShowJdbcDriverInfo;
   }

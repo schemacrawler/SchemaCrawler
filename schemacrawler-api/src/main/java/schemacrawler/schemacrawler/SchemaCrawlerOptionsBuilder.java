@@ -121,7 +121,7 @@ public final class SchemaCrawlerOptionsBuilder
 
   private boolean grepOnlyMatching;
 
-  private boolean hideEmptyTables;
+  private boolean isNoEmptyTables;
   private int childTableFilterDepth;
 
   private int parentTableFilterDepth;
@@ -185,7 +185,7 @@ public final class SchemaCrawlerOptionsBuilder
     grepInvertMatch = options.isGrepInvertMatch();
     grepOnlyMatching = options.isGrepOnlyMatching();
 
-    hideEmptyTables = options.isHideEmptyTables();
+    isNoEmptyTables = options.isNoEmptyTables();
 
     childTableFilterDepth = options.getChildTableFilterDepth();
     parentTableFilterDepth = options.getParentTableFilterDepth();
@@ -263,9 +263,9 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder hideEmptyTables()
+  public SchemaCrawlerOptionsBuilder noEmptyTables()
   {
-    hideEmptyTables = true;
+    isNoEmptyTables = true;
     return this;
   }
 
@@ -569,7 +569,7 @@ public final class SchemaCrawlerOptionsBuilder
                                     grepDefinitionInclusionRule.orElse(null),
                                     grepInvertMatch,
                                     grepOnlyMatching,
-                                    hideEmptyTables,
+                                    isNoEmptyTables,
                                     childTableFilterDepth,
                                     parentTableFilterDepth);
   }
