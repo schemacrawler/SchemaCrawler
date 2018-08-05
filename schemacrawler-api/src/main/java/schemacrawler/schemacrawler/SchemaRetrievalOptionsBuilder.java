@@ -76,7 +76,7 @@ public final class SchemaRetrievalOptionsBuilder
     return new SchemaRetrievalOptionsBuilder().toOptions();
   }
 
-  public static SchemaRetrievalOptions newSchemaRetrievalOptions(Config config)
+  public static SchemaRetrievalOptions newSchemaRetrievalOptions(final Config config)
   {
     return new SchemaRetrievalOptionsBuilder().fromConfig(config).toOptions();
   }

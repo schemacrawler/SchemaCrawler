@@ -50,13 +50,6 @@ public class SerializationCommandProvider
     .getLogger(SerializationCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final SerializationCommand scCommand = new SerializationCommand();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/SerializationCommand.txt";
@@ -78,6 +71,13 @@ public class SerializationCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(SerializationCommand.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final SerializationCommand scCommand = new SerializationCommand();
+    return scCommand;
   }
 
   @Override

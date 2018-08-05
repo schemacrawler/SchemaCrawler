@@ -50,13 +50,6 @@ public class ThymeleafCommandProvider
     .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final ThymeleafRenderer scCommand = new ThymeleafRenderer();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/ThymeleafRenderer.txt";
@@ -78,6 +71,13 @@ public class ThymeleafCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(ThymeleafRenderer.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final ThymeleafRenderer scCommand = new ThymeleafRenderer();
+    return scCommand;
   }
 
   @Override

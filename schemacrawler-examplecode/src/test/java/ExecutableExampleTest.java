@@ -42,7 +42,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class ExecutableExampleTest
   extends BaseDatabaseTest
 {
-  
+
   @Test
   public void executableExample()
     throws Exception

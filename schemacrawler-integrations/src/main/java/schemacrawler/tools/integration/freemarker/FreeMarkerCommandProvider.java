@@ -50,13 +50,6 @@ public class FreeMarkerCommandProvider
     .getLogger(FreeMarkerCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final FreeMarkerRenderer scCommand = new FreeMarkerRenderer();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/FreeMarkerRenderer.txt";
@@ -78,6 +71,13 @@ public class FreeMarkerCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(FreeMarkerRenderer.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final FreeMarkerRenderer scCommand = new FreeMarkerRenderer();
+    return scCommand;
   }
 
   @Override
