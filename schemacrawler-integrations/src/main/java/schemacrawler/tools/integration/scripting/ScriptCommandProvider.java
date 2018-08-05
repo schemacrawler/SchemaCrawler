@@ -50,13 +50,6 @@ public class ScriptCommandProvider
     .getLogger(ScriptCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final ScriptCommand scCommand = new ScriptCommand();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/ScriptExecutable.txt";
@@ -78,6 +71,13 @@ public class ScriptCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(ScriptCommand.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final ScriptCommand scCommand = new ScriptCommand();
+    return scCommand;
   }
 
   @Override

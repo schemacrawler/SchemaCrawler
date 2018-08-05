@@ -55,16 +55,6 @@ public class SpringOptions
   }
 
   /**
-   * Bean name for the database-specific override options.
-   *
-   * @return Bean name for the database-specific override options.
-   */
-  public String getSchemaRetrievalOptionsName()
-  {
-    return schemaRetrievalOptionsName;
-  }
-
-  /**
    * Bean name for the datasource.
    *
    * @return Bean name for the datasource.
@@ -85,6 +75,16 @@ public class SpringOptions
   }
 
   /**
+   * Bean name for the database-specific override options.
+   *
+   * @return Bean name for the database-specific override options.
+   */
+  public String getSchemaRetrievalOptionsName()
+  {
+    return schemaRetrievalOptionsName;
+  }
+
+  /**
    * Set the Spring context file name.
    *
    * @param contextFileName
@@ -93,14 +93,6 @@ public class SpringOptions
   public void setContextFileName(final String contextFileName)
   {
     this.contextFileName = contextFileName;
-  }
-
-  /**
-   * Set the bean name for the database-specific override options.
-   */
-  public void setSchemaRetrievalOptionsName(final String schemaRetrievalOptionsName)
-  {
-    this.schemaRetrievalOptionsName = schemaRetrievalOptionsName;
   }
 
   /**
@@ -123,6 +115,14 @@ public class SpringOptions
   public void setExecutableName(final String executableName)
   {
     this.executableName = executableName;
+  }
+
+  /**
+   * Set the bean name for the database-specific override options.
+   */
+  public void setSchemaRetrievalOptionsName(final String schemaRetrievalOptionsName)
+  {
+    this.schemaRetrievalOptionsName = schemaRetrievalOptionsName;
   }
 
 }

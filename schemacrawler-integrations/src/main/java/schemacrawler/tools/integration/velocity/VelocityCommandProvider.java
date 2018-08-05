@@ -50,13 +50,6 @@ public class VelocityCommandProvider
     .getLogger(VelocityCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final VelocityRenderer scCommand = new VelocityRenderer();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/VelocityRenderer.txt";
@@ -78,6 +71,13 @@ public class VelocityCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(VelocityRenderer.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final VelocityRenderer scCommand = new VelocityRenderer();
+    return scCommand;
   }
 
   @Override

@@ -64,17 +64,17 @@ public final class EmbeddedGraphCommandProvider
   }
 
   @Override
+  public Collection<String> getSupportedCommands()
+  {
+    return supportedCommands();
+  }
+
+  @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
     throws SchemaCrawlerException
   {
     final SchemaCrawlerCommand scCommand = new EmbeddedGraphRenderer(command);
     return scCommand;
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return supportedCommands();
   }
 
   @Override

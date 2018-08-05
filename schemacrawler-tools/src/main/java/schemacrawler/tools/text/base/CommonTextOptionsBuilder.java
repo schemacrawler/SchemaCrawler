@@ -34,11 +34,6 @@ public final class CommonTextOptionsBuilder
   extends BaseTextOptionsBuilder<CommonTextOptionsBuilder, CommonTextOptions>
 {
 
-  private CommonTextOptionsBuilder()
-  {
-    // Set default values, if any
-  }
-
   public static CommonTextOptionsBuilder builder()
   {
     return new CommonTextOptionsBuilder();
@@ -57,6 +52,11 @@ public final class CommonTextOptionsBuilder
   public static CommonTextOptions newCommonTextOptions(final Config config)
   {
     return new CommonTextOptionsBuilder().fromConfig(config).toOptions();
+  }
+
+  private CommonTextOptionsBuilder()
+  {
+    // Set default values, if any
   }
 
   @Override

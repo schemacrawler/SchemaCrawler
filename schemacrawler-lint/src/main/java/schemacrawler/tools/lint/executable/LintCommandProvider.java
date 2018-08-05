@@ -59,13 +59,6 @@ public class LintCommandProvider
     .getLogger(LintCommandProvider.class.getName());
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    final LintCommand scCommand = new LintCommand();
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     try
@@ -102,6 +95,13 @@ public class LintCommandProvider
   public Collection<String> getSupportedCommands()
   {
     return Arrays.asList(LintCommand.COMMAND);
+  }
+
+  @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    final LintCommand scCommand = new LintCommand();
+    return scCommand;
   }
 
   @Override

@@ -83,6 +83,13 @@ public abstract class BaseDatabaseTest
     XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
+  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException
+  {
+    return getCatalog(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                      schemaCrawlerOptions);
+  }
+
   protected Catalog getCatalog(final SchemaRetrievalOptions schemaRetrievalOptions,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
@@ -95,13 +102,6 @@ public abstract class BaseDatabaseTest
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
-  }
-
-  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    return getCatalog(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                      schemaCrawlerOptions);
   }
 
   /**
