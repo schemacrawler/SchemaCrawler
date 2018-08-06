@@ -52,7 +52,8 @@ public class H2Test
   public void createDatabase()
     throws SchemaCrawlerException, SQLException
   {
-    createDatabase("jdbc:h2:mem:schemacrawler", null, null, "/h2.scripts.txt");
+    createDataSource("jdbc:h2:mem:schemacrawler", null, null);
+    createDatabase("/h2.scripts.txt");
   }
 
   @Test
@@ -69,8 +70,7 @@ public class H2Test
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
-      .toOptions();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
