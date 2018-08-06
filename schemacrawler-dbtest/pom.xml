@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -14,14 +15,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.signing.artifacts>true</skip.signing.artifacts>
-  </properties>  
-  <dependencies>    
+  </properties>
+  <dependencies>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
-    </dependency>     
+    </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-api</artifactId>
@@ -41,14 +42,24 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
-
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-mysql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+        <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-postgresql</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-dbcp2</artifactId>
       <version>2.3.0</version>
       <scope>test</scope>
     </dependency>
-        
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -79,11 +90,18 @@
       <version>2.37</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-oracle</artifactId>
-      <version>${project.version}</version>
-    </dependency>    
+      <groupId>ru.yandex.qatools.embed</groupId>
+      <artifactId>postgresql-embedded</artifactId>
+      <version>2.9</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.wix</groupId>
+      <artifactId>wix-embedded-mysql</artifactId>
+      <version>4.1.2</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 </project>
