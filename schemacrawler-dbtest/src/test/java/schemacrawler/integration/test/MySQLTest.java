@@ -75,10 +75,11 @@ public class MySQLTest
       final int port = mysqld.getConfig().getPort();
       final String user = mysqld.getConfig().getUsername();
       final String password = mysqld.getConfig().getPassword();
-      final String url = String
+      final String connectionUrl = String
         .format("jdbc:mysql://localhost:%d/%s?useSSL=false", port, schema);
 
-      createDatabase(url, user, password, "/mysql.scripts.txt");
+      createDataSource(connectionUrl, user, password);
+      createDatabase("/mysql.scripts.txt");
 
       isDatabaseRunning = true;
     }

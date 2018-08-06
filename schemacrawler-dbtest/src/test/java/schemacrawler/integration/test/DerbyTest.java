@@ -52,8 +52,8 @@ public class DerbyTest
     throws SchemaCrawlerException, ClassNotFoundException, SQLException
   {
     Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
-    createDatabase("jdbc:derby:memory:schemacrawler;create=true",
-                   null, null, "/derby.scripts.txt");
+    createDataSource("jdbc:derby:memory:schemacrawler;create=true", null, null);
+    createDatabase("/derby.scripts.txt");
   }
 
   @Test
@@ -69,8 +69,7 @@ public class DerbyTest
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = (SchemaTextOptions) textOptionsBuilder
-      .toOptions();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);

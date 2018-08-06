@@ -61,18 +61,15 @@ public class PostgreSQLTest
     try
     {
       postgres = new EmbeddedPostgres(V10_3);
-      final String url = postgres.start("localhost",
-                                        SocketUtil.findFreePort(),
-                                        "schemacrawler",
-                                        "schemacrawler",
-                                        "schemacrawler");
-      System.out.println("PostgreSQL connection URL: " + url);
+      final String connectionUrl = postgres.start("localhost",
+                                                  SocketUtil.findFreePort(),
+                                                  "schemacrawler",
+                                                  "schemacrawler",
+                                                  "schemacrawler");
 
-      dropDatabase(url, "/db/books/00_drop_schemas_01_E.sql");
-      createDatabase(url,
-                     "schemacrawler",
-                     "schemacrawler",
-                     "/postgresql.scripts.txt");
+      createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
+      dropDatabase("/db/books/00_drop_schemas_01_E.sql");
+      createDatabase("/postgresql.scripts.txt");
 
       isDatabaseRunning = true;
     }

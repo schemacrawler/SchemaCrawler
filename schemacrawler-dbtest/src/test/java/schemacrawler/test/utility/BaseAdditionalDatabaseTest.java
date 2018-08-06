@@ -45,10 +45,20 @@ public abstract class BaseAdditionalDatabaseTest
 
   private DataSource dataSource;
 
-  protected void createDatabase(final String connectionUrl,
-                                final String user,
-                                final String password,
-                                final String scriptsResource)
+  protected void createDatabase(final String scriptsResource)
+    throws SchemaCrawlerException, SQLException
+  {
+    try (Connection connection = getConnection();)
+    {
+      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
+                                                                    scriptsResource);
+      schemaCreator.run();
+    }
+  }
+
+  protected void createDataSource(final String connectionUrl,
+                                  final String user,
+                                  final String password)
     throws SchemaCrawlerException, SQLException
   {
     final BasicDataSource dataSource = new BasicDataSource();
@@ -59,38 +69,17 @@ public abstract class BaseAdditionalDatabaseTest
     dataSource.setInitialSize(1);
     dataSource.setMaxTotal(1);
 
+    System.out.println("Database connection URL: " + connectionUrl);
     this.dataSource = dataSource;
-
-    try (Connection connection = getConnection();)
-    {
-      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
-                                                                    scriptsResource);
-      schemaCreator.run();
-    }
   }
 
-  protected void dropDatabase(final String connectionUrl,
-                              final String dropDbResource)
+  protected void dropDatabase(final String dropDbResource)
+    throws SQLException
   {
-    try (final BasicDataSource dataSource = new BasicDataSource();)
+    try (Connection connection = dataSource.getConnection();)
     {
-      dataSource.setUsername(null);
-      dataSource.setPassword(null);
-      dataSource.setUrl(connectionUrl);
-      dataSource.setDefaultAutoCommit(false);
-      dataSource.setInitialSize(1);
-      dataSource.setMaxTotal(1);
-
-      try (Connection connection = dataSource.getConnection();)
-      {
-        final SqlScript dropDbScript = new SqlScript(dropDbResource,
-                                                     connection);
-        dropDbScript.run();
-      }
-    }
-    catch (final Throwable e)
-    {
-      e.printStackTrace();
+      final SqlScript dropDbScript = new SqlScript(dropDbResource, connection);
+      dropDbScript.run();
     }
   }
 
