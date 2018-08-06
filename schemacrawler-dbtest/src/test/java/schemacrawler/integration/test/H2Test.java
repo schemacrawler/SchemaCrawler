@@ -52,7 +52,7 @@ public class H2Test
   public void createDatabase()
     throws SchemaCrawlerException, SQLException
   {
-    createDatabase("jdbc:h2:mem:schemacrawler", "/h2.scripts.txt");
+    createDatabase("jdbc:h2:mem:schemacrawler", null, null, "/h2.scripts.txt");
   }
 
   @Test

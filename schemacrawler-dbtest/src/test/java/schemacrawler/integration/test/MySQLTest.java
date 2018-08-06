@@ -65,17 +65,20 @@ public class MySQLTest
   {
     try
     {
+      final String schema = "schemacrawler";
+
       final MysqldConfig config = aMysqldConfig(v5_7_latest)
         .withServerVariable("bind-address", "localhost").withFreePort()
-        .withUser("schemacrawler", "schemacrawler").withCharset(UTF8)
-        .withTimeout(2, MINUTES).build();
-      mysqld = anEmbeddedMysql(config).addSchema("schemacrawler").start();
+        .withCharset(UTF8).withTimeout(1, MINUTES).build();
+      mysqld = anEmbeddedMysql(config).addSchema(schema).start();
 
       final int port = mysqld.getConfig().getPort();
+      final String user = mysqld.getConfig().getUsername();
+      final String password = mysqld.getConfig().getPassword();
       final String url = String
-        .format("jdbc:mysql://localhost:%d/schemacrawler&user=schemacrawler&password=schemacrawler&",
-                port);
-      createDatabase(url, "/mysql.scripts.txt");
+        .format("jdbc:mysql://localhost:%d/%s?useSSL=false", port, schema);
+
+      createDatabase(url, user, password, "/mysql.scripts.txt");
 
       isDatabaseRunning = true;
     }
