@@ -28,15 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
+import static com.wix.mysql.config.Charset.UTF8;
+import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
+import static com.wix.mysql.distribution.Version.v5_7_latest;
+import static java.util.concurrent.TimeUnit.MINUTES;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
+import com.wix.mysql.EmbeddedMysql;
+import com.wix.mysql.config.MysqldConfig;
+
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
@@ -44,54 +52,57 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-public class MonetDBTest
+public class MySQLTest
   extends BaseAdditionalDatabaseTest
 {
 
   private boolean isDatabaseRunning;
-
-  @After
-  public void stopDatabaseServer()
-    throws MonetDBEmbeddedException
-  {
-    if (isDatabaseRunning)
-    {
-      MonetDBEmbeddedDatabase.stopDatabase();
-    }
-  }
+  private EmbeddedMysql mysqld;
 
   @Before
   public void createDatabase()
+    throws SchemaCrawlerException, SQLException, IOException
   {
     try
     {
-      // Set up native libraries, and load JDBC driver
-      final Path directoryPath = Files.createTempDirectory("monetdbjavalite");
-      MonetDBEmbeddedDatabase.startDatabase(directoryPath.toString());
-      if (MonetDBEmbeddedDatabase.isDatabaseRunning())
-      {
-        MonetDBEmbeddedDatabase.stopDatabase();
-      }
+      final MysqldConfig config = aMysqldConfig(v5_7_latest)
+        .withServerVariable("bind-address", "localhost").withFreePort()
+        .withUser("schemacrawler", "schemacrawler").withCharset(UTF8)
+        .withTimeout(2, MINUTES).build();
+      mysqld = anEmbeddedMysql(config).addSchema("schemacrawler").start();
 
-      createDatabase("jdbc:monetdb:embedded::memory:", "/monetdb.scripts.txt");
+      final int port = mysqld.getConfig().getPort();
+      final String url = String
+        .format("jdbc:mysql://localhost:%d/schemacrawler&user=schemacrawler&password=schemacrawler&",
+                port);
+      createDatabase(url, "/mysql.scripts.txt");
 
       isDatabaseRunning = true;
     }
     catch (final Throwable e)
     {
       e.printStackTrace();
-      // Do not run if MonetDBLite cannot be loaded
+      // Do not run if database server cannot be loaded
       isDatabaseRunning = false;
     }
   }
 
+  @After
+  public void stopDatabaseServer()
+  {
+    if (isDatabaseRunning)
+    {
+      mysqld.stop();
+    }
+  }
+
   @Test
-  public void testMonetDBWithConnection()
+  public void testMySQLWithConnection()
     throws Exception
   {
     if (!isDatabaseRunning)
     {
-      System.out.println("Did not run MonetDB test");
+      System.out.println("Did not run MySQL test");
       return;
     }
 
@@ -108,7 +119,7 @@ public class MonetDBTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
+    executeExecutable(executable, "text", "testMySQLWithConnection.txt");
   }
 
 }

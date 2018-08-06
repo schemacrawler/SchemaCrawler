@@ -36,6 +36,7 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
 
 public abstract class BaseAdditionalDatabaseTest
@@ -61,8 +62,33 @@ public abstract class BaseAdditionalDatabaseTest
     try (Connection connection = getConnection();)
     {
       final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
-                                                            scriptsResource);
+                                                                    scriptsResource);
       schemaCreator.run();
+    }
+  }
+
+  protected void dropDatabase(final String connectionUrl,
+                              final String dropDbResource)
+  {
+    try (final BasicDataSource dataSource = new BasicDataSource();)
+    {
+      dataSource.setUsername(null);
+      dataSource.setPassword(null);
+      dataSource.setUrl(connectionUrl);
+      dataSource.setDefaultAutoCommit(false);
+      dataSource.setInitialSize(1);
+      dataSource.setMaxTotal(1);
+
+      try (Connection connection = dataSource.getConnection();)
+      {
+        final SqlScript dropDbScript = new SqlScript(dropDbResource,
+                                                     connection);
+        dropDbScript.run();
+      }
+    }
+    catch (final Throwable e)
+    {
+      e.printStackTrace();
     }
   }
 

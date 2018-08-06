@@ -28,15 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
-import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
+import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
+import ru.yandex.qatools.embed.postgresql.distribution.Version;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
@@ -44,54 +45,55 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-public class MonetDBTest
+public class PostgreSQLTest
   extends BaseAdditionalDatabaseTest
 {
 
   private boolean isDatabaseRunning;
-
-  @After
-  public void stopDatabaseServer()
-    throws MonetDBEmbeddedException
-  {
-    if (isDatabaseRunning)
-    {
-      MonetDBEmbeddedDatabase.stopDatabase();
-    }
-  }
+  private EmbeddedPostgres postgres;
 
   @Before
   public void createDatabase()
+    throws SchemaCrawlerException, SQLException, IOException
   {
     try
     {
-      // Set up native libraries, and load JDBC driver
-      final Path directoryPath = Files.createTempDirectory("monetdbjavalite");
-      MonetDBEmbeddedDatabase.startDatabase(directoryPath.toString());
-      if (MonetDBEmbeddedDatabase.isDatabaseRunning())
-      {
-        MonetDBEmbeddedDatabase.stopDatabase();
-      }
+      postgres = new EmbeddedPostgres(Version.V10_3);
+      final String url = postgres.start("localhost",
+                                        5432,
+                                        "schemacrawler",
+                                        "schemacrawler",
+                                        "schemacrawler");
 
-      createDatabase("jdbc:monetdb:embedded::memory:", "/monetdb.scripts.txt");
+      dropDatabase(url, "/db/books/00_drop_schemas_01_E.sql");
+      createDatabase(url, "/postgresql.scripts.txt");
 
       isDatabaseRunning = true;
     }
     catch (final Throwable e)
     {
       e.printStackTrace();
-      // Do not run if MonetDBLite cannot be loaded
+      // Do not run if database server cannot be loaded
       isDatabaseRunning = false;
     }
   }
 
+  @After
+  public void stopDatabaseServer()
+  {
+    if (isDatabaseRunning)
+    {
+      postgres.stop();
+    }
+  }
+
   @Test
-  public void testMonetDBWithConnection()
+  public void testPostgreSQLWithConnection()
     throws Exception
   {
     if (!isDatabaseRunning)
     {
-      System.out.println("Did not run MonetDB test");
+      System.out.println("Did not run PostgreSQL test");
       return;
     }
 
@@ -100,7 +102,7 @@ public class MonetDBTest
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
+    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo().portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
@@ -108,7 +110,7 @@ public class MonetDBTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
+    executeExecutable(executable, "text", "testPostgreSQLWithConnection.txt");
   }
 
 }

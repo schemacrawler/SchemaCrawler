@@ -1,0 +1,2 @@
+-- PostgreSQL syntax
+DROP SCHEMA IF EXISTS BOOKS CASCADE;
