@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static ru.yandex.qatools.embed.postgresql.distribution.Version.V9_6_8;
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_3;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,6 +38,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
+import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -59,12 +60,13 @@ public class PostgreSQLTest
   {
     try
     {
-      postgres = new EmbeddedPostgres(V9_6_8);
+      postgres = new EmbeddedPostgres(V10_3);
       final String url = postgres.start("localhost",
-                                        5432,
+                                        SocketUtil.findFreePort(),
                                         "schemacrawler",
                                         "schemacrawler",
                                         "schemacrawler");
+      System.out.println("PostgreSQL connection URL: " + url);
 
       dropDatabase(url, "/db/books/00_drop_schemas_01_E.sql");
       createDatabase(url,
