@@ -38,10 +38,14 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
+import sf.util.SchemaCrawlerLogger;
 
 public abstract class BaseAdditionalDatabaseTest
   extends BaseExecutableTest
 {
+
+  protected static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(BaseAdditionalDatabaseTest.class.getName());
 
   private DataSource dataSource;
 

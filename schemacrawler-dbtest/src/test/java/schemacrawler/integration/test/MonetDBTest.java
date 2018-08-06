@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
@@ -92,7 +93,7 @@ public class MonetDBTest
   {
     if (!isDatabaseRunning)
     {
-      System.out.println("Did not run MonetDB test");
+      LOGGER.log(Level.INFO, "Did NOT run MonetDB test");
       return;
     }
 
@@ -110,6 +111,7 @@ public class MonetDBTest
       .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
+    LOGGER.log(Level.INFO, "Completed MonetDB test successfully");
   }
 
 }

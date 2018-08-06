@@ -32,6 +32,7 @@ import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_3;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
@@ -96,7 +97,7 @@ public class PostgreSQLTest
   {
     if (!isDatabaseRunning)
     {
-      System.out.println("Did not run PostgreSQL test");
+      LOGGER.log(Level.INFO, "Did NOT run PostgreSQL test");
       return;
     }
 
@@ -114,6 +115,7 @@ public class PostgreSQLTest
       .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testPostgreSQLWithConnection.txt");
+    LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
 }
