@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V9_6_8;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -36,7 +38,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
-import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -58,7 +59,7 @@ public class PostgreSQLTest
   {
     try
     {
-      postgres = new EmbeddedPostgres(Version.V10_3);
+      postgres = new EmbeddedPostgres(V9_6_8);
       final String url = postgres.start("localhost",
                                         5432,
                                         "schemacrawler",
@@ -105,7 +106,7 @@ public class PostgreSQLTest
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo().portableNames();
+    textOptionsBuilder.noInfo().portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");

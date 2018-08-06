@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.Charset.UTF8;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
-import static com.wix.mysql.distribution.Version.v5_7_latest;
+import static com.wix.mysql.distribution.Version.v5_6_latest;
 import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.io.IOException;
@@ -67,7 +67,7 @@ public class MySQLTest
     {
       final String schema = "schemacrawler";
 
-      final MysqldConfig config = aMysqldConfig(v5_7_latest)
+      final MysqldConfig config = aMysqldConfig(v5_6_latest)
         .withServerVariable("bind-address", "localhost").withFreePort()
         .withCharset(UTF8).withTimeout(1, MINUTES).build();
       mysqld = anEmbeddedMysql(config).addSchema(schema).start();
