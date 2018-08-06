@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -78,6 +79,7 @@ public class H2Test
       .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testH2WithConnection.txt");
+    LOGGER.log(Level.INFO, "Completed H2 test successfully");
   }
 
 }

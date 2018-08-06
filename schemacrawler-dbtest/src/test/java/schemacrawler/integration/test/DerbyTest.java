@@ -29,6 +29,7 @@ package schemacrawler.integration.test;
 
 
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +78,7 @@ public class DerbyTest
       .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testDerbyWithConnection.txt");
+    LOGGER.log(Level.INFO, "Completed Apache Derby test successfully");
   }
 
 }

@@ -36,6 +36,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
@@ -106,7 +107,7 @@ public class MySQLTest
   {
     if (!isDatabaseRunning)
     {
-      System.out.println("Did not run MySQL test");
+      LOGGER.log(Level.INFO, "Did NOT run MySQL test");
       return;
     }
 
@@ -124,6 +125,7 @@ public class MySQLTest
       .builder(textOptions).toConfig());
 
     executeExecutable(executable, "text", "testMySQLWithConnection.txt");
+    LOGGER.log(Level.INFO, "Completed MySQL test successfully");
   }
 
 }
