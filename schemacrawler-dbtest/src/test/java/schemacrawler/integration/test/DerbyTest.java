@@ -53,7 +53,7 @@ public class DerbyTest
   {
     Class.forName("org.apache.derby.impl.jdbc.EmbedConnection");
     createDatabase("jdbc:derby:memory:schemacrawler;create=true",
-                   "/derby.scripts.txt");
+                   null, null, "/derby.scripts.txt");
   }
 
   @Test

@@ -46,12 +46,14 @@ public abstract class BaseAdditionalDatabaseTest
   private DataSource dataSource;
 
   protected void createDatabase(final String connectionUrl,
+                                final String user,
+                                final String password,
                                 final String scriptsResource)
     throws SchemaCrawlerException, SQLException
   {
     final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUsername(null);
-    dataSource.setPassword(null);
+    dataSource.setUsername(user);
+    dataSource.setPassword(password);
     dataSource.setUrl(connectionUrl);
     dataSource.setDefaultAutoCommit(false);
     dataSource.setInitialSize(1);

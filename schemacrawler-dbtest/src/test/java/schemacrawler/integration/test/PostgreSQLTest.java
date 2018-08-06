@@ -66,7 +66,10 @@ public class PostgreSQLTest
                                         "schemacrawler");
 
       dropDatabase(url, "/db/books/00_drop_schemas_01_E.sql");
-      createDatabase(url, "/postgresql.scripts.txt");
+      createDatabase(url,
+                     "schemacrawler",
+                     "schemacrawler",
+                     "/postgresql.scripts.txt");
 
       isDatabaseRunning = true;
     }

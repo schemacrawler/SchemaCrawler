@@ -73,7 +73,7 @@ public class MonetDBTest
         MonetDBEmbeddedDatabase.stopDatabase();
       }
 
-      createDatabase("jdbc:monetdb:embedded::memory:", "/monetdb.scripts.txt");
+      createDatabase("jdbc:monetdb:embedded::memory:", null, null, "/monetdb.scripts.txt");
 
       isDatabaseRunning = true;
     }
