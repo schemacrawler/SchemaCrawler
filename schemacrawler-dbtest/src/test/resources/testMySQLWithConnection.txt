@@ -1,0 +1,164 @@
+
+
+Tables
+========================================================================
+
+
+
+authors                                                          [table]
+------------------------------------------------------------------------
+  Id                                INT NOT NULL                
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
+  Address1                          VARCHAR(255)                
+  Address2                          VARCHAR(255)                
+  City                              VARCHAR(50)                 
+  State                             VARCHAR(2)                  
+  PostalCode                        VARCHAR(10)                 
+  Country                           VARCHAR(50)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) bookauthors.AuthorId                              
+
+Indexes
+
+                                                      [non-unique index]
+  LastName                          ascending                   
+  FirstName                         ascending                   
+
+                                                      [non-unique index]
+  City                              ascending                   
+  State                             ascending                   
+  PostalCode                        ascending                   
+  Country                           ascending                   
+
+Triggers
+
+                                        [trigger, after delete, per row]
+UPDATE Publishers SET Publisher = 'Jacob' WHERE Publisher = 'John'
+
+
+
+authorslist                                                       [view]
+------------------------------------------------------------------------
+  Id                                INT NOT NULL                
+  FirstName                         VARCHAR(20) NOT NULL        
+  LastName                          VARCHAR(20) NOT NULL        
+
+Definition
+                                                            [definition]
+select `books`.`authors`.`Id` AS `Id`,`books`.`authors`.`FirstName` AS `FirstName`,`books`.`authors`.`LastName` AS `LastName` from `books`.`authors`
+
+
+
+bookauthors                                                      [table]
+------------------------------------------------------------------------
+  BookId                            INT NOT NULL                
+  AuthorId                          INT NOT NULL                
+  SomeData                          VARCHAR(30)                 
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  AuthorId (0..many)--> authors.Id                              
+
+                                           [foreign key, with no action]
+  BookId (0..many)--> books.Id                                  
+
+Indexes
+
+                                                      [non-unique index]
+  AuthorId                          ascending                   
+
+                                                          [unique index]
+  BookId                            ascending                   
+  AuthorId                          ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+
+
+
+books                                                            [table]
+------------------------------------------------------------------------
+  Id                                INT NOT NULL                
+  Title                             VARCHAR(255) NOT NULL       
+  Description                       VARCHAR(255)                
+  PublisherId                       INT NOT NULL                
+  PublicationDate                   DATE                        
+  Price                             FLOAT(12, 0)                
+  PreviousEditionId                 INT                         
+
+Primary Key
+
+                                                           [primary key]
+  Id                                ascending                   
+
+Foreign Keys
+
+                                           [foreign key, with no action]
+  Id <--(0..many) bookauthors.BookId                              
+
+                                           [foreign key, with no action]
+  Id <--(0..1) PreviousEditionId                                
+
+Indexes
+
+                                                          [unique index]
+  PreviousEditionId                 ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+
+
+
+coupons                                                          [table]
+------------------------------------------------------------------------
+  Id                                INT NOT NULL                
+  Data                              TEXT(65535)                 
+  Coupons                           INT                         
+  Books                             VARCHAR(20)                 
+
+Primary Key
+
+                                                           [primary key]
+  Id                                ascending                   
+
+
+
+`global counts`                                                  [table]
+------------------------------------------------------------------------
+  `Global Count`                    INT                         
+  `UPDATE`                          VARCHAR(20)                 
+
+
+
+publishers                                                       [table]
+------------------------------------------------------------------------
+  Id                                BIGINT UNSIGNED NOT NULL    
+                                    auto-incremented            
+  Publisher                         VARCHAR(255)                
+
+Primary Key
+
+                                                           [primary key]
+  Id                                ascending                   
+
+Indexes
+
+                                                          [unique index]
+  Id                                ascending                   
+
+Table Constraints
+
+                                                     [unique constraint]
+

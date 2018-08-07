@@ -30,13 +30,13 @@ package schemacrawler.test.utility;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
 import sf.util.SchemaCrawlerLogger;
 
@@ -73,18 +73,8 @@ public abstract class BaseAdditionalDatabaseTest
     dataSource.setInitialSize(1);
     dataSource.setMaxTotal(1);
 
-    System.out.println("Database connection URL: " + connectionUrl);
+    LOGGER.log(Level.INFO, "Database connection URL: " + connectionUrl);
     this.dataSource = dataSource;
-  }
-
-  protected void dropDatabase(final String dropDbResource)
-    throws SQLException
-  {
-    try (Connection connection = dataSource.getConnection();)
-    {
-      final SqlScript dropDbScript = new SqlScript(dropDbResource, connection);
-      dropDbScript.run();
-    }
   }
 
   @Override
