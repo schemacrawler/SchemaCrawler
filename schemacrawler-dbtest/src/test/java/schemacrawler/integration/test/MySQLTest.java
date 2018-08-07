@@ -106,7 +106,8 @@ public class MySQLTest
       final List<SqlScriptSource> sqlScriptSources = sqlScriptSources();
 
       final MysqldConfig config = aMysqldConfig(v5_6_latest)
-        .withServerVariable("bind-address", "localhost").withFreePort()
+        .withServerVariable("bind-address", "localhost")
+        .withServerVariable("lower_case_table_names", 1).withFreePort()
         .withCharset(UTF8).withTimeout(1, MINUTES).build();
       mysqld = anEmbeddedMysql(config).addSchema(schema, sqlScriptSources)
         .start();
