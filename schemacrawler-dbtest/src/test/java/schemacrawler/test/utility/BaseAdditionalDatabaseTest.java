@@ -30,22 +30,33 @@ package schemacrawler.test.utility;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.junit.BeforeClass;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
-import sf.util.SchemaCrawlerLogger;
 
 public abstract class BaseAdditionalDatabaseTest
   extends BaseExecutableTest
 {
 
-  protected static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(BaseAdditionalDatabaseTest.class.getName());
+  protected final static Logger LOGGER = Logger
+    .getLogger(BaseExecutableTest.class.getName());
+
+  @BeforeClass
+  public static final void startLoggin()
+  {
+    final ConsoleHandler ch = new ConsoleHandler();
+    ch.setLevel(Level.FINEST);
+    LOGGER.addHandler(ch);
+    LOGGER.setLevel(Level.FINEST);
+  }
 
   private DataSource dataSource;
 
