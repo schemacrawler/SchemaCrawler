@@ -75,7 +75,7 @@ public class PostgreSQLTest
     }
     catch (final Throwable e)
     {
-      e.printStackTrace();
+      LOGGER.log(Level.FINE, e.getMessage(), e);
       // Do not run if database server cannot be loaded
       isDatabaseRunning = false;
     }

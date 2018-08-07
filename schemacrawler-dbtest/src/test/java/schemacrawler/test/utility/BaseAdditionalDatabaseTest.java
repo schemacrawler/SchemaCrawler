@@ -53,9 +53,9 @@ public abstract class BaseAdditionalDatabaseTest
   public static final void startLoggin()
   {
     final ConsoleHandler ch = new ConsoleHandler();
-    ch.setLevel(Level.FINEST);
+    ch.setLevel(Level.INFO);
     LOGGER.addHandler(ch);
-    LOGGER.setLevel(Level.FINEST);
+    LOGGER.setLevel(Level.INFO);
   }
 
   private DataSource dataSource;
