@@ -69,7 +69,6 @@ public class PostgreSQLTest
                                                   "schemacrawler");
 
       createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
-      dropDatabase("/db/books/00_drop_schemas_01_E.sql");
       createDatabase("/postgresql.scripts.txt");
 
       isDatabaseRunning = true;

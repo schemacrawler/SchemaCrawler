@@ -32,10 +32,16 @@ import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.Charset.UTF8;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static com.wix.mysql.distribution.Version.v5_6_latest;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static sf.util.Utility.isBlank;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.junit.After;
@@ -43,19 +49,49 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.wix.mysql.EmbeddedMysql;
+import com.wix.mysql.SqlScriptSource;
 import com.wix.mysql.config.MysqldConfig;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import sf.util.IOUtility;
 
 public class MySQLTest
   extends BaseAdditionalDatabaseTest
 {
+
+  protected class SqlScriptClasspathSource
+    implements SqlScriptSource
+  {
+    private final String classpathResource;
+
+    protected SqlScriptClasspathSource(final String classpathResource)
+    {
+      this.classpathResource = classpathResource;
+    }
+
+    @Override
+    public String read()
+      throws IOException
+    {
+      LOGGER.log(Level.CONFIG,
+                 "Reading SQL script resource, " + classpathResource);
+      return IOUtility.readResourceFully(classpathResource);
+    }
+
+    @Override
+    public String toString()
+    {
+      return classpathResource;
+    }
+
+  }
 
   private boolean isDatabaseRunning;
   private EmbeddedMysql mysqld;
@@ -66,12 +102,14 @@ public class MySQLTest
   {
     try
     {
-      final String schema = "schemacrawler";
+      final String schema = "books";
+      final List<SqlScriptSource> sqlScriptSources = sqlScriptSources();
 
       final MysqldConfig config = aMysqldConfig(v5_6_latest)
         .withServerVariable("bind-address", "localhost").withFreePort()
         .withCharset(UTF8).withTimeout(1, MINUTES).build();
-      mysqld = anEmbeddedMysql(config).addSchema(schema).start();
+      mysqld = anEmbeddedMysql(config).addSchema(schema, sqlScriptSources)
+        .start();
 
       final int port = mysqld.getConfig().getPort();
       final String user = mysqld.getConfig().getUsername();
@@ -80,7 +118,6 @@ public class MySQLTest
         .format("jdbc:mysql://localhost:%d/%s?useSSL=false", port, schema);
 
       createDataSource(connectionUrl, user, password);
-      createDatabase("/mysql.scripts.txt");
 
       isDatabaseRunning = true;
     }
@@ -116,7 +153,7 @@ public class MySQLTest
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    textOptionsBuilder.noIndexNames().showDatabaseInfo().showJdbcDriverInfo();
+    textOptionsBuilder.noInfo().portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
@@ -126,6 +163,30 @@ public class MySQLTest
 
     executeExecutable(executable, "text", "testMySQLWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed MySQL test successfully");
+  }
+
+  private List<SqlScriptSource> sqlScriptSources()
+    throws IOException
+  {
+    final String scriptsResource = "/mysql.scripts.5.6.txt";
+    final List<SqlScriptSource> scriptsResourceList = new ArrayList<>();
+    try (
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
+          .getResourceAsStream(scriptsResource), UTF_8));)
+    {
+      reader.lines().forEach(line -> {
+        if (!isBlank(line) && line.startsWith(";"))
+        {
+          final String scriptResource = line.substring(2);
+          scriptsResourceList.add(new SqlScriptClasspathSource(scriptResource));
+        }
+      });
+    }
+    catch (final IOException e)
+    {
+      throw e;
+    }
+    return scriptsResourceList;
   }
 
 }
