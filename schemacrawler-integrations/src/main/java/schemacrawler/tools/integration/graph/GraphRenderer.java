@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.graph;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
@@ -146,11 +147,6 @@ public final class GraphRenderer
     graphExecutor.call();
   }
 
-  public GraphOptions getGraphOptions()
-  {
-    return graphOptions;
-  }
-
   @Override
   public void initialize()
     throws Exception
@@ -161,7 +157,8 @@ public final class GraphRenderer
 
   public final void setGraphOptions(final GraphOptions graphOptions)
   {
-    this.graphOptions = graphOptions;
+    this.graphOptions = requireNonNull(graphOptions,
+                                       "No graph options provided");
   }
 
   private GraphExecutor getGraphExecutor(final Path dotFile)

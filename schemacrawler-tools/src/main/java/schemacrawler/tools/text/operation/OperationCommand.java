@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.operation;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.utility.QueryUtility.executeAgainstTable;
 import static sf.util.DatabaseUtility.createStatement;
 import static sf.util.DatabaseUtility.executeSql;
@@ -168,17 +169,10 @@ public final class OperationCommand
     loadOperationOptions();
   }
 
-  public boolean isOutputFormatSupported()
-  {
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    final boolean isOutputFormatSupported = TextOutputFormat
-      .isSupportedFormat(outputFormatValue);
-    return isOutputFormatSupported;
-  }
-
   public final void setOperationOptions(final OperationOptions operationOptions)
   {
-    this.operationOptions = operationOptions;
+    this.operationOptions = requireNonNull(operationOptions,
+                                           "No operation options provided");
   }
 
   private DataTraversalHandler getDataTraversalHandler()
@@ -257,6 +251,14 @@ public final class OperationCommand
                      NamedObjectSort.getNamedObjectSort(operationOptions
                        .isAlphabeticalSortForTables()));
     return tables;
+  }
+
+  private boolean isOutputFormatSupported()
+  {
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+    final boolean isOutputFormatSupported = TextOutputFormat
+      .isSupportedFormat(outputFormatValue);
+    return isOutputFormatSupported;
   }
 
   private void loadOperationOptions()
