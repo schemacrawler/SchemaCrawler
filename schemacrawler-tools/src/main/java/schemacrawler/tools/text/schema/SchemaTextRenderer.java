@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import static java.util.Objects.requireNonNull;
+
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -111,7 +113,8 @@ public final class SchemaTextRenderer
 
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
-    this.schemaTextOptions = schemaTextOptions;
+    this.schemaTextOptions = requireNonNull(schemaTextOptions,
+                                            "No schema text options provided");
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()

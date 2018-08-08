@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.lint.LintUtility.readLinterConfigs;
 
 import java.util.ArrayList;
@@ -70,9 +71,6 @@ public class LintCommand
   {
     checkCatalog();
 
-    // Read lint options from the config
-    lintOptions = getLintOptions();
-
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           additionalConfiguration);
     final Linters linters = new Linters(linterConfigs);
@@ -86,24 +84,17 @@ public class LintCommand
     dispatch(linters);
   }
 
-  public final LintOptions getLintOptions()
+  @Override
+  public void initialize()
+    throws Exception
   {
-    final LintOptions lintOptions;
-    if (this.lintOptions == null)
-    {
-      lintOptions = LintOptionsBuilder.builder()
-        .fromConfig(additionalConfiguration).toOptions();
-    }
-    else
-    {
-      lintOptions = this.lintOptions;
-    }
-    return lintOptions;
+    super.initialize();
+    loadLintOptions();
   }
 
   public final void setLintOptions(final LintOptions lintOptions)
   {
-    this.lintOptions = lintOptions;
+    this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 
   private void dispatch(final Linters linters)
@@ -179,6 +170,15 @@ public class LintCommand
     }
 
     return formatter;
+  }
+
+  private void loadLintOptions()
+  {
+    if (lintOptions == null)
+    {
+      lintOptions = LintOptionsBuilder.builder()
+        .fromConfig(additionalConfiguration).toOptions();
+    }
   }
 
 }
