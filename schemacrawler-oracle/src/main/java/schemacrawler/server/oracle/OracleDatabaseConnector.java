@@ -37,8 +37,8 @@ import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.SchemaCrawlerLogger;
@@ -47,7 +47,8 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
-  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle", "Oracle");
+  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle",
+                                                                          "Oracle");
 
   private static class OracleInformationSchemaViewsBuilder
     implements BiConsumer<InformationSchemaViewsBuilder, Connection>
@@ -111,7 +112,9 @@ public final class OracleDatabaseConnector
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder
+      .withTableRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
