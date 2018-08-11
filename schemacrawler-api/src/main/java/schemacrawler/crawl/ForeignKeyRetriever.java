@@ -48,6 +48,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -86,7 +87,7 @@ final class ForeignKeyRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    if (!informationSchemaViews.hasExtForeignKeysSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_FOREIGN_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended foreign keys SQL statement was not provided");
@@ -103,7 +104,7 @@ final class ForeignKeyRetriever
     }
 
     final Query extForeignKeysSql = informationSchemaViews
-      .getExtForeignKeysSql();
+      .getQuery(InformationSchemaKey.EXT_FOREIGN_KEYS);
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(extForeignKeysSql,
@@ -327,7 +328,7 @@ final class ForeignKeyRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasForeignKeysSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.FOREIGN_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended foreign keys SQL statement was not provided");
@@ -335,7 +336,8 @@ final class ForeignKeyRetriever
     }
 
     final NamedObjectList<MutableForeignKey> foreignKeys = new NamedObjectList<>();
-    final Query fkSql = informationSchemaViews.getForeignKeysSql();
+    final Query fkSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.FOREIGN_KEYS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(fkSql,

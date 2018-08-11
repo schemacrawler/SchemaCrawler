@@ -36,6 +36,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 
 import schemacrawler.schema.RoutineBodyType;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -74,7 +75,7 @@ final class RoutineExtRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasRoutinesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.ROUTINES))
     {
       LOGGER
         .log(Level.INFO,
@@ -86,7 +87,8 @@ final class RoutineExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving routine definitions");
 
-    final Query routineDefinitionsSql = informationSchemaViews.getRoutinesSql();
+    final Query routineDefinitionsSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.ROUTINES);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(routineDefinitionsSql,

@@ -42,6 +42,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Sequence;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -92,7 +93,7 @@ final class SequenceRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasSequencesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SEQUENCES))
     {
       LOGGER.log(Level.FINE,
                  "Sequence definition SQL statement was not provided");
@@ -102,7 +103,7 @@ final class SequenceRetriever
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
     final Query sequencesDefinitionSql = informationSchemaViews
-      .getSequencesSql();
+      .getQuery(InformationSchemaKey.SEQUENCES);
     final Connection connection = getDatabaseConnection();
 
     try (final Statement statement = connection.createStatement();

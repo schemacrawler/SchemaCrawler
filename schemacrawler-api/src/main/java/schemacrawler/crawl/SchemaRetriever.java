@@ -42,6 +42,7 @@ import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -236,12 +237,13 @@ final class SchemaRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasSchemataSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SCHEMATA))
     {
       LOGGER.log(Level.FINE, "Schemata SQL statement was not provided");
       return schemaRefs;
     }
-    final Query schemataSql = informationSchemaViews.getSchemataSql();
+    final Query schemataSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.SCHEMATA);
 
     final Connection connection = getDatabaseConnection();
 

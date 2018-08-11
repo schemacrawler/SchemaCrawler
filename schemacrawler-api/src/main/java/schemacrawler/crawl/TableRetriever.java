@@ -45,6 +45,7 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -190,11 +191,12 @@ final class TableRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasTablesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLES))
     {
       throw new SchemaCrawlerSQLException("No tables SQL provided", null);
     }
-    final Query tablesSql = informationSchemaViews.getTablesSql();
+    final Query tablesSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.TABLES);
     final Connection connection = getDatabaseConnection();
     final TableTypes supportedTableTypes = getRetrieverConnection()
       .getTableTypes();

@@ -46,6 +46,7 @@ import schemacrawler.schema.ConditionTimingType;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.PrimaryKey;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -84,7 +85,8 @@ final class TableExtRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasAdditionalColumnAttributesSql())
+    if (!informationSchemaViews
+      .hasQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES))
     {
       LOGGER
         .log(Level.INFO,
@@ -94,7 +96,7 @@ final class TableExtRetriever
       return;
     }
     final Query columnAttributesSql = informationSchemaViews
-      .getAdditionalColumnAttributesSql();
+      .getQuery(InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES);
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
@@ -167,7 +169,8 @@ final class TableExtRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasAdditionalTableAttributesSql())
+    if (!informationSchemaViews
+      .hasQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES))
     {
       LOGGER
         .log(Level.INFO,
@@ -177,7 +180,7 @@ final class TableExtRetriever
       return;
     }
     final Query tableAttributesSql = informationSchemaViews
-      .getAdditionalTableAttributesSql();
+      .getQuery(InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES);
 
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
@@ -235,7 +238,7 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasExtIndexColumnsSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_INDEX_COLUMNS))
     {
       LOGGER
         .log(Level.INFO,
@@ -248,7 +251,7 @@ final class TableExtRetriever
     LOGGER.log(Level.INFO, "Retrieving additional index column information");
 
     final Query extIndexColumnsInformationSql = informationSchemaViews
-      .getExtIndexColumnsSql();
+      .getQuery(InformationSchemaKey.EXT_INDEX_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(extIndexColumnsInformationSql,
@@ -346,7 +349,7 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasExtIndexesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_INDEXES))
     {
       LOGGER
         .log(Level.INFO,
@@ -359,7 +362,7 @@ final class TableExtRetriever
     LOGGER.log(Level.INFO, "Retrieving additional index information");
 
     final Query extIndexesInformationSql = informationSchemaViews
-      .getExtIndexesSql();
+      .getQuery(InformationSchemaKey.EXT_INDEXES);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(extIndexesInformationSql,
@@ -433,7 +436,7 @@ final class TableExtRetriever
 
     final Connection connection = getDatabaseConnection();
 
-    if (!informationSchemaViews.hasExtPrimaryKeysSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_PRIMARY_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended primary keys SQL statement was not provided");
@@ -451,7 +454,7 @@ final class TableExtRetriever
     }
 
     final Query extPrimaryKeysSql = informationSchemaViews
-      .getExtPrimaryKeysSql();
+      .getQuery(InformationSchemaKey.EXT_PRIMARY_KEYS);
 
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(extPrimaryKeysSql,
@@ -527,7 +530,7 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasExtTablesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_TABLES))
     {
       LOGGER
         .log(Level.INFO,
@@ -540,7 +543,7 @@ final class TableExtRetriever
     LOGGER.log(Level.INFO, "Retrieving table definitions");
 
     final Query tableDefinitionsInformationSql = informationSchemaViews
-      .getExtTablesSql();
+      .getQuery(InformationSchemaKey.EXT_TABLES);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(tableDefinitionsInformationSql,
@@ -614,7 +617,7 @@ final class TableExtRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasTriggerSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TRIGGERS))
     {
       LOGGER
         .log(Level.INFO,
@@ -626,7 +629,8 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving trigger definitions");
 
-    final Query triggerInformationSql = informationSchemaViews.getTriggersSql();
+    final Query triggerInformationSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.TRIGGERS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(triggerInformationSql,
@@ -712,7 +716,7 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasViewsSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.VIEWS))
     {
       LOGGER
         .log(Level.INFO,
@@ -723,7 +727,8 @@ final class TableExtRetriever
 
     LOGGER.log(Level.INFO, "Retrieving additional view information");
 
-    final Query viewInformationSql = informationSchemaViews.getViewsSql();
+    final Query viewInformationSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.VIEWS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(viewInformationSql,
