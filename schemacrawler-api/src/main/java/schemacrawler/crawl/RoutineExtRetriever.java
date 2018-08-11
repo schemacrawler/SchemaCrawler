@@ -84,7 +84,7 @@ final class RoutineExtRetriever
       return;
     }
 
-    LOGGER.log(Level.INFO, "Retrieving procedure definitions");
+    LOGGER.log(Level.INFO, "Retrieving routine definitions");
 
     final Query routineDefinitionsSql = informationSchemaViews.getRoutinesSql();
     final Connection connection = getDatabaseConnection();
