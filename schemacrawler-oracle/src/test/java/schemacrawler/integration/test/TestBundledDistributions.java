@@ -50,10 +50,10 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("oracle");
-    assertEquals(19,
+    assertEquals(20,
                  databaseSystemIdentifier
-                   .getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getInformationSchemaViews().size());
+                   .getSchemaRetrievalOptionsBuilder(connection).toOptions()
+                   .getInformationSchemaViews().size());
   }
 
   @Test
