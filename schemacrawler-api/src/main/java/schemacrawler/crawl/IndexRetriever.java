@@ -43,6 +43,7 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.IndexColumnSortSequence;
 import schemacrawler.schema.IndexType;
 import schemacrawler.schema.View;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -292,13 +293,14 @@ final class IndexRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasIndexesSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.INDEXES))
     {
       LOGGER.log(Level.FINE, "Extended indexes SQL statement was not provided");
       return;
     }
 
-    final Query indexesSql = informationSchemaViews.getIndexesSql();
+    final Query indexesSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.INDEXES);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(indexesSql,
@@ -402,14 +404,15 @@ final class IndexRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasPrimaryKeysSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PRIMARY_KEYS))
     {
       LOGGER.log(Level.FINE,
                  "Extended primary keys SQL statement was not provided");
       return;
     }
 
-    final Query pkSql = informationSchemaViews.getPrimaryKeysSql();
+    final Query pkSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.PRIMARY_KEYS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(pkSql,

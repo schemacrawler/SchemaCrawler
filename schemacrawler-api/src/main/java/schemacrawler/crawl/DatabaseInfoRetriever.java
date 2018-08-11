@@ -54,6 +54,7 @@ import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -404,9 +405,10 @@ final class DatabaseInfoRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (informationSchemaViews.hasOverrideTypeInfoSql())
+    if (informationSchemaViews.hasQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO))
     {
-      final Query typeInfoSql = informationSchemaViews.getOverrideTypeInfoSql();
+      final Query typeInfoSql = informationSchemaViews
+        .getQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO);
       final Connection connection = getDatabaseConnection();
       statement = connection.createStatement();
       results = new MetadataResultSet(typeInfoSql,

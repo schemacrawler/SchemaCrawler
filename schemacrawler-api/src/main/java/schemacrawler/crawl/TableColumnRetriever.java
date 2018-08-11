@@ -46,6 +46,7 @@ import java.util.logging.Level;
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Column;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
@@ -254,12 +255,13 @@ final class TableColumnRetriever
   {
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasTableColumnsSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_COLUMNS))
     {
       throw new SchemaCrawlerSQLException("No table columns SQL provided",
                                           null);
     }
-    final Query tableColumnsSql = informationSchemaViews.getTableColumnsSql();
+    final Query tableColumnsSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
@@ -326,13 +328,14 @@ final class TableColumnRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasExtHiddenTableColumnsSql())
+    if (!informationSchemaViews
+      .hasQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS))
     {
       LOGGER.log(Level.INFO, "No hidden table columns SQL provided");
       return hiddenColumns;
     }
     final Query hiddenColumnsSql = informationSchemaViews
-      .getExtHiddenTableColumnsSql();
+      .getQuery(InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(hiddenColumnsSql,

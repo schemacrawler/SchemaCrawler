@@ -43,6 +43,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Synonym;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.utility.Query;
@@ -94,7 +95,7 @@ final class SynonymRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasSynonymsSql())
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SEQUENCES))
     {
       LOGGER.log(Level.FINE,
                  "Synonym definition SQL statement was not provided");
@@ -103,7 +104,8 @@ final class SynonymRetriever
 
     final NamedObjectList<SchemaReference> schemas = getAllSchemas();
 
-    final Query synonymsDefinitionSql = informationSchemaViews.getSynonymsSql();
+    final Query synonymsDefinitionSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.EXT_SYNONYMS);
     final Connection connection = getDatabaseConnection();
     try (final Statement statement = connection.createStatement();
         MetadataResultSet results = new MetadataResultSet(synonymsDefinitionSql,
