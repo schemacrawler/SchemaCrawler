@@ -54,9 +54,11 @@ import static sf.util.Utility.isBlank;
 
 import java.sql.DatabaseMetaData;
 import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import sf.util.ObjectToString;
+import sf.util.TemplatingUtility;
 
 /**
  * The database specific views to get additional database metadata in a
@@ -176,6 +178,20 @@ public final class InformationSchemaViewsBuilder
     }
 
     return this;
+  }
+
+  public void substituteAll(final String templateKey,
+                            final String templateValue)
+  {
+    final Map<String, String> map = new HashMap<>();
+    map.put(templateKey, templateValue);
+    for (final Map.Entry<InformationSchemaKey, String> query: informationSchemaQueries
+      .entrySet())
+    {
+      String sql = query.getValue();
+      sql = TemplatingUtility.expandTemplate(sql, map);
+      query.setValue(sql);
+    }
   }
 
   @Override
