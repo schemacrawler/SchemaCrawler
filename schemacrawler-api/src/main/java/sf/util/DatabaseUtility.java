@@ -351,7 +351,8 @@ public final class DatabaseUtility
 
   private static void logSQLWarnings(final SQLWarning sqlWarning)
   {
-    if (!LOGGER.isLoggable(Level.INFO))
+    final Level level = Level.FINER;
+    if (!LOGGER.isLoggable(level))
     {
       return;
     }
@@ -359,8 +360,11 @@ public final class DatabaseUtility
     SQLWarning currentSqlWarning = sqlWarning;
     while (currentSqlWarning != null)
     {
-      LOGGER
-        .log(Level.FINER, currentSqlWarning.getMessage(), currentSqlWarning);
+      final String message = String.format("%s%nError code: %d, SQL state: %s",
+                                           currentSqlWarning.getMessage(),
+                                           currentSqlWarning.getErrorCode(),
+                                           currentSqlWarning.getSQLState());
+      LOGGER.log(level, message, currentSqlWarning);
       currentSqlWarning = currentSqlWarning.getNextWarning();
     }
   }
