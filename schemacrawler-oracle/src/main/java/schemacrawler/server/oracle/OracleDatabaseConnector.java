@@ -38,17 +38,16 @@ import java.util.regex.Pattern;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
-
-  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle",
-                                                                          "Oracle");
 
   private static class OracleInformationSchemaViewsBuilder
     implements BiConsumer<InformationSchemaViewsBuilder, Connection>
@@ -88,9 +87,37 @@ public final class OracleDatabaseConnector
         return;
       }
 
+      // Check level of access
+      final String catalogScope = getCatalogScope(connection);
+      informationSchemaViewsBuilder.substituteAll("catalogscope", catalogScope);
+    }
+
+    public String getCatalogScope(final Connection connection)
+    {
+      String catalogScope = "ALL";
+      try
+      {
+        final Object scalar = DatabaseUtility
+          .executeSqlForScalar(connection,
+                               "SELECT TABLE_NAME FROM DBA_TABLES FETCH FIRST 1 ROWS ONLY");
+        if (scalar != null)
+        {
+          catalogScope = "DBA";
+        }
+      }
+      catch (final SchemaCrawlerException e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+        catalogScope = "ALL";
+      }
+
+      return catalogScope;
     }
 
   }
+
+  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle",
+                                                                          "Oracle");
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(OracleDatabaseConnector.class.getName());
