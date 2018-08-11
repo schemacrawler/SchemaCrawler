@@ -73,7 +73,7 @@ public class SchemaCrawlerLogger
 
   private SchemaCrawlerLogger(final Logger logger)
   {
-    this.logger = logger;
+    this.logger = requireNonNull(logger, "No logger provided");
   }
 
   public boolean isLoggable(final Level level)
