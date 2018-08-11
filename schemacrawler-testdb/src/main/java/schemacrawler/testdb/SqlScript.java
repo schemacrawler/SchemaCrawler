@@ -35,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
+import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +126,15 @@ public class SqlScript
           {
             LOGGER.log(Level.INFO, "\n" + sql);
           }
+
           statement.execute(sql);
+
+          final SQLWarning warnings = statement.getWarnings();
+          if (warnings != null)
+          {
+            throw warnings;
+          }
+
           connection.commit();
         }
       }
