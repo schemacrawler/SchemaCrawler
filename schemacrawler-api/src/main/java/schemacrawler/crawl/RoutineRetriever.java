@@ -32,9 +32,11 @@ package schemacrawler.crawl;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -51,8 +53,11 @@ import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InformationSchemaKey;
+import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
+import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -424,10 +429,32 @@ final class RoutineRetriever
 
   private void retrieveFunctionsFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
                                                    final InclusionRuleFilter<Function> functionFilter)
+    throws SQLException
   {
-    LOGGER
-      .log(Level.CONFIG,
-           "Not retrieving functions, since retrieval from data dictionary is not supported");
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.FUNCTIONS))
+    {
+      throw new SchemaCrawlerSQLException("No functions SQL provided", null);
+    }
+    final Query functionsSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.FUNCTIONS);
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(functionsSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrieveFunctionsFromDataDictionary");
+      int numFunctions = 0;
+      while (results.next())
+      {
+        numFunctions = numFunctions + 1;
+        createFunction(results, schemas, functionFilter);
+      }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d functions", numFunctions));
+    }
   }
 
   private void retrieveFunctionsFromMetadata(final NamedObjectList<SchemaReference> schemas,
@@ -499,11 +526,32 @@ final class RoutineRetriever
 
   private void retrieveProceduresFromDataDictionary(final NamedObjectList<SchemaReference> schemas,
                                                     final InclusionRuleFilter<Procedure> procedureFilter)
+    throws SQLException
   {
-    LOGGER
-      .log(Level.CONFIG,
-           "Not retrieving procedures, since retrieval from the data dictionary is not supported");
-
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.PROCEDURES))
+    {
+      throw new SchemaCrawlerSQLException("No procedures SQL provided", null);
+    }
+    final Query proceduresSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.PROCEDURES);
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(proceduresSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrieveProceduresFromDataDictionary");
+      int numProcedures = 0;
+      while (results.next())
+      {
+        numProcedures = numProcedures + 1;
+        createProcedure(results, schemas, procedureFilter);
+      }
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Processed %d procedures", numProcedures));
+    }
   }
 
   private void retrieveProceduresFromMetadata(final NamedObjectList<SchemaReference> schemas,
