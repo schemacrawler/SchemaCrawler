@@ -244,12 +244,17 @@ public final class SchemaCrawler
 
     final RoutineRetriever retriever;
     final RoutineExtRetriever retrieverExtra;
+    final RoutineColumnRetriever columnRetriever;
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, catalog, options);
       retrieverExtra = new RoutineExtRetriever(retrieverConnection,
                                                catalog,
                                                options);
+      columnRetriever = new RoutineColumnRetriever(retrieverConnection,
+                                                   catalog,
+                                                   options);
+
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
       stopWatch.time("retrieveRoutines", () -> {
@@ -286,7 +291,7 @@ public final class SchemaCrawler
             if (routine instanceof MutableProcedure
                 && routineTypes.contains(RoutineType.procedure))
             {
-              retriever
+              columnRetriever
                 .retrieveProcedureColumns((MutableProcedure) routine,
                                           options
                                             .getRoutineColumnInclusionRule());
@@ -295,7 +300,7 @@ public final class SchemaCrawler
             if (routine instanceof MutableFunction
                 && routineTypes.contains(RoutineType.function))
             {
-              retriever
+              columnRetriever
                 .retrieveFunctionColumns((MutableFunction) routine,
                                          options
                                            .getRoutineColumnInclusionRule());

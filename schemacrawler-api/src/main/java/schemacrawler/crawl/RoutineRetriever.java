@@ -33,7 +33,6 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
 import java.sql.Statement;
@@ -43,12 +42,8 @@ import java.util.logging.Level;
 
 import schemacrawler.filter.InclusionRuleFilter;
 import schemacrawler.schema.Function;
-import schemacrawler.schema.FunctionColumn;
-import schemacrawler.schema.FunctionColumnType;
 import schemacrawler.schema.FunctionReturnType;
 import schemacrawler.schema.Procedure;
-import schemacrawler.schema.ProcedureColumn;
-import schemacrawler.schema.ProcedureColumnType;
 import schemacrawler.schema.ProcedureReturnType;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
@@ -80,93 +75,6 @@ final class RoutineRetriever
     throws SQLException
   {
     super(retrieverConnection, catalog, options);
-  }
-
-  void retrieveFunctionColumns(final MutableFunction function,
-                               final InclusionRule columnInclusionRule)
-    throws SQLException
-  {
-    final InclusionRuleFilter<FunctionColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                       true);
-    if (columnFilter.isExcludeAll())
-    {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving function columns, since this was not requested");
-      return;
-    }
-
-    int ordinalNumber = 0;
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getFunctionColumns(function.getSchema().getCatalogName(),
-                          function.getSchema().getName(),
-                          function.getName(),
-                          null));)
-    {
-      while (results.next())
-      {
-        final String columnCatalogName = normalizeCatalogName(results
-          .getString("FUNCTION_CAT"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("FUNCTION_SCHEM"));
-        final String functionName = results.getString("FUNCTION_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
-        final String specificName = results.getString("SPECIFIC_NAME");
-
-        final MutableFunctionColumn column = new MutableFunctionColumn(function,
-                                                                       columnName);
-        if (columnFilter.test(column) && function.getName().equals(functionName)
-            && belongsToSchema(function, columnCatalogName, schemaName))
-        {
-          if (!isBlank(specificName)
-              && !specificName.equals(function.getSpecificName()))
-          {
-            continue;
-          }
-
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Retrieving function column: %s.%s",
-                                      function.getFullName(),
-                                      columnName));
-
-          final FunctionColumnType columnType = results
-            .getEnumFromShortId("COLUMN_TYPE", FunctionColumnType.unknown);
-          final int dataType = results.getInt("DATA_TYPE", 0);
-          final String typeName = results.getString("TYPE_NAME");
-          final int length = results.getInt("LENGTH", 0);
-          final int precision = results.getInt("PRECISION", 0);
-          final boolean isNullable = results
-            .getShort("NULLABLE",
-                      (short) DatabaseMetaData.functionNullableUnknown) == (short) DatabaseMetaData.functionNullable;
-          final String remarks = results.getString("REMARKS");
-          column.setOrdinalPosition(ordinalNumber++);
-          column.setFunctionColumnType(columnType);
-          column.setColumnDataType(lookupOrCreateColumnDataType(function
-            .getSchema(), dataType, typeName));
-          column.setSize(length);
-          column.setPrecision(precision);
-          column.setNullable(isNullable);
-          column.setRemarks(remarks);
-
-          column.addAttributes(results.getAttributes());
-
-          function.addColumn(column);
-        }
-      }
-    }
-    catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
-    {
-      logSQLFeatureNotSupported(new StringFormat("Could not retrieve columns for function %s",
-                                                 function),
-                                e);
-    }
-    catch (final SQLException e)
-    {
-      logPossiblyUnsupportedSQLFeature(new StringFormat("Could not retrieve columns for function %s",
-                                                        function),
-                                       e);
-    }
-
   }
 
   void retrieveFunctions(final NamedObjectList<SchemaReference> schemas,
@@ -208,88 +116,6 @@ final class RoutineRetriever
 
       default:
         break;
-    }
-
-  }
-
-  void retrieveProcedureColumns(final MutableProcedure procedure,
-                                final InclusionRule columnInclusionRule)
-    throws SQLException
-  {
-    final InclusionRuleFilter<ProcedureColumn> columnFilter = new InclusionRuleFilter<>(columnInclusionRule,
-                                                                                        true);
-    if (columnFilter.isExcludeAll())
-    {
-      LOGGER
-        .log(Level.INFO,
-             "Not retrieving procedure columns, since this was not requested");
-      return;
-    }
-
-    int ordinalNumber = 0;
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getProcedureColumns(procedure.getSchema().getCatalogName(),
-                           procedure.getSchema().getName(),
-                           procedure.getName(),
-                           null));)
-    {
-      while (results.next())
-      {
-        final String columnCatalogName = normalizeCatalogName(results
-          .getString("PROCEDURE_CAT"));
-        final String schemaName = normalizeSchemaName(results
-          .getString("PROCEDURE_SCHEM"));
-        final String procedureName = results.getString("PROCEDURE_NAME");
-        final String columnName = results.getString("COLUMN_NAME");
-        final String specificName = results.getString("SPECIFIC_NAME");
-
-        final MutableProcedureColumn column = new MutableProcedureColumn(procedure,
-                                                                         columnName);
-        if (columnFilter.test(column)
-            && procedure.getName().equals(procedureName)
-            && belongsToSchema(procedure, columnCatalogName, schemaName))
-        {
-          if (!isBlank(specificName)
-              && !specificName.equals(procedure.getSpecificName()))
-          {
-            continue;
-          }
-
-          LOGGER.log(Level.FINE,
-                     new StringFormat("Retrieving procedure column: %s.%s",
-                                      procedure.getFullName(),
-                                      columnName));
-
-          final ProcedureColumnType columnType = results
-            .getEnumFromShortId("COLUMN_TYPE", ProcedureColumnType.unknown);
-          final int dataType = results.getInt("DATA_TYPE", 0);
-          final String typeName = results.getString("TYPE_NAME");
-          final int length = results.getInt("LENGTH", 0);
-          final int precision = results.getInt("PRECISION", 0);
-          final boolean isNullable = results
-            .getShort("NULLABLE",
-                      (short) DatabaseMetaData.procedureNullableUnknown) == (short) DatabaseMetaData.procedureNullable;
-          final String remarks = results.getString("REMARKS");
-          column.setOrdinalPosition(ordinalNumber++);
-          column.setProcedureColumnType(columnType);
-          column.setColumnDataType(lookupOrCreateColumnDataType(procedure
-            .getSchema(), dataType, typeName));
-          column.setSize(length);
-          column.setPrecision(precision);
-          column.setNullable(isNullable);
-          column.setRemarks(remarks);
-
-          column.addAttributes(results.getAttributes());
-
-          procedure.addColumn(column);
-        }
-      }
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerSQLException("Could not retrieve columns for procedure "
-                                          + procedure,
-                                          e);
     }
 
   }
