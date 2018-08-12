@@ -143,7 +143,9 @@ public final class OracleDatabaseConnector
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
+      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withProcedureRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
+      .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 
