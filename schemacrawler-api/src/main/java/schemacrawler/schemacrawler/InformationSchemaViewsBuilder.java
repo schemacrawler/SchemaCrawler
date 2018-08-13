@@ -29,30 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_COLUMN_ATTRIBUTES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.ADDITIONAL_TABLE_ATTRIBUTES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.CONSTRAINT_COLUMN_USAGE;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_FOREIGN_KEYS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_HIDDEN_TABLE_COLUMNS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_INDEX_COLUMNS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_PRIMARY_KEYS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_SYNONYMS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.EXT_TABLE_CONSTRAINTS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.FOREIGN_KEYS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.INDEXES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.OVERRIDE_TYPE_INFO;
-import static schemacrawler.schemacrawler.InformationSchemaKey.ROUTINES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.SCHEMATA;
-import static schemacrawler.schemacrawler.InformationSchemaKey.SEQUENCES;
-import static schemacrawler.schemacrawler.InformationSchemaKey.TABLE_CONSTRAINTS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.TRIGGERS;
-import static schemacrawler.schemacrawler.InformationSchemaKey.VIEWS;
+import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.readResourceFully;
 import static sf.util.Utility.isBlank;
 
-import java.sql.DatabaseMetaData;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -213,243 +193,23 @@ public final class InformationSchemaViewsBuilder
   }
 
   /**
-   * Sets the additional attributes SQL for columns.
+   * Sets definitions SQL.
    *
    * @param sql
-   *        Additional attributes SQL for columns.
+   *        Definitions SQL.
    */
-  public InformationSchemaViewsBuilder withAdditionalColumnAttributesSql(final String sql)
+  public InformationSchemaViewsBuilder withSql(final InformationSchemaKey key,
+                                               final String sql)
   {
-    informationSchemaQueries.put(ADDITIONAL_COLUMN_ATTRIBUTES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the additional attributes SQL for tables.
-   *
-   * @param sql
-   *        Additional attributes SQL for tables.
-   */
-  public InformationSchemaViewsBuilder withAdditionalTableAttributesSql(final String sql)
-  {
-    informationSchemaQueries.put(ADDITIONAL_TABLE_ATTRIBUTES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the foreign key constraints SQL.
-   *
-   * @param sql
-   *        Foreign key constraints SQL.
-   */
-  public InformationSchemaViewsBuilder withExtForeignKeysSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_FOREIGN_KEYS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the hidden table column definitions SQL.
-   *
-   * @param sql
-   *        Hidden table column definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withExtHiddenTableColumnsSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_HIDDEN_TABLE_COLUMNS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the index column definitions SQL.
-   *
-   * @param sql
-   *        Index column definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withExtIndexColumnSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_INDEX_COLUMNS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the index definitions SQL.
-   *
-   * @param sql
-   *        Index definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withExtIndexesSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_INDEXES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the primary key constraints SQL.
-   *
-   * @param sql
-   *        Primary key constraints SQL.
-   */
-  public InformationSchemaViewsBuilder withExtPrimaryKeysSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_PRIMARY_KEYS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the table check constraints SQL.
-   *
-   * @param sql
-   *        Table check constraints SQL.
-   */
-  public InformationSchemaViewsBuilder withExtTableConstraintsSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_TABLE_CONSTRAINTS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the table definitions SQL.
-   *
-   * @param sql
-   *        Table definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withExtTablesSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_TABLES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the foreign key SQL.
-   *
-   * @param sql
-   *        Foreign key SQL.
-   */
-  public InformationSchemaViewsBuilder withForeignKeysSql(final String sql)
-  {
-    informationSchemaQueries.put(FOREIGN_KEYS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the indexes SQL.
-   *
-   * @param sql
-   *        Indexes SQL.
-   */
-  public InformationSchemaViewsBuilder withIndexesSql(final String sql)
-  {
-    informationSchemaQueries.put(INDEXES, sql);
-    return this;
-  }
-
-  /**
-   * Sets SQL that overrides DatabaseMetaData#getTypeInfo().
-   * {@link DatabaseMetaData#getTypeInfo()}.
-   *
-   * @param sql
-   *        SQL that overrides DatabaseMetaData#getTypeInfo().
-   */
-  public InformationSchemaViewsBuilder withOverrideTypeInfoSql(final String sql)
-  {
-    informationSchemaQueries.put(OVERRIDE_TYPE_INFO, sql);
-    return this;
-  }
-
-  /**
-   * Sets the procedure definitions SQL.
-   *
-   * @param sql
-   *        Procedure definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withRoutinesSql(final String sql)
-  {
-    informationSchemaQueries.put(ROUTINES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the schemata SQL.
-   *
-   * @param sql
-   *        Schemata SQL.
-   */
-  public InformationSchemaViewsBuilder withSchemataSql(final String sql)
-  {
-    informationSchemaQueries.put(SCHEMATA, sql);
-    return this;
-  }
-
-  /**
-   * Sets the sequences SQL.
-   *
-   * @param sql
-   *        Sequences SQL.
-   */
-  public InformationSchemaViewsBuilder withSequencesSql(final String sql)
-  {
-    informationSchemaQueries.put(SEQUENCES, sql);
-    return this;
-  }
-
-  /**
-   * Sets the synonym SQL.
-   *
-   * @param sql
-   *        Synonyms SQL.
-   */
-  public InformationSchemaViewsBuilder withSynonymsSql(final String sql)
-  {
-    informationSchemaQueries.put(EXT_SYNONYMS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the table constraints columns SQL.
-   *
-   * @param sql
-   *        Table constraints columns SQL.
-   */
-  public InformationSchemaViewsBuilder withTableConstraintsColumnsSql(final String sql)
-  {
-    informationSchemaQueries.put(CONSTRAINT_COLUMN_USAGE, sql);
-    return this;
-  }
-
-  /**
-   * Sets the table constraints SQL.
-   *
-   * @param sql
-   *        Table constraints SQL.
-   */
-  public InformationSchemaViewsBuilder withTableConstraintsSql(final String sql)
-  {
-    informationSchemaQueries.put(TABLE_CONSTRAINTS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the trigger definitions SQL.
-   *
-   * @param sql
-   *        Trigger definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withTriggersSql(final String sql)
-  {
-    informationSchemaQueries.put(TRIGGERS, sql);
-    return this;
-  }
-
-  /**
-   * Sets the view definitions SQL.
-   *
-   * @param sql
-   *        View definitions SQL.
-   */
-  public InformationSchemaViewsBuilder withViewsSql(final String sql)
-  {
-    informationSchemaQueries.put(VIEWS, sql);
+    requireNonNull(key, "No key provided");
+    if (isBlank(sql))
+    {
+      informationSchemaQueries.remove(key);
+    }
+    else
+    {
+      informationSchemaQueries.put(key, sql);
+    }
     return this;
   }
 

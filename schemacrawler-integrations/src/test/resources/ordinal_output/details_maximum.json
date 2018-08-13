@@ -3933,7 +3933,7 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-06-03 07:37:39",
+    "crawlTimestamp": "2018-08-12 22:42:54",
     "title": ""
   },
   "routines": [
@@ -3950,7 +3950,7 @@
           "name": "NEWPUBLISHER",
           "width": "",
           "type": "in",
-          "ordinal": 1
+          "ordinal": 2
         },
         {
           "databaseSpecificType": "CHARACTER VARYING",
@@ -3958,7 +3958,7 @@
           "name": "PUBLISHER",
           "width": "",
           "type": "out",
-          "ordinal": 2
+          "ordinal": 3
         }
       ],
       "returnType": "no result",
@@ -3976,7 +3976,7 @@
         "name": "PUBLISHER",
         "width": "",
         "type": "out",
-        "ordinal": 1
+        "ordinal": 2
       }],
       "returnType": "no result",
       "remarks": ""
@@ -3994,7 +3994,7 @@
           "name": "ONE",
           "width": "",
           "type": "in",
-          "ordinal": 1
+          "ordinal": 2
         },
         {
           "databaseSpecificType": "INTEGER",
@@ -4002,7 +4002,7 @@
           "name": "TWO",
           "width": "",
           "type": "in",
-          "ordinal": 2
+          "ordinal": 3
         }
       ],
       "returnType": "does not return a table",
@@ -4020,7 +4020,7 @@
         "name": "ONE",
         "width": "",
         "type": "in",
-        "ordinal": 1
+        "ordinal": 2
       }],
       "returnType": "does not return a table",
       "remarks": ""

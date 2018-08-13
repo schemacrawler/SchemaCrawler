@@ -55,7 +55,9 @@ public final class SchemaRetrievalOptions
   private final MetadataRetrievalStrategy indexRetrievalStrategy;
   private final MetadataRetrievalStrategy fkRetrievalStrategy;
   private final MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private final MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
   private final MetadataRetrievalStrategy functionRetrievalStrategy;
+  private final MetadataRetrievalStrategy functionColumnRetrievalStrategy;
   private final String identifierQuoteString;
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
@@ -74,7 +76,10 @@ public final class SchemaRetrievalOptions
     indexRetrievalStrategy = bldr.getIndexRetrievalStrategy();
     fkRetrievalStrategy = bldr.getForeignKeyRetrievalStrategy();
     procedureRetrievalStrategy = bldr.getProcedureRetrievalStrategy();
+    procedureColumnRetrievalStrategy = bldr
+      .getProcedureColumnRetrievalStrategy();
     functionRetrievalStrategy = bldr.getFunctionRetrievalStrategy();
+    functionColumnRetrievalStrategy = bldr.getFunctionColumnRetrievalStrategy();
     identifierQuoteString = bldr.getIdentifierQuoteString();
     informationSchemaViews = bldr.getInformationSchemaViews();
     identifiers = bldr.getIdentifiers();
@@ -89,6 +94,11 @@ public final class SchemaRetrievalOptions
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
+  {
+    return functionColumnRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
@@ -123,6 +133,11 @@ public final class SchemaRetrievalOptions
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
     return pkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
+  {
+    return procedureColumnRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getProcedureRetrievalStrategy()

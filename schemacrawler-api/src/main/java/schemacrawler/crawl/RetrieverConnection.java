@@ -81,39 +81,29 @@ final class RetrieverConnection
     javaSqlTypes = new JavaSqlTypes();
   }
 
-  public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
+  Connection getConnection()
+  {
+    return connection;
+  }
+
+  MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return schemaRetrievalOptions.getForeignKeyRetrievalStrategy();
   }
 
-  public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
+  MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
+  {
+    return schemaRetrievalOptions.getFunctionColumnRetrievalStrategy();
+  }
+
+  MetadataRetrievalStrategy getFunctionRetrievalStrategy()
   {
     return schemaRetrievalOptions.getFunctionRetrievalStrategy();
   }
 
-  public MetadataRetrievalStrategy getIndexRetrievalStrategy()
+  MetadataRetrievalStrategy getIndexRetrievalStrategy()
   {
     return schemaRetrievalOptions.getIndexRetrievalStrategy();
-  }
-
-  public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getPrimaryKeyRetrievalStrategy();
-  }
-
-  public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getProcedureRetrievalStrategy();
-  }
-
-  public MetadataRetrievalStrategy getTableRetrievalStrategy()
-  {
-    return schemaRetrievalOptions.getTableRetrievalStrategy();
-  }
-
-  Connection getConnection()
-  {
-    return connection;
   }
 
   /**
@@ -136,9 +126,29 @@ final class RetrieverConnection
     return metaData;
   }
 
+  MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
+  {
+    return schemaRetrievalOptions.getPrimaryKeyRetrievalStrategy();
+  }
+
+  MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
+  {
+    return schemaRetrievalOptions.getProcedureColumnRetrievalStrategy();
+  }
+
+  MetadataRetrievalStrategy getProcedureRetrievalStrategy()
+  {
+    return schemaRetrievalOptions.getProcedureRetrievalStrategy();
+  }
+
   MetadataRetrievalStrategy getTableColumnRetrievalStrategy()
   {
     return schemaRetrievalOptions.getTableColumnRetrievalStrategy();
+  }
+
+  MetadataRetrievalStrategy getTableRetrievalStrategy()
+  {
+    return schemaRetrievalOptions.getTableRetrievalStrategy();
   }
 
   TableTypes getTableTypes()
