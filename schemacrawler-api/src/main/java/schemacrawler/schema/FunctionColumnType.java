@@ -58,11 +58,11 @@ public enum FunctionColumnType
  /**
   * Return.
   */
- returnValue(DatabaseMetaData.functionColumnResult, "return"),
+ returnValue(DatabaseMetaData.functionReturn, "return"),
  /**
   * Return.
   */
- result(DatabaseMetaData.procedureColumnResult, "result");
+ result(DatabaseMetaData.functionColumnResult, "result");
 
   private final int id;
   private final String text;
