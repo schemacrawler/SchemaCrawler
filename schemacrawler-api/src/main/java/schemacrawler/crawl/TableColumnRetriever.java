@@ -75,8 +75,8 @@ final class TableColumnRetriever
     super(retrieverConnection, catalog, options);
   }
 
-  void retrieveColumns(final NamedObjectList<MutableTable> allTables,
-                       final InclusionRule columnInclusionRule)
+  void retrieveTableColumns(final NamedObjectList<MutableTable> allTables,
+                            final InclusionRule columnInclusionRule)
     throws SQLException
   {
     requireNonNull(allTables, "No tables provided");
@@ -86,11 +86,11 @@ final class TableColumnRetriever
     if (columnFilter.isExcludeAll())
     {
       LOGGER.log(Level.INFO,
-                 "Not retrieving columns, since this was not requested");
+                 "Not retrieving table columns, since this was not requested");
       return;
     }
 
-    final Set<List<String>> hiddenColumns = retrieveHiddenColumns();
+    final Set<List<String>> hiddenColumns = retrieveHiddenTableColumns();
 
     final MetadataRetrievalStrategy tableColumnRetrievalStrategy = getRetrieverConnection()
       .getTableColumnRetrievalStrategy();
@@ -100,22 +100,24 @@ final class TableColumnRetriever
         LOGGER
           .log(Level.INFO,
                "Retrieving table columns, using fast data dictionary retrieval");
-        retrieveColumnsFromDataDictionary(allTables,
-                                          columnFilter,
-                                          hiddenColumns);
+        retrieveTableColumnsFromDataDictionary(allTables,
+                                               columnFilter,
+                                               hiddenColumns);
         break;
 
       case metadata_all:
         LOGGER.log(Level.INFO,
                    "Retrieving table columns, using fast meta-data retrieval");
-        retrieveColumnsFromMetadataForAllTables(allTables,
-                                                columnFilter,
-                                                hiddenColumns);
+        retrieveTableColumnsFromMetadataForAllTables(allTables,
+                                                     columnFilter,
+                                                     hiddenColumns);
         break;
 
       case metadata:
         LOGGER.log(Level.INFO, "Retrieving table columns");
-        retrieveColumnsFromMetadata(allTables, columnFilter, hiddenColumns);
+        retrieveTableColumnsFromMetadata(allTables,
+                                         columnFilter,
+                                         hiddenColumns);
         break;
 
       default:
@@ -124,10 +126,10 @@ final class TableColumnRetriever
 
   }
 
-  private MutableColumn createTableColumn(final MetadataResultSet results,
-                                          final NamedObjectList<MutableTable> allTables,
-                                          final InclusionRuleFilter<Column> columnFilter,
-                                          final Set<List<String>> hiddenColumns)
+  private void createTableColumn(final MetadataResultSet results,
+                                 final NamedObjectList<MutableTable> allTables,
+                                 final InclusionRuleFilter<Column> columnFilter,
+                                 final Set<List<String>> hiddenColumns)
   {
     // Get the "COLUMN_DEF" value first as it the Oracle drivers
     // don't handle it properly otherwise.
@@ -143,7 +145,7 @@ final class TableColumnRetriever
     final String tableName = results.getString("TABLE_NAME");
     final String columnName = results.getString("COLUMN_NAME");
     LOGGER.log(Level.FINE,
-               new StringFormat("Retrieving column <%s.%s.%s.%s>",
+               new StringFormat("Retrieving table column <%s.%s.%s.%s>",
                                 columnCatalogName,
                                 schemaName,
                                 tableName,
@@ -153,18 +155,14 @@ final class TableColumnRetriever
       .lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
     if (!optionalTable.isPresent())
     {
-      return null;
+      return;
     }
 
     final MutableTable table = optionalTable.get();
-    MutableColumn column;
-
-    column = lookupOrCreateColumn(table, columnName);
+    final MutableColumn column = lookupOrCreateTableColumn(table, columnName);
     if (columnFilter.test(column)
         && belongsToSchema(table, columnCatalogName, schemaName))
     {
-      column = lookupOrCreateColumn(table, columnName);
-
       final int ordinalPosition = results.getInt("ORDINAL_POSITION", 0);
       final int dataType = results.getInt("DATA_TYPE", 0);
       final String typeName = results.getString("TYPE_NAME");
@@ -228,11 +226,10 @@ final class TableColumnRetriever
       }
     }
 
-    return column;
   }
 
-  private MutableColumn lookupOrCreateColumn(final MutableTable table,
-                                             final String columnName)
+  private MutableColumn lookupOrCreateTableColumn(final MutableTable table,
+                                                  final String columnName)
   {
     final Optional<MutableColumn> columnOptional = table
       .lookupColumn(columnName);
@@ -248,79 +245,7 @@ final class TableColumnRetriever
     return column;
   }
 
-  private void retrieveColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
-                                                 final InclusionRuleFilter<Column> columnFilter,
-                                                 final Set<List<String>> hiddenColumns)
-    throws SQLException
-  {
-    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
-      .getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_COLUMNS))
-    {
-      throw new SchemaCrawlerSQLException("No table columns SQL provided",
-                                          null);
-    }
-    final Query tableColumnsSql = informationSchemaViews
-      .getQuery(InformationSchemaKey.TABLE_COLUMNS);
-    final Connection connection = getDatabaseConnection();
-    try (final Statement statement = connection.createStatement();
-        final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
-                                                                statement,
-                                                                getSchemaInclusionRule());)
-    {
-      results.setDescription("retrieveColumnsFromDataDictionary");
-      while (results.next())
-      {
-        createTableColumn(results, allTables, columnFilter, hiddenColumns);
-      }
-    }
-  }
-
-  private void retrieveColumnsFromMetadata(final NamedObjectList<MutableTable> allTables,
-                                           final InclusionRuleFilter<Column> columnFilter,
-                                           final Set<List<String>> hiddenColumns)
-    throws SchemaCrawlerSQLException
-  {
-    for (final MutableTable table: allTables)
-    {
-      LOGGER.log(Level.FINE, "Retrieving columns for " + table);
-      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-        .getColumns(table.getSchema().getCatalogName(),
-                    table.getSchema().getName(),
-                    table.getName(),
-                    null));)
-      {
-        while (results.next())
-        {
-          createTableColumn(results, allTables, columnFilter, hiddenColumns);
-        }
-      }
-      catch (final SQLException e)
-      {
-        throw new SchemaCrawlerSQLException(String
-          .format("Could not retrieve columns for %s <%s>",
-                  table.getTableType(),
-                  table), e);
-      }
-    }
-  }
-
-  private void retrieveColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
-                                                       final InclusionRuleFilter<Column> columnFilter,
-                                                       final Set<List<String>> hiddenColumns)
-    throws SQLException
-  {
-    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
-      .getColumns(null, null, "%", "%"));)
-    {
-      while (results.next())
-      {
-        createTableColumn(results, allTables, columnFilter, hiddenColumns);
-      }
-    }
-  }
-
-  private Set<List<String>> retrieveHiddenColumns()
+  private Set<List<String>> retrieveHiddenTableColumns()
     throws SQLException
   {
 
@@ -368,6 +293,78 @@ final class TableColumnRetriever
     }
 
     return hiddenColumns;
+  }
+
+  private void retrieveTableColumnsFromDataDictionary(final NamedObjectList<MutableTable> allTables,
+                                                      final InclusionRuleFilter<Column> columnFilter,
+                                                      final Set<List<String>> hiddenColumns)
+    throws SQLException
+  {
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.TABLE_COLUMNS))
+    {
+      throw new SchemaCrawlerSQLException("No table columns SQL provided",
+                                          null);
+    }
+    final Query tableColumnsSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.TABLE_COLUMNS);
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(tableColumnsSql,
+                                                                statement,
+                                                                getSchemaInclusionRule());)
+    {
+      results.setDescription("retrieveTableColumnsFromDataDictionary");
+      while (results.next())
+      {
+        createTableColumn(results, allTables, columnFilter, hiddenColumns);
+      }
+    }
+  }
+
+  private void retrieveTableColumnsFromMetadata(final NamedObjectList<MutableTable> allTables,
+                                                final InclusionRuleFilter<Column> columnFilter,
+                                                final Set<List<String>> hiddenColumns)
+    throws SchemaCrawlerSQLException
+  {
+    for (final MutableTable table: allTables)
+    {
+      LOGGER.log(Level.FINE, "Retrieving table columns for " + table);
+      try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+        .getColumns(table.getSchema().getCatalogName(),
+                    table.getSchema().getName(),
+                    table.getName(),
+                    null));)
+      {
+        while (results.next())
+        {
+          createTableColumn(results, allTables, columnFilter, hiddenColumns);
+        }
+      }
+      catch (final SQLException e)
+      {
+        throw new SchemaCrawlerSQLException(String
+          .format("Could not retrieve table columns for %s <%s>",
+                  table.getTableType(),
+                  table), e);
+      }
+    }
+  }
+
+  private void retrieveTableColumnsFromMetadataForAllTables(final NamedObjectList<MutableTable> allTables,
+                                                            final InclusionRuleFilter<Column> columnFilter,
+                                                            final Set<List<String>> hiddenColumns)
+    throws SQLException
+  {
+    try (final MetadataResultSet results = new MetadataResultSet(getMetaData()
+      .getColumns(null, null, "%", "%"));)
+    {
+      while (results.next())
+      {
+        createTableColumn(results, allTables, columnFilter, hiddenColumns);
+      }
+    }
   }
 
 }

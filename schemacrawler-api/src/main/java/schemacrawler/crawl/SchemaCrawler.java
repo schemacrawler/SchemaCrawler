@@ -244,16 +244,20 @@ public final class SchemaCrawler
 
     final RoutineRetriever retriever;
     final RoutineExtRetriever retrieverExtra;
-    final RoutineColumnRetriever columnRetriever;
+    final ProcedureColumnRetriever procedureColumnRetriever;
+    final FunctionColumnRetriever functionColumnRetriever;
     try
     {
       retriever = new RoutineRetriever(retrieverConnection, catalog, options);
       retrieverExtra = new RoutineExtRetriever(retrieverConnection,
                                                catalog,
                                                options);
-      columnRetriever = new RoutineColumnRetriever(retrieverConnection,
-                                                   catalog,
-                                                   options);
+      procedureColumnRetriever = new ProcedureColumnRetriever(retrieverConnection,
+                                                              catalog,
+                                                              options);
+      functionColumnRetriever = new FunctionColumnRetriever(retrieverConnection,
+                                                            catalog,
+                                                            options);
 
       final Collection<RoutineType> routineTypes = options.getRoutineTypes();
 
@@ -284,27 +288,21 @@ public final class SchemaCrawler
 
       stopWatch.time("retrieveRoutineColumns", () -> {
         LOGGER.log(Level.INFO, "Retrieving routine columns");
-        for (final MutableRoutine routine: allRoutines)
+        if (infoLevel.isRetrieveRoutineColumns())
         {
-          if (infoLevel.isRetrieveRoutineColumns())
+          if (routineTypes.contains(RoutineType.procedure))
           {
-            if (routine instanceof MutableProcedure
-                && routineTypes.contains(RoutineType.procedure))
-            {
-              columnRetriever
-                .retrieveProcedureColumns((MutableProcedure) routine,
-                                          options
-                                            .getRoutineColumnInclusionRule());
-            }
+            procedureColumnRetriever
+              .retrieveProcedureColumns(allRoutines,
+                                        options
+                                          .getRoutineColumnInclusionRule());
+          }
 
-            if (routine instanceof MutableFunction
-                && routineTypes.contains(RoutineType.function))
-            {
-              columnRetriever
-                .retrieveFunctionColumns((MutableFunction) routine,
-                                         options
-                                           .getRoutineColumnInclusionRule());
-            }
+          if (routineTypes.contains(RoutineType.function))
+          {
+            functionColumnRetriever
+              .retrieveFunctionColumns(allRoutines,
+                                       options.getRoutineColumnInclusionRule());
           }
         }
         return null;
@@ -560,8 +558,8 @@ public final class SchemaCrawler
       stopWatch.time("retrieveColumns", () -> {
         if (infoLevel.isRetrieveTableColumns())
         {
-          columnRetriever.retrieveColumns(allTables,
-                                          options.getColumnInclusionRule());
+          columnRetriever
+            .retrieveTableColumns(allTables, options.getColumnInclusionRule());
         }
         return null;
       });

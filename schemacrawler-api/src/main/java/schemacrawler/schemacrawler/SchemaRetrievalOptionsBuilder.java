@@ -49,7 +49,6 @@ public final class SchemaRetrievalOptionsBuilder
   private static final String prefix = "schemacrawler.schema.retrieval.strategy";
 
   private static final String SC_RETRIEVAL_TABLES = prefix + ".tables";
-
   private static final String SC_RETRIEVAL_TABLE_COLUMNS = prefix
                                                            + ".tablecolumns";
 
@@ -58,8 +57,13 @@ public final class SchemaRetrievalOptionsBuilder
   private static final String SC_RETRIEVAL_INDEXES = prefix + ".indexes";
   private static final String SC_RETRIEVAL_FOREIGN_KEYS = prefix
                                                           + ".foreignkeys";
+
   private static final String SC_RETRIEVAL_PROCEDURES = prefix + ".procedures";
+  private static final String SC_RETRIEVAL_PROCEDURE_COLUMNS = prefix
+                                                               + ".procedurecolumns";
   private static final String SC_RETRIEVAL_FUNCTIONS = prefix + ".functions";
+  private static final String SC_RETRIEVAL_FUNCTION_COLUMNS = prefix
+                                                              + ".functioncolumns";
 
   public static SchemaRetrievalOptionsBuilder builder()
   {
@@ -95,7 +99,9 @@ public final class SchemaRetrievalOptionsBuilder
   private MetadataRetrievalStrategy indexRetrievalStrategy;
   private MetadataRetrievalStrategy fkRetrievalStrategy;
   private MetadataRetrievalStrategy procedureRetrievalStrategy;
+  private MetadataRetrievalStrategy procedureColumnRetrievalStrategy;
   private MetadataRetrievalStrategy functionRetrievalStrategy;
+  private MetadataRetrievalStrategy functionColumnRetrievalStrategy;
   private Optional<TypeMap> overridesTypeMap;
 
   private SchemaRetrievalOptionsBuilder()
@@ -114,7 +120,9 @@ public final class SchemaRetrievalOptionsBuilder
     indexRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     fkRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     procedureRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    procedureColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     overridesTypeMap = Optional.empty();
   }
 
@@ -145,8 +153,14 @@ public final class SchemaRetrievalOptionsBuilder
       .getEnumValue(SC_RETRIEVAL_FOREIGN_KEYS, fkRetrievalStrategy);
     procedureRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_PROCEDURES, procedureRetrievalStrategy);
+    procedureColumnRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_PROCEDURE_COLUMNS,
+                    procedureColumnRetrievalStrategy);
     functionRetrievalStrategy = configProperties
       .getEnumValue(SC_RETRIEVAL_FUNCTIONS, functionRetrievalStrategy);
+    functionColumnRetrievalStrategy = configProperties
+      .getEnumValue(SC_RETRIEVAL_FUNCTION_COLUMNS,
+                    functionColumnRetrievalStrategy);
 
     return this;
   }
@@ -207,7 +221,11 @@ public final class SchemaRetrievalOptionsBuilder
     indexRetrievalStrategy = options.getIndexRetrievalStrategy();
     fkRetrievalStrategy = options.getForeignKeyRetrievalStrategy();
     procedureRetrievalStrategy = options.getProcedureRetrievalStrategy();
+    procedureColumnRetrievalStrategy = options
+      .getProcedureColumnRetrievalStrategy();
     functionRetrievalStrategy = options.getFunctionRetrievalStrategy();
+    functionColumnRetrievalStrategy = options
+      .getFunctionColumnRetrievalStrategy();
     overridesTypeMap = Optional.empty();
 
     return this;
@@ -221,6 +239,11 @@ public final class SchemaRetrievalOptionsBuilder
   public MetadataRetrievalStrategy getForeignKeyRetrievalStrategy()
   {
     return fkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getFunctionColumnRetrievalStrategy()
+  {
+    return functionColumnRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getFunctionRetrievalStrategy()
@@ -251,6 +274,11 @@ public final class SchemaRetrievalOptionsBuilder
   public MetadataRetrievalStrategy getPrimaryKeyRetrievalStrategy()
   {
     return pkRetrievalStrategy;
+  }
+
+  public MetadataRetrievalStrategy getProcedureColumnRetrievalStrategy()
+  {
+    return procedureColumnRetrievalStrategy;
   }
 
   public MetadataRetrievalStrategy getProcedureRetrievalStrategy()
@@ -337,6 +365,19 @@ public final class SchemaRetrievalOptionsBuilder
     else
     {
       this.fkRetrievalStrategy = fkRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withFunctionColumnRetrievalStrategy(final MetadataRetrievalStrategy functionColumnRetrievalStrategy)
+  {
+    if (functionColumnRetrievalStrategy == null)
+    {
+      this.functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.functionColumnRetrievalStrategy = functionColumnRetrievalStrategy;
     }
     return this;
   }
@@ -438,6 +479,19 @@ public final class SchemaRetrievalOptionsBuilder
     else
     {
       this.pkRetrievalStrategy = pkRetrievalStrategy;
+    }
+    return this;
+  }
+
+  public SchemaRetrievalOptionsBuilder withProcedureColumnRetrievalStrategy(final MetadataRetrievalStrategy procedureColumnRetrievalStrategy)
+  {
+    if (procedureColumnRetrievalStrategy == null)
+    {
+      this.procedureColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
+    }
+    else
+    {
+      this.procedureColumnRetrievalStrategy = procedureColumnRetrievalStrategy;
     }
     return this;
   }
