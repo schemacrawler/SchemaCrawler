@@ -44,6 +44,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public final class OracleDatabaseConnector
   extends DatabaseConnector
@@ -99,7 +100,7 @@ public final class OracleDatabaseConnector
       {
         final Object scalar = DatabaseUtility
           .executeSqlForScalar(connection,
-                               "SELECT TABLE_NAME FROM DBA_TABLES FETCH FIRST 1 ROWS ONLY");
+                               "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1");
         if (scalar != null)
         {
           catalogScope = "DBA";
@@ -111,6 +112,10 @@ public final class OracleDatabaseConnector
         catalogScope = "ALL";
       }
 
+      LOGGER
+        .log(Level.INFO,
+             new StringFormat("Using Oracle data dictionary catalog scope <%s>",
+                              catalogScope));
       return catalogScope;
     }
 

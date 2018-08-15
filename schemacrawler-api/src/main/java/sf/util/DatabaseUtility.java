@@ -227,10 +227,14 @@ public final class DatabaseUtility
         throw new SchemaCrawlerException("Too many columns of data returned");
       }
 
-      final Object scalar;
+      Object scalar;
       if (resultSet.next())
       {
         scalar = resultSet.getObject(1);
+        if (resultSet.wasNull())
+        {
+          scalar = null;
+        }
       }
       else
       {
