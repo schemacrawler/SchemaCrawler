@@ -266,11 +266,13 @@ public final class SchemaCrawler
           .getAllSchemas();
         if (routineTypes.contains(RoutineType.procedure))
         {
+          LOGGER.log(Level.INFO, "Retrieving procedure names");
           retriever.retrieveProcedures(schemas,
                                        options.getRoutineInclusionRule());
         }
         if (routineTypes.contains(RoutineType.function))
         {
+          LOGGER.log(Level.INFO, "Retrieving function names");
           retriever.retrieveFunctions(schemas,
                                       options.getRoutineInclusionRule());
         }
@@ -538,6 +540,7 @@ public final class SchemaCrawler
                                                                      options);
 
       stopWatch.time("retrieveTables", () -> {
+        LOGGER.log(Level.INFO, "Retrieving table names");
         final NamedObjectList<SchemaReference> schemas = retriever
           .getAllSchemas();
         retriever.retrieveTables(schemas,
@@ -556,6 +559,7 @@ public final class SchemaCrawler
       }
 
       stopWatch.time("retrieveColumns", () -> {
+        LOGGER.log(Level.INFO, "Retrieving table columns");
         if (infoLevel.isRetrieveTableColumns())
         {
           columnRetriever
@@ -565,6 +569,7 @@ public final class SchemaCrawler
       });
 
       stopWatch.time("retrieveForeignKeys", () -> {
+        LOGGER.log(Level.INFO, "Retrieving foreign keys");
         if (infoLevel.isRetrieveForeignKeys())
         {
           if (infoLevel.isRetrieveTableColumns())
@@ -616,6 +621,7 @@ public final class SchemaCrawler
         return null;
       });
 
+      LOGGER.log(Level.INFO, "Retrieving additional table information");
       stopWatch.time("retrieveTableConstraintInformation", () -> {
         if (infoLevel.isRetrieveTableConstraintInformation())
         {
