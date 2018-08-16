@@ -24,8 +24,8 @@
 #,/db/books/05_tables_03_B.sql
 ;,/db/books/05_tables_04_A.sql
 #,/db/books/05_tables_04_B.sql
-;,/db/books/05_temp_tables_01_A.sql
-#,/db/books/05_temp_tables_01_B.sql
+#,/db/books/05_temp_tables_01_A.sql
+;,/db/books/05_temp_tables_01_B.sql
 #,/db/books/05_temp_tables_01_C.sql
 #,/db/books/05_temp_tables_01_D.sql
 ;,/db/books/05_views_01_A.sql
@@ -39,7 +39,8 @@
 #,/db/books/08_procedures_01_C.sql
 #,/db/books/09_functions_01_A.sql
 #,/db/books/09_functions_01_B.sql
-@,/db/books/09_functions_01_C.sql
+#,/db/books/09_functions_01_C.sql
+@,/db/books/09_functions_01_D.sql
 #,/db/books/10_triggers_01_A.sql
 #,/db/books/10_triggers_01_B.sql
 #,/db/books/11_synonyms_01_A.sql
