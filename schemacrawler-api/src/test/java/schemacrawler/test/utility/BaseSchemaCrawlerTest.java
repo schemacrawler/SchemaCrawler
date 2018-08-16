@@ -25,26 +25,32 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.integration.test;
+
+package schemacrawler.test.utility;
 
 
-import static org.junit.Assert.assertTrue;
+import static sf.util.Utility.applyApplicationLogLevel;
 
-import org.junit.Test;
+import java.util.logging.Level;
 
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import org.custommonkey.xmlunit.XMLUnit;
+import org.junit.BeforeClass;
 
-public class TestBundledDistributions
-  extends BaseSchemaCrawlerTest
+public abstract class BaseSchemaCrawlerTest
 {
 
-  @Test
-  public void testPlugin_offline()
+  @BeforeClass
+  public static void setApplicationLogLevel()
     throws Exception
   {
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    assertTrue(registry.hasDatabaseSystemIdentifier("offline"));
+    applyApplicationLogLevel(Level.OFF);
+  }
+
+  @BeforeClass
+  public static void setEntityResolver()
+    throws Exception
+  {
+    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
 }
