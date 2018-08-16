@@ -31,13 +31,17 @@ package schemacrawler.integration.test;
 import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_3;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -61,14 +65,29 @@ public class PostgreSQLTest
   {
     try
     {
-      postgres = new EmbeddedPostgres(V10_3);
-      final String connectionUrl = postgres.start("localhost",
-                                                  SocketUtil.findFreePort(),
-                                                  "schemacrawler",
-                                                  "schemacrawler",
-                                                  "schemacrawler");
+      final String user = "schemacrawler";
+      final String password = "schemacrawler";
 
-      createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
+      final String homeDirectory = System.getProperty("user.home");
+      final Path cachedPostgreSQL = Paths.get(homeDirectory, ".embedpostgresql")
+        .toAbsolutePath();
+      cachedPostgreSQL.toFile().mkdirs();
+
+      final IRuntimeConfig runtimeConfig = EmbeddedPostgres
+        .cachedRuntimeConfig(cachedPostgreSQL);
+
+      postgres = new EmbeddedPostgres(V10_3);
+      postgres.start(runtimeConfig,
+                     "localhost",
+                     SocketUtil.findFreePort(),
+                     "schemacrawler",
+                     user,
+                     password,
+                     Arrays.asList("-E", "'UTF-8'"));
+
+      final String connectionUrl = postgres.getConnectionUrl()
+        .orElseThrow(() -> new RuntimeException());
+      createDataSource(connectionUrl, user, password);
       createDatabase("/postgresql.scripts.txt");
 
       isDatabaseRunning = true;
