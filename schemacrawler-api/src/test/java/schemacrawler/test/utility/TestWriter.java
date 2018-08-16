@@ -133,7 +133,14 @@ public class TestWriter
   {
     out.close();
 
-    deleteIfExists(tempFile);
+    try
+    {
+      deleteIfExists(tempFile);
+    }
+    catch (final Throwable e)
+    {
+      // Ignore
+    }
   }
 
   public List<String> collectFailures(final String referenceFile)

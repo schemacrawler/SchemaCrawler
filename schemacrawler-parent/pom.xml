@@ -321,7 +321,9 @@
               <quiet>true</quiet>
               <show>public</show>
               <detectOfflineLinks>true</detectOfflineLinks>
-              <additionalparam>-Xdoclint:html,syntax,reference,missing</additionalparam>
+							<additionalOptions>
+								<additionalOption>-Xdoclint:none</additionalOption>
+							</additionalOptions>
               <bottom>Copyright © 2000-2018 {organizationName}. All rights reserved.</bottom>
               <doctitle>SchemaCrawler ${project.version}</doctitle>
             </configuration>
