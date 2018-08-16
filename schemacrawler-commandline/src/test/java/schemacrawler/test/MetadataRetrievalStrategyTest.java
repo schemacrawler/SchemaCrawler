@@ -38,7 +38,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -68,7 +67,8 @@ public class MetadataRetrievalStrategyTest
   public final SystemOutRule systemOutRule = new SystemOutRule().enableLog()
     .mute();
   @Rule
-  public final SystemErrRule systemErrRule = new SystemErrRule().enableLog();
+  public final SystemErrRule systemErrRule = new SystemErrRule().enableLog()
+    .mute();
 
   @Test
   public void overrideMetadataRetrievalStrategy()
@@ -102,7 +102,7 @@ public class MetadataRetrievalStrategyTest
     argsMap.put("outputformat", outputFormat.getFormat());
     argsMap.put("outputfile", testOutputFile.toString());
     argsMap.put("noinfo", "true");
-    argsMap.put("loglevel", Level.SEVERE.getName());
+    // argsMap.put("loglevel", Level.SEVERE.getName());
 
     Main.main(flattenCommandlineArgs(argsMap));
 
