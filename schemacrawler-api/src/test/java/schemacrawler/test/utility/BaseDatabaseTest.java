@@ -62,25 +62,12 @@ import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
 
 public abstract class BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   static
   {
     TestDatabase.initialize();
-  }
-
-  @BeforeClass
-  public static void setApplicationLogLevel()
-    throws Exception
-  {
-    applyApplicationLogLevel(Level.OFF);
-  }
-
-  @BeforeClass
-  public static void setEntityResolver()
-    throws Exception
-  {
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)

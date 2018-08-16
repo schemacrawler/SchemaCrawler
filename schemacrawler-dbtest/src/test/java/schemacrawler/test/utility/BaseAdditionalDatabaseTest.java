@@ -50,7 +50,7 @@ public abstract class BaseAdditionalDatabaseTest
     .getLogger(BaseExecutableTest.class.getName());
 
   @BeforeClass
-  public static final void startLoggin()
+  public static final void startLogging()
   {
     final ConsoleHandler ch = new ConsoleHandler();
     ch.setLevel(Level.INFO);
@@ -84,7 +84,7 @@ public abstract class BaseAdditionalDatabaseTest
     dataSource.setInitialSize(1);
     dataSource.setMaxTotal(1);
 
-    LOGGER.log(Level.INFO, "Database connection URL: " + connectionUrl);
+    LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
     this.dataSource = dataSource;
   }
 

@@ -35,10 +35,12 @@ import java.sql.Connection;
 
 import org.junit.Test;
 
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 public class TestBundledDistributions
+  extends BaseSchemaCrawlerTest
 {
 
   @Test
@@ -52,8 +54,8 @@ public class TestBundledDistributions
       .lookupDatabaseConnector("postgresql");
     assertEquals(7,
                  databaseSystemIdentifier
-                   .getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getInformationSchemaViews().size());
+                   .getSchemaRetrievalOptionsBuilder(connection).toOptions()
+                   .getInformationSchemaViews().size());
   }
 
   @Test
