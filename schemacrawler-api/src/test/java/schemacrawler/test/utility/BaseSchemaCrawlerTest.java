@@ -33,7 +33,6 @@ import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.util.logging.Level;
 
-import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
 
 public abstract class BaseSchemaCrawlerTest
@@ -44,13 +43,6 @@ public abstract class BaseSchemaCrawlerTest
     throws Exception
   {
     applyApplicationLogLevel(Level.OFF);
-  }
-
-  @BeforeClass
-  public static void setEntityResolver()
-    throws Exception
-  {
-    XMLUnit.setControlEntityResolver(new LocalEntityResolver());
   }
 
 }

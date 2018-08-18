@@ -70,11 +70,9 @@ public final class ResultsCrawler
   }
 
   /**
-   * Crawls the database, to obtain database metadata.
+   * Crawls the database, to obtain result set metadata.
    *
-   * @param options
-   *        SchemaCrawler options that control what metadata is returned
-   * @return Database metadata
+   * @return Result set metadata
    * @throws SchemaCrawlerException
    *         On an exception
    */
