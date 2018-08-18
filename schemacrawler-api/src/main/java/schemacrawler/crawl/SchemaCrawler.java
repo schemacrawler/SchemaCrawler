@@ -729,8 +729,6 @@ public final class SchemaCrawler
    *        Database-specific schema retrieval overrides
    * @param schemaCrawlerOptions
    *        SchemaCrawler options
-   * @throws SchemaCrawlerException
-   *         On a SchemaCrawler exception
    */
   public SchemaCrawler(final Connection connection,
                        final SchemaRetrievalOptions schemaRetrievalOptions,
@@ -746,8 +744,6 @@ public final class SchemaCrawler
   /**
    * Crawls the database, to obtain database metadata.
    *
-   * @param options
-   *        SchemaCrawler options that control what metadata is returned
    * @return Database metadata
    * @throws SchemaCrawlerException
    *         On an exception

@@ -96,6 +96,10 @@ public interface TextFormattingHelper
   /**
    * Creates a new anchor tag.
    *
+   * @param text
+   *        Anchor text
+   * @param link
+   *        Anchor link
    * @return Anchor tag
    */
   String createAnchor(String text, String link);
@@ -135,7 +139,6 @@ public interface TextFormattingHelper
    *
    * @param description
    *        Description
-   * @return Row as a string
    */
   void writeDescriptionRow(String description);
 
@@ -148,14 +151,24 @@ public interface TextFormattingHelper
    *        Name
    * @param text3
    *        Type
-   * @return Row as a string
    */
   void writeDetailRow(String text1, String text2, String text3);
 
   /**
    * Creates a detail row, with four fields. The name can be emphasized.
-   *
-   * @return Row as a string
+   * 
+   * @param text1
+   *        Text for field 1
+   * @param text2
+   *        Text for field 2
+   * @param text3
+   *        Text for field 3
+   * @param escapeText
+   *        Escape sequence
+   * @param emphasize
+   *        Whether to emphasize text
+   * @param style
+   *        Other CSS style
    */
   void writeDetailRow(String text1,
                       String text2,
@@ -166,22 +179,16 @@ public interface TextFormattingHelper
 
   /**
    * Document end.
-   *
-   * @return Document end
    */
   void writeDocumentEnd();
 
   /**
    * Document start.
-   *
-   * @return Document start
    */
   void writeDocumentStart();
 
   /**
    * Create an empty row.
-   *
-   * @return Row as a string
    */
   void writeEmptyRow();
 
@@ -192,7 +199,6 @@ public interface TextFormattingHelper
    *        Type of header
    * @param header
    *        Header text
-   * @return Section header
    */
   void writeHeader(DocumentHeaderType type, String header);
 
@@ -203,7 +209,6 @@ public interface TextFormattingHelper
    *        Name
    * @param description
    *        Description
-   * @return Row as a string
    */
   void writeNameRow(String name, String description);
 
@@ -216,14 +221,11 @@ public interface TextFormattingHelper
    *        Value
    * @param valueAlignment
    *        Alignment of the value
-   * @return Row as a string
    */
   void writeNameValueRow(String name, String value, Alignment valueAlignment);
 
   /**
    * Database object end.
-   *
-   * @return Database object end
    */
   void writeObjectEnd();
 
@@ -236,7 +238,8 @@ public interface TextFormattingHelper
    *        Name
    * @param description
    *        Description
-   * @return Row as a string
+   * @param backgroundColor
+   *        Background color
    */
   void writeObjectNameRow(String id,
                           String name,
@@ -245,8 +248,6 @@ public interface TextFormattingHelper
 
   /**
    * Database object start.
-   *
-   * @return Database object start
    */
   void writeObjectStart();
 
@@ -255,7 +256,6 @@ public interface TextFormattingHelper
    *
    * @param columnData
    *        Column data
-   * @return Row of data
    */
   void writeRow(Object... columnData);
 
@@ -264,7 +264,6 @@ public interface TextFormattingHelper
    *
    * @param columnNames
    *        Column names
-   * @return Header row for data
    */
   void writeRowHeader(String... columnNames);
 
@@ -275,7 +274,6 @@ public interface TextFormattingHelper
    *        Definition
    * @param style
    *        CSS style class
-   * @return Row as a string
    */
   void writeWideRow(String definition, String style);
 

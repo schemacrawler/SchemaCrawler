@@ -170,10 +170,11 @@ public final class OutputOptionsBuilder
    * important to note that the input encoding should be available at
    * this point.
    *
-   * @param outputFileName
-   *        Output file name.
+   * @param inputFile
+   *        Path to compressed file.
    * @throws IOException
    *         When file cannot be read
+   * @return Builder
    */
   public OutputOptionsBuilder withCompressedInputFile(final Path inputFile)
     throws IOException
@@ -189,9 +190,10 @@ public final class OutputOptionsBuilder
    * important to note that the output encoding should be available at
    * this point.
    *
-   * @param outputFileName
-   *        Output file name.
+   * @param outputFile
+   *        Output path.
    * @throws IOException
+   * @return Builder
    */
   public OutputOptionsBuilder withCompressedOutputFile(final Path outputFile)
     throws IOException
@@ -227,6 +229,7 @@ public final class OutputOptionsBuilder
    *
    * @param inputEncoding
    *        Input encoding
+   * @return Builder
    */
   public OutputOptionsBuilder withInputEncoding(final String inputEncoding)
   {
@@ -245,10 +248,11 @@ public final class OutputOptionsBuilder
    * Sets the name of the input file. It is important to note that the
    * input encoding should be available at this point.
    *
-   * @param inputFileName
-   *        Input file name.
+   * @param inputFile
+   *        Input path.
    * @throws IOException
    *         When file cannot be read
+   * @return Builder
    */
   public OutputOptionsBuilder withInputFile(final Path inputFile)
     throws IOException
@@ -279,8 +283,7 @@ public final class OutputOptionsBuilder
    * @param inputResourceName
    *        Input resource name, which could be a file path, or a
    *        classpath resource.
-   * @throws IOException
-   *         When the resource cannot be accessed
+   * @return Builder
    */
   public OutputOptionsBuilder withInputResourceName(final String inputResourceName)
   {
@@ -307,6 +310,7 @@ public final class OutputOptionsBuilder
    *
    * @param outputEncoding
    *        Output encoding
+   * @return Builder
    */
   public OutputOptionsBuilder withOutputEncoding(final String outputEncoding)
   {
@@ -325,8 +329,9 @@ public final class OutputOptionsBuilder
    * Sets the name of the output file. It is important to note that the
    * output encoding should be available at this point.
    *
-   * @param outputFileName
-   *        Output file name.
+   * @param outputFile
+   *        Output path.
+   * @return Builder
    */
   public OutputOptionsBuilder withOutputFile(final Path outputFile)
   {
@@ -340,6 +345,7 @@ public final class OutputOptionsBuilder
    *
    * @param outputFormat
    *        Output format
+   * @return Builder
    */
   public OutputOptionsBuilder withOutputFormat(final OutputFormat outputFormat)
   {
@@ -353,6 +359,7 @@ public final class OutputOptionsBuilder
    *
    * @param outputFormatValue
    *        Output format value
+   * @return Builder
    */
   public OutputOptionsBuilder withOutputFormatValue(final String outputFormatValue)
   {

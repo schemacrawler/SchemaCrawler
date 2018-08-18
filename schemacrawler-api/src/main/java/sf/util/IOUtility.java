@@ -66,7 +66,8 @@ public final class IOUtility
    *
    * @param reader
    *        Reader to read.
-   * @return Byte array
+   * @param writer
+   *        Writer to copy to
    */
   public static void copy(final Reader reader, final Writer writer)
   {

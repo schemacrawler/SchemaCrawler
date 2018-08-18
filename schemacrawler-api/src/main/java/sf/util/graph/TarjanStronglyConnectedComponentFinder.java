@@ -66,8 +66,6 @@ public class TarjanStronglyConnectedComponentFinder<T extends Comparable<? super
   /**
    * Calculates the sets of strongly connected vertices.
    *
-   * @param graph
-   *        Graph to detect cycles within.
    * @return Set of strongly connected components (sets of vertices)
    */
   public Collection<List<T>> detectCycles()

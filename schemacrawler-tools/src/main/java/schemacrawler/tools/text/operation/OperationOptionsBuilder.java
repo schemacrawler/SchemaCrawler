@@ -107,8 +107,9 @@ public final class OperationOptionsBuilder
   /**
    * Show LOB data, or not.
    *
-   * @param Whether
-   *        to show LOB data.
+   * @param value
+   *        Whether to show LOB data.
+   * @return Builder
    */
   public OperationOptionsBuilder showLobs(final boolean value)
   {
