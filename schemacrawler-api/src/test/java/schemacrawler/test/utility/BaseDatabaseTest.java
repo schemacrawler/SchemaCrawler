@@ -45,7 +45,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 
-import org.custommonkey.xmlunit.XMLUnit;
 import org.junit.BeforeClass;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -62,12 +61,18 @@ import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
 
 public abstract class BaseDatabaseTest
-  extends BaseSchemaCrawlerTest
 {
 
   static
   {
     TestDatabase.initialize();
+  }
+
+  @BeforeClass
+  public static void setApplicationLogLevel()
+    throws Exception
+  {
+    applyApplicationLogLevel(Level.OFF);
   }
 
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)

@@ -37,6 +37,12 @@ import java.util.logging.Level;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
+/**
+ * Data source with connection information provided from a configuration
+ * file.
+ * 
+ * @author Sualeh Fatehi
+ */
 public final class DatabaseConfigConnectionOptions
   extends BaseDatabaseConnectionOptions
 {
