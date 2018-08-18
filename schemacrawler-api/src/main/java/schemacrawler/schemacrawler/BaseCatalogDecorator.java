@@ -60,7 +60,7 @@ public abstract class BaseCatalogDecorator
 
   protected final Catalog catalog;
 
-  public BaseCatalogDecorator(final Catalog catalog)
+  protected BaseCatalogDecorator(final Catalog catalog)
   {
     this.catalog = requireNonNull(catalog, "No catalog provided");
   }
@@ -168,8 +168,7 @@ public abstract class BaseCatalogDecorator
   }
 
   /**
-   * @return
-   * @see schemacrawler.schema.Catalog#getSequences()
+   * {@inheritDoc}
    */
   @Override
   public Collection<Sequence> getSequences()
@@ -178,9 +177,7 @@ public abstract class BaseCatalogDecorator
   }
 
   /**
-   * @param schema
-   * @return
-   * @see schemacrawler.schema.Catalog#getSequences(schemacrawler.schema.Schema)
+   * {@inheritDoc}
    */
   @Override
   public Collection<Sequence> getSequences(final Schema schema)
@@ -251,11 +248,7 @@ public abstract class BaseCatalogDecorator
   }
 
   /**
-   * @param schema
-   * @param name
-   * @return
-   * @see schemacrawler.schema.Catalog#lookupSequence(schemacrawler.schema.Schema,
-   *      java.lang.String)
+   * {@inheritDoc}
    */
   @Override
   public Optional<? extends Sequence> lookupSequence(final Schema schema,
@@ -264,6 +257,9 @@ public abstract class BaseCatalogDecorator
     return catalog.lookupSequence(schema, name);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public Optional<? extends Synonym> lookupSynonym(final Schema schema,
                                                    final String name)

@@ -129,8 +129,9 @@ public final class InformationSchemaViewsBuilder
   /**
    * Information schema views from a map.
    *
-   * @param informationSchemaViewsSql
-   *        Map of information schema view definitions.
+   * @param classpath
+   *        Classpath location for SQL queries.
+   * @return Builder
    */
   public InformationSchemaViewsBuilder fromResourceFolder(final String classpath)
   {
@@ -195,8 +196,11 @@ public final class InformationSchemaViewsBuilder
   /**
    * Sets definitions SQL.
    *
+   * @param key
+   *        SQL query key
    * @param sql
    *        Definitions SQL.
+   * @return Builder
    */
   public InformationSchemaViewsBuilder withSql(final InformationSchemaKey key,
                                                final String sql)

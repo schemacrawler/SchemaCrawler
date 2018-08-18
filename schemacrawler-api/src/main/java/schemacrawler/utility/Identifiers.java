@@ -157,6 +157,7 @@ public final class Identifiers
      * @param connection
      *        Live database connection
      * @throws SQLException
+     * @return Builder
      */
     public Builder withConnection(final Connection connection)
       throws SQLException
@@ -183,9 +184,10 @@ public final class Identifiers
     /**
      * Tries to use the connection, but does not throw any exceptions.
      *
-     * @see withConnection(Connection connection)
+     * @see #withConnection(Connection connection)
      * @param connection
      *        Live database connection
+     * @return Builder
      */
     public Builder withConnectionIfPossible(final Connection connection)
     {
@@ -207,6 +209,7 @@ public final class Identifiers
      * @param identifierQuoteString
      *        Identifier quote string override, or null if not
      *        overridden
+     * @return Builder
      */
     public Builder withIdentifierQuoteString(final String identifierQuoteString)
     {
@@ -229,6 +232,7 @@ public final class Identifiers
      * @param identifierQuotingStrategy
      *        Set identifier quoting strategy, or turn off quoting if
      *        null
+     * @return Builder
      */
     public Builder withIdentifierQuotingStrategy(final IdentifierQuotingStrategy identifierQuotingStrategy)
     {
@@ -323,6 +327,8 @@ public final class Identifiers
 
   /**
    * Get a list of reserved words, normalized to uppercase.
+   * 
+   * @return Reserved words
    */
   public Collection<String> getReservedWords()
   {
@@ -430,8 +436,8 @@ public final class Identifiers
    * not quote the identifier name if quoting is not required, per
    * generalized database rules.
    *
-   * @param name
-   *        Identifier name to quote
+   * @param namedObject
+   *        Object name to quote
    * @return Identifier name after quoting it, or the original name if
    *         quoting is not required
    */
