@@ -71,7 +71,7 @@ directory, and install them locally.
 [Java]: https://www.java.com/
 [Eclipse]: http://www.eclipse.org/downloads/eclipse-packages/
 [SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
-[SchemaCrawler jars]: http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler 
+[SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler* 
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Apache ant]: http://ant.apache.org/
 [Gradle]: https://gradle.org/

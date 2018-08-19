@@ -87,7 +87,7 @@ Additonal installation options are available from the [SchemaCrawler ecosystem](
 [Java]: https://www.java.com/
 [SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler distribution with examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
-[SchemaCrawler jars]: http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler 
+[SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler* 
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Gradle]: https://gradle.org/
 [Groovy]: http://www.groovy-lang.org/
