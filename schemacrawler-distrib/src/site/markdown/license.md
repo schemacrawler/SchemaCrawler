@@ -17,7 +17,7 @@ of these licenses, as long as you have downloaded SchemaCrawler that is not bund
 
 In order to download and use SchemaCrawler under one of the licenses above, you should
 have obtained the SchemaCrawler jar files from the 
-[The Central Repository](http://search.maven.org/#search%7Cga%7C1%7Cg%3Aus.fatehi%20schemacrawler), 
+[The Central Repository](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*), 
 or built them yourself from the source code.
 
 ## License With JDBC Drivers
