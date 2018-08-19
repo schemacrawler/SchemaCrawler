@@ -139,6 +139,24 @@ public class SqlScript
         }
       }
     }
+    catch (final SQLWarning e)
+    {
+      final int errorCode = e.getErrorCode();
+      if (errorCode == 5701 || errorCode == 5703)
+      {
+        // SQL Server information message
+        return;
+      }
+      final Throwable throwable = getCause(e);
+      final String message = String.format("Script: %s -- [%d %s] %s",
+                                           scriptResource,
+                                           errorCode,
+                                           e.getSQLState(),
+                                           throwable.getMessage());
+      System.err.println(message);
+      LOGGER.log(Level.WARNING, message, throwable);
+      throw new RuntimeException(e);
+    }
     catch (final Exception e)
     {
       final Throwable throwable = getCause(e);
