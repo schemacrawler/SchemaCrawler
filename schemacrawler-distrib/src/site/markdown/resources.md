@@ -15,7 +15,6 @@ To read more about SchemaCrawler, you can read:
 
 # SchemaCrawler Slides
 
-<div class="container-fluid">
   <div class="row">
     <div class="col-sm-6 p-3">
       <div class="embed-responsive embed-responsive-16by9">
@@ -39,4 +38,3 @@ To read more about SchemaCrawler, you can read:
         <iframe src="http://www.youtube.com/embed/zYPfOzImuTk" frameborder="0" allowfullscreen="true"></iframe>
       </div>
     </div>
-</div>
