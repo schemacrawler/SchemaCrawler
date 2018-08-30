@@ -89,6 +89,33 @@ public final class Utility
 
     final Logger rootLogger = Logger.getLogger("");
     rootLogger.setLevel(logLevel);
+
+    // See https://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html
+    final String slf4jLogLevel;
+    switch (logLevel.getName())
+    {
+      case "OFF":
+        slf4jLogLevel = "off";
+        break;
+      case "SEVERE":
+        slf4jLogLevel = "error";
+        break;
+      case "WARNING":
+        slf4jLogLevel = "warn";
+        break;
+      case "CONFIG":
+        slf4jLogLevel = "debug";
+        break;
+      case "INFO":
+        slf4jLogLevel = "info";
+        break;
+      default:
+        slf4jLogLevel = "trace";
+        break;
+    }
+    // Set properties for other loggers
+    System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", slf4jLogLevel);
+
   }
 
   public static String commonPrefix(final String string1, final String string2)
