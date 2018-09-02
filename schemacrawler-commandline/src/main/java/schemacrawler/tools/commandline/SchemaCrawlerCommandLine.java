@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.util.logging.Level;
 
@@ -42,11 +41,10 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -65,6 +63,7 @@ public final class SchemaCrawlerCommandLine
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
+
   private final DatabaseConnector dbConnector;
 
   public SchemaCrawlerCommandLine(final Config argsMap)
@@ -168,33 +167,7 @@ public final class SchemaCrawlerCommandLine
   private Config loadConfig(final Config argsMap)
     throws SchemaCrawlerException
   {
-    final Config config = new Config();
-
-    // 1. Get bundled database config
-    config.putAll(dbConnector.getConfig());
-
-    // 2. Load config from CLASSPATH, in place
-    try
-    {
-      config.putAll(PropertiesUtility
-        .loadConfig(new ClasspathInputResource("/schemacrawler.config.properties")));
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.CONFIG,
-                 "schemacrawler.config.properties not found on CLASSPATH");
-    }
-
-    // 3. Load config from files, in place
-    config.putAll(argsMap);
-    new ConfigParser(config).loadConfig();
-
-    // 4. Override/ overwrite from the command-line options
-    config.putAll(argsMap);
-
-    new ConfigParser(config).consumeOptions();
-
-    return config;
+    return CommandLineUtility.loadConfig(argsMap, dbConnector);
   }
 
   /**

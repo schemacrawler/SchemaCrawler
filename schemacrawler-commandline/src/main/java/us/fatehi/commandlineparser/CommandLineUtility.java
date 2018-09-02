@@ -31,6 +31,7 @@ package us.fatehi.commandlineparser;
 import static sf.util.Utility.join;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -44,6 +45,11 @@ import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.ConfigParser;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;
@@ -62,6 +68,56 @@ public final class CommandLineUtility
   public static void applyApplicationLogLevel(final Level applicationLogLevel)
   {
     Utility.applyApplicationLogLevel(applicationLogLevel);
+  }
+
+  /**
+   * Loads configuration from a number of sources, in order of priority.
+   *
+   * @param argsMap
+   *        Command-line arguments
+   * @param dbConnector
+   *        Database connector
+   * @return Loaded configuration
+   * @throws SchemaCrawlerException
+   *         On an exception
+   */
+  public static Config loadConfig(final Config argsMap,
+                                  final DatabaseConnector dbConnector)
+    throws SchemaCrawlerException
+  {
+    final Config config = new Config();
+
+    // 1. Get bundled database config
+    if (dbConnector != null)
+    {
+      config.putAll(dbConnector.getConfig());
+    }
+
+    // 2. Load config from CLASSPATH, in place
+    try
+    {
+      config.putAll(PropertiesUtility
+        .loadConfig(new ClasspathInputResource("/schemacrawler.config.properties")));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG,
+                 "schemacrawler.config.properties not found on CLASSPATH");
+    }
+
+    // 3. Load config from files, in place
+    if (argsMap != null)
+    {
+      config.putAll(argsMap);
+    }
+    new ConfigParser(config).loadConfig();
+
+    // 4. Override/ overwrite from the command-line options
+    config.putAll(argsMap);
+
+    new ConfigParser(config).consumeOptions();
+
+    return config;
   }
 
   public static void logFullStackTrace(final Level level, final Throwable t)
@@ -172,6 +228,10 @@ public final class CommandLineUtility
 
   /**
    * Loads configuration from a number of command-line.
+   * 
+   * @param args
+   *        Command-line arguments
+   * @return Parsed command-line arguments
    */
   public static Config parseArgs(final String[] args)
   {
