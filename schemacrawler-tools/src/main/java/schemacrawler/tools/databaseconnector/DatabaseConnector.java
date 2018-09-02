@@ -193,6 +193,12 @@ public abstract class DatabaseConnector
     return supportsUrlPredicate.test(url);
   }
 
+  @Override
+  public String toString()
+  {
+    return "Database connector for " + dbServerType;
+  }
+
   /**
    * Checks if the database connection options are valid, the JDBC
    * driver class can be loaded, and so on. Throws an exception if there
