@@ -58,21 +58,21 @@ public final class DatabaseServerTypeParser
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
 
-    final String serverType = config.getStringValue(SERVER, null);
+    final String databaseSystemIdentifier = config.getStringValue(SERVER, null);
     if (config.hasValue(SERVER)
-        && !registry.hasDatabaseSystemIdentifier(serverType))
+        && !registry.hasDatabaseSystemIdentifier(databaseSystemIdentifier))
     {
       throw new SchemaCrawlerCommandLineException(String
         .format("Unsupported server <%s> %n"
                 + "Please provide a database connection URL on the command-line, %n"
                 + "and re-run SchemaCrawler without the -server argument",
-                serverType));
+                databaseSystemIdentifier));
     }
 
     final DatabaseConnector dbConnector;
-    if (serverType != null)
+    if (databaseSystemIdentifier != null)
     {
-      dbConnector = registry.lookupDatabaseConnector(serverType);
+      dbConnector = registry.lookupDatabaseConnector(databaseSystemIdentifier);
       consumeOption(SERVER);
     }
     else
