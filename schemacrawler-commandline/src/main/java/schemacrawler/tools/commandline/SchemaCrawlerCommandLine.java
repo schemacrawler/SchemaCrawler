@@ -64,7 +64,7 @@ public final class SchemaCrawlerCommandLine
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
 
-  private final DatabaseConnector dbConnector;
+  private final DatabaseConnector databaseConnector;
 
   public SchemaCrawlerCommandLine(final Config argsMap)
     throws SchemaCrawlerException
@@ -77,10 +77,10 @@ public final class SchemaCrawlerCommandLine
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
-    dbConnector = dbServerTypeParser.getOptions();
+    databaseConnector = dbServerTypeParser.getOptions();
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
-                                dbConnector.getDatabaseServerType()));
+                                databaseConnector.getDatabaseServerType()));
 
     config = loadConfig(argsMap);
 
@@ -99,7 +99,7 @@ public final class SchemaCrawlerCommandLine
     final UserCredentials userCredentials = parseConnectionOptions();
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    connectionOptions = dbConnector
+    connectionOptions = databaseConnector
       .newDatabaseConnectionOptions(userCredentials, config);
   }
 
@@ -122,7 +122,7 @@ public final class SchemaCrawlerCommandLine
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in
       // from the command-line
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = dbConnector
+      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = databaseConnector
         .getSchemaRetrievalOptionsBuilder(connection);
       schemaRetrievalOptionsBuilder.fromConfig(config);
 
@@ -167,7 +167,7 @@ public final class SchemaCrawlerCommandLine
   private Config loadConfig(final Config argsMap)
     throws SchemaCrawlerException
   {
-    return CommandLineUtility.loadConfig(argsMap, dbConnector);
+    return CommandLineUtility.loadConfig(argsMap, databaseConnector);
   }
 
   /**
@@ -180,7 +180,7 @@ public final class SchemaCrawlerCommandLine
     throws SchemaCrawlerException
   {
     final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
-    if (dbConnector.isUnknownDatabaseSystem() || config.hasValue("url"))
+    if (databaseConnector.isUnknownDatabaseSystem() || config.hasValue("url"))
     {
       dbConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
     }
