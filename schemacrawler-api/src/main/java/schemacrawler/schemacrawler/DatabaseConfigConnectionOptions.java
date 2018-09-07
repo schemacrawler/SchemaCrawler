@@ -40,7 +40,7 @@ import sf.util.StringFormat;
 /**
  * Data source with connection information provided from a configuration
  * file.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public final class DatabaseConfigConnectionOptions
@@ -117,6 +117,18 @@ public final class DatabaseConfigConnectionOptions
     {
       LOGGER.log(Level.WARNING,
                  new StringFormat("Cannot connect to port, %d", port));
+    }
+  }
+
+  public void setUrlX(final String urlx)
+  {
+    if (!isBlank(urlx))
+    {
+      connectionProperties.put(URLX, urlx);
+    }
+    else
+    {
+      connectionProperties.remove(URLX);
     }
   }
 
