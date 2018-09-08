@@ -4,7 +4,7 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-ruby" />
   <dependencies>
-    <dependency org="guru.nidi" name="graphviz-java" rev="0.2.3" />
+    <dependency org="guru.nidi" name="graphviz-java" rev="0.5.4" />
 
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
