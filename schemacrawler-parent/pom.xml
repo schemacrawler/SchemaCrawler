@@ -158,7 +158,7 @@
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava-testlib</artifactId>
-      <version>25.1-jre</version>
+      <version>26.0-jre</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -194,7 +194,7 @@
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.7</version>
+      <version>3.8</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
