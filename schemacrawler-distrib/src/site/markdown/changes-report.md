@@ -3,8 +3,9 @@
 <a name="a15.01.01"></a>
 ## Release 15.01.01 - 2018-07-10
 
-- Output files by default, except for text output format
+- Output to files by default, except for text output format
 - Make executable work in two phases, to load schema, and then to run a command
+- Allow SchemaCrawler to work with Oracle users that have just the SELECT_CATALOG_ROLE
 
 
 <a name="a14.21.03"></a>
