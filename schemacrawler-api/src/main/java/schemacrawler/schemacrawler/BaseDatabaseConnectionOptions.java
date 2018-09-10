@@ -195,6 +195,8 @@ abstract class BaseDatabaseConnectionOptions
   @Override
   public String getConnectionUrl()
   {
+    TemplatingUtility.substituteVariables(connectionProperties);
+
     final String connectionUrl = connectionProperties.get(URL);
 
     // Check that all required parameters have been substituted
