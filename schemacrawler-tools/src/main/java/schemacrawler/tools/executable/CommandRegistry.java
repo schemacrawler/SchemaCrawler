@@ -31,7 +31,9 @@ package schemacrawler.tools.executable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
@@ -51,6 +53,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
+  implements Iterable<String>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -114,7 +117,16 @@ public final class CommandRegistry
     {
       supportedCommands.addAll(commandProvider.getSupportedCommands());
     }
-    return supportedCommands;
+
+    final List<String> supportedCommandsOrdered = new ArrayList<>(supportedCommands);
+    Collections.sort(supportedCommandsOrdered);
+    return supportedCommandsOrdered;
+  }
+
+  @Override
+  public Iterator<String> iterator()
+  {
+    return getSupportedCommands().iterator();
   }
 
   public boolean supportsCommand(final String command,
