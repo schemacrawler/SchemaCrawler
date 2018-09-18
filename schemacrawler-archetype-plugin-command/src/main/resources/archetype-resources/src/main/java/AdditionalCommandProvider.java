@@ -28,28 +28,6 @@ public class AdditionalCommandProvider
 {
 
   @Override
-  public SchemaCrawlerCommand configureNewSchemaCrawlerCommand(final String command,
-                                                               final SchemaCrawlerOptions schemaCrawlerOptions,
-                                                               final OutputOptions outputOptions)
-  {
-    if (!AdditionalCommand.COMMAND.equals(command))
-    {
-      throw new IllegalArgumentException("Cannot support command, " + command);
-    }
-
-    final AdditionalCommand scCommand = new AdditionalCommand();
-    if (schemaCrawlerOptions != null)
-    {
-      scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    }
-    if (outputOptions != null)
-    {
-      scCommand.setOutputOptions(outputOptions);
-    }
-    return scCommand;
-  }
-
-  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/AdditionalCommandProvider.txt";
@@ -70,11 +48,22 @@ public class AdditionalCommandProvider
   }
 
   @Override
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  {
+    if (!AdditionalCommand.COMMAND.equals(command))
+    {
+      throw new IllegalArgumentException("Cannot support command, " + command);
+    }
+    final AdditionalCommand scCommand = new AdditionalCommand();
+    return scCommand;
+  }
+
+  @Override
   public boolean supportsSchemaCrawlerCommand(final String command,
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
     return AdditionalCommand.COMMAND.equals(command);
   }
-
+    
 }
