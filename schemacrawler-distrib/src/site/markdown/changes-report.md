@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
-<a name="a15.01.01"></a>
-## Release 15.01.01 - 2018-07-10
+<a name="a15.01.02"></a>
+## Release 15.01.02 - 2018-07-10
 
 - Output to files by default, except for text output format
 - Make executable work in two phases, to load schema, and then to run a command
@@ -14,8 +14,8 @@
 - Add tests for embedded MonetDB
 
 
-<a name="a15.01.01"></a>
-## Release 15.01.01 - 2018-05-21
+<a name="a15.01.02"></a>
+## Release 15.01.02 - 2018-05-21
 
 - Add support for java.sql.Types REF_CURSOR, TIME_WITH_TIMEZONE, and TIMESTAMP_WITH_TIMEZONE
 - Fixed issue with lint reporting "unique index with nullable columns" on computed columns
