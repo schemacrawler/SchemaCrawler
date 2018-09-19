@@ -99,9 +99,10 @@
         <module>../schemacrawler-archetype-plugin-lint</module>
         <module>../schemacrawler-archetype-plugin-dbconnector</module>
 
+        <module>../schemacrawler-docker</module>
+
         <module>../schemacrawler-docs</module>
         <module>../schemacrawler-distrib</module>
-        <module>../schemacrawler-docker</module>
       </modules>
       <properties>
         <maven.javadoc.skip>false</maven.javadoc.skip>
