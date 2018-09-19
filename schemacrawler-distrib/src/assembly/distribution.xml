@@ -15,7 +15,6 @@
     value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-javadoc.jar" />
 
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
-  <available file="bnd-1.50.0.jar" property="available.bnd.jar" />
   <available file="ivy-2.4.0.jar" property="available.ivy.jar" />
 
   <target name="make-distribution"
@@ -29,17 +28,11 @@
           "
     description="Package all sub-project jars into the distributable jar" />
 
-  <target name="download-tools" depends="download-lgpl,download-bnd-tool,download-ivy" />
+  <target name="download-tools" depends="download-lgpl,download-ivy" />
 
   <target name="download-lgpl" unless="available.lgpl-3.0.txt">
     <get src="http://www.gnu.org/licenses/lgpl-3.0.txt" dest="lgpl-3.0.txt"
       usetimestamp="true" />
-  </target>
-
-  <target name="download-bnd-tool" unless="available.bnd.jar">
-    <get
-      src="http://repo1.maven.org/maven2/biz/aQute/bnd/1.50.0/bnd-1.50.0.jar"
-      dest="bnd-1.50.0.jar" usetimestamp="true" />
   </target>
 
   <target name="download-ivy" unless="available.ivy.jar">

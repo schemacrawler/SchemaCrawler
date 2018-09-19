@@ -39,10 +39,6 @@ dependencies {
 }
 </pre></div>
 
-## OSGi
-The SchemaCrawler jar file is bundled as an [OSGi bundle], and can be deployed into your OSGi Service Platform 
-and your OSGi Bundle Repository.
-
 
 # Building From the Source Code
 
@@ -82,7 +78,6 @@ directory, and install them locally.
 [Spring Framework]: http://www.springsource.org/spring-framework
 [Apache Velocity]: http://velocity.apache.org/
 [Apache Maven]: http://maven.apache.org/
-[OSGi bundle]: http://en.wikipedia.org/wiki/OSGi#Bundles
 [m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/
 [IBM DB2 JDBC drivers]: http://www-306.ibm.com/software/data/db2/express/download.html
 [Oracle JDBC drivers]: http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html

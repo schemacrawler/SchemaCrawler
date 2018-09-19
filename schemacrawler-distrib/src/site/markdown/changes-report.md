@@ -1,5 +1,10 @@
 # SchemaCrawler Change History
 
+<a name="a15.01.03"></a>
+## Release 15.01.02 - 2018-09-17
+
+- Remove support for OSGi bundles
+
 <a name="a15.01.02"></a>
 ## Release 15.01.02 - 2018-09-17
 
@@ -20,8 +25,8 @@
 - Add tests for embedded MonetDB
 
 
-<a name="a15.01.02"></a>
-## Release 15.01.02 - 2018-05-21
+<a name="a14.21.02"></a>
+## Release 14.21.02 - 2018-05-21
 
 - Add support for java.sql.Types REF_CURSOR, TIME_WITH_TIMEZONE, and TIMESTAMP_WITH_TIMEZONE
 - Fixed issue with lint reporting "unique index with nullable columns" on computed columns
