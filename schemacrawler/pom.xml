@@ -23,6 +23,28 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>javadoc-jar</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <includeDependencySources>true</includeDependencySources>
+              <dependencySourceIncludes>
+                <dependencySourceInclude>us.fatehi:schemacrawler-api</dependencySourceInclude>
+                <dependencySourceInclude>us.fatehi:schemacrawler-tools</dependencySourceInclude>
+                <dependencySourceInclude>us.fatehi:schemacrawler-commandline</dependencySourceInclude>
+                <dependencySourceInclude>us.fatehi:schemacrawler-integrations</dependencySourceInclude>
+              </dependencySourceIncludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.0</version>
         <executions>
