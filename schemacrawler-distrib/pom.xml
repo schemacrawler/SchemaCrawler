@@ -276,65 +276,17 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
+        <artifactId>maven-install-plugin</artifactId>
         <configuration>
           <skip>true</skip>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <configuration>
-              <file>target/schemacrawler-${project.version}.jar</file>
-              <pomFile>src/assembly/schemacrawler.pom</pomFile>
-              <sources>target/schemacrawler-${project.version}-sources.jar</sources>
-              <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>
-              <repositoryLayout>default</repositoryLayout>
-              <groupId>us.fatehi</groupId>
-              <artifactId>schemacrawler</artifactId>
-              <packaging>jar</packaging>
-              <version>${project.version}</version>
-              <createChecksum>true</createChecksum>
-            </configuration>
-            <goals>
-              <goal>install-file</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
+        <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
-          <useAgent>true</useAgent>
-          <skip>${skip.signing.artifacts}</skip>
+          <skip>true</skip>
         </configuration>
-        <executions>
-          <execution>
-            <id>schemacrawler_release</id>
-            <phase>deploy</phase>
-            <configuration>
-              <file>target/schemacrawler-${project.version}.jar</file>
-              <generatePom>false</generatePom>
-              <pomFile>src/assembly/schemacrawler.pom</pomFile>
-              <sources>target/schemacrawler-${project.version}-sources.jar</sources>
-              <javadoc>target/schemacrawler-${project.version}-javadoc.jar</javadoc>
-              <repositoryId>sonatype-nexus</repositoryId>
-              <repositoryLayout>default</repositoryLayout>
-              <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-              <groupId>us.fatehi</groupId>
-              <artifactId>schemacrawler</artifactId>
-              <packaging>jar</packaging>
-              <version>${project.version}</version>
-            </configuration>
-            <goals>
-              <goal>sign-and-deploy-file</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
