@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<project
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -24,38 +23,38 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-install-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>schemacrawler.Main</mainClass>
-            </manifest>
-          </archive>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.0</version>
         <executions>
           <execution>
-            <id>make-assembly</id>
             <phase>package</phase>
             <goals>
-              <goal>single</goal>
+              <goal>shade</goal>
             </goals>
+            <configuration>
+              <artifactSet>
+                <includes>
+                  <include>us.fatehi:schemacrawler-api</include>
+                  <include>us.fatehi:schemacrawler-tools</include>
+                  <include>us.fatehi:schemacrawler-commandline</include>
+                  <include>us.fatehi:schemacrawler-integrations</include>
+                </includes>
+              </artifactSet>
+              <createSourcesJar>true</createSourcesJar>
+              <transformers>
+                <transformer
+                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <manifestEntries>
+                    <Product>SchemaCrawler</Product>
+                    <Version>${project.version}</Version>
+                    <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
+                    <Copyright>Copyright (c) 2000-2018, Sualeh Fatehi</Copyright>
+                    <Main-Class>schemacrawler.Main</Main-Class>
+                    <Website>https://www.SchemaCrawler.com</Website>
+                  </manifestEntries>
+                </transformer>
+              </transformers>
+            </configuration>
           </execution>
         </executions>
       </plugin>
