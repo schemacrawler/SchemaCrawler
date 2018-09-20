@@ -14,7 +14,6 @@ import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import sf.util.StringFormat;
 
 /**
  * SchemaCrawler command plug-in.
@@ -59,7 +58,7 @@ public class AdditionalCommand
       {
         // SchemaCrawler will control output of log messages if you use
         // JDK logging
-        LOGGER.log(Level.INFO, new StringFormat("Processing <%s>", schema));
+        LOGGER.log(Level.INFO, String.format("Processing <%s>", schema));
         for (final Table table: catalog.getTables(schema))
         {
           writer.println("o--> " + table);
