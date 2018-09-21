@@ -85,10 +85,6 @@
       For text output (default)
     html
       For HTML5 output
-    csv
-      For comma-separated values output
-    tsv
-      For tab-separated values output
     json
       For JavaScript Object Notation output 
     scdot

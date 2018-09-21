@@ -55,7 +55,7 @@ SchemaCrawler is also a command-line tool to output your database schema and dat
 
 ### <a name="output">What does SchemaCrawler output look like?</a>
 
-SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [comma-separated text (CSV),](snapshot-examples/snapshot.csv) [HTML5,](snapshot-examples/snapshot.html) or [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that can be viewed in a browser. SchemaCrawler can produce output in the [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which [Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
+SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [HTML5,](snapshot-examples/snapshot.html) or [JavaScript object notation (JSON).](snapshot-examples/snapshot.json) The HTML5 output is a combination of valid XML (that can be manipulated by XML tools or XSLT), and HTML that can be viewed in a browser. SchemaCrawler can produce output in the [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which [Graphviz](http://www.graphviz.org/) can convert into [schema diagrams.](diagramming.html)
 
 ----------
 

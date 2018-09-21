@@ -98,9 +98,6 @@ public final class TableRow
     String fieldSeparator;
     switch (outputFormat)
     {
-      case csv:
-        fieldSeparator = ",";
-        break;
       case tsv:
         fieldSeparator = "\t";
         break;
@@ -129,9 +126,9 @@ public final class TableRow
   }
 
   /**
-   * Converts the table row to CSV.
+   * Converts the table row to text.
    *
-   * @return CSV
+   * @return Text
    */
   private String toPlainTextString()
   {

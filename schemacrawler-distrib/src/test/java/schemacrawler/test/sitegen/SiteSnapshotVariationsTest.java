@@ -83,7 +83,6 @@ public class SiteSnapshotVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat: new OutputFormat[] {
-                                                               TextOutputFormat.csv,
                                                                TextOutputFormat.html,
                                                                TextOutputFormat.json,
                                                                TextOutputFormat.text,
