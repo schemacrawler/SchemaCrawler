@@ -358,6 +358,7 @@
         <configuration>
           <serverId>sonatype-nexus</serverId>
           <nexusUrl>https://oss.sonatype.org</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
     </plugins>
