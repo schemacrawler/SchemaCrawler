@@ -94,70 +94,70 @@
                   <artifactId>schemacrawler-lint</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-offline</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-hsqldb</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-oracle</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-mysql</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-db2</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-postgresql</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlite</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-sqlserver</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
@@ -165,7 +165,7 @@
                   <version>42.2.5</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>mysql</groupId>
@@ -173,7 +173,7 @@
                   <version>8.0.12</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
@@ -181,7 +181,7 @@
                   <version>7.0.0.jre8</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.h2database</groupId>
@@ -189,7 +189,7 @@
                   <version>1.4.197</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.hsqldb</groupId>
@@ -197,7 +197,7 @@
                   <version>2.4.1</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.apache.derby</groupId>
@@ -205,7 +205,7 @@
                   <version>10.13.1.1</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>org.xerial</groupId>
@@ -213,7 +213,7 @@
                   <version>3.21.0</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.thoughtworks.xstream</groupId>
@@ -221,7 +221,7 @@
                   <version>1.4.10</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>xpp3</groupId>
@@ -229,7 +229,7 @@
                   <version>${xpp3_min.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>xmlpull</groupId>
@@ -237,10 +237,10 @@
                   <version>${xmlpull.version}</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_complete-distribution/lib/</outputDirectory>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>${project.build.directory}/_complete-distribution/lib</outputDirectory>
+              <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
@@ -258,7 +258,7 @@
               <target>
                 <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version" value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml" target="make-distribution" />
+                <ant antfile="src\assembly\distribution.xml" target="make" />
               </target>
             </configuration>
             <goals>

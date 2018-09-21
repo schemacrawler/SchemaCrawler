@@ -1,14 +1,12 @@
-<project name="schemacrawler" default="make-distribution"
+<project name="schemacrawler" default="make"
   basedir=".">
 
   <property name="distribution.assembly"
     location="${SchemaCrawler.home}/schemacrawler-distrib/src/assembly" />
   <property name="distribution.target"
     location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
-  <property name="schemacrawler.complete-distribution"
-    value="${distribution.target}/_complete-distribution" />
-  <property name="schemacrawler.distribution.jar"
-    value="${distribution.target}/schemacrawler-${SchemaCrawler.version}.jar" />
+  <property name="schemacrawler.base-distribution"
+    value="${distribution.target}/_base-distribution" />
   <property name="schemacrawler.distribution.sources.jar"
     value="${distribution.target}/schemacrawler-${SchemaCrawler.version}-sources.jar" />
   <property name="schemacrawler.distribution.javadoc.jar"
@@ -17,11 +15,10 @@
   <available file="lgpl-3.0.txt" property="available.lgpl-3.0.txt" />
   <available file="ivy-2.4.0.jar" property="available.ivy.jar" />
 
-  <target name="make-distribution"
+  <target name="make"
     depends="
             download-tools,
-            make-super-jar,
-            make-super-distribution,
+            make-base-distribution,
             make-distribution-zip,
             make-website-distribution,
             cleanup-distribution
@@ -41,17 +38,6 @@
       dest="ivy-2.4.0.jar" usetimestamp="true" />
   </target>
 
-  <target name="make-super-jar">
-
-  	<echo>Copy over super-jar</echo>
-
-    <copy
-      file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
-      tofile="${schemacrawler.distribution.jar}" />
-
-  </target>
-
-
   <target name="make-distribution-zip">
 
     <property name="main-distribution.staging.dir" location="${distribution.target}/_distribution" />
@@ -61,6 +47,8 @@
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
 
     <!-- 1. STAGE FOR EXAMPLES -->
+  	
+  	<mkdir dir="${main-distribution.staging.dir}"/>
 
     <!-- Copy licenses -->
     <copy file="lgpl-3.0.txt" tofile="${main-distribution.staging.dir}/LICENSE.txt" />
@@ -102,9 +90,9 @@
     </copy>
 
     <copy todir="${main-distribution.staging.dir}/_schemacrawler">
-      <fileset dir="${schemacrawler.complete-distribution}" />
+      <fileset dir="${schemacrawler.base-distribution}" />
     </copy>
-
+  	
     <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
       eol="unix" eof="remove" tab="remove" tablength="2" outputencoding="UTF-8" />
 
@@ -192,9 +180,9 @@
 
   </target>
 
-  <target name="make-super-distribution">
+  <target name="make-base-distribution">
 
-    <copy todir="${schemacrawler.complete-distribution}">
+    <copy todir="${schemacrawler.base-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
         <include name="schemacrawler.sh" />
@@ -202,13 +190,14 @@
     </copy>
 
     <!-- Move SchemaCrawler distribution, for use in the examples -->
-    <copy file="${schemacrawler.distribution.jar}" todir="${schemacrawler.complete-distribution}/lib" />
+    <copy file="${SchemaCrawler.home}/schemacrawler/target/schemacrawler-${SchemaCrawler.version}.jar"
+        todir="${schemacrawler.base-distribution}/lib" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.config.properties"
-      todir="${schemacrawler.complete-distribution}/config" />
+      todir="${schemacrawler.base-distribution}/config" />
     <copy
       file="${SchemaCrawler.home}/schemacrawler-docs/config/schemacrawler.colormap.properties"
-      todir="${schemacrawler.complete-distribution}/config" />
+      todir="${schemacrawler.base-distribution}/config" />
 
     <create-dbserver-distribution database="offline" />
     <create-dbserver-distribution database="db2" />
@@ -242,7 +231,7 @@
 
       <copy
         file="${SchemaCrawler.home}/schemacrawler-@{database}/DRIVER.LICENSE.txt"
-        tofile="${schemacrawler.complete-distribution}/DRIVER.LICENSE-@{database}.txt"
+        tofile="${schemacrawler.base-distribution}/DRIVER.LICENSE-@{database}.txt"
         failonerror="false" />
 
     </sequential>
