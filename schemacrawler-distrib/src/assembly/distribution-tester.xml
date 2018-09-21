@@ -9,11 +9,13 @@
   <target name="clean">
     <property name="distribution.target"
       location="${SchemaCrawler.home}/schemacrawler-distrib/target" />
+
+    <delete dir="${distribution.target}/_schemacrawler-distribution" verbose="true" />			
     <delete dir="${distribution.target}/_distribution" verbose="true" />
   </target>
 
   <target name="distribution-tester" depends="clean">
-    <antcall target="make-distribution">
+    <antcall target="make">
       <param name="SchemaCrawler.home" value=".." />
       <param name="SchemaCrawler.version" value="15.01.02" />
     </antcall>
