@@ -47,7 +47,6 @@ public enum TextOutputFormat
 
  text("Plain text format", "txt"),
  html("HyperText Markup Language (HTML) format"),
- csv("Comma-separated values (CSV) format"),
  tsv("Tab-separated values (TSV) format"),
  json("JavaScript Object Notation (JSON) format"),;
 

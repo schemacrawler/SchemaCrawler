@@ -1,9 +1,10 @@
 # SchemaCrawler Change History
 
 <a name="a15.01.03"></a>
-## Release 15.01.02 - 2018-09-17
+## Release 15.01.03 - 2018-09-21
 
-- Remove support for OSGi bundles
+- Drop support for OSGi bundles
+- Drop support for CSV and TSV output
 
 <a name="a15.01.02"></a>
 ## Release 15.01.02 - 2018-09-17
