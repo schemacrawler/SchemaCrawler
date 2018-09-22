@@ -4,6 +4,7 @@
 package ${package};
 
 import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
 
 import java.sql.Connection;
@@ -18,10 +19,10 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
 import schemacrawler.schema.View;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
-import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -31,19 +32,21 @@ public final class ApiExample
   public static void main(final String[] args)
     throws Exception
   {
-    // Set logging on
-    applyApplicationLogLevel(Level.ALL);
+    // Turn application logging on by applying the correct log level
+    applyApplicationLogLevel(Level.OFF);
     // Log system properties and classpath
+    logSystemClasspath();
     logSystemProperties();
 
     // Create the options
-    final SchemaCrawlerOptions options = new SchemaCrawlerOptions();
-    // Set what details are required in the schema - this affects the
-    // time taken to crawl the schema
-    options.setSchemaInfoLevel(SchemaInfoLevelBuilder.standard());
-    options.setRoutineInclusionRule(new ExcludeAll());
-    options
-      .setSchemaInclusionRule(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
+    final SchemaCrawlerOptionsBuilder optionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      // Set what details are required in the schema - this affects the
+      // time taken to crawl the schema
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
+      .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
+    final SchemaCrawlerOptions options = optionsBuilder.toOptions();
 
     // Get the schema definition
     final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
@@ -77,7 +80,8 @@ public final class ApiExample
   private static Connection getConnection()
     throws SchemaCrawlerException, SQLException
   {
-    final DataSource dataSource = new DatabaseConnectionOptions("jdbc:hsqldb:hsql://localhost:9001/schemacrawler");
+    final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
+    final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);
     return dataSource.getConnection("sa", "");
   }
 
