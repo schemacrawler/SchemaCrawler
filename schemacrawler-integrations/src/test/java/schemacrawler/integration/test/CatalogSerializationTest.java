@@ -43,22 +43,27 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 import org.junit.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
+import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import sf.util.IOUtility;
 
-public class SchemaSerializationTest
+public class CatalogSerializationTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void schemaSerializationWithJava()
+  public void catalogSerializationWithJava()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
@@ -101,7 +106,7 @@ public class SchemaSerializationTest
   }
 
   @Test
-  public void schemaSerializationWithXStream()
+  public void catalogSerializationWithXStream()
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
