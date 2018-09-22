@@ -216,30 +216,6 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
-                <artifactItem>
-                  <groupId>de.ruedigermoeller</groupId>
-                  <artifactId>fst</artifactId>
-                  <version>2.56</version>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>xpp3</groupId>
-                  <artifactId>xpp3_min</artifactId>
-                  <version>${xpp3_min.version}</version>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>xmlpull</groupId>
-                  <artifactId>xmlpull</artifactId>
-                  <version>${xmlpull.version}</version>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
-                </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>
