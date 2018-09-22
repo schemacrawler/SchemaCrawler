@@ -41,7 +41,9 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
+import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
@@ -133,8 +135,10 @@ public final class OutputOptions
   /**
    * Gets the input reader. If the input resource is null, first set it
    * to a value based off the output format value.
-   *
-   * @throws SchemaCrawlerException
+   * 
+   * @return Input reader
+   * @throws IOException
+   *         On an exception
    */
   public Reader openNewInputReader()
     throws IOException
@@ -142,11 +146,36 @@ public final class OutputOptions
     return inputResource.openNewInputReader(inputEncodingCharset);
   }
 
+  public Path getInputFile()
+  {
+    final Path inputFile;
+    if (inputResource instanceof FileInputResource)
+    {
+      inputFile = ((FileInputResource) inputResource).getInputFile();
+    }
+    else if (inputResource instanceof CompressedFileInputResource)
+    {
+      inputFile = ((CompressedFileInputResource) inputResource).getInputFile();
+    }
+    else
+    {
+      // Create input file path
+      inputFile = Paths.get(".",
+                            String.format("schemacrawler-%s.%s",
+                                          UUID.randomUUID(),
+                                          outputFormatValue))
+        .normalize().toAbsolutePath();
+    }
+    return inputFile;
+  }
+
   /**
    * Gets the output reader. If the output resource is null, first set
    * it to console output.
    *
-   * @throws SchemaCrawlerException
+   * @return Output writer
+   * @throws IOException
+   *         On an exception
    */
   public Writer openNewOutputWriter()
     throws IOException

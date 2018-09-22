@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.size;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,8 +35,8 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Writer;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +58,6 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
@@ -72,7 +70,7 @@ public class OfflineSnapshotTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
-  private Path serializedDatabaseFile;
+  private Path serializedCatalogFile;
 
   @Test
   public void offlineSnapshotCommandLine()
@@ -82,7 +80,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
-      argsMap.put("database", serializedDatabaseFile.toString());
+      argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("infolevel", "maximum");
@@ -105,7 +103,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
-      argsMap.put("database", serializedDatabaseFile.toString());
+      argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
@@ -130,7 +128,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
-      argsMap.put("database", serializedDatabaseFile.toString());
+      argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
@@ -169,7 +167,7 @@ public class OfflineSnapshotTest
     schemaTextOptionsBuilder.noInfo(false);
 
     final OutputOptions inputOptions = OutputOptionsBuilder.builder()
-      .withCompressedInputFile(serializedDatabaseFile).toOptions();
+      .withCompressedInputFile(serializedCatalogFile).toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
@@ -202,19 +200,14 @@ public class OfflineSnapshotTest
                  10,
                  catalog.getTables(schema).size());
 
-    serializedDatabaseFile = IOUtility.createTempFilePath("schemacrawler",
-                                                          "ser");
-
-    final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
-    final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
-                                                           "schemacrawler.data")
-                                                             .openNewOutputWriter(UTF_8,
-                                                                                  false);
-    xmlDatabase.save(writer);
-    writer.close();
-    assertNotSame("Database was not serialized to XML",
+    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
+                                                         "ser");
+    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(catalog);
+    serializedCatalog
+      .save(new FileOutputStream(serializedCatalogFile.toFile()));
+    assertNotSame("Database was not serialized",
                   0,
-                  size(serializedDatabaseFile));
+                  size(serializedCatalogFile));
 
   }
 
@@ -233,7 +226,7 @@ public class OfflineSnapshotTest
         .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
 
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(new OfflineConnection(serializedDatabaseFile));
+      executable.setConnection(new OfflineConnection(serializedCatalogFile));
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
       executable.execute();
