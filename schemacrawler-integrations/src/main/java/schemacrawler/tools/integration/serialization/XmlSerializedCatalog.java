@@ -31,32 +31,14 @@ package schemacrawler.tools.integration.serialization;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Optional;
-import java.util.Set;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.converters.basic.AbstractSingleValueConverter;
-import com.thoughtworks.xstream.converters.collections.CollectionConverter;
-import com.thoughtworks.xstream.converters.collections.MapConverter;
-import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.security.ArrayTypePermission;
-import com.thoughtworks.xstream.security.NoTypePermission;
-import com.thoughtworks.xstream.security.NullPermission;
-import com.thoughtworks.xstream.security.PrimitiveTypePermission;
+import org.nustaq.serialization.FSTObjectInput;
+import org.nustaq.serialization.FSTObjectOutput;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
@@ -72,185 +54,17 @@ public final class XmlSerializedCatalog
 
   private static final long serialVersionUID = 5314326260124511414L;
 
-  private static XStream newXStream()
+  private static Catalog readCatalog(final InputStream in)
     throws SchemaCrawlerException
   {
-    try
+    requireNonNull(in, "No input stream provided");
+    try (final FSTObjectInput fstin = new FSTObjectInput(in);)
     {
-
-      final XStream xStream = new XStream();
-
-      // Set security settings
-      // https://stackoverflow.com/questions/44698296/security-framework-of-xstream-not-initialized-xstream-is-probably-vulnerable
-      // clear out existing permissions and set own ones
-      xStream.addPermission(NoTypePermission.NONE);
-      // allow some basics
-      xStream.addPermission(NullPermission.NULL);
-      xStream.addPermission(PrimitiveTypePermission.PRIMITIVES);
-      xStream.addPermission(ArrayTypePermission.ARRAYS);
-      xStream.allowTypeHierarchy(Collection.class);
-      // allow any type from the same package
-      xStream.allowTypesByWildcard(new String[] {
-                                                  "schemacrawler.**",
-                                                  "schemacrawler.schema.**",
-                                                  "schemacrawler.crawl.**",
-                                                  "java.lang.**",
-                                                  "java.sql.**" });
-
-      xStream.setMode(XStream.ID_REFERENCES);
-
-      xStream.registerConverter(new AbstractSingleValueConverter()
-      {
-
-        @Override
-        public boolean canConvert(final Class type)
-        {
-          return type != null
-                 && LocalDateTime.class.getPackage().equals(type.getPackage());
-        }
-
-        @Override
-        public Object fromString(final String str)
-        {
-          try
-          {
-            return LocalDateTime.parse(str);
-          }
-          catch (final Exception e)
-          {
-            return LocalDateTime.now();
-          }
-        }
-
-        @Override
-        public String toString(final Object source)
-        {
-          return source.toString();
-        }
-
-      }, 5000);
-      xStream.registerConverter(new CollectionConverter(xStream.getMapper())
-      {
-        @Override
-        public void marshal(final Object source,
-                            final HierarchicalStreamWriter writer,
-                            final MarshallingContext context)
-        {
-          Collection collection = (Collection) source;
-          if (collection instanceof Set)
-          {
-            final List list = new ArrayList(collection);
-            Collections.sort(list);
-            collection = list;
-          }
-          for (final Object item: collection)
-          {
-            writeItem(item, context, writer);
-          }
-        }
-      }, 5000);
-      xStream.registerConverter(new MapConverter(xStream.getMapper())
-      {
-        @Override
-        public void marshal(final Object source,
-                            final HierarchicalStreamWriter writer,
-                            final MarshallingContext context)
-        {
-          final Map map = (Map) source;
-          final List entryList = new ArrayList(map.entrySet());
-          Collections.sort(entryList, (o1, o2) -> {
-            final Object key1 = ((Map.Entry) o1).getKey();
-            final Object key2 = ((Map.Entry) o2).getKey();
-            if (key1 instanceof Comparable<?> && key2 instanceof Comparable<?>)
-            {
-              if (key1 != null)
-              {
-                return ((Comparable) key1).compareTo(key2);
-              }
-              else if (key2 != null)
-              {
-                return -1 * ((Comparable) key2).compareTo(key1);
-              }
-              else
-              {
-                return 0;
-              }
-            }
-            else
-            {
-              return Objects.hashCode(key1) - Objects.hashCode(key2);
-            }
-          });
-
-          for (final Object object: entryList)
-          {
-            final Map.Entry entry = (Map.Entry) object;
-            ExtendedHierarchicalStreamWriterHelper
-              .startNode(writer,
-                         mapper().serializedClass(Map.Entry.class),
-                         Map.Entry.class);
-
-            writeItem(entry.getKey(), context, writer);
-            writeItem(entry.getValue(), context, writer);
-
-            writer.endNode();
-          }
-        }
-      }, 5000);
-
-      final String[] mutable = new String[] {
-                                              "tableConstraint",
-                                              "column",
-                                              "columnDataType",
-                                              "catalog",
-                                              "foreignKey",
-                                              "foreignKeyColumnReference",
-                                              "index",
-                                              "indexColumn",
-                                              "primaryKey",
-                                              "privilege",
-                                              "procedure",
-                                              "procedureColumn",
-                                              "resultsColumn",
-                                              "resultsColumns",
-                                              "table",
-                                              "trigger",
-                                              "view", };
-      for (final String xmlElement: mutable)
-      {
-        xStream.alias(xmlElement,
-                      Class.forName("schemacrawler.crawl.Mutable"
-                                    + xmlElement.substring(0, 1).toUpperCase()
-                                    + xmlElement.substring(1)));
-      }
-      final String[] immutable = new String[] {
-                                                "databaseProperty",
-                                                "jdbcDriverProperty",
-                                                "crawlInfo", };
-      for (final String xmlElement: immutable)
-      {
-        xStream.alias(xmlElement,
-                      Class.forName("schemacrawler.crawl.Immutable"
-                                    + xmlElement.substring(0, 1).toUpperCase()
-                                    + xmlElement.substring(1)));
-      }
-      xStream
-        .alias("grant",
-               Class
-                 .forName("schemacrawler.crawl.MutablePrivilege$PrivilegeGrant"));
-      xStream.alias("schema",
-                    Class.forName("schemacrawler.schema.SchemaReference"));
-
-      xStream.omitField(NamedObject.class, "lookupName");
-      xStream.omitField(NamedObject.class, "fullName");
-
-      return xStream;
+      return (Catalog) fstin.readObject();
     }
-    catch (
-
-    final ClassNotFoundException e)
+    catch (ClassNotFoundException | IOException e)
     {
-      throw new SchemaCrawlerException("Could not load internal classes", e);
+      throw new SchemaCrawlerException("Cannot deserialize catalog", e);
     }
   }
 
@@ -259,10 +73,10 @@ public final class XmlSerializedCatalog
     super(catalog);
   }
 
-  public XmlSerializedCatalog(final Reader reader)
+  public XmlSerializedCatalog(final InputStream in)
     throws SchemaCrawlerException
   {
-    this((Catalog) newXStream().fromXML(reader));
+    this(readCatalog(in));
   }
 
   /**
@@ -286,24 +100,24 @@ public final class XmlSerializedCatalog
   /**
    * Serializes the database to the writer, as XML.
    *
-   * @param writer
+   * @param out
    *        Writer to save to
    * @throws SchemaCrawlerException
    *         On an exception
    */
   @Override
-  public void save(final Writer writer)
+  public void save(final OutputStream out)
     throws SchemaCrawlerException
   {
-    requireNonNull(writer, "Writer not provided");
-    try
+    requireNonNull(out, "No output stream provided");
+    try (final FSTObjectOutput fstout = new FSTObjectOutput(out);)
     {
-      newXStream().toXML(catalog, writer);
-      writer.flush();
+      fstout.writeObject(catalog);
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Could not write XML", e);
+      throw new SchemaCrawlerException("Could not serialize catalog", e);
     }
   }
+
 }

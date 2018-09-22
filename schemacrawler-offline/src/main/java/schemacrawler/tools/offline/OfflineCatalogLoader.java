@@ -1,15 +1,14 @@
 package schemacrawler.tools.offline;
 
 
-import java.io.IOException;
-import java.io.Reader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
@@ -68,17 +67,9 @@ public final class OfflineCatalogLoader
       .fromConfig(additionalConfiguration)
       .withCompressedInputFile(offlineDatabasePath).toOptions();
 
-    final Reader snapshotReader;
-    try
-    {
-      snapshotReader = inputOptions.openNewInputReader();
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException("Cannot open input reader", e);
-    }
-
-    final XmlSerializedCatalog catalog = new XmlSerializedCatalog(snapshotReader);
+    final File inputFile = inputOptions.getInputFile().toFile();
+    final FileInputStream inputFileStream = new FileInputStream(inputFile);
+    final XmlSerializedCatalog catalog = new XmlSerializedCatalog(inputFileStream);
     return catalog;
   }
 

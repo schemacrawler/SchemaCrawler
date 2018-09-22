@@ -29,15 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.IOException;
-import java.io.Writer;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.Utility;
 
 /**
  * Main executor for the graphing integration.
@@ -67,10 +63,8 @@ public final class SerializationCommand
   public void checkAvailibility()
     throws Exception
   {
-    if (!Utility.isClassAvailable("com.thoughtworks.xstream.XStream"))
-    {
-      throw new SchemaCrawlerException("Cannot use offline databases");
-    }
+    // Nothing additional to check at this point. The Command should be
+    // available after the class is loaded, and imports are resolved.
   }
 
   /**
@@ -83,19 +77,11 @@ public final class SerializationCommand
     checkCatalog();
 
     final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
-    // Force output to a compressed file
-    outputOptions = forceCompressedFileOutput();
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final OutputStream out = new FileOutputStream(outputOptions
+      .getOutputFile().toFile());)
     {
-      serializableCatalog.save(writer);
+      serializableCatalog.save(out);
     }
-  }
-
-  private OutputOptions forceCompressedFileOutput()
-    throws IOException
-  {
-    return OutputOptionsBuilder.builder(outputOptions)
-      .withCompressedOutputFile(outputOptions.getOutputFile()).toOptions();
   }
 
 }

@@ -28,16 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.size;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.file.Path;
 
 import org.junit.Before;
@@ -50,8 +49,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
-import schemacrawler.tools.iosource.CompressedFileInputResource;
-import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import sf.util.IOUtility;
 
 public class LoadSnapshotTest
@@ -59,22 +56,22 @@ public class LoadSnapshotTest
 {
 
   private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";
-  private Path serializedDatabaseFile;
+  private Path serializedCatalogFile;
 
   @Test
   public void loadSnapshot()
     throws Exception
   {
-    final CompressedFileInputResource inputResource = new CompressedFileInputResource(serializedDatabaseFile,
-                                                                                      SCHEMACRAWLER_DATA);
-    final Reader snapshotReader = inputResource.openNewInputReader(UTF_8);
-    final XmlSerializedCatalog catalog = new XmlSerializedCatalog(snapshotReader);
+    final FileInputStream inputFileStream = new FileInputStream(serializedCatalogFile
+      .toFile());
+    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(inputFileStream);
 
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schema = serializedCatalog.lookupSchema("PUBLIC.BOOKS")
+      .orElse(null);
     assertNotNull("Could not obtain schema", schema);
     assertEquals("Unexpected number of tables in the schema",
                  10,
-                 catalog.getTables(schema).size());
+                 serializedCatalog.getTables(schema).size());
   }
 
   @Before
@@ -95,19 +92,15 @@ public class LoadSnapshotTest
                  10,
                  catalog.getTables(schema).size());
 
-    serializedDatabaseFile = IOUtility.createTempFilePath("schemacrawler",
-                                                          "ser");
+    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
+                                                         "ser");
 
-    final XmlSerializedCatalog xmlDatabase = new XmlSerializedCatalog(catalog);
-    final Writer writer = new CompressedFileOutputResource(serializedDatabaseFile,
-                                                           SCHEMACRAWLER_DATA)
-                                                             .openNewOutputWriter(UTF_8,
-                                                                                  false);
-    xmlDatabase.save(writer);
-    writer.close();
-    assertNotSame("Database was not serialized to XML",
+    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(catalog);
+    serializedCatalog
+      .save(new FileOutputStream(serializedCatalogFile.toFile()));
+    assertNotSame("Database was not serialized",
                   0,
-                  size(serializedDatabaseFile));
+                  size(serializedCatalogFile));
 
   }
 

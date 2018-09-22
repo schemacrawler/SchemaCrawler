@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.Writer;
+import java.io.OutputStream;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -37,7 +37,7 @@ public interface SerializableCatalog
   extends Catalog
 {
 
-  void save(final Writer writer)
+  void save(final OutputStream out)
     throws SchemaCrawlerException;
 
 }

@@ -5,6 +5,7 @@
 
 - Drop support for OSGi bundles
 - Drop support for CSV and TSV output
+- Use FST for catalog serialization and deserialization instead of XStream
 
 <a name="a15.01.02"></a>
 ## Release 15.01.02 - 2018-09-17
