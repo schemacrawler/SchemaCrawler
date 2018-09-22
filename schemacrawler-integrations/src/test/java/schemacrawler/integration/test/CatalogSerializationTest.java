@@ -43,15 +43,12 @@ import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-
 import org.junit.Test;
+import org.nustaq.serialization.FSTObjectInput;
+import org.nustaq.serialization.FSTObjectOutput;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -61,6 +58,49 @@ import sf.util.IOUtility;
 public class CatalogSerializationTest
   extends BaseDatabaseTest
 {
+
+  @Test
+  public void catalogSerializationWithFst()
+    throws Exception
+  {
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .withMaximumSchemaInfoLevel();
+
+    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    assertNotNull("Could not obtain catalog", catalog);
+    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
+
+    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schema);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalog.getTables(schema).size());
+
+    final Path testOutputFile = IOUtility
+      .createTempFilePath("sc_fst_serialization", "fst");
+    try (
+        final FSTObjectOutput fstout = new FSTObjectOutput(new FileOutputStream(testOutputFile
+          .toFile()));)
+    {
+      fstout.writeObject(catalog);
+    }
+    assertTrue("Catalog was not serialized", Files.size(testOutputFile) > 0);
+
+    Catalog catalogDeserialized = null;
+    try (
+        final FSTObjectInput fstin = new FSTObjectInput(new FileInputStream(testOutputFile
+          .toFile()));)
+    {
+      catalogDeserialized = (Catalog) fstin.readObject();
+    }
+
+    final Schema schemaDeserialized = catalogDeserialized
+      .lookupSchema("PUBLIC.BOOKS").orElse(null);
+    assertNotNull("Could not obtain schema", schemaDeserialized);
+    assertEquals("Unexpected number of tables in the schema",
+                 10,
+                 catalogDeserialized.getTables(schemaDeserialized).size());
+  }
 
   @Test
   public void catalogSerializationWithJava()
