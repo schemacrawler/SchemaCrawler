@@ -2980,7 +2980,8 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-07 01:36:31",
+    "runId": "78c0d6b9-ffa3-4357-8d0a-4459d50a098c",
+    "crawlTimestamp": "2018-09-25 22:43:51",
     "title": ""
   },
   "routines": [

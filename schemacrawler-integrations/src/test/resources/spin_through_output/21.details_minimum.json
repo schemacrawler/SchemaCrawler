@@ -259,7 +259,8 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-06-03 07:38:44",
+    "runId": "e9c2a954-b0ca-4dcf-a7b3-d84111901a9c",
+    "crawlTimestamp": "2018-09-25 22:43:38",
     "title": ""
   },
   "routines": [

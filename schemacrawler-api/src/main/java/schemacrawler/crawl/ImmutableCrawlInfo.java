@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import schemacrawler.BaseProductVersion;
 import schemacrawler.JvmSystemInfo;
@@ -61,6 +62,7 @@ final class ImmutableCrawlInfo
   private final ProductVersion jvmInfo;
   private final String title;
   private final LocalDateTime crawlTimestamp;
+  private final UUID runId;
 
   ImmutableCrawlInfo(final JdbcDriverInfo jdbcDriverInfo,
                      final DatabaseInfo databaseInfo,
@@ -77,7 +79,9 @@ final class ImmutableCrawlInfo
     this.databaseInfo = new BaseProductVersion(databaseInfo);
 
     this.title = title;
+
     crawlTimestamp = LocalDateTime.now();
+    runId = UUID.randomUUID();
   }
 
   @Override
@@ -108,6 +112,11 @@ final class ImmutableCrawlInfo
   public String getOperatingSystemInfo()
   {
     return osInfo.toString();
+  }
+
+  public String getRunId()
+  {
+    return runId.toString();
   }
 
   @Override

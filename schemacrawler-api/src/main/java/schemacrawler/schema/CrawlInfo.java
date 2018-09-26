@@ -71,6 +71,13 @@ public interface CrawlInfo
   String getOperatingSystemInfo();
 
   /**
+   * Unique identifier for each SchemaCrawler run.
+   *
+   * @return Unique identifier
+   */
+  String getRunId();
+
+  /**
    * Gets the SchemaCrawler version.
    *
    * @return SchemaCrawler version

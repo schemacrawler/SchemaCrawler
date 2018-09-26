@@ -1781,7 +1781,8 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-07 01:36:44",
+    "runId": "d141398a-136b-433f-b42a-3f975b4589d1",
+    "crawlTimestamp": "2018-09-25 22:44:08",
     "title": "Database Design for Books and Publishers"
   }
 }]

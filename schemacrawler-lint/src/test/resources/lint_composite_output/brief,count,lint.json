@@ -412,7 +412,8 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-07 01:38:57",
+    "runId": "0fb6cf32-2a75-44d4-aed9-af974b55c30f",
+    "crawlTimestamp": "2018-09-25 23:03:36",
     "title": ""
   }
 },

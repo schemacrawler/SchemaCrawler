@@ -1210,7 +1210,8 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-06-03 07:37:44",
+    "runId": "20d3345a-7328-46de-8f6a-9bac356642eb",
+    "crawlTimestamp": "2018-09-25 22:42:43",
     "title": ""
   },
   "routines": [

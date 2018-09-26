@@ -118,6 +118,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
 
       jsonSchemaCrawlerHeaderInfo
         .put("crawlTimestamp", formatTimestamp(crawlInfo.getCrawlTimestamp()));
+      jsonSchemaCrawlerHeaderInfo.put("runId", crawlInfo.getRunId());
+
       jsonSchemaCrawlerHeaderInfo.put("title", crawlInfo.getTitle());
     }
     catch (final JSONException e)

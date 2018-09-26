@@ -977,7 +977,8 @@
     }
   ],
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-07 01:36:25",
+    "runId": "b95328e6-6743-406b-9954-fa3ce84f10aa",
+    "crawlTimestamp": "2018-09-25 22:43:43",
     "title": ""
   },
   "routines": [

@@ -2985,7 +2985,8 @@
     "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
   },
   "schemaCrawlerHeaderInfo": {
-    "crawlTimestamp": "2018-01-07 01:36:38",
+    "runId": "1e018504-44b1-4153-8262-468b945bba43",
+    "crawlTimestamp": "2018-09-25 22:43:59",
     "title": ""
   },
   "routines": [

@@ -106,6 +106,8 @@ public final class TestUtility
                                              Pattern
                                                .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
                                              Pattern
+                                               .compile("\\s+\"runId\": .*"),
+                                             Pattern
                                                .compile("\\s+<product(Name|Version)>.*"),
                                              Pattern
                                                .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
