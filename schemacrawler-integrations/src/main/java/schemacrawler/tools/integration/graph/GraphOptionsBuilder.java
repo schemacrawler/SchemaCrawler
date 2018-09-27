@@ -48,11 +48,17 @@ public final class GraphOptionsBuilder
   extends BaseSchemaTextOptionsBuilder<GraphOptionsBuilder, GraphOptions>
 {
 
-  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = "schemacrawler.graph.show.primarykey.cardinality";
-  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = "schemacrawler.graph.show.foreignkey.cardinality";
-  private static final String GRAPH_GRAPHVIZ_OPTS = "schemacrawler.graph.graphviz_opts";
+  protected static final String SCHEMACRAWLER_GRAPH_PREFIX = "schemacrawler.graph.";
+
+  private static final String GRAPH_SHOW_PRIMARY_KEY_CARDINALITY = SCHEMACRAWLER_GRAPH_PREFIX
+                                                                   + "show.primarykey.cardinality";
+  private static final String GRAPH_SHOW_FOREIGN_KEY_CARDINALITY = SCHEMACRAWLER_GRAPH_PREFIX
+                                                                   + "show.foreignkey.cardinality";
+  private static final String GRAPH_GRAPHVIZ_OPTS = SCHEMACRAWLER_GRAPH_PREFIX
+                                                    + "graphviz_opts";
   private static final String SC_GRAPHVIZ_OPTS = "SC_GRAPHVIZ_OPTS";
-  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = "schemacrawler.graph.graphviz";
+  private static final String GRAPH_GRAPHVIZ_ATTRIBUTES = SCHEMACRAWLER_GRAPH_PREFIX
+                                                          + "graphviz";
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(GraphOptions.class.getName());
