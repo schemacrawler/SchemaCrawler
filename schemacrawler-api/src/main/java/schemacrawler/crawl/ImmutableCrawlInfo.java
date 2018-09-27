@@ -114,6 +114,7 @@ final class ImmutableCrawlInfo
     return osInfo.toString();
   }
 
+  @Override
   public String getRunId()
   {
     return runId.toString();

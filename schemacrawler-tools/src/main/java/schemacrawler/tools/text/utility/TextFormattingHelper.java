@@ -156,7 +156,7 @@ public interface TextFormattingHelper
 
   /**
    * Creates a detail row, with four fields. The name can be emphasized.
-   * 
+   *
    * @param text1
    *        Text for field 1
    * @param text2

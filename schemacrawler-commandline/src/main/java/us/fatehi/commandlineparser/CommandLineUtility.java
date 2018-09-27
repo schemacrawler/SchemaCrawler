@@ -228,7 +228,7 @@ public final class CommandLineUtility
 
   /**
    * Loads configuration from a number of command-line.
-   * 
+   *
    * @param args
    *        Command-line arguments
    * @return Parsed command-line arguments

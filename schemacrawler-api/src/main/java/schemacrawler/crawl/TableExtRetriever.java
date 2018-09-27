@@ -238,7 +238,8 @@ final class TableExtRetriever
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
 
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_INDEX_COLUMNS))
+    if (!informationSchemaViews
+      .hasQuery(InformationSchemaKey.EXT_INDEX_COLUMNS))
     {
       LOGGER
         .log(Level.INFO,

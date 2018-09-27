@@ -327,7 +327,7 @@ public final class Identifiers
 
   /**
    * Get a list of reserved words, normalized to uppercase.
-   * 
+   *
    * @return Reserved words
    */
   public Collection<String> getReservedWords()

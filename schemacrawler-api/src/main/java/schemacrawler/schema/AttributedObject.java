@@ -34,7 +34,7 @@ import java.util.Optional;
 
 /**
  * Allow attributes on objects.
- * 
+ *
  * @author Sualeh Fatehi
  */
 public interface AttributedObject

@@ -90,6 +90,29 @@ public final class OutputOptions
     return inputEncodingCharset;
   }
 
+  public Path getInputFile()
+  {
+    final Path inputFile;
+    if (inputResource instanceof FileInputResource)
+    {
+      inputFile = ((FileInputResource) inputResource).getInputFile();
+    }
+    else if (inputResource instanceof CompressedFileInputResource)
+    {
+      inputFile = ((CompressedFileInputResource) inputResource).getInputFile();
+    }
+    else
+    {
+      // Create input file path
+      inputFile = Paths.get(".",
+                            String.format("schemacrawler-%s.%s",
+                                          UUID.randomUUID(),
+                                          outputFormatValue))
+        .normalize().toAbsolutePath();
+    }
+    return inputFile;
+  }
+
   /**
    * Character encoding for output files.
    */
@@ -135,7 +158,7 @@ public final class OutputOptions
   /**
    * Gets the input reader. If the input resource is null, first set it
    * to a value based off the output format value.
-   * 
+   *
    * @return Input reader
    * @throws IOException
    *         On an exception
@@ -144,29 +167,6 @@ public final class OutputOptions
     throws IOException
   {
     return inputResource.openNewInputReader(inputEncodingCharset);
-  }
-
-  public Path getInputFile()
-  {
-    final Path inputFile;
-    if (inputResource instanceof FileInputResource)
-    {
-      inputFile = ((FileInputResource) inputResource).getInputFile();
-    }
-    else if (inputResource instanceof CompressedFileInputResource)
-    {
-      inputFile = ((CompressedFileInputResource) inputResource).getInputFile();
-    }
-    else
-    {
-      // Create input file path
-      inputFile = Paths.get(".",
-                            String.format("schemacrawler-%s.%s",
-                                          UUID.randomUUID(),
-                                          outputFormatValue))
-        .normalize().toAbsolutePath();
-    }
-    return inputFile;
   }
 
   /**

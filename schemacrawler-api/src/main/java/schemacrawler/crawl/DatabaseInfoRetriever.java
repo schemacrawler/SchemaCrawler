@@ -405,7 +405,8 @@ final class DatabaseInfoRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (informationSchemaViews.hasQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO))
+    if (informationSchemaViews
+      .hasQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO))
     {
       final Query typeInfoSql = informationSchemaViews
         .getQuery(InformationSchemaKey.OVERRIDE_TYPE_INFO);
