@@ -134,7 +134,7 @@ public final class SchemaCrawlerHelpCommandLine
       final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
       printHelpText("/help/Connections.txt");
       out.println("Available servers are: ");
-      for (final String availableServer: databaseConnectorRegistry)
+      for (final DatabaseServerType availableServer: databaseConnectorRegistry)
       {
         out.println("  " + availableServer);
       }

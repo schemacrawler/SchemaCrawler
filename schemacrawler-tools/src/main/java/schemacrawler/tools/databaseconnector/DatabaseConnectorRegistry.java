@@ -37,7 +37,6 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -46,6 +45,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -57,7 +57,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class DatabaseConnectorRegistry
-  implements Iterable<String>
+  implements Iterable<DatabaseServerType>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -124,9 +124,16 @@ public final class DatabaseConnectorRegistry
   }
 
   @Override
-  public Iterator<String> iterator()
+  public Iterator<DatabaseServerType> iterator()
   {
-    return lookupAvailableDatabaseConnectors().iterator();
+    final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
+    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+      .values())
+    {
+      databaseServerTypes.add(databaseConnector.getDatabaseServerType());
+    }
+    Collections.sort(databaseServerTypes);
+    return databaseServerTypes.iterator();
   }
 
   public DatabaseConnector lookupDatabaseConnector(final Connection connection)
@@ -198,14 +205,6 @@ public final class DatabaseConnectorRegistry
     {
       LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
     }
-  }
-
-  private Collection<String> lookupAvailableDatabaseConnectors()
-  {
-    final List<String> availableDatabaseConnectors = new ArrayList<>(databaseConnectorRegistry
-      .keySet());
-    Collections.sort(availableDatabaseConnectors);
-    return availableDatabaseConnectors;
   }
 
 }

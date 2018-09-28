@@ -33,7 +33,7 @@ import static sf.util.Utility.isBlank;
 import java.io.Serializable;
 
 public final class DatabaseServerType
-  implements Serializable
+  implements Serializable, Comparable<DatabaseServerType>
 {
 
   private static final long serialVersionUID = 2160456864554076419L;
@@ -64,6 +64,32 @@ public final class DatabaseServerType
   {
     databaseSystemIdentifier = null;
     databaseSystemName = null;
+  }
+
+  @Override
+  public int compareTo(final DatabaseServerType other)
+  {
+    if (this == other)
+    {
+      return 0;
+    }
+    else if (other == null)
+    {
+      return -1;
+    }
+    else if (other.isUnknownDatabaseSystem() && !isUnknownDatabaseSystem())
+    {
+      return 1;
+    }
+    else if (!other.isUnknownDatabaseSystem() && isUnknownDatabaseSystem())
+    {
+      return -1;
+    }
+    else
+    {
+      return getDatabaseSystemIdentifier()
+        .compareTo(other.getDatabaseSystemIdentifier());
+    }
   }
 
   @Override
