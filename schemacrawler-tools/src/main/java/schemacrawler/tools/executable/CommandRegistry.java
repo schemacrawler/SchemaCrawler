@@ -132,22 +132,6 @@ public final class CommandRegistry
     return getSupportedCommands().iterator();
   }
 
-  public boolean supportsCommand(final String command,
-                                 final SchemaCrawlerOptions schemaCrawlerOptions,
-                                 final OutputOptions outputOptions)
-  {
-    for (final CommandProvider commandProvider: commandRegistry)
-    {
-      if (commandProvider.supportsSchemaCrawlerCommand(command,
-                                                       schemaCrawlerOptions,
-                                                       outputOptions))
-      {
-        return true;
-      }
-    }
-    return false;
-  }
-
   SchemaCrawlerCommand configureNewCommand(final String command,
                                            final SchemaCrawlerOptions schemaCrawlerOptions,
                                            final OutputOptions outputOptions)

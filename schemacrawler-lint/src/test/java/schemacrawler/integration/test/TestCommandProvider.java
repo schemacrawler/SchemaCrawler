@@ -33,21 +33,22 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.lint.executable.LintCommandProvider;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-public class TestCommandPlugin
+public class TestCommandProvider
 {
 
   @Test
-  public void testCommandPlugin()
+  public void testCommandProvider()
     throws Exception
   {
-    final CommandRegistry registry = new CommandRegistry();
-    assertTrue(registry
-      .supportsCommand("lint",
-                       SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
-                       OutputOptionsBuilder.newOutputOptions()));
+    final LintCommandProvider lintCommandProvider = new LintCommandProvider();
+    assertTrue(lintCommandProvider
+      .supportsSchemaCrawlerCommand("lint",
+                                    SchemaCrawlerOptionsBuilder
+                                      .newSchemaCrawlerOptions(),
+                                    OutputOptionsBuilder.newOutputOptions()));
   }
 
 }
