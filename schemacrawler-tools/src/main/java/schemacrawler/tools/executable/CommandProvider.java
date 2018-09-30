@@ -38,6 +38,11 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
+  default String getDescription()
+  {
+    return "";
+  }
+
   InputResource getHelp();
 
   Collection<String> getSupportedCommands();

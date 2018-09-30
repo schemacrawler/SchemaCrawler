@@ -35,7 +35,6 @@ import static sf.util.Utility.isBlank;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
-import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
@@ -43,6 +42,7 @@ import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.InputResource;
@@ -148,13 +148,11 @@ public final class SchemaCrawlerHelpCommandLine
     printHelpText("/help/Config.txt");
     printHelpText("/help/ApplicationOptions.txt");
 
-    final Collection<String> supportedCommands = commandRegistry
-      .getSupportedCommands();
-    if (!supportedCommands.contains(command))
+    if (!commandRegistry.isCommandSupported(command))
     {
       printHelpText("/help/Command.txt");
       out.println("  Available commands are: ");
-      for (final String availableCommand: supportedCommands)
+      for (final CommandDescription availableCommand: commandRegistry)
       {
         out.println("    " + availableCommand);
       }

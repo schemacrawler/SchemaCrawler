@@ -63,6 +63,12 @@ public final class SchemaExecutableCommandProvider
   }
 
   @Override
+  public String getDescription()
+  {
+    return "Display schema information at different levels of detail";
+  }
+
+  @Override
   public Collection<String> getSupportedCommands()
   {
     return supportedCommands();

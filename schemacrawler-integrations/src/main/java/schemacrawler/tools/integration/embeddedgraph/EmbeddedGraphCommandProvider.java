@@ -64,6 +64,12 @@ public final class EmbeddedGraphCommandProvider
   }
 
   @Override
+  public String getDescription()
+  {
+    return "Display database diagram and schema information in HTML";
+  }
+
+  @Override
   public Collection<String> getSupportedCommands()
   {
     return supportedCommands();

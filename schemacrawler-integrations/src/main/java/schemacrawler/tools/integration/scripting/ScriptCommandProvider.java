@@ -50,6 +50,12 @@ public class ScriptCommandProvider
     .getLogger(ScriptCommandProvider.class.getName());
 
   @Override
+  public String getDescription()
+  {
+    return "Execute a script against a schema";
+  }
+
+  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/ScriptExecutable.txt";

@@ -53,7 +53,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
-  implements Iterable<String>
+  implements Iterable<CommandDescription>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -110,21 +110,24 @@ public final class CommandRegistry
     return new EmptyInputResource();
   }
 
-  public Collection<String> getSupportedCommands()
+  public boolean isCommandSupported(final String command)
   {
-    final Collection<String> supportedCommands = new HashSet<>();
     for (final CommandProvider commandProvider: commandRegistry)
     {
-      supportedCommands.addAll(commandProvider.getSupportedCommands());
+      for (final String supportedCommand: commandProvider
+        .getSupportedCommands())
+      {
+        if (supportedCommand.equalsIgnoreCase(command))
+        {
+          return true;
+        }
+      }
     }
-
-    final List<String> supportedCommandsOrdered = new ArrayList<>(supportedCommands);
-    Collections.sort(supportedCommandsOrdered);
-    return supportedCommandsOrdered;
+    return false;
   }
 
   @Override
-  public Iterator<String> iterator()
+  public Iterator<CommandDescription> iterator()
   {
     return getSupportedCommands().iterator();
   }
@@ -183,6 +186,24 @@ public final class CommandRegistry
     }
 
     return scCommand;
+  }
+
+  private Collection<CommandDescription> getSupportedCommands()
+  {
+    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+    for (final CommandProvider commandProvider: commandRegistry)
+    {
+      final String description = commandProvider.getDescription();
+      for (final String command: commandProvider.getSupportedCommands())
+      {
+        supportedCommandDescriptions
+          .add(new CommandDescription(command, description));
+      }
+    }
+
+    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(supportedCommandDescriptions);
+    Collections.sort(supportedCommandsOrdered);
+    return supportedCommandsOrdered;
   }
 
 }

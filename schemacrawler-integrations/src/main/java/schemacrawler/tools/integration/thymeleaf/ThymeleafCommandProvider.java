@@ -50,6 +50,12 @@ public class ThymeleafCommandProvider
     .getLogger(ThymeleafCommandProvider.class.getName());
 
   @Override
+  public String getDescription()
+  {
+    return "Render a Freemarker template against a schema";
+  }
+
+  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/ThymeleafRenderer.txt";

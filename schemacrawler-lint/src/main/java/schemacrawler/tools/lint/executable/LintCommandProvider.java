@@ -59,6 +59,12 @@ public class LintCommandProvider
     .getLogger(LintCommandProvider.class.getName());
 
   @Override
+  public String getDescription()
+  {
+    return "Display database lints";
+  }
+
+  @Override
   public InputResource getHelp()
   {
     try

@@ -41,8 +41,6 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import org.thymeleaf.templateresolver.UrlTemplateResolver;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.integration.serialization.SerializationCommand;
-import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the Thymeleaf integration.
@@ -52,9 +50,6 @@ import sf.util.SchemaCrawlerLogger;
 public final class ThymeleafRenderer
   extends BaseSchemaCrawlerCommand
 {
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SerializationCommand.class.getName());
 
   static final String COMMAND = "thymeleaf";
 

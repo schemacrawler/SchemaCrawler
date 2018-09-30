@@ -63,6 +63,12 @@ public final class GraphCommandProvider
   }
 
   @Override
+  public String getDescription()
+  {
+    return "Render a database diagram";
+  }
+
+  @Override
   public Collection<String> getSupportedCommands()
   {
     return supportedCommands();

@@ -56,6 +56,12 @@ final class OperationExecutableCommandProvider
   }
 
   @Override
+  public String getDescription()
+  {
+    return "Display results of table queries";
+  }
+
+  @Override
   public Collection<String> getSupportedCommands()
   {
     return supportedCommands();

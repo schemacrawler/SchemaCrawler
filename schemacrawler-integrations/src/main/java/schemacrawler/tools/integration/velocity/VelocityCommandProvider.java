@@ -50,6 +50,12 @@ public class VelocityCommandProvider
     .getLogger(VelocityCommandProvider.class.getName());
 
   @Override
+  public String getDescription()
+  {
+    return "Render an Apache Velocity template against a schema";
+  }
+
+  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/VelocityRenderer.txt";

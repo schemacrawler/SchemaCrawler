@@ -50,6 +50,12 @@ public class SerializationCommandProvider
     .getLogger(SerializationCommandProvider.class.getName());
 
   @Override
+  public String getDescription()
+  {
+    return "Create an offline catalog snapshot";
+  }
+
+  @Override
   public InputResource getHelp()
   {
     final String helpResource = "/help/SerializationCommand.txt";

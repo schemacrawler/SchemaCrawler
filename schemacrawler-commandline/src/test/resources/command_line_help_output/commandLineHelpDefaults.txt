@@ -210,3 +210,13 @@ The order of loading configuration settings is:
   Where <command> is a SchemaCrawler command.   
   For help on a command, re-run SchemaCrawler with:
   -help -c=<command>
+
+  Available commands are: 
+    brief - Display schema information at different levels of detail
+    count - Display results of table queries
+    details - Display schema information at different levels of detail
+    dump - Display results of table queries
+    list - Display schema information at different levels of detail
+    quickdump - Display results of table queries
+    schema - Display schema information at different levels of detail
+
