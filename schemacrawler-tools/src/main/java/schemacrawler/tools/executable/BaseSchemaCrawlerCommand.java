@@ -76,6 +76,15 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
+  public void checkAvailibility()
+    throws Exception
+  {
+    // Nothing additional to check at this point.
+    // Most commands should be available after their class is loaded,
+    // and imports are resolved.
+  }
+
+  @Override
   public final Config getAdditionalConfiguration()
   {
     return additionalConfiguration;
