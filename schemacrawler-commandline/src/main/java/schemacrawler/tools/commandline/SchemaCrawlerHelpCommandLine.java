@@ -165,6 +165,8 @@ public final class SchemaCrawlerHelpCommandLine
       printHelpText(commandRegistry.getHelp(command));
     }
 
+    out.flush();
+
   }
 
   public final String getCommand()
@@ -182,6 +184,7 @@ public final class SchemaCrawlerHelpCommandLine
     {
       IOUtility.copy(helpReader, out);
       out.println();
+      out.flush();
       // Do not close System.out
     }
     catch (final IOException e)
