@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a15.01.04"></a>
-## Release 15.01.04 - 2018-09-21
+## Release 15.01.04 - 2018-10-07
 
 - Create a unique run id for each SchemaCrawler run
 

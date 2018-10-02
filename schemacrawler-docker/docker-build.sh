@@ -13,7 +13,7 @@ docker version
 
 # Build Docker image
 docker build -t schemacrawler/schemacrawler .
-docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v15.01.03 
+docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:v15.01.04 
 docker tag schemacrawler/schemacrawler schemacrawler/schemacrawler:latest
 
 # Deploy image to Docker Hub
