@@ -420,9 +420,21 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder noEmptyTables()
+  /**
+   * Corresponds to the -hideemptytables command-line argument.
+   */
+  public final SchemaCrawlerOptionsBuilder hideEmptyTables()
   {
-    isNoEmptyTables = true;
+    return hideEmptyTables(true);
+  }
+
+  /**
+   * Corresponds to the -hideemptytables=&lt;boolean&gt; command-line
+   * argument.
+   */
+  public final SchemaCrawlerOptionsBuilder hideEmptyTables(final boolean value)
+  {
+    isNoEmptyTables = value;
     return this;
   }
 
