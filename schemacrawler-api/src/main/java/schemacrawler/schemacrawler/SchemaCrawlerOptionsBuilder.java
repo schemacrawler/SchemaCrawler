@@ -137,7 +137,6 @@ public final class SchemaCrawlerOptionsBuilder
 
   private boolean isNoEmptyTables;
   private int childTableFilterDepth;
-
   private int parentTableFilterDepth;
 
   /**
@@ -283,6 +282,18 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  @Deprecated
+  public final SchemaCrawlerOptionsBuilder hideEmptyTables()
+  {
+    return noEmptyTables(true);
+  }
+
+  @Deprecated
+  public final SchemaCrawlerOptionsBuilder hideEmptyTables(final boolean value)
+  {
+    return noEmptyTables(value);
+  }
+
   public SchemaCrawlerOptionsBuilder includeAllRoutines()
   {
     includeRoutines(new IncludeAll());
@@ -421,18 +432,18 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
   /**
-   * Corresponds to the -hideemptytables command-line argument.
+   * Corresponds to the -noemptytables command-line argument.
    */
-  public final SchemaCrawlerOptionsBuilder hideEmptyTables()
+  public final SchemaCrawlerOptionsBuilder noEmptyTables()
   {
-    return hideEmptyTables(true);
+    return noEmptyTables(true);
   }
 
   /**
-   * Corresponds to the -hideemptytables=&lt;boolean&gt; command-line
+   * Corresponds to the -noemptytables=&lt;boolean&gt; command-line
    * argument.
    */
-  public final SchemaCrawlerOptionsBuilder hideEmptyTables(final boolean value)
+  public final SchemaCrawlerOptionsBuilder noEmptyTables(final boolean value)
   {
     isNoEmptyTables = value;
     return this;

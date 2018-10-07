@@ -51,17 +51,17 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
-public class HideEmptyTablesCommandLineTest
+public class NoEmptyTablesCommandLineTest
   extends BaseDatabaseTest
 {
 
-  private static final String HIDE_EMPTY_TABLES_OUTPUT = "hide_empty_tables_output/";
+  private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
   @Rule
   public TestName testName = new TestName();
 
   @Test
-  public void hideEmptyTables()
+  public void noEmptyTables()
     throws Exception
   {
     clean(HIDE_EMPTY_TABLES_OUTPUT);
@@ -87,7 +87,7 @@ public class HideEmptyTablesCommandLineTest
     args.put("outputfile", testOutputFile.toString());
     args.put("noinfo", "true");
     args.put("routines", "");
-    args.put("hideemptytables", "true");
+    args.put("noemptytables", "true");
 
     Main.main(flattenCommandlineArgs(args));
 

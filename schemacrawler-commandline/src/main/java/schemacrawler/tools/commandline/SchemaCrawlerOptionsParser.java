@@ -79,7 +79,7 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("grepdef");
     normalizeOptionName("invert-match");
     normalizeOptionName("only-matching");
-    normalizeOptionName("hideemptytables");
+    normalizeOptionName("noemptytables", "hideemptytables");
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
@@ -252,15 +252,15 @@ public final class SchemaCrawlerOptionsParser
       optionsBuilder.includeGreppedDefinitions(null);
     }
 
-    if (config.hasValue("hideemptytables"))
+    if (config.hasValue("noemptytables"))
     {
-      final boolean hideEmptyTables = config.getBooleanValue("hideemptytables",
-                                                             true);
-      if (hideEmptyTables)
+      final boolean noEmptyTables = config.getBooleanValue("noemptytables",
+                                                           true);
+      if (noEmptyTables)
       {
-        optionsBuilder.hideEmptyTables();
+        optionsBuilder.noEmptyTables();
       }
-      consumeOption("hideemptytables");
+      consumeOption("noemptytables");
     }
 
     if (config.hasValue("parents"))

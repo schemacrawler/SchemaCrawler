@@ -39,11 +39,11 @@ class TableCountFilter
   implements Predicate<Table>
 {
 
-  private final boolean hideEmptyTables;
+  private final boolean noEmptyTables;
 
   public TableCountFilter(final SchemaCrawlerOptions options)
   {
-    hideEmptyTables = requireNonNull(options,
+    noEmptyTables = requireNonNull(options,
                                      "No SchemaCrawlerOptions provided")
                                        .isNoEmptyTables();
   }
@@ -59,7 +59,7 @@ class TableCountFilter
   public boolean test(final Table table)
   {
     final boolean hideTable;
-    if (hideEmptyTables)
+    if (noEmptyTables)
     {
       final long count = CountsUtility.getRowCount(table);
       hideTable = count == 0;
