@@ -31,6 +31,7 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -66,12 +67,9 @@ public final class RegularExpressionRule
   public RegularExpressionRule(final Pattern patternInclude,
                                final Pattern patternExclude)
   {
-    final String ALL = ".*";
-    final String NONE = "";
-
     if (patternInclude == null)
     {
-      this.patternInclude = Pattern.compile(ALL);
+      this.patternInclude = InclusionRuleWithRegularExpression.super.getInclusionPattern();
     }
     else
     {
@@ -80,7 +78,7 @@ public final class RegularExpressionRule
 
     if (patternExclude == null)
     {
-      this.patternExclude = Pattern.compile(NONE);
+      this.patternExclude = InclusionRuleWithRegularExpression.super.getExclusionPattern();
     }
     else
     {
@@ -145,6 +143,12 @@ public final class RegularExpressionRule
   }
 
   @Override
+  public Pattern getExclusionPattern()
+  {
+    return patternExclude;
+  }
+
+  @Override
   public Pattern getInclusionPattern()
   {
     return patternInclude;
@@ -169,7 +173,7 @@ public final class RegularExpressionRule
   public boolean test(final String text)
   {
 
-    final StringFormat actionMessage;
+    final Supplier<String> actionMessage;
     boolean include = false;
     if (!isBlank(text))
     {

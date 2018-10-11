@@ -105,6 +105,20 @@ public final class RegularExpressionInclusionRule
   }
 
   @Override
+  public Pattern getExclusionPattern()
+  {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression)
+    {
+      return ((InclusionRuleWithRegularExpression) inclusionRule)
+        .getExclusionPattern();
+    }
+    else
+    {
+      return InclusionRuleWithRegularExpression.super.getExclusionPattern();
+    }
+  }
+
+  @Override
   public Pattern getInclusionPattern()
   {
     if (inclusionRule instanceof InclusionRuleWithRegularExpression)
@@ -114,7 +128,7 @@ public final class RegularExpressionInclusionRule
     }
     else
     {
-      return Pattern.compile(".*");
+      return InclusionRuleWithRegularExpression.super.getInclusionPattern();
     }
   }
 

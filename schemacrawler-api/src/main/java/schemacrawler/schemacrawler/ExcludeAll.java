@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import java.util.regex.Pattern;
+
 /**
  * Include all names, definitions, and other attributes of named
  * objects.
@@ -35,7 +37,7 @@ package schemacrawler.schemacrawler;
  * @author Sualeh Fatehi
  */
 public final class ExcludeAll
-  implements InclusionRule
+  implements InclusionRuleWithRegularExpression
 {
 
   private static final long serialVersionUID = -2992724018349021861L;
@@ -44,6 +46,18 @@ public final class ExcludeAll
   public boolean equals(final Object obj)
   {
     return obj instanceof ExcludeAll;
+  }
+
+  @Override
+  public Pattern getExclusionPattern()
+  {
+    return InclusionRuleWithRegularExpression.super.getInclusionPattern();
+  }
+
+  @Override
+  public Pattern getInclusionPattern()
+  {
+    return InclusionRuleWithRegularExpression.super.getExclusionPattern();
   }
 
   @Override

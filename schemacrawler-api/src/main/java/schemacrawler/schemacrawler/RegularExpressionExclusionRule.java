@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * @author Sualeh Fatehi
  */
 public final class RegularExpressionExclusionRule
-  implements InclusionRule
+  implements InclusionRuleWithRegularExpression
 {
 
   private static final long serialVersionUID = 6274652266761961575L;
@@ -102,6 +102,34 @@ public final class RegularExpressionExclusionRule
       return false;
     }
     return true;
+  }
+
+  @Override
+  public Pattern getExclusionPattern()
+  {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression)
+    {
+      return ((InclusionRuleWithRegularExpression) inclusionRule)
+        .getExclusionPattern();
+    }
+    else
+    {
+      return InclusionRuleWithRegularExpression.super.getExclusionPattern();
+    }
+  }
+
+  @Override
+  public Pattern getInclusionPattern()
+  {
+    if (inclusionRule instanceof InclusionRuleWithRegularExpression)
+    {
+      return ((InclusionRuleWithRegularExpression) inclusionRule)
+        .getInclusionPattern();
+    }
+    else
+    {
+      return InclusionRuleWithRegularExpression.super.getInclusionPattern();
+    }
   }
 
   @Override
