@@ -2,13 +2,13 @@
 <ivy-module version="2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="schemacrawler"
-    module="schemacrawler-thymeleaf" />
+  <info organisation="schemacrawler" module="schemacrawler-shell" />
   <dependencies>
-    <dependency org="org.thymeleaf" name="thymeleaf"
-      rev="3.0.9.RELEASE" />
-    <dependency org="org.slf4j" name="slf4j-jdk14"
-      rev="1.7.21" />
+    <dependency org="us.fatehi" name="schemacrawler-shell"
+      rev="15.01.04" />
+
+    <exclude org="us.fatehi" module="schemacrawler" />
+    <exclude org="org.hsqldb" module="hsqldb" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />

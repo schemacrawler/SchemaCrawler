@@ -3,12 +3,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler"
-    module="schemacrawler-velocity" />
+    module="schemacrawler-database-plugins" />
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="15.01.03" />
+      rev="15.01.04" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="15.01.03" />
+      rev="15.01.04" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
