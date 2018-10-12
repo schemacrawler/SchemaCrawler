@@ -1,4 +1,4 @@
---- Connection Options ---
+--- Database Connection Options ---
 
 For database connections, please read
 https://www.schemacrawler.com/database-support.html

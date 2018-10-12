@@ -55,11 +55,7 @@
   <boolean> can be true or false
   Optional, defaults to false
 
---- Output Options ---
-
--title=<title>
-  Shows the title text as the title on the output
-  Optional, defaults to no title being shown
+--- Show Options ---
 
 -noinfo=<boolean>
   Hides database information
@@ -84,7 +80,15 @@
   and not showing the fully-qualified table name
   <boolean> can be true or false
   Optional, defaults to false
-    
+
+--- Run Options ---
+
+-title=<title>
+  Shows the title text as the title on the output
+  Optional, defaults to no title being shown
+
+--- Output Options ---
+      
 -fmt=<outputformat> (short for -outputformat=<outputformat>)
   Format of the SchemaCrawler output, where <outputformat> is one of:
     text

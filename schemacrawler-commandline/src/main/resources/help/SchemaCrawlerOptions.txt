@@ -1,8 +1,8 @@
---- Filtering Options ---
+--- Limiting Options ---
 
 -schemas=<regular-expression>
   <regular-expression> is a regular expression to match fully qualified schema 
-  namess, in the form "CATALOGNAME.SCHEMANAME" - for example,
+  names, in the form "CATALOGNAME.SCHEMANAME" - for example,
   -schemas=.*\.C.*|.*\.P.*
   matches any schemas whose names start with C or P
   Schemas that do not match the pattern are not displayed
@@ -106,7 +106,7 @@
   other non-matching tables
   Optional, default is false
 
---- Additional Filtering Options ---
+--- Filtering Options ---
 
 -noemptytables
   Includes only tables that have rows of data
