@@ -4,8 +4,10 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-ruby" />
   <dependencies>
-    <dependency org="guru.nidi" name="graphviz-java" rev="0.5.4" />
+    <dependency org="guru.nidi" name="graphviz-java"
+      rev="0.5.4" />
 
+    <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
     <exclude type="javadoc" ext="jar" />

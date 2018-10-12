@@ -6,7 +6,8 @@
   <dependencies>
     <dependency org="org.codehaus.groovy" name="groovy-all"
       rev="2.5.2" />
-      
+
+    <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
     <exclude type="javadoc" ext="jar" />

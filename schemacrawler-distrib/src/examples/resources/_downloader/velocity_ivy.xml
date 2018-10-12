@@ -2,12 +2,15 @@
 <ivy-module version="2.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="schemacrawler" module="schemacrawler-velocity" />
+  <info organisation="schemacrawler"
+    module="schemacrawler-velocity" />
   <dependencies>
-    <dependency org="org.apache.velocity" name="velocity-engine-scripting"
-      rev="2.0" />
-    <dependency org="org.slf4j" name="slf4j-jdk14" rev="1.7.25" />
+    <dependency org="org.apache.velocity"
+      name="velocity-engine-scripting" rev="2.0" />
+    <dependency org="org.slf4j" name="slf4j-jdk14"
+      rev="1.7.25" />
 
+    <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
     <exclude type="javadoc" ext="jar" />
