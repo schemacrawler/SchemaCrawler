@@ -5,7 +5,7 @@
   <info organisation="schemacrawler" module="schemacrawler-shell" />
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-shell"
-      rev="15.01.04" />
+      rev="15.01.04.01" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />

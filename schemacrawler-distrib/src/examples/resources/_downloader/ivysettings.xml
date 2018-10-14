@@ -1,0 +1,13 @@
+<ivysettings>
+  <settings defaultResolver="default"/>
+  <property name="m2-pattern" value="${user.home}/.m2/repository/[organisation]/[module]/[revision]/[module]-[revision](-[classifier]).[ext]" override="false" />
+  <resolvers>
+    <chain name="default">
+      <filesystem name="local-m2" m2compatible="true" >
+        <artifact pattern="${m2-pattern}"/>
+        <ivy pattern="${m2-pattern}"/>
+      </filesystem>
+      <ibiblio name="central" m2compatible="true"/>
+    </chain>
+  </resolvers>
+</ivysettings>
