@@ -1,10 +1,12 @@
 # SchemaCrawler Change History
 
 <a name="a15.01.04"></a>
-## Release 15.01.04 - 2018-10-07
+## Release 15.01.04 - 2018-10-14
 
 - Create a unique run id for each SchemaCrawler run
 - Rename -hideemptytables to -noemptytables
+- Allow for additional data plugins to be downloaded with a script
+- Reorganize command-line help to be consistent with SchemaCrawler Shell
 
 <a name="a15.01.03"></a>
 ## Release 15.01.03 - 2018-09-21

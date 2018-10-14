@@ -6,7 +6,7 @@
     module="schemacrawler-thymeleaf" />
   <dependencies>
     <dependency org="org.thymeleaf" name="thymeleaf"
-      rev="3.0.9.RELEASE" />
+      rev="3.0.10.RELEASE" />
     <dependency org="org.slf4j" name="slf4j-jdk14"
       rev="1.7.21" />
 
