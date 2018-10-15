@@ -10,15 +10,13 @@
     <dependency org="org.springframework.boot"
       name="spring-boot-starter" rev="2.0.5.RELEASE" />
     <dependency org="org.springframework.boot"
-      name="spring-boot-loader" rev="2.0.5.RELEASE" />
-    <dependency org="org.springframework.boot"
       name="spring-boot-starter-validation" rev="2.0.5.RELEASE" />
 
     <dependency org="org.apache.commons" name="commons-dbcp2"
       rev="2.5.0" />
 
     <dependency org="us.fatehi" name="schemacrawler-shell"
-      rev="15.01.04.02">
+      rev="15.01.05.01">
       <exclude org="us.fatehi" module="schemacrawler" />
       <exclude org="org.hsqldb" module="hsqldb" />
     </dependency>

@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a15.01.05"></a>
+## Release 15.01.05 - 2018-10-14
+
+- Add SchemaCrawler Shell to the main distribution
+
+
 <a name="a15.01.04"></a>
 ## Release 15.01.04 - 2018-10-14
 
@@ -7,6 +13,7 @@
 - Rename -hideemptytables to -noemptytables
 - Allow for additional data plugins to be downloaded with a script
 - Reorganize command-line help to be consistent with SchemaCrawler Shell
+
 
 <a name="a15.01.03"></a>
 ## Release 15.01.03 - 2018-09-21
