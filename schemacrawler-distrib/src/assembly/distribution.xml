@@ -185,7 +185,9 @@
     <copy todir="${schemacrawler.base-distribution}">
       <fileset dir="${distribution.assembly}">
         <include name="schemacrawler.cmd" />
+      	<include name="schemacrawler-shell.cmd" />
         <include name="schemacrawler.sh" />
+      	<include name="schemacrawler-shell.sh" />
       </fileset>
     </copy>
 
