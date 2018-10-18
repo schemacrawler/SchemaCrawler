@@ -43,8 +43,8 @@ import schemacrawler.Version;
 
 public class TestVersion
 {
-  private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-  private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+  private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+  private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
 
   @After
   public void cleanUpStreams()
@@ -56,15 +56,15 @@ public class TestVersion
   @Before
   public void setUpStreams()
   {
-    System.setOut(new PrintStream(outContent));
-    System.setErr(new PrintStream(errContent));
+    System.setOut(new PrintStream(outStream));
+    System.setErr(new PrintStream(errStream));
   }
 
   @Test
   public void version()
   {
     Version.main(new String[0]);
-    assertTrue(outContent.toString().startsWith("SchemaCrawler 15.01.05"));
+    assertTrue(outStream.toString().startsWith("SchemaCrawler 15.01.05"));
   }
 
 }
