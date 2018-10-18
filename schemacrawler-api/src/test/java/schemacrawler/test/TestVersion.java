@@ -31,6 +31,8 @@ package schemacrawler.test;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.PrintStream;
 
 import org.junit.After;
@@ -47,8 +49,8 @@ public class TestVersion
   @After
   public void cleanUpStreams()
   {
-    System.setOut(null);
-    System.setErr(null);
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
   @Before
