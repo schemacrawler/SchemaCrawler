@@ -54,7 +54,15 @@ final class MutableDatabaseInfo
   private String userName = "";
   private String productName = "";
   private String productVersion = "";
+  private String catalog = "";
+  private String schema = "";
   private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
+
+  @Override
+  public String getCatalog()
+  {
+    return catalog;
+  }
 
   /**
    * {@inheritDoc}
@@ -83,6 +91,12 @@ final class MutableDatabaseInfo
     final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
     Collections.sort(properties);
     return properties;
+  }
+
+  @Override
+  public String getSchema()
+  {
+    return schema;
   }
 
   /**
@@ -114,6 +128,11 @@ final class MutableDatabaseInfo
     }
   }
 
+  void setCatalog(final String catalog)
+  {
+    this.catalog = catalog;
+  }
+
   void setProductName(final String productName)
   {
     this.productName = productName;
@@ -122,6 +141,11 @@ final class MutableDatabaseInfo
   void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
+  }
+
+  void setSchema(final String schema)
+  {
+    this.schema = schema;
   }
 
   void setUserName(final String userName)

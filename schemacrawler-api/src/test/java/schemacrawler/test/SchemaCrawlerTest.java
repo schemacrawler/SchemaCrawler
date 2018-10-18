@@ -51,6 +51,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnDataType;
 import schemacrawler.schema.Constraint;
+import schemacrawler.schema.DatabaseInfo;
+import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.EventManipulationType;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
@@ -261,6 +263,49 @@ public class SchemaCrawlerTest
                       + table.getImportedForeignKeys().size());
           out.println("    # privileges: " + table.getPrivileges().size());
         }
+      }
+
+      out.assertEquals(testName.currentMethodFullName());
+    }
+  }
+
+  @Test
+  public void databaseInfo()
+    throws Exception
+  {
+    try (final TestWriter out = new TestWriter("text");)
+    {
+      final Config config = loadHsqldbConfig();
+
+      final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
+        .newSchemaRetrievalOptions(config);
+
+      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+        .builder()
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+        .includeAllRoutines();
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+        .toOptions();
+
+      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+                                         schemaCrawlerOptions);
+      final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
+      final Collection<DatabaseProperty> dbProperties = databaseInfo
+        .getProperties();
+      assertEquals("Database property count does not match",
+                   158,
+                   dbProperties.size());
+      out.println(String.format("username=%s", databaseInfo.getUserName()));
+      out.println(String.format("product name=%s",
+                                databaseInfo.getProductName()));
+      out.println(String.format("product version=%s",
+                                databaseInfo.getProductVersion()));
+      out.println(String.format("catalog=%s", databaseInfo.getCatalog()));
+      out.println(String.format("schema=%s", databaseInfo.getSchema()));
+      for (final DatabaseProperty dbProperty: dbProperties)
+      {
+        assertNotNull(dbProperty);
+        out.println(dbProperty);
       }
 
       out.assertEquals(testName.currentMethodFullName());

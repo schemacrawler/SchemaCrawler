@@ -342,9 +342,10 @@ final class DatabaseInfoRetriever
       return;
     }
 
+    DatabaseMetaData dbMetaData;
     try
     {
-      final DatabaseMetaData dbMetaData = getMetaData();
+      dbMetaData = getMetaData();
 
       dbInfo.setUserName(dbMetaData.getUserName());
       dbInfo.setProductName(dbMetaData.getDatabaseProductName());
@@ -353,7 +354,20 @@ final class DatabaseInfoRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not obtain database information", e);
+      return;
     }
+
+    try
+    {
+      final Connection connection = dbMetaData.getConnection();
+      dbInfo.setCatalog(connection.getCatalog());
+      dbInfo.setSchema(connection.getSchema());
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
+    }
+
   }
 
   /**

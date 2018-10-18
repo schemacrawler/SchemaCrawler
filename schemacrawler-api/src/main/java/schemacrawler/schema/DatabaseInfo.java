@@ -56,4 +56,18 @@ public interface DatabaseInfo
    */
   String getUserName();
 
+  /**
+   * Gets the catalog from the database connection.
+   *
+   * @return Catalog
+   */
+  String getCatalog();
+
+  /**
+   * Gets the schema from the database connection.
+   *
+   * @return Schema
+   */
+  String getSchema();
+
 }
