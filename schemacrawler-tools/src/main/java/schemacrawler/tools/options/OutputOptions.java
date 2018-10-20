@@ -113,6 +113,11 @@ public final class OutputOptions
     return inputFile;
   }
 
+  public InputResource getInputResource()
+  {
+    return inputResource;
+  }
+
   /**
    * Character encoding for output files.
    */
@@ -153,6 +158,11 @@ public final class OutputOptions
   public String getOutputFormatValue()
   {
     return outputFormatValue;
+  }
+
+  public OutputResource getOutputResource()
+  {
+    return outputResource;
   }
 
   /**
@@ -199,16 +209,6 @@ public final class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  InputResource getInputResource()
-  {
-    return inputResource;
-  }
-
-  OutputResource getOutputResource()
-  {
-    return outputResource;
   }
 
 }
