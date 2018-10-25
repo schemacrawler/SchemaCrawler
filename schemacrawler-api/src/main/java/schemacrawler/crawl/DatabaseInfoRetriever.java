@@ -360,8 +360,8 @@ final class DatabaseInfoRetriever
     try
     {
       final Connection connection = dbMetaData.getConnection();
-      dbInfo.setCatalog(connection.getCatalog());
-      dbInfo.setSchema(connection.getSchema());
+      dbInfo.setSchema(new SchemaReference(connection.getCatalog(),
+                                           connection.getSchema()));
     }
     catch (final SQLException e)
     {

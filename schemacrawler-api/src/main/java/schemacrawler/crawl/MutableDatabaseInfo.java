@@ -38,6 +38,8 @@ import java.util.Set;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
+import schemacrawler.schema.Schema;
+import schemacrawler.schema.SchemaReference;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -54,15 +56,9 @@ final class MutableDatabaseInfo
   private String userName = "";
   private String productName = "";
   private String productVersion = "";
-  private String catalog = "";
-  private String schema = "";
-  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
+  private Schema schema = new SchemaReference();
 
-  @Override
-  public String getCatalog()
-  {
-    return catalog;
-  }
+  private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
 
   /**
    * {@inheritDoc}
@@ -94,7 +90,7 @@ final class MutableDatabaseInfo
   }
 
   @Override
-  public String getSchema()
+  public Schema getSchema()
   {
     return schema;
   }
@@ -128,11 +124,6 @@ final class MutableDatabaseInfo
     }
   }
 
-  void setCatalog(final String catalog)
-  {
-    this.catalog = catalog;
-  }
-
   void setProductName(final String productName)
   {
     this.productName = productName;
@@ -143,9 +134,12 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setSchema(final String schema)
+  void setSchema(final Schema schema)
   {
-    this.schema = schema;
+    if (schema != null)
+    {
+      this.schema = schema;
+    }
   }
 
   void setUserName(final String userName)

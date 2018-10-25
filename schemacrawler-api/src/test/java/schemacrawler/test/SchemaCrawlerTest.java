@@ -300,8 +300,10 @@ public class SchemaCrawlerTest
                                 databaseInfo.getProductName()));
       out.println(String.format("product version=%s",
                                 databaseInfo.getProductVersion()));
-      out.println(String.format("catalog=%s", databaseInfo.getCatalog()));
-      out.println(String.format("schema=%s", databaseInfo.getSchema()));
+      out.println(String.format("catalog=%s",
+                                databaseInfo.getSchema().getCatalogName()));
+      out.println(String.format("schema=%s",
+                                databaseInfo.getSchema().getName()));
       for (final DatabaseProperty dbProperty: dbProperties)
       {
         assertNotNull(dbProperty);
