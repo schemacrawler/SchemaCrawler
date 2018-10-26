@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newOutputStream;
+import static java.nio.file.Files.readAllBytes;
 import static java.nio.file.Files.size;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
@@ -41,6 +42,7 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.List;
@@ -69,6 +71,7 @@ public class TestOutputStream
   public void assertEmpty()
     throws Exception
   {
+    out.flush();
     out.close();
 
     if (size(tempFile) > 0)
@@ -91,6 +94,7 @@ public class TestOutputStream
   public void close()
     throws IOException
   {
+    out.flush();
     out.close();
 
     try
@@ -114,6 +118,24 @@ public class TestOutputStream
     throws IOException
   {
     out.flush();
+  }
+
+  public Path getFilePath()
+  {
+    return tempFile;
+  }
+
+  public String getLog()
+  {
+    try
+    {
+      out.close();
+      return new String(readAllBytes(tempFile), StandardCharsets.UTF_8);
+    }
+    catch (final IOException e)
+    {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
@@ -152,6 +174,7 @@ public class TestOutputStream
   private List<String> collectFailures(final String referenceFile)
     throws Exception
   {
+    out.flush();
     out.close();
 
     requireNonNull(referenceFile, "No reference file provided");

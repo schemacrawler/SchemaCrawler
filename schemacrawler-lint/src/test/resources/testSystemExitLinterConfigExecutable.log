@@ -18,4 +18,3 @@ Summary of schema lints:
 [critical]      1- foreign key self-references primary key
 [critical]*     2- no indexes
 
-

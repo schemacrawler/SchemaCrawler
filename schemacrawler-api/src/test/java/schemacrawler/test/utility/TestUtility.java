@@ -371,6 +371,8 @@ public final class TestUtility
 
   private static StackTraceElement currentMethodStackTraceElement()
   {
+    final Pattern baseTestClassName = Pattern.compile(".*\\.Base.*Test");
+
     final StackTraceElement[] stackTrace = Thread.currentThread()
       .getStackTrace();
     final Iterator<StackTraceElement> stackTraceIterator = Arrays
@@ -386,7 +388,8 @@ public final class TestUtility
           final String className = stackTraceIterator.next().getClassName();
           if (!className.equals(TestUtility.class.getName())
               && !className.equals(TestWriter.class.getName())
-              && !className.matches(".*\\.Base.*Test"))
+              && !className.equals(TestOutputStream.class.getName())
+              && !baseTestClassName.matcher(className).matches())
           {
             return stackTrace[i + 1];
           }

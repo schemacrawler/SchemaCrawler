@@ -29,4 +29,3 @@ option for help
 Or, re-run SchemaCrawler with an additional
 -loglevel=CONFIG
 option for details on the error
-

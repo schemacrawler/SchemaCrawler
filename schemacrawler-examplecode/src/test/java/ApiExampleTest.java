@@ -27,58 +27,50 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.util.Arrays;
-import java.util.List;
-
-import org.junit.Rule;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemErrRule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.test.utility.TestOutputStream;
 
 public class ApiExampleTest
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public final SystemErrRule sysErrLog = new SystemErrRule().enableLog().mute();
-  @Rule
-  public final SystemOutRule sysOutLog = new SystemOutRule().enableLog().mute();
+  private TestOutputStream out;
+  private TestOutputStream err;
+
+  @After
+  public void cleanUpStreams()
+  {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
 
   @Test
   public void apiExample()
     throws Exception
   {
-    // Test
     ApiExample.main(new String[0]);
 
-    checkSystemOutLog();
-  }
-
-  private void checkSystemOutLog()
-    throws IOException, Exception
-  {
-    final Path tempFile = Files.createTempFile("sc", ".txt");
-    Files.write(tempFile,
-                Arrays.asList(sysOutLog.getLogWithNormalizedLineSeparator()),
-                StandardOpenOption.WRITE);
-
-    final List<String> failures = compareOutput("ApiExample.txt",
-                                                tempFile,
-                                                TextOutputFormat.text.name());
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    out.assertEquals("ApiExample.txt");
+    err.assertEmpty();
   }
 
 }

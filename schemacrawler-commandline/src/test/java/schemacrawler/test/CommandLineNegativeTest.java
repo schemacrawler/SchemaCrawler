@@ -32,21 +32,25 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemErrRule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 import sf.util.IOUtility;
 
@@ -58,10 +62,27 @@ public class CommandLineNegativeTest
 
   @Rule
   public TestName testName = new TestName();
-  @Rule
-  public final SystemOutRule sysOutLog = new SystemOutRule().enableLog().mute();
-  @Rule
-  public final SystemErrRule sysErrLog = new SystemErrRule().enableLog().mute();
+
+  private TestOutputStream out;
+  private TestOutputStream err;
+
+  @After
+  public void cleanUpStreams()
+  {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
 
   @Test
   public void commandLine_BadCommand()
@@ -88,10 +109,7 @@ public class CommandLineNegativeTest
                    final Map<String, String> config)
     throws Exception
   {
-    sysOutLog.clearLog();
-    sysErrLog.clearLog();
-
-    try (final TestWriter out = new TestWriter("text");)
+    try (final TestWriter outFile = new TestWriter("text");)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -104,7 +122,7 @@ public class CommandLineNegativeTest
       argsMap.put("tables", "");
       argsMap.put("routines", "");
       argsMap.put("outputformat", "text");
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("outputfile", outFile.toString());
 
       argsMap.putAll(argsMapOverride);
 
@@ -121,21 +139,12 @@ public class CommandLineNegativeTest
 
       Main.main(flattenCommandlineArgs(argsMap));
 
-      out.assertEmpty();
+      outFile.assertEmpty();
     }
 
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      out.write(sysOutLog.getLogWithNormalizedLineSeparator());
-      out.assertEmpty();
-    }
-
-    try (final TestWriter out = new TestWriter("text");)
-    {
-      out.write(sysErrLog.getLogWithNormalizedLineSeparator());
-      out.assertEquals(COMMAND_LINE_NEGATIVE_OUTPUT
-                       + testName.currentMethodName() + ".stderr.txt");
-    }
+    out.assertEmpty();
+    err.assertEquals(COMMAND_LINE_NEGATIVE_OUTPUT + testName.currentMethodName()
+                     + ".stderr.txt");
 
   }
 

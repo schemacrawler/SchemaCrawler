@@ -34,21 +34,25 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.writeConfigToTempFile;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemErrRule;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -63,12 +67,27 @@ public class MetadataRetrievalStrategyTest
 
   @Rule
   public TestName testName = new TestName();
-  @Rule
-  public final SystemOutRule systemOutRule = new SystemOutRule().enableLog()
-    .mute();
-  @Rule
-  public final SystemErrRule systemErrRule = new SystemErrRule().enableLog()
-    .mute();
+
+  private TestOutputStream out;
+  private TestOutputStream err;
+
+  @After
+  public void cleanUpStreams()
+  {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
 
   @Test
   public void overrideMetadataRetrievalStrategy()
@@ -107,7 +126,8 @@ public class MetadataRetrievalStrategyTest
     Main.main(flattenCommandlineArgs(argsMap));
 
     // Check that System.err has an error
-    final String errorLog = systemErrRule.getLog();
+    out.assertEmpty();
+    final String errorLog = err.getLog();
     assertThat(errorLog, containsString("No tables SQL provided"));
 
   }

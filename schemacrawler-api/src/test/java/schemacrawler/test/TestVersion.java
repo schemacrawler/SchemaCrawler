@@ -30,7 +30,6 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -40,11 +39,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import schemacrawler.Version;
+import schemacrawler.test.utility.TestOutputStream;
 
 public class TestVersion
 {
-  private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-  private final ByteArrayOutputStream errStream = new ByteArrayOutputStream();
+  private TestOutputStream out;
+  private TestOutputStream err;
 
   @After
   public void cleanUpStreams()
@@ -55,16 +55,22 @@ public class TestVersion
 
   @Before
   public void setUpStreams()
+    throws Exception
   {
-    System.setOut(new PrintStream(outStream));
-    System.setErr(new PrintStream(errStream));
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
   @Test
   public void version()
+    throws Exception
   {
     Version.main(new String[0]);
-    assertTrue(outStream.toString().startsWith("SchemaCrawler 15.01.05"));
+    assertTrue(out.getLog().startsWith("SchemaCrawler 15.01.05"));
+    err.assertEmpty();
   }
 
 }

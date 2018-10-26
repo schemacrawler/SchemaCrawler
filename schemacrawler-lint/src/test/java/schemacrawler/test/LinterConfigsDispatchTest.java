@@ -29,36 +29,33 @@ package schemacrawler.test;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.write;
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
-import static java.nio.file.StandardOpenOption.WRITE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Reader;
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
-import org.junit.contrib.java.lang.system.SystemErrRule;
 import org.junit.contrib.java.lang.system.internal.CheckExitCalled;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.test.utility.TestName;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
 
 public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
@@ -68,8 +65,27 @@ public class LinterConfigsDispatchTest
   public final TestName testName = new TestName();
   @Rule
   public final ExpectedSystemExit exit = ExpectedSystemExit.none();
-  @Rule
-  public final SystemErrRule sysErrLog = new SystemErrRule().enableLog().mute();
+
+  private TestOutputStream out;
+  private TestOutputStream err;
+
+  @After
+  public void cleanUpStreams()
+  {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
 
   @Test
   public void testLinterConfigs()
@@ -109,6 +125,7 @@ public class LinterConfigsDispatchTest
 
   @Test
   public void testSystemExitLinterConfigCommandLine()
+    throws Exception
   {
 
     final Config additionalConfig = new Config();
@@ -138,6 +155,7 @@ public class LinterConfigsDispatchTest
 
   @Test
   public void testSystemExitLinterConfigExecutable()
+    throws Exception
   {
 
     final Config additionalConfig = new Config();
@@ -166,29 +184,10 @@ public class LinterConfigsDispatchTest
   }
 
   private void checkSystemErrLog()
+    throws Exception
   {
-    try
-    {
-      final Path tempFile = IOUtility.createTempFilePath("lintertest", "log");
-      write(tempFile,
-            Arrays.asList(sysErrLog.getLogWithNormalizedLineSeparator()),
-            CREATE_NEW,
-            WRITE);
-      sysErrLog.clearLog();
-
-      final List<String> failures = compareOutput(testName.currentMethodName()
-                                                  + ".log",
-                                                  tempFile,
-                                                  TextOutputFormat.text.name());
-      if (failures.size() > 0)
-      {
-        fail(failures.toString());
-      }
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e);
-    }
+    out.assertEmpty();
+    err.assertEquals(testName.currentMethodName() + ".log");
   }
 
 }

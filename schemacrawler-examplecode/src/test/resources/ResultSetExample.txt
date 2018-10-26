@@ -6,4 +6,3 @@ o--> AUTHOR
      - label:     AUTHOR
      - data-type: VARCHAR
      - table:     
-
