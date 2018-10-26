@@ -49,7 +49,8 @@ public final class ConsoleOutputResource
                                     final boolean appendOutput)
     throws IOException
   {
-    final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out));
+    final Writer writer = new BufferedWriter(new OutputStreamWriter(System.out,
+                                                                    charset));
     LOGGER.log(Level.INFO, "Opened output writer to console");
     return new OutputWriter(getDescription(), writer, false);
   }
