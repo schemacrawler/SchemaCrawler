@@ -53,20 +53,21 @@ public final class TestOutputStream
   implements TestOutputCapture
 {
 
-  private final OutputStream out;
   private final Path tempFile;
   private final String outputformat;
+  private final OutputStream out;
 
   public TestOutputStream()
     throws IOException
   {
-    this(null);
+    this("");
   }
 
   public TestOutputStream(final String outputformat)
     throws IOException
   {
-    tempFile = IOUtility.createTempFilePath("test", "out");
+    tempFile = IOUtility
+      .createTempFilePath("test", outputformat.replaceAll("[/\\\\]", "_"));
     out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
     if (isBlank(outputformat))
     {

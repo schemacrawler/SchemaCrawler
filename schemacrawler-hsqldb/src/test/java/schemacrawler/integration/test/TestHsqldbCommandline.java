@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.Main;
@@ -66,7 +65,6 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
-@Ignore
 public class TestHsqldbCommandline
   extends BaseDatabaseTest
 {
