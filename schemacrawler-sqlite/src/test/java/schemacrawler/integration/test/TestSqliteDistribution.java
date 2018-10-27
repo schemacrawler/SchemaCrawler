@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import schemacrawler.Main;
@@ -50,6 +51,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@Ignore
 public class TestSqliteDistribution
 {
 
@@ -70,8 +72,7 @@ public class TestSqliteDistribution
 
     final Connection connection = null;
     assertEquals("\"",
-                 dbConnector
-                   .getSchemaRetrievalOptionsBuilder(connection)
+                 dbConnector.getSchemaRetrievalOptionsBuilder(connection)
                    .toOptions().getIdentifierQuoteString());
   }
 

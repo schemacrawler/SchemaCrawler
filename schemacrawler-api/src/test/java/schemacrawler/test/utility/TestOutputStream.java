@@ -39,18 +39,17 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.util.List;
 
 import sf.util.IOUtility;
 
-public class TestOutputStream
+public final class TestOutputStream
   extends OutputStream
+  implements TestOutputCapture
 {
 
   private final OutputStream out;
@@ -59,15 +58,11 @@ public class TestOutputStream
   public TestOutputStream()
     throws IOException
   {
-    final OpenOption[] openOptions = new OpenOption[] {
-                                                        WRITE,
-                                                        CREATE,
-                                                        TRUNCATE_EXISTING };
-
-    tempFile = IOUtility.createTempFilePath("schemacrawler", ".out.txt");
-    out = new BufferedOutputStream(newOutputStream(tempFile, openOptions));
+    tempFile = IOUtility.createTempFilePath("test", "out");
+    out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
   }
 
+  @Override
   public void assertEmpty()
     throws Exception
   {
@@ -80,6 +75,7 @@ public class TestOutputStream
     }
   }
 
+  @Override
   public void assertEquals(final String referenceFile)
     throws Exception
   {
@@ -108,27 +104,24 @@ public class TestOutputStream
   }
 
   @Override
-  public boolean equals(final Object obj)
+  public List<String> collectFailures(final String referenceFile)
+    throws Exception
   {
-    return out.equals(obj);
+    return collectFailures(referenceFile, "text", false);
   }
 
   @Override
-  public void flush()
-    throws IOException
-  {
-    out.flush();
-  }
-
   public Path getFilePath()
   {
     return tempFile;
   }
 
+  @Override
   public String getLog()
   {
     try
     {
+      out.flush();
       out.close();
       return new String(readAllBytes(tempFile), StandardCharsets.UTF_8);
     }
@@ -139,29 +132,9 @@ public class TestOutputStream
   }
 
   @Override
-  public int hashCode()
-  {
-    return out.hashCode();
-  }
-
-  @Override
   public String toString()
   {
-    return out.toString();
-  }
-
-  @Override
-  public void write(final byte[] b)
-    throws IOException
-  {
-    out.write(b);
-  }
-
-  @Override
-  public void write(final byte[] b, final int off, final int len)
-    throws IOException
-  {
-    out.write(b, off, len);
+    return tempFile.toString();
   }
 
   @Override
@@ -171,17 +144,18 @@ public class TestOutputStream
     out.write(b);
   }
 
-  private List<String> collectFailures(final String referenceFile)
+  protected List<String> collectFailures(final String referenceFile,
+                                         final String outputformat,
+                                         final boolean isCompressed)
     throws Exception
   {
-    out.flush();
     out.close();
 
     requireNonNull(referenceFile, "No reference file provided");
     final List<String> failures = compareOutput(referenceFile,
                                                 tempFile,
-                                                "text",
-                                                false);
+                                                outputformat,
+                                                isCompressed);
     return failures;
   }
 
