@@ -38,6 +38,7 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
+import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -54,12 +55,27 @@ public final class TestOutputStream
 
   private final OutputStream out;
   private final Path tempFile;
+  private final String outputformat;
 
   public TestOutputStream()
     throws IOException
   {
+    this(null);
+  }
+
+  public TestOutputStream(final String outputformat)
+    throws IOException
+  {
     tempFile = IOUtility.createTempFilePath("test", "out");
     out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
+    if (isBlank(outputformat))
+    {
+      this.outputformat = "text";
+    }
+    else
+    {
+      this.outputformat = outputformat;
+    }
   }
 
   @Override
@@ -107,7 +123,15 @@ public final class TestOutputStream
   public List<String> collectFailures(final String referenceFile)
     throws Exception
   {
-    return collectFailures(referenceFile, "text", false);
+    out.flush();
+    out.close();
+
+    requireNonNull(referenceFile, "No reference file provided");
+    final List<String> failures = compareOutput(referenceFile,
+                                                tempFile,
+                                                outputformat,
+                                                false);
+    return failures;
   }
 
   @Override
@@ -142,21 +166,6 @@ public final class TestOutputStream
     throws IOException
   {
     out.write(b);
-  }
-
-  protected List<String> collectFailures(final String referenceFile,
-                                         final String outputformat,
-                                         final boolean isCompressed)
-    throws Exception
-  {
-    out.close();
-
-    requireNonNull(referenceFile, "No reference file provided");
-    final List<String> failures = compareOutput(referenceFile,
-                                                tempFile,
-                                                outputformat,
-                                                isCompressed);
-    return failures;
   }
 
 }

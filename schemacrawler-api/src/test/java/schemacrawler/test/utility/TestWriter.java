@@ -29,7 +29,6 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -45,14 +44,11 @@ public final class TestWriter
     .getProperty("line.separator");
 
   private final TestOutputStream out;
-  private final String outputformat;
 
   public TestWriter(final String outputformat)
     throws IOException
   {
-    out = new TestOutputStream();
-    this.outputformat = requireNonNull(outputformat,
-                                       "No output format provided");
+    out = new TestOutputStream(outputformat);
   }
 
   @Override
@@ -80,7 +76,7 @@ public final class TestWriter
   public List<String> collectFailures(final String referenceFile)
     throws Exception
   {
-    return out.collectFailures(referenceFile, outputformat, false);
+    return out.collectFailures(referenceFile);
   }
 
   @Override
