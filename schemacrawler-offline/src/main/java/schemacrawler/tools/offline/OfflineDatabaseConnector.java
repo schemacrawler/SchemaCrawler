@@ -28,26 +28,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.offline;
 
 
+import java.io.IOException;
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
-import java.io.IOException;
-import java.util.regex.Pattern;
-
 public final class OfflineDatabaseConnector
-    extends DatabaseConnector
+  extends DatabaseConnector
 {
 
   public static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("offline",
-                                                                                 "SchemaCrawler " +
-                                                                                     "Offline " +
-                                                                                     "Catalog " +
-                                                                                     "Snapshot");
-  private static final long serialVersionUID = 1727911478084169179L;
+                                                                                 "SchemaCrawler "
+                                                                                            + "Offline "
+                                                                                            + "Catalog "
+                                                                                            + "Snapshot");
 
   public OfflineDatabaseConnector()
-      throws IOException
+    throws IOException
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/help/Connections.offline.txt"),

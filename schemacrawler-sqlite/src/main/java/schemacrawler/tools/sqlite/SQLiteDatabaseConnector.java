@@ -28,19 +28,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
-import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+
 public final class SQLiteDatabaseConnector
   extends DatabaseConnector
 {
-
-  private static final long serialVersionUID = -926915070636247650L;
 
   public SQLiteDatabaseConnector()
     throws IOException
@@ -55,7 +58,7 @@ public final class SQLiteDatabaseConnector
   }
 
   @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(Connection connection)
+  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");

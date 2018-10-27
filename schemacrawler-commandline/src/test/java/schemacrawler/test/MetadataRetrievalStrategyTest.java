@@ -78,17 +78,6 @@ public class MetadataRetrievalStrategyTest
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @Before
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   @Test
   public void overrideMetadataRetrievalStrategy()
     throws Exception
@@ -130,6 +119,17 @@ public class MetadataRetrievalStrategyTest
     final String errorLog = err.getLog();
     assertThat(errorLog, containsString("No tables SQL provided"));
 
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
 }

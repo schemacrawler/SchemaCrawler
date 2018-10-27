@@ -55,7 +55,6 @@ public class LoadSnapshotTest
   extends BaseDatabaseTest
 {
 
-  private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";
   private Path serializedCatalogFile;
 
   @Test

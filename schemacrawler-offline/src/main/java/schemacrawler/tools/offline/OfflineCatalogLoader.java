@@ -50,9 +50,29 @@ public final class OfflineCatalogLoader
   }
 
   @Override
-  public void setAdditionalConfiguration(Config additionalConfiguration)
+  public Connection getConnection()
   {
-    this.additionalConfiguration = additionalConfiguration;
+    return connection;
+  }
+
+  @Override
+  public String getDatabaseSystemIdentifier()
+  {
+    return databaseSystemIdentifier;
+  }
+
+  @Override
+  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+  }
+
+  @Override
+  public SchemaRetrievalOptions getSchemaRetrievalOptions()
+  {
+    return SchemaRetrievalOptionsBuilder.builder()
+      .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
+      .toOptions();
   }
 
   @Override
@@ -74,13 +94,25 @@ public final class OfflineCatalogLoader
   }
 
   @Override
-  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  public void setAdditionalConfiguration(final Config additionalConfiguration)
   {
-    return SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    this.additionalConfiguration = additionalConfiguration;
   }
 
   @Override
-  public void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions)
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
+  }
+
+  @Override
+  public void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    // No-op
+  }
+
+  @Override
+  public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
   {
     // No-op
   }
@@ -93,38 +125,6 @@ public final class OfflineCatalogLoader
         .log(Level.SEVERE,
              "Offline database connection not provided for the offline snapshot");
     }
-  }
-
-  @Override
-  public String getDatabaseSystemIdentifier()
-  {
-    return databaseSystemIdentifier;
-  }
-
-  @Override
-  public SchemaRetrievalOptions getSchemaRetrievalOptions()
-  {
-    return SchemaRetrievalOptionsBuilder.builder()
-      .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE)
-      .toOptions();
-  }
-
-  @Override
-  public void setSchemaRetrievalOptions(SchemaRetrievalOptions schemaRetrievalOptions)
-  {
-    // No-op
-  }
-
-  @Override
-  public Connection getConnection()
-  {
-    return connection;
-  }
-
-  @Override
-  public void setConnection(Connection connection)
-  {
-    this.connection = connection;
   }
 
 }

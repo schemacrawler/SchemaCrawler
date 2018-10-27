@@ -138,7 +138,7 @@ public class LintOutputTest
 
     final InfoLevel infoLevel = InfoLevel.standard;
     try (final TestWriter out = new TestWriter(TextOutputFormat.json
-      .getFormat());)
+       .getFormat());)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(TextOutputFormat.json, out);
@@ -168,7 +168,7 @@ public class LintOutputTest
 
     final InfoLevel infoLevel = InfoLevel.standard;
     try (final TestWriter out = new TestWriter(TextOutputFormat.text
-      .getFormat());)
+       .getFormat());)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(TextOutputFormat.text, out);

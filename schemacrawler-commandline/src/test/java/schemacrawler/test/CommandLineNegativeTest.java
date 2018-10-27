@@ -73,6 +73,16 @@ public class CommandLineNegativeTest
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
+  @Test
+  public void commandLine_BadCommand()
+    throws Exception
+  {
+    final Map<String, String> argsMapOverride = new HashMap<>();
+    argsMapOverride.put("command", "badcommand");
+
+    run(argsMapOverride, null);
+  }
+
   @Before
   public void setUpStreams()
     throws Exception
@@ -82,16 +92,6 @@ public class CommandLineNegativeTest
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
-  }
-
-  @Test
-  public void commandLine_BadCommand()
-    throws Exception
-  {
-    final Map<String, String> argsMapOverride = new HashMap<>();
-    argsMapOverride.put("command", "badcommand");
-
-    run(argsMapOverride, null);
   }
 
   private Path createConfig(final Map<String, String> config)

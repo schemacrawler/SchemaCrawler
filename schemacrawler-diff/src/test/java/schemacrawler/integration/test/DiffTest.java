@@ -84,7 +84,8 @@ public class DiffTest
                                                                 catalog2);
       diff.visit(new DiffNode.Visitor()
       {
-        public void node(DiffNode node, Visit visit)
+        @Override
+        public void node(final DiffNode node, final Visit visit)
         {
           final State nodeState = node.getState();
           final boolean print = DatabaseObject.class

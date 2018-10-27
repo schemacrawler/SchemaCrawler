@@ -53,17 +53,17 @@ public class SQLiteExecuableTest
   public TestName testName = new TestName();
 
   @Test
-  public void dump()
-    throws Exception
-  {
-    run(testName.currentMethodFullName(), "dump");
-  }
-
-  @Test
   public void count()
     throws Exception
   {
     run(testName.currentMethodFullName(), "count");
+  }
+
+  @Test
+  public void dump()
+    throws Exception
+  {
+    run(testName.currentMethodFullName(), "dump");
   }
 
   private void run(final String currentMethodFullName, final String command)
