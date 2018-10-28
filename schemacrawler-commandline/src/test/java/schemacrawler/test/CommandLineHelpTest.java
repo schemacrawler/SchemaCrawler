@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.util.HashMap;
@@ -70,14 +74,16 @@ public class CommandLineHelpTest
     throws Exception
   {
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       Main.main(flattenCommandlineArgs(argsMap));
       out.write(systemOutRule.getLog());
-
-      out.assertEquals(COMMAND_LINE_HELP_OUTPUT + testName.currentMethodName()
-                       + ".txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
+                                                  + testName.currentMethodName()
+                                                  + ".txt")));
   }
 
 }

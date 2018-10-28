@@ -30,8 +30,13 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.FileDescriptor;
@@ -186,8 +191,10 @@ public class LinterConfigsDispatchTest
   private void checkSystemErrLog()
     throws Exception
   {
-    out.assertEmpty();
-    err.assertEquals(testName.currentMethodName() + ".log");
+    assertThat(fileResource(out), hasNoContent());
+    assertThat(fileResource(err),
+               hasSameContentAs(classpathResource(testName.currentMethodName()
+                                                  + ".log")));
   }
 
 }

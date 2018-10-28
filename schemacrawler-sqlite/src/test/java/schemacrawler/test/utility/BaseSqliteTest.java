@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.io.IOException;
@@ -108,7 +112,8 @@ public abstract class BaseSqliteTest
     throws Exception
   {
     final String outputFormatValue = TextOutputFormat.text.name();
-    try (final TestWriter out = new TestWriter(outputFormatValue);)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(outputFormatValue, out);
@@ -120,9 +125,10 @@ public abstract class BaseSqliteTest
         executable.setConnection(connection);
         executable.execute();
       }
-
-      out.assertEquals(referenceFileName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(referenceFileName),
+                                       outputFormatValue));
   }
 
 }

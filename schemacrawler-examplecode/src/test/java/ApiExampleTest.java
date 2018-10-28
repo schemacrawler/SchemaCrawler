@@ -27,6 +27,12 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -69,8 +75,9 @@ public class ApiExampleTest
   {
     ApiExample.main(new String[0]);
 
-    out.assertEquals("ApiExample.txt");
-    err.assertEmpty();
+    assertThat(fileResource(out),
+               hasSameContentAs(classpathResource("ApiExample.txt")));
+    assertThat(fileResource(err), hasNoContent());
   }
 
 }

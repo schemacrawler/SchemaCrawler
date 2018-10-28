@@ -30,15 +30,16 @@ package schemacrawler.integration.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -76,7 +77,6 @@ public class TitleTest
     args.put("routines", "");
     // Testing no sequences, synonyms
 
-    final List<String> failures = new ArrayList<>();
     for (final String command: new String[] { "schema", "list" })
     {
       for (final OutputFormat outputFormat: outputFormats)
@@ -85,14 +85,8 @@ public class TitleTest
             null,
             command,
             outputFormat,
-            "commandLineWithTitle_" + command + "." + outputFormat.getFormat(),
-            failures);
+            "commandLineWithTitle_" + command + "." + outputFormat.getFormat());
       }
-    }
-
-    if (!failures.isEmpty())
-    {
-      fail(failures.toString());
     }
   }
 
@@ -111,12 +105,11 @@ public class TitleTest
                    final Map<String, String> config,
                    final String command,
                    final OutputFormat outputFormat,
-                   final String referenceFile,
-                   final List<String> allFailures)
+                   final String referenceFile)
     throws Exception
   {
-
-    try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
@@ -141,11 +134,11 @@ public class TitleTest
       argsMap.put("g", configFile.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      final List<String> failures = out
-        .collectFailures(TITLE_OUTPUT + referenceFile);
-      allFailures.addAll(failures);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(TITLE_OUTPUT
+                                                         + referenceFile),
+                                       outputFormat.getFormat()));
   }
 
 }

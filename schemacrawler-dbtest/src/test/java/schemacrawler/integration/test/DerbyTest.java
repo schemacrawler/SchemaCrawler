@@ -77,7 +77,7 @@ public class DerbyTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testDerbyWithConnection.txt");
+    executeExecutable(executable, "testDerbyWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed Apache Derby test successfully");
   }
 

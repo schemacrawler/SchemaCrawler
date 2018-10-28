@@ -28,44 +28,45 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.iosource;
 
 
-import static java.nio.file.Files.newBufferedReader;
 import static java.util.Objects.requireNonNull;
-import static sf.util.IOUtility.isFileReadable;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.util.logging.Level;
 
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
-public class FileInputResource
+public class ClasspathInputResource
   implements InputResource
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FileInputResource.class.getName());
+    .getLogger(ClasspathInputResource.class.getName());
 
-  private final Path inputFile;
+  private final String classpathResource;
 
-  public FileInputResource(final Path filePath)
+  public ClasspathInputResource(final String classpathResource)
     throws IOException
   {
-    inputFile = requireNonNull(filePath, "No file path provided").normalize()
-      .toAbsolutePath();
-    if (!isFileReadable(inputFile))
+    this.classpathResource = requireNonNull(classpathResource,
+                                            "No classpath resource provided");
+    if (ClasspathInputResource.class
+      .getResource(this.classpathResource) == null)
     {
-      final IOException e = new IOException("Cannot read file, " + inputFile);
+      final IOException e = new IOException("Cannot read classpath resource, "
+                                            + this.classpathResource);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
   }
 
-  public Path getInputFile()
+  public String getClasspathResource()
   {
-    return inputFile;
+    return classpathResource;
   }
 
   @Override
@@ -73,9 +74,13 @@ public class FileInputResource
     throws IOException
   {
     requireNonNull(charset, "No input charset provided");
-    final Reader reader = newBufferedReader(inputFile, charset);
-    LOGGER.log(Level.INFO,
-               new StringFormat("Opened input reader to file <%s>", inputFile));
+    final InputStream inputStream = ClasspathInputResource.class
+      .getResourceAsStream(classpathResource);
+    final Reader reader = new BufferedReader(new InputStreamReader(inputStream,
+                                                                   charset));
+    LOGGER
+      .log(Level.INFO,
+           "Opened input reader to classpath resource, " + classpathResource);
 
     return new InputReader(getDescription(), reader, true);
   }
@@ -83,7 +88,7 @@ public class FileInputResource
   @Override
   public String toString()
   {
-    return inputFile.toString();
+    return InputReader.class.getResource(classpathResource).toExternalForm();
   }
 
 }

@@ -30,6 +30,10 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
 import java.nio.file.Path;
@@ -96,7 +100,8 @@ public class PrimaryKeyWeakAssociationsTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .withMaximumSchemaInfoLevel();
@@ -131,9 +136,9 @@ public class PrimaryKeyWeakAssociationsTest
           }
         }
       }
-
-      out.assertEquals(currentMethodFullName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 
 }

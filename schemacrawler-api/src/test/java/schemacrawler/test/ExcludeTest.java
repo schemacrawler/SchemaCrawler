@@ -30,6 +30,10 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -64,7 +68,8 @@ public class ExcludeTest
   public void excludeColumns()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
@@ -98,9 +103,9 @@ public class ExcludeTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName.currentMethodFullName())));
   }
 
 }

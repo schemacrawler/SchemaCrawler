@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.util.HashMap;
@@ -106,7 +110,8 @@ public class TemplatingIntegrationTest
                                                        final String referenceFileName)
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -119,9 +124,9 @@ public class TemplatingIntegrationTest
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(referenceFileName + ".txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
   private void executeExecutableAndCheckForOutputFile(final String command,
@@ -130,7 +135,8 @@ public class TemplatingIntegrationTest
     throws Exception
   {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    try (final TestWriter out = new TestWriter(outputFormatValue);)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(outputFormatValue, out);
@@ -138,8 +144,8 @@ public class TemplatingIntegrationTest
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());
       executable.execute();
-
-      out.assertEquals(referenceFileName + ".txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 }

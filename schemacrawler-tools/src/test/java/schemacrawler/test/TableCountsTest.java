@@ -30,6 +30,10 @@ package schemacrawler.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
@@ -61,7 +65,8 @@ public class TableCountsTest
   public void tableCounts()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -89,9 +94,10 @@ public class TableCountsTest
           out.println(String.format("    row count: %d", count));
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
 }

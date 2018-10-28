@@ -132,7 +132,7 @@ public class PostgreSQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testPostgreSQLWithConnection.txt");
+    executeExecutable(executable, "testPostgreSQLWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 

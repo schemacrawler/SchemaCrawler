@@ -33,7 +33,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
@@ -90,7 +94,8 @@ public class SchemaCrawlerTest
   public void columnDataTypes()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -116,9 +121,10 @@ public class SchemaCrawlerTest
         assertNotNull(columnDataType);
         out.println(printColumnDataType(columnDataType));
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
@@ -144,7 +150,8 @@ public class SchemaCrawlerTest
   public void columns()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -217,16 +224,18 @@ public class SchemaCrawlerTest
           out.println();
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void counts()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -264,16 +273,18 @@ public class SchemaCrawlerTest
           out.println("    # privileges: " + table.getPrivileges().size());
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void databaseInfo()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -309,16 +320,18 @@ public class SchemaCrawlerTest
         assertNotNull(dbProperty);
         out.println(dbProperty);
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void relatedTables()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
@@ -339,16 +352,18 @@ public class SchemaCrawlerTest
         out.println("    # parent tables: "
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void relatedTablesWithTableRestriction()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
@@ -369,9 +384,10 @@ public class SchemaCrawlerTest
         out.println("    # parent tables: "
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
@@ -444,7 +460,8 @@ public class SchemaCrawlerTest
   public void sequences()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -475,16 +492,18 @@ public class SchemaCrawlerTest
         out.println("  maximum value: " + sequence.getMaximumValue());
         out.println("  cycle?: " + sequence.isCycle());
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void synonyms()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -513,16 +532,18 @@ public class SchemaCrawlerTest
         out.println("  class: "
                     + synonym.getReferencedObject().getClass().getSimpleName());
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void tableConstraints()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -563,16 +584,18 @@ public class SchemaCrawlerTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void tables()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Config config = loadHsqldbConfig();
 
@@ -609,9 +632,10 @@ public class SchemaCrawlerTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test

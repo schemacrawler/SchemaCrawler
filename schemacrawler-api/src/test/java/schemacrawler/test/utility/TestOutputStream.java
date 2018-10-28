@@ -28,23 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.readAllBytes;
-import static java.nio.file.Files.size;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
-import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.List;
 
 import sf.util.IOUtility;
 
@@ -54,85 +47,13 @@ public final class TestOutputStream
 {
 
   private final Path tempFile;
-  private final String outputformat;
   private final OutputStream out;
 
   public TestOutputStream()
     throws IOException
   {
-    this("");
-  }
-
-  public TestOutputStream(final String outputformat)
-    throws IOException
-  {
-    tempFile = IOUtility
-      .createTempFilePath("test", outputformat.replaceAll("[/\\\\]", "_"));
+    tempFile = IOUtility.createTempFilePath("test", "");
     out = newOutputStream(tempFile, WRITE, CREATE, TRUNCATE_EXISTING);
-    if (isBlank(outputformat))
-    {
-      this.outputformat = "text";
-    }
-    else
-    {
-      this.outputformat = outputformat;
-    }
-  }
-
-  @Override
-  public void assertEmpty()
-    throws Exception
-  {
-    out.flush();
-    out.close();
-
-    if (size(tempFile) > 0)
-    {
-      fail("Output is not empty");
-    }
-  }
-
-  @Override
-  public void assertEquals(final String referenceFile)
-    throws Exception
-  {
-    final List<String> failures = collectFailures(referenceFile);
-    if (!failures.isEmpty())
-    {
-      fail(failures.toString());
-    }
-  }
-
-  @Override
-  public void close()
-    throws IOException
-  {
-    out.flush();
-    out.close();
-
-    try
-    {
-      deleteIfExists(tempFile);
-    }
-    catch (final Throwable e)
-    {
-      // Ignore
-    }
-  }
-
-  @Override
-  public List<String> collectFailures(final String referenceFile)
-    throws Exception
-  {
-    out.flush();
-    out.close();
-
-    requireNonNull(referenceFile, "No reference file provided");
-    final List<String> failures = compareOutput(referenceFile,
-                                                tempFile,
-                                                outputformat,
-                                                false);
-    return failures;
   }
 
   @Override
@@ -142,7 +63,7 @@ public final class TestOutputStream
   }
 
   @Override
-  public String getLog()
+  public String getFileContents()
   {
     try
     {

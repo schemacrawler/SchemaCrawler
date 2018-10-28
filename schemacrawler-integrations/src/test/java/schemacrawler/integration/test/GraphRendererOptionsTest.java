@@ -391,7 +391,7 @@ public class GraphRendererOptionsTest
     // Check DOT file
     final String referenceFileName = testMethodName;
     executeExecutable(executable,
-                      GraphOutputFormat.scdot.getFormat(),
+                      GraphOutputFormat.scdot,
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
   }
 

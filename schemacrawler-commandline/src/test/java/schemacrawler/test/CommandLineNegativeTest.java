@@ -30,6 +30,11 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileDescriptor;
@@ -52,6 +57,7 @@ import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 public class CommandLineNegativeTest
@@ -109,7 +115,8 @@ public class CommandLineNegativeTest
                    final Map<String, String> config)
     throws Exception
   {
-    try (final TestWriter outFile = new TestWriter("text");)
+    final TestWriter outputFile = new TestWriter();
+    try (final TestWriter outFile = outputFile;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -121,7 +128,7 @@ public class CommandLineNegativeTest
       argsMap.put("command", "brief");
       argsMap.put("tables", "");
       argsMap.put("routines", "");
-      argsMap.put("outputformat", "text");
+      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
       argsMap.put("outputfile", outFile.toString());
 
       argsMap.putAll(argsMapOverride);
@@ -138,14 +145,14 @@ public class CommandLineNegativeTest
       argsMap.put("g", configFile.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      outFile.assertEmpty();
     }
 
-    out.assertEmpty();
-    err.assertEquals(COMMAND_LINE_NEGATIVE_OUTPUT + testName.currentMethodName()
-                     + ".stderr.txt");
-
+    assertThat(fileResource(outputFile), hasNoContent());
+    assertThat(fileResource(out), hasNoContent());
+    assertThat(fileResource(err),
+               hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
+                                                  + testName.currentMethodName()
+                                                  + ".stderr.txt")));
   }
 
 }

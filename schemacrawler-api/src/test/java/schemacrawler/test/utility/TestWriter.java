@@ -33,7 +33,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.List;
 
 public final class TestWriter
   extends Writer
@@ -45,24 +44,10 @@ public final class TestWriter
 
   private final TestOutputStream out;
 
-  public TestWriter(final String outputformat)
+  public TestWriter()
     throws IOException
   {
-    out = new TestOutputStream(outputformat);
-  }
-
-  @Override
-  public void assertEmpty()
-    throws Exception
-  {
-    out.assertEmpty();
-  }
-
-  @Override
-  public void assertEquals(final String referenceFile)
-    throws Exception
-  {
-    out.assertEquals(referenceFile);
+    out = new TestOutputStream();
   }
 
   @Override
@@ -70,13 +55,6 @@ public final class TestWriter
     throws IOException
   {
     out.close();
-  }
-
-  @Override
-  public List<String> collectFailures(final String referenceFile)
-    throws Exception
-  {
-    return out.collectFailures(referenceFile);
   }
 
   @Override
@@ -93,9 +71,9 @@ public final class TestWriter
   }
 
   @Override
-  public String getLog()
+  public String getFileContents()
   {
-    return out.getLog();
+    return out.getFileContents();
   }
 
   public void println()

@@ -31,22 +31,12 @@ package schemacrawler.test.utility;
 import java.io.Closeable;
 import java.io.Flushable;
 import java.nio.file.Path;
-import java.util.List;
 
 public interface TestOutputCapture
   extends Flushable, Closeable
 {
 
-  void assertEmpty()
-    throws Exception;
-
-  void assertEquals(String referenceFile)
-    throws Exception;
-
-  List<String> collectFailures(String referenceFile)
-    throws Exception;
-
-  String getLog();
+  String getFileContents();
 
   Path getFilePath();
 

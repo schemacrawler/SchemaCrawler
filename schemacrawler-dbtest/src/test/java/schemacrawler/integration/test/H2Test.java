@@ -78,7 +78,7 @@ public class H2Test
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testH2WithConnection.txt");
+    executeExecutable(executable, "testH2WithConnection.txt");
     LOGGER.log(Level.INFO, "Completed H2 test successfully");
   }
 

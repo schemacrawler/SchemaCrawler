@@ -32,7 +32,12 @@ import static java.nio.file.Files.size;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileOutputStream;
@@ -62,6 +67,7 @@ import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
@@ -76,7 +82,8 @@ public class OfflineSnapshotTest
   public void offlineSnapshotCommandLine()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
@@ -86,20 +93,23 @@ public class OfflineSnapshotTest
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
       argsMap.put("command", "details");
-      argsMap.put("outputformat", "text");
+      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + "details.txt")));
+
   }
 
   @Test
   public void offlineSnapshotCommandLineWithFilters()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
@@ -109,22 +119,24 @@ public class OfflineSnapshotTest
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
       argsMap.put("command", "details");
-      argsMap.put("outputformat", "text");
+      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
       argsMap.put("routines", "");
       argsMap.put("tables", ".*SALES");
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + "offlineWithFilters.txt")));
   }
 
   @Test
   public void offlineSnapshotCommandLineWithSchemaFilters()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "offline");
@@ -134,7 +146,7 @@ public class OfflineSnapshotTest
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
       argsMap.put("command", "list");
-      argsMap.put("outputformat", "text");
+      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
       argsMap.put("schemas", "PUBLIC.BOOKS");
       argsMap.put("outputfile", out.toString());
 
@@ -145,10 +157,10 @@ public class OfflineSnapshotTest
       }
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(OFFLINE_EXECUTABLE_OUTPUT
-                       + "offlineWithSchemaFilters.txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
+                                                  + "offlineWithSchemaFilters.txt")));
   }
 
   @Test
@@ -174,9 +186,7 @@ public class OfflineSnapshotTest
     executable.setOutputOptions(inputOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
-    executeExecutable(executable,
-                      "text",
-                      OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
+    executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
   }
 
   @Before
@@ -212,14 +222,14 @@ public class OfflineSnapshotTest
   }
 
   protected void executeExecutable(final SchemaCrawlerExecutable executable,
-                                   final String outputFormatValue,
                                    final String referenceFileName)
     throws Exception
   {
-    try (final TestWriter out = new TestWriter(outputFormatValue);)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormatValue, out);
+        .newOutputOptions(TextOutputFormat.text, out);
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
         .builder();
       schemaRetrievalOptionsBuilder
@@ -230,9 +240,10 @@ public class OfflineSnapshotTest
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
       executable.execute();
-
-      out.assertEquals(referenceFileName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(referenceFileName),
+                                       TextOutputFormat.text.getFormat()));
   }
 
 }

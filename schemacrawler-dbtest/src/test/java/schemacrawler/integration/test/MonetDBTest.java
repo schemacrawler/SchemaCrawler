@@ -110,7 +110,7 @@ public class MonetDBTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testMonetDBWithConnection.txt");
+    executeExecutable(executable, "testMonetDBWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed MonetDB test successfully");
   }
 

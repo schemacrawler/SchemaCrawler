@@ -27,6 +27,12 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasNoContent;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -67,11 +73,11 @@ public class ResultSetExampleTest
   public void resultSetExample()
     throws Exception
   {
-    // Test
     ResultSetExample.main(new String[0]);
 
-    out.assertEquals("ResultSetExample.txt");
-    err.assertEmpty();
+    assertThat(fileResource(out),
+               hasSameContentAs(classpathResource("ResultSetExample.txt")));
+    assertThat(fileResource(err), hasNoContent());
   }
 
 }

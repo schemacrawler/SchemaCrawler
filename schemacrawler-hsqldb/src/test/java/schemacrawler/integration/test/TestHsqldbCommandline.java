@@ -36,6 +36,10 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.DatabaseUtility.checkConnection;
 
@@ -91,7 +95,8 @@ public class TestHsqldbCommandline
     }
 
     final OutputFormat outputFormat = TextOutputFormat.text;
-    try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "hsqldb");
@@ -107,9 +112,12 @@ public class TestHsqldbCommandline
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals("hsqldb.main" + "." + outputFormat.getFormat());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource("hsqldb.main" + "."
+                                                         + outputFormat
+                                                           .getFormat()),
+                                       outputFormat.getFormat()));
   }
 
   @Test

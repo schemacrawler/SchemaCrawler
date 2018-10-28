@@ -31,6 +31,10 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
@@ -61,7 +65,8 @@ public class SchemaCrawlerGrepTest
   public void grepColumns()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .builder()
@@ -86,9 +91,10 @@ public class SchemaCrawlerGrepTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
@@ -131,7 +137,8 @@ public class SchemaCrawlerGrepTest
   public void grepCombined()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .builder()
@@ -157,16 +164,18 @@ public class SchemaCrawlerGrepTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void grepDefinitions()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
         .builder()
@@ -191,16 +200,18 @@ public class SchemaCrawlerGrepTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
   @Test
   public void grepProcedures()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().includeAllRoutines()
@@ -227,9 +238,10 @@ public class SchemaCrawlerGrepTest
           }
         }
       }
-
-      out.assertEquals(testName.currentMethodFullName());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
 
   }
 

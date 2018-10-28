@@ -89,7 +89,7 @@ public class SiteLintReportVariationsTest
     {
       final String outputFormatValue = outputFormat.getFormat();
       final String extension;
-      if ("text".equals(outputFormatValue))
+      if (outputFormat == TextOutputFormat.text)
       {
         extension = "txt";
       }

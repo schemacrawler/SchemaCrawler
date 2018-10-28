@@ -31,6 +31,10 @@ package schemacrawler.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
@@ -91,21 +95,26 @@ public class LintTest
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(51, lintCollector.size());
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout1 = new TestWriter();
+    try (final TestWriter out = testout1;)
     {
       for (final Lint<?> lint: lintCollector)
       {
         out.println(lint);
       }
-
-      out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.txt");
     }
+    assertThat(fileResource(testout1),
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.txt")));
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout2 = new TestWriter();
+    try (final TestWriter out = testout2;)
     {
       out.println(linters.getLintSummary());
-      out.assertEquals(LINTS_OUTPUT + "schemacrawler.lints.summary.txt");
     }
+    assertThat(fileResource(testout2),
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.summary.txt")));
   }
 
   @Test
@@ -137,16 +146,17 @@ public class LintTest
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertEquals(40, lintCollector.size());
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       for (final Lint<?> lint: lintCollector)
       {
         out.println(lint);
       }
-
-      out.assertEquals(LINTS_OUTPUT
-                       + "schemacrawler.lints.excluded_columns.txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(LINTS_OUTPUT
+                                                  + "schemacrawler.lints.excluded_columns.txt")));
   }
 
 }

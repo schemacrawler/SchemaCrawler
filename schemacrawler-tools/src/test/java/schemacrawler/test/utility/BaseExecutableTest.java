@@ -29,20 +29,43 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseExecutableTest
   extends BaseDatabaseTest
 {
 
   protected void executeExecutable(final SchemaCrawlerExecutable executable,
+                                   final OutputFormat outputFormat,
+                                   final String referenceFileName)
+    throws Exception
+  {
+    executeExecutable(executable, outputFormat.getFormat(), referenceFileName);
+  }
+
+  protected void executeExecutable(final SchemaCrawlerExecutable executable,
+                                   final String referenceFileName)
+    throws Exception
+  {
+    executeExecutable(executable, TextOutputFormat.text, referenceFileName);
+  }
+
+  protected void executeExecutable(final SchemaCrawlerExecutable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
     throws Exception
   {
-    try (final TestWriter out = new TestWriter(outputFormatValue);)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(outputFormatValue, out);
@@ -50,9 +73,10 @@ public abstract class BaseExecutableTest
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());
       executable.execute();
-
-      out.assertEquals(referenceFileName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(referenceFileName),
+                                       outputFormatValue));
   }
 
 }

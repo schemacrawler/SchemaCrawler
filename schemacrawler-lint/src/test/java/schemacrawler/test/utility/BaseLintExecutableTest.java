@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.Utility.isBlank;
@@ -53,7 +57,8 @@ public abstract class BaseLintExecutableTest
                                         final String referenceFileName)
     throws Exception
   {
-    try (final TestWriter out = new TestWriter(outputFormat.getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
@@ -78,9 +83,11 @@ public abstract class BaseLintExecutableTest
       }
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(referenceFileName + ".txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(referenceFileName
+                                                         + ".txt"),
+                                       outputFormat.getFormat()));
   }
 
   protected void executeLintExecutable(final OutputFormat outputFormat,
@@ -104,9 +111,7 @@ public abstract class BaseLintExecutableTest
       lintExecutable.setAdditionalConfiguration(config);
     }
 
-    executeExecutable(lintExecutable,
-                      outputFormat.getFormat(),
-                      referenceFileName + ".txt");
+    executeExecutable(lintExecutable, outputFormat, referenceFileName + ".txt");
   }
 
 }

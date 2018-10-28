@@ -29,6 +29,10 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
@@ -78,10 +82,10 @@ public class TestSqliteDistribution
   public void testSqliteMain()
     throws Exception
   {
-    try (final TestWriter out = new TestWriter("text");)
+    final OutputFormat outputFormat = TextOutputFormat.text;
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
-      final OutputFormat outputFormat = TextOutputFormat.text;
-
       final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
         .normalize().toAbsolutePath();
 
@@ -100,9 +104,12 @@ public class TestSqliteDistribution
       argsMap.put("outputfile", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals("sqlite.main" + "." + outputFormat.getFormat());
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource("sqlite.main" + "."
+                                                         + outputFormat
+                                                           .getFormat()),
+                                       outputFormat.getFormat()));
   }
 
 }

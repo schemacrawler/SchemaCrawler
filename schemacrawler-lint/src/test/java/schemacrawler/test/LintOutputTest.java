@@ -29,7 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
@@ -137,8 +142,8 @@ public class LintOutputTest
     clean(JSON_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (final TestWriter out = new TestWriter(TextOutputFormat.json
-       .getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(TextOutputFormat.json, out);
@@ -155,9 +160,11 @@ public class LintOutputTest
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());
       executable.execute();
-
-      out.assertEquals(JSON_OUTPUT + "lints.json");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAndTypeAs(classpathResource(JSON_OUTPUT
+                                                         + "lints.json"),
+                                       TextOutputFormat.json.getFormat()));
   }
 
   @Test
@@ -167,8 +174,8 @@ public class LintOutputTest
     clean(TEXT_OUTPUT);
 
     final InfoLevel infoLevel = InfoLevel.standard;
-    try (final TestWriter out = new TestWriter(TextOutputFormat.text
-       .getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final OutputOptions outputOptions = OutputOptionsBuilder
         .newOutputOptions(TextOutputFormat.text, out);
@@ -185,9 +192,9 @@ public class LintOutputTest
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());
       executable.execute();
-
-      out.assertEquals(TEXT_OUTPUT + "lint.txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(TEXT_OUTPUT + "lint.txt")));
   }
 
 }

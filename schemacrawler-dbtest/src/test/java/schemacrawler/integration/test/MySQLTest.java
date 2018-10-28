@@ -162,7 +162,7 @@ public class MySQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "text", "testMySQLWithConnection.txt");
+    executeExecutable(executable, "testMySQLWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed MySQL test successfully");
   }
 

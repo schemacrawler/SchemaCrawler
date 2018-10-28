@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import org.junit.BeforeClass;
@@ -145,8 +149,8 @@ public class SchemaCrawlerTextCommandsOutputTest
   private void textOutputTest(final String command, final Config config)
     throws Exception
   {
-    try (final TestWriter writer = new TestWriter(TextOutputFormat.text
-      .getFormat());)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
@@ -156,7 +160,7 @@ public class SchemaCrawlerTextCommandsOutputTest
         .toOptions();
 
       final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(TextOutputFormat.text, writer);
+        .newOutputOptions(TextOutputFormat.text, out);
 
       final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder
         .builder();
@@ -173,9 +177,10 @@ public class SchemaCrawlerTextCommandsOutputTest
       executable.setOutputOptions(outputOptions);
       executable.setConnection(getConnection());
       executable.execute();
-
-      writer.assertEquals(COMMAND_OUTPUT + command + ".txt");
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(COMMAND_OUTPUT + command
+                                                  + ".txt")));
   }
 
 }

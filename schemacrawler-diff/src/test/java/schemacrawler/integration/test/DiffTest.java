@@ -29,6 +29,10 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
@@ -78,7 +82,8 @@ public class DiffTest
 
     final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final DiffNode diff = objectDifferBuilder.build().compare(catalog1,
                                                                 catalog2);
@@ -107,9 +112,9 @@ public class DiffTest
           }
         }
       });
-
-      out.assertEquals(currentMethodFullName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 
   @Test
@@ -151,7 +156,8 @@ public class DiffTest
     throws Exception
   {
 
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       final Catalog baseCatalog = getCatalog(database);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
@@ -171,9 +177,9 @@ public class DiffTest
           }
         }
       }
-
-      out.assertEquals(currentMethodFullName);
     }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 
 }

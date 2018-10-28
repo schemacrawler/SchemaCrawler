@@ -30,6 +30,10 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -46,6 +50,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 public class CommandLineTest
@@ -291,8 +296,8 @@ public class CommandLineTest
                    final String command)
     throws Exception
   {
-
-    try (final TestWriter out = new TestWriter("text");)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
       argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
       argsMap.put("user", "sa");
@@ -301,7 +306,7 @@ public class CommandLineTest
       argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
       argsMap.put("infolevel", "maximum");
       argsMap.put("command", command);
-      argsMap.put("outputformat", "text");
+      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
       argsMap.put("outputfile", out.toString());
 
       final Config runConfig = new Config();
@@ -316,10 +321,12 @@ public class CommandLineTest
       argsMap.put("g", configFile.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
-
-      out.assertEquals(COMMAND_LINE_OUTPUT + testName.currentMethodName()
-                       + ".txt");
     }
+
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
+                                                  + testName.currentMethodName()
+                                                  + ".txt")));
   }
 
 }
