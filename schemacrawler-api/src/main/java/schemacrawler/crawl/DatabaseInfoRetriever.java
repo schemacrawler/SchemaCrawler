@@ -549,7 +549,7 @@ final class DatabaseInfoRetriever
         }
         else
         {
-          baseType = null;
+          baseType = new MutableColumnDataType(schema, "unknown");
         }
         final MutableColumnDataType columnDataType = lookupOrCreateColumnDataType(schema,
                                                                                   dataType,
