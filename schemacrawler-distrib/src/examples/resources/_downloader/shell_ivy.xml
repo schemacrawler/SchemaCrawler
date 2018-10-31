@@ -7,10 +7,6 @@
 
     <dependency org="org.springframework.shell"
       name="spring-shell-starter" rev="2.0.1.RELEASE" />
-    <dependency org="org.springframework.boot"
-      name="spring-boot-starter" rev="2.0.5.RELEASE" />
-    <dependency org="org.springframework.boot"
-      name="spring-boot-starter-validation" rev="2.0.5.RELEASE" />
 
     <dependency org="org.apache.commons" name="commons-dbcp2"
       rev="2.5.0" />
@@ -25,9 +21,6 @@
     <exclude type="sources" ext="jar" />
     <exclude type="test" ext="jar" />
     <exclude type="javadoc" ext="jar" />
-
-    <override org="org.springframework.boot" module="spring-*"
-      rev="2.0.5.RELEASE" />
 
   </dependencies>
 </ivy-module>
