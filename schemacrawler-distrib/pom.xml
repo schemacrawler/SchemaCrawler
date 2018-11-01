@@ -171,7 +171,7 @@
                 <artifactItem>
                   <groupId>mysql</groupId>
                   <artifactId>mysql-connector-java</artifactId>
-                  <version>8.0.12</version>
+                  <version>8.0.13</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
