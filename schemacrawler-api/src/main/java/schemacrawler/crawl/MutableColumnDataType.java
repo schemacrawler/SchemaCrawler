@@ -84,7 +84,11 @@ final class MutableColumnDataType
     javaSqlType = JavaSqlType.UNKNOWN;
     javaSqlTypeMappedClass = Object.class;
     searchable = SearchableType.unknown;
+
+    literalPrefix = "";
+    literalSuffix = "";
     createParameters = "";
+    localizedTypeName = "";
   }
 
   /**
