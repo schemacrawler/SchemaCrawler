@@ -3,7 +3,7 @@
 <a name="a15.01.05"></a>
 ## Release 15.01.05 - 2018-10-14
 
-- Add SchemaCrawler Shell to the main distribution
+- Add SchemaCrawler Shell example to the main distribution
 
 
 <a name="a15.01.04"></a>

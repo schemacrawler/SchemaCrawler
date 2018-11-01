@@ -7,11 +7,14 @@ The shell example demonstrates the use of SchemaCrawler Shell.
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `_downloader` directory 
-4. Run `download.cmd shell` (or `download.sh shell` on Unix) to
+4. Run `download.cmd shell` (or `download.sh shell` on Unix) to  
    install SchemaCrawler Shell support 
-5. Start a command shell in the SchemaCrawler distribution directory, that is, the `_schemacrawler` directory. 
-6. Run `schemacrawler-shell.cmd ` (or `schemacrawler-shell.sh` on Unix), to give you a list of available command-line options 
-7. Run the `help` commands in SchemaCrawler Shell
+5. Copy the `schemacrawler-shell.cmd` and `schemacrawler-shell.sh` files into the  
+   the `_schemacrawler` directory
+5. Start a command shell in the SchemaCrawler distribution directory,  
+   that is, the `_schemacrawler` directory
+6. Run `schemacrawler-shell.cmd ` (or `schemacrawler-shell.sh` on Unix)
+7. Run the `help` command in SchemaCrawler Shell
 8. Run the following commands in SchemaCrawler Shell
 ```
 connect -server hsqldb -user sa -database schemacrawler
