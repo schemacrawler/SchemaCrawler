@@ -79,4 +79,13 @@ public abstract class BaseExecutableTest
                                        outputFormatValue));
   }
 
+  protected void executeExecutable(final String command,
+                                   final String outputFormatValue,
+                                   final String referenceFileName)
+    throws Exception
+  {
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executeExecutable(executable, outputFormatValue, referenceFileName);
+  }
+
 }

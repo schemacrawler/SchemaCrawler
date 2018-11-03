@@ -41,14 +41,11 @@ import java.util.Map;
 import org.junit.Test;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class TemplatingIntegrationTest
-  extends BaseDatabaseTest
+  extends BaseExecutableTest
 {
 
   @Test
@@ -82,27 +79,27 @@ public class TemplatingIntegrationTest
   public void executableFreeMarker()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile("freemarker",
-                                           "plaintextschema.ftl",
-                                           "executableForFreeMarker");
+    executeExecutable("freemarker",
+                      "plaintextschema.ftl",
+                      "executableForFreeMarker.txt");
   }
 
   @Test
   public void executableThymeleaf()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile("thymeleaf",
-                                           "plaintextschema.thymeleaf",
-                                           "executableForThymeleaf");
+    executeExecutable("thymeleaf",
+                      "plaintextschema.thymeleaf",
+                      "executableForThymeleaf.txt");
   }
 
   @Test
   public void executableVelocity()
     throws Exception
   {
-    executeExecutableAndCheckForOutputFile("velocity",
-                                           "plaintextschema.vm",
-                                           "executableForVelocity");
+    executeExecutable("velocity",
+                      "plaintextschema.vm",
+                      "executableForVelocity.txt");
   }
 
   private void executeCommandlineAndCheckForOutputFile(final String command,
@@ -129,23 +126,4 @@ public class TemplatingIntegrationTest
                hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
-  private void executeExecutableAndCheckForOutputFile(final String command,
-                                                      final String outputFormatValue,
-                                                      final String referenceFileName)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormatValue, out);
-
-      executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
-      executable.execute();
-    }
-    assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
-  }
 }

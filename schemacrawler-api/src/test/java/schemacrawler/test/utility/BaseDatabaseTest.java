@@ -31,7 +31,6 @@ package schemacrawler.test.utility;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,9 +42,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Level;
-
-import org.junit.BeforeClass;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -61,18 +57,12 @@ import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
 
 public abstract class BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   static
   {
     TestDatabase.initialize();
-  }
-
-  @BeforeClass
-  public static void setApplicationLogLevel()
-    throws Exception
-  {
-    applyApplicationLogLevel(Level.OFF);
   }
 
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
