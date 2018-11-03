@@ -28,22 +28,35 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.BeforeClass;
 
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
+import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestSchemaCreator;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseAdditionalDatabaseTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   protected final static Logger LOGGER = Logger
@@ -76,19 +89,33 @@ public abstract class BaseAdditionalDatabaseTest
                                   final String password)
     throws SchemaCrawlerException, SQLException
   {
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUsername(user);
-    dataSource.setPassword(password);
-    dataSource.setUrl(connectionUrl);
-    dataSource.setDefaultAutoCommit(false);
-    dataSource.setInitialSize(1);
-    dataSource.setMaxTotal(1);
-
     LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
-    this.dataSource = dataSource;
+
+    final UserCredentials userCredentials = new SingleUseUserCredentials(user,
+                                                                         password);
+    final Map<String, String> map = new HashMap<>();
+    map.put("url", connectionUrl);
+    dataSource = new DatabaseConnectionOptions(userCredentials, map);
   }
 
-  @Override
+  protected void executeExecutable(final SchemaCrawlerExecutable executable,
+                                   final String referenceFileName)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
+    {
+      final OutputOptions outputOptions = OutputOptionsBuilder
+        .newOutputOptions(TextOutputFormat.text, out);
+
+      executable.setOutputOptions(outputOptions);
+      executable.setConnection(getConnection());
+      executable.execute();
+    }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(referenceFileName)));
+  }
+
   protected final Connection getConnection()
     throws SchemaCrawlerException
   {

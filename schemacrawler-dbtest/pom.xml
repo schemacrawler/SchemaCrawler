@@ -52,13 +52,6 @@
       <artifactId>schemacrawler-postgresql</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-dbcp2</artifactId>
-      <version>2.3.0</version>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
