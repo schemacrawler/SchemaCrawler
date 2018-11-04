@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.junit.Assume.assumeTrue;
 import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_3;
+import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -39,6 +41,7 @@ import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
@@ -55,6 +58,15 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 public class PostgreSQLTest
   extends BaseAdditionalDatabaseTest
 {
+
+  @BeforeClass
+  public static void checkRun()
+  {
+    final String property = System.getProperty("complete");
+    final boolean runIf = property != null && isBlank(property)
+                          || Boolean.parseBoolean(property);
+    assumeTrue(runIf);
+  }
 
   private boolean isDatabaseRunning;
   private EmbeddedPostgres postgres;

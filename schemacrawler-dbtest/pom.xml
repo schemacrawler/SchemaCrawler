@@ -42,11 +42,6 @@
       <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-mysql</artifactId>
-      <version>${project.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
@@ -76,12 +71,6 @@
       <groupId>monetdb</groupId>
       <artifactId>monetdb-java-lite</artifactId>
       <version>2.37</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.wix</groupId>
-      <artifactId>wix-embedded-mysql</artifactId>
-      <version>4.1.2</version>
       <scope>test</scope>
     </dependency>
 

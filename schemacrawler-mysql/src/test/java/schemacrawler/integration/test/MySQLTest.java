@@ -34,6 +34,7 @@ import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static com.wix.mysql.distribution.Version.v5_6_latest;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.junit.Assume.assumeTrue;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -46,6 +47,7 @@ import java.util.logging.Level;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.wix.mysql.EmbeddedMysql;
@@ -56,7 +58,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
-import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -91,6 +92,15 @@ public class MySQLTest
       return classpathResource;
     }
 
+  }
+
+  @BeforeClass
+  public static void checkRun()
+  {
+    final String property = System.getProperty("complete");
+    final boolean runIf = property != null && isBlank(property)
+                          || Boolean.parseBoolean(property);
+    assumeTrue(runIf);
   }
 
   private boolean isDatabaseRunning;
@@ -172,7 +182,7 @@ public class MySQLTest
     final String scriptsResource = "/mysql.scripts.5.6.txt";
     final List<SqlScriptSource> scriptsResourceList = new ArrayList<>();
     try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(MySQLTest.class
           .getResourceAsStream(scriptsResource), UTF_8));)
     {
       reader.lines().forEach(line -> {
