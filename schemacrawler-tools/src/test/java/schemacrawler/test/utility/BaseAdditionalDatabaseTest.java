@@ -35,20 +35,16 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.BeforeClass;
 
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -91,11 +87,13 @@ public abstract class BaseAdditionalDatabaseTest
   {
     LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
 
-    final UserCredentials userCredentials = new SingleUseUserCredentials(user,
-                                                                         password);
-    final Map<String, String> map = new HashMap<>();
-    map.put("url", connectionUrl);
-    dataSource = new DatabaseConnectionOptions(userCredentials, map);
+    final BasicDataSource ds = new BasicDataSource();
+    ds.setUrl(connectionUrl);
+    ds.setUsername(user);
+    ds.setPassword(password);
+    ds.setDefaultAutoCommit(false);
+
+    dataSource = ds;
   }
 
   protected void executeExecutable(final SchemaCrawlerExecutable executable,
