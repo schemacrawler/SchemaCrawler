@@ -65,9 +65,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -376,26 +374,15 @@ public final class TestUtility
 
     final StackTraceElement[] stackTrace = Thread.currentThread()
       .getStackTrace();
-    final Iterator<StackTraceElement> stackTraceIterator = Arrays
-      .asList(stackTrace).iterator();
-    int i = 0;
-    while (stackTraceIterator.hasNext())
+    for (int i = 0; i < stackTrace.length; i++)
     {
-      final StackTraceElement stackTraceElement = stackTraceIterator.next();
-      if (stackTraceElement.getClassName().equals(TestUtility.class.getName()))
+      final StackTraceElement stackTraceElement = stackTrace[i];
+      final String className = stackTraceElement.getClassName();
+      if (testClassName.matcher(className).matches()
+          && !baseTestClassName.matcher(className).matches())
       {
-        while (stackTraceIterator.hasNext())
-        {
-          final String className = stackTraceIterator.next().getClassName();
-          if (testClassName.matcher(className).matches()
-              && !baseTestClassName.matcher(className).matches())
-          {
-            return stackTrace[i + 1];
-          }
-          i++;
-        }
+        return stackTrace[i];
       }
-      i++;
     }
 
     return null;
