@@ -306,7 +306,7 @@ final class ForeignKeyRetriever
       }
     }
 
-    if (column == null)
+    if (column == null && !isBlank(columnName))
     {
       // Create the table and column, but do not add it to the schema
       final Schema schema = new SchemaReference(catalogName, schemaName);

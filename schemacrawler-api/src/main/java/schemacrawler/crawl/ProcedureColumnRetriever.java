@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -138,6 +139,10 @@ final class ProcedureColumnRetriever
                                 procedureName,
                                 specificName,
                                 columnName));
+    if (isBlank(columnName))
+    {
+      return;
+    }
 
     final Optional<MutableRoutine> optionalRoutine = allRoutines.lookup(Arrays
       .asList(columnCatalogName, schemaName, procedureName, specificName));

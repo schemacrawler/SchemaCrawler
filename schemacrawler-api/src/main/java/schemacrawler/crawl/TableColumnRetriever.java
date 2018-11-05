@@ -150,6 +150,10 @@ final class TableColumnRetriever
                                 schemaName,
                                 tableName,
                                 columnName));
+    if (isBlank(columnName))
+    {
+      return;
+    }
 
     final Optional<MutableTable> optionalTable = allTables
       .lookup(Arrays.asList(columnCatalogName, schemaName, tableName));
