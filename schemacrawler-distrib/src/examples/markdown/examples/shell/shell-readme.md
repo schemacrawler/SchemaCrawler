@@ -7,8 +7,18 @@ The shell example demonstrates the use of SchemaCrawler Shell.
 1. Make sure that java is on your PATH
 2. Start the test database server by following instructions in the `_testdb/README.html` file
 3. Start a command shell in the `_downloader` directory 
-4. Run `download.cmd shell` (or `download.sh shell` on Unix) to  
-   install SchemaCrawler Shell support 
+4. To install SchemaCrawler Shell support, run :
+
+```
+download.cmd shell
+```
+
+   or (on Unix) :
+
+```
+download.sh shell
+```
+    
 5. Copy the `schemacrawler-shell.cmd` and `schemacrawler-shell.sh` files into the  
    the `_schemacrawler` directory
 5. Start a command shell in the SchemaCrawler distribution directory,  
