@@ -37,6 +37,7 @@ import static schemacrawler.filter.ReducerFactory.getTableReducer;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
@@ -130,6 +131,24 @@ public final class SchemaCrawlerExecutable
                                 command,
                                 scCommand.getClass().getName()));
     scCommand.execute();
+  }
+
+  public boolean hasConnection()
+  {
+    if (connection == null)
+    {
+      return false;
+    }
+    try
+    {
+      final boolean closed = connection.isClosed();
+      return !closed;
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+      return true;
+    }
   }
 
   public final void setAdditionalConfiguration(final Config additionalConfiguration)

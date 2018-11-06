@@ -53,10 +53,10 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 public class SchemaCrawlerSQLiteUtility
 {
 
-  public static Connection createDatabaseConnection(final Path dbFile)
+  public static ConnectionOptions createConnectionOptions(final Path dbFile)
     throws SchemaCrawlerException
   {
-    requireNonNull(dbFile, "No SQLite database file provided");
+    requireNonNull(dbFile, "No database file provided");
     if (!isFileReadable(dbFile))
     {
       throw new SchemaCrawlerException("Cannot read, " + dbFile);
@@ -65,19 +65,31 @@ public class SchemaCrawlerSQLiteUtility
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", dbFile.toString());
-    final Connection connection;
     try
     {
       final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
         .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
-      connection = connectionOptions.getConnection();
+      return connectionOptions;
     }
-    catch (final IOException | SQLException e)
+    catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Cannot read SQLite database " + dbFile,
+      throw new SchemaCrawlerException("Cannot read database file, " + dbFile,
                                        e);
     }
-    return connection;
+  }
+
+  public static Connection createDatabaseConnection(final Path dbFile)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      return createConnectionOptions(dbFile).getConnection();
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Cannot read database file, " + dbFile,
+                                       e);
+    }
   }
 
   public static Path createSchemaCrawlerDiagram(final Path dbFile,
@@ -117,7 +129,7 @@ public class SchemaCrawlerSQLiteUtility
 
   private SchemaCrawlerSQLiteUtility()
   {
-    // Disable instantiation
+    // Prevent instantiation
   }
 
 }

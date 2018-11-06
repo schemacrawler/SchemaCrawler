@@ -28,18 +28,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
-import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.iosource.ClasspathInputResource;
+import static java.nio.file.Files.exists;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
+
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.ConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseConnectionOptions;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
-
-  private static final long serialVersionUID = -3501763931031195572L;
 
   public PostgreSQLDatabaseConnector()
     throws IOException
@@ -51,6 +60,53 @@ public final class PostgreSQLDatabaseConnector
            connection) -> informationSchemaViewsBuilder
              .fromResourceFolder("/postgresql.information_schema"),
           url -> Pattern.matches("jdbc:postgresql:.*", url));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
+                                                        final Config additionalConfig)
+    throws SchemaCrawlerException
+  {
+    requireNonNull(userCredentials,
+                   "No database connection user credentials provided");
+
+    final Config config = getConfig();
+    if (additionalConfig != null)
+    {
+      config.putAll(additionalConfig);
+      // Remove sensitive properties from the original configuration
+      additionalConfig.remove("user");
+      additionalConfig.remove("password");
+    }
+
+    final ConnectionOptions connectionOptions;
+    if (getDatabaseServerType().isUnknownDatabaseSystem()
+        || config.hasValue("url"))
+    {
+      connectionOptions = new DatabaseConnectionOptions(userCredentials,
+                                                        config);
+    }
+    else
+    {
+      final String database = config.get("database");
+      if (!isBlank(database) && exists(Paths.get(database)))
+      {
+        // Load PostgreSQL dump file, and connect to the local database
+        // with that dump loaded
+        connectionOptions = SchemaCrawlerPostgreSQLUtility
+          .createConnectionOptions(Paths.get(database));
+      }
+      else
+      {
+        connectionOptions = new DatabaseConfigConnectionOptions(userCredentials,
+                                                                config);
+      }
+    }
+
+    return connectionOptions;
   }
 
 }

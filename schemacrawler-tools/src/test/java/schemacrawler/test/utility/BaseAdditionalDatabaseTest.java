@@ -107,7 +107,10 @@ public abstract class BaseAdditionalDatabaseTest
         .newOutputOptions(TextOutputFormat.text, out);
 
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
+      if (!executable.hasConnection())
+      {
+        executable.setConnection(getConnection());
+      }
       executable.execute();
     }
     assertThat(fileResource(testout),
