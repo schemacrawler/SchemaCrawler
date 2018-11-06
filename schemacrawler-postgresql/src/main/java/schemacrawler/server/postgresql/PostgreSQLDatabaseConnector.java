@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.regex.Pattern;
 
@@ -92,12 +93,20 @@ public final class PostgreSQLDatabaseConnector
     else
     {
       final String database = config.get("database");
-      if (!isBlank(database) && exists(Paths.get(database)))
+      final Path databaseFile = Paths.get(database);
+      if (!isBlank(database) && exists(databaseFile))
       {
-        // Load PostgreSQL dump file, and connect to the local database
-        // with that dump loaded
-        connectionOptions = SchemaCrawlerPostgreSQLUtility
-          .createConnectionOptions(Paths.get(database));
+        try
+        {
+          final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(databaseFile);
+          connectionOptions = postgreSQLDumpLoader.createConnectionOptions();
+        }
+        catch (final IOException e)
+        {
+          throw new SchemaCrawlerException("Could not load database file, "
+                                           + databaseFile,
+                                           e);
+        }
       }
       else
       {

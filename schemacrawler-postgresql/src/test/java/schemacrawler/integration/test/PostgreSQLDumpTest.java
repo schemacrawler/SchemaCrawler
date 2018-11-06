@@ -49,7 +49,7 @@ import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.server.postgresql.SchemaCrawlerPostgreSQLUtility;
+import schemacrawler.server.postgresql.PostgreSQLDumpLoader;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -101,8 +101,8 @@ public class PostgreSQLDumpTest
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
-    executable.setConnection(SchemaCrawlerPostgreSQLUtility
-      .createDatabaseConnection(dumpFile));
+    executable.setConnection(new PostgreSQLDumpLoader(dumpFile)
+      .createDatabaseConnection());
 
     executeExecutable(executable, "testPostgreSQLWithDump.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");

@@ -36,8 +36,6 @@ import static sf.util.IOUtility.isFileReadable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.logging.Level;
 
@@ -49,23 +47,32 @@ import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.integration.dbdump.DatabaseDumpLoader;
 import sf.util.SchemaCrawlerLogger;
 
-public class SchemaCrawlerPostgreSQLUtility
+public class PostgreSQLDumpLoader
+  extends DatabaseDumpLoader
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerPostgreSQLUtility.class.getName());
+    .getLogger(PostgreSQLDumpLoader.class.getName());
 
-  public static ConnectionOptions createConnectionOptions(final Path dbFile)
+  public PostgreSQLDumpLoader(final Path databaseFile)
+    throws IOException
+  {
+    super(databaseFile);
+  }
+
+  @Override
+  public ConnectionOptions createConnectionOptions()
     throws SchemaCrawlerException
   {
     try
     {
-      requireNonNull(dbFile, "No database file provided");
-      if (!isFileReadable(dbFile))
+      requireNonNull(databaseFile, "No database file provided");
+      if (!isFileReadable(databaseFile))
       {
-        throw new SchemaCrawlerException("Cannot read, " + dbFile);
+        throw new SchemaCrawlerException("Cannot read, " + databaseFile);
       }
 
       final String user = "schemacrawler";
@@ -73,7 +80,7 @@ public class SchemaCrawlerPostgreSQLUtility
 
       final EmbeddedPostgres postgres = startEmbeddedPostgreSQLServer(user,
                                                                       password);
-      loadDump(postgres, dbFile);
+      loadDump(postgres, databaseFile);
 
       final Config config = new Config();
       config.put("url", getConnectionUrl(postgres));
@@ -92,38 +99,22 @@ public class SchemaCrawlerPostgreSQLUtility
     return null;
   }
 
-  public static Connection createDatabaseConnection(final Path dbFile)
-    throws SchemaCrawlerException
+  private String getConnectionUrl(final EmbeddedPostgres postgres)
   {
-    try
-    {
-      return createConnectionOptions(dbFile).getConnection();
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Cannot read database file, " + dbFile,
-                                       e);
-    }
-  }
-
-  private static String getConnectionUrl(final EmbeddedPostgres postgres)
-  {
-    // Create database connection
     final String connectionUrl = postgres.getConnectionUrl()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL connection URL"));
     return connectionUrl;
   }
 
-  private static void loadDump(final EmbeddedPostgres postgres,
-                               final Path dbFile)
+  private void loadDump(final EmbeddedPostgres postgres, final Path dbFile)
   {
     postgres.getProcess()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
       .importFromFile(dbFile.toFile());
   }
 
-  private static EmbeddedPostgres startEmbeddedPostgreSQLServer(final String user,
-                                                                final String password)
+  private EmbeddedPostgres startEmbeddedPostgreSQLServer(final String user,
+                                                         final String password)
     throws IOException
   {
     final String homeDirectory = System.getProperty("user.home");
@@ -144,11 +135,6 @@ public class SchemaCrawlerPostgreSQLUtility
                    Arrays.asList("-E", "'UTF-8'"));
     Runtime.getRuntime().addShutdownHook(new Thread(() -> postgres.stop()));
     return postgres;
-  }
-
-  private SchemaCrawlerPostgreSQLUtility()
-  {
-    // Prevent instantiation
   }
 
 }
