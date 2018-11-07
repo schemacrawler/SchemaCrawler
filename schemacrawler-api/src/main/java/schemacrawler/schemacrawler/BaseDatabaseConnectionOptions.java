@@ -92,7 +92,6 @@ abstract class BaseDatabaseConnectionOptions
     }
 
     connectionProperties = new HashMap<>(properties);
-    TemplatingUtility.substituteVariables(connectionProperties);
   }
 
   @Override
@@ -195,8 +194,10 @@ abstract class BaseDatabaseConnectionOptions
   @Override
   public String getConnectionUrl()
   {
-    TemplatingUtility.substituteVariables(connectionProperties);
+    final String oldConnectionUrl = connectionProperties.get(URL);
 
+    // Substitute parameters
+    TemplatingUtility.substituteVariables(connectionProperties);
     final String connectionUrl = connectionProperties.get(URL);
 
     // Check that all required parameters have been substituted
@@ -208,6 +209,9 @@ abstract class BaseDatabaseConnectionOptions
         .format("Insufficient parameters for database connection URL: missing %s",
                 unmatchedVariables));
     }
+
+    // Reset old connection URL
+    connectionProperties.put(URL, oldConnectionUrl);
 
     return connectionUrl;
   }
