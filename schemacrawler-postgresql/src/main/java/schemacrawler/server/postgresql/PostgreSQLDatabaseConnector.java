@@ -35,6 +35,8 @@ import static sf.util.Utility.isBlank;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.Config;
@@ -46,10 +48,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(PostgreSQLDatabaseConnector.class.getName());
 
   public PostgreSQLDatabaseConnector()
     throws IOException
@@ -82,6 +89,8 @@ public final class PostgreSQLDatabaseConnector
       additionalConfig.remove("user");
       additionalConfig.remove("password");
     }
+
+    readEnv(config);
 
     final ConnectionOptions connectionOptions;
     if (getDatabaseServerType().isUnknownDatabaseSystem()
@@ -116,6 +125,69 @@ public final class PostgreSQLDatabaseConnector
     }
 
     return connectionOptions;
+  }
+
+  private void readEnv(final Config config)
+  {
+    try
+    {
+      final Map<String, String> env = System.getenv();
+
+      final String host;
+      if (env.containsKey("PGHOSTADDR"))
+      {
+        host = env.get("PGHOSTADDR");
+      }
+      else if (env.containsKey("PGHOST"))
+      {
+        host = env.get("PGHOST");
+      }
+      else
+      {
+        host = null;
+      }
+      if (!isBlank(host))
+      {
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Read PGHOSTADDR/PGHOST=%s", host));
+        config.put("host", host);
+      }
+
+      final String port;
+      if (env.containsKey("PGPORT"))
+      {
+        port = env.get("PGPORT");
+      }
+      else
+      {
+        port = null;
+      }
+      if (!isBlank(port) && port.chars().allMatch(Character::isDigit))
+      {
+        LOGGER.log(Level.INFO, new StringFormat("Read PGPORT=%s", port));
+        config.put("port", port);
+      }
+
+      final String database;
+      if (env.containsKey("PGDATABASE"))
+      {
+        database = env.get("PGDATABASE");
+      }
+      else
+      {
+        database = null;
+      }
+      if (!isBlank(database))
+      {
+        LOGGER.log(Level.INFO,
+                   new StringFormat("Read PGDATABASE=%s", database));
+        config.put("database", database);
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.INFO, "Could not read environmental variables");
+    }
   }
 
 }
