@@ -131,7 +131,7 @@ public class PostgreSQLDumpTest
       argsMap.put("command", "details");
       argsMap.put("infolevel", InfoLevel.maximum.name());
       argsMap.put("outputfile", out.toString());
-      argsMap.put("loglevel", Level.ALL.toString());
+      // argsMap.put("loglevel", Level.ALL.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
