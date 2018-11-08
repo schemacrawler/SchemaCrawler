@@ -32,7 +32,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.nio.file.Path;
@@ -106,10 +106,8 @@ public class TestSqliteDistribution
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(fileResource(testout),
-               hasSameContentAndTypeAs(classpathResource("sqlite.main" + "."
-                                                         + outputFormat
-                                                           .getFormat()),
-                                       outputFormat.getFormat()));
+               hasSameContentAs(classpathResource("sqlite.main" + "."
+                                                  + outputFormat.getFormat())));
   }
 
 }

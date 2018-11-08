@@ -35,6 +35,7 @@ import java.io.Writer;
 import java.util.logging.Level;
 
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 public final class OutputWriter
   extends Writer
@@ -89,7 +90,8 @@ public final class OutputWriter
 
     if (shouldCloseWriter)
     {
-      LOGGER.log(Level.INFO, "Closing output writer");
+      LOGGER.log(Level.INFO,
+                 new StringFormat("Closing output writer, %s", description));
       writer.close();
     }
     else
