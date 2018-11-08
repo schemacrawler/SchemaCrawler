@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.logging.Level;
 
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
@@ -72,7 +71,7 @@ public class PostgreSQLDumpLoader
       requireNonNull(databaseFile, "No database file provided");
       if (!isFileReadable(databaseFile))
       {
-        throw new SchemaCrawlerException("Cannot read, " + databaseFile);
+        throw new SchemaCrawlerException("Cannot read file, " + databaseFile);
       }
 
       final String user = "schemacrawler";
@@ -94,9 +93,8 @@ public class PostgreSQLDumpLoader
     }
     catch (final Throwable e)
     {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
+      throw new SchemaCrawlerException("Cannot read file, " + databaseFile, e);
     }
-    return null;
   }
 
   private String getConnectionUrl(final EmbeddedPostgres postgres)
