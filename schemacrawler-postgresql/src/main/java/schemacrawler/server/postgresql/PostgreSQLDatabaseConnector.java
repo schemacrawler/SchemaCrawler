@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
-import static java.nio.file.Files.exists;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -92,39 +92,58 @@ public final class PostgreSQLDatabaseConnector
 
     readEnv(config);
 
+    final Path databaseDumpFile = getDatabaseDumpFile(config);
+
     final ConnectionOptions connectionOptions;
-    if (getDatabaseServerType().isUnknownDatabaseSystem()
-        || config.hasValue("url"))
+    if (databaseDumpFile != null)
+    {
+      try
+      {
+        final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(databaseDumpFile);
+        connectionOptions = postgreSQLDumpLoader.createConnectionOptions();
+      }
+      catch (final IOException e)
+      {
+        throw new SchemaCrawlerException("Could not load database file, "
+                                         + databaseDumpFile,
+                                         e);
+      }
+    }
+    else if (getDatabaseServerType().isUnknownDatabaseSystem()
+             || config.hasValue("url"))
     {
       connectionOptions = new DatabaseConnectionOptions(userCredentials,
                                                         config);
     }
     else
     {
-      final String database = config.get("database");
-      final Path databaseFile = Paths.get(database);
-      if (!isBlank(database) && exists(databaseFile))
-      {
-        try
-        {
-          final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(databaseFile);
-          connectionOptions = postgreSQLDumpLoader.createConnectionOptions();
-        }
-        catch (final IOException e)
-        {
-          throw new SchemaCrawlerException("Could not load database file, "
-                                           + databaseFile,
-                                           e);
-        }
-      }
-      else
-      {
-        connectionOptions = new DatabaseConfigConnectionOptions(userCredentials,
-                                                                config);
-      }
+      connectionOptions = new DatabaseConfigConnectionOptions(userCredentials,
+                                                              config);
     }
 
     return connectionOptions;
+  }
+
+  private Path getDatabaseDumpFile(final Config config)
+  {
+    final String database = config.get("database");
+    final Path databaseFile;
+    if (!isBlank(database))
+    {
+      if (isFileReadable(Paths.get(database)))
+      {
+        databaseFile = Paths.get(database);
+      }
+      else
+      {
+        databaseFile = null;
+      }
+    }
+    else
+    {
+      databaseFile = null;
+    }
+    return databaseFile;
   }
 
   private void readEnv(final Config config)

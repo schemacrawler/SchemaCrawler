@@ -29,7 +29,12 @@ package schemacrawler.integration.test;
 
 
 import static java.nio.file.Files.createTempFile;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -37,6 +42,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.junit.Before;
@@ -46,12 +53,15 @@ import org.junit.Test;
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
+import schemacrawler.Main;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.server.postgresql.PostgreSQLDumpLoader;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -86,7 +96,7 @@ public class PostgreSQLDumpTest
   }
 
   @Test
-  public void testPostgreSQLWithDump()
+  public void testPostgreSQLExecutableWithDump()
     throws Exception
   {
     final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
@@ -106,6 +116,27 @@ public class PostgreSQLDumpTest
 
     executeExecutable(executable, "testPostgreSQLWithDump.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
+  }
+
+  @Test
+  public void testPostgreSQLMainWithDump()
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
+    {
+      final Map<String, String> argsMap = new HashMap<>();
+      argsMap.put("server", "postgresql");
+      argsMap.put("database", dumpFile.toString());
+      argsMap.put("command", "details");
+      argsMap.put("infolevel", InfoLevel.maximum.name());
+      argsMap.put("outputfile", out.toString());
+      argsMap.put("loglevel", Level.ALL.toString());
+
+      Main.main(flattenCommandlineArgs(argsMap));
+    }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource("testPostgreSQLMainWithDump.txt")));
   }
 
   private EmbeddedPostgres createDatabase()
