@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
@@ -38,7 +37,6 @@ import java.nio.file.Paths;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 
 /**
  * Parses the command-line.
@@ -66,29 +64,20 @@ public final class OutputOptionsParser
   @Override
   public OutputOptions getOptions()
   {
-    final String fileExtension;
     final String outputFileName = config.getStringValue(OUTPUT_FILE, null);
     consumeOption(OUTPUT_FILE);
     if (!isBlank(outputFileName))
     {
       final Path outputFile = Paths.get(outputFileName).toAbsolutePath();
       outputOptionsBuilder.withOutputFile(outputFile);
-      fileExtension = getFileExtension(outputFile);
-    }
-    else
-    {
-      fileExtension = "";
     }
 
-    // If there is an output format specified, use it
-    // Otherwise, infer the output format from the extension of the file
-    // Otherwise, assume text output
-    final String defaultOutputFormatValue = isBlank(fileExtension)? TextOutputFormat.text
-      .getFormat(): fileExtension;
-    final String outputFormatValue = config
-      .getStringValue(OUTPUT_FORMAT, defaultOutputFormatValue);
+    final String outputFormatValue = config.getStringValue(OUTPUT_FORMAT, null);
     consumeOption(OUTPUT_FORMAT);
-    outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
+    if (!isBlank(outputFormatValue))
+    {
+      outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
+    }
 
     return outputOptionsBuilder.toOptions();
   }

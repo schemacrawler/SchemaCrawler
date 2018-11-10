@@ -3,6 +3,8 @@ package schemacrawler.tools.options;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
+import static sf.util.IOUtility.getFileExtension;
+import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -153,9 +155,25 @@ public final class OutputOptionsBuilder
     withInputEncoding(inputEncodingCharset);
     withOutputResource(outputResource);
     withOutputEncoding(inputEncodingCharset);
-    if (outputFormatValue == null)
+
+    // If there is an output format specified, use it
+    // Otherwise, infer the output format from the extension of the file
+    // Otherwise, assume text output
+    if (isBlank(outputFormatValue))
     {
-      outputFormatValue = TextOutputFormat.text.name();
+      final String fileExtension;
+      if (outputResource instanceof FileOutputResource)
+      {
+        fileExtension = getFileExtension(((FileOutputResource) outputResource)
+          .getOutputFile());
+      }
+      else
+      {
+        fileExtension = null;
+      }
+
+      outputFormatValue = isBlank(fileExtension)? TextOutputFormat.text
+        .getFormat(): fileExtension;
     }
 
     return new OutputOptions(inputResource,
