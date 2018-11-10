@@ -29,8 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import java.io.FileOutputStream;
+import static java.nio.file.Files.newOutputStream;
+
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
@@ -76,9 +80,14 @@ public final class SerializationCommand
   {
     checkCatalog();
 
+    final Path outputFile = outputOptions.getOutputFile()
+      .orElseGet(() -> Paths
+        .get(".",
+             String.format("schemacrawler-%s.%s", UUID.randomUUID(), "data")))
+      .normalize().toAbsolutePath();
+
     final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
-    try (final OutputStream out = new FileOutputStream(outputOptions
-      .getOutputFile().toFile());)
+    try (final OutputStream out = newOutputStream(outputFile);)
     {
       serializableCatalog.save(out);
     }

@@ -37,12 +37,12 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.CompressedFileInputResource;
-import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
 import schemacrawler.tools.iosource.InputResource;
@@ -113,11 +113,6 @@ public final class OutputOptions
     return inputFile;
   }
 
-  public InputResource getInputResource()
-  {
-    return inputResource;
-  }
-
   /**
    * Character encoding for output files.
    */
@@ -126,28 +121,18 @@ public final class OutputOptions
     return outputEncodingCharset;
   }
 
-  public Path getOutputFile()
+  public Optional<Path> getOutputFile()
   {
     final Path outputFile;
     if (outputResource instanceof FileOutputResource)
     {
       outputFile = ((FileOutputResource) outputResource).getOutputFile();
     }
-    else if (outputResource instanceof CompressedFileOutputResource)
-    {
-      outputFile = ((CompressedFileOutputResource) outputResource)
-        .getOutputFile();
-    }
     else
     {
-      // Create output file path
-      outputFile = Paths.get(".",
-                             String.format("schemacrawler-%s.%s",
-                                           UUID.randomUUID(),
-                                           outputFormatValue))
-        .normalize().toAbsolutePath();
+      outputFile = null;
     }
-    return outputFile;
+    return Optional.ofNullable(outputFile);
   }
 
   /**
@@ -158,11 +143,6 @@ public final class OutputOptions
   public String getOutputFormatValue()
   {
     return outputFormatValue;
-  }
-
-  public OutputResource getOutputResource()
-  {
-    return outputResource;
   }
 
   /**
@@ -209,6 +189,16 @@ public final class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
+  }
+
+  InputResource getInputResource()
+  {
+    return inputResource;
+  }
+
+  OutputResource getOutputResource()
+  {
+    return outputResource;
   }
 
 }
