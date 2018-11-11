@@ -25,7 +25,7 @@ You can create a new SchemaCrawler command, and plug it into the SchemaCrawler f
 To generate your new SchemaCrawler command plugin project, run: 
 
 `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-command-plugin 
-  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-command -DarchetypeVersion=15.01.05
+  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-command -DarchetypeVersion=15.01.06
   -DinteractiveMode=false`
 
 You can use any groupId and artifactId that you like. Example Java code
@@ -41,7 +41,7 @@ You can create a new SchemaCrawler linter, and plug it into the SchemaCrawler fr
 To generate your new SchemaCrawler lint plugin project, run: 
  
 `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-lint-plugin 
-  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-lint -DarchetypeVersion=15.01.05 
+  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-lint -DarchetypeVersion=15.01.06 
   -DinteractiveMode=false`
 
 You can use any groupId and artifactId that you like. Example Java code
@@ -57,7 +57,7 @@ You can create a new SchemaCrawler connector for a database, and plug it into th
 To generate your new SchemaCrawler database connector plugin project, run: 
  
 `mvn archetype:generate -DgroupId=com.mycompany -DartifactId=my-dbconnector-plugin 
-  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-dbconnector -DarchetypeVersion=15.01.05
+  -DarchetypeGroupId=us.fatehi -DarchetypeArtifactId=schemacrawler-archetype-plugin-dbconnector -DarchetypeVersion=15.01.06
   -DinteractiveMode=false`
 
 You can use any groupId and artifactId that you like. Example Java code
