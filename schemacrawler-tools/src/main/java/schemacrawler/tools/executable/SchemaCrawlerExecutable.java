@@ -226,28 +226,11 @@ public final class SchemaCrawlerExecutable
   private SchemaCrawlerCommand loadCommand()
     throws SchemaCrawlerException
   {
-    final Commands commands = new Commands(command);
-    if (commands.isEmpty())
-    {
-      throw new SchemaCrawlerException("No command specified");
-    }
-
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    final SchemaCrawlerCommand scCommand;
-    if (commands.hasMultipleCommands())
-    {
-      // NOTE: The daisy chain command may change the provided output
-      // options for each chained command
-      scCommand = new CommandDaisyChain(command);
-      scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      scCommand.setOutputOptions(outputOptions);
-    }
-    else
-    {
-      scCommand = commandRegistry
-        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
-    }
-
+    // NOTE: The daisy chain command may change the provided output
+    // options for each chained command
+    final SchemaCrawlerCommand scCommand = new CommandDaisyChain(command);
+    scCommand.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    scCommand.setOutputOptions(outputOptions);
     scCommand.setAdditionalConfiguration(additionalConfiguration);
     scCommand.setIdentifiers(schemaRetrievalOptions.getIdentifiers());
 
