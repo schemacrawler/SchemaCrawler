@@ -160,4 +160,10 @@ public final class VelocityRenderer
 
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return true;
+  }
+
 }

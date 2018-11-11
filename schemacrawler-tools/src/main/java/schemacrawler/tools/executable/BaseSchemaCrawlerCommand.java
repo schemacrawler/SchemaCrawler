@@ -212,7 +212,10 @@ public abstract class BaseSchemaCrawlerCommand
   protected void checkCatalog()
   {
     requireNonNull(catalog, "No database catalog provided");
-    requireNonNull(connection, "No database connection provided");
+    if (usesConnection())
+    {
+      requireNonNull(connection, "No database connection provided");
+    }
   }
 
   private void checkOptions()

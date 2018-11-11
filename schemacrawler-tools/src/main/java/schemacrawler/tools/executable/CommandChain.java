@@ -114,4 +114,10 @@ public final class CommandChain
     executeChain();
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
 }

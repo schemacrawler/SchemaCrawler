@@ -97,6 +97,12 @@ public class LintCommand
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
   private void dispatch(final Linters linters)
   {
     if (!linters.exceedsThreshold())

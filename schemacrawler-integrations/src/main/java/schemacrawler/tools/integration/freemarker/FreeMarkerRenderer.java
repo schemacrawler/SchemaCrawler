@@ -130,4 +130,10 @@ public final class FreeMarkerRenderer
     }
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return true;
+  }
+
 }

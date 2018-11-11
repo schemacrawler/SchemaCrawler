@@ -129,6 +129,12 @@ public class EmbeddedGraphRenderer
     }
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
   private void insertSvg(final BufferedWriter finalHtmlFileWriter,
                          final BufferedReader baseSvgFileReader)
     throws IOException

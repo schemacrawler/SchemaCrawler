@@ -111,6 +111,12 @@ public final class ScriptCommand
 
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return true;
+  }
+
   private ScriptEngine getScriptEngine()
     throws SchemaCrawlerException
   {

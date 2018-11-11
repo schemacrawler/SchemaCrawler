@@ -93,4 +93,10 @@ public final class SerializationCommand
     }
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
 }

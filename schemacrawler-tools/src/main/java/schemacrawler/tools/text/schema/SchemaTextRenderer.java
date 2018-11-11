@@ -117,6 +117,12 @@ public final class SchemaTextRenderer
                                             "No schema text options provided");
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
   private SchemaTextDetailType getSchemaTextDetailType()
   {
     SchemaTextDetailType schemaTextDetailType;

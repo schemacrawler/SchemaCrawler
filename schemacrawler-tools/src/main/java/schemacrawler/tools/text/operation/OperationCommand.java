@@ -175,6 +175,12 @@ public final class OperationCommand
                                            "No operation options provided");
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return true;
+  }
+
   private DataTraversalHandler getDataTraversalHandler()
     throws SchemaCrawlerException
   {

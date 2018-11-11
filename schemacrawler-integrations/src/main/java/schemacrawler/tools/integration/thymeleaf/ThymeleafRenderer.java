@@ -102,6 +102,12 @@ public final class ThymeleafRenderer
     }
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return true;
+  }
+
   private ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
                                       final Charset inputEncoding)
   {

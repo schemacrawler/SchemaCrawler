@@ -163,6 +163,12 @@ public final class GraphRenderer
                                        "No graph options provided");
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
   private GraphExecutor getGraphExecutor(final Path dotFile)
     throws SchemaCrawlerException
   {

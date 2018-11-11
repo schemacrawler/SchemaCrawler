@@ -114,4 +114,10 @@ public final class CommandDaisyChain
 
   }
 
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
+  }
+
 }

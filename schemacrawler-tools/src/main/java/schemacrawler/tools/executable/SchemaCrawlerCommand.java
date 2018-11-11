@@ -100,4 +100,9 @@ public interface SchemaCrawlerCommand
 
   void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
+  default boolean usesConnection()
+  {
+    return false;
+  }
+
 }
