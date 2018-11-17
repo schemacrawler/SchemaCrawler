@@ -70,16 +70,40 @@ public final class TableType
     {
       return 1;
     }
+
     final String thisToString = toString();
-    final int compareTo = thisToString.compareTo(other.toString());
-    if (compareTo != 0 && "TABLE".equalsIgnoreCase(thisToString))
+    final String otherToString = other.toString();
+
+    if (thisToString.equalsIgnoreCase(otherToString))
+    {
+      return 0;
+    }
+
+    // Sort tables first
+    final boolean isThisTable = "TABLE".equalsIgnoreCase(thisToString);
+    final boolean isOtherTable = "TABLE".equalsIgnoreCase(otherToString);
+    if (isThisTable && !isOtherTable)
     {
       return -1;
     }
-    else
+    else if (!isThisTable && isOtherTable)
     {
-      return compareTo;
+      return 1;
     }
+
+    // Sort views second
+    final boolean isThisView = "VIEW".equalsIgnoreCase(thisToString);
+    final boolean isOtherView = "VIEW".equalsIgnoreCase(otherToString);
+    if (isThisView && !isOtherView)
+    {
+      return -1;
+    }
+    else if (!isThisView && isOtherView)
+    {
+      return 1;
+    }
+
+    return thisToString.compareTo(otherToString);
   }
 
   /**
