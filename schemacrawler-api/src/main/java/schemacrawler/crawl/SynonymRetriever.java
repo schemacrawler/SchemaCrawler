@@ -95,7 +95,7 @@ final class SynonymRetriever
 
     final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
       .getInformationSchemaViews();
-    if (!informationSchemaViews.hasQuery(InformationSchemaKey.SEQUENCES))
+    if (!informationSchemaViews.hasQuery(InformationSchemaKey.EXT_SYNONYMS))
     {
       LOGGER.log(Level.FINE,
                  "Synonym definition SQL statement was not provided");
