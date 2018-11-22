@@ -30,6 +30,7 @@ package schemacrawler.crawl;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -426,15 +427,17 @@ final class DatabaseInfoRetriever
       results.setDescription("retrieveServerInfo");
       while (results.next())
       {
-        final String propertyName = normalizeCatalogName(results
-          .getString("NAME"));
+        final String propertyName = results.getString("NAME");
+        if (isBlank(propertyName))
+        {
+          continue;
+        }
         LOGGER
           .log(Level.FINER,
                new StringFormat("Retrieving server information property: %s",
                                 propertyName));
 
-        final String propertyValue = normalizeSchemaName(results
-          .getString("VALUE"));
+        final String propertyValue = results.getString("VALUE");
         final String propertyDescription = results.getString("DESCRIPTION");
 
         final Property serverInfoProperty = new ImmutableServerInfoProperty(propertyName,
