@@ -357,17 +357,6 @@ final class DatabaseInfoRetriever
       return;
     }
 
-    try
-    {
-      final Connection connection = dbMetaData.getConnection();
-      dbInfo.setSchema(new SchemaReference(connection.getCatalog(),
-                                           connection.getSchema()));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
-    }
-
   }
 
   /**

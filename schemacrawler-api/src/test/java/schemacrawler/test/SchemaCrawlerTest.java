@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -58,6 +59,7 @@ import schemacrawler.schema.Constraint;
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.EventManipulationType;
+import schemacrawler.schema.Property;
 import schemacrawler.schema.Routine;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
@@ -306,16 +308,21 @@ public class SchemaCrawlerTest
       assertEquals("Database property count does not match",
                    158,
                    dbProperties.size());
+      final Set<Property> serverInfo = databaseInfo.getServerInfo();
+      assertEquals("Server info property count does not match",
+                   0,
+                   serverInfo.size());
       out.println(String.format("username=%s", databaseInfo.getUserName()));
       out.println(String.format("product name=%s",
                                 databaseInfo.getProductName()));
       out.println(String.format("product version=%s",
                                 databaseInfo.getProductVersion()));
       out.println(String.format("catalog=%s", catalog.getName()));
-      out.println(String.format("catalog=%s",
-                                databaseInfo.getSchema().getCatalogName()));
-      out.println(String.format("schema=%s",
-                                databaseInfo.getSchema().getName()));
+      for (Property serverInfoProperty: serverInfo)
+      {
+        assertNotNull(serverInfoProperty);
+        out.println(serverInfoProperty);
+      }
       for (final DatabaseProperty dbProperty: dbProperties)
       {
         assertNotNull(dbProperty);

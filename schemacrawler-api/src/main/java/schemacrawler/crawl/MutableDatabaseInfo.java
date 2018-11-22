@@ -38,8 +38,7 @@ import java.util.Set;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
+import schemacrawler.schema.Property;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -56,8 +55,7 @@ final class MutableDatabaseInfo
   private String userName = "";
   private String productName = "";
   private String productVersion = "";
-  private Schema schema = new SchemaReference();
-
+  private Set<Property> serverInfo = new HashSet<>();
   private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
 
   /**
@@ -90,9 +88,9 @@ final class MutableDatabaseInfo
   }
 
   @Override
-  public Schema getSchema()
+  public Set<Property> getServerInfo()
   {
-    return schema;
+    return new HashSet<>(serverInfo);
   }
 
   /**
@@ -134,11 +132,11 @@ final class MutableDatabaseInfo
     this.productVersion = productVersion;
   }
 
-  void setSchema(final Schema schema)
+  void addServerInfo(final Property property)
   {
-    if (schema != null)
+    if (property != null)
     {
-      this.schema = schema;
+      this.serverInfo.add(property);
     }
   }
 
