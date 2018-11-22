@@ -180,6 +180,20 @@ public final class SchemaCrawler
         return null;
       });
 
+      stopWatch.time("retrieveServerInfo", () -> {
+        if (infoLevel.isRetrieveServerInfo())
+        {
+          retriever.retrieveServerInfo();
+        }
+        else
+        {
+          LOGGER
+            .log(Level.INFO,
+                 "Not retrieving server information, since this was not requested");
+        }
+        return null;
+      });
+
       LOGGER.log(Level.INFO, "Retrieving JDBC driver information");
       stopWatch.time("retrieveJdbcDriverInfo", () -> {
         retriever.retrieveJdbcDriverInfo();

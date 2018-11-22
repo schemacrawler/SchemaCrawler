@@ -51,9 +51,11 @@ import java.util.Properties;
 import java.util.logging.Level;
 
 import schemacrawler.schema.ColumnDataType;
+import schemacrawler.schema.Property;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.SearchableType;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.InformationSchemaKey;
 import schemacrawler.schemacrawler.InformationSchemaViews;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -388,6 +390,64 @@ final class DatabaseInfoRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not obtain JDBC driver information", e);
+    }
+
+  }
+
+  void retrieveServerInfo()
+  {
+    final MutableDatabaseInfo dbInfo = catalog.getDatabaseInfo();
+    if (dbInfo == null)
+    {
+      return;
+    }
+
+    final InformationSchemaViews informationSchemaViews = getRetrieverConnection()
+      .getInformationSchemaViews();
+    if (!informationSchemaViews
+      .hasQuery(InformationSchemaKey.SERVER_INFORMATION))
+    {
+      LOGGER
+        .log(Level.INFO,
+             "Not retrieving server information, since this was not requested");
+      LOGGER.log(Level.FINE,
+                 "Server information SQL statement was not provided");
+      return;
+    }
+    final Query serverInfoSql = informationSchemaViews
+      .getQuery(InformationSchemaKey.SERVER_INFORMATION);
+
+    final Connection connection = getDatabaseConnection();
+    try (final Statement statement = connection.createStatement();
+        final MetadataResultSet results = new MetadataResultSet(serverInfoSql,
+                                                                statement,
+                                                                new IncludeAll());)
+    {
+      results.setDescription("retrieveServerInfo");
+      while (results.next())
+      {
+        final String propertyName = normalizeCatalogName(results
+          .getString("NAME"));
+        LOGGER
+          .log(Level.FINER,
+               new StringFormat("Retrieving server information property: %s",
+                                propertyName));
+
+        final String propertyValue = normalizeSchemaName(results
+          .getString("VALUE"));
+        final String propertyDescription = results.getString("DESCRIPTION");
+
+        final Property serverInfoProperty = new ImmutableServerInfoProperty(propertyName,
+                                                                            propertyValue,
+                                                                            propertyDescription);
+        dbInfo.addServerInfo(serverInfoProperty);
+      }
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.WARNING,
+                 "Could not retrieve additional column attributes",
+                 e);
     }
 
   }

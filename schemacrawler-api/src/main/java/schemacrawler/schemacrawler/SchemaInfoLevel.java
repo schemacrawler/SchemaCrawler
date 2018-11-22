@@ -45,6 +45,7 @@ public final class SchemaInfoLevel
   private final boolean retrieveColumnDataTypes;
   private final boolean retrieveDatabaseInfo;
   private final boolean retrieveAdditionalDatabaseInfo;
+  private final boolean retrieveServerInfo;
   private final boolean retrieveAdditionalJdbcDriverInfo;
   private final boolean retrieveUserDefinedColumnDataTypes;
   private final boolean retrieveRoutineColumns;
@@ -74,6 +75,7 @@ public final class SchemaInfoLevel
                   final boolean retrieveColumnDataTypes,
                   final boolean retrieveDatabaseInfo,
                   final boolean retrieveAdditionalDatabaseInfo,
+                  final boolean retrieveServerInfo,
                   final boolean retrieveAdditionalJdbcDriverInfo,
                   final boolean retrieveUserDefinedColumnDataTypes,
                   final boolean retrieveRoutineColumns,
@@ -103,6 +105,7 @@ public final class SchemaInfoLevel
     this.retrieveColumnDataTypes = retrieveColumnDataTypes;
     this.retrieveDatabaseInfo = retrieveDatabaseInfo;
     this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
+    this.retrieveServerInfo = retrieveServerInfo;
     this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
     this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
     this.retrieveRoutineColumns = retrieveRoutineColumns;
@@ -210,6 +213,11 @@ public final class SchemaInfoLevel
   public boolean isRetrieveSequenceInformation()
   {
     return retrieveSequenceInformation;
+  }
+
+  public boolean isRetrieveServerInfo()
+  {
+    return retrieveServerInfo;
   }
 
   public boolean isRetrieveSynonymInformation()

@@ -60,6 +60,7 @@ public final class SchemaInfoLevelBuilder
   {
     final SchemaInfoLevelBuilder maximum = detailed();
     maximum.setRetrieveAdditionalDatabaseInfo(true);
+    maximum.setRetrieveServerInfo(true);
     maximum.setRetrieveAdditionalJdbcDriverInfo(true);
     maximum.setRetrieveTablePrivileges(true);
     maximum.setRetrieveTableColumnPrivileges(true);
@@ -115,6 +116,7 @@ public final class SchemaInfoLevelBuilder
   private boolean retrieveColumnDataTypes;
   private boolean retrieveDatabaseInfo;
   private boolean retrieveAdditionalDatabaseInfo;
+  private boolean retrieveServerInfo;
   private boolean retrieveAdditionalJdbcDriverInfo;
   private boolean retrieveUserDefinedColumnDataTypes;
   private boolean retrieveRoutineColumns;
@@ -165,6 +167,7 @@ public final class SchemaInfoLevelBuilder
     retrieveDatabaseInfo = schemaInfoLevel.isRetrieveDatabaseInfo();
     retrieveAdditionalDatabaseInfo = schemaInfoLevel
       .isRetrieveAdditionalDatabaseInfo();
+    retrieveServerInfo = schemaInfoLevel.isRetrieveServerInfo();
     retrieveAdditionalJdbcDriverInfo = schemaInfoLevel
       .isRetrieveAdditionalJdbcDriverInfo();
     retrieveUserDefinedColumnDataTypes = schemaInfoLevel
@@ -304,6 +307,12 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  public SchemaInfoLevelBuilder setRetrieveServerInfo(final boolean retrieveServerInfo)
+  {
+    this.retrieveServerInfo = retrieveServerInfo;
+    return this;
+  }
+
   public SchemaInfoLevelBuilder setRetrieveSynonymInformation(final boolean retrieveSynonymInformation)
   {
     this.retrieveSynonymInformation = retrieveSynonymInformation;
@@ -391,6 +400,7 @@ public final class SchemaInfoLevelBuilder
                                retrieveColumnDataTypes,
                                retrieveDatabaseInfo,
                                retrieveAdditionalDatabaseInfo,
+                               retrieveServerInfo,
                                retrieveAdditionalJdbcDriverInfo,
                                retrieveUserDefinedColumnDataTypes,
                                retrieveRoutineColumns,
