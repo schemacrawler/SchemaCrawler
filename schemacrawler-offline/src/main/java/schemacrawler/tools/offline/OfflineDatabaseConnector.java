@@ -56,10 +56,4 @@ public final class OfflineDatabaseConnector
           url -> Pattern.matches("jdbc:offline:.*", url));
   }
 
-  @Override
-  protected String getCatalogName(Connection connection)
-  {
-    return "catalog";
-  }
-
 }

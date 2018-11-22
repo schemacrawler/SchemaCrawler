@@ -62,7 +62,6 @@ public final class SchemaRetrievalOptions
   private final InformationSchemaViews informationSchemaViews;
   private final TypeMap typeMap;
   private final Identifiers identifiers;
-  private final String catalogName;
 
   protected SchemaRetrievalOptions(final SchemaRetrievalOptionsBuilder builder)
   {
@@ -85,12 +84,6 @@ public final class SchemaRetrievalOptions
     informationSchemaViews = bldr.getInformationSchemaViews();
     identifiers = bldr.getIdentifiers();
     typeMap = bldr.getTypeMap();
-    catalogName = builder.getCatalogName();
-  }
-
-  public String getCatalogName()
-  {
-    return catalogName;
   }
 
   public DatabaseServerType getDatabaseServerType()

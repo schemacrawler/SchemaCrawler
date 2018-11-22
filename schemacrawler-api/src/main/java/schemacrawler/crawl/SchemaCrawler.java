@@ -751,8 +751,7 @@ public final class SchemaCrawler
   public Catalog crawl()
     throws SchemaCrawlerException
   {
-    final String catalogName = schemaRetrievalOptions.getCatalogName();
-    final MutableCatalog catalog = new MutableCatalog(catalogName);
+    final MutableCatalog catalog = new MutableCatalog("catalog");
     try
     {
       final RetrieverConnection retrieverConnection = new RetrieverConnection(connection,

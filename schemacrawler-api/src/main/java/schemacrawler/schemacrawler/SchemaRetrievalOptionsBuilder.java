@@ -103,7 +103,6 @@ public final class SchemaRetrievalOptionsBuilder
   private MetadataRetrievalStrategy functionRetrievalStrategy;
   private MetadataRetrievalStrategy functionColumnRetrievalStrategy;
   private Optional<TypeMap> overridesTypeMap;
-  private String catalogName;
 
   private SchemaRetrievalOptionsBuilder()
   {
@@ -125,7 +124,6 @@ public final class SchemaRetrievalOptionsBuilder
     functionRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     functionColumnRetrievalStrategy = MetadataRetrievalStrategy.metadata;
     overridesTypeMap = Optional.empty();
-    catalogName = "catalog";
   }
 
   @Override
@@ -233,11 +231,6 @@ public final class SchemaRetrievalOptionsBuilder
     return this;
   }
 
-  public String getCatalogName()
-  {
-    return catalogName;
-  }
-
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
@@ -328,19 +321,6 @@ public final class SchemaRetrievalOptionsBuilder
   public SchemaRetrievalOptions toOptions()
   {
     return new SchemaRetrievalOptions(this);
-  }
-
-  public SchemaRetrievalOptionsBuilder withCatalogName(final String catalogName)
-  {
-    if (isBlank(catalogName))
-    {
-      this.catalogName = "catalog";
-    }
-    else
-    {
-      this.catalogName = catalogName;
-    }
-    return this;
   }
 
   public SchemaRetrievalOptionsBuilder withDatabaseServerType(final DatabaseServerType dbServerType)
