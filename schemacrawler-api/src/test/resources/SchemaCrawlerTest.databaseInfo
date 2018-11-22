@@ -1,6 +1,7 @@
 username=SA
 product name=HSQL Database Engine
 product version=2.4.1
+catalog=catalog
 catalog=PUBLIC
 schema=PUBLIC
 all procedures are callable = true

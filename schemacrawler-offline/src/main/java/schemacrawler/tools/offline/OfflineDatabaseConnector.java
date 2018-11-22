@@ -29,6 +29,7 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -53,6 +54,12 @@ public final class OfflineDatabaseConnector
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           null,
           url -> Pattern.matches("jdbc:offline:.*", url));
+  }
+
+  @Override
+  protected String getCatalogName(Connection connection)
+  {
+    return "catalog";
   }
 
 }

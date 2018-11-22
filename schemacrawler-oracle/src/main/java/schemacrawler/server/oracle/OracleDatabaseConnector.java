@@ -42,6 +42,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.utility.Query;
+import schemacrawler.utility.QueryUtility;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -154,6 +156,34 @@ public final class OracleDatabaseConnector
       .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
       .withFunctionColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  protected String getCatalogName(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return "";
+    }
+    try
+    {
+      final Query query = new Query("Get catalog",
+                                    "SELECT INSTANCE FROM V$THREAD");
+      final Object catalog = QueryUtility.executeForScalar(query, connection);
+      if (catalog != null)
+      {
+        return catalog.toString();
+      }
+      else
+      {
+        return "";
+      }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "");
+      return "";
+    }
   }
 
 }

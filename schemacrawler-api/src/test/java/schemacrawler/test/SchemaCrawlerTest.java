@@ -311,6 +311,7 @@ public class SchemaCrawlerTest
                                 databaseInfo.getProductName()));
       out.println(String.format("product version=%s",
                                 databaseInfo.getProductVersion()));
+      out.println(String.format("catalog=%s", catalog.getName()));
       out.println(String.format("catalog=%s",
                                 databaseInfo.getSchema().getCatalogName()));
       out.println(String.format("schema=%s",

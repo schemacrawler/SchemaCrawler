@@ -30,19 +30,25 @@ package schemacrawler.server.db2;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.utility.Query;
+import schemacrawler.utility.QueryUtility;
+import sf.util.SchemaCrawlerLogger;
 
 public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 2668483709122768087L;
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(DB2DatabaseConnector.class.getName());
 
   public DB2DatabaseConnector()
     throws IOException
@@ -57,12 +63,40 @@ public final class DB2DatabaseConnector
   }
 
   @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(Connection connection)
+  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder
       .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  protected String getCatalogName(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return "";
+    }
+    try
+    {
+      final Query query = new Query("Get catalog",
+                                    "SELECT CURRENT_SERVER FROM SYSIBM.SYSDUMMY1");
+      final Object catalog = QueryUtility.executeForScalar(query, connection);
+      if (catalog != null)
+      {
+        return catalog.toString();
+      }
+      else
+      {
+        return "";
+      }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "");
+      return "";
+    }
   }
 
 }

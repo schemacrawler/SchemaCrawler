@@ -28,18 +28,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.sqlserver;
 
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.logging.Level;
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-
-import java.io.IOException;
-import java.util.regex.Pattern;
+import schemacrawler.utility.Query;
+import schemacrawler.utility.QueryUtility;
+import sf.util.SchemaCrawlerLogger;
 
 public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final long serialVersionUID = 6732719260206397502L;
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SqlServerDatabaseConnector.class.getName());
 
   public SqlServerDatabaseConnector()
     throws IOException
@@ -51,6 +58,34 @@ public final class SqlServerDatabaseConnector
            connection) -> informationSchemaViewsBuilder
              .fromResourceFolder("/sqlserver.information_schema"),
           url -> Pattern.matches("jdbc:sqlserver:.*", url));
+  }
+
+  @Override
+  protected String getCatalogName(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return "";
+    }
+    try
+    {
+      final Query query = new Query("Get catalog",
+                                    "SELECT CONVERT(SYSNAME, SERVERPROPERTY('servername'))");
+      final Object catalog = QueryUtility.executeForScalar(query, connection);
+      if (catalog != null)
+      {
+        return catalog.toString();
+      }
+      else
+      {
+        return "";
+      }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      LOGGER.log(Level.WARNING, "");
+      return "";
+    }
   }
 
 }

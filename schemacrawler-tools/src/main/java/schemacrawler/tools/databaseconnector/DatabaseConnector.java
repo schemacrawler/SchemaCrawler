@@ -32,8 +32,10 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
@@ -48,13 +50,23 @@ import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
+import sf.util.SchemaCrawlerLogger;
 
 public abstract class DatabaseConnector
   implements Options
 {
 
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(DatabaseConnector.class.getName());
+
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
+
+    @Override
+    protected String getCatalogName(Connection connection)
+    {
+      return null;
+    }
 
   };
 
@@ -130,11 +142,13 @@ public abstract class DatabaseConnector
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
+    final String catalogName = getCatalogName(connection);
+
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
       .builder().withDatabaseServerType(dbServerType)
       .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
                                                connection)
-      .fromConnnection(connection);
+      .withCatalogName(catalogName).fromConnnection(connection);
 
     return schemaRetrievalOptionsBuilder;
   }
@@ -211,6 +225,23 @@ public abstract class DatabaseConnector
     throws SchemaCrawlerException
   {
     newDatabaseConnectionOptions(new SingleUseUserCredentials(), null);
+  }
+
+  protected String getCatalogName(final Connection connection)
+  {
+    if (connection == null)
+    {
+      return "";
+    }
+    try
+    {
+      return connection.getCatalog();
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not obtain database information", e);
+      return "";
+    }
   }
 
 }
