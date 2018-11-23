@@ -31,7 +31,6 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.createTempFile;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
-import static ru.yandex.qatools.embed.postgresql.distribution.Version.V11_1;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -59,7 +58,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.server.postgresql.PostgreSQLDumpLoader;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -67,7 +65,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class PostgreSQLDumpTest
-  extends BaseAdditionalDatabaseTest
+  extends BasePostgreSQLTest
 {
 
   @BeforeClass
@@ -154,7 +152,7 @@ public class PostgreSQLDumpTest
     final IRuntimeConfig runtimeConfig = EmbeddedPostgres
       .cachedRuntimeConfig(cachedPostgreSQL);
 
-    final EmbeddedPostgres postgres = new EmbeddedPostgres(V11_1);
+    final EmbeddedPostgres postgres = new EmbeddedPostgres(getEmbeddedPostgreSQLVersion());
     postgres.start(runtimeConfig,
                    "localhost",
                    SocketUtil.findFreePort(),

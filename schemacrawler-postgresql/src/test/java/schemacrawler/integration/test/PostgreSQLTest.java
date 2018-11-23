@@ -29,7 +29,6 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assume.assumeTrue;
-import static ru.yandex.qatools.embed.postgresql.distribution.Version.V11_1;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -52,13 +51,12 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class PostgreSQLTest
-  extends BaseAdditionalDatabaseTest
+  extends BasePostgreSQLTest
 {
 
   @BeforeClass
@@ -90,7 +88,7 @@ public class PostgreSQLTest
       final IRuntimeConfig runtimeConfig = EmbeddedPostgres
         .cachedRuntimeConfig(cachedPostgreSQL);
 
-      postgres = new EmbeddedPostgres(V11_1);
+      postgres = new EmbeddedPostgres(getEmbeddedPostgreSQLVersion());
       postgres.start(runtimeConfig,
                      "localhost",
                      SocketUtil.findFreePort(),
