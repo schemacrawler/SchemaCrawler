@@ -37,6 +37,8 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.logging.Level;
 
+import schemacrawler.JvmSystemInfo;
+import schemacrawler.OperatingSystemInfo;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -126,6 +128,10 @@ public final class SchemaCrawlerHelpCommandLine
     out.println();
     if (showVersionOnly)
     {
+      out.println(new JvmSystemInfo());
+      out.println(new OperatingSystemInfo());
+      out.flush();
+
       return;
     }
 
