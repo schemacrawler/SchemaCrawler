@@ -33,7 +33,7 @@
 
 FROM openjdk
 
-ARG SCHEMACRAWLER_VERSION=15.01.06
+ARG SCHEMACRAWLER_VERSION=15.02.01
 
 LABEL "us.fatehi.schemacrawler.product-version"="SchemaCrawler ${SCHEMACRAWLER_VERSION}" \
       "us.fatehi.schemacrawler.website"="http://www.schemacrawler.com" \

@@ -28,7 +28,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <schemacrawler.version>15.01.06</schemacrawler.version>
+    <schemacrawler.version>15.02.01</schemacrawler.version>
     <skip.signing.artifacts>true</skip.signing.artifacts>
   </properties>
 </project>
