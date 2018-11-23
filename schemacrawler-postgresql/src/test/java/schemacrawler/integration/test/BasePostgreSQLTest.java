@@ -41,9 +41,15 @@ public class BasePostgreSQLTest
   extends BaseAdditionalDatabaseTest
 {
 
+  private static final boolean useProductionVersion = true;
+
   protected Version getEmbeddedPostgreSQLVersion()
   {
-    if (IS_OS_WINDOWS || IS_OS_MAC)
+    if (useProductionVersion)
+    {
+      return V10_6;
+    }
+    else if (IS_OS_WINDOWS || IS_OS_MAC)
     {
       return V11_1;
     }
