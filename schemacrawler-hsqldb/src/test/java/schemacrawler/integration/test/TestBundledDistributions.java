@@ -51,10 +51,10 @@ public class TestBundledDistributions
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("hsqldb");
     final Connection connection = null;
-    assertEquals(10,
+    assertEquals(11,
                  databaseSystemIdentifier
-                   .getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getInformationSchemaViews().size());
+                   .getSchemaRetrievalOptionsBuilder(connection).toOptions()
+                   .getInformationSchemaViews().size());
   }
 
   @Test

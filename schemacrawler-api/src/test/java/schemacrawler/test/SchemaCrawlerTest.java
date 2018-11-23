@@ -45,7 +45,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -308,7 +307,7 @@ public class SchemaCrawlerTest
       assertEquals("Database property count does not match",
                    158,
                    dbProperties.size());
-      final Set<Property> serverInfo = databaseInfo.getServerInfo();
+      final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertEquals("Server info property count does not match",
                    0,
                    serverInfo.size());

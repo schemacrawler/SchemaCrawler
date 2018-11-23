@@ -69,7 +69,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
-public class TestHsqldbCommandline
+public class HsqldbCommandlineTest
   extends BaseDatabaseTest
 {
 

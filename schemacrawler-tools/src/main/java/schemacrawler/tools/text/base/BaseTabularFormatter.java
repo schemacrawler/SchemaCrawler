@@ -39,6 +39,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.TextFormattingHelper.DocumentHeaderType;
@@ -154,6 +155,27 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
       return;
     }
 
+    final Collection<Property> serverInfo = dbInfo.getServerInfo();
+    if (!serverInfo.isEmpty())
+    {
+      formattingHelper.writeHeader(DocumentHeaderType.section,
+                                   "Database Server Information");
+      formattingHelper.writeObjectStart();
+      for (final Property property: serverInfo)
+      {
+        final String name = property.getName();
+        Object value = property.getValue();
+        if (value == null)
+        {
+          value = "";
+        }
+        formattingHelper.writeNameValueRow(name,
+                                           ObjectToString.toString(value),
+                                           Alignment.inherit);
+      }
+      formattingHelper.writeObjectEnd();
+    }
+
     formattingHelper.writeHeader(DocumentHeaderType.section,
                                  "Database Information");
 
@@ -169,12 +191,13 @@ public abstract class BaseTabularFormatter<O extends BaseTextOptions>
                                        Alignment.inherit);
     formattingHelper.writeObjectEnd();
 
-    if (!dbInfo.getProperties().isEmpty())
+    final Collection<DatabaseProperty> dbProperties = dbInfo.getProperties();
+    if (!dbProperties.isEmpty())
     {
       formattingHelper.writeHeader(DocumentHeaderType.section,
                                    "Database Characteristics");
       formattingHelper.writeObjectStart();
-      for (final DatabaseProperty property: dbInfo.getProperties())
+      for (final DatabaseProperty property: dbProperties)
       {
         final String name = property.getDescription();
         Object value = property.getValue();

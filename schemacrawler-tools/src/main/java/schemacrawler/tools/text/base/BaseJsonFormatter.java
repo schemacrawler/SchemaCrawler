@@ -38,6 +38,7 @@ import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
 import schemacrawler.schema.JdbcDriverInfo;
 import schemacrawler.schema.JdbcDriverProperty;
+import schemacrawler.schema.Property;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.JsonFormattingHelper;
@@ -150,11 +151,28 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       jsonDbInfo.put("databaseProductVersion", dbInfo.getProductVersion());
       jsonDbInfo.put("databaseUserName", dbInfo.getUserName());
 
-      if (printVerboseDatabaseInfo && !dbInfo.getProperties().isEmpty())
+      final Collection<Property> serverInfo = dbInfo.getServerInfo();
+      if (printVerboseDatabaseInfo && !serverInfo.isEmpty())
+      {
+        final JSONArray jsonServerInfoProperties = new JSONArray();
+        jsonDbInfo.put("serverInfo", jsonServerInfoProperties);
+        for (final Property property: serverInfo)
+        {
+          final JSONObject jsonServerInfoProperty = new JSONObject();
+          jsonServerInfoProperties.put(jsonServerInfoProperty);
+
+          jsonServerInfoProperty.put("name", property.getName());
+          jsonServerInfoProperty.put("description", property.getDescription());
+          jsonServerInfoProperty.put("value", property.getValue());
+        }
+      }
+
+      final Collection<DatabaseProperty> dbProperties = dbInfo.getProperties();
+      if (printVerboseDatabaseInfo && !dbProperties.isEmpty())
       {
         final JSONArray jsonDbProperties = new JSONArray();
         jsonDbInfo.put("databaseProperties", jsonDbProperties);
-        for (final DatabaseProperty property: dbInfo.getProperties())
+        for (final DatabaseProperty property: dbProperties)
         {
           final JSONObject jsonDbProperty = new JSONObject();
           jsonDbProperties.put(jsonDbProperty);

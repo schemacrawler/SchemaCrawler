@@ -30,7 +30,6 @@ package schemacrawler.schema;
 
 
 import java.util.Collection;
-import java.util.Set;
 
 import schemacrawler.ProductVersion;
 
@@ -62,6 +61,6 @@ public interface DatabaseInfo
    *
    * @return Schema
    */
-  Set<Property> getServerInfo();
+  Collection<Property> getServerInfo();
 
 }

@@ -88,7 +88,7 @@ final class MutableDatabaseInfo
   }
 
   @Override
-  public Set<Property> getServerInfo()
+  public Collection<Property> getServerInfo()
   {
     return new HashSet<>(serverInfo);
   }

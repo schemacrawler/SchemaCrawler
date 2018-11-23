@@ -153,7 +153,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | TABLE_SCHEMA | The name of the schema containing the view. |
 | TABLE_NAME | The name of the view. |
 | TABLE_DEFINITION | The definition of the table as it would appear in a CREATE TABLE statement. If it does not fit, the value is NULL. |
- 
+
 
 ### METADATA_EXTENSION.EXT_TABLE_CONSTRAINTS
 
@@ -163,7 +163,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | CONSTRAINT_SCHEMA | The name of the schema containing the constraint. |
 | CONSTRAINT_NAME | The name of the constraint. |
 | CHECK_CLAUSE | The search condition used in the check clause. If it does not fit, the value is NULL. |
- 
+
 
 ### METADATA_EXTENSION.EXT_PRIMARY_KEYS
 
@@ -174,7 +174,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | PRIMARY_KEY_TABLE_NAME | The name of the table containing the primary key. |
 | PRIMARY_KEY_NAME | The name of the primary key. |
 | PRIMARY_KEY_DEFINITION | The definition of the primary key. |
- 
+
 
 ### METADATA_EXTENSION.EXT_FOREIGN_KEYS
 
@@ -185,7 +185,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | FOREIGN_KEY_TABLE_NAME | The name of the table containing the foreign key. |
 | FOREIGN_KEY_NAME | The name of the foreign key. |
 | FOREIGN_KEY_DEFINITION | The definition of the foreign key. |
- 
+
 
 ### METADATA_EXTENSION.EXT_HIDDEN_TABLE_COLUMNS
 
@@ -206,7 +206,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | REFERENCED_OBJECT_CATALOG | The name of the catalog containing the referenced object. |
 | REFERENCED_OBJECT_SCHEMA | The name of the schema containing the referenced object. |
 | REFERENCED_OBJECT_NAME | The name of the referenced object. |
- 
+
 
 ### METADATA_EXTENSION.EXT_INDEXES
 
@@ -217,7 +217,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | INDEX_NAME | The name of the index. |
 | TABLE_NAME | The name of the table which has the index. |
 | INDEX_DEFINITION | The definition of the index. |
- 
+
 
 ### METADATA_EXTENSION.EXT_INDEX_COLUMNS
 
@@ -229,7 +229,7 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 | TABLE_NAME | The name of the table which has the index. |
 | COLUMN_NAME | The name of the table column which has the index. |
 | IS_GENERATEDCOLUMN | Whether the columns is generated - that is, a functional index column, or a virtual column |
-| INDEX_COLUMN_DEFINITION | The definition of the index column . | 
+| INDEX_COLUMN_DEFINITION | The definition of the index column . |
 
 
 ## Additional Metadata
@@ -237,6 +237,17 @@ For details on the columns in this view, please refer to [getPrimaryKeys](https:
 ### Additional Metadata in SchemaCrawler Output
 
 SchemaCrawler saves any additional metadata from the view queries as attibutes on the SchemaCrawler Java objects. You can access the attributes with `getAttribute`. You can also define your own queries to define additional attributes.
+
+### ADDITIONAL_INFO.SERVER_INFORMATION
+
+If you create a query definition in the configuration properties, called `select.ADDITIONAL_INFO.SERVER_INFORMATION`, the database server specific information will be added to the catalog metadata, and SchemaCrawler output. The query should return the following columns:
+
+| Column name | Description |
+| --- | --- |
+| NAME | The name of the server information property. |
+| VALUE | The value of the server information property. |
+| DESCRIPTION | The description of the server information property. |
+
 
 ### ADDITIONAL_INFO.ADDITIONAL_TABLE_ATTRIBUTES
 
@@ -247,7 +258,7 @@ If you create a query definition in the configuration properties, called `select
 | TABLE_CATALOG | The name of the catalog containing the table or view. |
 | TABLE_SCHEMA | The name of the schema containing the table or view. |
 | TABLE_NAME | The name of the table or view. |
-| ... additional columns | Any additional values that should be added to the table metadata. | 
+| ... additional columns | Any additional values that should be added to the table metadata. |
 
 
 ### ADDITIONAL_INFO.ADDITIONAL_COLUMN_ATTRIBUTES
