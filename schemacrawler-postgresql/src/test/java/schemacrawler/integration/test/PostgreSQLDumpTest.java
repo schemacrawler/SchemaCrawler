@@ -31,6 +31,7 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.createTempFile;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V11_1;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -153,7 +154,7 @@ public class PostgreSQLDumpTest
     final IRuntimeConfig runtimeConfig = EmbeddedPostgres
       .cachedRuntimeConfig(cachedPostgreSQL);
 
-    final EmbeddedPostgres postgres = new EmbeddedPostgres();
+    final EmbeddedPostgres postgres = new EmbeddedPostgres(V11_1);
     postgres.start(runtimeConfig,
                    "localhost",
                    SocketUtil.findFreePort(),
