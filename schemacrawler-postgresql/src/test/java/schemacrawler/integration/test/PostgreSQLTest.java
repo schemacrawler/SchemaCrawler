@@ -29,7 +29,7 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assume.assumeTrue;
-import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_3;
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V11_1;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class PostgreSQLTest
       final IRuntimeConfig runtimeConfig = EmbeddedPostgres
         .cachedRuntimeConfig(cachedPostgreSQL);
 
-      postgres = new EmbeddedPostgres(V10_3);
+      postgres = new EmbeddedPostgres(V11_1);
       postgres.start(runtimeConfig,
                      "localhost",
                      SocketUtil.findFreePort(),
