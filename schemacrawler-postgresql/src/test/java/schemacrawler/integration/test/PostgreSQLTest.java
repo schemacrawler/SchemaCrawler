@@ -143,7 +143,6 @@ public class PostgreSQLTest
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    // textOptionsBuilder.portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");

@@ -54,6 +54,7 @@ import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.SqlScriptSource;
 import com.wix.mysql.config.MysqldConfig;
 
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -162,15 +163,16 @@ public class MySQLTest
     }
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+      .builder();
+    schemaCrawlerOptionsBuilder
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences().includeAllSynonyms().includeAllRoutines();
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    textOptionsBuilder.noInfo().portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
