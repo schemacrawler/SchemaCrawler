@@ -4,13 +4,18 @@
   Loads SchemaCrawler plug-in for PostgreSQL.
   
 -host=<host>
-	Host name. Optional, defaults to localhost.
+	Host name. 
+	Optional, uses the PGHOSTADDR and PGHOST environmental variables if available, 
+	or defaults to localhost.
 	
 -port=<port>
-	Port number. Optional, defaults to 1433.	
+	Port number.
+    Optional, uses the PGPORT environmental variable if available, 
+    or defaults to 5432.	
 
 -database=<database>
 	Database name.
+    Optional, uses the PGDATABASE environmental variable.
 	
 -user=<user>
 	Database user name.
