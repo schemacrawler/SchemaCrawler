@@ -54,9 +54,11 @@ import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.server.postgresql.PostgreSQLDumpLoader;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -98,8 +100,14 @@ public class PostgreSQLDumpTest
   public void testPostgreSQLExecutableWithDump()
     throws Exception
   {
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder();
+    schemaCrawlerOptionsBuilder
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .includeSchemas(new RegularExpressionInclusionRule("books"))
+      .includeAllSequences().includeAllSynonyms().includeAllRoutines();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
@@ -113,7 +121,7 @@ public class PostgreSQLDumpTest
     executable.setConnection(new PostgreSQLDumpLoader(dumpFile)
       .createDatabaseConnection());
 
-    executeExecutable(executable, "testPostgreSQLWithDump.txt");
+    executeExecutable(executable, "testPostgreSQLExecutableWithDump.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
@@ -127,6 +135,8 @@ public class PostgreSQLDumpTest
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "postgresql");
       argsMap.put("database", dumpFile.toString());
+      argsMap.put("schemas", "books");
+      argsMap.put("routines", ".*");
       argsMap.put("command", "details");
       argsMap.put("infolevel", InfoLevel.maximum.name());
       argsMap.put("outputfile", out.toString());

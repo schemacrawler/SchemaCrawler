@@ -57,6 +57,7 @@ import com.wix.mysql.config.MysqldConfig;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -117,8 +118,9 @@ public class MySQLTest
 
       final MysqldConfig config = aMysqldConfig(v5_6_latest)
         .withServerVariable("bind-address", "localhost")
-        .withServerVariable("lower_case_table_names", 1).withFreePort()
-        .withCharset(UTF8).withTimeout(1, MINUTES).build();
+        .withServerVariable("lower_case_table_names", 1).withCharset(UTF8)
+        .withTimeout(1, MINUTES).withFreePort()
+        .withUser("schemacrawler", "schemacrawler").build();
       mysqld = anEmbeddedMysql(config).addSchema(schema, sqlScriptSources)
         .start();
 
@@ -159,8 +161,12 @@ public class MySQLTest
       return;
     }
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+      .includeAllSequences().includeAllSynonyms().includeAllRoutines();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
+      .toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
