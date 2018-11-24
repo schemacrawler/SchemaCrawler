@@ -125,7 +125,7 @@ public class FileHasContent
   @Override
   public void describeMismatch(final Object item, final Description description)
   {
-    description.appendText("was ").appendValue(item);
+    // description.appendText("was ").appendValue(item);
     if (failures != null)
     {
       description.appendValueList("mismatched on:\n", "\n", "", failures);

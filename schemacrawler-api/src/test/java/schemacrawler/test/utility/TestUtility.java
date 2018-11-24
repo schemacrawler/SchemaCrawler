@@ -188,7 +188,10 @@ public final class TestUtility
     else
     {
       final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
-      contentEquals = contentEquals(referenceReader, fileReader, neuters);
+      contentEquals = contentEquals(referenceReader,
+                                    fileReader,
+                                    failures,
+                                    neuters);
     }
 
     if ("html".equals(outputFormat))
@@ -313,6 +316,7 @@ public final class TestUtility
 
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
+                                       List<String> failures,
                                        final Pattern... ignoreLinePatterns)
     throws Exception
   {
@@ -347,9 +351,16 @@ public final class TestUtility
 
         if (!expectedline.equals(actualLine))
         {
-          System.out.println("Line #" + i + " (expected followed by actual)");
-          System.out.println(expectedline);
-          System.out.println(actualLine);
+          final StringBuilder buffer = new StringBuilder();
+          buffer.append("Line #").append(i)
+            .append(" (expected followed by actual):").append("\n");
+          buffer.append(expectedline).append("\n");
+          buffer.append(actualLine).append("\n");
+
+          final String lineMiscompare = buffer.toString();
+          failures.add(lineMiscompare);
+          System.out.println(lineMiscompare);
+
           return false;
         }
       }
