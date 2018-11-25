@@ -29,6 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.postgresql;
 
 
+/**
+ * Force a download of the PostgreSQL executables.
+ * 
+ * @author Sualeh Fatehi
+ */
 public class EmbeddedPostgreSQLDownloader
 {
 
