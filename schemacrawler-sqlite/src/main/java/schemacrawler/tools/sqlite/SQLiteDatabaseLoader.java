@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.nio.file.Path;
 
@@ -41,16 +43,14 @@ public class SQLiteDatabaseLoader
   extends DatabaseDumpLoader
 {
 
-  public SQLiteDatabaseLoader(final Path databaseFile)
-    throws IOException
-  {
-    super(databaseFile);
-  }
+  private Path databaseFile;
 
   @Override
   public ConnectionOptions createConnectionOptions()
     throws SchemaCrawlerException
   {
+    requireNonNull(databaseFile, "Database file not loaded");
+
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", databaseFile.toString());
@@ -66,6 +66,34 @@ public class SQLiteDatabaseLoader
                                        + databaseFile,
                                        e);
     }
+  }
+
+  @Override
+  public String getConnectionUrl()
+  {
+    requireNonNull(databaseFile, "Database file not loaded");
+    return "jdbc:sqlite:" + databaseFile.toString();
+  }
+
+  @Override
+  public void loadDatabaseFile(final Path dbFile)
+    throws IOException
+  {
+    databaseFile = checkDatabaseFile(dbFile);
+  }
+
+  @Override
+  public void startServer()
+    throws SchemaCrawlerException
+  {
+    // No-op
+  }
+
+  @Override
+  public void stopServer()
+    throws SchemaCrawlerException
+  {
+    // No-op
   }
 
 }

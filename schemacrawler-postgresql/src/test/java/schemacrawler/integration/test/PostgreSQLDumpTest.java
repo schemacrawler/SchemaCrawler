@@ -39,9 +39,7 @@ import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -50,9 +48,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.flapdoodle.embed.process.config.IRuntimeConfig;
-import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
-import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -87,13 +82,15 @@ public class PostgreSQLDumpTest
   {
     dumpFile = createTempFile("test_postgres_dump", "sql");
 
-    final EmbeddedPostgres postgres = createDatabase();
+    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader(getEmbeddedPostgreSQLVersion());
+    dumpLoader.startServer();
+    final String connectionUrl = dumpLoader.getConnectionUrl();
+    createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
+    createDatabase("/postgresql.scripts.txt");
 
-    postgres.getProcess()
-      .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
-      .exportToFile(dumpFile.toFile());
+    dumpLoader.exportToFile(dumpFile);
 
-    postgres.stop();
+    dumpLoader.stopServer();
   }
 
   @Test
@@ -114,12 +111,15 @@ public class PostgreSQLDumpTest
     textOptionsBuilder.portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
+    final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(getEmbeddedPostgreSQLVersion());
+    postgreSQLDumpLoader.startServer();
+    postgreSQLDumpLoader.loadDatabaseFile(dumpFile);
+
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
-    executable.setConnection(new PostgreSQLDumpLoader(dumpFile)
-      .createDatabaseConnection());
+    executable.setConnection(postgreSQLDumpLoader.createDatabaseConnection());
 
     executeExecutable(executable, "testPostgreSQLExecutableWithDump.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
@@ -146,38 +146,6 @@ public class PostgreSQLDumpTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource("testPostgreSQLMainWithDump.txt")));
-  }
-
-  private EmbeddedPostgres createDatabase()
-    throws SchemaCrawlerException, SQLException, IOException
-  {
-    final String user = "schemacrawler";
-    final String password = "schemacrawler";
-
-    final String homeDirectory = System.getProperty("user.home");
-    final Path cachedPostgreSQL = Paths.get(homeDirectory, ".embedpostgresql")
-      .toAbsolutePath();
-    cachedPostgreSQL.toFile().mkdirs();
-
-    final IRuntimeConfig runtimeConfig = EmbeddedPostgres
-      .cachedRuntimeConfig(cachedPostgreSQL);
-
-    final EmbeddedPostgres postgres = new EmbeddedPostgres(getEmbeddedPostgreSQLVersion());
-    postgres.start(runtimeConfig,
-                   "localhost",
-                   SocketUtil.findFreePort(),
-                   "schemacrawler",
-                   user,
-                   password,
-                   Arrays.asList("-E", "'UTF-8'"));
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> postgres.stop()));
-
-    final String connectionUrl = postgres.getConnectionUrl()
-      .orElseThrow(() -> new RuntimeException());
-    createDataSource(connectionUrl, user, password);
-    createDatabase("/postgresql.scripts.txt");
-
-    return postgres;
   }
 
 }

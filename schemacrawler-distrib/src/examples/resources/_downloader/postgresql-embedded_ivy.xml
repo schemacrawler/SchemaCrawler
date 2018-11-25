@@ -5,7 +5,7 @@
   <info organisation="schemacrawler" module="schemacrawler-python" />
   <dependencies>
     <dependency org="ru.yandex.qatools.embed" name="postgresql-embedded"
-      rev="2.9" />
+      rev="2.10" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />

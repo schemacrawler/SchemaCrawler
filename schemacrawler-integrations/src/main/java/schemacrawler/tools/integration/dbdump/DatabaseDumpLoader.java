@@ -56,23 +56,6 @@ public abstract class DatabaseDumpLoader
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseDumpLoader.class.getName());
 
-  protected final Path databaseFile;
-
-  public DatabaseDumpLoader(final Path databaseFile)
-    throws IOException
-  {
-    this.databaseFile = requireNonNull(databaseFile,
-                                       "No database file path provided")
-                                         .normalize().toAbsolutePath();
-    if (!isFileReadable(this.databaseFile))
-    {
-      final IOException e = new IOException("Cannot read database file, "
-                                            + this.databaseFile);
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      throw e;
-    }
-  }
-
   public abstract ConnectionOptions createConnectionOptions()
     throws SchemaCrawlerException;
 
@@ -85,9 +68,7 @@ public abstract class DatabaseDumpLoader
     }
     catch (final SQLException e)
     {
-      throw new SchemaCrawlerException("Cannot read database file, "
-                                       + databaseFile,
-                                       e);
+      throw new SchemaCrawlerException("Cannot load database file", e);
     }
   }
 
@@ -99,6 +80,33 @@ public abstract class DatabaseDumpLoader
       return createDiagram(connection, extension);
     }
   }
+
+  public abstract String getConnectionUrl();
+
+  public abstract void startServer()
+    throws SchemaCrawlerException;
+
+  public abstract void stopServer()
+    throws SchemaCrawlerException;
+
+  protected final Path checkDatabaseFile(final Path dbFile)
+    throws IOException
+  {
+    final Path databaseFile = requireNonNull(dbFile,
+                                             "No database file path provided")
+                                               .normalize().toAbsolutePath();
+    if (!isFileReadable(databaseFile))
+    {
+      final IOException e = new IOException("Cannot read database file, "
+                                            + databaseFile);
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+      throw e;
+    }
+    return databaseFile;
+  }
+
+  public abstract void loadDatabaseFile(final Path dbFile)
+    throws IOException;
 
   private Path createDiagram(final Connection connection,
                              final String extension)

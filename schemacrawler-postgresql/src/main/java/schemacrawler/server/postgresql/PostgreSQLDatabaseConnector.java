@@ -29,6 +29,7 @@ package schemacrawler.server.postgresql;
 
 
 import static java.util.Objects.requireNonNull;
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_6;
 import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
@@ -99,7 +100,9 @@ public final class PostgreSQLDatabaseConnector
     {
       try
       {
-        final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(databaseDumpFile);
+        final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(V10_6);
+        postgreSQLDumpLoader.startServer();
+        postgreSQLDumpLoader.loadDatabaseFile(databaseDumpFile);
         connectionOptions = postgreSQLDumpLoader.createConnectionOptions();
       }
       catch (final IOException e)

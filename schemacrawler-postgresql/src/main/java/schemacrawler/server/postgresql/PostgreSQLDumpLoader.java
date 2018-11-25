@@ -31,15 +31,16 @@ package schemacrawler.server.postgresql;
 
 import static java.util.Objects.requireNonNull;
 import static ru.yandex.qatools.embed.postgresql.util.SocketUtil.findFreePort;
-import static sf.util.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.logging.Level;
 
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
+import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -56,10 +57,28 @@ public class PostgreSQLDumpLoader
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(PostgreSQLDumpLoader.class.getName());
 
-  public PostgreSQLDumpLoader(final Path databaseFile)
+  private static final String user = "schemacrawler";;
+  private static final String password = "schemacrawler";;
+
+  private Path databaseFile;
+  private EmbeddedPostgres postgres;
+  private final Thread hook;
+
+  public PostgreSQLDumpLoader(final Version version)
     throws IOException
   {
-    super(databaseFile);
+    requireNonNull(version, "No embedded PostgreSQL version provided");
+
+    hook = new Thread(() -> {
+      try
+      {
+        stopServer();
+      }
+      catch (final SchemaCrawlerException e)
+      {
+        e.printStackTrace(System.err);
+      }
+    });
   }
 
   @Override
@@ -68,28 +87,16 @@ public class PostgreSQLDumpLoader
   {
     try
     {
-      requireNonNull(databaseFile, "No database file provided");
-      if (!isFileReadable(databaseFile))
-      {
-        throw new SchemaCrawlerException("Cannot read file, " + databaseFile);
-      }
-
-      final String user = "schemacrawler";
-      final String password = "schemacrawler";
-
-      final EmbeddedPostgres postgres = startEmbeddedPostgreSQLServer(user,
-                                                                      password);
-      loadDump(postgres, databaseFile);
+      requireNonNull(postgres, "Database server not started");
 
       final Config config = new Config();
-      config.put("url", getConnectionUrl(postgres));
+      config.put("url", getConnectionUrl());
 
       final UserCredentials userCredentials = new SingleUseUserCredentials(user,
                                                                            password);
       final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,
                                                                                 config);
       return connectionOptions;
-
     }
     catch (final Throwable e)
     {
@@ -97,42 +104,77 @@ public class PostgreSQLDumpLoader
     }
   }
 
-  private String getConnectionUrl(final EmbeddedPostgres postgres)
+  public void exportToFile(final Path dumpFile)
   {
+    requireNonNull(postgres, "Database server not started");
+    postgres.getProcess()
+      .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
+      .exportToFile(dumpFile.toFile());
+  }
+
+  @Override
+  public String getConnectionUrl()
+  {
+    requireNonNull(postgres, "Database server not started");
     final String connectionUrl = postgres.getConnectionUrl()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL connection URL"));
     return connectionUrl;
   }
 
-  private void loadDump(final EmbeddedPostgres postgres, final Path dbFile)
+  @Override
+  public void loadDatabaseFile(final Path dbFile)
+    throws IOException
   {
+    requireNonNull(postgres, "Database server not started");
+
+    databaseFile = checkDatabaseFile(dbFile);
+
     postgres.getProcess()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
       .importFromFile(dbFile.toFile());
   }
 
-  private EmbeddedPostgres startEmbeddedPostgreSQLServer(final String user,
-                                                         final String password)
-    throws IOException
+  @Override
+  public void startServer()
+    throws SchemaCrawlerException
   {
-    final String homeDirectory = System.getProperty("user.home");
-    final Path cachedPostgreSQL = Paths.get(homeDirectory, ".embedpostgresql")
-      .toAbsolutePath();
-    cachedPostgreSQL.toFile().mkdirs();
+    try
+    {
+      final String homeDirectory = System.getProperty("user.home");
+      final Path cachedPostgreSQL = Paths.get(homeDirectory, ".embedpostgresql")
+        .toAbsolutePath();
+      cachedPostgreSQL.toFile().mkdirs();
 
-    final IRuntimeConfig runtimeConfig = EmbeddedPostgres
-      .cachedRuntimeConfig(cachedPostgreSQL);
+      final IRuntimeConfig runtimeConfig = EmbeddedPostgres
+        .cachedRuntimeConfig(cachedPostgreSQL);
 
-    final EmbeddedPostgres postgres = new EmbeddedPostgres();
-    postgres.start(runtimeConfig,
-                   "localhost",
-                   findFreePort(),
-                   "schemacrawler",
-                   user,
-                   password,
-                   Arrays.asList("-E", "'UTF-8'"));
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> postgres.stop()));
-    return postgres;
+      postgres = new EmbeddedPostgres();
+      postgres.start(runtimeConfig,
+                     "localhost",
+                     findFreePort(),
+                     "schemacrawler",
+                     user,
+                     password,
+                     Arrays.asList("-E", "'UTF-8'"));
+
+      Runtime.getRuntime().addShutdownHook(hook);
+    }
+    catch (final Exception e)
+    {
+      throw new SchemaCrawlerException("Could not start PostgreSQL server", e);
+    }
+  }
+
+  @Override
+  public void stopServer()
+    throws SchemaCrawlerException
+  {
+    if (postgres != null)
+    {
+      LOGGER.log(Level.FINE, "Stopping PostgreSQL server");
+      postgres.stop();
+      postgres = null;
+    }
   }
 
 }
