@@ -32,10 +32,7 @@ import static org.junit.Assume.assumeTrue;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.logging.Level;
 
 import org.junit.After;
@@ -43,14 +40,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.flapdoodle.embed.process.config.IRuntimeConfig;
-import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
-import ru.yandex.qatools.embed.postgresql.util.SocketUtil;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -69,7 +64,7 @@ public class PostgreSQLTest
   }
 
   private boolean isDatabaseRunning;
-  private EmbeddedPostgres postgres;
+  private EmbeddedPostgreSQLWrapper embeddedPostgreSQL;
 
   @Before
   public void createDatabase()
@@ -77,30 +72,11 @@ public class PostgreSQLTest
   {
     try
     {
-      final String user = "schemacrawler";
-      final String password = "schemacrawler";
-
-      final String homeDirectory = System.getProperty("user.home");
-      final Path cachedPostgreSQL = Paths.get(homeDirectory, ".embedpostgresql")
-        .toAbsolutePath();
-      cachedPostgreSQL.toFile().mkdirs();
-
-      final IRuntimeConfig runtimeConfig = EmbeddedPostgres
-        .cachedRuntimeConfig(cachedPostgreSQL);
-
-      postgres = new EmbeddedPostgres(getEmbeddedPostgreSQLVersion());
-      postgres.start(runtimeConfig,
-                     "localhost",
-                     SocketUtil.findFreePort(),
-                     "schemacrawler",
-                     user,
-                     password,
-                     Arrays.asList("-E", "'UTF-8'"));
-      Runtime.getRuntime().addShutdownHook(new Thread(() -> postgres.stop()));
-
-      final String connectionUrl = postgres.getConnectionUrl()
-        .orElseThrow(() -> new RuntimeException());
-      createDataSource(connectionUrl, user, password);
+      embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper(getEmbeddedPostgreSQLVersion());
+      embeddedPostgreSQL.startServer();
+      createDataSource(embeddedPostgreSQL.getConnectionUrl(),
+                       embeddedPostgreSQL.getUser(),
+                       embeddedPostgreSQL.getPassword());
       createDatabase("/postgresql.scripts.txt");
 
       isDatabaseRunning = true;
@@ -115,10 +91,11 @@ public class PostgreSQLTest
 
   @After
   public void stopDatabaseServer()
+    throws SchemaCrawlerException
   {
     if (isDatabaseRunning)
     {
-      postgres.stop();
+      embeddedPostgreSQL.stopServer();
     }
   }
 

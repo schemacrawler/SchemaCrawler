@@ -99,7 +99,7 @@ public final class PostgreSQLDatabaseConnector
     {
       try
       {
-        final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader();
+        final EmbeddedPostgreSQLWrapper postgreSQLDumpLoader = new EmbeddedPostgreSQLWrapper();
         postgreSQLDumpLoader.startServer();
         postgreSQLDumpLoader.loadDatabaseFile(databaseDumpFile);
         connectionOptions = postgreSQLDumpLoader.createConnectionOptions();

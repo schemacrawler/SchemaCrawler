@@ -54,7 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.server.postgresql.PostgreSQLDumpLoader;
+import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -82,15 +82,16 @@ public class PostgreSQLDumpTest
   {
     dumpFile = createTempFile("test_postgres_dump", "sql");
 
-    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader();
-    dumpLoader.startServer();
-    final String connectionUrl = dumpLoader.getConnectionUrl();
-    createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
+    final EmbeddedPostgreSQLWrapper embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
+    embeddedPostgreSQL.startServer();
+    createDataSource(embeddedPostgreSQL.getConnectionUrl(),
+                     embeddedPostgreSQL.getUser(),
+                     embeddedPostgreSQL.getPassword());
     createDatabase("/postgresql.scripts.txt");
 
-    dumpLoader.exportToFile(dumpFile);
+    embeddedPostgreSQL.exportToFile(dumpFile);
 
-    dumpLoader.stopServer();
+    embeddedPostgreSQL.stopServer();
   }
 
   @Test
@@ -111,7 +112,7 @@ public class PostgreSQLDumpTest
     textOptionsBuilder.portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader();
+    final EmbeddedPostgreSQLWrapper postgreSQLDumpLoader = new EmbeddedPostgreSQLWrapper();
     postgreSQLDumpLoader.startServer();
     postgreSQLDumpLoader.loadDatabaseFile(dumpFile);
 

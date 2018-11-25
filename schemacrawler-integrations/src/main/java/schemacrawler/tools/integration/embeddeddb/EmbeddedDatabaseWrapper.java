@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.dbdump;
+package schemacrawler.tools.integration.embeddeddb;
 
 
 import static java.util.Objects.requireNonNull;
@@ -50,11 +50,11 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
-public abstract class DatabaseDumpLoader
+public abstract class EmbeddedDatabaseWrapper
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DatabaseDumpLoader.class.getName());
+    .getLogger(EmbeddedDatabaseWrapper.class.getName());
 
   public abstract ConnectionOptions createConnectionOptions()
     throws SchemaCrawlerException;
@@ -83,6 +83,15 @@ public abstract class DatabaseDumpLoader
 
   public abstract String getConnectionUrl();
 
+  public abstract String getPassword();
+
+  public abstract String getUser();
+
+  public abstract String getDatabase();
+
+  public abstract void loadDatabaseFile(final Path dbFile)
+    throws IOException;
+
   public abstract void startServer()
     throws SchemaCrawlerException;
 
@@ -104,9 +113,6 @@ public abstract class DatabaseDumpLoader
     }
     return databaseFile;
   }
-
-  public abstract void loadDatabaseFile(final Path dbFile)
-    throws IOException;
 
   private Path createDiagram(final Connection connection,
                              final String extension)

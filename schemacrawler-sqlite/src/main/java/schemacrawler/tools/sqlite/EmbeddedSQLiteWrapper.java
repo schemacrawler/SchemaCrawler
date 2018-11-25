@@ -37,10 +37,10 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.tools.integration.dbdump.DatabaseDumpLoader;
+import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 
-public class SQLiteDatabaseLoader
-  extends DatabaseDumpLoader
+public class EmbeddedSQLiteWrapper
+  extends EmbeddedDatabaseWrapper
 {
 
   private Path databaseFile;
@@ -73,6 +73,31 @@ public class SQLiteDatabaseLoader
   {
     requireNonNull(databaseFile, "Database file not loaded");
     return "jdbc:sqlite:" + databaseFile.toString();
+  }
+
+  @Override
+  public String getDatabase()
+  {
+    if (databaseFile == null)
+    {
+      return "";
+    }
+    else
+    {
+      return databaseFile.toString();
+    }
+  }
+
+  @Override
+  public String getPassword()
+  {
+    return "schemacrawler";
+  }
+
+  @Override
+  public String getUser()
+  {
+    return "schemacrawler";
   }
 
   @Override

@@ -35,7 +35,7 @@ public class EmbeddedPostgreSQLDownloader
   public static void main(final String[] args)
     throws Exception
   {
-    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader();
+    final EmbeddedPostgreSQLWrapper dumpLoader = new EmbeddedPostgreSQLWrapper();
     dumpLoader.startServer();
     dumpLoader.stopServer();
   }

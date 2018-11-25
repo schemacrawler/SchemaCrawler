@@ -30,6 +30,7 @@ package schemacrawler.server.postgresql;
 
 
 import static java.util.Objects.requireNonNull;
+import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_6;
 import static ru.yandex.qatools.embed.postgresql.util.SocketUtil.findFreePort;
 
 import java.io.IOException;
@@ -40,32 +41,39 @@ import java.util.logging.Level;
 
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
+import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
-import schemacrawler.tools.integration.dbdump.DatabaseDumpLoader;
+import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 import sf.util.SchemaCrawlerLogger;
 
-public class PostgreSQLDumpLoader
-  extends DatabaseDumpLoader
+public class EmbeddedPostgreSQLWrapper
+  extends EmbeddedDatabaseWrapper
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(PostgreSQLDumpLoader.class.getName());
-
-  private static final String user = "schemacrawler";;
-  private static final String password = "schemacrawler";;
+    .getLogger(EmbeddedPostgreSQLWrapper.class.getName());
 
   private Path databaseFile;
-  private EmbeddedPostgres postgres;
+  private EmbeddedPostgres postgreSQL;
   private final Thread hook;
+  private final Version postgreSQLVersion;
 
-  public PostgreSQLDumpLoader()
-    throws IOException
+  public EmbeddedPostgreSQLWrapper()
   {
+    this(V10_6);
+  }
+
+  public EmbeddedPostgreSQLWrapper(final Version postgreSQLVersion)
+  {
+
+    this.postgreSQLVersion = requireNonNull(postgreSQLVersion,
+                                            "No PostgreSQL version provided");
+
     hook = new Thread(() -> {
       try
       {
@@ -84,13 +92,13 @@ public class PostgreSQLDumpLoader
   {
     try
     {
-      requireNonNull(postgres, "Database server not started");
+      requireNonNull(postgreSQL, "Database server not started");
 
       final Config config = new Config();
       config.put("url", getConnectionUrl());
 
-      final UserCredentials userCredentials = new SingleUseUserCredentials(user,
-                                                                           password);
+      final UserCredentials userCredentials = new SingleUseUserCredentials(getUser(),
+                                                                           getPassword());
       final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,
                                                                                 config);
       return connectionOptions;
@@ -103,8 +111,8 @@ public class PostgreSQLDumpLoader
 
   public void exportToFile(final Path dumpFile)
   {
-    requireNonNull(postgres, "Database server not started");
-    postgres.getProcess()
+    requireNonNull(postgreSQL, "Database server not started");
+    postgreSQL.getProcess()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
       .exportToFile(dumpFile.toFile());
   }
@@ -112,8 +120,8 @@ public class PostgreSQLDumpLoader
   @Override
   public String getConnectionUrl()
   {
-    requireNonNull(postgres, "Database server not started");
-    final String connectionUrl = postgres.getConnectionUrl()
+    requireNonNull(postgreSQL, "Database server not started");
+    final String connectionUrl = postgreSQL.getConnectionUrl()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL connection URL"));
     return connectionUrl;
   }
@@ -122,11 +130,11 @@ public class PostgreSQLDumpLoader
   public void loadDatabaseFile(final Path dbFile)
     throws IOException
   {
-    requireNonNull(postgres, "Database server not started");
+    requireNonNull(postgreSQL, "Database server not started");
 
     databaseFile = checkDatabaseFile(dbFile);
 
-    postgres.getProcess()
+    postgreSQL.getProcess()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
       .importFromFile(dbFile.toFile());
   }
@@ -145,14 +153,14 @@ public class PostgreSQLDumpLoader
       final IRuntimeConfig runtimeConfig = EmbeddedPostgres
         .cachedRuntimeConfig(cachedPostgreSQL);
 
-      postgres = new EmbeddedPostgres();
-      postgres.start(runtimeConfig,
-                     "localhost",
-                     findFreePort(),
-                     "schemacrawler",
-                     user,
-                     password,
-                     Arrays.asList("-E", "'UTF-8'"));
+      postgreSQL = new EmbeddedPostgres(postgreSQLVersion);
+      postgreSQL.start(runtimeConfig,
+                       "localhost",
+                       findFreePort(),
+                       getDatabase(),
+                       getUser(),
+                       getPassword(),
+                       Arrays.asList("-E", "'UTF-8'"));
 
       Runtime.getRuntime().addShutdownHook(hook);
     }
@@ -166,12 +174,30 @@ public class PostgreSQLDumpLoader
   public void stopServer()
     throws SchemaCrawlerException
   {
-    if (postgres != null)
+    if (postgreSQL != null)
     {
       LOGGER.log(Level.FINE, "Stopping PostgreSQL server");
-      postgres.stop();
-      postgres = null;
+      postgreSQL.stop();
+      postgreSQL = null;
     }
+  }
+
+  @Override
+  public String getPassword()
+  {
+    return "schemacrawler";
+  }
+
+  @Override
+  public String getUser()
+  {
+    return "schemacrawler";
+  }
+
+  @Override
+  public String getDatabase()
+  {
+    return "schemacrawler";
   }
 
 }
