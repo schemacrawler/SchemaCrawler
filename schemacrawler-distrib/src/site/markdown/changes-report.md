@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a15.02.02"></a>
+## Release 15.02.02 - 2018-11-25
+
+- Add example to demonstrate how to load PostgreSQL dumps
+
+
 <a name="a15.02.01"></a>
 ## Release 15.02.01 - 2018-11-23
 
@@ -13,8 +19,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.02.01"></a>
-## Release 15.02.01 - 2018-10-14
+<a name="a15.02.02"></a>
+## Release 15.02.02 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 

@@ -6,9 +6,9 @@
     module="schemacrawler-database-plugins" />
   <dependencies>
     <dependency org="us.fatehi" name="schemacrawler-timesten"
-      rev="15.02.01" />
+      rev="15.02.02" />
     <dependency org="us.fatehi" name="schemacrawler-sapiq"
-      rev="15.02.01" />
+      rev="15.02.02" />
 
     <exclude org="us.fatehi" module="schemacrawler" />
     <exclude org="org.hsqldb" module="hsqldb" />
