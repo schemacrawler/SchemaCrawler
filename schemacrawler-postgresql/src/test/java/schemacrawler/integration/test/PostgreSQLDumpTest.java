@@ -82,7 +82,7 @@ public class PostgreSQLDumpTest
   {
     dumpFile = createTempFile("test_postgres_dump", "sql");
 
-    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader(getEmbeddedPostgreSQLVersion());
+    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader();
     dumpLoader.startServer();
     final String connectionUrl = dumpLoader.getConnectionUrl();
     createDataSource(connectionUrl, "schemacrawler", "schemacrawler");
@@ -111,7 +111,7 @@ public class PostgreSQLDumpTest
     textOptionsBuilder.portableNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader(getEmbeddedPostgreSQLVersion());
+    final PostgreSQLDumpLoader postgreSQLDumpLoader = new PostgreSQLDumpLoader();
     postgreSQLDumpLoader.startServer();
     postgreSQLDumpLoader.loadDatabaseFile(dumpFile);
 

@@ -28,16 +28,13 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.server.postgresql;
 
-
-import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_6;
-
 public class EmbeddedPostgreSQLDownloader
 {
 
   public static void main(final String[] args)
     throws Exception
   {
-    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader(V10_6);
+    final PostgreSQLDumpLoader dumpLoader = new PostgreSQLDumpLoader();
     dumpLoader.startServer();
     dumpLoader.stopServer();
   }

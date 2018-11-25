@@ -40,7 +40,6 @@ import java.util.logging.Level;
 
 import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
-import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseConnectionOptions;
@@ -64,11 +63,9 @@ public class PostgreSQLDumpLoader
   private EmbeddedPostgres postgres;
   private final Thread hook;
 
-  public PostgreSQLDumpLoader(final Version version)
+  public PostgreSQLDumpLoader()
     throws IOException
   {
-    requireNonNull(version, "No embedded PostgreSQL version provided");
-
     hook = new Thread(() -> {
       try
       {
