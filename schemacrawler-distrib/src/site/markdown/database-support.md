@@ -26,6 +26,7 @@ The JDBC drivers for database systems commonly used with SchemaCrawler are:
   and is included with the SchemaCrawler download.
 - For any other database that includes a compliant JDBC driver, place the JDBC in the
   SchemaCrawler `lib` directory.
+- [Amazon Aurora](https://aws.amazon.com/rds/aurora/) is supported in MySQL and PostgreSQL modes.
 
 
 # Additional SchemaCrawler Database Plugins
@@ -59,6 +60,8 @@ You should always use the `-schemas` command-line switch for databases that supp
 for the `-schemas` switch is a regular expression that determines which schemas SchemaCrawler will
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically
 schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).
+
+If there are environmental variables that contain a value, you can use the supported shell functionality to pass data to SchemaCrawler. For example, `-host %DBHOST%` on Windows will use the host value specified in the `DBHOST` environmental variable, and `-host $DBHOST` will do the same thing on Linux.
 
 ## Making Connections to a Database
 
@@ -115,6 +118,9 @@ Typical command-line arguments will look like:
 ```
 -server=postgresql -host=db.example.com -port=5432 -database=schemacrawler -schemas=public -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
+* `-host`  is optional if the `PGHOSTADDR` or `PGHOST` environmental variables are set
+* `-port`  is optional if the `PGPORT` environmental variables is set
+* `-database`  is optional if the `PGDATABASE`  environmental variables is set
 
 ### MariaDB
 
