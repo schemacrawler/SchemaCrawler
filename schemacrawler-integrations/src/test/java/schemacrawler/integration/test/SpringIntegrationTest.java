@@ -33,7 +33,6 @@ import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.lang.reflect.Executable;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,19 +68,16 @@ public class SpringIntegrationTest
     final List<String> failures = new ArrayList<>();
     for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
     {
-      final Object bean = appContext.getBean(beanDefinitionName);
-      if (bean instanceof Executable)
-      {
-        final SchemaRetrievalOptions schemaRetrievalOptions = (SchemaRetrievalOptions) appContext
-          .getBean("schemaRetrievalOptions");
+      final SchemaCrawlerExecutable executable = appContext
+        .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
+      final SchemaRetrievalOptions schemaRetrievalOptions = (SchemaRetrievalOptions) appContext
+        .getBean("schemaRetrievalOptions");
 
-        final SchemaCrawlerExecutable executable = (SchemaCrawlerExecutable) bean;
-        executeAndCheckForOutputFile(beanDefinitionName,
-                                     executable,
-                                     schemaRetrievalOptions,
-                                     failures,
-                                     false);
-      }
+      executeAndCheckForOutputFile(beanDefinitionName,
+                                   executable,
+                                   schemaRetrievalOptions,
+                                   failures,
+                                   false);
     }
     if (failures.size() > 0)
     {
