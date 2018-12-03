@@ -29,13 +29,10 @@ package schemacrawler.integration.test;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static schemacrawler.test.utility.TestUtility.compareCompressedOutput;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.Test;
@@ -46,14 +43,12 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
 
 public class SpringIntegrationTest
   extends BaseDatabaseTest
@@ -65,32 +60,23 @@ public class SpringIntegrationTest
   public void testExecutables()
     throws Exception
   {
-    final List<String> failures = new ArrayList<>();
-    for (final String beanDefinitionName: appContext.getBeanDefinitionNames())
-    {
-      final SchemaCrawlerExecutable executable = appContext
-        .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
-      final SchemaRetrievalOptions schemaRetrievalOptions = (SchemaRetrievalOptions) appContext
-        .getBean("schemaRetrievalOptions");
+    final String beanDefinitionName = "executableForSchema";
+    final SchemaCrawlerExecutable executable = appContext
+      .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
+    final SchemaRetrievalOptions schemaRetrievalOptions = appContext
+      .getBean("schemaRetrievalOptions", SchemaRetrievalOptions.class);
 
-      executeAndCheckForOutputFile(beanDefinitionName,
-                                   executable,
-                                   schemaRetrievalOptions,
-                                   failures,
-                                   false);
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    executeAndCheckForOutputFile(beanDefinitionName,
+                                 executable,
+                                 schemaRetrievalOptions);
   }
 
   @Test
   public void testSchema()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) appContext
-      .getBean("schemaCrawlerOptions");
+    final SchemaCrawlerOptions schemaCrawlerOptions = appContext
+      .getBean("schemaCrawlerOptions", SchemaCrawlerOptions.class);
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
@@ -101,49 +87,26 @@ public class SpringIntegrationTest
 
   private void executeAndCheckForOutputFile(final String executableName,
                                             final SchemaCrawlerExecutable executable,
-                                            final SchemaRetrievalOptions schemaRetrievalOptions,
-                                            final List<String> failures,
-                                            final boolean isCompressedOutput)
+                                            final SchemaRetrievalOptions schemaRetrievalOptions)
     throws Exception
   {
-    final Path testOutputFile = IOUtility.createTempFilePath(executableName,
-                                                             "data");
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
-      .readField(executable, "schemaCrawlerOptions", true);
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder(schemaCrawlerOptions).includeAllRoutines();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
-
-    // Force output to test output file
-    final OutputOptions outputOptions = (OutputOptions) FieldUtils
-      .readField(executable, "outputOptions", true);
-    executable.setOutputOptions(forceOutputToTestOutputFile(outputOptions,
-                                                            testOutputFile));
-
-    executable.setConnection(getConnection());
-    executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-    executable.execute();
-
-    if (isCompressedOutput)
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
-      failures.addAll(compareCompressedOutput(executableName + ".txt",
-                                              testOutputFile,
-                                              TextOutputFormat.text.name()));
-    }
-    else
-    {
-      failures.addAll(compareOutput(executableName + ".txt",
-                                    testOutputFile,
-                                    TextOutputFormat.text.name()));
-    }
-  }
+      final OutputOptions outputOptions = (OutputOptions) FieldUtils
+        .readField(executable, "outputOptions", true);
+      OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder(outputOptions).withOutputWriter(out);
 
-  private OutputOptions forceOutputToTestOutputFile(final OutputOptions outputOptions,
-                                                    final Path testOutputFile)
-  {
-    return OutputOptionsBuilder.builder(outputOptions)
-      .withOutputFile(testOutputFile).toOptions();
+      executable.setOutputOptions(outputOptionsBuilder.toOptions());
+
+      executable.setConnection(getConnection());
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      executable.execute();
+
+    }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(executableName + ".txt")));
   }
 
 }

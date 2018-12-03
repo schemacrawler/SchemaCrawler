@@ -37,7 +37,6 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import sf.util.SchemaCrawlerLogger;
 
 /**
  * Main executor for the graphing integration.
@@ -47,9 +46,6 @@ import sf.util.SchemaCrawlerLogger;
 public final class SerializationCommand
   extends BaseSchemaCrawlerCommand
 {
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SerializationCommand.class.getName());
 
   static final String COMMAND = "serialize";
 
