@@ -114,7 +114,8 @@ public class PostgreSQLTest
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines();
+      .includeAllSequences().includeAllSynonyms().includeAllRoutines()
+      .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
 
