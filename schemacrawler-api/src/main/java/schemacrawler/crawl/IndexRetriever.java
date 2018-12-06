@@ -355,10 +355,6 @@ final class IndexRetriever
   {
     for (final MutableTable table: allTables)
     {
-      if (table instanceof View)
-      {
-        continue;
-      }
       retrieveIndexesFromMetadata(table, false);
       retrieveIndexesFromMetadata(table, true);
     }
