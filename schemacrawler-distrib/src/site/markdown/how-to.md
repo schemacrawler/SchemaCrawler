@@ -48,6 +48,7 @@
 5.  [How to configure SchemaCrawler linters](#configure_linter)
 6.  [How to extend SchemaCrawler by adding a new linter](#add_new_linter)
 7.  [How to fail a build with too many SchemaCrawler lints](#fail_build_linter)
+8.  [How to obtain PostgreSQL materialized views](#pgsql_materialized_views)
 
 ---------
 
@@ -318,3 +319,12 @@ See [SchemaCrawler Lint](lint.html) for details.
 ### <a name="fail_build_linter">How to fail a build with too many SchemaCrawler lints</a>
 
 See [SchemaCrawler Lint](lint.html) for details.
+
+----------
+
+### <a name="pgsql_materialized_views">How to obtain PostgreSQL materialized views</a>
+
+PostgreSQL materialized views are a table type called "MATERIALIZED VIEW". Use an additional SchemaCrawler command-line option, `-tabletypes=TABLE,VIEW,MATERIALIZED VIEW`
+
+----------
+
