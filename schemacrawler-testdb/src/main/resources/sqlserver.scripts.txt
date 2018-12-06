@@ -9,7 +9,7 @@
 ;,/db/books/02_types_02_B.sql
 #,/db/books/02_types_02_C.sql
 #,/db/books/03_domains_01_A.sql
-#,/db/books/04_sequences_01_A.sql
+;,/db/books/04_sequences_01_A.sql
 #,/db/books/05_tables_01_A.sql
 #,/db/books/05_tables_01_B.sql
 #,/db/books/05_tables_01_C.sql
