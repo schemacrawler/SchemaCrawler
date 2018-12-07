@@ -31,6 +31,7 @@
 2.  [How to create your own output format](#velocity)
 3.  [How to create a database diagram of your schema](#diagrams)
 4.  [How to provide additional Graphviz command-line options](#graphviz_opts)
+5.  [How to use pure-Java Graphviz](#graphviz-java)
 
 ## How to Use SchemaCrawler in Projects
 
@@ -224,6 +225,12 @@ SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce gr
 
 SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the previous question for details.
 You can provide additional Graphviz command-line options using the SC_GRAPHVIZ_OPTS environmental variable, or pass in the additional arguments using the SC_GRAPHVIZ_OPTS Java system property.
+
+----------
+
+### <a name="graphviz-java">How to use pure-Java Graphviz</a>
+
+In certain situations, it may not be possible to install Graphviz. SchemaCrawler integrates with [nidi3/graphviz-java](https://github.com/nidi3/graphviz-java) to provide a pre-Java approach to generating graphs. Download the [SchemaCrawler distribution](https://github.com/schemacrawler/SchemaCrawler/releases), and run through the `diagram` example. This will download the required jar files automatically.
 
 ----------
 

@@ -15,7 +15,9 @@ schema.
 SchemaCrawler relies on [Graphviz](http://www.graphviz.org/) to generate diagrams.
 Install [Graphviz](http://www.graphviz.org/) first, and ensure that it is on the system 
 PATH. If installing [Graphviz](http://www.graphviz.org/) is not an option for you, use 
-the pure Java Graphviz library. Instructions are provided with the SchemaCrawler download.
+the pure Java Graphviz library. Instructions are provided with 
+[the SchemaCrawler download](https://github.com/schemacrawler/SchemaCrawler/releases), 
+in the `diagram` example.
 Currently, the the pure Java Graphviz library is only able to generate PNG and SVG diagrams.
 
 Then you can run SchemaCrawler with the correct command-line options - for 
@@ -128,10 +130,10 @@ You can provide additional Graphviz command-line options in one of three ways:
 SchemaCrawler does not set the dpi, or resolution of generated graphs. A useful Graphviz command-line 
 option to set is `-Gdpi=300`. In the SchemaCrawler configuration file, 
 `schemacrawler.config.properties`, this would look like: 
-    
+​    
 ```        
 schemacrawler.graph.graphviz_opts=-Gdpi=300
-```    
+```
 
 ### Embedded Diagrams
 
