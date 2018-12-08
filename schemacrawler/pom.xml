@@ -70,7 +70,7 @@
                     <Product>SchemaCrawler</Product>
                     <Version>${project.version}</Version>
                     <Author>Sualeh Fatehi sualeh@hotmail.com</Author>
-                    <Copyright>Copyright (c) 2000-2018, Sualeh Fatehi</Copyright>
+                    <Copyright>Copyright (c) 2000-2019, Sualeh Fatehi</Copyright>
                     <Main-Class>schemacrawler.Main</Main-Class>
                     <Website>https://www.SchemaCrawler.com</Website>
                   </manifestEntries>
