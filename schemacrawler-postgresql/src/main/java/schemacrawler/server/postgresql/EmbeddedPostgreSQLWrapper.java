@@ -136,7 +136,7 @@ public class EmbeddedPostgreSQLWrapper
 
     postgreSQL.getProcess()
       .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
-      .importFromFile(dbFile.toFile());
+      .restoreFromFile(dbFile.toFile());
   }
 
   @Override

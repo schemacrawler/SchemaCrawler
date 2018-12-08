@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.file.Files.createTempFile;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeTrue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -55,6 +54,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
+import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.InfoLevel;
@@ -80,18 +80,8 @@ public class PostgreSQLDumpTest
   public void createDatabaseDump()
     throws SchemaCrawlerException, SQLException, IOException
   {
-    dumpFile = createTempFile("test_postgres_dump", "sql");
-
-    final EmbeddedPostgreSQLWrapper embeddedPostgreSQL = new EmbeddedPostgreSQLWrapper();
-    embeddedPostgreSQL.startServer();
-    createDataSource(embeddedPostgreSQL.getConnectionUrl(),
-                     embeddedPostgreSQL.getUser(),
-                     embeddedPostgreSQL.getPassword());
-    createDatabase("/postgresql.scripts.txt");
-
-    embeddedPostgreSQL.exportToFile(dumpFile);
-
-    embeddedPostgreSQL.stopServer();
+    // http://postgresguide.com/setup/example.html
+    dumpFile = TestUtility.copyResourceToTempFile("/example.dump");
   }
 
   @Test
@@ -102,7 +92,7 @@ public class PostgreSQLDumpTest
       .builder();
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
+      .includeSchemas(new RegularExpressionInclusionRule("public"))
       .includeAllSequences().includeAllSynonyms().includeAllRoutines();
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -136,7 +126,7 @@ public class PostgreSQLDumpTest
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "postgresql");
       argsMap.put("database", dumpFile.toString());
-      argsMap.put("schemas", "books");
+      argsMap.put("schemas", "public");
       argsMap.put("routines", ".*");
       argsMap.put("command", "details");
       argsMap.put("infolevel", InfoLevel.maximum.name());
