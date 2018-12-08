@@ -89,6 +89,23 @@ public final class TableTypes
   }
 
   /**
+   * Obtain a collection of tables types from provided list.
+   */
+  public TableTypes(final Collection<String> tableTypeStrings)
+  {
+    requireNonNull(tableTypeStrings, "No table types provided");
+
+    tableTypes = new HashSet<>();
+    for (final String tableTypeString: tableTypeStrings)
+    {
+      if (!isBlank(tableTypeString))
+      {
+        tableTypes.add(new TableType(tableTypeString));
+      }
+    }
+  }
+
+  /**
    * Filters table types not known to the database system. Returns
    * values in the same case as known to the database system, even
    * though the search (that is, values in the input collection) is

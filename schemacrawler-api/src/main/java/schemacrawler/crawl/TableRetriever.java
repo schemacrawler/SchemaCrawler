@@ -157,11 +157,13 @@ final class TableRetriever
       .lookupTableType(tableTypeString).orElse(TableType.UNKNOWN);
     if (tableType.equals(TableType.UNKNOWN))
     {
-      LOGGER.log(Level.FINE,
-                 new StringFormat("Unknown table type <%s> for <%s.%s>",
-                                  tableTypeString,
-                                  schema,
-                                  tableName));
+      LOGGER
+        .log(Level.FINE,
+             new StringFormat("Not including table <%s.%s>, since table type <%s> was not requested",
+                              schema,
+                              tableName,
+                              tableTypeString));
+      return;
     }
 
     final MutableTable table;
@@ -198,8 +200,7 @@ final class TableRetriever
     final Query tablesSql = informationSchemaViews
       .getQuery(InformationSchemaKey.TABLES);
     final Connection connection = getDatabaseConnection();
-    final TableTypes supportedTableTypes = getRetrieverConnection()
-      .getTableTypes();
+    final TableTypes supportedTableTypes = new TableTypes(tableTypes);
     try (final Statement statement = connection.createStatement();
         final MetadataResultSet results = new MetadataResultSet(tablesSql,
                                                                 statement,
