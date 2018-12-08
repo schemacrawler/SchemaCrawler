@@ -12,8 +12,8 @@ SchemaCrawler allows loading PostgreSQL database dumps. This example shows how t
 
 ## How to Run
 1. Start a command shell in the `postgresql` example directory
-2. Download an example [PostgreSQL database dump](https://dbseminar.r61.net/system/files/HR_pgsql.sql), and save it as `hr_dump.sql`
-3. Run `postgresql.cmd -database hr_dump.sql -infolevel standard -c schema` (or `postgresql.sh  -database hr_dump.sql -infolevel standard -c schema` on Unix) 
+2. Download an example [PostgreSQL database dump](http://postgresguide.com/setup/example.html), and save it as `example.database`
+3. Run `postgresql.cmd -database example.database -infolevel standard -c schema` (or `postgresql.sh  -database example.database -infolevel standard -c schema` on Unix) 
 
 ## How to Experiment
 1. Run different SchemaCrawler commands.
