@@ -1,5 +1,13 @@
 # SchemaCrawler Change History
 
+<a name="a15.03.01"></a>
+## Release 15.03.01 - 2018-12-07
+
+- Change copyright messages
+- Add support for PostgreSQL and Oracle materialized views
+- Add support for Microsoft SQL Server indexed views
+
+
 <a name="a15.02.02"></a>
 ## Release 15.02.02 - 2018-11-25
 
