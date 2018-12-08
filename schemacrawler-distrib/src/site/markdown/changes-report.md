@@ -1,7 +1,7 @@
 # SchemaCrawler Change History
 
 <a name="a15.03.01"></a>
-## Release 15.03.01 - 2018-12-07
+## Release 15.03.01 - 2018-12-10
 
 - Change copyright messages
 - Add support for PostgreSQL and Oracle materialized views
@@ -27,8 +27,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.02.02"></a>
-## Release 15.02.02 - 2018-10-14
+<a name="a15.03.01"></a>
+## Release 15.03.01 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 

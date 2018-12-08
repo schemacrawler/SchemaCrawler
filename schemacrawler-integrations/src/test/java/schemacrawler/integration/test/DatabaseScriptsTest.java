@@ -36,9 +36,13 @@ import static sf.util.Utility.isBlank;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
@@ -51,7 +55,10 @@ import org.springframework.core.io.support.ResourcePatternUtils;
 public class DatabaseScriptsTest
 {
 
-  private Resource[] resources;
+  private final static Pattern fileNamePattern = Pattern
+    .compile(".*\\/(.*\\..*)");
+
+  private List<String> sqlScripts;
 
   @Autowired
   private ResourceLoader resourceLoader;
@@ -60,18 +67,17 @@ public class DatabaseScriptsTest
   public void setup()
     throws IOException
   {
-    resources = loadResources("classpath*:/**/db/**/*.sql");
+    sqlScripts = loadResources("classpath*:/**/db/**/*.sql");
   }
 
   @Test
   public void testScripts()
     throws Exception
   {
-    final Resource[] scripts = loadResources("classpath*:/**/*.scripts.txt");
+    final List<String> scripts = loadResources("classpath*:/**/*.scripts.txt");
     final Set<String> failedScripts = new HashSet<>();
-    for (final Resource script: scripts)
+    for (final String scriptName: scripts)
     {
-      final String scriptName = script.getFile().getName();
       final String scriptsResource = "/" + scriptName;
       try (
           final BufferedReader reader = new BufferedReader(new InputStreamReader(DatabaseScriptsTest.class
@@ -81,8 +87,11 @@ public class DatabaseScriptsTest
         for (int i = 0; i < lines.size(); i++)
         {
           final String line = lines.get(i);
-          if (isBlank(line)) break;
-          final String sqlResource = resources[i].getFile().getName();
+          if (isBlank(line))
+          {
+            break;
+          }
+          final String sqlResource = sqlScripts.get(i);
           if (!line.endsWith(sqlResource))
           {
             failedScripts.add(scriptName);
@@ -103,11 +112,35 @@ public class DatabaseScriptsTest
     }
   }
 
-  private Resource[] loadResources(final String pattern)
+  private String getScriptName(final String path)
+  {
+    final String scriptName;
+    final Matcher matcher = fileNamePattern.matcher(path);
+    if (matcher.matches())
+    {
+      scriptName = matcher.group(1);
+    }
+    else
+    {
+      scriptName = null;
+    }
+    return scriptName;
+  }
+
+  private List<String> loadResources(final String pattern)
     throws IOException
   {
-    return ResourcePatternUtils.getResourcePatternResolver(resourceLoader)
-      .getResources(pattern);
+    final Resource[] resources = ResourcePatternUtils
+      .getResourcePatternResolver(resourceLoader).getResources(pattern);
+    final List<String> scripts = new ArrayList<>();
+    for (final Resource classpathResource: resources)
+    {
+      final String scriptName = getScriptName(classpathResource.getURL()
+        .getPath());
+      scripts.add(scriptName);
+    }
+    Collections.sort(scripts);
+    return scripts;
   }
 
 }
