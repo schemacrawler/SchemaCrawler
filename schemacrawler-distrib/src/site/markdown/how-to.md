@@ -329,9 +329,10 @@ See [SchemaCrawler Lint](lint.html) for details.
 
 ----------
 
-### <a name="pgsql_materialized_views">How to obtain PostgreSQL materialized views</a>
+### <a name="pgsql_materialized_views">How to obtain Oracle and PostgreSQL materialized views</a>
 
-PostgreSQL materialized views are a table type called "MATERIALIZED VIEW". Use an additional SchemaCrawler command-line option, `-tabletypes=TABLE,VIEW,MATERIALIZED VIEW`
+PostgreSQL materialized views are a table type called "MATERIALIZED VIEW". Use an additional SchemaCrawler command-line option, `"-tabletypes=TABLE,VIEW,MATERIALIZED VIEW"`. Notice the double-quotes, since there is a space between
+`MATERIALIZED` and `VIEW`.
 
 ----------
 
