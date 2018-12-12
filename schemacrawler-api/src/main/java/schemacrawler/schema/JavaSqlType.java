@@ -47,10 +47,40 @@ public final class JavaSqlType
   /**
    * Unknown SQL data type.
    */
-  public static final JavaSqlType UNKNOWN = new JavaSqlType(Integer.MAX_VALUE,
-                                                            "<UNKNOWN>",
-                                                            java.lang.Object.class,
+  public static final JavaSqlType UNKNOWN = new JavaSqlType(unknownSQLType(),
+                                                            Object.class,
                                                             JavaSqlTypeGroup.unknown);
+
+  private static SQLType unknownSQLType()
+  {
+    final class UnknownSQLType
+      implements SQLType, Serializable
+    {
+
+      private static final long serialVersionUID = -2579002704227573365L;
+
+      @Override
+      public String getName()
+      {
+        return "UNKNOWN";
+      }
+
+      @Override
+      public String getVendor()
+      {
+        return "us.fatehi.schemacrawler";
+      }
+
+      @Override
+      public Integer getVendorTypeNumber()
+      {
+        return Integer.MIN_VALUE;
+      }
+
+    }
+
+    return new UnknownSQLType();
+  }
 
   private final SQLType sqlType;
   private final Class<?> defaultMappedClass;
@@ -65,34 +95,6 @@ public final class JavaSqlType
                                              "Np default mapped class provided");
     this.javaSqlTypeGroup = requireNonNull(javaSqlTypeGroup,
                                            "No SQLType group provided");
-  }
-
-  private JavaSqlType(final int typeNumber,
-                      final String typeName,
-                      final Class<?> defaultMappedClass,
-                      final JavaSqlTypeGroup sqlTypeGroup)
-  {
-    this(new SQLType()
-    {
-
-      @Override
-      public String getName()
-      {
-        return typeName;
-      }
-
-      @Override
-      public String getVendor()
-      {
-        return "SchemaCrawler";
-      }
-
-      @Override
-      public Integer getVendorTypeNumber()
-      {
-        return typeNumber;
-      }
-    }, defaultMappedClass, sqlTypeGroup);
   }
 
   @Override
