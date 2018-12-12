@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a15.03.02"></a>
+## Release 15.03.02 - 2018-12-12
+
+- Fix issue with serialization of offline snapshots
+
+
 <a name="a15.03.01"></a>
 ## Release 15.03.01 - 2018-12-10
 
@@ -27,8 +33,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.03.01"></a>
-## Release 15.03.01 - 2018-10-14
+<a name="a15.03.02"></a>
+## Release 15.03.02 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 

@@ -12,7 +12,7 @@
       rev="2.5.0" />
 
     <dependency org="us.fatehi" name="schemacrawler-shell"
-      rev="15.03.01.01">
+      rev="15.03.02.01">
       <exclude org="us.fatehi" module="schemacrawler" />
       <exclude org="org.hsqldb" module="hsqldb" />
     </dependency>
