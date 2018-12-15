@@ -42,8 +42,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.utility.Query;
-import schemacrawler.utility.QueryUtility;
 import sf.util.DatabaseUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -95,7 +93,7 @@ public final class OracleDatabaseConnector
       informationSchemaViewsBuilder.substituteAll("catalogscope", catalogScope);
     }
 
-    public String getCatalogScope(final Connection connection)
+    private String getCatalogScope(final Connection connection)
     {
       String catalogScope = "ALL";
       try
