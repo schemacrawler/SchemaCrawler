@@ -432,13 +432,15 @@ final class DatabaseInfoRetriever
         {
           continue;
         }
-        LOGGER
-          .log(Level.FINER,
-               new StringFormat("Retrieving server information property: %s",
-                                propertyName));
 
         final String propertyValue = results.getString("VALUE");
         final String propertyDescription = results.getString("DESCRIPTION");
+
+        LOGGER
+          .log(Level.FINER,
+               new StringFormat("Retrieving server information property: %s=%s",
+                                propertyName,
+                                propertyValue));
 
         final Property serverInfoProperty = new ImmutableServerInfoProperty(propertyName,
                                                                             propertyValue,
