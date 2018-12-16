@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
+import static java.util.stream.Collectors.toMap;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
@@ -39,7 +40,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -283,8 +283,7 @@ public final class TypeMap
   public String toString()
   {
     final Map<String, String> typeClassNameMap = sqlTypeMap.entrySet().stream()
-      .collect(Collectors.toMap(e -> e.getKey().toString(),
-                                e -> e.getValue().getCanonicalName()));
+      .collect(toMap(Map.Entry::getKey, e -> e.getValue().getCanonicalName()));
     return typeClassNameMap.toString();
   }
 
