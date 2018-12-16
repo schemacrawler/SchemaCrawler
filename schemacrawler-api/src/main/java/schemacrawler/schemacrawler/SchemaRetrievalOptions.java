@@ -33,6 +33,7 @@ import static sf.util.Utility.isBlank;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.utility.Identifiers;
 import schemacrawler.utility.TypeMap;
+import sf.util.ObjectToString;
 
 /**
  * Provides for database specific overrides for SchemaCrawler
@@ -178,6 +179,15 @@ public final class SchemaRetrievalOptions
   public boolean isSupportsSchemas()
   {
     return supportsSchemas;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public String toString()
+  {
+    return ObjectToString.toString(this);
   }
 
 }
