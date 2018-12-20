@@ -68,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 
@@ -91,45 +92,60 @@ import sf.util.IOUtility;
 public final class TestUtility
 {
 
-  private final static Pattern[] neuters = {
-                                             Pattern.compile("url +jdbc:.*"),
-                                             Pattern
-                                               .compile("database product version.*"),
-                                             Pattern
-                                               .compile("driver version.*"),
-                                             Pattern
-                                               .compile("-- operating system:.*"),
-                                             Pattern
-                                               .compile("-- JVM system:.*"),
-                                             Pattern
-                                               .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
-                                             Pattern
-                                               .compile("\\s+\"runId\": .*"),
-                                             Pattern
-                                               .compile("\\s+<product(Name|Version)>.*"),
-                                             Pattern
-                                               .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
-                                             Pattern
-                                               .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-                                             Pattern
-                                               .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-                                             // Apache Derby unnamed
-                                             // database objects
-                                             Pattern
-                                               .compile("SQL\\d+\\s+\\[primary key\\]"),
-                                             Pattern
-                                               .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
-                                             // SVG {
-                                             Pattern.compile("<svg.*"),
-                                             Pattern
-                                               .compile(" viewBox=\"0.00.*"),
-                                             Pattern.compile("<g id=.*"),
-                                             Pattern
-                                               .compile("<text text-anchor.*"),
-                                             Pattern.compile("<path fill=.*"),
-                                             Pattern
-                                               .compile("<(ellipse|polyline|polygon) fill=.*"),
-                                             Pattern.compile(".*&#xd;"), };
+  private static Predicate<String> keepLines = new Predicate<String>()
+  {
+
+    private final Pattern[] neuters = {
+                                        Pattern.compile("url +jdbc:.*"),
+                                        Pattern
+                                          .compile("database product version.*"),
+                                        Pattern.compile("driver version.*"),
+                                        Pattern
+                                          .compile("-- operating system:.*"),
+                                        Pattern.compile("-- JVM system:.*"),
+                                        Pattern
+                                          .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
+                                        Pattern.compile("\\s+\"runId\": .*"),
+                                        Pattern
+                                          .compile("\\s+<product(Name|Version)>.*"),
+                                        Pattern
+                                          .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
+                                        Pattern
+                                          .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+                                        Pattern
+                                          .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+                                        // Apache Derby unnamed
+                                        // database objects
+                                        Pattern
+                                          .compile("SQL\\d+\\s+\\[primary key\\]"),
+                                        Pattern
+                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
+                                        // SVG {
+                                        Pattern.compile("<svg.*"),
+                                        Pattern.compile(" viewBox=\"0.00.*"),
+                                        Pattern.compile("<g id=.*"),
+                                        Pattern.compile("<text text-anchor.*"),
+                                        Pattern.compile("<path fill=.*"),
+                                        Pattern
+                                          .compile("<(ellipse|polyline|polygon) fill=.*"),
+                                        Pattern.compile(".*&#xd;"), };
+
+    /**
+     * Should we keep the line - that is, not ignore it?
+     */
+    @Override
+    public boolean test(final String line)
+    {
+      for (final Pattern ignoreLinePattern: neuters)
+      {
+        if (ignoreLinePattern.matcher(line).matches())
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+  };
 
   public static void clean(final String dirname)
     throws Exception
@@ -191,7 +207,7 @@ public final class TestUtility
       contentEquals = contentEquals(referenceReader,
                                     fileReader,
                                     failures,
-                                    neuters);
+                                    keepLines);
     }
 
     if ("html".equals(outputFormat))
@@ -316,8 +332,8 @@ public final class TestUtility
 
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
-                                       List<String> failures,
-                                       final Pattern... ignoreLinePatterns)
+                                       final List<String> failures,
+                                       final Predicate<String> keepLines)
     throws Exception
   {
     if (expectedInputReader == null || actualInputReader == null)
@@ -335,16 +351,7 @@ public final class TestUtility
       {
         final String actualLine = actualBufferedReader.readLine();
         i++;
-        boolean ignore = false;
-        for (final Pattern ignoreLinePattern: ignoreLinePatterns)
-        {
-          if (ignoreLinePattern.matcher(expectedline).matches())
-          {
-            ignore = true;
-            break;
-          }
-        }
-        if (ignore)
+        if (!keepLines.test(expectedline))
         {
           continue;
         }
@@ -385,14 +392,13 @@ public final class TestUtility
 
     final StackTraceElement[] stackTrace = Thread.currentThread()
       .getStackTrace();
-    for (int i = 0; i < stackTrace.length; i++)
+    for (final StackTraceElement stackTraceElement: stackTrace)
     {
-      final StackTraceElement stackTraceElement = stackTrace[i];
       final String className = stackTraceElement.getClassName();
       if (testClassName.matcher(className).matches()
           && !baseTestClassName.matcher(className).matches())
       {
-        return stackTrace[i];
+        return stackTraceElement;
       }
     }
 
