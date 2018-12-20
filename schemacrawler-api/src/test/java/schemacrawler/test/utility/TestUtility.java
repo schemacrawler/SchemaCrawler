@@ -94,7 +94,36 @@ import sf.util.IOUtility;
 public final class TestUtility
 {
 
-  private static Predicate<String> keepLines = new Predicate<String>()
+  private static Predicate<String> filterSvg = new Predicate<String>()
+  {
+
+    private final Pattern start = Pattern.compile("<svg.*");
+    private final Pattern end = Pattern.compile(".*svg>");
+
+    private boolean isFiltering;
+
+    @Override
+    public boolean test(final String line)
+    {
+      if (start.matcher(line).matches())
+      {
+        isFiltering = true;
+        // Filter out the start SVG tag
+        return false;
+      }
+      else if (end.matcher(line).matches())
+      {
+        isFiltering = false;
+        // Filter out the end SVG tag
+        return false;
+      }
+
+      return !isFiltering;
+    }
+
+  };
+
+  private static Predicate<String> filterNeuteredLines = new Predicate<String>()
   {
 
     private final Pattern[] neuters = {
@@ -120,16 +149,7 @@ public final class TestUtility
                                         Pattern
                                           .compile("SQL\\d+\\s+\\[primary key\\]"),
                                         Pattern
-                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
-                                        // SVG {
-                                        Pattern.compile("<svg.*"),
-                                        Pattern.compile(" viewBox=\"0.00.*"),
-                                        Pattern.compile("<g id=.*"),
-                                        Pattern.compile("<text text-anchor.*"),
-                                        Pattern.compile("<path fill=.*"),
-                                        Pattern
-                                          .compile("<(ellipse|polyline|polygon) fill=.*"),
-                                        Pattern.compile(".*&#xd;"), };
+                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"), };
 
     /**
      * Should we keep the line - that is, not ignore it?
@@ -137,9 +157,9 @@ public final class TestUtility
     @Override
     public boolean test(final String line)
     {
-      for (final Pattern ignoreLinePattern: neuters)
+      for (final Pattern neuter: neuters)
       {
-        if (ignoreLinePattern.matcher(line).matches())
+        if (neuter.matcher(line).matches())
         {
           return false;
         }
@@ -208,7 +228,7 @@ public final class TestUtility
       contentEquals = contentEquals(referenceReader,
                                     fileReader,
                                     failures,
-                                    keepLines);
+                                    filterSvg.and(filterNeuteredLines));
     }
 
     if ("html".equals(outputFormat))
