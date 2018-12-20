@@ -66,10 +66,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -114,8 +116,7 @@ public final class TestUtility
                                           .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
                                         Pattern
                                           .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-                                        // Apache Derby unnamed
-                                        // database objects
+                                        // Apache Derby unnamed objects
                                         Pattern
                                           .compile("SQL\\d+\\s+\\[primary key\\]"),
                                         Pattern
@@ -341,26 +342,26 @@ public final class TestUtility
       return false;
     }
 
-    int i = 0;
     try (
-        final BufferedReader expectedBufferedReader = new BufferedReader(expectedInputReader);
-        final BufferedReader actualBufferedReader = new BufferedReader(actualInputReader);)
+        final Stream<String> expectedLinesStream = new BufferedReader(expectedInputReader)
+          .lines();
+        final Stream<String> actualLinesStream = new BufferedReader(actualInputReader)
+          .lines();)
     {
-      String expectedline;
-      while ((expectedline = expectedBufferedReader.readLine()) != null)
+      final Iterator<String> expectedLinesIterator = expectedLinesStream
+        .filter(keepLines).iterator();
+      final Iterator<String> actualLinesIterator = actualLinesStream
+        .filter(keepLines).iterator();
+
+      while (expectedLinesIterator.hasNext() && actualLinesIterator.hasNext())
       {
-        final String actualLine = actualBufferedReader.readLine();
-        i++;
-        if (!keepLines.test(expectedline))
-        {
-          continue;
-        }
+        final String expectedline = expectedLinesIterator.next();
+        final String actualLine = actualLinesIterator.next();
 
         if (!expectedline.equals(actualLine))
         {
           final StringBuilder buffer = new StringBuilder();
-          buffer.append("Line #").append(i)
-            .append(" (expected followed by actual):").append("\n");
+          buffer.append(">> expected followed by actual:").append("\n");
           buffer.append(expectedline).append("\n");
           buffer.append(actualLine).append("\n");
 
@@ -372,11 +373,11 @@ public final class TestUtility
         }
       }
 
-      if (actualBufferedReader.readLine() != null)
+      if (actualLinesIterator.hasNext())
       {
         return false;
       }
-      if (expectedBufferedReader.readLine() != null)
+      if (expectedLinesIterator.hasNext())
       {
         return false;
       }
