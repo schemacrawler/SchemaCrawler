@@ -2,7 +2,29 @@
 
 > Please see the [SchemaCrawler website](https://www.schemacrawler.com/).
 
-### Run
+### Use the SchemaCrawler Interactive Shell
+
+Start the SchemaCrawler Interactive Shell in the Docker container like this
+```
+docker run \
+-v $(pwd):/share \
+--rm -i -t \
+--entrypoint=/opt/schemacrawler/schemacrawler-shell.sh \
+schemacrawler/schemacrawler
+```
+
+From within the shell, type `help` for a list of commands.
+
+Use the following script from within the shell to create a sample diagram
+```
+connect -server sqlite -database ./sc.db -user sa
+load-catalog -infolevel maximum
+execute -command schema -o /share/sc_db.png
+```
+The image exports a volume called `/share`, and you can map it to your local directory. 
+
+
+### Run the SchemaCrawler Command-line
 
 Check that the Docker image for SchemaCrawler has been installed correctly, first start
 the Docker container
@@ -16,14 +38,15 @@ schemacrawler/schemacrawler
 
 Then, run SchemaCrawler from the command-line within the container, like this
 ```
-/opt/schemacrawler/schemacrawler.sh \
+schemacrawler \
 -server=sqlite -user= -password= -database=sc.db \
 -infolevel=maximum -command=schema \
 -outputfile=/share/sc_db.png
 ```
 The image exports a volume called `/share`, and you can map it to your local directory. 
 
-Exit the Docker container for SchemaCrawler, and look at the `sc_db.png` file in your local directory.
+Exit the Docker container for SchemaCrawler, and look at the `sc_db.png` file in your local directory on the host.
+
 
 ### Examples
 
@@ -38,7 +61,7 @@ vi schemacrawler.config.properties
 
 Then, run SchemaCrawler from the command-line within the container, similarly to this example
 ```
-/opt/schemacrawler/schemacrawler.sh \
+schemacrawler \
 -server=sqlite -user= -password= -database=sc.db \
 -g ./schemacrawler.config.properties \
 -infolevel=maximum -command=schema \
@@ -53,7 +76,7 @@ Run the SchemaCrawler Docker image using the command above, to get a new contain
 
 Then, run SchemaCrawler from the command-line within the container, similarly to this example
 ```
-/opt/schemacrawler/schemacrawler.sh \
+schemacrawler \
 -server=sqlserver -host=host.us-east-1.rds.amazonaws.com \
 -user=schemacrawler -password=schemacrawler \
 -database=SCHEMACRAWLER -schemas=SCHEMACRAWLER.dbo \
@@ -96,7 +119,7 @@ schemacrawler/schemacrawler
 
 Then, run SchemaCrawler from the command-line within the container, similarly to this example
 ```
-/opt/schemacrawler/schemacrawler.sh \
+schemacrawler \
 -server=postgresql -host=scpostgres \
 -user=schemacrawler -password=schemacrawler \
 -database=schemacrawler \

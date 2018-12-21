@@ -31,7 +31,7 @@
 # schemacrawler-distrib/target/_distribution
 # ------------------------------------------------------------------------
 
-FROM openjdk
+FROM openjdk:8-jre
 
 ARG SCHEMACRAWLER_VERSION=15.03.02
 
@@ -48,16 +48,25 @@ RUN \
 
 # Copy SchemaCrawler distribution from the local build
 COPY _schemacrawler /opt/schemacrawler
-COPY _testdb/sc.db /opt/schemacrawler/sc.db
 RUN chmod +x /opt/schemacrawler/schemacrawler.sh
+RUN chmod +x /opt/schemacrawler/schemacrawler-shell.sh
 
 # Run the image as a non-root user
 RUN useradd -ms /bin/bash schemacrawler
 USER schemacrawler
 WORKDIR /home/schemacrawler
 
+# Copy configuration files for the current user
 COPY --chown=schemacrawler:schemacrawler _testdb/sc.db /home/schemacrawler/sc.db
 COPY --chown=schemacrawler:schemacrawler _schemacrawler/config/* /home/schemacrawler/
+
+# Create aliases for SchemaCrawler
+RUN \
+    echo 'alias schemacrawler="/opt/schemacrawler/schemacrawler.sh"' \
+    >> /home/schemacrawler/.bashrc
+RUN \
+    echo 'alias schemacrawler-shell="/opt/schemacrawler/schemacrawler-shell.sh"' \
+    >> /home/schemacrawler/.bashrc
 
 MAINTAINER Sualeh Fatehi <sualeh@hotmail.com>
 
