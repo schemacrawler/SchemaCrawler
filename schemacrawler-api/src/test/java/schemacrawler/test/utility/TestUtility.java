@@ -105,13 +105,13 @@ public final class TestUtility
     @Override
     public boolean test(final String line)
     {
-      if (start.matcher(line).matches())
+      if (!isFiltering && start.matcher(line).matches())
       {
         isFiltering = true;
         // Filter out the start SVG tag
         return false;
       }
-      else if (end.matcher(line).matches())
+      else if (isFiltering && end.matcher(line).matches())
       {
         isFiltering = false;
         // Filter out the end SVG tag
