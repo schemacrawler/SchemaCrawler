@@ -55,29 +55,13 @@
 
 ## How to Use the SchemaCrawler Command-line
 
-### <a name="sc-main">Explanation of the SchemaCrawler main Programs</a>
-* `schemacrawler.Main`
-This is the most usual way to launch SchemaCrawler from the command-line. This launch offer a 
+Use `schemacrawler.Main` to launch SchemaCrawler from the command-line. This launch offers a 
 number of connection options, including by JDBC driver and URL, and by a connection defined in 
 a properties configuration file. There are options to load configuration from properties files.
 JDBC drivers and other external libraries must be available on the classpath for this 
 application to function.
 
 For help, use the -h command-line switch.
-
-* `schemacrawler.tools.integration.spring.Main`
-An alternate to `schemacrawler.Main,` where configuration, including configuration of the 
-SchemaCrawler command is done by means of a Spring Framework application context file.
-JDBC drivers, Spring Framework libraries, and other external libraries must be available on 
-the classpath for this application to function.
-
-For help, use the -h command-line switch.
-
-* `schemacrawler.utility.TestDatabase`
-Started the test database server, with a test schema, and test data. This is used for 
-examples. Any schema or data modifications will be restored when the server is restarted.
-JDBC drivers for HyperSQL, and other external libraries must be available on the classpath for 
-this application to function.
 
 ---------
 

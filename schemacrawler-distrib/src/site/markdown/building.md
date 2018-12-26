@@ -75,7 +75,6 @@ directory, and install them locally.
 [Ruby]: http://www.ruby-lang.org/en/
 [Python]: https://www.python.org/
 [Graphviz]: http://www.graphviz.org/
-[Spring Framework]: http://www.springsource.org/spring-framework
 [Apache Velocity]: http://velocity.apache.org/
 [Apache Maven]: http://maven.apache.org/
 [m2e Maven Integration for Eclipse]: http://eclipse.org/m2e/

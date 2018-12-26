@@ -33,7 +33,6 @@ the provided scripts.
     - `python` - for Python language scripting with SchemaCrawler
     - `ruby` - for Ruby language scripting with SchemaCrawler
     - `velocity` - for Apache Velocity templating with SchemaCrawler
-    - `spring` - for using Spring Framework with SchemaCrawler
 
 ## Examples
 

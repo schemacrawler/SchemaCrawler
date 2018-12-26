@@ -82,12 +82,6 @@
         <include name="schemacrawler-linter-configs.xml" />
       </fileset>
     </copy>
-    <copy todir="${main-distribution.staging.dir}/examples/spring">
-      <fileset
-        dir="${SchemaCrawler.home}/schemacrawler-integrations/src/test/resources">
-        <include name="context.xml" />
-      </fileset>
-    </copy>
 
     <copy todir="${main-distribution.staging.dir}/_schemacrawler">
       <fileset dir="${schemacrawler.base-distribution}" />

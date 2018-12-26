@@ -13,7 +13,7 @@ distribution with examples] zip file, and unzip it into a directory. You will ha
 distribution in a directory called `_schemacrawler`. There are detailed instructions with the download.
 
 You can extend the SchemaCrawler distribution by downloading additional libraries that SchemaCrawler 
-integrates with, such as the pure Java Graphviz library, Spring Framework, Groovy, Ruby, Python and so 
+integrates with, such as the pure Java Graphviz library, [Spring Framework], [Groovy], [Ruby], [Python] and so 
 on. You can also download additional JDBC drivers, and have SchemaCrawler pick them up automatically. 
 Once you are happy with the customization of your installation, you can copy the `_schemacrawler` 
 folder to any location on your system, and use it from there.
@@ -34,9 +34,8 @@ The first thing to try is the [SchemaCrawler examples].
 
 Several examples on how to use SchemaCrawler on the command-line, with [Apache ant] or with [Apache 
 Maven], as an API, how to script your database using JavaScript, [Groovy], [Ruby] or [Python], how to 
-create database diagrams with [Graphviz], how to integrate with the [Spring Framework], and how to use 
-the [Apache Velocity] templating integration are provided with the [SchemaCrawler distribution with 
-examples] download.
+create database diagrams with [Graphviz] and how to use the [Apache Velocity] templating integration 
+are provided with the [SchemaCrawler distribution with the examples] download.
 
 ## Command-line Help
 SchemaCrawler provides detailed command-line help. Simply run `schemacrawler.cmd` (or

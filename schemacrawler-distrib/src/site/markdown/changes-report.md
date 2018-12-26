@@ -1,5 +1,11 @@
 # SchemaCrawler Change History
 
+<a name="a15.03.03"></a>
+## Release 15.03.03 - 2018-12-25
+
+- Remove Spring Framework command-line support
+
+
 <a name="a15.03.02"></a>
 ## Release 15.03.02 - 2018-12-12
 

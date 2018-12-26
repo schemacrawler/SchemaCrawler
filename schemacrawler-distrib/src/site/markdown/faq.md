@@ -204,7 +204,7 @@ _For more details, see scripting example in the [SchemaCrawler examples](http://
 
 ### <a name="integrations">Can SchemaCrawler be used integrated with other programs?</a>
 
-SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is designed to be used programmatically with the [Spring Framework](https://spring.io/) . For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\spring` directory.
+SchemaCrawler can be integrated with other programs, but this requires some Java programming. SchemaCrawler is designed to be used programmatically with the [Spring Framework](https://spring.io/) . 
 
 SchemaCrawler comes pre-built with integration with [Apache Velocity.](http://velocity.apache.org/) This allows you to specify your own templates for formatting the schema. For more details, see scripting example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download, in the `examples\velocity` directory.
 
