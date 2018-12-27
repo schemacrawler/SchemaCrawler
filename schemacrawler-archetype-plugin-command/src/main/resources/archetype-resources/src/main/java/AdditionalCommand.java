@@ -5,11 +5,9 @@ package ${package};
 
 
 import java.io.PrintWriter;
-import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;

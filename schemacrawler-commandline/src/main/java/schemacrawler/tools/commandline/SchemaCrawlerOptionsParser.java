@@ -100,7 +100,7 @@ public final class SchemaCrawlerOptionsParser
     {
       final String infoLevel = config.getStringValue("infolevel", "standard");
       final SchemaInfoLevel schemaInfoLevel = InfoLevel
-        .valueOfFromString(infoLevel).buildSchemaInfoLevel();
+        .valueOfFromString(infoLevel).toSchemaInfoLevel();
       optionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
       consumeOption("infolevel");
     }
@@ -108,7 +108,7 @@ public final class SchemaCrawlerOptionsParser
     {
       // Default to standard infolevel
       final SchemaInfoLevel schemaInfoLevel = InfoLevel.standard
-        .buildSchemaInfoLevel();
+        .toSchemaInfoLevel();
       optionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
     }
 

@@ -114,7 +114,7 @@ public class SchemaCrawlerJsonOutputTest
       .toConfig();
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+      .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
       .includeRoutines(new ExcludeAll()).includeTables(tableInclusionRule)
       .tableNamePattern(tableName);

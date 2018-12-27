@@ -320,7 +320,7 @@ public class SchemaCrawlerOutputTest
         .builder().fromConfig(config);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(infoLevel.buildSchemaInfoLevel())
+        .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .includeAllSequences().includeAllRoutines();
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
