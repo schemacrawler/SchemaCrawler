@@ -55,7 +55,7 @@ final class MutableDatabaseInfo
   private String userName = "";
   private String productName = "";
   private String productVersion = "";
-  private Set<Property> serverInfo = new HashSet<>();
+  private final Set<Property> serverInfo = new HashSet<>();
   private final Set<DatabaseProperty> databaseProperties = new HashSet<>();
 
   /**
@@ -122,6 +122,14 @@ final class MutableDatabaseInfo
     }
   }
 
+  void addServerInfo(final Property property)
+  {
+    if (property != null)
+    {
+      serverInfo.add(property);
+    }
+  }
+
   void setProductName(final String productName)
   {
     this.productName = productName;
@@ -130,14 +138,6 @@ final class MutableDatabaseInfo
   void setProductVersion(final String productVersion)
   {
     this.productVersion = productVersion;
-  }
-
-  void addServerInfo(final Property property)
-  {
-    if (property != null)
-    {
-      this.serverInfo.add(property);
-    }
   }
 
   void setUserName(final String userName)

@@ -105,7 +105,8 @@ public class ExcludeTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName.currentMethodFullName())));
+               hasSameContentAs(classpathResource(testName
+                 .currentMethodFullName())));
   }
 
 }

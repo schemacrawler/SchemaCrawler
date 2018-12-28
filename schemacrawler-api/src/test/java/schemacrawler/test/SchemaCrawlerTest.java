@@ -314,7 +314,7 @@ public class SchemaCrawlerTest
       out.println(String.format("product version=%s",
                                 databaseInfo.getProductVersion()));
       out.println(String.format("catalog=%s", catalog.getName()));
-      for (Property serverInfoProperty: serverInfo)
+      for (final Property serverInfoProperty: serverInfo)
       {
         assertNotNull(serverInfoProperty);
         out.println(serverInfoProperty);

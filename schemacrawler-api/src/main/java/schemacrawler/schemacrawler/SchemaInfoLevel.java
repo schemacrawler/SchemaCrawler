@@ -232,7 +232,8 @@ public final class SchemaInfoLevel
   public String toString()
   {
     final Map<String, String> completeMap = new HashMap<>();
-    for (SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval.values())
+    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
+      .values())
     {
       completeMap.put(schemaInfoRetrieval.name(),
                       String.valueOf(is(schemaInfoRetrieval)));

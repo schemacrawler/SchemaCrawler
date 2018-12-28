@@ -57,12 +57,6 @@ public final class TestOutputStream
   }
 
   @Override
-  public Path getFilePath()
-  {
-    return tempFile;
-  }
-
-  @Override
   public String getFileContents()
   {
     try
@@ -75,6 +69,12 @@ public final class TestOutputStream
     {
       throw new RuntimeException(e);
     }
+  }
+
+  @Override
+  public Path getFilePath()
+  {
+    return tempFile;
   }
 
   @Override

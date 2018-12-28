@@ -65,15 +65,15 @@ public final class TestWriter
   }
 
   @Override
-  public Path getFilePath()
-  {
-    return out.getFilePath();
-  }
-
-  @Override
   public String getFileContents()
   {
     return out.getFileContents();
+  }
+
+  @Override
+  public Path getFilePath()
+  {
+    return out.getFilePath();
   }
 
   public void println()

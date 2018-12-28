@@ -50,17 +50,17 @@ public interface DatabaseInfo
   Collection<DatabaseProperty> getProperties();
 
   /**
-   * Gets the user name as known to this database.
-   *
-   * @return Database user name
-   */
-  String getUserName();
-
-  /**
    * Gets the schema from the database connection.
    *
    * @return Schema
    */
   Collection<Property> getServerInfo();
+
+  /**
+   * Gets the user name as known to this database.
+   *
+   * @return Database user name
+   */
+  String getUserName();
 
 }

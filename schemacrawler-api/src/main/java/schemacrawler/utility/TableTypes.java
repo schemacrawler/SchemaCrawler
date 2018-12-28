@@ -61,6 +61,23 @@ public final class TableTypes
   private final Collection<TableType> tableTypes;
 
   /**
+   * Obtain a collection of tables types from provided list.
+   */
+  public TableTypes(final Collection<String> tableTypeStrings)
+  {
+    requireNonNull(tableTypeStrings, "No table types provided");
+
+    tableTypes = new HashSet<>();
+    for (final String tableTypeString: tableTypeStrings)
+    {
+      if (!isBlank(tableTypeString))
+      {
+        tableTypes.add(new TableType(tableTypeString));
+      }
+    }
+  }
+
+  /**
    * Obtain a collection of tables types for a database system, as
    * returned by the database server itself.
    */
@@ -85,23 +102,6 @@ public final class TableTypes
     {
       LOGGER
         .log(Level.WARNING, "Could not obtain table types from connection", e);
-    }
-  }
-
-  /**
-   * Obtain a collection of tables types from provided list.
-   */
-  public TableTypes(final Collection<String> tableTypeStrings)
-  {
-    requireNonNull(tableTypeStrings, "No table types provided");
-
-    tableTypes = new HashSet<>();
-    for (final String tableTypeString: tableTypeStrings)
-    {
-      if (!isBlank(tableTypeString))
-      {
-        tableTypes.add(new TableType(tableTypeString));
-      }
     }
   }
 
