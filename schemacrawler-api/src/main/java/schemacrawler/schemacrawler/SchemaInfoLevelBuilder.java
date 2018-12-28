@@ -33,10 +33,70 @@ public final class SchemaInfoLevelBuilder
   implements OptionsBuilder<SchemaInfoLevelBuilder, SchemaInfoLevel>
 {
 
+  private static final String SC_SCHEMA_INFO_LEVEL = "schemacrawler.schema_info_level.";
+
+  private static final String RETRIEVE_ADDITIONAL_COLUMN_ATTRIBUTES = SC_SCHEMA_INFO_LEVEL
+                                                                      + "retrieve_additional_column_attributes";
+  private static final String RETRIEVE_ADDITIONAL_DATABASE_INFO = SC_SCHEMA_INFO_LEVEL
+                                                                  + "retrieve_additional_database_info";
+  private static final String RETRIEVE_ADDITIONAL_JDBC_DRIVER_INFO = SC_SCHEMA_INFO_LEVEL
+                                                                     + "retrieve_additional_jdbc_driver_info";
+  private static final String RETRIEVE_ADDITIONAL_TABLE_ATTRIBUTES = SC_SCHEMA_INFO_LEVEL
+                                                                     + "retrieve_additional_table_attributes";
+  private static final String RETRIEVE_COLUMN_DATA_TYPES = SC_SCHEMA_INFO_LEVEL
+                                                           + "retrieve_column_data_types";
+  private static final String RETRIEVE_DATABASE_INFO = SC_SCHEMA_INFO_LEVEL
+                                                       + "retrieve_database_info";
+  private static final String RETRIEVE_FOREIGN_KEY_DEFINITIONS = SC_SCHEMA_INFO_LEVEL
+                                                                 + "retrieve_foreign_key_definitions";
+  private static final String RETRIEVE_FOREIGN_KEYS = SC_SCHEMA_INFO_LEVEL
+                                                      + "retrieve_foreign_keys";
+  private static final String RETRIEVE_INDEX_COLUMN_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                                  + "retrieve_index_column_information";
+  private static final String RETRIEVE_INDEXES = SC_SCHEMA_INFO_LEVEL
+                                                 + "retrieve_indexes";
+  private static final String RETRIEVE_INDEX_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                           + "retrieve_index_information";
+  private static final String RETRIEVE_PRIMARY_KEY_DEFINITIONS = SC_SCHEMA_INFO_LEVEL
+                                                                 + "retrieve_primary_key_definitions";
+  private static final String RETRIEVE_ROUTINE_COLUMNS = SC_SCHEMA_INFO_LEVEL
+                                                         + "retrieve_routine_columns";
+  private static final String RETRIEVE_ROUTINE_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                             + "retrieve_routine_information";
+  private static final String RETRIEVE_ROUTINES = SC_SCHEMA_INFO_LEVEL
+                                                  + "retrieve_routines";
+  private static final String RETRIEVE_SEQUENCE_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                              + "retrieve_sequence_information";
+  private static final String RETRIEVE_SERVER_INFO = SC_SCHEMA_INFO_LEVEL
+                                                     + "retrieve_server_info";
+  private static final String RETRIEVE_SYNONYM_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                             + "retrieve_synonym_information";
+  private static final String RETRIEVE_TABLE_COLUMN_PRIVILEGES = SC_SCHEMA_INFO_LEVEL
+                                                                 + "retrieve_table_column_privileges";
+  private static final String RETRIEVE_TABLE_COLUMNS = SC_SCHEMA_INFO_LEVEL
+                                                       + "retrieve_table_columns";
+  private static final String RETRIEVE_TABLE_CONSTRAINT_DEFINITIONS = SC_SCHEMA_INFO_LEVEL
+                                                                      + "retrieve_table_constraint_definitions";
+  private static final String RETRIEVE_TABLE_CONSTRAINT_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                                      + "retrieve_table_constraint_information";
+  private static final String RETRIEVE_TABLE_DEFINITIONS_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                                       + "retrieve_table_definitions_information";
+  private static final String RETRIEVE_TABLE_PRIVILEGES = SC_SCHEMA_INFO_LEVEL
+                                                          + "retrieve_table_privileges";
+  private static final String RETRIEVE_TABLES = SC_SCHEMA_INFO_LEVEL
+                                                + "retrieve_tables";
+  private static final String RETRIEVE_TRIGGER_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                             + "retrieve_trigger_information";
+  private static final String RETRIEVE_USER_DEFINED_COLUMN_DATA_TYPES = SC_SCHEMA_INFO_LEVEL
+                                                                        + "retrieve_user_defined_column_data_types";
+  private static final String RETRIEVE_VIEW_INFORMATION = SC_SCHEMA_INFO_LEVEL
+                                                          + "retrieve_view_information";
+
   /**
-   * Creates a new SchemaInfoLevel for verbose schema information.
+   * Creates a new SchemaInfoLevel builder with settings for detailed
+   * schema information.
    *
-   * @return New SchemaInfoLevel
+   * @return SchemaInfoLevel builder
    */
   public static SchemaInfoLevelBuilder detailed()
   {
@@ -52,9 +112,25 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Creates a new SchemaInfoLevel for maximum schema information.
+   * Creates a new SchemaInfoLevel from an existing one, so that values
+   * can be modified.
    *
-   * @return New SchemaInfoLevel
+   * @param schemaInfoLevel
+   *        Existing immutable SchemaInfoLevel
+   * @return SchemaInfoLevel builder
+   */
+  public static SchemaInfoLevelBuilder from(final SchemaInfoLevel schemaInfoLevel)
+  {
+    final SchemaInfoLevelBuilder builder = new SchemaInfoLevelBuilder();
+    builder.fromOptions(schemaInfoLevel);
+    return builder;
+  }
+
+  /**
+   * Creates a new SchemaInfoLevel builder with settings for maximum
+   * schema information.
+   *
+   * @return SchemaInfoLevel builder
    */
   public static SchemaInfoLevelBuilder maximum()
   {
@@ -78,9 +154,10 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Creates a new SchemaInfoLevel for minimum schema information.
+   * Creates a new SchemaInfoLevel builder with settings for minimum
+   * schema information.
    *
-   * @return New SchemaInfoLevel
+   * @return SchemaInfoLevel builder
    */
   public static SchemaInfoLevelBuilder minimum()
   {
@@ -93,9 +170,10 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Creates a new SchemaInfoLevel for standard schema information.
+   * Creates a new SchemaInfoLevel builder with settings for standard
+   * schema information.
    *
-   * @return New SchemaInfoLevel
+   * @return SchemaInfoLevel builder
    */
   public static SchemaInfoLevelBuilder standard()
   {
@@ -148,7 +226,157 @@ public final class SchemaInfoLevelBuilder
   @Override
   public SchemaInfoLevelBuilder fromConfig(final Config config)
   {
-    throw new UnsupportedOperationException();
+    final Config configProperties;
+    if (config == null)
+    {
+      configProperties = new Config();
+    }
+    else
+    {
+      configProperties = new Config(config);
+    }
+
+    if (configProperties.containsKey(RETRIEVE_ADDITIONAL_COLUMN_ATTRIBUTES))
+    {
+      retrieveAdditionalColumnAttributes = configProperties
+        .getBooleanValue(RETRIEVE_ADDITIONAL_COLUMN_ATTRIBUTES);
+    }
+    if (configProperties.containsKey(RETRIEVE_ADDITIONAL_DATABASE_INFO))
+    {
+      retrieveAdditionalDatabaseInfo = configProperties
+        .getBooleanValue(RETRIEVE_ADDITIONAL_DATABASE_INFO);
+    }
+    if (configProperties.containsKey(RETRIEVE_ADDITIONAL_JDBC_DRIVER_INFO))
+    {
+      retrieveAdditionalJdbcDriverInfo = configProperties
+        .getBooleanValue(RETRIEVE_ADDITIONAL_JDBC_DRIVER_INFO);
+    }
+    if (configProperties.containsKey(RETRIEVE_ADDITIONAL_TABLE_ATTRIBUTES))
+    {
+      retrieveAdditionalTableAttributes = configProperties
+        .getBooleanValue(RETRIEVE_ADDITIONAL_TABLE_ATTRIBUTES);
+    }
+    if (configProperties.containsKey(RETRIEVE_COLUMN_DATA_TYPES))
+    {
+      retrieveColumnDataTypes = configProperties
+        .getBooleanValue(RETRIEVE_COLUMN_DATA_TYPES);
+    }
+    if (configProperties.containsKey(RETRIEVE_DATABASE_INFO))
+    {
+      retrieveDatabaseInfo = configProperties
+        .getBooleanValue(RETRIEVE_DATABASE_INFO);
+    }
+    if (configProperties.containsKey(RETRIEVE_FOREIGN_KEY_DEFINITIONS))
+    {
+      retrieveForeignKeyDefinitions = configProperties
+        .getBooleanValue(RETRIEVE_FOREIGN_KEY_DEFINITIONS);
+    }
+    if (configProperties.containsKey(RETRIEVE_FOREIGN_KEYS))
+    {
+      retrieveForeignKeys = configProperties
+        .getBooleanValue(RETRIEVE_FOREIGN_KEYS);
+    }
+    if (configProperties.containsKey(RETRIEVE_INDEX_COLUMN_INFORMATION))
+    {
+      retrieveIndexColumnInformation = configProperties
+        .getBooleanValue(RETRIEVE_INDEX_COLUMN_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_INDEX_INFORMATION))
+    {
+      retrieveIndexes = configProperties
+        .getBooleanValue(RETRIEVE_INDEX_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_INDEXES))
+    {
+      retrieveIndexInformation = configProperties
+        .getBooleanValue(RETRIEVE_INDEXES);
+    }
+    if (configProperties.containsKey(RETRIEVE_PRIMARY_KEY_DEFINITIONS))
+    {
+      retrievePrimaryKeyDefinitions = configProperties
+        .getBooleanValue(RETRIEVE_PRIMARY_KEY_DEFINITIONS);
+    }
+    if (configProperties.containsKey(RETRIEVE_ROUTINE_COLUMNS))
+    {
+      retrieveRoutineColumns = configProperties
+        .getBooleanValue(RETRIEVE_ROUTINE_COLUMNS);
+    }
+    if (configProperties.containsKey(RETRIEVE_ROUTINE_INFORMATION))
+    {
+      retrieveRoutineInformation = configProperties
+        .getBooleanValue(RETRIEVE_ROUTINE_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_ROUTINES))
+    {
+      retrieveRoutines = configProperties.getBooleanValue(RETRIEVE_ROUTINES);
+    }
+    if (configProperties.containsKey(RETRIEVE_SEQUENCE_INFORMATION))
+    {
+      retrieveSequenceInformation = configProperties
+        .getBooleanValue(RETRIEVE_SEQUENCE_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_SERVER_INFO))
+    {
+      retrieveServerInfo = configProperties
+        .getBooleanValue(RETRIEVE_SERVER_INFO);
+    }
+    if (configProperties.containsKey(RETRIEVE_SYNONYM_INFORMATION))
+    {
+      retrieveSynonymInformation = configProperties
+        .getBooleanValue(RETRIEVE_SYNONYM_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_COLUMN_PRIVILEGES))
+    {
+      retrieveTableColumnPrivileges = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_COLUMN_PRIVILEGES);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_COLUMNS))
+    {
+      retrieveTableColumns = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_COLUMNS);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_CONSTRAINT_DEFINITIONS))
+    {
+      retrieveTableConstraintDefinitions = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_CONSTRAINT_DEFINITIONS);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_CONSTRAINT_INFORMATION))
+    {
+      retrieveTableConstraintInformation = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_CONSTRAINT_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_DEFINITIONS_INFORMATION))
+    {
+      retrieveTableDefinitionsInformation = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_DEFINITIONS_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLE_PRIVILEGES))
+    {
+      retrieveTablePrivileges = configProperties
+        .getBooleanValue(RETRIEVE_TABLE_PRIVILEGES);
+    }
+    if (configProperties.containsKey(RETRIEVE_TABLES))
+    {
+      retrieveTables = configProperties.getBooleanValue(RETRIEVE_TABLES);
+    }
+    if (configProperties.containsKey(RETRIEVE_TRIGGER_INFORMATION))
+    {
+      retrieveTriggerInformation = configProperties
+        .getBooleanValue(RETRIEVE_TRIGGER_INFORMATION);
+    }
+    if (configProperties.containsKey(RETRIEVE_USER_DEFINED_COLUMN_DATA_TYPES))
+    {
+      retrieveUserDefinedColumnDataTypes = configProperties
+        .getBooleanValue(RETRIEVE_USER_DEFINED_COLUMN_DATA_TYPES);
+    }
+    if (configProperties.containsKey(RETRIEVE_VIEW_INFORMATION))
+    {
+      retrieveViewInformation = configProperties
+        .getBooleanValue(RETRIEVE_VIEW_INFORMATION);
+    }
+
+    return this;
+
   }
 
   @Override
