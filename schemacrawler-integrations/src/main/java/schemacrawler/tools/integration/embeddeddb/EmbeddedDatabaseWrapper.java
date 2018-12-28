@@ -121,7 +121,7 @@ public abstract class EmbeddedDatabaseWrapper
     checkConnection(connection);
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withStandard())
       .includeRoutines(new ExcludeAll());
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

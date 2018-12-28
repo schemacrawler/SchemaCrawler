@@ -127,7 +127,7 @@ public class TableTypesTest
     {
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard().toOptions())
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withStandard().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       if (!"default".equals(tableTypes))
       {

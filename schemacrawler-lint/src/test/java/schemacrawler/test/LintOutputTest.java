@@ -108,7 +108,7 @@ public class LintOutputTest
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
           .builder()
           .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+          .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum());
         final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
           .toOptions();
 

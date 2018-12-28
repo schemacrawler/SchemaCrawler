@@ -71,7 +71,7 @@ public class TableCountsTest
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder()
-        .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+        .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum().toOptions())
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();

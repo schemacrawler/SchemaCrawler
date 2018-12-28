@@ -38,7 +38,7 @@ public final class ApiExample
       .builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withStandard())
       .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"))
       .includeTables(tableFullName -> !tableFullName.contains("ΒΙΒΛΊΑ"));
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();

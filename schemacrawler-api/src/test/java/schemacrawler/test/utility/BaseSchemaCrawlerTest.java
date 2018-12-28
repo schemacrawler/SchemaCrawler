@@ -43,7 +43,7 @@ public abstract class BaseSchemaCrawlerTest
 {
 
   private final SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum().toOptions())
     .toOptions();
 
   @BeforeClass

@@ -169,7 +169,7 @@ public class OfflineSnapshotTest
   {
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -195,7 +195,7 @@ public class OfflineSnapshotTest
   {
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

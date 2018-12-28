@@ -62,7 +62,7 @@ public class DerbyTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeSchemas(new RegularExpressionInclusionRule("BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

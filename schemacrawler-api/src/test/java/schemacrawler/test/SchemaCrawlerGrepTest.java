@@ -118,8 +118,8 @@ public class SchemaCrawlerGrepTest
     table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
     assertNotNull("Table BOOKAUTHORS not found", table);
 
-    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .builder(schemaCrawlerOptions).parentTableFilterDepth(1).toOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
+      .fromOptions(schemaCrawlerOptions).parentTableFilterDepth(1).toOptions();
     catalog = getCatalog(schemaCrawlerOptions);
     schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertNotNull("Schema PUBLIC.BOOKS not found", schema);

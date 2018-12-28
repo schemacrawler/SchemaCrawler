@@ -80,19 +80,9 @@ public final class SchemaCrawlerOptionsBuilder
     return new SchemaCrawlerOptionsBuilder();
   }
 
-  public static SchemaCrawlerOptionsBuilder builder(final SchemaCrawlerOptions options)
-  {
-    return new SchemaCrawlerOptionsBuilder().fromOptions(options);
-  }
-
   public static SchemaCrawlerOptions newSchemaCrawlerOptions()
   {
-    return new SchemaCrawlerOptionsBuilder().toOptions();
-  }
-
-  public static SchemaCrawlerOptions newSchemaCrawlerOptions(final Config config)
-  {
-    return new SchemaCrawlerOptionsBuilder().fromConfig(config).toOptions();
+    return builder().toOptions();
   }
 
   private static Collection<RoutineType> allRoutineTypes()
@@ -137,7 +127,7 @@ public final class SchemaCrawlerOptionsBuilder
    */
   private SchemaCrawlerOptionsBuilder()
   {
-    schemaInfoLevel = SchemaInfoLevelBuilder.standard().toOptions();
+    schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard().toOptions();
 
     title = "";
 
@@ -187,7 +177,7 @@ public final class SchemaCrawlerOptionsBuilder
     final Config configProperties;
     if (config == null)
     {
-      configProperties = new Config();
+      return this;
     }
     else
     {
@@ -614,7 +604,7 @@ public final class SchemaCrawlerOptionsBuilder
   {
     if (schemaInfoLevel == null)
     {
-      this.schemaInfoLevel = SchemaInfoLevelBuilder.standard().toOptions();
+      this.schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard().toOptions();
     }
     else
     {
@@ -627,7 +617,7 @@ public final class SchemaCrawlerOptionsBuilder
   {
     if (schemaInfoLevelBuilder == null)
     {
-      schemaInfoLevel = SchemaInfoLevelBuilder.standard().toOptions();
+      schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard().toOptions();
     }
     else
     {

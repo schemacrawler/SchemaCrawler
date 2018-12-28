@@ -91,7 +91,7 @@ public class PostgreSQLDumpTest
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeSchemas(new RegularExpressionInclusionRule("public"))
       .includeAllSequences().includeAllSynonyms().includeAllRoutines();
     final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder

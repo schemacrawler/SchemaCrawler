@@ -92,106 +92,73 @@ public final class SchemaInfoLevelBuilder
   private static final String RETRIEVE_VIEW_INFORMATION = SC_SCHEMA_INFO_LEVEL
                                                           + "retrieve_view_information";
 
-  /**
-   * Creates a new SchemaInfoLevel builder with settings for detailed
-   * schema information.
-   *
-   * @return SchemaInfoLevel builder
-   */
-  public static SchemaInfoLevelBuilder detailed()
+  public static SchemaInfoLevelBuilder builder()
   {
-    final SchemaInfoLevelBuilder detailed = standard();
-    detailed.setRetrieveUserDefinedColumnDataTypes(true);
-    detailed.setRetrieveTriggerInformation(true);
-    detailed.setRetrieveTableConstraintInformation(true);
-    detailed.setRetrieveTableConstraintDefinitions(true);
-    detailed.setRetrieveViewInformation(true);
-    detailed.setRetrieveRoutineInformation(true);
-    detailed.setTag("detailed");
-    return detailed;
+    return new SchemaInfoLevelBuilder();
   }
 
   /**
-   * Creates a new SchemaInfoLevel from an existing one, so that values
-   * can be modified.
+   * Creates a new SchemaInfoLevel with settings for detailed schema
+   * information.
    *
-   * @param schemaInfoLevel
-   *        Existing immutable SchemaInfoLevel
-   * @return SchemaInfoLevel builder
+   * @return SchemaInfoLevel detailed
    */
-  public static SchemaInfoLevelBuilder from(final SchemaInfoLevel schemaInfoLevel)
+  public static SchemaInfoLevel detailed()
   {
-    final SchemaInfoLevelBuilder builder = new SchemaInfoLevelBuilder();
-    builder.fromOptions(schemaInfoLevel);
-    return builder;
+    return builder().withDetailed().toOptions();
   }
 
   /**
-   * Creates a new SchemaInfoLevel builder with settings for maximum
-   * schema information.
+   * Creates a new SchemaInfoLevel with settings for maximum schema
+   * information.
    *
-   * @return SchemaInfoLevel builder
+   * @return SchemaInfoLevel maximum
    */
-  public static SchemaInfoLevelBuilder maximum()
+  public static SchemaInfoLevel maximum()
   {
-    final SchemaInfoLevelBuilder maximum = detailed();
-    maximum.setRetrieveAdditionalDatabaseInfo(true);
-    maximum.setRetrieveServerInfo(true);
-    maximum.setRetrieveAdditionalJdbcDriverInfo(true);
-    maximum.setRetrieveTablePrivileges(true);
-    maximum.setRetrieveTableColumnPrivileges(true);
-    maximum.setRetrieveTableDefinitionsInformation(true);
-    maximum.setRetrieveForeignKeyDefinitions(true);
-    maximum.setRetrievePrimaryKeyDefinitions(true);
-    maximum.setRetrieveAdditionalTableAttributes(true);
-    maximum.setRetrieveAdditionalColumnAttributes(true);
-    maximum.setRetrieveIndexInformation(true);
-    maximum.setRetrieveIndexColumnInformation(true);
-    maximum.setRetrieveSequenceInformation(true);
-    maximum.setRetrieveSynonymInformation(true);
-    maximum.setTag("maximum");
-    return maximum;
+    return builder().withMaximum().toOptions();
   }
 
   /**
-   * Creates a new SchemaInfoLevel builder with settings for minimum
-   * schema information.
+   * Creates a new SchemaInfoLevel with settings for minimum schema
+   * information.
    *
-   * @return SchemaInfoLevel builder
+   * @return SchemaInfoLevel minimum
    */
-  public static SchemaInfoLevelBuilder minimum()
+  public static SchemaInfoLevel minimum()
   {
-    final SchemaInfoLevelBuilder minimum = new SchemaInfoLevelBuilder();
-    minimum.setRetrieveDatabaseInfo(true);
-    minimum.setRetrieveTables(true);
-    minimum.setRetrieveRoutines(true);
-    minimum.setTag("minimum");
-    return minimum;
+    return builder().withMinimum().toOptions();
   }
 
   /**
-   * Creates a new SchemaInfoLevel builder with settings for standard
-   * schema information.
+   * Retrieves schema based on standard options.
    *
-   * @return SchemaInfoLevel builder
+   * @return Standard schema info level.
    */
-  public static SchemaInfoLevelBuilder standard()
+  public static SchemaInfoLevel newSchemaInfoLevel()
   {
-    final SchemaInfoLevelBuilder standard = minimum();
-    standard.setRetrieveColumnDataTypes(true);
-    standard.setRetrieveTableColumns(true);
-    standard.setRetrieveForeignKeys(true);
-    standard.setRetrieveIndexes(true);
-    standard.setRetrieveRoutineColumns(true);
-    standard.setTag("standard");
-    return standard;
+    return builder().withStandard().toOptions();
+  }
+
+  /**
+   * Creates a new SchemaInfoLevel with settings for standard schema
+   * information.
+   *
+   * @return SchemaInfoLevel standard
+   */
+  public static SchemaInfoLevel standard()
+  {
+    return builder().withStandard().toOptions();
   }
 
   private String tag;
 
   private boolean retrieveTables;
+
   private boolean retrieveRoutines;
+
   private boolean retrieveColumnDataTypes;
+
   private boolean retrieveDatabaseInfo;
   private boolean retrieveAdditionalDatabaseInfo;
   private boolean retrieveServerInfo;
@@ -229,7 +196,7 @@ public final class SchemaInfoLevelBuilder
     final Config configProperties;
     if (config == null)
     {
-      configProperties = new Config();
+      return this;
     }
     else
     {
@@ -657,6 +624,67 @@ public final class SchemaInfoLevelBuilder
   public String toString()
   {
     return tag == null? "": tag;
+  }
+
+  public SchemaInfoLevelBuilder withDetailed()
+  {
+    withStandard();
+    setRetrieveUserDefinedColumnDataTypes(true);
+    setRetrieveTriggerInformation(true);
+    setRetrieveTableConstraintInformation(true);
+    setRetrieveTableConstraintDefinitions(true);
+    setRetrieveViewInformation(true);
+    setRetrieveRoutineInformation(true);
+    setTag("detailed");
+    return this;
+  }
+
+  /**
+   * Creates a new SchemaInfoLevel builder with settings for maximum
+   * schema information.
+   *
+   * @return SchemaInfoLevel builder
+   */
+  public SchemaInfoLevelBuilder withMaximum()
+  {
+    withDetailed();
+    setRetrieveAdditionalDatabaseInfo(true);
+    setRetrieveServerInfo(true);
+    setRetrieveAdditionalJdbcDriverInfo(true);
+    setRetrieveTablePrivileges(true);
+    setRetrieveTableColumnPrivileges(true);
+    setRetrieveTableDefinitionsInformation(true);
+    setRetrieveForeignKeyDefinitions(true);
+    setRetrievePrimaryKeyDefinitions(true);
+    setRetrieveAdditionalTableAttributes(true);
+    setRetrieveAdditionalColumnAttributes(true);
+    setRetrieveIndexInformation(true);
+    setRetrieveIndexColumnInformation(true);
+    setRetrieveSequenceInformation(true);
+    setRetrieveSynonymInformation(true);
+    setTag("maximum");
+    return this;
+  }
+
+  public SchemaInfoLevelBuilder withMinimum()
+  {
+    setRetrieveDatabaseInfo(true);
+    setRetrieveTables(true);
+    setRetrieveRoutines(true);
+    setTag("minimum");
+    return this;
+  }
+
+  public SchemaInfoLevelBuilder withStandard()
+  {
+    withMinimum();
+    setRetrieveColumnDataTypes(true);
+    setRetrieveTableColumns(true);
+    setRetrieveForeignKeys(true);
+    setRetrieveIndexes(true);
+    setRetrieveRoutineColumns(true);
+    setTag("standard");
+    return this;
   }
 
 }

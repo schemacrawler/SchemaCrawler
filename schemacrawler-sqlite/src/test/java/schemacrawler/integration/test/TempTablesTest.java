@@ -71,7 +71,7 @@ public class TempTablesTest
                                                            "/db/books/05_temp_tables_01_B.sql");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMinimum())
       .tableTypes(Arrays.asList("GLOBAL TEMPORARY"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();

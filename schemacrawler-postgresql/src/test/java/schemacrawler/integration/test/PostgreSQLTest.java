@@ -124,7 +124,7 @@ public class PostgreSQLTest
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences().includeAllSynonyms().includeAllRoutines()
       .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");
@@ -164,7 +164,7 @@ public class PostgreSQLTest
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
     schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeSchemas(new RegularExpressionInclusionRule("books"))
       .includeAllSequences().includeAllSynonyms().includeAllRoutines()
       .tableTypes("TABLE,VIEW,MATERIALIZED VIEW");

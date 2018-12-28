@@ -336,7 +336,7 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMaximum())
       .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -358,7 +358,8 @@ public class GraphRendererOptionsTest
     SchemaCrawlerOptions schemaCrawlerOptions = options;
     if (options.getSchemaInclusionRule().equals(new IncludeAll()))
     {
-      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder(options)
+      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
+        .fromOptions(options)
         .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
         .toOptions();
     }
