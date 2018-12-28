@@ -44,7 +44,6 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.utility.NamedObjectSort;
 
@@ -119,8 +118,7 @@ public class SortingTest
                                final boolean sortAlphabetically)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
@@ -153,8 +151,7 @@ public class SortingTest
                            final boolean sortAlphabetically)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertNotNull("Schema not found", schema);
@@ -190,8 +187,7 @@ public class SortingTest
                               final boolean sortAlphabetically)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);

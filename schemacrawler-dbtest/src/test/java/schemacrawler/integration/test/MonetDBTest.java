@@ -39,7 +39,6 @@ import org.junit.Test;
 import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
 import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -97,8 +96,7 @@ public class MonetDBTest
       return;
     }
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();

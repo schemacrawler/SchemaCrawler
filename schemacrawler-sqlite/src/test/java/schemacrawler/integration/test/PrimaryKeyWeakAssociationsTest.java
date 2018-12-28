@@ -49,7 +49,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestName;
@@ -103,8 +102,7 @@ public class PrimaryKeyWeakAssociationsTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .withMaximumSchemaInfoLevel();
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
       final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
         .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);

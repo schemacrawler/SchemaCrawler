@@ -52,7 +52,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
@@ -139,8 +138,7 @@ public class DiffTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
       .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);

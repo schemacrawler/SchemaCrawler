@@ -36,7 +36,6 @@ import org.junit.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestName;
 import schemacrawler.testdb.TestSchemaCreator;
@@ -82,8 +81,7 @@ public class SQLiteExecuableTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder
       .newSchemaTextOptions();

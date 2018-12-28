@@ -557,8 +557,7 @@ public class SchemaCrawlerTest
       final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
         .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .withMaximumSchemaInfoLevel();
+      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
       final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                          schemaCrawlerOptions);
@@ -723,8 +722,7 @@ public class SchemaCrawlerTest
     final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
       .newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                        schemaCrawlerOptions);

@@ -58,8 +58,7 @@ public class SchemaCrawlerReferenceTest
     throws Exception
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     int fkReferenceCount = 0;
     final Catalog catalog = getCatalog(schemaCrawlerOptions);

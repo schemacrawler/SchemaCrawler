@@ -47,7 +47,6 @@ import org.nustaq.serialization.FSTObjectOutput;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import sf.util.IOUtility;
 
@@ -59,8 +58,7 @@ public class CatalogSerializationTest
   public void catalogSerializationWithFst()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);
@@ -102,8 +100,7 @@ public class CatalogSerializationTest
   public void catalogSerializationWithJava()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     assertNotNull("Could not obtain catalog", catalog);

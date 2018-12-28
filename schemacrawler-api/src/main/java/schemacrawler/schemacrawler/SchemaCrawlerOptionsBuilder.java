@@ -95,13 +95,6 @@ public final class SchemaCrawlerOptionsBuilder
     return new SchemaCrawlerOptionsBuilder().fromConfig(config).toOptions();
   }
 
-  public static SchemaCrawlerOptions withMaximumSchemaInfoLevel()
-  {
-    return new SchemaCrawlerOptionsBuilder()
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
-      .toOptions();
-  }
-
   private static Collection<RoutineType> allRoutineTypes()
   {
     return EnumSet.of(RoutineType.procedure, RoutineType.function);

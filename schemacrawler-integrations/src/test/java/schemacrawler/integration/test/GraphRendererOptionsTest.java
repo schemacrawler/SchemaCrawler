@@ -99,8 +99,7 @@ public class GraphRendererOptionsTest
   public void executableForGraph_00()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -193,8 +192,7 @@ public class GraphRendererOptionsTest
   public void executableForGraph_06()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.brief.name(),
@@ -207,8 +205,7 @@ public class GraphRendererOptionsTest
   public void executableForGraph_07()
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -301,8 +298,7 @@ public class GraphRendererOptionsTest
     graphOptionsBuilder.showRowCounts();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
@@ -327,8 +323,7 @@ public class GraphRendererOptionsTest
     graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .withMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,

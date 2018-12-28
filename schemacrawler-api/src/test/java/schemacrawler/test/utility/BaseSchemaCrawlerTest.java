@@ -35,14 +35,27 @@ import java.util.logging.Level;
 
 import org.junit.BeforeClass;
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+
 public abstract class BaseSchemaCrawlerTest
 {
+
+  private final SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
+    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum().toOptions())
+    .toOptions();
 
   @BeforeClass
   public static void setApplicationLogLevel()
     throws Exception
   {
     applyApplicationLogLevel(Level.OFF);
+  }
+
+  protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()
+  {
+    return schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
   }
 
 }

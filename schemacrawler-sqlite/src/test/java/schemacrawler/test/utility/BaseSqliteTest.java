@@ -32,16 +32,12 @@ import static org.junit.Assert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
-import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.logging.Level;
 
 import javax.sql.DataSource;
-
-import org.junit.BeforeClass;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -55,14 +51,8 @@ import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
+  extends BaseSchemaCrawlerTest
 {
-
-  @BeforeClass
-  public static void setApplicationLogLevel()
-    throws Exception
-  {
-    applyApplicationLogLevel(Level.OFF);
-  }
 
   protected DataSource createDataSource(final Path sqliteDbFile)
     throws SchemaCrawlerException
