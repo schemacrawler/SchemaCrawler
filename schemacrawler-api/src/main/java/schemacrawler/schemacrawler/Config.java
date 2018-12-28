@@ -36,8 +36,10 @@ import static sf.util.Utility.isBlank;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import sf.util.ObjectToString;
@@ -203,72 +205,46 @@ public final class Config
     return enumValue(value, defaultValue);
   }
 
+  /**
+   * Creates an exclusion rule, which includes everything, and then
+   * excludes a pattern. If no pattern is provided, include everything,
+   * since there are no excludes specified.
+   *
+   * @param optionName
+   *        Option to look up.
+   * @return Inclusion rule.
+   */
   public InclusionRule getExclusionRule(final String optionName)
   {
-    final String value = getStringValue(optionName, null);
-    final InclusionRule schemaInclusionRule;
-    if (!isBlank(value))
-    {
-      schemaInclusionRule = new RegularExpressionExclusionRule(value);
-    }
-    else
-    {
-      schemaInclusionRule = new IncludeAll();
-    }
-    return schemaInclusionRule;
+    return getInclusionRuleWithDefault(null,
+                                       optionName,
+                                       () -> new IncludeAll());
   }
 
+  /**
+   * Creates an inclusion rule, which includes a pattern has no
+   * excludes. If no pattern is provided, exclude everything, since
+   * there are no includes specified.
+   *
+   * @param optionName
+   *        Option to look up.
+   * @return Inclusion rule.
+   */
   public InclusionRule getInclusionRule(final String optionName)
   {
-    final String value = getStringValue(optionName, null);
-    final InclusionRule schemaInclusionRule;
-    if (!isBlank(value))
-    {
-      schemaInclusionRule = new RegularExpressionInclusionRule(value);
-    }
-    else
-    {
-      schemaInclusionRule = new ExcludeAll();
-    }
-    return schemaInclusionRule;
+    return getInclusionRuleWithDefault(optionName,
+                                       null,
+                                       () -> new ExcludeAll());
   }
 
-  public InclusionRule getInclusionRule(final String includePatternProperty,
-                                        final String excludePatternProperty)
+  public InclusionRule getInclusionRuleWithDefault(final String includePatternProperty,
+                                                   final String excludePatternProperty,
+                                                   final Supplier<InclusionRule> supplier)
   {
-    final InclusionRule inclusionRule = getInclusionRuleOrNull(includePatternProperty,
-                                                               excludePatternProperty);
-    if (inclusionRule == null)
-    {
-      return new IncludeAll();
-    }
-    else
-    {
-      return inclusionRule;
-    }
-  }
-
-  public InclusionRule getInclusionRuleDefaultExclude(final String includePatternProperty,
-                                                      final String excludePatternProperty)
-  {
-    return new RegularExpressionRule(getStringValue(includePatternProperty, ""),
-                                     getStringValue(excludePatternProperty,
-                                                    ".*"));
-  }
-
-  public InclusionRule getInclusionRuleOrNull(final String includePatternProperty,
-                                              final String excludePatternProperty)
-  {
-    final String includePattern = getStringValue(includePatternProperty, null);
-    final String excludePattern = getStringValue(excludePatternProperty, null);
-    if (isBlank(includePattern) && isBlank(excludePattern))
-    {
-      return null;
-    }
-    else
-    {
-      return new RegularExpressionRule(includePattern, excludePattern);
-    }
+    requireNonNull(supplier);
+    final Optional<InclusionRule> optionalInclusionRule = getOptionalInclusionRule(includePatternProperty,
+                                                                                   excludePatternProperty);
+    return optionalInclusionRule.orElse(supplier.get());
   }
 
   /**
@@ -318,6 +294,22 @@ public final class Config
                               propertyName),
              e);
       return defaultValue;
+    }
+  }
+
+  public Optional<InclusionRule> getOptionalInclusionRule(final String includePatternProperty,
+                                                          final String excludePatternProperty)
+  {
+    final String includePattern = getStringValue(includePatternProperty, null);
+    final String excludePattern = getStringValue(excludePatternProperty, null);
+    if (isBlank(includePattern) && isBlank(excludePattern))
+    {
+      return Optional.empty();
+    }
+    else
+    {
+      return Optional
+        .of(new RegularExpressionRule(includePattern, excludePattern));
     }
   }
 
