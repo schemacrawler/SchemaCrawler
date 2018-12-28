@@ -38,7 +38,7 @@ import schemacrawler.schemacrawler.InclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevel;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.options.InfoLevel;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -96,21 +96,39 @@ public final class SchemaCrawlerOptionsParser
       consumeOption("title");
     }
 
+    // Load schema info level configuration from config, and override
+    // with command-line options
+    final SchemaInfoLevelBuilder schemaInfoLevelBuilder = SchemaInfoLevelBuilder
+      .builder().fromConfig(config);
     if (config.hasValue("infolevel"))
     {
-      final String infoLevel = config.getStringValue("infolevel", "standard");
-      final SchemaInfoLevel schemaInfoLevel = InfoLevel
-        .valueOfFromString(infoLevel).toSchemaInfoLevel();
-      optionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
+      final InfoLevel infoLevel = config.getEnumValue("infolevel",
+                                                      InfoLevel.standard);
+      switch (infoLevel)
+      {
+        case maximum:
+          schemaInfoLevelBuilder.withMaximum();
+          break;
+        case detailed:
+          schemaInfoLevelBuilder.withDetailed();
+          break;
+        case standard:
+          schemaInfoLevelBuilder.withStandard();
+          break;
+        case minimum:
+          schemaInfoLevelBuilder.withMinimum();
+          break;
+        default:
+          break;
+      }
       consumeOption("infolevel");
     }
     else
     {
       // Default to standard infolevel
-      final SchemaInfoLevel schemaInfoLevel = InfoLevel.standard
-        .toSchemaInfoLevel();
-      optionsBuilder.withSchemaInfoLevel(schemaInfoLevel);
+      schemaInfoLevelBuilder.withStandard();
     }
+    optionsBuilder.withSchemaInfoLevel(schemaInfoLevelBuilder);
 
     if (config.hasValue("schemas"))
     {
