@@ -35,11 +35,11 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InclusionRule;
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.tools.options.InfoLevel;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -104,29 +104,13 @@ public final class SchemaCrawlerOptionsParser
     {
       final InfoLevel infoLevel = config.getEnumValue("infolevel",
                                                       InfoLevel.standard);
-      switch (infoLevel)
-      {
-        case maximum:
-          schemaInfoLevelBuilder.withMaximum();
-          break;
-        case detailed:
-          schemaInfoLevelBuilder.withDetailed();
-          break;
-        case standard:
-          schemaInfoLevelBuilder.withStandard();
-          break;
-        case minimum:
-          schemaInfoLevelBuilder.withMinimum();
-          break;
-        default:
-          break;
-      }
+      schemaInfoLevelBuilder.withInfoLevel(infoLevel);
       consumeOption("infolevel");
     }
     else
     {
       // Default to standard infolevel
-      schemaInfoLevelBuilder.withStandard();
+      schemaInfoLevelBuilder.withInfoLevel(InfoLevel.standard);
     }
     optionsBuilder.withSchemaInfoLevel(schemaInfoLevelBuilder);
 

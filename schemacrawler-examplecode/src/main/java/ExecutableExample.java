@@ -39,7 +39,7 @@ public final class ExecutableExample
       .builder()
       // Set what details are required in the schema - this affects the
       // time taken to crawl the schema
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withStandard())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
       .includeSchemas(new RegularExpressionInclusionRule("PUBLIC.BOOKS"));
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();
 

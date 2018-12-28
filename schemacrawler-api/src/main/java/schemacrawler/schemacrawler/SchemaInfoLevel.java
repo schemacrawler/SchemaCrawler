@@ -29,9 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.join;
 
-import sf.util.ObjectToString;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * Descriptor for level of schema detail.
@@ -43,95 +46,15 @@ public final class SchemaInfoLevel
 {
 
   private final String tag;
-
-  private final boolean retrieveTables;
-  private final boolean retrieveRoutines;
-  private final boolean retrieveColumnDataTypes;
-  private final boolean retrieveDatabaseInfo;
-  private final boolean retrieveAdditionalDatabaseInfo;
-  private final boolean retrieveServerInfo;
-  private final boolean retrieveAdditionalJdbcDriverInfo;
-  private final boolean retrieveUserDefinedColumnDataTypes;
-  private final boolean retrieveRoutineColumns;
-  private final boolean retrieveRoutineInformation;
-  private final boolean retrieveTableConstraintInformation;
-  private final boolean retrieveTableConstraintDefinitions;
-  private final boolean retrieveViewInformation;
-  private final boolean retrieveIndexInformation;
-  private final boolean retrieveIndexColumnInformation;
-  private final boolean retrievePrimaryKeyDefinitions;
-  private final boolean retrieveForeignKeys;
-  private final boolean retrieveForeignKeyDefinitions;
-  private final boolean retrieveIndexes;
-  private final boolean retrieveTablePrivileges;
-  private final boolean retrieveTableColumnPrivileges;
-  private final boolean retrieveTriggerInformation;
-  private final boolean retrieveSynonymInformation;
-  private final boolean retrieveSequenceInformation;
-  private final boolean retrieveTableColumns;
-  private final boolean retrieveAdditionalTableAttributes;
-  private final boolean retrieveAdditionalColumnAttributes;
-  private final boolean retrieveTableDefinitionsInformation;
+  private final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals;
 
   SchemaInfoLevel(final String tag,
-                  final boolean retrieveTables,
-                  final boolean retrieveRoutines,
-                  final boolean retrieveColumnDataTypes,
-                  final boolean retrieveDatabaseInfo,
-                  final boolean retrieveAdditionalDatabaseInfo,
-                  final boolean retrieveServerInfo,
-                  final boolean retrieveAdditionalJdbcDriverInfo,
-                  final boolean retrieveUserDefinedColumnDataTypes,
-                  final boolean retrieveRoutineColumns,
-                  final boolean retrieveRoutineInformation,
-                  final boolean retrieveTableConstraintInformation,
-                  final boolean retrieveTableConstraintDefinitions,
-                  final boolean retrieveViewInformation,
-                  final boolean retrieveIndexInformation,
-                  final boolean retrieveIndexColumnInformation,
-                  final boolean retrievePrimaryKeyDefinitions,
-                  final boolean retrieveForeignKeys,
-                  final boolean retrieveForeignKeyDefinitions,
-                  final boolean retrieveIndexes,
-                  final boolean retrieveTablePrivileges,
-                  final boolean retrieveTableColumnPrivileges,
-                  final boolean retrieveTriggerInformation,
-                  final boolean retrieveSynonymInformation,
-                  final boolean retrieveSequenceInformation,
-                  final boolean retrieveTableColumns,
-                  final boolean retrieveAdditionalTableAttributes,
-                  final boolean retrieveAdditionalColumnAttributes,
-                  final boolean retrieveTableDefinitionsInformation)
+                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals)
   {
+    requireNonNull(tag, "No tag provided");
     this.tag = tag;
-    this.retrieveTables = retrieveTables;
-    this.retrieveRoutines = retrieveRoutines;
-    this.retrieveColumnDataTypes = retrieveColumnDataTypes;
-    this.retrieveDatabaseInfo = retrieveDatabaseInfo;
-    this.retrieveAdditionalDatabaseInfo = retrieveAdditionalDatabaseInfo;
-    this.retrieveServerInfo = retrieveServerInfo;
-    this.retrieveAdditionalJdbcDriverInfo = retrieveAdditionalJdbcDriverInfo;
-    this.retrieveUserDefinedColumnDataTypes = retrieveUserDefinedColumnDataTypes;
-    this.retrieveRoutineColumns = retrieveRoutineColumns;
-    this.retrieveRoutineInformation = retrieveRoutineInformation;
-    this.retrieveTableConstraintInformation = retrieveTableConstraintInformation;
-    this.retrieveTableConstraintDefinitions = retrieveTableConstraintDefinitions;
-    this.retrieveViewInformation = retrieveViewInformation;
-    this.retrieveIndexInformation = retrieveIndexInformation;
-    this.retrieveIndexColumnInformation = retrieveIndexColumnInformation;
-    this.retrievePrimaryKeyDefinitions = retrievePrimaryKeyDefinitions;
-    this.retrieveForeignKeys = retrieveForeignKeys;
-    this.retrieveForeignKeyDefinitions = retrieveForeignKeyDefinitions;
-    this.retrieveIndexes = retrieveIndexes;
-    this.retrieveTablePrivileges = retrieveTablePrivileges;
-    this.retrieveTableColumnPrivileges = retrieveTableColumnPrivileges;
-    this.retrieveTriggerInformation = retrieveTriggerInformation;
-    this.retrieveSynonymInformation = retrieveSynonymInformation;
-    this.retrieveSequenceInformation = retrieveSequenceInformation;
-    this.retrieveTableColumns = retrieveTableColumns;
-    this.retrieveAdditionalTableAttributes = retrieveAdditionalTableAttributes;
-    this.retrieveAdditionalColumnAttributes = retrieveAdditionalColumnAttributes;
-    this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
+    requireNonNull(schemaInfoRetrievals, "No schema info retrievals provided");
+    this.schemaInfoRetrievals = new HashMap<>(schemaInfoRetrievals);
   }
 
   @Override
@@ -150,34 +73,7 @@ public final class SchemaInfoLevel
       return false;
     }
     final SchemaInfoLevel other = (SchemaInfoLevel) obj;
-    return retrieveAdditionalColumnAttributes == other.retrieveAdditionalColumnAttributes
-           && retrieveAdditionalDatabaseInfo == other.retrieveAdditionalDatabaseInfo
-           && retrieveAdditionalJdbcDriverInfo == other.retrieveAdditionalJdbcDriverInfo
-           && retrieveAdditionalTableAttributes == other.retrieveAdditionalTableAttributes
-           && retrieveColumnDataTypes == other.retrieveColumnDataTypes
-           && retrieveDatabaseInfo == other.retrieveDatabaseInfo
-           && retrieveForeignKeyDefinitions == other.retrieveForeignKeyDefinitions
-           && retrieveForeignKeys == other.retrieveForeignKeys
-           && retrieveIndexColumnInformation == other.retrieveIndexColumnInformation
-           && retrieveIndexInformation == other.retrieveIndexInformation
-           && retrieveIndexes == other.retrieveIndexes
-           && retrievePrimaryKeyDefinitions == other.retrievePrimaryKeyDefinitions
-           && retrieveRoutineColumns == other.retrieveRoutineColumns
-           && retrieveRoutineInformation == other.retrieveRoutineInformation
-           && retrieveRoutines == other.retrieveRoutines
-           && retrieveSequenceInformation == other.retrieveSequenceInformation
-           && retrieveServerInfo == other.retrieveServerInfo
-           && retrieveSynonymInformation == other.retrieveSynonymInformation
-           && retrieveTableColumnPrivileges == other.retrieveTableColumnPrivileges
-           && retrieveTableColumns == other.retrieveTableColumns
-           && retrieveTableConstraintDefinitions == other.retrieveTableConstraintDefinitions
-           && retrieveTableConstraintInformation == other.retrieveTableConstraintInformation
-           && retrieveTableDefinitionsInformation == other.retrieveTableDefinitionsInformation
-           && retrieveTablePrivileges == other.retrieveTablePrivileges
-           && retrieveTables == other.retrieveTables
-           && retrieveTriggerInformation == other.retrieveTriggerInformation
-           && retrieveUserDefinedColumnDataTypes == other.retrieveUserDefinedColumnDataTypes
-           && retrieveViewInformation == other.retrieveViewInformation
+    return Objects.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
            && Objects.equals(tag, other.tag);
   }
 
@@ -189,183 +85,169 @@ public final class SchemaInfoLevel
   @Override
   public int hashCode()
   {
-    return Objects.hash(retrieveAdditionalColumnAttributes,
-                        retrieveAdditionalDatabaseInfo,
-                        retrieveAdditionalJdbcDriverInfo,
-                        retrieveAdditionalTableAttributes,
-                        retrieveColumnDataTypes,
-                        retrieveDatabaseInfo,
-                        retrieveForeignKeyDefinitions,
-                        retrieveForeignKeys,
-                        retrieveIndexColumnInformation,
-                        retrieveIndexInformation,
-                        retrieveIndexes,
-                        retrievePrimaryKeyDefinitions,
-                        retrieveRoutineColumns,
-                        retrieveRoutineInformation,
-                        retrieveRoutines,
-                        retrieveSequenceInformation,
-                        retrieveServerInfo,
-                        retrieveSynonymInformation,
-                        retrieveTableColumnPrivileges,
-                        retrieveTableColumns,
-                        retrieveTableConstraintDefinitions,
-                        retrieveTableConstraintInformation,
-                        retrieveTableDefinitionsInformation,
-                        retrieveTablePrivileges,
-                        retrieveTables,
-                        retrieveTriggerInformation,
-                        retrieveUserDefinedColumnDataTypes,
-                        retrieveViewInformation,
-                        tag);
+    return Objects.hash(schemaInfoRetrievals, tag);
   }
 
   public boolean isRetrieveAdditionalColumnAttributes()
   {
-    return retrieveAdditionalColumnAttributes;
+    return is(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes);
   }
 
   public boolean isRetrieveAdditionalDatabaseInfo()
   {
-    return retrieveAdditionalDatabaseInfo;
+    return is(SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo);
   }
 
   public boolean isRetrieveAdditionalJdbcDriverInfo()
   {
-    return retrieveAdditionalJdbcDriverInfo;
+    return is(SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo);
   }
 
   public boolean isRetrieveAdditionalTableAttributes()
   {
-    return retrieveAdditionalTableAttributes;
+    return is(SchemaInfoRetrieval.retrieveAdditionalTableAttributes);
   }
 
   public boolean isRetrieveColumnDataTypes()
   {
-    return retrieveColumnDataTypes;
+    return is(SchemaInfoRetrieval.retrieveColumnDataTypes);
   }
 
   public boolean isRetrieveDatabaseInfo()
   {
-    return retrieveDatabaseInfo;
+    return is(SchemaInfoRetrieval.retrieveDatabaseInfo);
   }
 
   public boolean isRetrieveForeignKeyDefinitions()
   {
-    return retrieveForeignKeyDefinitions;
+    return is(SchemaInfoRetrieval.retrieveForeignKeyDefinitions);
   }
 
   public boolean isRetrieveForeignKeys()
   {
-    return retrieveForeignKeys;
+    return is(SchemaInfoRetrieval.retrieveForeignKeys);
   }
 
   public boolean isRetrieveIndexColumnInformation()
   {
-    return retrieveIndexColumnInformation;
+    return is(SchemaInfoRetrieval.retrieveIndexColumnInformation);
   }
 
   public boolean isRetrieveIndexes()
   {
-    return retrieveIndexes;
+    return is(SchemaInfoRetrieval.retrieveIndexes);
   }
 
   public boolean isRetrieveIndexInformation()
   {
-    return retrieveIndexInformation;
+    return is(SchemaInfoRetrieval.retrieveIndexInformation);
   }
 
   public boolean isRetrievePrimaryKeyDefinitions()
   {
-    return retrievePrimaryKeyDefinitions;
+    return is(SchemaInfoRetrieval.retrievePrimaryKeyDefinitions);
   }
 
   public boolean isRetrieveRoutineColumns()
   {
-    return retrieveRoutineColumns;
+    return is(SchemaInfoRetrieval.retrieveRoutineColumns);
   }
 
   public boolean isRetrieveRoutineInformation()
   {
-    return retrieveRoutineInformation;
+    return is(SchemaInfoRetrieval.retrieveRoutineInformation);
   }
 
   public boolean isRetrieveRoutines()
   {
-    return retrieveRoutines;
+    return is(SchemaInfoRetrieval.retrieveRoutines);
   }
 
   public boolean isRetrieveSequenceInformation()
   {
-    return retrieveSequenceInformation;
+    return is(SchemaInfoRetrieval.retrieveSequenceInformation);
   }
 
   public boolean isRetrieveServerInfo()
   {
-    return retrieveServerInfo;
+    return is(SchemaInfoRetrieval.retrieveServerInfo);
   }
 
   public boolean isRetrieveSynonymInformation()
   {
-    return retrieveSynonymInformation;
+    return is(SchemaInfoRetrieval.retrieveSynonymInformation);
   }
 
   public boolean isRetrieveTableColumnPrivileges()
   {
-    return retrieveTableColumnPrivileges;
+    return is(SchemaInfoRetrieval.retrieveTableColumnPrivileges);
   }
 
   public boolean isRetrieveTableColumns()
   {
-    return retrieveTableColumns;
+    return is(SchemaInfoRetrieval.retrieveTableColumns);
   }
 
   public boolean isRetrieveTableConstraintDefinitions()
   {
-    return retrieveTableConstraintDefinitions;
+    return is(SchemaInfoRetrieval.retrieveTableConstraintDefinitions);
   }
 
   public boolean isRetrieveTableConstraintInformation()
   {
-    return retrieveTableConstraintInformation;
+    return is(SchemaInfoRetrieval.retrieveTableConstraintInformation);
   }
 
   public boolean isRetrieveTableDefinitionsInformation()
   {
-    return retrieveTableDefinitionsInformation;
+    return is(SchemaInfoRetrieval.retrieveTableDefinitionsInformation);
   }
 
   public boolean isRetrieveTablePrivileges()
   {
-    return retrieveTablePrivileges;
+    return is(SchemaInfoRetrieval.retrieveTablePrivileges);
   }
 
   public boolean isRetrieveTables()
   {
-    return retrieveTables;
+    return is(SchemaInfoRetrieval.retrieveTables);
   }
 
   public boolean isRetrieveTriggerInformation()
   {
-    return retrieveTriggerInformation;
+    return is(SchemaInfoRetrieval.retrieveTriggerInformation);
   }
 
   public boolean isRetrieveUserDefinedColumnDataTypes()
   {
-    return retrieveUserDefinedColumnDataTypes;
+    return is(SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes);
   }
 
   public boolean isRetrieveViewInformation()
   {
-    return retrieveViewInformation;
+    return is(SchemaInfoRetrieval.retrieveViewInformation);
   }
 
   @Override
   public String toString()
   {
-    return String.format("SchemaInfoLevel <%s>%n%s",
-                         tag == null? "": tag,
-                         ObjectToString.toString(this));
+    final Map<String, String> completeMap = new HashMap<>();
+    for (SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval.values())
+    {
+      completeMap.put(schemaInfoRetrieval.name(),
+                      String.valueOf(is(schemaInfoRetrieval)));
+    }
+    return String
+      .format("SchemaInfoLevel <%s>%n%s", tag, join(completeMap, "\n"));
+  }
+
+  private Boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
+  {
+    if (schemaInfoRetrieval == null)
+    {
+      return false;
+    }
+    return schemaInfoRetrievals.getOrDefault(schemaInfoRetrieval, false);
   }
 
 }

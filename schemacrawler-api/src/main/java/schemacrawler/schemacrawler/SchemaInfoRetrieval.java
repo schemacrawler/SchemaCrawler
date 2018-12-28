@@ -33,36 +33,48 @@ import static sf.util.Utility.toSnakeCase;
 
 public enum SchemaInfoRetrieval
 {
- retrieveAdditionalColumnAttributes,
- retrieveAdditionalDatabaseInfo,
- retrieveAdditionalJdbcDriverInfo,
- retrieveAdditionalTableAttributes,
- retrieveColumnDataTypes,
- retrieveDatabaseInfo,
- retrieveForeignKeyDefinitions,
- retrieveForeignKeys,
- retrieveIndexColumnInformation,
- retrieveIndexes,
- retrieveIndexInformation,
- retrievePrimaryKeyDefinitions,
- retrieveRoutineColumns,
- retrieveRoutineInformation,
- retrieveRoutines,
- retrieveSequenceInformation,
- retrieveServerInfo,
- retrieveSynonymInformation,
- retrieveTableColumnPrivileges,
- retrieveTableColumns,
- retrieveTableConstraintDefinitions,
- retrieveTableConstraintInformation,
- retrieveTableDefinitionsInformation,
- retrieveTablePrivileges,
- retrieveTables,
- retrieveTriggerInformation,
- retrieveUserDefinedColumnDataTypes,
- retrieveViewInformation;
+ retrieveAdditionalColumnAttributes(InfoLevel.maximum),
+ retrieveAdditionalDatabaseInfo(InfoLevel.maximum),
+ retrieveAdditionalJdbcDriverInfo(InfoLevel.maximum),
+ retrieveAdditionalTableAttributes(InfoLevel.maximum),
+ retrieveColumnDataTypes(InfoLevel.standard),
+ retrieveDatabaseInfo(InfoLevel.minimum),
+ retrieveForeignKeyDefinitions(InfoLevel.maximum),
+ retrieveForeignKeys(InfoLevel.standard),
+ retrieveIndexColumnInformation(InfoLevel.maximum),
+ retrieveIndexes(InfoLevel.standard),
+ retrieveIndexInformation(InfoLevel.maximum),
+ retrievePrimaryKeyDefinitions(InfoLevel.maximum),
+ retrieveRoutineColumns(InfoLevel.standard),
+ retrieveRoutineInformation(InfoLevel.detailed),
+ retrieveRoutines(InfoLevel.minimum),
+ retrieveSequenceInformation(InfoLevel.maximum),
+ retrieveServerInfo(InfoLevel.maximum),
+ retrieveSynonymInformation(InfoLevel.maximum),
+ retrieveTableColumnPrivileges(InfoLevel.maximum),
+ retrieveTableColumns(InfoLevel.standard),
+ retrieveTableConstraintDefinitions(InfoLevel.detailed),
+ retrieveTableConstraintInformation(InfoLevel.detailed),
+ retrieveTableDefinitionsInformation(InfoLevel.maximum),
+ retrieveTablePrivileges(InfoLevel.maximum),
+ retrieveTables(InfoLevel.minimum),
+ retrieveTriggerInformation(InfoLevel.detailed),
+ retrieveUserDefinedColumnDataTypes(InfoLevel.detailed),
+ retrieveViewInformation(InfoLevel.detailed);
 
   private static final String SC_SCHEMA_INFO_LEVEL = "schemacrawler.schema_info_level.";
+
+  private final InfoLevel infoLevel;
+
+  private SchemaInfoRetrieval(final InfoLevel infoLevel)
+  {
+    this.infoLevel = infoLevel;
+  }
+
+  public InfoLevel getInfoLevel()
+  {
+    return infoLevel;
+  }
 
   public String getKey()
   {

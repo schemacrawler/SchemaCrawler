@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +58,8 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel detailed()
   {
-    return builder().withDetailed().toOptions();
+    return builder().withTag("detailed").withInfoLevel(InfoLevel.detailed)
+      .toOptions();
   }
 
   /**
@@ -67,7 +70,8 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel maximum()
   {
-    return builder().withMaximum().toOptions();
+    return builder().withTag("maximum").withInfoLevel(InfoLevel.maximum)
+      .toOptions();
   }
 
   /**
@@ -78,7 +82,8 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel minimum()
   {
-    return builder().withMinimum().toOptions();
+    return builder().withTag("minimum").withInfoLevel(InfoLevel.minimum)
+      .toOptions();
   }
 
   /**
@@ -88,7 +93,7 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel newSchemaInfoLevel()
   {
-    return builder().withStandard().toOptions();
+    return standard();
   }
 
   /**
@@ -99,15 +104,16 @@ public final class SchemaInfoLevelBuilder
    */
   public static SchemaInfoLevel standard()
   {
-    return builder().withStandard().toOptions();
+    return builder().withTag("standard").withInfoLevel(InfoLevel.standard)
+      .toOptions();
   }
 
   private String tag;
-
   private final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals;
 
   private SchemaInfoLevelBuilder()
   {
+    tag = "";
     // Retrieve nothing
     schemaInfoRetrievals = new HashMap<>();
   }
@@ -378,10 +384,13 @@ public final class SchemaInfoLevelBuilder
     return this;
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public SchemaInfoLevelBuilder setTag(final String tag)
   {
-    this.tag = tag;
-    return this;
+    return withTag(tag);
   }
 
   @Override
@@ -393,35 +402,8 @@ public final class SchemaInfoLevelBuilder
   @Override
   public SchemaInfoLevel toOptions()
   {
-    return new SchemaInfoLevel(tag,
-                               get(SchemaInfoRetrieval.retrieveTables),
-                               get(SchemaInfoRetrieval.retrieveRoutines),
-                               get(SchemaInfoRetrieval.retrieveColumnDataTypes),
-                               get(SchemaInfoRetrieval.retrieveDatabaseInfo),
-                               get(SchemaInfoRetrieval.retrieveAdditionalDatabaseInfo),
-                               get(SchemaInfoRetrieval.retrieveServerInfo),
-                               get(SchemaInfoRetrieval.retrieveAdditionalJdbcDriverInfo),
-                               get(SchemaInfoRetrieval.retrieveUserDefinedColumnDataTypes),
-                               get(SchemaInfoRetrieval.retrieveRoutineColumns),
-                               get(SchemaInfoRetrieval.retrieveRoutineInformation),
-                               get(SchemaInfoRetrieval.retrieveTableConstraintInformation),
-                               get(SchemaInfoRetrieval.retrieveTableConstraintDefinitions),
-                               get(SchemaInfoRetrieval.retrieveViewInformation),
-                               get(SchemaInfoRetrieval.retrieveIndexInformation),
-                               get(SchemaInfoRetrieval.retrieveIndexColumnInformation),
-                               get(SchemaInfoRetrieval.retrievePrimaryKeyDefinitions),
-                               get(SchemaInfoRetrieval.retrieveForeignKeys),
-                               get(SchemaInfoRetrieval.retrieveForeignKeyDefinitions),
-                               get(SchemaInfoRetrieval.retrieveIndexes),
-                               get(SchemaInfoRetrieval.retrieveTablePrivileges),
-                               get(SchemaInfoRetrieval.retrieveTableColumnPrivileges),
-                               get(SchemaInfoRetrieval.retrieveTriggerInformation),
-                               get(SchemaInfoRetrieval.retrieveSynonymInformation),
-                               get(SchemaInfoRetrieval.retrieveSequenceInformation),
-                               get(SchemaInfoRetrieval.retrieveTableColumns),
-                               get(SchemaInfoRetrieval.retrieveAdditionalTableAttributes),
-                               get(SchemaInfoRetrieval.retrieveAdditionalColumnAttributes),
-                               get(SchemaInfoRetrieval.retrieveTableDefinitionsInformation));
+    reduceMap();
+    return new SchemaInfoLevel(tag, schemaInfoRetrievals);
   }
 
   @Override
@@ -430,74 +412,64 @@ public final class SchemaInfoLevelBuilder
     return tag == null? "": tag;
   }
 
-  public SchemaInfoLevelBuilder withDetailed()
-  {
-    withStandard();
-    setRetrieveUserDefinedColumnDataTypes(true);
-    setRetrieveTriggerInformation(true);
-    setRetrieveTableConstraintInformation(true);
-    setRetrieveTableConstraintDefinitions(true);
-    setRetrieveViewInformation(true);
-    setRetrieveRoutineInformation(true);
-    setTag("detailed");
-    return this;
-  }
-
   /**
-   * Creates a new SchemaInfoLevel builder with settings for maximum
-   * schema information.
+   * Creates a new SchemaInfoLevel builder with settings for a given
+   * info level.
    *
    * @return SchemaInfoLevel builder
    */
-  public SchemaInfoLevelBuilder withMaximum()
+  public SchemaInfoLevelBuilder withInfoLevel(final InfoLevel infoLevel)
   {
-    withDetailed();
-    setRetrieveAdditionalDatabaseInfo(true);
-    setRetrieveServerInfo(true);
-    setRetrieveAdditionalJdbcDriverInfo(true);
-    setRetrieveTablePrivileges(true);
-    setRetrieveTableColumnPrivileges(true);
-    setRetrieveTableDefinitionsInformation(true);
-    setRetrieveForeignKeyDefinitions(true);
-    setRetrievePrimaryKeyDefinitions(true);
-    setRetrieveAdditionalTableAttributes(true);
-    setRetrieveAdditionalColumnAttributes(true);
-    setRetrieveIndexInformation(true);
-    setRetrieveIndexColumnInformation(true);
-    setRetrieveSequenceInformation(true);
-    setRetrieveSynonymInformation(true);
-    setTag("maximum");
+    if (infoLevel == null)
+    {
+      return this;
+    }
+    final int infoLevelOrdinal = infoLevel.ordinal();
+    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
+      .values())
+    {
+      final int schemaInfoLevelOrdinal = schemaInfoRetrieval.getInfoLevel().ordinal();
+      if (schemaInfoLevelOrdinal <= infoLevelOrdinal)
+      {
+        schemaInfoRetrievals.put(schemaInfoRetrieval, true);
+      }
+    }
+
     return this;
   }
 
-  public SchemaInfoLevelBuilder withMinimum()
+  public SchemaInfoLevelBuilder withTag(final String tag)
   {
-    setRetrieveDatabaseInfo(true);
-    setRetrieveTables(true);
-    setRetrieveRoutines(true);
-    setTag("minimum");
+    if (isBlank(tag))
+    {
+      this.tag = "";
+    }
+    else
+    {
+      this.tag = tag;
+    }
     return this;
   }
 
-  public SchemaInfoLevelBuilder withStandard()
-  {
-    withMinimum();
-    setRetrieveColumnDataTypes(true);
-    setRetrieveTableColumns(true);
-    setRetrieveForeignKeys(true);
-    setRetrieveIndexes(true);
-    setRetrieveRoutineColumns(true);
-    setTag("standard");
-    return this;
-  }
-
-  private Boolean get(final SchemaInfoRetrieval schemaInfoRetrieval)
+  private Boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
   {
     if (schemaInfoRetrieval == null)
     {
       return false;
     }
     return schemaInfoRetrievals.getOrDefault(schemaInfoRetrieval, false);
+  }
+
+  private void reduceMap()
+  {
+    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
+      .values())
+    {
+      if (!is(schemaInfoRetrieval))
+      {
+        schemaInfoRetrievals.remove(schemaInfoRetrieval);
+      }
+    }
   }
 
 }

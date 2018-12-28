@@ -324,8 +324,7 @@ public final class Utility
     return joiner.toString();
   }
 
-  public static String join(final Map<String, String> map,
-                            final String separator)
+  public static String join(final Map<?, ?> map, final String separator)
   {
     if (map == null || map.isEmpty())
     {
@@ -333,9 +332,9 @@ public final class Utility
     }
 
     final StringJoiner joiner = new StringJoiner(separator);
-    for (final Entry<String, String> entry: map.entrySet())
+    for (final Entry<?, ?> entry: map.entrySet())
     {
-      joiner.add(String.format(entry.getKey(), "=", entry.getValue()));
+      joiner.add(String.format("%s=%s", entry.getKey(), entry.getValue()));
     }
 
     return joiner.toString();

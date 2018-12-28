@@ -25,13 +25,11 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.options;
+package schemacrawler.schemacrawler;
 
 
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaInfoLevel;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

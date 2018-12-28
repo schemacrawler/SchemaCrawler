@@ -127,7 +127,7 @@ public final class SchemaCrawlerOptionsBuilder
    */
   private SchemaCrawlerOptionsBuilder()
   {
-    schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard()
+    schemaInfoLevel = SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard)
       .toOptions();
 
     title = "";
@@ -603,7 +603,7 @@ public final class SchemaCrawlerOptionsBuilder
   {
     if (schemaInfoLevel == null)
     {
-      this.schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard()
+      this.schemaInfoLevel = SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard)
         .toOptions();
     }
     else
@@ -617,7 +617,7 @@ public final class SchemaCrawlerOptionsBuilder
   {
     if (schemaInfoLevelBuilder == null)
     {
-      schemaInfoLevel = SchemaInfoLevelBuilder.builder().withStandard()
+      schemaInfoLevel = SchemaInfoLevelBuilder.builder().withInfoLevel(InfoLevel.standard)
         .toOptions();
     }
     else

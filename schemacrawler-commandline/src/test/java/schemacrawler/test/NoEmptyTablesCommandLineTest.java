@@ -43,9 +43,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import schemacrawler.Main;
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
-import schemacrawler.tools.options.InfoLevel;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;

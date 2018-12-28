@@ -115,7 +115,7 @@ public class SchemaCrawlerXmlOutputTest
       .readField(executable, "schemaCrawlerOptions", true);
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder().fromOptions(schemaCrawlerOptions)
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.builder().withMinimum().toOptions())
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
       .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
       .includeAllRoutines();
     executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
