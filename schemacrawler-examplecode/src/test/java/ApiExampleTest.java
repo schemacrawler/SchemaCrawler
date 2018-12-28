@@ -51,6 +51,17 @@ public class ApiExampleTest
   private TestOutputStream out;
   private TestOutputStream err;
 
+  @Test
+  public void apiExample()
+    throws Exception
+  {
+    ApiExample.main(new String[0]);
+
+    assertThat(fileResource(out),
+               hasSameContentAs(classpathResource("ApiExample.txt")));
+    assertThat(fileResource(err), hasNoContent());
+  }
+
   @After
   public void cleanUpStreams()
   {
@@ -67,17 +78,6 @@ public class ApiExampleTest
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
-  }
-
-  @Test
-  public void apiExample()
-    throws Exception
-  {
-    ApiExample.main(new String[0]);
-
-    assertThat(fileResource(out),
-               hasSameContentAs(classpathResource("ApiExample.txt")));
-    assertThat(fileResource(err), hasNoContent());
   }
 
 }

@@ -83,11 +83,11 @@ public abstract class EmbeddedDatabaseWrapper
 
   public abstract String getConnectionUrl();
 
+  public abstract String getDatabase();
+
   public abstract String getPassword();
 
   public abstract String getUser();
-
-  public abstract String getDatabase();
 
   public abstract void loadDatabaseFile(final Path dbFile)
     throws IOException;

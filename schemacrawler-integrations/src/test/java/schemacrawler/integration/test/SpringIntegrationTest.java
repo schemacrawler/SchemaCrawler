@@ -95,7 +95,7 @@ public class SpringIntegrationTest
     {
       final OutputOptions outputOptions = (OutputOptions) FieldUtils
         .readField(executable, "outputOptions", true);
-      OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
         .builder(outputOptions).withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());

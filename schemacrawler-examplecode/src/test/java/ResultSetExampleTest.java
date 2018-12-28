@@ -58,17 +58,6 @@ public class ResultSetExampleTest
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @Before
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   @Test
   public void resultSetExample()
     throws Exception
@@ -78,6 +67,17 @@ public class ResultSetExampleTest
     assertThat(fileResource(out),
                hasSameContentAs(classpathResource("ResultSetExample.txt")));
     assertThat(fileResource(err), hasNoContent());
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
 }
