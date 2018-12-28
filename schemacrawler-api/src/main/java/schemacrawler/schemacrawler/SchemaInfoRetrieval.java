@@ -29,46 +29,64 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static java.util.Objects.requireNonNull;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.base;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.database;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.other;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.routine;
+import static schemacrawler.schemacrawler.DatabaseObjectInfoRetrieval.table;
+import static schemacrawler.schemacrawler.InfoLevel.detailed;
+import static schemacrawler.schemacrawler.InfoLevel.maximum;
+import static schemacrawler.schemacrawler.InfoLevel.minimum;
+import static schemacrawler.schemacrawler.InfoLevel.standard;
 import static sf.util.Utility.toSnakeCase;
 
 public enum SchemaInfoRetrieval
 {
- retrieveAdditionalColumnAttributes(InfoLevel.maximum),
- retrieveAdditionalDatabaseInfo(InfoLevel.maximum),
- retrieveAdditionalJdbcDriverInfo(InfoLevel.maximum),
- retrieveAdditionalTableAttributes(InfoLevel.maximum),
- retrieveColumnDataTypes(InfoLevel.standard),
- retrieveDatabaseInfo(InfoLevel.minimum),
- retrieveForeignKeyDefinitions(InfoLevel.maximum),
- retrieveForeignKeys(InfoLevel.standard),
- retrieveIndexColumnInformation(InfoLevel.maximum),
- retrieveIndexes(InfoLevel.standard),
- retrieveIndexInformation(InfoLevel.maximum),
- retrievePrimaryKeyDefinitions(InfoLevel.maximum),
- retrieveRoutineColumns(InfoLevel.standard),
- retrieveRoutineInformation(InfoLevel.detailed),
- retrieveRoutines(InfoLevel.minimum),
- retrieveSequenceInformation(InfoLevel.maximum),
- retrieveServerInfo(InfoLevel.maximum),
- retrieveSynonymInformation(InfoLevel.maximum),
- retrieveTableColumnPrivileges(InfoLevel.maximum),
- retrieveTableColumns(InfoLevel.standard),
- retrieveTableConstraintDefinitions(InfoLevel.detailed),
- retrieveTableConstraintInformation(InfoLevel.detailed),
- retrieveTableDefinitionsInformation(InfoLevel.maximum),
- retrieveTablePrivileges(InfoLevel.maximum),
- retrieveTables(InfoLevel.minimum),
- retrieveTriggerInformation(InfoLevel.detailed),
- retrieveUserDefinedColumnDataTypes(InfoLevel.detailed),
- retrieveViewInformation(InfoLevel.detailed);
+ retrieveAdditionalColumnAttributes(table, maximum),
+ retrieveAdditionalDatabaseInfo(database, maximum),
+ retrieveAdditionalJdbcDriverInfo(database, maximum),
+ retrieveAdditionalTableAttributes(table, maximum),
+ retrieveColumnDataTypes(base, standard),
+ retrieveDatabaseInfo(database, minimum),
+ retrieveForeignKeyDefinitions(table, maximum),
+ retrieveForeignKeys(table, standard),
+ retrieveIndexColumnInformation(table, maximum),
+ retrieveIndexes(table, standard),
+ retrieveIndexInformation(table, maximum),
+ retrievePrimaryKeyDefinitions(table, maximum),
+ retrieveRoutineColumns(routine, standard),
+ retrieveRoutineInformation(routine, detailed),
+ retrieveRoutines(routine, minimum),
+ retrieveSequenceInformation(other, maximum),
+ retrieveServerInfo(database, maximum),
+ retrieveSynonymInformation(other, maximum),
+ retrieveTableColumnPrivileges(table, maximum),
+ retrieveTableColumns(table, standard),
+ retrieveTableConstraintDefinitions(table, detailed),
+ retrieveTableConstraintInformation(table, detailed),
+ retrieveTableDefinitionsInformation(table, maximum),
+ retrieveTablePrivileges(table, maximum),
+ retrieveTables(table, minimum),
+ retrieveTriggerInformation(table, detailed),
+ retrieveUserDefinedColumnDataTypes(other, detailed),
+ retrieveViewInformation(table, detailed);
 
   private static final String SC_SCHEMA_INFO_LEVEL = "schemacrawler.schema_info_level.";
 
   private final InfoLevel infoLevel;
+  private final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval;
 
-  private SchemaInfoRetrieval(final InfoLevel infoLevel)
+  private SchemaInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval,
+                              final InfoLevel infoLevel)
   {
-    this.infoLevel = infoLevel;
+    this.infoLevel = requireNonNull(infoLevel);
+    this.databaseObjectInfoRetrieval = requireNonNull(databaseObjectInfoRetrieval);
+  }
+
+  public DatabaseObjectInfoRetrieval getDatabaseObjectInfoRetrieval()
+  {
+    return databaseObjectInfoRetrieval;
   }
 
   public InfoLevel getInfoLevel()

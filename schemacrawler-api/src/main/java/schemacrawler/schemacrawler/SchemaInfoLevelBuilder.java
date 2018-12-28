@@ -129,10 +129,10 @@ public final class SchemaInfoLevelBuilder
     for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
       .values())
     {
-      if (config.containsKey(schemaInfoRetrieval.getKey()))
+      final String key = schemaInfoRetrieval.getKey();
+      if (config.containsKey(key))
       {
-        final boolean booleanValue = config
-          .getBooleanValue(schemaInfoRetrieval.getKey());
+        final boolean booleanValue = config.getBooleanValue(key);
         schemaInfoRetrievals.put(schemaInfoRetrieval, booleanValue);
       }
     }
@@ -413,8 +413,8 @@ public final class SchemaInfoLevelBuilder
   }
 
   /**
-   * Creates a new SchemaInfoLevel builder with settings for a given
-   * info level.
+   * Updates SchemaInfoLevel builder with settings for a given info
+   * level.
    *
    * @return SchemaInfoLevel builder
    */
@@ -428,7 +428,8 @@ public final class SchemaInfoLevelBuilder
     for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
       .values())
     {
-      final int schemaInfoLevelOrdinal = schemaInfoRetrieval.getInfoLevel().ordinal();
+      final int schemaInfoLevelOrdinal = schemaInfoRetrieval.getInfoLevel()
+        .ordinal();
       if (schemaInfoLevelOrdinal <= infoLevelOrdinal)
       {
         schemaInfoRetrievals.put(schemaInfoRetrieval, true);
@@ -436,6 +437,28 @@ public final class SchemaInfoLevelBuilder
     }
 
     return this;
+  }
+
+  /**
+   * Updates SchemaInfoLevel builder by removing settings to retrieve
+   * routines.
+   *
+   * @return SchemaInfoLevel builder
+   */
+  public SchemaInfoLevelBuilder withoutRoutines()
+  {
+    return withoutDatabaseObjectInfoRetrieval(DatabaseObjectInfoRetrieval.routine);
+  }
+
+  /**
+   * Updates SchemaInfoLevel builder by removing settings to retrieve
+   * tables.
+   *
+   * @return SchemaInfoLevel builder
+   */
+  public SchemaInfoLevelBuilder withoutTables()
+  {
+    return withoutDatabaseObjectInfoRetrieval(DatabaseObjectInfoRetrieval.table);
   }
 
   public SchemaInfoLevelBuilder withTag(final String tag)
@@ -470,6 +493,21 @@ public final class SchemaInfoLevelBuilder
         schemaInfoRetrievals.remove(schemaInfoRetrieval);
       }
     }
+  }
+
+  private SchemaInfoLevelBuilder withoutDatabaseObjectInfoRetrieval(final DatabaseObjectInfoRetrieval databaseObjectInfoRetrieval)
+  {
+    for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
+      .values())
+    {
+      if (schemaInfoRetrieval
+        .getDatabaseObjectInfoRetrieval() == databaseObjectInfoRetrieval)
+      {
+        schemaInfoRetrievals.remove(schemaInfoRetrieval);
+      }
+    }
+
+    return this;
   }
 
 }
