@@ -29,6 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import java.util.Objects;
+
+import sf.util.ObjectToString;
+
 /**
  * Descriptor for level of schema detail.
  *
@@ -130,9 +134,90 @@ public final class SchemaInfoLevel
     this.retrieveTableDefinitionsInformation = retrieveTableDefinitionsInformation;
   }
 
+  @Override
+  public boolean equals(final Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+    if (obj == null)
+    {
+      return false;
+    }
+    if (!(obj instanceof SchemaInfoLevel))
+    {
+      return false;
+    }
+    final SchemaInfoLevel other = (SchemaInfoLevel) obj;
+    return retrieveAdditionalColumnAttributes == other.retrieveAdditionalColumnAttributes
+           && retrieveAdditionalDatabaseInfo == other.retrieveAdditionalDatabaseInfo
+           && retrieveAdditionalJdbcDriverInfo == other.retrieveAdditionalJdbcDriverInfo
+           && retrieveAdditionalTableAttributes == other.retrieveAdditionalTableAttributes
+           && retrieveColumnDataTypes == other.retrieveColumnDataTypes
+           && retrieveDatabaseInfo == other.retrieveDatabaseInfo
+           && retrieveForeignKeyDefinitions == other.retrieveForeignKeyDefinitions
+           && retrieveForeignKeys == other.retrieveForeignKeys
+           && retrieveIndexColumnInformation == other.retrieveIndexColumnInformation
+           && retrieveIndexInformation == other.retrieveIndexInformation
+           && retrieveIndexes == other.retrieveIndexes
+           && retrievePrimaryKeyDefinitions == other.retrievePrimaryKeyDefinitions
+           && retrieveRoutineColumns == other.retrieveRoutineColumns
+           && retrieveRoutineInformation == other.retrieveRoutineInformation
+           && retrieveRoutines == other.retrieveRoutines
+           && retrieveSequenceInformation == other.retrieveSequenceInformation
+           && retrieveServerInfo == other.retrieveServerInfo
+           && retrieveSynonymInformation == other.retrieveSynonymInformation
+           && retrieveTableColumnPrivileges == other.retrieveTableColumnPrivileges
+           && retrieveTableColumns == other.retrieveTableColumns
+           && retrieveTableConstraintDefinitions == other.retrieveTableConstraintDefinitions
+           && retrieveTableConstraintInformation == other.retrieveTableConstraintInformation
+           && retrieveTableDefinitionsInformation == other.retrieveTableDefinitionsInformation
+           && retrieveTablePrivileges == other.retrieveTablePrivileges
+           && retrieveTables == other.retrieveTables
+           && retrieveTriggerInformation == other.retrieveTriggerInformation
+           && retrieveUserDefinedColumnDataTypes == other.retrieveUserDefinedColumnDataTypes
+           && retrieveViewInformation == other.retrieveViewInformation
+           && Objects.equals(tag, other.tag);
+  }
+
   public String getTag()
   {
     return tag;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(retrieveAdditionalColumnAttributes,
+                        retrieveAdditionalDatabaseInfo,
+                        retrieveAdditionalJdbcDriverInfo,
+                        retrieveAdditionalTableAttributes,
+                        retrieveColumnDataTypes,
+                        retrieveDatabaseInfo,
+                        retrieveForeignKeyDefinitions,
+                        retrieveForeignKeys,
+                        retrieveIndexColumnInformation,
+                        retrieveIndexInformation,
+                        retrieveIndexes,
+                        retrievePrimaryKeyDefinitions,
+                        retrieveRoutineColumns,
+                        retrieveRoutineInformation,
+                        retrieveRoutines,
+                        retrieveSequenceInformation,
+                        retrieveServerInfo,
+                        retrieveSynonymInformation,
+                        retrieveTableColumnPrivileges,
+                        retrieveTableColumns,
+                        retrieveTableConstraintDefinitions,
+                        retrieveTableConstraintInformation,
+                        retrieveTableDefinitionsInformation,
+                        retrieveTablePrivileges,
+                        retrieveTables,
+                        retrieveTriggerInformation,
+                        retrieveUserDefinedColumnDataTypes,
+                        retrieveViewInformation,
+                        tag);
   }
 
   public boolean isRetrieveAdditionalColumnAttributes()
@@ -278,7 +363,9 @@ public final class SchemaInfoLevel
   @Override
   public String toString()
   {
-    return tag == null? "": tag;
+    return String.format("SchemaInfoLevel <%s>%n%s",
+                         tag == null? "": tag,
+                         ObjectToString.toString(this));
   }
 
 }

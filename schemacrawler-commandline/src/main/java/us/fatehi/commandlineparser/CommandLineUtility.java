@@ -32,12 +32,11 @@ import static sf.util.Utility.join;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.SortedMap;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.logging.Level;
 
@@ -153,7 +152,7 @@ public final class CommandLineUtility
       return;
     }
 
-    final List<String> argsList = new ArrayList<>();
+    final StringJoiner argsList = new StringJoiner(System.lineSeparator());
     for (final Iterator<String> iterator = Arrays.asList(args)
       .iterator(); iterator.hasNext();)
     {
@@ -183,8 +182,7 @@ public final class CommandLineUtility
     }
 
     LOGGER.log(Level.INFO,
-               new StringFormat("Command line: %n%s",
-                                join(argsList, System.lineSeparator())));
+               new StringFormat("Command line: %n%s", argsList.toString()));
   }
 
   public static void logSystemClasspath()
@@ -247,7 +245,7 @@ public final class CommandLineUtility
     {
       return "";
     }
-    return join(path.split(File.pathSeparator), System.lineSeparator());
+    return String.join(System.lineSeparator(), path.split(File.pathSeparator));
   }
 
   private CommandLineUtility()

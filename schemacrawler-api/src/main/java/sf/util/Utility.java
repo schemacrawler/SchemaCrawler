@@ -30,19 +30,18 @@ package sf.util;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
+import java.util.StringJoiner;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Utility methods.
@@ -315,18 +314,14 @@ public final class Utility
       return null;
     }
 
-    final StringBuilder buffer = new StringBuilder(1024);
-    for (final Iterator<String> iterator = collection.iterator(); iterator
-      .hasNext();)
+    final StringJoiner joiner = new StringJoiner(separator);
+    joiner.setEmptyValue("");
+    for (final String string: collection)
     {
-      buffer.append(iterator.next());
-      if (iterator.hasNext())
-      {
-        buffer.append(separator);
-      }
+      joiner.add(string);
     }
 
-    return buffer.toString();
+    return joiner.toString();
   }
 
   public static String join(final Map<String, String> map,
@@ -337,25 +332,25 @@ public final class Utility
       return null;
     }
 
-    final StringBuilder buffer = new StringBuilder(1024);
-    final Set<Entry<String, String>> entrySet = map.entrySet();
-    for (final Iterator<Entry<String, String>> iterator = entrySet
-      .iterator(); iterator.hasNext();)
+    final StringJoiner joiner = new StringJoiner(separator);
+    for (final Entry<String, String> entry: map.entrySet())
     {
-      final Entry<String, String> entry = iterator.next();
-      buffer.append(entry.getKey()).append("=").append(entry.getValue());
-      if (iterator.hasNext())
-      {
-        buffer.append(separator);
-      }
+      joiner.add(String.format(entry.getKey(), "=", entry.getValue()));
     }
 
-    return buffer.toString();
+    return joiner.toString();
   }
 
-  public static String join(final String[] collection, final String separator)
+  public static String toSnakeCase(final String identifier)
   {
-    return join(Arrays.asList(collection), separator);
+    if (isBlank(identifier))
+    {
+      return identifier;
+    }
+    final Pattern identifyCamelCase = Pattern.compile("([A-Z])");
+    final String snakeCaseIdentifier = identifyCamelCase.matcher(identifier)
+      .replaceAll("_$1").toLowerCase();
+    return snakeCaseIdentifier;
   }
 
   private static int indexOfDifference(final String string1,

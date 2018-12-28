@@ -28,8 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.isBlank;
+import static sf.util.Utility.toSnakeCase;
 
 import org.junit.Test;
 
@@ -54,6 +58,18 @@ public class UtilityTest
     assertTrue(!isBlank(" a"));
     assertTrue(!isBlank("a "));
     assertTrue(!isBlank("a b"));
+  }
+
+  @Test
+  public void snakeCaseTest()
+  {
+    assertThat(toSnakeCase(null), nullValue());
+    assertThat(toSnakeCase("a b"), equalTo("a b"));
+    assertThat(toSnakeCase("ab"), equalTo("ab"));
+    assertThat(toSnakeCase("abI"), equalTo("ab_i"));
+    assertThat(toSnakeCase("Ab"), equalTo("_ab"));
+    assertThat(toSnakeCase("abIj"), equalTo("ab_ij"));
+    assertThat(toSnakeCase("ABC"), equalTo("_a_b_c"));
   }
 
 }

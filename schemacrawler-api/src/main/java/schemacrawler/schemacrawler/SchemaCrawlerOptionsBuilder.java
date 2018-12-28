@@ -175,47 +175,42 @@ public final class SchemaCrawlerOptionsBuilder
   @Override
   public SchemaCrawlerOptionsBuilder fromConfig(final Config config)
   {
-    final Config configProperties;
     if (config == null)
     {
       return this;
     }
-    else
-    {
-      configProperties = new Config(config);
-    }
 
-    schemaInfoLevel = SchemaInfoLevelBuilder.builder()
-      .fromConfig(configProperties).toOptions();
+    schemaInfoLevel = SchemaInfoLevelBuilder.builder().fromConfig(config)
+      .toOptions();
 
-    schemaInclusionRule = configProperties
-      .getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE, SC_SCHEMA_PATTERN_EXCLUDE);
-    synonymInclusionRule = configProperties
+    schemaInclusionRule = config.getInclusionRule(SC_SCHEMA_PATTERN_INCLUDE,
+                                                  SC_SCHEMA_PATTERN_EXCLUDE);
+    synonymInclusionRule = config
       .getInclusionRuleDefaultExclude(SC_SYNONYM_PATTERN_INCLUDE,
                                       SC_SYNONYM_PATTERN_EXCLUDE);
-    sequenceInclusionRule = configProperties
+    sequenceInclusionRule = config
       .getInclusionRuleDefaultExclude(SC_SEQUENCE_PATTERN_INCLUDE,
                                       SC_SEQUENCE_PATTERN_EXCLUDE);
 
-    tableInclusionRule = configProperties
-      .getInclusionRule(SC_TABLE_PATTERN_INCLUDE, SC_TABLE_PATTERN_EXCLUDE);
-    columnInclusionRule = configProperties
-      .getInclusionRule(SC_COLUMN_PATTERN_INCLUDE, SC_COLUMN_PATTERN_EXCLUDE);
+    tableInclusionRule = config.getInclusionRule(SC_TABLE_PATTERN_INCLUDE,
+                                                 SC_TABLE_PATTERN_EXCLUDE);
+    columnInclusionRule = config.getInclusionRule(SC_COLUMN_PATTERN_INCLUDE,
+                                                  SC_COLUMN_PATTERN_EXCLUDE);
 
-    routineInclusionRule = configProperties
+    routineInclusionRule = config
       .getInclusionRuleDefaultExclude(SC_ROUTINE_PATTERN_INCLUDE,
                                       SC_ROUTINE_PATTERN_EXCLUDE);
-    routineColumnInclusionRule = configProperties
+    routineColumnInclusionRule = config
       .getInclusionRule(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
                         SC_ROUTINE_COLUMN_PATTERN_EXCLUDE);
 
-    grepColumnInclusionRule = Optional.ofNullable(configProperties
+    grepColumnInclusionRule = Optional.ofNullable(config
       .getInclusionRuleOrNull(SC_GREP_COLUMN_PATTERN_INCLUDE,
                               SC_GREP_COLUMN_PATTERN_EXCLUDE));
-    grepRoutineColumnInclusionRule = Optional.ofNullable(configProperties
+    grepRoutineColumnInclusionRule = Optional.ofNullable(config
       .getInclusionRuleOrNull(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
                               SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE));
-    grepDefinitionInclusionRule = Optional.ofNullable(configProperties
+    grepDefinitionInclusionRule = Optional.ofNullable(config
       .getInclusionRuleOrNull(SC_GREP_DEFINITION_PATTERN_INCLUDE,
                               SC_GREP_DEFINITION_PATTERN_EXCLUDE));
 
