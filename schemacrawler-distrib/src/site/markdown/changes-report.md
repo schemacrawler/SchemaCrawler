@@ -1,9 +1,10 @@
 # SchemaCrawler Change History
 
 <a name="a15.03.03"></a>
-## Release 15.03.03 - 2018-12-25
+## Release 15.03.03 - 2018-12-28
 
 - Remove Spring Framework command-line support
+- Allow fine tuning of retrieval using configuration properties values for schema info level
 
 
 <a name="a15.03.02"></a>
@@ -39,8 +40,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.03.02"></a>
-## Release 15.03.02 - 2018-10-14
+<a name="a15.03.03"></a>
+## Release 15.03.03 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 
