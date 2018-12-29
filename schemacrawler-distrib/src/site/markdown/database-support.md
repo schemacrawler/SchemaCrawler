@@ -88,14 +88,19 @@ Typical command-line arguments for connecting to SQL Server with Windows authent
 
 ### Oracle
 
-You need to specify the host, port, database name, and the schemas you
+You need to specify the host, port, Oracle Service Name, and the schemas you
 are interested in, for Oracle.
 
-
+You can use a query similar to `SELECT GLOBAL_NAME FROM GLOBAL_NAME`
+to find the Oracle Service Name.
+    
 Typical command-line arguments will look like:
 ```
 -server=oracle -host=db.example.com -port=1521 -database=ORCL -schemas=SCHEMACRAWLER -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
 ```
+
+In the example above, "ORCL" is the Oracle Service Name.
+
 
 ### MySQL
 
