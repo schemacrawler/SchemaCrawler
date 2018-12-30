@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+<a name="a15.03.04"></a>
+## Release 15.03.04 - 2018-12-29
+
+- Fix documentation on how to connect to Oracle
+- Fix query for Oracle system information
+
+
 <a name="a15.03.03"></a>
 ## Release 15.03.03 - 2018-12-28
 
@@ -40,8 +47,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.03.03"></a>
-## Release 15.03.03 - 2018-10-14
+<a name="a15.03.04"></a>
+## Release 15.03.04 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 
