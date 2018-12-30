@@ -149,7 +149,14 @@ public final class TestUtility
                                         Pattern
                                           .compile("SQL\\d+\\s+\\[primary key\\]"),
                                         Pattern
-                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"), };
+                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
+                                        // MySQL
+                                        Pattern.compile("PORT\\s+\\d+\\s+"),
+                                        Pattern
+                                          .compile("REPORT_PORT\\s+\\d+\\s+"),
+                                        Pattern.compile("SERVER_UUID.*"),
+                                        Pattern
+                                          .compile("  value\\s+\\d+\\s+"), };
 
     /**
      * Should we keep the line - that is, not ignore it?

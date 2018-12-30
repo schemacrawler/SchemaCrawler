@@ -52,7 +52,7 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("mysql");
-    assertEquals(6,
+    assertEquals(7,
                  databaseSystemIdentifier
                    .getSchemaRetrievalOptionsBuilder(connection).toOptions()
                    .getInformationSchemaViews().size());

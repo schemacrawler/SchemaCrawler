@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import schemacrawler.schema.DatabaseInfo;
 import schemacrawler.schema.DatabaseProperty;
@@ -90,7 +91,7 @@ final class MutableDatabaseInfo
   @Override
   public Collection<Property> getServerInfo()
   {
-    return new HashSet<>(serverInfo);
+    return new TreeSet<>(serverInfo);
   }
 
   /**

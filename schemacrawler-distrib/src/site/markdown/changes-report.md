@@ -1,5 +1,12 @@
 # SchemaCrawler Change History
 
+
+<a name="a15.03.05"></a>
+## Release 15.03.04 - 2018-12-29
+
+- Add server information for MySQL
+
+
 <a name="a15.03.04"></a>
 ## Release 15.03.04 - 2018-12-29
 
