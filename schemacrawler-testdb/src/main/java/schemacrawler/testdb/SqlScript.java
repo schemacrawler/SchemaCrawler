@@ -132,7 +132,10 @@ public class SqlScript
           final SQLWarning warnings = statement.getWarnings();
           if (warnings != null)
           {
-            throw warnings;
+            if (!warnings.getMessage().startsWith("Can't drop database"))
+            {
+              throw warnings;
+            }
           }
 
           connection.commit();
