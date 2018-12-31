@@ -81,7 +81,9 @@ public class EmbeddedPostgreSQLWrapper
       }
       catch (final SchemaCrawlerException e)
       {
-        e.printStackTrace(System.err);
+        LOGGER.log(Level.WARNING,
+                   "Could not shutdown embedded PostgreSQL server",
+                   e);
       }
     });
   }
