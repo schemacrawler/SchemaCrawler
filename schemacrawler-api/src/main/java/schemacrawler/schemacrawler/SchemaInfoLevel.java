@@ -30,11 +30,11 @@ package schemacrawler.schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.join;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * Descriptor for level of schema detail.
@@ -46,15 +46,26 @@ public final class SchemaInfoLevel
 {
 
   private final String tag;
-  private final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals;
+  private final boolean[] schemaInfoRetrievals;
 
   SchemaInfoLevel(final String tag,
-                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievals)
+                  final Map<SchemaInfoRetrieval, Boolean> schemaInfoRetrievalsMap)
   {
     requireNonNull(tag, "No tag provided");
     this.tag = tag;
-    requireNonNull(schemaInfoRetrievals, "No schema info retrievals provided");
-    this.schemaInfoRetrievals = new HashMap<>(schemaInfoRetrievals);
+
+    requireNonNull(schemaInfoRetrievalsMap,
+                   "No schema info retrievals provided");
+    final SchemaInfoRetrieval[] schemaInfoRetrievalsArray = SchemaInfoRetrieval
+      .values();
+    schemaInfoRetrievals = new boolean[schemaInfoRetrievalsArray.length];
+    for (final SchemaInfoRetrieval schemaInfoRetrieval: schemaInfoRetrievalsArray)
+    {
+      final boolean schemaInfoRetrievalValue = schemaInfoRetrievalsMap
+        .getOrDefault(schemaInfoRetrieval, false);
+      schemaInfoRetrievals[schemaInfoRetrieval
+        .ordinal()] = schemaInfoRetrievalValue;
+    }
   }
 
   @Override
@@ -73,7 +84,7 @@ public final class SchemaInfoLevel
       return false;
     }
     final SchemaInfoLevel other = (SchemaInfoLevel) obj;
-    return Objects.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
+    return Arrays.equals(schemaInfoRetrievals, other.schemaInfoRetrievals)
            && Objects.equals(tag, other.tag);
   }
 
@@ -85,7 +96,20 @@ public final class SchemaInfoLevel
   @Override
   public int hashCode()
   {
-    return Objects.hash(schemaInfoRetrievals, tag);
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + Arrays.hashCode(schemaInfoRetrievals);
+    result = prime * result + Objects.hash(tag);
+    return result;
+  }
+
+  public boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
+  {
+    if (schemaInfoRetrieval == null)
+    {
+      return false;
+    }
+    return schemaInfoRetrievals[schemaInfoRetrieval.ordinal()];
   }
 
   public boolean isRetrieveAdditionalColumnAttributes()
@@ -231,24 +255,15 @@ public final class SchemaInfoLevel
   @Override
   public String toString()
   {
-    final Map<String, String> completeMap = new HashMap<>();
+    final StringJoiner settings = new StringJoiner(System.lineSeparator());
     for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
       .values())
     {
-      completeMap.put(schemaInfoRetrieval.name(),
-                      String.valueOf(is(schemaInfoRetrieval)));
+      settings.add(String.format("  %s=%b",
+                                 schemaInfoRetrieval.name(),
+                                 is(schemaInfoRetrieval)));
     }
-    return String
-      .format("SchemaInfoLevel <%s>%n%s", tag, join(completeMap, "\n"));
-  }
-
-  private Boolean is(final SchemaInfoRetrieval schemaInfoRetrieval)
-  {
-    if (schemaInfoRetrieval == null)
-    {
-      return false;
-    }
-    return schemaInfoRetrievals.getOrDefault(schemaInfoRetrieval, false);
+    return String.format("SchemaInfoLevel <%s>%n{%n%s%n}%n", tag, settings);
   }
 
 }

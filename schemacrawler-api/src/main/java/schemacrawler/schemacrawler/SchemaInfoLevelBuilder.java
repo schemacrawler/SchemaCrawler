@@ -31,7 +31,6 @@ package schemacrawler.schemacrawler;
 
 import static sf.util.Utility.isBlank;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -152,19 +151,11 @@ public final class SchemaInfoLevelBuilder
 
     try
     {
-      final Method[] methods = SchemaInfoLevel.class.getDeclaredMethods();
-      for (final Method method: methods)
+      for (final SchemaInfoRetrieval schemaInfoRetrieval: SchemaInfoRetrieval
+        .values())
       {
-        if (method.getReturnType().isAssignableFrom(boolean.class)
-            && method.getName().startsWith("isRetrieve"))
-        {
-          final String schemaInfoRetrievalName = "retrieve" + method.getName()
-            .substring(10);
-          final SchemaInfoRetrieval schemaInfoRetrieval = Enum
-            .valueOf(SchemaInfoRetrieval.class, schemaInfoRetrievalName);
-          final boolean booleanValue = (boolean) method.invoke(schemaInfoLevel);
-          schemaInfoRetrievals.put(schemaInfoRetrieval, booleanValue);
-        }
+        final boolean booleanValue = schemaInfoLevel.is(schemaInfoRetrieval);
+        schemaInfoRetrievals.put(schemaInfoRetrieval, booleanValue);
       }
     }
     catch (final Exception e)
