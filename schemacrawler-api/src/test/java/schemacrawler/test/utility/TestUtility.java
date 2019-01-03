@@ -94,84 +94,6 @@ import sf.util.IOUtility;
 public final class TestUtility
 {
 
-  private static Predicate<String> filterSvg = new Predicate<String>()
-  {
-
-    private final Pattern start = Pattern.compile("<svg.*");
-    private final Pattern end = Pattern.compile(".*svg>");
-
-    private boolean isFiltering;
-
-    @Override
-    public boolean test(final String line)
-    {
-      if (!isFiltering && start.matcher(line).matches())
-      {
-        isFiltering = true;
-        // Filter out the start SVG tag
-        return false;
-      }
-      else if (isFiltering && end.matcher(line).matches())
-      {
-        isFiltering = false;
-        // Filter out the end SVG tag
-        return false;
-      }
-
-      return !isFiltering;
-    }
-
-  };
-
-  private static Predicate<String> filterNeuteredLines = new Predicate<String>()
-  {
-
-    private final Pattern[] neuters = {
-                                        Pattern.compile("url +jdbc:.*"),
-                                        Pattern
-                                          .compile("database product version.*"),
-                                        Pattern.compile("driver version.*"),
-                                        Pattern
-                                          .compile("-- operating system:.*"),
-                                        Pattern.compile("-- JVM system:.*"),
-                                        Pattern
-                                          .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
-                                        Pattern.compile("\\s+\"runId\": .*"),
-                                        Pattern
-                                          .compile("\\s+<product(Name|Version)>.*"),
-                                        Pattern
-                                          .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
-                                        Pattern
-                                          .compile(".*201[6-8]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-                                        Pattern
-                                          .compile(".*201[6-8]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-                                        // Apache Derby unnamed objects
-                                        Pattern
-                                          .compile("SQL\\d+\\s+\\[primary key\\]"),
-                                        Pattern
-                                          .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
-                                        // MySQL
-                                        Pattern.compile("server_uuid.*"),
-                                        Pattern
-                                          .compile("  value\\s+\\d+\\s+"), };
-
-    /**
-     * Should we keep the line - that is, not ignore it?
-     */
-    @Override
-    public boolean test(final String line)
-    {
-      for (final Pattern neuter: neuters)
-      {
-        if (neuter.matcher(line).matches())
-        {
-          return false;
-        }
-      }
-      return true;
-    }
-  };
-
   public static void clean(final String dirname)
     throws Exception
   {
@@ -229,10 +151,12 @@ public final class TestUtility
     else
     {
       final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
+      final Predicate<String> linesFilter = new SvgElementFilter()
+        .and(new NeuteredLinesFilter());
       contentEquals = contentEquals(referenceReader,
                                     fileReader,
                                     failures,
-                                    filterSvg.and(filterNeuteredLines));
+                                    linesFilter);
     }
 
     if ("html".equals(outputFormat))
