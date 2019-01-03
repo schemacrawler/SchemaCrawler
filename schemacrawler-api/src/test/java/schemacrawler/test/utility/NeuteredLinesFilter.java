@@ -59,7 +59,8 @@ final class NeuteredLinesFilter
                                       Pattern
                                         .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
                                       // MySQL
-                                      Pattern.compile("server_uuid.*"),
+                                      Pattern.compile("server_uuid\\s+.*"),
+                                      Pattern.compile("hostname\\s+.*"),
                                       Pattern.compile("  value\\s+\\d+\\s+"), };
 
   /**
