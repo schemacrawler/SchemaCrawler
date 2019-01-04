@@ -28,6 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.schemacrawler;
 
 
+import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.detailed;
+import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.maximum;
+import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.minimum;
+import static schemacrawler.schemacrawler.SchemaInfoLevelBuilder.standard;
+
 import java.util.logging.Level;
 
 import sf.util.SchemaCrawlerLogger;
@@ -36,11 +41,17 @@ import sf.util.StringFormat;
 public enum InfoLevel
 {
 
- unknown,
- minimum,
- standard,
- detailed,
- maximum,;
+ unknown(() -> standard()),
+ minimum(() -> minimum()),
+ standard(() -> standard()),
+ detailed(() -> detailed()),
+ maximum(() -> maximum());
+
+  @FunctionalInterface
+  interface ToSchemaInfoLevelFunction
+  {
+    SchemaInfoLevel toSchemaInfoLevel();
+  }
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(InfoLevel.class.getName());
@@ -59,28 +70,16 @@ public enum InfoLevel
     }
   }
 
+  private final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction;
+
+  private InfoLevel(final ToSchemaInfoLevelFunction toSchemaInfoLevelFunction)
+  {
+    this.toSchemaInfoLevelFunction = toSchemaInfoLevelFunction;
+  }
+
   public final SchemaInfoLevel toSchemaInfoLevel()
   {
-    final SchemaInfoLevel schemaInfoLevel;
-    switch (this)
-    {
-      case minimum:
-        schemaInfoLevel = SchemaInfoLevelBuilder.minimum();
-        break;
-      case standard:
-        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
-        break;
-      case detailed:
-        schemaInfoLevel = SchemaInfoLevelBuilder.detailed();
-        break;
-      case maximum:
-        schemaInfoLevel = SchemaInfoLevelBuilder.maximum();
-        break;
-      default:
-        schemaInfoLevel = SchemaInfoLevelBuilder.standard();
-        break;
-    }
-    return schemaInfoLevel;
+    return toSchemaInfoLevelFunction.toSchemaInfoLevel();
   }
 
 }
