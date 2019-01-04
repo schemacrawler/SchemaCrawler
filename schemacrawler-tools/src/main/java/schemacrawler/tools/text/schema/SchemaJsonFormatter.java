@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
 import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 
@@ -192,9 +193,8 @@ final class SchemaJsonFormatter
 
         final List<? extends RoutineColumn<? extends Routine>> columns = routine
           .getColumns();
-        Collections.sort(columns,
-                         NamedObjectSort.getNamedObjectSort(options
-                           .isAlphabeticalSortForRoutineColumns()));
+        columns.sort(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForRoutineColumns()));
         for (final RoutineColumn<?> column: columns)
         {
           jsonParameters.put(handleRoutineColumn(column));
@@ -324,9 +324,8 @@ final class SchemaJsonFormatter
       final List<Column> columns = table.getColumns();
       final JSONArray jsonColumns = new JSONArray();
       jsonTable.put("columns", jsonColumns);
-      Collections.sort(columns,
-                       NamedObjectSort.getNamedObjectSort(options
-                         .isAlphabeticalSortForTableColumns()));
+      columns.sort(NamedObjectSort
+        .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
       for (final Column column: columns)
       {
         if (isBrief && !isColumnSignificant(column))
@@ -342,9 +341,8 @@ final class SchemaJsonFormatter
       {
         final JSONArray jsonHiddenColumns = new JSONArray();
         jsonTable.put("hiddenColumns", jsonHiddenColumns);
-        Collections.sort(hiddenColumns,
-                         NamedObjectSort.getNamedObjectSort(options
-                           .isAlphabeticalSortForTableColumns()));
+        hiddenColumns.sort(NamedObjectSort
+          .getNamedObjectSort(options.isAlphabeticalSortForTableColumns()));
         for (final Column hiddenColumn: hiddenColumns)
         {
           if (isBrief && !isColumnSignificant(hiddenColumn))
@@ -364,7 +362,7 @@ final class SchemaJsonFormatter
           final Collection<WeakAssociationForeignKey> weakAssociationsCollection = WeakAssociationsUtility
             .getWeakAssociations(table);
           final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-          Collections.sort(weakAssociations);
+          weakAssociations.sort(naturalOrder());
 
           if (options.isShowWeakAssociations())
           {
@@ -828,7 +826,7 @@ final class SchemaJsonFormatter
     final JSONArray jsonFks = new JSONArray();
 
     final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-    Collections.sort(weakAssociations);
+    weakAssociations.sort(naturalOrder());
     for (final WeakAssociationForeignKey weakFk: weakAssociations)
     {
       if (weakFk != null)

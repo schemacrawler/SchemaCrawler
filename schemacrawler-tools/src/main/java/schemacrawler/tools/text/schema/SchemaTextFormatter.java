@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import static java.util.Comparator.naturalOrder;
 import static schemacrawler.tools.analysis.counts.CountsUtility.getRowCountMessage;
 import static schemacrawler.tools.analysis.counts.CountsUtility.hasRowCount;
 import static sf.util.Utility.isBlank;
@@ -808,9 +809,8 @@ final class SchemaTextFormatter
       return;
     }
 
-    Collections.sort(columns,
-                     NamedObjectSort.getNamedObjectSort(options
-                       .isAlphabeticalSortForRoutineColumns()));
+    columns.sort(NamedObjectSort
+      .getNamedObjectSort(options.isAlphabeticalSortForRoutineColumns()));
 
     for (final RoutineColumn<?> column: columns)
     {
@@ -1140,7 +1140,7 @@ final class SchemaTextFormatter
     formattingHelper.writeWideRow("Weak Associations", "section");
 
     final List<WeakAssociationForeignKey> weakAssociations = new ArrayList<>(weakAssociationsCollection);
-    Collections.sort(weakAssociations);
+    weakAssociations.sort(naturalOrder());
     for (final WeakAssociationForeignKey weakFk: weakAssociations)
     {
       if (weakFk != null)

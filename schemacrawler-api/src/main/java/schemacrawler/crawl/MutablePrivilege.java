@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Comparator.naturalOrder;
 import static sf.util.Utility.isBlank;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -195,7 +195,7 @@ final class MutablePrivilege<D extends DatabaseObject>
   public Collection<Grant<D>> getGrants()
   {
     final List<Grant<D>> values = new ArrayList<>(grants);
-    Collections.sort(values);
+    values.sort(naturalOrder());
     return values;
   }
 

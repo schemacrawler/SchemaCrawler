@@ -152,7 +152,7 @@ final class TableMatchKeys
 
     // Make sure we have the smallest prefixes
     final List<String> keySet = new ArrayList<>(prefixesMap.keySet());
-    Collections.sort(keySet, (key1, key2) -> {
+    keySet.sort((key1, key2) -> {
       int comparison = 0;
       comparison = key2.length() - key1.length();
       if (comparison == 0)

@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
+import static java.util.Comparator.naturalOrder;
 import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.Utility.isBlank;
 
@@ -132,7 +133,7 @@ public final class DatabaseConnectorRegistry
     {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
     }
-    Collections.sort(databaseServerTypes);
+    databaseServerTypes.sort(naturalOrder());
     return databaseServerTypes.iterator();
   }
 

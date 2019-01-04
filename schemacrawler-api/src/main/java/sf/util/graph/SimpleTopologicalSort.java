@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 package sf.util.graph;
 
 
+import static java.util.Comparator.naturalOrder;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
@@ -96,7 +97,7 @@ public class SimpleTopologicalSort<T extends Comparable<? super T>>
         vertices.remove(vertex);
       }
 
-      Collections.sort(nodesAtLevel);
+      nodesAtLevel.sort(naturalOrder());
       sortedValues.addAll(nodesAtLevel);
     }
 

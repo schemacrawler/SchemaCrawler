@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import static java.util.Comparator.naturalOrder;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -186,7 +187,7 @@ public final class CommandRegistry
     }
 
     final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(supportedCommandDescriptions);
-    Collections.sort(supportedCommandsOrdered);
+    supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }
 

@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -226,7 +226,7 @@ final class NamedObjectList<N extends NamedObject>
   List<N> values()
   {
     final List<N> all = new ArrayList<>(objects.values());
-    Collections.sort(all);
+    all.sort(naturalOrder());
     return all;
   }
 

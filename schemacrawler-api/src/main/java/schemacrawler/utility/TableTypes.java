@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.utility;
 
 
+import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 import static sf.util.DatabaseUtility.readResultsVector;
 import static sf.util.Utility.isBlank;
@@ -36,7 +37,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -138,7 +138,7 @@ public final class TableTypes
         filteredTableTypes.add(tableType.get().getTableType());
       }
     }
-    Collections.sort(filteredTableTypes);
+    filteredTableTypes.sort(naturalOrder());
     return filteredTableTypes.toArray(new String[filteredTableTypes.size()]);
   }
 

@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -163,7 +162,7 @@ public final class Linters
     }
 
     final List<Linter> linters = new ArrayList<>(this.linters);
-    Collections.sort(linters, new LinterComparator());
+    linters.sort(new LinterComparator());
 
     final StringBuilder buffer = new StringBuilder(1024);
     for (final Linter linter: linters)

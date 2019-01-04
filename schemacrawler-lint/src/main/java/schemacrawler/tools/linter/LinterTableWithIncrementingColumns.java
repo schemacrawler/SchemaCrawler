@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.linter;
 
 
+import static java.util.Comparator.naturalOrder;
 import static java.util.Objects.requireNonNull;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -123,7 +123,7 @@ public class LinterTableWithIncrementingColumns
       maxIncrement = Math.max(maxIncrement,
                               incrementingColumn.getColumnIncrement());
     }
-    Collections.sort(incrementingColumns);
+    incrementingColumns.sort(naturalOrder());
     addTableLint(table, getSummary(), incrementingColumns);
 
     // Check for increments that are not consecutive

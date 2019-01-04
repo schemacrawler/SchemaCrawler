@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Comparator.naturalOrder;
 import static org.junit.Assert.fail;
 import static sf.util.Utility.isBlank;
 
@@ -37,7 +38,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -139,7 +139,7 @@ public class DatabaseScriptsTest
         .getPath());
       scripts.add(scriptName);
     }
-    Collections.sort(scripts);
+    scripts.sort(naturalOrder());
     return scripts;
   }
 

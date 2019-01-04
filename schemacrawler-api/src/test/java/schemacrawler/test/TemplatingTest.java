@@ -29,10 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static java.util.Comparator.naturalOrder;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,7 +174,7 @@ public class TemplatingTest
   private List<String> getSortedVariables(final Set<String> variables)
   {
     final List<String> sortedVariables = new ArrayList<>(variables);
-    Collections.sort(sortedVariables);
+    sortedVariables.sort(naturalOrder());
     return sortedVariables;
   }
 

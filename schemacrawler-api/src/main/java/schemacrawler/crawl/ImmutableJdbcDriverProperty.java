@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Comparator.naturalOrder;
+
 import java.sql.DriverPropertyInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,7 +71,7 @@ final class ImmutableJdbcDriverProperty
     else
     {
       choices = Arrays.asList(driverPropertyInfo.choices);
-      Collections.sort(choices);
+      choices.sort(naturalOrder());
     }
   }
 

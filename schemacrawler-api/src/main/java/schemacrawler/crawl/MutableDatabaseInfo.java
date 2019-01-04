@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static java.util.Comparator.naturalOrder;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,7 +85,7 @@ final class MutableDatabaseInfo
   public Collection<DatabaseProperty> getProperties()
   {
     final List<DatabaseProperty> properties = new ArrayList<>(databaseProperties);
-    Collections.sort(properties);
+    properties.sort(naturalOrder());
     return properties;
   }
 

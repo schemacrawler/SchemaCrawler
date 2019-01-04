@@ -38,7 +38,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -253,9 +252,8 @@ public final class OperationCommand
   private List<? extends Table> getSortedTables(final Catalog catalog)
   {
     final List<? extends Table> tables = new ArrayList<>(catalog.getTables());
-    Collections.sort(tables,
-                     NamedObjectSort.getNamedObjectSort(operationOptions
-                       .isAlphabeticalSortForTables()));
+    tables.sort(NamedObjectSort
+      .getNamedObjectSort(operationOptions.isAlphabeticalSortForTables()));
     return tables;
   }
 

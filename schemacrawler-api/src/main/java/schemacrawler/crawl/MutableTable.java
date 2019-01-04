@@ -31,7 +31,6 @@ package schemacrawler.crawl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -235,7 +234,7 @@ class MutableTable
     }
 
     final List<Table> relatedTablesList = new ArrayList<>(relatedTables);
-    Collections.sort(relatedTablesList, NamedObjectSort.alphabetical);
+    relatedTablesList.sort(NamedObjectSort.alphabetical);
     return relatedTablesList;
   }
 

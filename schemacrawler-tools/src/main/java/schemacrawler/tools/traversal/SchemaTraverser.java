@@ -32,7 +32,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -125,7 +124,7 @@ public class SchemaTraverser
       handler.handleTablesStart();
 
       final List<? extends Table> tablesList = new ArrayList<>(tables);
-      Collections.sort(tablesList, tablesComparator);
+      tablesList.sort(tablesComparator);
       for (final Table table: tablesList)
       {
         handler.handle(table);
@@ -139,7 +138,7 @@ public class SchemaTraverser
       handler.handleRoutinesStart();
 
       final List<? extends Routine> routinesList = new ArrayList<>(routines);
-      Collections.sort(routinesList, routinesComparator);
+      routinesList.sort(routinesComparator);
       for (final Routine routine: routinesList)
       {
         handler.handle(routine);
