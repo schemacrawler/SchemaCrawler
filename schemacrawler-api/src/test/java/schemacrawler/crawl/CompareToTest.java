@@ -29,12 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
-import static org.junit.Assert.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.TableType;
