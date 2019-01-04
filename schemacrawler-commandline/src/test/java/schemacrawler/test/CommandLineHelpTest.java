@@ -34,16 +34,21 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.SystemOutRule;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestName;
+import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 
 public class CommandLineHelpTest
@@ -55,9 +60,26 @@ public class CommandLineHelpTest
   @Rule
   public TestName testName = new TestName();
 
-  @Rule
-  public final SystemOutRule systemOutRule = new SystemOutRule().enableLog()
-    .mute();
+  private TestOutputStream out;
+  private TestOutputStream err;
+
+  @After
+  public void cleanUpStreams()
+  {
+    System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Before
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
 
   @Test
   public void commandLineHelpDefaults()
@@ -78,7 +100,7 @@ public class CommandLineHelpTest
     try (final TestWriter out = testout;)
     {
       Main.main(flattenCommandlineArgs(argsMap));
-      out.write(systemOutRule.getLog());
+      out.write(this.out.getFileContents());
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
