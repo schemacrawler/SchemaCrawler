@@ -28,12 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -59,30 +61,35 @@ public class CoverageTest
       private static final long serialVersionUID = 6176088733525976950L;
 
     });
-    assertEquals("NamedObjectList size", 2, list.size());
-    assertEquals("NamedObjectList toString", "name1, name2", list.toString());
+    assertThat(list.size(), equalTo(2));
+    assertThat(list.toString(), equalTo("name1, name2"));
   }
 
-  @Test(expected = NullPointerException.class)
+  @Test
   public void namedObjectListNull()
   {
-    final NamedObjectList<NamedObject> list = new NamedObjectList<>();
-    list.add(null);
+    assertThrows(NullPointerException.class, () -> {
+      final NamedObjectList<NamedObject> list = new NamedObjectList<>();
+      list.add(null);
+    });
   }
 
-  @Test(expected = SQLException.class)
+  @Test
   public void retrieverConnection()
     throws SQLException
   {
-    new RetrieverConnection(null, null);
+    assertThrows(SQLException.class, () -> new RetrieverConnection(null, null));
   }
 
-  @Test(expected = SQLException.class)
+  @Test
   public void retrieverConnectionClosed()
     throws SQLException, SchemaCrawlerException
   {
-    final Connection connection = getConnection();
-    connection.close();
-    new RetrieverConnection(connection, null);
+    assertThrows(SQLException.class, () -> {
+      final Connection connection = getConnection();
+      connection.close();
+      new RetrieverConnection(connection, null);
+    });
   }
+
 }
