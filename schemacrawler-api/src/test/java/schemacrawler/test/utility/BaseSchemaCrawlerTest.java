@@ -34,6 +34,7 @@ import static sf.util.Utility.applyApplicationLogLevel;
 import java.util.logging.Level;
 
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -56,6 +57,20 @@ public abstract class BaseSchemaCrawlerTest
   protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()
   {
     return schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+  }
+
+  protected String currentMethodName(final TestInfo testInfo)
+  {
+    return testInfo.getTestMethod().map(method -> method.getName()).orElse("");
+  }
+
+  protected String currentMethodFullName(final TestInfo testInfo)
+  {
+    return testInfo.getTestMethod()
+      .map(method -> String.format("%s.%s",
+                                   method.getDeclaringClass().getSimpleName(),
+                                   method.getName()))
+      .orElse("");
   }
 
 }
