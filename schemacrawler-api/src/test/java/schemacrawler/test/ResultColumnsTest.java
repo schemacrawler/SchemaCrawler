@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -40,14 +40,13 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Level;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import sf.util.SchemaCrawlerLogger;
 
@@ -58,11 +57,8 @@ public class ResultColumnsTest
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ResultColumnsTest.class.getName());
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void columns()
+  public void columns(final TestInfo testInfo)
     throws Exception
   {
 
@@ -89,7 +85,9 @@ public class ResultColumnsTest
         final ResultsColumns resultColumns = new ResultsCrawler(resultSet)
           .crawl();
 
-        assertNotNull("Could not obtain result columns", resultColumns);
+        assertThat("Could not obtain result columns",
+                   resultColumns,
+                   notNullValue());
         final ResultsColumn[] columns = resultColumns.getColumns()
           .toArray(new ResultsColumn[0]);
         for (final ResultsColumn column: columns)
@@ -104,8 +102,7 @@ public class ResultColumnsTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
 }

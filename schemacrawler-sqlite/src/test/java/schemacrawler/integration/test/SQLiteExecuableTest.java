@@ -31,13 +31,12 @@ package schemacrawler.integration.test;
 
 import java.nio.file.Path;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
@@ -48,21 +47,18 @@ public class SQLiteExecuableTest
   extends BaseSqliteTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void count()
+  public void count(final TestInfo testInfo)
     throws Exception
   {
-    run(testName.currentMethodFullName(), "count");
+    run(currentMethodFullName(testInfo), "count");
   }
 
   @Test
-  public void dump()
+  public void dump(final TestInfo testInfo)
     throws Exception
   {
-    run(testName.currentMethodFullName(), "dump");
+    run(currentMethodFullName(testInfo), "dump");
   }
 
   private void run(final String currentMethodFullName, final String command)

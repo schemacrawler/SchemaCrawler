@@ -31,13 +31,12 @@ package schemacrawler.integration.test;
 
 import java.nio.file.Path;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -46,24 +45,19 @@ public class AdditionalCasesTest
   extends BaseSqliteTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void advancedUsage()
+  public void advancedUsage(final TestInfo testInfo)
     throws Exception
   {
-    run(testName.currentMethodFullName(), "/advanced_usage.sql", "details");
+    run(currentMethodFullName(testInfo), "/advanced_usage.sql", "details");
   }
 
   @Test
-  public void quotedCreateScript()
+  public void quotedCreateScript(final TestInfo testInfo)
     throws Exception
   {
-    run(testName.currentMethodFullName(),
-        "/identifiers_unquoted.sql",
-        "schema");
-    run(testName.currentMethodFullName(), "/identifiers_quoted.sql", "schema");
+    run(currentMethodFullName(testInfo), "/identifiers_unquoted.sql", "schema");
+    run(currentMethodFullName(testInfo), "/identifiers_quoted.sql", "schema");
   }
 
   private void run(final String currentMethodFullName,

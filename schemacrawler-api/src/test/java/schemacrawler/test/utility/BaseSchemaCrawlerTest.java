@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.util.logging.Level;
@@ -61,16 +62,19 @@ public abstract class BaseSchemaCrawlerTest
 
   protected String currentMethodName(final TestInfo testInfo)
   {
-    return testInfo.getTestMethod().map(method -> method.getName()).orElse("");
+    requireNonNull(testInfo, "No test info provided");
+    return testInfo.getTestMethod().map(method -> method.getName())
+      .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
   protected String currentMethodFullName(final TestInfo testInfo)
   {
+    requireNonNull(testInfo, "No test info provided");
     return testInfo.getTestMethod()
       .map(method -> String.format("%s.%s",
                                    method.getDeclaringClass().getSimpleName(),
                                    method.getName()))
-      .orElse("");
+      .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
 }
