@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.TestUtility.clean;
@@ -44,17 +44,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -67,13 +66,10 @@ public class MetadataRetrievalStrategyTest
 
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT = "metadata_retrieval_strategy_output/";
 
-  @Rule
-  public TestName testName = new TestName();
-
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -81,7 +77,7 @@ public class MetadataRetrievalStrategyTest
   }
 
   @Test
-  public void overrideMetadataRetrievalStrategy()
+  public void overrideMetadataRetrievalStrategy(final TestInfo testInfo)
     throws Exception
   {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
@@ -96,7 +92,7 @@ public class MetadataRetrievalStrategyTest
                MetadataRetrievalStrategy.data_dictionary_all.name());
     final Path configFile = writeConfigToTempFile(config);
 
-    final String referenceFile = testName.currentMethodName() + ".txt";
+    final String referenceFile = currentMethodName(testInfo) + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 
@@ -123,7 +119,7 @@ public class MetadataRetrievalStrategyTest
 
   }
 
-  @Before
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {

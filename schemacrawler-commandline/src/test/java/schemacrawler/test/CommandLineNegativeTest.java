@@ -46,15 +46,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -66,13 +65,10 @@ public class CommandLineNegativeTest
 
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
 
-  @Rule
-  public TestName testName = new TestName();
-
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -80,16 +76,16 @@ public class CommandLineNegativeTest
   }
 
   @Test
-  public void commandLine_BadCommand()
+  public void commandLine_BadCommand(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("command", "badcommand");
 
-    run(argsMapOverride, null);
+    run(testInfo, argsMapOverride, null);
   }
 
-  @Before
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {
@@ -111,7 +107,8 @@ public class CommandLineNegativeTest
     return configFile;
   }
 
-  private void run(final Map<String, String> argsMapOverride,
+  private void run(final TestInfo testInfo,
+                   final Map<String, String> argsMapOverride,
                    final Map<String, String> config)
     throws Exception
   {
@@ -151,7 +148,7 @@ public class CommandLineNegativeTest
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
-                                                  + testName.currentMethodName()
+                                                  + currentMethodName(testInfo)
                                                   + ".stderr.txt")));
   }
 

@@ -37,9 +37,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ExcludeAll;
@@ -50,7 +50,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -65,31 +64,29 @@ public class SchemaCrawlerJsonOutputTest
 
   private static final String JSON_EXTRA_OUTPUT = "json_extra_output/";
 
-  @BeforeClass
+  @BeforeAll
   public static void cleanOutput()
     throws Exception
   {
     clean(JSON_EXTRA_OUTPUT);
   }
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void noTableJsonOutput()
+  public void noTableJsonOutput(TestInfo testInfo)
     throws Exception
   {
-    jsonOutput(fullName -> false, "");
+    jsonOutput(testInfo, fullName -> false, "");
   }
 
   @Test
-  public void singleTableJsonOutput()
+  public void singleTableJsonOutput(TestInfo testInfo)
     throws Exception
   {
-    jsonOutput(fullName -> fullName.contains("Counts"), "%Counts");
+    jsonOutput(testInfo, fullName -> fullName.contains("Counts"), "%Counts");
   }
 
-  private void jsonOutput(final InclusionRule tableInclusionRule,
+  private void jsonOutput(TestInfo testInfo,
+                          final InclusionRule tableInclusionRule,
                           final String tableName)
     throws Exception
   {
@@ -97,7 +94,7 @@ public class SchemaCrawlerJsonOutputTest
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
-    final String referenceFile = testName.currentMethodName() + ".json";
+    final String referenceFile = currentMethodName(testInfo) + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());

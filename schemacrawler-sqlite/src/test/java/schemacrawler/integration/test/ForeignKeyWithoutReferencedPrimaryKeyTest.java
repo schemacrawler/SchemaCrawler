@@ -31,13 +31,12 @@ package schemacrawler.integration.test;
 
 import java.nio.file.Path;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -46,14 +45,11 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest
   extends BaseSqliteTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void foreignKeyWithoutReferencedPrimaryKey()
+  public void foreignKeyWithoutReferencedPrimaryKey(final TestInfo testInfo)
     throws Exception
   {
-    run(testName.currentMethodName(),
+    run(currentMethodName(testInfo),
         "/foreignKeyWithoutReferencedPrimaryKey.sql",
         "schema");
   }

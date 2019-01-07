@@ -41,9 +41,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -52,7 +52,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
@@ -70,14 +69,14 @@ public class GraphRendererOptionsTest
 
   private static Path directory;
 
-  @BeforeClass
+  @BeforeAll
   public static void removeOutputDir()
     throws Exception
   {
     clean(GRAPH_OPTIONS_OUTPUT);
   }
 
-  @BeforeClass
+  @BeforeAll
   public static void setupDirectory()
     throws Exception
   {
@@ -92,11 +91,8 @@ public class GraphRendererOptionsTest
     createDirectories(directory);
   }
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void executableForGraph_00()
+  public void executableForGraph_00(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
@@ -105,11 +101,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_01()
+  public void executableForGraph_01(final TestInfo testInfo)
     throws Exception
   {
     final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
@@ -121,11 +117,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_02()
+  public void executableForGraph_02(final TestInfo testInfo)
     throws Exception
   {
     final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
@@ -136,11 +132,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_03()
+  public void executableForGraph_03(final TestInfo testInfo)
     throws Exception
   {
     final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
@@ -153,11 +149,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_04()
+  public void executableForGraph_04(final TestInfo testInfo)
     throws Exception
   {
     final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
@@ -168,11 +164,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_05()
+  public void executableForGraph_05(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -185,11 +181,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_06()
+  public void executableForGraph_06(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
@@ -198,11 +194,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.brief.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_07()
+  public void executableForGraph_07(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
@@ -211,11 +207,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_08()
+  public void executableForGraph_08(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -231,11 +227,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_09()
+  public void executableForGraph_09(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -252,11 +248,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_10()
+  public void executableForGraph_10(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
@@ -269,11 +265,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_11()
+  public void executableForGraph_11(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
@@ -286,11 +282,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_12()
+  public void executableForGraph_12(final TestInfo testInfo)
     throws Exception
   {
     final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
@@ -303,11 +299,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_13()
+  public void executableForGraph_13(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> graphvizAttributes = new HashMap<>();
@@ -328,11 +324,11 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   @Test
-  public void executableForGraph_lintschema()
+  public void executableForGraph_lintschema(final TestInfo testInfo)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -346,7 +342,7 @@ public class GraphRendererOptionsTest
     executableGraph(SchemaTextDetailType.schema.name(),
                     schemaCrawlerOptions,
                     graphOptions,
-                    testName.currentMethodName());
+                    currentMethodName(testInfo));
   }
 
   private void executableGraph(final String command,

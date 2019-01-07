@@ -11,56 +11,54 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
-import schemacrawler.test.utility.TestName;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import sf.util.IOUtility;
 
 public class JsonLibraryTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String JSON_LIBRARY_OUTPUT = "json_library_output/";
 
-  @BeforeClass
+  @BeforeAll
   public static void cleanOutput()
     throws Exception
   {
     clean(JSON_LIBRARY_OUTPUT);
   }
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void emptyJsonArray()
+  public void emptyJsonArray(final TestInfo testInfo)
     throws Exception
   {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put("array", new JSONArray());
 
-    testJson(jsonObject);
+    testJson(testInfo, jsonObject);
   }
 
   @Test
-  public void emptyJsonObject()
+  public void emptyJsonObject(final TestInfo testInfo)
     throws Exception
   {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put("object", new JSONObject());
 
-    testJson(jsonObject);
+    testJson(testInfo, jsonObject);
   }
 
-  private void testJson(final JSONObject jsonObject)
+  private void testJson(final TestInfo testInfo, final JSONObject jsonObject)
     throws Exception
   {
 
-    final String referenceFile = testName.currentMethodName() + ".json";
+    final String referenceFile = currentMethodName(testInfo) + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());

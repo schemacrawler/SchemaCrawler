@@ -40,14 +40,13 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 
@@ -57,20 +56,27 @@ public class CommandLineHelpTest
 
   private static final String COMMAND_LINE_HELP_OUTPUT = "command_line_help_output/";
 
-  @Rule
-  public TestName testName = new TestName();
-
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @Before
+  @Test
+  public void commandLineHelpDefaults(final TestInfo testInfo)
+    throws Exception
+  {
+    final Map<String, String> args = new HashMap<>();
+    args.put("h", null);
+
+    run(testInfo, args, null);
+  }
+
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {
@@ -81,17 +87,8 @@ public class CommandLineHelpTest
     System.setErr(new PrintStream(err));
   }
 
-  @Test
-  public void commandLineHelpDefaults()
-    throws Exception
-  {
-    final Map<String, String> args = new HashMap<>();
-    args.put("h", null);
-
-    run(args, null);
-  }
-
-  private void run(final Map<String, String> argsMap,
+  private void run(final TestInfo testInfo,
+                   final Map<String, String> argsMap,
                    final Map<String, String> config)
     throws Exception
   {
@@ -104,7 +101,7 @@ public class CommandLineHelpTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
-                                                  + testName.currentMethodName()
+                                                  + currentMethodName(testInfo)
                                                   + ".txt")));
   }
 

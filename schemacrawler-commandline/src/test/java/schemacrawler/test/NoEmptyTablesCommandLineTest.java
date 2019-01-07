@@ -39,13 +39,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -57,11 +56,8 @@ public class NoEmptyTablesCommandLineTest
 
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void noEmptyTables()
+  public void noEmptyTables(final TestInfo testInfo)
     throws Exception
   {
     clean(HIDE_EMPTY_TABLES_OUTPUT);
@@ -71,7 +67,7 @@ public class NoEmptyTablesCommandLineTest
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.maximum;
 
-    final String referenceFile = testName.currentMethodName() + ".txt";
+    final String referenceFile = currentMethodName(testInfo) + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 
