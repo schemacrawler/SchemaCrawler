@@ -29,7 +29,6 @@ package schemacrawler.test.sitegen;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -41,29 +40,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 public class SiteLintReportVariationsTest
   extends
-  BaseDatabaseTest
+  BaseSiteVariationsTest
 {
 
   private Path directory;
 
-  @Rule
-  public ProjectRoot projectRoot = new ProjectRoot();
-
-  @Before
-  public void _setupDirectory()
+  @BeforeEach
+  public void _setupDirectory(final TestInfo testInfo)
     throws IOException,
     URISyntaxException
   {
@@ -71,10 +66,8 @@ public class SiteLintReportVariationsTest
     {
       return;
     }
-    final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/_website/lint-report-examples")
-      .normalize().toAbsolutePath();
-    createDirectories(directory);
+
+    directory = resolveTargetFromRootPath(testInfo, "lint-report-examples");
   }
 
   @Test

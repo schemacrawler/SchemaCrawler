@@ -29,7 +29,6 @@ package schemacrawler.test.sitegen;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.createDirectories;
 import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.newBufferedWriter;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -41,31 +40,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import sf.util.IOUtility;
 
 public class SiteGraphVariationsTest
   extends
-  BaseDatabaseTest
+  BaseSiteVariationsTest
 {
 
   private Path directory;
 
-  @Rule
-  public TestName testName = new TestName();
-
-  @Rule
-  public ProjectRoot projectRoot = new ProjectRoot();
-
-  @Before
-  public void _setupDirectory()
+  @BeforeEach
+  public void _setupDirectory(final TestInfo testInfo)
     throws IOException,
     URISyntaxException
   {
@@ -73,14 +64,11 @@ public class SiteGraphVariationsTest
     {
       return;
     }
-    final Path projectRootPath = projectRoot.getProjectRootPath();
-    directory = projectRootPath.resolve("target/_website/diagram-examples")
-      .normalize().toAbsolutePath();
-    createDirectories(directory);
+    directory = resolveTargetFromRootPath(testInfo, "diagram-examples");
   }
 
   @Test
-  public void diagram()
+  public void diagram(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -88,11 +76,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_10_no_schema_colors()
+  public void diagram_10_no_schema_colors(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -102,11 +90,11 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_11_title()
+  public void diagram_11_title(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -115,11 +103,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_12_graphviz_attributes()
+  public void diagram_12_graphviz_attributes(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -141,11 +129,11 @@ public class SiteGraphVariationsTest
     // Test
     config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_2_portablenames()
+  public void diagram_2_portablenames(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -154,11 +142,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_3_important_columns()
+  public void diagram_3_important_columns(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -168,11 +156,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_4_ordinals()
+  public void diagram_4_ordinals(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -182,11 +170,11 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_5_alphabetical()
+  public void diagram_5_alphabetical(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -196,11 +184,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_6_grep()
+  public void diagram_6_grep(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -211,11 +199,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_7_grep_onlymatching()
+  public void diagram_7_grep_onlymatching(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -227,11 +215,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_8_no_cardinality()
+  public void diagram_8_no_cardinality(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -242,11 +230,11 @@ public class SiteGraphVariationsTest
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_9_row_counts()
+  public void diagram_9_row_counts(final TestInfo testInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -256,7 +244,7 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_row_counts", "true");
 
-    run(args, config, directory.resolve(testName.currentMethodName() + ".png"));
+    run(args, config, diagramPath(testInfo));
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -268,6 +256,11 @@ public class SiteGraphVariationsTest
     configProperties.putAll(config);
     configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
     return configFile;
+  }
+
+  private Path diagramPath(final TestInfo testInfo)
+  {
+    return directory.resolve(currentMethodName(testInfo) + ".png");
   }
 
   private void run(final Map<String, String> argsMap,
