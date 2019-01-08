@@ -28,11 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.utility.Identifiers;
 
@@ -47,8 +47,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "  ", "\t", };
     for (final String word: words)
     {
-      assertFalse(word, identifiers.isReservedWord(word));
-      assertTrue(word, identifiers.isToBeQuoted(word));
+      assertThat(word, identifiers.isReservedWord(word), is(false));
+      assertThat(word, identifiers.isToBeQuoted(word), is(true));
     }
   }
 
@@ -58,8 +58,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "", null, };
     for (final String word: words)
     {
-      assertFalse(word, identifiers.isReservedWord(word));
-      assertFalse(word, identifiers.isToBeQuoted(word));
+      assertThat(word, identifiers.isReservedWord(word), is(false));
+      assertThat(word, identifiers.isToBeQuoted(word), is(false));
     }
   }
 
@@ -76,8 +76,8 @@ public class IdentifiersTest
                                           " leaD" };
     for (final String word: words)
     {
-      assertFalse(word, identifiers.isReservedWord(word));
-      assertTrue(word, identifiers.isToBeQuoted(word));
+      assertThat(word, identifiers.isReservedWord(word), is(false));
+      assertThat(word, identifiers.isToBeQuoted(word), is(true));
     }
   }
 
@@ -100,7 +100,7 @@ public class IdentifiersTest
     {
       final String name = names[i];
       final String quotedName = quotedNames[i];
-      assertEquals(quotedName, identifiers.quoteName(name));
+      assertThat(quotedName, equalTo(identifiers.quoteName(name)));
     }
   }
 
@@ -110,8 +110,8 @@ public class IdentifiersTest
     final String[] words = new String[] { "update", "UPDATE", };
     for (final String word: words)
     {
-      assertTrue(word, identifiers.isReservedWord(word));
-      assertTrue(word, identifiers.isToBeQuoted(word));
+      assertThat(word, identifiers.isReservedWord(word), is(true));
+      assertThat(word, identifiers.isToBeQuoted(word), is(true));
     }
   }
 
@@ -139,8 +139,8 @@ public class IdentifiersTest
                                           "दी८दी" };
     for (final String word: words)
     {
-      assertFalse(word, identifiers.isReservedWord(word));
-      assertFalse(word, identifiers.isToBeQuoted(word));
+      assertThat(word, identifiers.isReservedWord(word), is(false));
+      assertThat(word, identifiers.isToBeQuoted(word), is(false));
     }
   }
 

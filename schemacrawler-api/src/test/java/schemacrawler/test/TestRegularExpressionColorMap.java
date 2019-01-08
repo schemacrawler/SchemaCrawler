@@ -28,13 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
+import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import java.util.Properties;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import sf.util.Color;
 import sf.util.RegularExpressionColorMap;
@@ -50,13 +51,13 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC.*", "1A3B5");
-    assertFalse(colorMap.match("SCH").isPresent());
+    assertThat(colorMap.match("SCH"), emptyOptional());
 
     colorMap.put("SC.*", test_color.toString().substring(1) + "A");
-    assertFalse(colorMap.match("SCH").isPresent());
+    assertThat(colorMap.match("SCH"), emptyOptional());
 
     colorMap.put("SC.*", test_color.toString().substring(1));
-    assertFalse(colorMap.match("SCH").isPresent());
+    assertThat(colorMap.match("SCH"), emptyOptional());
   }
 
   @Test
@@ -65,7 +66,7 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC(H", test_color.toString());
-    assertFalse(colorMap.match("SCH").isPresent());
+    assertThat(colorMap.match("SCH"), emptyOptional());
 
   }
 
@@ -78,11 +79,11 @@ public class TestRegularExpressionColorMap
     properties.put("000000", "QW.*");
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap(properties);
 
-    assertEquals(2, colorMap.size());
-    assertTrue(colorMap.match("SCH").isPresent());
-    assertTrue(colorMap.match("SCH").get().equals(test_color));
-    assertFalse(colorMap.match("SHC").isPresent());
-    assertTrue(colorMap.match("QW").isPresent());
+    assertThat(colorMap.size(), is(2));
+    assertThat(colorMap.match("SCH"), optionalWithValue());
+    assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
+    assertThat(colorMap.match("SHC"), emptyOptional());
+    assertThat(colorMap.match("QW"), optionalWithValue());
   }
 
   @Test
@@ -91,10 +92,10 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC.*", test_color.toString());
-    assertTrue(colorMap.match("SCH").isPresent());
-    assertTrue(colorMap.match("SCH").get().equals(test_color));
-    assertTrue(colorMap.match("SC.*").isPresent());
-    assertFalse(colorMap.match("SHC").isPresent());
+    assertThat(colorMap.match("SCH"), optionalWithValue());
+    assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
+    assertThat(colorMap.match("SC.*"), optionalWithValue());
+    assertThat(colorMap.match("SHC"), emptyOptional());
   }
 
   @Test
@@ -103,8 +104,8 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.putLiteral("SC.*", test_color);
-    assertFalse(colorMap.match("SCH").isPresent());
-    assertTrue(colorMap.match("SC.*").isPresent());
+    assertThat(colorMap.match("SCH"), emptyOptional());
+    assertThat(colorMap.match("SC.*"), optionalWithValue());
 
   }
 

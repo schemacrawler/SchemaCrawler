@@ -29,13 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.number.OrderingComparison.comparesEqualTo;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 import static org.hamcrest.number.OrderingComparison.lessThan;
-import static org.junit.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.TableType;
 import schemacrawler.test.utility.BaseDatabaseTest;
@@ -44,11 +45,10 @@ public class TableTypeTest
   extends BaseDatabaseTest
 {
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void tableTypeCompare0()
-    throws Exception
   {
-    new TableType(null);
+    assertThrows(IllegalArgumentException.class, () -> new TableType(null));
   }
 
   @Test
@@ -59,7 +59,7 @@ public class TableTypeTest
     final TableType tableType2 = new TableType("table");
     assertThat(tableType1, comparesEqualTo(tableType2));
     assertThat(tableType2, comparesEqualTo(tableType1));
-    assertEquals(tableType1, tableType2);
+    assertThat(tableType1, equalTo(tableType2));
   }
 
   @Test

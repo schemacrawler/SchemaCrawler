@@ -29,12 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -121,26 +123,26 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertNotNull("Schema not found", schema);
+    assertThat("Schema not found", schema, notNullValue());
 
     final Table table = catalog.lookupTable(schema, tableName).orElse(null);
-    assertNotNull("Table " + tableName + " not found", table);
+    assertThat("Table " + tableName + " not found", table, notNullValue());
     if (table.getName().equals(tableName))
     {
       final Column[] columns = table.getColumns().toArray(new Column[0]);
       Arrays.sort(columns,
                   NamedObjectSort.getNamedObjectSort(sortAlphabetically));
-      assertEquals("Column count does not match",
-                   expectedValues.length,
-                   columns.length);
+      assertThat("Column count does not match",
+                 expectedValues.length,
+                 equalTo(columns.length));
       for (int i = 0; i < columns.length; i++)
       {
         final Column column = columns[i];
-        assertEquals("Columns not "
-                     + (sortAlphabetically? "alphabetically": "naturally")
-                     + " sorted",
-                     expectedValues[i],
-                     column.getName());
+        assertThat("Columns not "
+                   + (sortAlphabetically? "alphabetically": "naturally")
+                   + " sorted",
+                   expectedValues[i],
+                   equalTo(column.getName()));
       }
     }
   }
@@ -154,10 +156,10 @@ public class SortingTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertNotNull("Schema not found", schema);
+    assertThat("Schema not found", schema, notNullValue());
 
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertEquals("Table count does not match", 10, tables.length);
+    assertThat("Table count does not match", tables.length, is(10));
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
@@ -166,17 +168,17 @@ public class SortingTest
           .toArray(new ForeignKey[0]);
         Arrays.sort(foreignKeys,
                     NamedObjectSort.getNamedObjectSort(sortAlphabetically));
-        assertEquals("Foreign key count does not match",
-                     expectedValues.length,
-                     foreignKeys.length);
+        assertThat("Foreign key count does not match",
+                   expectedValues.length,
+                   equalTo(foreignKeys.length));
         for (int i = 0; i < foreignKeys.length; i++)
         {
           final ForeignKey foreignKey = foreignKeys[i];
-          assertEquals("Foreign keys not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted",
-                       expectedValues[i],
-                       foreignKey.getName());
+          assertThat("Foreign keys not "
+                     + (sortAlphabetically? "alphabetically": "naturally")
+                     + " sorted",
+                     expectedValues[i],
+                     equalTo(foreignKey.getName()));
         }
       }
     }
@@ -191,7 +193,7 @@ public class SortingTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertEquals("Table count does not match", 10, tables.length);
+    assertThat("Table count does not match", tables.length, is(10));
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
@@ -199,17 +201,17 @@ public class SortingTest
         final Index[] indexes = table.getIndexes().toArray(new Index[0]);
         Arrays.sort(indexes,
                     NamedObjectSort.getNamedObjectSort(sortAlphabetically));
-        assertEquals("Index count does not match for table " + table,
-                     expectedValues.length,
-                     indexes.length);
+        assertThat("Index count does not match for table " + table,
+                   expectedValues.length,
+                   equalTo(indexes.length));
         for (int i = 0; i < indexes.length; i++)
         {
           final Index index = indexes[i];
-          assertEquals("Indexes not "
-                       + (sortAlphabetically? "alphabetically": "naturally")
-                       + " sorted  for table " + table,
-                       expectedValues[i],
-                       index.getName());
+          assertThat("Indexes not "
+                     + (sortAlphabetically? "alphabetically": "naturally")
+                     + " sorted  for table " + table,
+                     expectedValues[i],
+                     equalTo(index.getName()));
         }
       }
     }

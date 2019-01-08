@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.toSnakeCase;
 
@@ -43,21 +43,21 @@ public class UtilityTest
   @Test
   public void isBlankTest()
   {
-    assertTrue(isBlank(null));
-    assertTrue(isBlank(""));
-    assertTrue(isBlank(" "));
-    assertTrue(isBlank("   "));
-    assertTrue(isBlank("\t"));
-    assertTrue(isBlank("\n"));
-    assertTrue(isBlank("\r"));
-    assertTrue(isBlank(" \t "));
-    assertTrue(isBlank("\t\t"));
+    assertThat(isBlank(null), is(true));
+    assertThat(isBlank(""), is(true));
+    assertThat(isBlank(" "), is(true));
+    assertThat(isBlank("   "), is(true));
+    assertThat(isBlank("\t"), is(true));
+    assertThat(isBlank("\n"), is(true));
+    assertThat(isBlank("\r"), is(true));
+    assertThat(isBlank(" \t "), is(true));
+    assertThat(isBlank("\t\t"), is(true));
 
-    assertTrue(!isBlank("a"));
-    assertTrue(!isBlank("©"));
-    assertTrue(!isBlank(" a"));
-    assertTrue(!isBlank("a "));
-    assertTrue(!isBlank("a b"));
+    assertThat(!isBlank("a"), is(true));
+    assertThat(!isBlank("©"), is(true));
+    assertThat(!isBlank(" a"), is(true));
+    assertThat(!isBlank("a "), is(true));
+    assertThat(!isBlank("a b"), is(true));
   }
 
   @Test

@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import sf.util.Color;
 
@@ -41,16 +42,16 @@ public class TestColor
   public void colors()
   {
     final Color color1 = Color.fromRGB(0, 0, 0);
-    assertEquals("#000000", color1.toString());
+    assertThat(color1.toString(), is("#000000"));
 
     final Color color2 = Color.fromRGB(0, 0, 255);
-    assertEquals("#0000FF", color2.toString());
+    assertThat(color2.toString(), is("#0000FF"));
 
     final Color color3 = Color.fromRGB(0, 9, 255);
-    assertEquals("#0009FF", color3.toString());
+    assertThat(color3.toString(), is("#0009FF"));
 
     final Color color4 = Color.fromRGB(12, 0, 1);
-    assertEquals("#0C0001", color4.toString());
+    assertThat(color4.toString(), is("#0C0001"));
   }
 
 }

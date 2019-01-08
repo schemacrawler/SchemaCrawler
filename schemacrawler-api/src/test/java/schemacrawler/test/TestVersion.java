@@ -29,7 +29,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.startsWith;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 
@@ -37,9 +37,9 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Version;
 import schemacrawler.test.utility.TestOutputStream;
@@ -49,14 +49,14 @@ public class TestVersion
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @Before
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {
@@ -72,7 +72,7 @@ public class TestVersion
     throws Exception
   {
     Version.main(new String[0]);
-    assertTrue(out.getFileContents().startsWith("SchemaCrawler 15.03.04"));
+    assertThat(out.getFileContents(), startsWith("SchemaCrawler 15.03.04"));
     assertThat(fileResource(err), hasNoContent());
   }
 

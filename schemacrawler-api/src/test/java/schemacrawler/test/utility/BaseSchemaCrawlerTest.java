@@ -49,8 +49,8 @@ public abstract class BaseSchemaCrawlerTest
     .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
     .toOptions();
 
-  @BeforeClass
   @BeforeAll
+  @BeforeClass
   public static void setApplicationLogLevel()
     throws Exception
   {

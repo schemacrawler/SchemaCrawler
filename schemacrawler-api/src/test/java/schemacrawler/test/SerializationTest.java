@@ -29,12 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 
 import org.apache.commons.lang3.SerializationUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -52,29 +56,32 @@ public class SerializationTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
+    assertThat("Could not obtain catalog", catalog, notNullValue());
+    assertThat("Could not find any schemas",
+               catalog.getSchemas(),
+               is(not(empty())));
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 catalog.getTables(schema).size());
+    assertThat("Could not obtain schema", schema, notNullValue());
+    assertThat("Unexpected number of tables in the schema",
+               catalog.getTables(schema),
+               hasSize(10));
 
     final Catalog clonedCatalog = SerializationUtils.clone(catalog);
 
-    assertEquals(catalog, clonedCatalog);
+    assertThat(catalog, equalTo(clonedCatalog));
 
-    assertNotNull("Could not obtain catalog", clonedCatalog);
-    assertTrue("Could not find any schemas",
-               clonedCatalog.getSchemas().size() > 0);
+    assertThat("Could not obtain catalog", clonedCatalog, notNullValue());
+    assertThat("Could not find any schemas",
+               clonedCatalog.getSchemas(),
+               is(not(empty())));
 
     final Schema clonedSchema = clonedCatalog.lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
-    assertNotNull("Could not obtain schema", clonedSchema);
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 clonedCatalog.getTables(clonedSchema).size());
+    assertThat("Could not obtain schema", clonedSchema, notNullValue());
+    assertThat("Unexpected number of tables in the schema",
+               clonedCatalog.getTables(clonedSchema),
+               hasSize(10));
   }
 
 }

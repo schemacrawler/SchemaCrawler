@@ -29,15 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -136,7 +136,7 @@ public class TableTypesTest
       final Catalog catalog = getCatalog(schemaCrawlerOptionsBuilder
         .toOptions());
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 5, schemas.length);
+      assertThat("Schema count does not match", schemas.length, is(5));
       for (final Schema schema: schemas)
       {
         out.println(String.format("%s", schema.getFullName()));
