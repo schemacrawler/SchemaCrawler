@@ -30,7 +30,6 @@ package schemacrawler.test.graph;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
@@ -73,8 +72,8 @@ public class DirectedGraphTest
   {
     final DirectedGraph<String> graph = new DirectedGraph<>("");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
     graph.addEdge("A", "B");
     graph.addEdge("B", "A");

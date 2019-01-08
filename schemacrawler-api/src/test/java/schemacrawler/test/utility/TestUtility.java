@@ -44,7 +44,9 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static sf.util.IOUtility.isFileReadable;
 import static sf.util.Utility.isBlank;
 
@@ -242,8 +244,10 @@ public final class TestUtility
   public static void validateDiagram(final Path diagramFile)
     throws IOException
   {
-    assertTrue("Diagram file not created", exists(diagramFile));
-    assertTrue("Diagram file has 0 bytes size", size(diagramFile) > 0);
+    assertThat("Diagram file not created", exists(diagramFile), is(true));
+    assertThat("Diagram file has 0 bytes size",
+               size(diagramFile),
+               greaterThan(0L));
   }
 
   public static Path writeConfigToTempFile(final Config config)

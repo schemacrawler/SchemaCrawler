@@ -28,11 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -63,23 +65,24 @@ public class SchemaCrawlerDeepTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
 
     final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
-    assertTrue("Should not find any tables",
-               catalog.getTables(systemSchema).size() == 0);
-    assertEquals("Expected no routines, since routine retrieval is turned off by default",
-                 0,
-                 catalog.getRoutines(systemSchema).size());
+    assertThat("Should not find any tables",
+               catalog.getTables(systemSchema),
+               empty());
+    assertThat("Expected no routines, since routine retrieval is turned off by default",
+               catalog.getRoutines(systemSchema),
+               empty());
 
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Could not find any tables",
-                 10,
-                 catalog.getTables(schema).size());
-    assertEquals("Expected no routines, since routine retrieval is turned off by default",
-                 0,
-                 catalog.getRoutines(schema).size());
+    assertThat("Could not find any tables",
+               catalog.getTables(schema),
+               hasSize(10));
+    assertThat("Expected no routines, since routine retrieval is turned off by default",
+               catalog.getRoutines(schema),
+               empty());
 
     // Try negative test
     final Table table0 = (Table) catalog.getTables(schema).toArray()[0];
-    assertTrue("Could not find any columns", table0.getColumns().size() > 0);
+    assertThat("Could not find any columns", table0.getColumns(), not(empty()));
 
     final MutableTable table1 = new MutableTable(table0.getSchema(),
                                                  "Test Table 1");
@@ -120,7 +123,7 @@ public class SchemaCrawlerDeepTest
       table2.addTableConstraint((MutableTableConstraint) tableConstraint);
     }
 
-    assertFalse("Tables should not be equal", table1.equals(table2));
+    assertThat("Tables should not be equal", table1, not(equalTo(table2)));
 
   }
 }

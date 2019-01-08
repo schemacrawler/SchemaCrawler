@@ -29,14 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Catalog;
@@ -80,7 +81,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(26, fkReferenceCount);
+    assertThat(fkReferenceCount, is(26));
   }
 
   @Test
@@ -116,7 +117,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(2, fkReferenceCount);
+    assertThat(fkReferenceCount, is(2));
   }
 
   @Test
@@ -152,7 +153,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(1, fkReferenceCount);
+    assertThat(fkReferenceCount, is(1));
   }
 
   @Test
@@ -186,7 +187,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(2, fkReferenceCount);
+    assertThat(fkReferenceCount, is(2));
   }
 
   @Test
@@ -220,7 +221,7 @@ public class SchemaCrawlerReferenceTest
       }
     }
 
-    assertEquals(1, fkReferenceCount);
+    assertThat(fkReferenceCount, is(1));
   }
 
   private void assertReferencedColumnDoesNotExist(final Catalog catalog,
@@ -228,12 +229,13 @@ public class SchemaCrawlerReferenceTest
                                                   final boolean assertDataNotLoaded)
   {
     final Table table = column.getParent();
-    assertNull("Primary key table table should not be in the database - "
+    assertThat("Primary key table table should not be in the database - "
                + table.getName(),
-               catalog.lookupTable(table.getSchema(), table.getName())
-                 .orElse(null));
-    assertTrue("Column references do not match",
-               column == table.lookupColumn(column.getName()).get());
+               catalog.lookupTable(table.getSchema(), table.getName()),
+               emptyOptional());
+    assertThat("Column references do not match",
+               column == table.lookupColumn(column.getName()).get(),
+               is(true));
 
     if (assertDataNotLoaded)
     {
@@ -261,12 +263,12 @@ public class SchemaCrawlerReferenceTest
   private void assertReferencedColumnExists(final Catalog catalog,
                                             final Column column)
   {
-    assertTrue(column != null);
+    assertThat(column, notNullValue());
     final Table table = column.getParent();
-    assertTrue("Table references do not match - " + table.getName(),
+    assertThat("Table references do not match - " + table.getName(),
                table == catalog.lookupTable(table.getSchema(), table.getName())
                  .get());
-    assertTrue("Column references do not match",
+    assertThat("Column references do not match",
                column == table.lookupColumn(column.getName()).get());
   }
 

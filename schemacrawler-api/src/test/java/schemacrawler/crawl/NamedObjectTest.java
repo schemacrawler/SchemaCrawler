@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.crawl;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
@@ -67,7 +68,7 @@ public class NamedObjectTest
         tables.add(table);
       }
     }
-    assertEquals("", schemaNames.length * tableNames.length, tables.size());
+    assertThat(tables.size(), is(schemaNames.length * tableNames.length));
 
   }
 
