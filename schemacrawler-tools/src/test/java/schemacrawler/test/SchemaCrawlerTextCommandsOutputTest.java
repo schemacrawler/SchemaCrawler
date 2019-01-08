@@ -35,8 +35,8 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.clean;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
@@ -58,7 +58,7 @@ public class SchemaCrawlerTextCommandsOutputTest
 
   private static final String COMMAND_OUTPUT = "command_output/";
 
-  @BeforeClass
+  @BeforeAll
   public static void before()
     throws Exception
   {

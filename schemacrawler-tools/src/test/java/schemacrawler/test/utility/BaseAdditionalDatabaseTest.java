@@ -43,6 +43,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
@@ -58,6 +59,7 @@ public abstract class BaseAdditionalDatabaseTest
   protected final static Logger LOGGER = Logger
     .getLogger(BaseExecutableTest.class.getName());
 
+  @BeforeAll
   @BeforeClass
   public static final void startLogging()
   {
