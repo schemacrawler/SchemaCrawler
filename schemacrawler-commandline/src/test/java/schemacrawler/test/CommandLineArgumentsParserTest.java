@@ -28,14 +28,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static schemacrawler.test.utility.IsEmptyMap.isEmptyMap;
+import static schemacrawler.test.utility.IsMapWithSize.isMapWithSize;
 
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import us.fatehi.commandlineparser.CommandLineArgumentsParser;
 
@@ -54,15 +63,14 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals("value with spaces", optionsMap.get("blah"));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("blah", "value with spaces"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(1, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
-    assertTrue(nonOptionArguments.contains("othernonoption"));
+    assertThat(nonOptionArguments, hasSize(1));
+    assertThat(nonOptionArguments, not(contains("random")));
+    assertThat(nonOptionArguments, contains("othernonoption"));
   }
 
   @Test
@@ -78,17 +86,15 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(2, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals("value with spaces", optionsMap.get("blah"));
-    assertTrue(optionsMap.containsKey("other option"));
-    assertEquals(null, optionsMap.get("other option"));
+    assertThat(optionsMap, isMapWithSize(2));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("blah", "value with spaces"));
+    assertThat(optionsMap, hasEntry("other option", null));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(1, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
-    assertTrue(nonOptionArguments.contains("othernonoption"));
+    assertThat(nonOptionArguments, hasSize(1));
+    assertThat(nonOptionArguments, not(contains("random")));
+    assertThat(nonOptionArguments, contains("othernonoption"));
   }
 
   @Test
@@ -100,12 +106,12 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(0, optionsMap.size());
+    assertThat(optionsMap, isEmptyMap());
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(1, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
-    assertTrue(nonOptionArguments.contains("nonoption with spaces"));
+    assertThat(nonOptionArguments, hasSize(1));
+    assertThat(nonOptionArguments, not(contains("random")));
+    assertThat(nonOptionArguments, contains("nonoption with spaces"));
   }
 
   @Test
@@ -119,13 +125,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(0, optionsMap.size());
+    assertThat(optionsMap, isEmptyMap());
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(2, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
-    assertTrue(nonOptionArguments.contains("nonoption with spaces"));
-    assertTrue(nonOptionArguments.contains("othernonoption"));
+    assertThat(nonOptionArguments, hasSize(2));
+    assertThat(nonOptionArguments, not(contains("random")));
+    assertThat(nonOptionArguments,
+               containsInAnyOrder("nonoption with spaces", "othernonoption"));
   }
 
   @Test
@@ -137,14 +143,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey(""));
-    assertEquals("blah", optionsMap.get(""));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("", "blah"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -156,14 +161,14 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey(""));
-    assertEquals(null, optionsMap.get(""));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasKey(""));
+    assertThat(optionsMap.get(""), nullValue());
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -175,14 +180,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey(""));
-    assertEquals("", optionsMap.get(""));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("", ""));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -194,14 +198,14 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals(null, optionsMap.get("blah"));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasKey("blah"));
+    assertThat(optionsMap.get("blah"), nullValue());
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -213,16 +217,16 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(2, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals(null, optionsMap.get("blah"));
-    assertTrue(optionsMap.containsKey("foo"));
-    assertEquals(null, optionsMap.get("foo"));
+    assertThat(optionsMap, isMapWithSize(2));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasKey("blah"));
+    assertThat(optionsMap.get("blah"), nullValue());
+    assertThat(optionsMap, hasKey("foo"));
+    assertThat(optionsMap.get("foo"), nullValue());
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -234,14 +238,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals("", optionsMap.get("blah"));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("blah", ""));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -253,14 +256,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals("3", optionsMap.get("blah"));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("blah", "3"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -272,14 +274,13 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertEquals(1, optionsMap.size());
-    assertFalse(optionsMap.containsKey("random"));
-    assertTrue(optionsMap.containsKey("blah"));
-    assertEquals("3", optionsMap.get("blah"));
+    assertThat(optionsMap, isMapWithSize(1));
+    assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, hasEntry("blah", "3"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
-    assertEquals(0, nonOptionArguments.size());
-    assertFalse(nonOptionArguments.contains("random"));
+    assertThat(nonOptionArguments, is(empty()));
+    assertThat(nonOptionArguments, not(contains("random")));
   }
 
 }
