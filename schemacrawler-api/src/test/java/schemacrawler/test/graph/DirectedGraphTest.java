@@ -28,25 +28,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.graph;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Arrays;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 import sf.util.graph.GraphException;
 
 public class DirectedGraphTest
   extends GraphTestBase
 {
-
-  @Rule
-  public TestName testName = new TestName();
 
   @Test
   public void cycles()
@@ -55,8 +51,8 @@ public class DirectedGraphTest
     final DirectedGraph<String> graph = makeGraph();
     graph.addEdge("C", "A");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -66,8 +62,8 @@ public class DirectedGraphTest
   {
     final DirectedGraph<String> graph = makeGraph();
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -75,8 +71,7 @@ public class DirectedGraphTest
   public void smallCycle()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
 
     assertFalse(containsCycleSimple(graph));
     assertFalse(containsCycleTarjan(graph));
@@ -84,8 +79,8 @@ public class DirectedGraphTest
     graph.addEdge("A", "B");
     graph.addEdge("B", "A");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -97,28 +92,28 @@ public class DirectedGraphTest
     {
       final DirectedGraph<String> graph = makeGraph();
 
-      assertEquals("Test run #" + (i + 1),
-                   "[A, E, B, D, C]",
-                   topologicalSort(graph).toString());
+      assertThat("Test run #" + (i + 1),
+                 topologicalSort(graph),
+                 is(Arrays.asList("A", "E", "B", "D", "C")));
     }
   }
 
-  @Test(expected = GraphException.class)
+  @Test
   public void topologicalSortCyclical()
     throws Exception
   {
     final DirectedGraph<String> graph = makeGraph();
     graph.addEdge("C", "A");
 
-    assertEquals(Arrays.asList("E", "A", "D", "B", "C"),
-                 topologicalSort(graph));
+    assertThrows(GraphException.class,
+                 () -> topologicalSort(graph),
+                 () -> Arrays.asList("E", "A", "D", "B", "C").toString());
   }
 
   private DirectedGraph<String> makeGraph()
   {
 
-    final DirectedGraph<String> graph = new DirectedGraph<String>(testName
-      .currentMethodFullName())
+    final DirectedGraph<String> graph = new DirectedGraph<String>("")
     {
       {
         addEdge("A", "B");

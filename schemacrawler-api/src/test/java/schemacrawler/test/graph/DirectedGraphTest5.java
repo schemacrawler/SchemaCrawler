@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.graph;
 
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 /**
@@ -46,21 +44,17 @@ public class DirectedGraphTest5
   extends GraphTestBase
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   // A↔B
   @Test
   public void cycle2()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "A");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -71,14 +65,13 @@ public class DirectedGraphTest5
   public void cycle3()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "C");
     graph.addEdge("C", "A");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -89,15 +82,14 @@ public class DirectedGraphTest5
   public void cycle3WithStub()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "C");
     graph.addEdge("C", "A");
     graph.addEdge("C", "D");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -106,12 +98,11 @@ public class DirectedGraphTest5
   public void linear2()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -120,13 +111,12 @@ public class DirectedGraphTest5
   public void linear3()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "C");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -137,8 +127,7 @@ public class DirectedGraphTest5
   public void twoConnected3Cycles()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "C");
     graph.addEdge("C", "A");
@@ -149,8 +138,8 @@ public class DirectedGraphTest5
 
     graph.addEdge("B", "D");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -161,8 +150,7 @@ public class DirectedGraphTest5
   public void twoIsolated3Cycles()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "B");
     graph.addEdge("B", "C");
     graph.addEdge("C", "A");
@@ -171,8 +159,8 @@ public class DirectedGraphTest5
     graph.addEdge("E", "F");
     graph.addEdge("F", "D");
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 

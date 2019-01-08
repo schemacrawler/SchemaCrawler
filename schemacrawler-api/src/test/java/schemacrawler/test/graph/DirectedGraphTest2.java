@@ -28,28 +28,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.graph;
 
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 public class DirectedGraphTest2
   extends GraphTestBase
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
   public void dbcycles1()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<String>(testName
-      .currentMethodFullName())
+    final DirectedGraph<String> graph = new DirectedGraph<String>("")
     {
       {
         addEdge("ACTIVITIES", "PRODUCTION_VARIANTS");
@@ -67,8 +61,8 @@ public class DirectedGraphTest2
       }
     };
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -76,8 +70,7 @@ public class DirectedGraphTest2
   public void dbcycles2()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<String>(testName
-      .currentMethodFullName())
+    final DirectedGraph<String> graph = new DirectedGraph<String>("")
     {
       {
         addEdge("ORDERS", "ACTIVITIES");
@@ -90,8 +83,8 @@ public class DirectedGraphTest2
       }
     };
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -99,8 +92,7 @@ public class DirectedGraphTest2
   public void dbcycles3()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<String>(testName
-      .currentMethodFullName())
+    final DirectedGraph<String> graph = new DirectedGraph<String>("")
     {
       {
         addEdge("TARGETGROUPS", "ORDERS");
@@ -115,8 +107,8 @@ public class DirectedGraphTest2
       }
     };
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 

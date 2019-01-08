@@ -28,13 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.graph;
 
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 /**
@@ -46,15 +44,11 @@ public class DirectedGraphTest3
   extends GraphTestBase
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
   public void test1()
     throws Exception
   {
-    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>(testName
-      .currentMethodFullName())
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
     {
       {
         addEdge(1, 2);
@@ -63,8 +57,8 @@ public class DirectedGraphTest3
       }
     };
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -72,8 +66,7 @@ public class DirectedGraphTest3
   public void test2()
     throws Exception
   {
-    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>(testName
-      .currentMethodFullName())
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
     {
       {
         addEdge(1, 2);
@@ -82,8 +75,8 @@ public class DirectedGraphTest3
       }
     };
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -91,8 +84,7 @@ public class DirectedGraphTest3
   public void test3()
     throws Exception
   {
-    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>(testName
-      .currentMethodFullName())
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
     {
       {
         addEdge(1, 2);
@@ -103,8 +95,8 @@ public class DirectedGraphTest3
       }
     };
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -112,8 +104,7 @@ public class DirectedGraphTest3
   public void test4()
     throws Exception
   {
-    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>(testName
-      .currentMethodFullName())
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
     {
       {
         addEdge(1, 2);
@@ -125,8 +116,8 @@ public class DirectedGraphTest3
       }
     };
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 
@@ -134,8 +125,7 @@ public class DirectedGraphTest3
   public void test5()
     throws Exception
   {
-    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>(testName
-      .currentMethodFullName())
+    final DirectedGraph<Integer> graph = new DirectedGraph<Integer>("")
     {
       {
         addEdge(1, 2);
@@ -145,8 +135,8 @@ public class DirectedGraphTest3
       }
     };
 
-    assertTrue(containsCycleSimple(graph));
-    assertTrue(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(true));
+    assertThat(containsCycleTarjan(graph), is(true));
 
   }
 

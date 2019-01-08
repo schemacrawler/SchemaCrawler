@@ -28,12 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.graph;
 
 
-import static org.junit.Assert.assertFalse;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.TestName;
 import sf.util.graph.DirectedGraph;
 
 /**
@@ -45,18 +44,14 @@ public class DirectedGraphBoundaryTest
   extends GraphTestBase
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
   public void emptyGraph()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -64,12 +59,11 @@ public class DirectedGraphBoundaryTest
   public void selfLoop()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addEdge("A", "A");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 
@@ -77,12 +71,11 @@ public class DirectedGraphBoundaryTest
   public void singleVertex()
     throws Exception
   {
-    final DirectedGraph<String> graph = new DirectedGraph<>(testName
-      .currentMethodFullName());
+    final DirectedGraph<String> graph = new DirectedGraph<>("");
     graph.addVertex("A");
 
-    assertFalse(containsCycleSimple(graph));
-    assertFalse(containsCycleTarjan(graph));
+    assertThat(containsCycleSimple(graph), is(false));
+    assertThat(containsCycleTarjan(graph), is(false));
 
   }
 

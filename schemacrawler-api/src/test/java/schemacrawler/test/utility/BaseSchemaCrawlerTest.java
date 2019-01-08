@@ -35,6 +35,7 @@ import static sf.util.Utility.applyApplicationLogLevel;
 import java.util.logging.Level;
 
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -49,6 +50,7 @@ public abstract class BaseSchemaCrawlerTest
     .toOptions();
 
   @BeforeClass
+  @BeforeAll
   public static void setApplicationLogLevel()
     throws Exception
   {
