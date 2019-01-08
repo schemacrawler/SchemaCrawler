@@ -37,7 +37,6 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.test.utility.IsEmptyMap.isEmptyMap;
 import static schemacrawler.test.utility.IsMapWithSize.isMapWithSize;
 
@@ -65,6 +64,7 @@ public class CommandLineArgumentsParserTest
     final Map<String, String> optionsMap = parser.getOptionsMap();
     assertThat(optionsMap, isMapWithSize(1));
     assertThat(optionsMap, not(hasKey("random")));
+    assertThat(optionsMap, not(hasKey("othernonoption")));
     assertThat(optionsMap, hasEntry("blah", "value with spaces"));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
@@ -89,6 +89,7 @@ public class CommandLineArgumentsParserTest
     assertThat(optionsMap, isMapWithSize(2));
     assertThat(optionsMap, not(hasKey("random")));
     assertThat(optionsMap, hasEntry("blah", "value with spaces"));
+    assertThat(optionsMap, not(hasKey("othernonoption")));
     assertThat(optionsMap, hasEntry("other option", null));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
@@ -163,12 +164,10 @@ public class CommandLineArgumentsParserTest
     final Map<String, String> optionsMap = parser.getOptionsMap();
     assertThat(optionsMap, isMapWithSize(1));
     assertThat(optionsMap, not(hasKey("random")));
-    assertThat(optionsMap, hasKey(""));
-    assertThat(optionsMap.get(""), nullValue());
+    assertThat(optionsMap, hasEntry("", null));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -186,7 +185,6 @@ public class CommandLineArgumentsParserTest
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -200,12 +198,10 @@ public class CommandLineArgumentsParserTest
     final Map<String, String> optionsMap = parser.getOptionsMap();
     assertThat(optionsMap, isMapWithSize(1));
     assertThat(optionsMap, not(hasKey("random")));
-    assertThat(optionsMap, hasKey("blah"));
-    assertThat(optionsMap.get("blah"), nullValue());
+    assertThat(optionsMap, hasEntry("blah", null));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -219,14 +215,11 @@ public class CommandLineArgumentsParserTest
     final Map<String, String> optionsMap = parser.getOptionsMap();
     assertThat(optionsMap, isMapWithSize(2));
     assertThat(optionsMap, not(hasKey("random")));
-    assertThat(optionsMap, hasKey("blah"));
-    assertThat(optionsMap.get("blah"), nullValue());
-    assertThat(optionsMap, hasKey("foo"));
-    assertThat(optionsMap.get("foo"), nullValue());
+    assertThat(optionsMap, hasEntry("blah", null));
+    assertThat(optionsMap, hasEntry("foo", null));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -244,7 +237,6 @@ public class CommandLineArgumentsParserTest
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -262,7 +254,6 @@ public class CommandLineArgumentsParserTest
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
   @Test
@@ -280,7 +271,6 @@ public class CommandLineArgumentsParserTest
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, is(empty()));
-    assertThat(nonOptionArguments, not(contains("random")));
   }
 
 }
