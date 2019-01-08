@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -40,8 +40,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -51,7 +51,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -65,34 +64,32 @@ public class PrimaryKeyWeakAssociationsTest
   extends BaseSqliteTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void weakAssociations1()
+  public void weakAssociations1(final TestInfo testInfo)
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_1.sql");
+    weakAssociations(testInfo, "/pk_test_1.sql");
   }
 
   @Test
-  public void weakAssociations2()
+  public void weakAssociations2(final TestInfo testInfo)
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_2.sql");
+    weakAssociations(testInfo, "/pk_test_2.sql");
   }
 
   @Test
-  public void weakAssociations3()
+  public void weakAssociations3(final TestInfo testInfo)
     throws Exception
   {
-    weakAssociations(testName.currentMethodFullName(), "/pk_test_3.sql");
+    weakAssociations(testInfo, "/pk_test_3.sql");
   }
 
-  private void weakAssociations(final String currentMethodFullName,
+  private void weakAssociations(final TestInfo testInfo,
                                 final String databaseSqlResource)
     throws Exception
   {
+    final String currentMethodFullName = currentMethodFullName(testInfo);
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
 
     final Config config = new Config();

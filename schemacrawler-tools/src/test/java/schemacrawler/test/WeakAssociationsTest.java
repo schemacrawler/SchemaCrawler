@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -39,8 +39,8 @@ import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -50,7 +50,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -62,11 +61,8 @@ public class WeakAssociationsTest
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void weakAssociations()
+  public void weakAssociations(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -107,7 +103,6 @@ public class WeakAssociationsTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 }

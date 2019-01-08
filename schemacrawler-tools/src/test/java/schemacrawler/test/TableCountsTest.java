@@ -29,16 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.analysis.counts.CountsUtility;
@@ -58,11 +57,8 @@ public class TableCountsTest
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void tableCounts()
+  public void tableCounts(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -95,8 +91,7 @@ public class TableCountsTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
 }

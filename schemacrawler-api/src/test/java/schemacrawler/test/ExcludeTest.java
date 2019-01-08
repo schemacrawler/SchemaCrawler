@@ -38,8 +38,8 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import java.util.Arrays;
 import java.util.logging.Level;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -49,7 +49,6 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.SchemaCrawlerLogger;
@@ -61,11 +60,8 @@ public class ExcludeTest
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ExcludeTest.class.getName());
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void excludeColumns()
+  public void excludeColumns(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -105,8 +101,7 @@ public class ExcludeTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
 }

@@ -29,17 +29,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -51,18 +52,14 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 
 public class SchemaCrawlerGrepTest
   extends BaseDatabaseTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void grepColumns()
+  public void grepColumns(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -75,7 +72,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 6, schemas.length);
+      assertThat("Schema count does not match", schemas.length, is(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -93,8 +90,7 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
   @Test
@@ -113,28 +109,28 @@ public class SchemaCrawlerGrepTest
 
     catalog = getCatalog(schemaCrawlerOptions);
     schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
-    assertNotNull("Schema PUBLIC.BOOKS not found", schema);
-    assertEquals(1, catalog.getTables(schema).size());
+    assertThat("Schema PUBLIC.BOOKS not found", schema, notNullValue());
+    assertThat(catalog.getTables(schema), hasSize(1));
     table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
-    assertNotNull("Table BOOKAUTHORS not found", table);
+    assertThat("Table BOOKAUTHORS not found", table, notNullValue());
 
     schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
       .fromOptions(schemaCrawlerOptions).parentTableFilterDepth(1).toOptions();
     catalog = getCatalog(schemaCrawlerOptions);
     schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
-    assertNotNull("Schema PUBLIC.BOOKS not found", schema);
-    assertEquals(3, catalog.getTables(schema).size());
+    assertThat("Schema PUBLIC.BOOKS not found", schema, notNullValue());
+    assertThat(catalog.getTables(schema).size(), is(3));
     table = catalog.lookupTable(schema, "BOOKAUTHORS").get();
-    assertNotNull("Table BOOKAUTHORS not found", table);
+    assertThat("Table BOOKAUTHORS not found", table, notNullValue());
     table = catalog.lookupTable(schema, "BOOKS").get();
-    assertNotNull("Table BOOKS not found", table);
+    assertThat("Table BOOKS not found", table, notNullValue());
     table = catalog.lookupTable(schema, "AUTHORS").get();
-    assertNotNull("Table AUTHORS not found", table);
+    assertThat("Table AUTHORS not found", table, notNullValue());
 
   }
 
   @Test
-  public void grepCombined()
+  public void grepCombined(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -148,7 +144,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 6, schemas.length);
+      assertThat("Schema count does not match", schemas.length, is(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -166,12 +162,11 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
   @Test
-  public void grepDefinitions()
+  public void grepDefinitions(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -184,7 +179,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 6, schemas.length);
+      assertThat("Schema count does not match", schemas.length, is(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -202,12 +197,11 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
   }
 
   @Test
-  public void grepProcedures()
+  public void grepProcedures(final TestInfo testInfo)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -221,7 +215,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 6, schemas.length);
+      assertThat("Schema count does not match", schemas.length, is(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -240,8 +234,7 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(testName
-                 .currentMethodFullName())));
+               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
 
   }
 

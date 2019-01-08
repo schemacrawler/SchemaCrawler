@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -38,8 +38,8 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 import de.danielbechler.diff.node.DiffNode;
 import de.danielbechler.diff.node.DiffNode.State;
@@ -54,7 +54,6 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.test.utility.BaseDatabaseTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
@@ -67,17 +66,14 @@ public class DiffTest
   BaseDatabaseTest
 {
 
-  @Rule
-  public TestName testName = new TestName();
-
   @Test
-  public void diffCatalog()
+  public void diffCatalog(final TestInfo testInfo)
     throws Exception
   {
     final Catalog catalog1 = getCatalog("/test1.db");
     final Catalog catalog2 = getCatalog("/test2.db");
 
-    final String currentMethodFullName = testName.currentMethodFullName();
+    final String currentMethodFullName = currentMethodFullName(testInfo);
 
     final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
 
@@ -117,17 +113,17 @@ public class DiffTest
   }
 
   @Test
-  public void printColumns1()
+  public void printColumns1(final TestInfo testInfo)
     throws Exception
   {
-    printColumns(testName.currentMethodFullName(), "/test1.db");
+    printColumns(testInfo, "/test1.db");
   }
 
   @Test
-  public void printColumns2()
+  public void printColumns2(final TestInfo testInfo)
     throws Exception
   {
-    printColumns(testName.currentMethodFullName(), "/test2.db");
+    printColumns(testInfo, "/test2.db");
   }
 
   private Catalog getCatalog(final String database)
@@ -149,11 +145,10 @@ public class DiffTest
     return catalog;
   }
 
-  private void printColumns(final String currentMethodFullName,
-                            final String database)
+  private void printColumns(final TestInfo testInfo, final String database)
     throws Exception
   {
-
+    final String currentMethodFullName = currentMethodFullName(testInfo);
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
