@@ -32,9 +32,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.logging.Level;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedDatabase;
 import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
@@ -50,7 +50,7 @@ public class MonetDBTest
 
   private boolean isDatabaseRunning;
 
-  @After
+  @AfterEach
   public void stopDatabaseServer()
     throws MonetDBEmbeddedException
   {
@@ -60,7 +60,7 @@ public class MonetDBTest
     }
   }
 
-  @Before
+  @BeforeEach
   public void createDatabase()
   {
     try

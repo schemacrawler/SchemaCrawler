@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -44,7 +45,7 @@ public class TestBundledDistributions
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    assertTrue(registry.hasDatabaseSystemIdentifier("offline"));
+    assertThat(registry.hasDatabaseSystemIdentifier("offline"), is(true));
   }
 
 }

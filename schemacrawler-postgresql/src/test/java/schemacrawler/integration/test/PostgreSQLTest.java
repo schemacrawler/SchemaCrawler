@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static sf.util.DatabaseUtility.checkConnection;
 import static sf.util.Utility.isBlank;
 
@@ -41,10 +41,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -66,7 +66,7 @@ public class PostgreSQLTest
   extends BasePostgreSQLTest
 {
 
-  @BeforeClass
+  @BeforeAll
   public static void checkRun()
   {
     final String property = System.getProperty("complete");
@@ -78,7 +78,7 @@ public class PostgreSQLTest
   private boolean isDatabaseRunning;
   private EmbeddedPostgreSQLWrapper embeddedPostgreSQL;
 
-  @Before
+  @BeforeEach
   public void createDatabase()
     throws SchemaCrawlerException, SQLException, IOException
   {
@@ -101,7 +101,7 @@ public class PostgreSQLTest
     }
   }
 
-  @After
+  @AfterEach
   public void stopDatabaseServer()
     throws SchemaCrawlerException
   {

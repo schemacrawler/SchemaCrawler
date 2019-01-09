@@ -96,9 +96,10 @@ public final class Main
       System.err
         .printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
       final String errorMessage = e.getMessage();
-      System.err.print("Error: ");
-      System.err.println(errorMessage);
-      System.err.println();
+      if (errorMessage != null)
+      {
+        System.err.printf("Error: %s%n%n", errorMessage);
+      }
       System.err
         .println("Re-run SchemaCrawler with just the\n-?\noption for help");
       System.err.println();

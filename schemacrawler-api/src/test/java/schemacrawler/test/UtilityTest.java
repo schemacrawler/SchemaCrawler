@@ -35,7 +35,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.toSnakeCase;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UtilityTest
 {

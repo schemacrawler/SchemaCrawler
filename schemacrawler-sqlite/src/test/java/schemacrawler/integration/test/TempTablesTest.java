@@ -29,7 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.is;
 
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -37,7 +39,7 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -79,13 +81,13 @@ public class TempTablesTest
     final Catalog catalog = SchemaCrawlerUtility
       .getCatalog(connection, schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-    assertEquals("Schema count does not match", 1, schemas.length);
+    assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
     final Table[] tables = catalog.getTables(schemas[0]).toArray(new Table[0]);
-    assertEquals("Table count does not match", 1, tables.length);
+    assertThat("Table count does not match", tables, is(arrayWithSize(1)));
     final Table table = tables[0];
-    assertEquals("Table name does not match",
-                 "TEMP_AUTHOR_LIST",
-                 table.getFullName());
+    assertThat("Table name does not match",
+               table.getFullName(),
+               is("TEMP_AUTHOR_LIST"));
   }
 
   protected Connection executeSqlInTestDatabase(final Path sqliteDbFile,

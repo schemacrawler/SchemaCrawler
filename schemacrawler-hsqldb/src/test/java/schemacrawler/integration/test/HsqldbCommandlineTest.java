@@ -28,15 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
@@ -51,7 +52,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
@@ -140,18 +141,18 @@ public class HsqldbCommandlineTest
     final Catalog catalog1 = schemaCrawler.crawl();
 
     final Catalog catalog = catalog1;
-    assertNotNull(catalog);
+    assertThat(catalog, notNullValue());
 
-    assertEquals(6, catalog.getSchemas().size());
+    assertThat(catalog.getSchemas(), hasSize(6));
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertNotNull(schema);
+    assertThat(schema, notNullValue());
 
-    assertEquals(10, catalog.getTables(schema).size());
+    assertThat(catalog.getTables(schema), hasSize(10));
     final Table table = catalog.lookupTable(schema, "AUTHORS").orElse(null);
-    assertNotNull(table);
+    assertThat(table, notNullValue());
 
-    assertEquals(1, table.getTriggers().size());
-    assertNotNull(table.lookupTrigger("TRG_AUTHORS").orElse(null));
+    assertThat(table.getTriggers(), hasSize(1));
+    assertThat(table.lookupTrigger("TRG_AUTHORS"), optionalWithValue());
 
   }
 

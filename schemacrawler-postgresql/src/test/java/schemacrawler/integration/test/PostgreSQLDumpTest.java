@@ -29,7 +29,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assume.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -43,9 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -65,7 +65,7 @@ public class PostgreSQLDumpTest
   extends BasePostgreSQLTest
 {
 
-  @BeforeClass
+  @BeforeAll
   public static void checkRun()
   {
     final String property = System.getProperty("complete");
@@ -76,7 +76,7 @@ public class PostgreSQLDumpTest
 
   private Path dumpFile;
 
-  @Before
+  @BeforeEach
   public void createDatabaseDump()
     throws SchemaCrawlerException, SQLException, IOException
   {

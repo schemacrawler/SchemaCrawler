@@ -28,12 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.sql.Connection;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -52,10 +53,9 @@ public class TestBundledDistributions
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("postgresql");
-    assertEquals(8,
-                 databaseSystemIdentifier
-                   .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-                   .getInformationSchemaViews().size());
+    assertThat(databaseSystemIdentifier
+      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
+      .getInformationSchemaViews().size(), is(8));
   }
 
   @Test

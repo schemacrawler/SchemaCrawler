@@ -28,8 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -40,8 +40,8 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -59,7 +59,7 @@ public class TestSqliteDistribution
 
   private DatabaseConnector dbConnector;
 
-  @Before
+  @BeforeEach
   public void setup()
     throws SchemaCrawlerException
   {
@@ -73,9 +73,8 @@ public class TestSqliteDistribution
   {
 
     final Connection connection = null;
-    assertEquals("\"",
-                 dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getIdentifierQuoteString());
+    assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions().getIdentifierQuoteString(), is("\""));
   }
 
   @Test

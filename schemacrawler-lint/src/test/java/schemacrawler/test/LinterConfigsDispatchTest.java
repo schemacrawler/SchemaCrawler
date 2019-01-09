@@ -29,8 +29,8 @@ package schemacrawler.test;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
@@ -45,17 +45,16 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.contrib.java.lang.system.ExpectedSystemExit;
-import org.junit.contrib.java.lang.system.internal.CheckExitCalled;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
+
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.BaseLintExecutableTest;
-import schemacrawler.test.utility.TestName;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
@@ -66,22 +65,17 @@ public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
 {
 
-  @Rule
-  public final TestName testName = new TestName();
-  @Rule
-  public final ExpectedSystemExit exit = ExpectedSystemExit.none();
-
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
   }
 
-  @Before
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {
@@ -129,71 +123,45 @@ public class LinterConfigsDispatchTest
   }
 
   @Test
-  public void testSystemExitLinterConfigCommandLine()
+  @ExpectSystemExitWithStatus(1)
+  public void testSystemExitLinterConfigCommandLine(final TestInfo testInfo)
     throws Exception
   {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lintdispatch", "terminate_system");
 
-    exit.expectSystemExitWithStatus(1);
+    executeLintCommandLine(TextOutputFormat.text,
+                           "/schemacrawler-linter-configs-with-dispatch.xml",
+                           additionalConfig,
+                           "schemacrawler-linter-configs-with-dispatch");
 
-    try
-    {
-      executeLintCommandLine(TextOutputFormat.text,
-                             "/schemacrawler-linter-configs-with-dispatch.xml",
-                             additionalConfig,
-                             "schemacrawler-linter-configs-with-dispatch");
-    }
-    catch (final CheckExitCalled e)
-    {
-      // Expected exception
-      assertEquals(1, e.getStatus().intValue());
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
-
-    checkSystemErrLog();
+    checkSystemErrLog(testInfo);
   }
 
   @Test
-  public void testSystemExitLinterConfigExecutable()
+  @ExpectSystemExitWithStatus(1)
+  public void testSystemExitLinterConfigExecutable(final TestInfo testInfo)
     throws Exception
   {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lintdispatch", "terminate_system");
 
-    exit.expectSystemExitWithStatus(1);
+    executeLintExecutable(TextOutputFormat.text,
+                          "/schemacrawler-linter-configs-with-dispatch.xml",
+                          additionalConfig,
+                          "schemacrawler-linter-configs-with-dispatch");
 
-    try
-    {
-      executeLintExecutable(TextOutputFormat.text,
-                            "/schemacrawler-linter-configs-with-dispatch.xml",
-                            additionalConfig,
-                            "schemacrawler-linter-configs-with-dispatch");
-    }
-    catch (final CheckExitCalled e)
-    {
-      // Expected exception
-      assertEquals(1, e.getStatus().intValue());
-    }
-    catch (final Exception e)
-    {
-      fail(e.getMessage());
-    }
-
-    checkSystemErrLog();
+    checkSystemErrLog(testInfo);
   }
 
-  private void checkSystemErrLog()
+  private void checkSystemErrLog(final TestInfo testInfo)
     throws Exception
   {
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
-               hasSameContentAs(classpathResource(testName.currentMethodName()
+               hasSameContentAs(classpathResource(currentMethodName(testInfo)
                                                   + ".log")));
   }
 

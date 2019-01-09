@@ -31,8 +31,8 @@ package schemacrawler.integration.test;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -48,7 +48,7 @@ public class DerbyTest
   extends BaseAdditionalDatabaseTest
 {
 
-  @Before
+  @BeforeEach
   public void createDatabase()
     throws SchemaCrawlerException, ClassNotFoundException, SQLException
   {

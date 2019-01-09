@@ -30,7 +30,8 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.arrayWithSize;
+import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -108,7 +109,7 @@ public class PrimaryKeyWeakAssociationsTest
         .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertEquals("Schema count does not match", 1, schemas.length);
+      assertThat("Schema count does not match", schemas, is(arrayWithSize(1)));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());

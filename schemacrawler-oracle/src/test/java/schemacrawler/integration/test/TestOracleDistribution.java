@@ -28,12 +28,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import java.sql.Connection;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -44,7 +45,7 @@ public class TestOracleDistribution
 
   private DatabaseConnector dbConnector;
 
-  @Before
+  @BeforeEach
   public void setup()
     throws SchemaCrawlerException
   {
@@ -58,10 +59,8 @@ public class TestOracleDistribution
   {
 
     final Connection connection = null;
-    assertEquals("",
-                 dbConnector
-                   .getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getIdentifierQuoteString());
+    assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
+      .toOptions().getIdentifierQuoteString(), is(""));
   }
 
 }

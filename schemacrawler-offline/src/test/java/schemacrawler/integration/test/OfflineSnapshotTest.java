@@ -29,11 +29,12 @@ package schemacrawler.integration.test;
 
 
 import static java.nio.file.Files.size;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
@@ -48,8 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
@@ -189,7 +190,7 @@ public class OfflineSnapshotTest
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
   }
 
-  @Before
+  @BeforeEach
   public void serializeCatalog()
     throws SchemaCrawlerException, IOException
   {
@@ -201,23 +202,25 @@ public class OfflineSnapshotTest
       .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    assertNotNull("Could not obtain catalog", catalog);
-    assertTrue("Could not find any schemas", catalog.getSchemas().size() > 0);
+    assertThat("Could not obtain catalog", catalog, notNullValue());
+    assertThat("Could not find any schemas",
+               catalog.getSchemas(),
+               not(empty()));
 
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertNotNull("Could not obtain schema", schema);
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 catalog.getTables(schema).size());
+    assertThat("Could not obtain schema", schema, notNullValue());
+    assertThat("Unexpected number of tables in the schema",
+               catalog.getTables(schema),
+               hasSize(10));
 
     serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
                                                          "ser");
     final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(catalog);
     serializedCatalog
       .save(new FileOutputStream(serializedCatalogFile.toFile()));
-    assertNotSame("Database was not serialized",
-                  0,
-                  size(serializedCatalogFile));
+    assertThat("Database was not serialized",
+               size(serializedCatalogFile),
+               greaterThan(0L));
 
   }
 
