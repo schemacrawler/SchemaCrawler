@@ -42,7 +42,6 @@ import java.util.logging.Logger;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -60,7 +59,6 @@ public abstract class BaseAdditionalDatabaseTest
     .getLogger(BaseExecutableTest.class.getName());
 
   @BeforeAll
-  @BeforeClass
   public static final void startLogging()
   {
     final ConsoleHandler ch = new ConsoleHandler();

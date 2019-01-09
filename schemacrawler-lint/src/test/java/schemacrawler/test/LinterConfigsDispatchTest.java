@@ -30,9 +30,8 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
@@ -103,16 +102,16 @@ public class LinterConfigsDispatchTest
       fail(e.getMessage());
     }
 
-    assertEquals(1, linterConfigs.size());
+    assertThat(linterConfigs.size(), is(1));
     boolean asserted = false;
     for (final LinterConfig linterConfig: linterConfigs)
     {
       if (linterConfig.getLinterId()
         .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
       {
-        assertEquals(LintSeverity.critical, linterConfig.getSeverity());
-        assertEquals(1, linterConfig.getThreshold());
-        assertTrue(linterConfig.isRunLinter());
+        assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
+        assertThat(linterConfig.getThreshold(), is(1));
+        assertThat(linterConfig.isRunLinter(), is(true));
         asserted = true;
       }
     }
