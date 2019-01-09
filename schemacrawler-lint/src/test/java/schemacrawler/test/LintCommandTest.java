@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.tools.options.TextOutputFormat;

@@ -27,14 +27,14 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.TextOutputFormat;

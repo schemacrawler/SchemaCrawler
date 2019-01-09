@@ -37,9 +37,9 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestOutputStream;
@@ -51,7 +51,7 @@ public class ResultSetExampleTest
   private TestOutputStream out;
   private TestOutputStream err;
 
-  @After
+  @AfterEach
   public void cleanUpStreams()
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
@@ -69,7 +69,7 @@ public class ResultSetExampleTest
     assertThat(fileResource(err), hasNoContent());
   }
 
-  @Before
+  @BeforeEach
   public void setUpStreams()
     throws Exception
   {

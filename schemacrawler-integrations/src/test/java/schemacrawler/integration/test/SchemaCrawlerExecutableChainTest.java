@@ -29,8 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.validateDiagram;
 import static sf.util.IOUtility.readFully;
@@ -41,7 +42,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -86,9 +87,9 @@ public class SchemaCrawlerExecutableChainTest
     executable.setConnection(getConnection());
     executable.execute();
 
-    assertEquals("Created files \"schema.txt\" and \"schema.png\""
-                 + System.lineSeparator(),
-                 readFully(new FileReader(testOutputFile.toFile())));
+    assertThat("Created files \"schema.txt\" and \"schema.png\""
+               + System.lineSeparator(),
+               equalTo(readFully(new FileReader(testOutputFile.toFile()))));
 
     final List<String> failures = compareOutput("schema.txt",
                                                 Paths.get("schema.txt"),

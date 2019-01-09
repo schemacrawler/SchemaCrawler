@@ -28,9 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.tools.lint.LinterRegistry;
 
@@ -56,7 +57,7 @@ public class TestLintPlugin
                                              "schemacrawler.tools.linter.LinterTableWithSingleColumn",
                                              "schemacrawler.tools.linter.LinterTooManyLobs", })
     {
-      assertTrue(registry.hasLinter(linter));
+      assertThat(registry.hasLinter(linter), is(true));
     }
   }
 

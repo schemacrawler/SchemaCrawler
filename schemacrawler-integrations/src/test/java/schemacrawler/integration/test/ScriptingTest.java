@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;

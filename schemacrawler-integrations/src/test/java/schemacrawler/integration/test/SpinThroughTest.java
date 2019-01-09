@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -40,9 +40,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
@@ -75,7 +75,7 @@ public class SpinThroughTest
                                                                            GraphOutputFormat.htmlx,
                                                                            GraphOutputFormat.scdot };
 
-  @BeforeClass
+  @BeforeAll
   public static void clean()
     throws Exception
   {
@@ -84,7 +84,7 @@ public class SpinThroughTest
 
   private Path hsqldbProperties;
 
-  @Before
+  @BeforeEach
   public void copyResources()
     throws IOException
   {

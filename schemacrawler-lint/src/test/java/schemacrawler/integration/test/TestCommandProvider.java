@@ -28,12 +28,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.lint.executable.LintCommandProvider;
+import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class TestCommandProvider
@@ -44,11 +47,14 @@ public class TestCommandProvider
     throws Exception
   {
     final LintCommandProvider lintCommandProvider = new LintCommandProvider();
-    assertTrue(lintCommandProvider
+    final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+      .newSchemaCrawlerOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
+    assertThat(lintCommandProvider
       .supportsSchemaCrawlerCommand("lint",
-                                    SchemaCrawlerOptionsBuilder
-                                      .newSchemaCrawlerOptions(),
-                                    OutputOptionsBuilder.newOutputOptions()));
+                                    schemaCrawlerOptions,
+                                    outputOptions),
+               is(true));
   }
 
 }

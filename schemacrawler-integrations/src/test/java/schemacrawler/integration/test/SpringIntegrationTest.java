@@ -28,14 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.junit.Assert.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -80,9 +80,9 @@ public class SpringIntegrationTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
-    assertEquals("Unexpected number of tables in the schema",
-                 10,
-                 catalog.getTables(schema).size());
+    assertThat("Unexpected number of tables in the schema",
+               catalog.getTables(schema),
+               hasSize(10));
   }
 
   private void executeAndCheckForOutputFile(final String executableName,

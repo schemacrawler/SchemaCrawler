@@ -33,7 +33,7 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseExecutableTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;

@@ -38,7 +38,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseExecutableTest;

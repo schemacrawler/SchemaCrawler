@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Comparator.naturalOrder;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -45,8 +45,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -63,7 +63,7 @@ public class DatabaseScriptsTest
   @Autowired
   private ResourceLoader resourceLoader;
 
-  @Before
+  @BeforeEach
   public void setup()
     throws IOException
   {

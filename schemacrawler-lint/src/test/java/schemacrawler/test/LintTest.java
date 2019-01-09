@@ -29,16 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -73,13 +74,13 @@ public class LintTest
       .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    assertNotNull(catalog);
-    assertEquals(1, catalog.getSchemas().size());
+    assertThat(catalog, notNullValue());
+    assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
-    assertNotNull("FOR_LINT schema not found", schema);
-    assertEquals("FOR_LINT tables not found",
-                 7,
-                 catalog.getTables(schema).size());
+    assertThat("FOR_LINT schema not found", schema, notNullValue());
+    assertThat("FOR_LINT tables not found",
+               catalog.getTables(schema),
+               hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final LinterConfig linterConfig = new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
@@ -93,7 +94,7 @@ public class LintTest
                                                            getConnection(),
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(51, lintCollector.size());
+    assertThat(lintCollector.size(), is(51));
 
     final TestWriter testout1 = new TestWriter();
     try (final TestWriter out = testout1;)
@@ -129,13 +130,13 @@ public class LintTest
       .toOptions();
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
-    assertNotNull(catalog);
-    assertEquals(1, catalog.getSchemas().size());
+    assertThat(catalog, notNullValue());
+    assertThat(catalog.getSchemas().size(), is(1));
     final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
-    assertNotNull("FOR_LINT schema not found", schema);
-    assertEquals("FOR_LINT tables not found",
-                 7,
-                 catalog.getTables(schema).size());
+    assertThat("FOR_LINT schema not found", schema, notNullValue());
+    assertThat("FOR_LINT tables not found",
+               catalog.getTables(schema),
+               hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs);
@@ -144,7 +145,7 @@ public class LintTest
                                                            getConnection(),
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertEquals(40, lintCollector.size());
+    assertThat(lintCollector.size(), is(40));
 
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
