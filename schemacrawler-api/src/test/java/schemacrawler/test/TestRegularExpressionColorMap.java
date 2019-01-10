@@ -28,10 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
-import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 
 import java.util.Properties;
 
@@ -80,10 +80,10 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap(properties);
 
     assertThat(colorMap.size(), is(2));
-    assertThat(colorMap.match("SCH"), optionalWithValue());
+    assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
     assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
     assertThat(colorMap.match("SHC"), emptyOptional());
-    assertThat(colorMap.match("QW"), optionalWithValue());
+    assertThat(colorMap.match("QW"), is(not(emptyOptional())));
   }
 
   @Test
@@ -92,9 +92,9 @@ public class TestRegularExpressionColorMap
     final RegularExpressionColorMap colorMap = new RegularExpressionColorMap();
 
     colorMap.put("SC.*", test_color.toString());
-    assertThat(colorMap.match("SCH"), optionalWithValue());
+    assertThat(colorMap.match("SCH"), is(not(emptyOptional())));
     assertThat(colorMap.match("SCH").get().equals(test_color), is(true));
-    assertThat(colorMap.match("SC.*"), optionalWithValue());
+    assertThat(colorMap.match("SC.*"), is(not(emptyOptional())));
     assertThat(colorMap.match("SHC"), emptyOptional());
   }
 
@@ -105,7 +105,7 @@ public class TestRegularExpressionColorMap
 
     colorMap.putLiteral("SC.*", test_color);
     assertThat(colorMap.match("SCH"), emptyOptional());
-    assertThat(colorMap.match("SC.*"), optionalWithValue());
+    assertThat(colorMap.match("SC.*"), is(not(emptyOptional())));
 
   }
 

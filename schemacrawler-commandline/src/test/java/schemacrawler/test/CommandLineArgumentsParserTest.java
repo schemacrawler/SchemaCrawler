@@ -37,7 +37,7 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static schemacrawler.test.utility.IsEmptyMap.isEmptyMap;
+import static schemacrawler.test.utility.IsEmptyMap.emptyMap;
 import static schemacrawler.test.utility.IsMapWithSize.isMapWithSize;
 
 import java.util.List;
@@ -107,7 +107,7 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertThat(optionsMap, isEmptyMap());
+    assertThat(optionsMap, is(emptyMap()));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, hasSize(1));
@@ -126,7 +126,7 @@ public class CommandLineArgumentsParserTest
     parser.parse();
 
     final Map<String, String> optionsMap = parser.getOptionsMap();
-    assertThat(optionsMap, isEmptyMap());
+    assertThat(optionsMap, is(emptyMap()));
 
     final List<String> nonOptionArguments = parser.getNonOptionArguments();
     assertThat(nonOptionArguments, hasSize(2));

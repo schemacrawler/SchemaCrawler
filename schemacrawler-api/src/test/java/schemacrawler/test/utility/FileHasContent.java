@@ -40,7 +40,6 @@ import java.util.List;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -78,13 +77,11 @@ public class FileHasContent
     }
   }
 
-  @Factory
   public static Matcher<InputResource> hasNoContent()
   {
     return new FileHasContent(null, null);
   }
 
-  @Factory
   public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
                                                                final String outputFormatValue)
   {
@@ -100,7 +97,6 @@ public class FileHasContent
     return new FileHasContent(classpathInputResource, outputFormatValue);
   }
 
-  @Factory
   public static Matcher<InputResource> hasSameContentAs(final InputResource classpathInputResource)
   {
     if (classpathInputResource == null

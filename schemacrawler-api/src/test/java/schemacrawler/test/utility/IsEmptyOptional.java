@@ -28,42 +28,41 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import java.util.Map;
+import java.util.Optional;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.TypeSafeDiagnosingMatcher;
 
-public class IsEmptyMap<K, V>
-  extends TypeSafeMatcher<Map<K, V>>
+public class IsEmptyOptional<T>
+  extends TypeSafeDiagnosingMatcher<Optional<T>>
 {
 
   /**
-   * Creates a matcher for {@link java.util.Map}s matching examined
-   * collections whose <code>isEmpty</code> method returns
-   * <code>true</code>.
-   * <p/>
-   * For example:
-   *
-   * <pre>
-   * assertThat(new HashMap&lt;String, String&gt;(), is(empty()))
-   * </pre>
+   * Creates a Matcher that matches an empty Optional.
    */
-  public static <K, V> Matcher<Map<K, V>> emptyMap()
+  public static <T> Matcher<Optional<T>> emptyOptional()
   {
-    return new IsEmptyMap<K, V>();
+    return new IsEmptyOptional<>();
+  }
+
+  @Override
+  protected boolean matchesSafely(final Optional<T> item,
+                                  final Description mismatchDescription)
+  {
+    if (item.isPresent())
+    {
+      mismatchDescription.appendText("was present with ")
+        .appendValue(item.get());
+      return false;
+    }
+    return true;
   }
 
   @Override
   public void describeTo(final Description description)
   {
-    description.appendText("an empty map");
-  }
-
-  @Override
-  protected boolean matchesSafely(final Map<K, V> item)
-  {
-    return item.isEmpty();
+    description.appendText("an Optional<T> that is empty");
   }
 
 }

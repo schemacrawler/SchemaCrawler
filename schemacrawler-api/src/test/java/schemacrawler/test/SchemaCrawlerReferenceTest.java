@@ -29,11 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 
 import java.util.Collection;
 

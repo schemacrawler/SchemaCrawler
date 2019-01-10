@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
-import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
@@ -38,6 +36,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -142,7 +141,7 @@ public class SchemaCrawlerTest
     assertThat(table.lookupColumn(null), is(emptyOptional()));
     assertThat(table.lookupColumn(""), is(emptyOptional()));
     assertThat(table.lookupColumn("NO_COLUMN"), is(emptyOptional()));
-    assertThat(table.lookupColumn("ID"), is(optionalWithValue()));
+    assertThat(table.lookupColumn("ID"), is(not(emptyOptional())));
   }
 
   @Test

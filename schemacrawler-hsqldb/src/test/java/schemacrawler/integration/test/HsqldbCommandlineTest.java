@@ -28,7 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -37,7 +36,10 @@ import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
@@ -152,7 +154,7 @@ public class HsqldbCommandlineTest
     assertThat(table, notNullValue());
 
     assertThat(table.getTriggers(), hasSize(1));
-    assertThat(table.lookupTrigger("TRG_AUTHORS"), optionalWithValue());
+    assertThat(table.lookupTrigger("TRG_AUTHORS"), is(not(emptyOptional())));
 
   }
 
