@@ -43,6 +43,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
@@ -51,6 +52,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
+@ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
   extends BaseSchemaCrawlerTest
 {

@@ -66,15 +66,6 @@ public class PostgreSQLTest
   extends BasePostgreSQLTest
 {
 
-  @BeforeAll
-  public static void checkRun()
-  {
-    final String property = System.getProperty("complete");
-    final boolean runIf = property != null && isBlank(property)
-                          || Boolean.parseBoolean(property);
-    assumeTrue(runIf);
-  }
-
   private boolean isDatabaseRunning;
   private EmbeddedPostgreSQLWrapper embeddedPostgreSQL;
 

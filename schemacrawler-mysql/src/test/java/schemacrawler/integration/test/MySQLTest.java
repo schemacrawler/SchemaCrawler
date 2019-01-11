@@ -96,15 +96,6 @@ public class MySQLTest
 
   }
 
-  @BeforeAll
-  public static void checkRun()
-  {
-    final String property = System.getProperty("complete");
-    final boolean runIf = property != null && isBlank(property)
-                          || Boolean.parseBoolean(property);
-    assumeTrue(runIf);
-  }
-
   private boolean isDatabaseRunning;
   private EmbeddedMysql mysqld;
 
