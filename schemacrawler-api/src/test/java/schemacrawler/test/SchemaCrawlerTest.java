@@ -30,16 +30,17 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static sf.util.Utility.isBlank;
 
 import java.util.Arrays;
@@ -165,7 +166,7 @@ public class SchemaCrawlerTest
       final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(5));
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema: schemas)
       {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
@@ -247,7 +248,7 @@ public class SchemaCrawlerTest
       final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(5));
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -339,7 +340,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
-      assertThat("Table count does not match", tables.length, is(13));
+      assertThat("Table count does not match", tables, arrayWithSize(13));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
@@ -370,7 +371,7 @@ public class SchemaCrawlerTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
-      assertThat("Table count does not match", tables.length, is(1));
+      assertThat("Table count does not match", tables, arrayWithSize(1));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
       for (final Table table: tables)
       {
@@ -406,7 +407,7 @@ public class SchemaCrawlerTest
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
       .toArray(new Routine[0]);
-    assertThat("Wrong number of routines", routines.length, is(4));
+    assertThat("Wrong number of routines", routines, arrayWithSize(4));
     for (final Routine routine: routines)
     {
       assertThat("Routine definition not found, for " + routine,
@@ -479,7 +480,7 @@ public class SchemaCrawlerTest
       assertThat("BOOKS Schema not found", schema, notNullValue());
       final Sequence[] sequences = catalog.getSequences(schema)
         .toArray(new Sequence[0]);
-      assertThat("Sequence count does not match", sequences.length, is(1));
+      assertThat("Sequence count does not match", sequences, arrayWithSize(1));
       for (final Sequence sequence: sequences)
       {
         assertThat(sequence, notNullValue());
@@ -521,7 +522,7 @@ public class SchemaCrawlerTest
       assertThat("BOOKS Schema not found", schema, notNullValue());
       final Synonym[] synonyms = catalog.getSynonyms(schema)
         .toArray(new Synonym[0]);
-      assertThat("Synonym count does not match", synonyms.length, is(1));
+      assertThat("Synonym count does not match", synonyms, arrayWithSize(1));
       for (final Synonym synonym: synonyms)
       {
         assertThat(synonym, notNullValue());
@@ -551,7 +552,7 @@ public class SchemaCrawlerTest
       final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(6));
+      assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -605,7 +606,7 @@ public class SchemaCrawlerTest
       final Catalog catalog = getCatalog(schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(5));
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema: schemas)
       {
         final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
@@ -656,7 +657,7 @@ public class SchemaCrawlerTest
 
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-    assertThat("Schema count does not match", schemas.length, is(5));
+    assertThat("Schema count does not match", schemas, arrayWithSize(5));
     final Schema schema = schemas[0];
 
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);

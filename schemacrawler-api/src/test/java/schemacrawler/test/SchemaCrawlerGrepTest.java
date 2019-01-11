@@ -30,6 +30,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
@@ -72,7 +73,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(6));
+      assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -144,7 +145,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(6));
+      assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -179,7 +180,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(6));
+      assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());
@@ -215,7 +216,7 @@ public class SchemaCrawlerGrepTest
 
       final Catalog catalog = getCatalog(schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(6));
+      assertThat("Schema count does not match", schemas, arrayWithSize(6));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());

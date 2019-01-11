@@ -30,7 +30,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -76,7 +76,7 @@ public class TableCountsTest
                                                               getConnection(),
                                                               schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
-      assertThat("Schema count does not match", schemas.length, is(5));
+      assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema: schemas)
       {
         out.println("schema: " + schema.getFullName());

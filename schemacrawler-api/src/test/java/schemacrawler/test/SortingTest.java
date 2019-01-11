@@ -30,8 +30,8 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import java.util.Arrays;
@@ -159,7 +159,7 @@ public class SortingTest
     assertThat("Schema not found", schema, notNullValue());
 
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertThat("Table count does not match", tables.length, is(10));
+    assertThat("Table count does not match", tables, arrayWithSize(10));
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
@@ -193,7 +193,7 @@ public class SortingTest
     final Catalog catalog = getCatalog(schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
-    assertThat("Table count does not match", tables.length, is(10));
+    assertThat("Table count does not match", tables, arrayWithSize(10));
     for (final Table table: tables)
     {
       if (table.getName().equals(tableName))
