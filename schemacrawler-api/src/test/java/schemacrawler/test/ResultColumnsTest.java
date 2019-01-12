@@ -42,23 +42,26 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.ResultsCrawler;
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import sf.util.SchemaCrawlerLogger;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ResultColumnsTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ResultColumnsTest.class.getName());
 
   @Test
-  public void columns(final TestInfo testInfo)
+  public void columns(final TestInfo testInfo, final Connection cxn)
     throws Exception
   {
 
@@ -77,7 +80,7 @@ public class ResultColumnsTest
                          + " INNER JOIN PUBLIC.BOOKS.AUTHORS                                          "
                          + "   ON PUBLIC.BOOKS.AUTHORS.ID = PUBLIC.BOOKS.BOOKAUTHORS.AUTHORID         ";
 
-      try (final Connection connection = getConnection();
+      try (final Connection connection = cxn;
           final Statement statement = connection.createStatement();
           final ResultSet resultSet = statement.executeQuery(sql);)
       {

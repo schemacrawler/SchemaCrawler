@@ -209,12 +209,10 @@ public class TestDatabase
     LOGGER.log(Level.CONFIG, url);
   }
 
-  private Connection getConnection()
+  public Connection getConnection()
     throws SQLException
   {
-    final Connection connection = DriverManager.getConnection(url, "sa", "");
-    connection.setAutoCommit(true);
-    return connection;
+    return DriverManager.getConnection(url, "sa", "");
   }
 
   public String getConnectionUrl()
@@ -287,7 +285,9 @@ public class TestDatabase
     server.setDatabasePath(0, serverFileStem);
     server.start();
 
-    final TestSchemaCreator schemaCreator = new TestSchemaCreator(getConnection(),
+    final Connection connection = getConnection();
+    connection.setAutoCommit(true);
+    final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
                                                                   "/hsqldb.scripts.txt");
     schemaCreator.run();
   }

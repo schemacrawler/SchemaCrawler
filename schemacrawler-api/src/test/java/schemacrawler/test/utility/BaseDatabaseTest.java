@@ -39,21 +39,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.testdb.TestDatabase;
 
 public abstract class BaseDatabaseTest
@@ -73,8 +67,6 @@ public abstract class BaseDatabaseTest
                                final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    createDataSource();
-
     final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
                                                           schemaRetrievalOptions,
                                                           schemaCrawlerOptions);
@@ -115,7 +107,7 @@ public abstract class BaseDatabaseTest
   {
     try
     {
-      return createDataSource().getConnection();
+      return testDatabase.getConnection();
     }
     catch (final SQLException e)
     {
@@ -151,18 +143,6 @@ public abstract class BaseDatabaseTest
     throws IOException
   {
     return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-  }
-
-  private ConnectionOptions createDataSource()
-    throws SchemaCrawlerException
-  {
-    final UserCredentials userCredentials = new SingleUseUserCredentials("sa",
-                                                                         "");
-    final Map<String, String> map = new HashMap<>();
-    map.put("url", testDatabase.getConnectionUrl());
-    final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,
-                                                                              map);
-    return connectionOptions;
   }
 
 }
