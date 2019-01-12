@@ -29,12 +29,10 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,7 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

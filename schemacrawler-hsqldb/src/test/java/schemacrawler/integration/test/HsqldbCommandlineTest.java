@@ -39,10 +39,10 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.DatabaseUtility.checkConnection;
 
@@ -100,9 +100,11 @@ public class HsqldbCommandlineTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
+      System.out.println(getConnectionUrl());
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "hsqldb");
-      argsMap.put("database", "schemacrawler");
+      argsMap.put("port", String.valueOf(getPort()));
+      argsMap.put("database", getDatabase());
       argsMap.put("user", "sa");
       argsMap.put("password", null);
       argsMap.put("g", testConfigFile.toString());

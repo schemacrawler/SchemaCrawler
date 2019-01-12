@@ -113,7 +113,7 @@ public class GrepCommandLineTest
 
       final List<String> args = new ArrayList<>(Arrays
         .asList(new String[] {
-                               "-url=jdbc:hsqldb:hsql://localhost/schemacrawler",
+                               "-url=" + getConnectionUrl(),
                                "-user=sa",
                                "-password=",
                                "-g=" + additionalProperties.toString(),

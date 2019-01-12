@@ -183,7 +183,7 @@ public class SpinThroughTest
                                                      outputFormat);
 
           final Map<String, String> argsMap = new HashMap<>();
-          argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+          argsMap.put("url", getConnectionUrl());
           argsMap.put("user", "sa");
           argsMap.put("password", null);
           argsMap.put("g", hsqldbProperties.toString());

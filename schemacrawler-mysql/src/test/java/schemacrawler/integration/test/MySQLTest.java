@@ -34,7 +34,6 @@ import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static com.wix.mysql.distribution.Version.v5_6_latest;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MINUTES;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
@@ -46,7 +45,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

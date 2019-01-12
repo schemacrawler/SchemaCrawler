@@ -30,9 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static sf.util.DatabaseUtility.checkConnection;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -42,7 +40,6 @@ import java.util.List;
 import java.util.logging.Level;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

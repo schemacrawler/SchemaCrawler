@@ -111,7 +111,7 @@ public class TitleTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("url", getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.FALSE.toString());

@@ -74,7 +74,7 @@ public class NoEmptyTablesCommandLineTest
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Map<String, String> args = new HashMap<>();
-    args.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    args.put("url", getConnectionUrl());
     args.put("user", "sa");
     args.put("password", "");
     args.put("infolevel", infoLevel.name());

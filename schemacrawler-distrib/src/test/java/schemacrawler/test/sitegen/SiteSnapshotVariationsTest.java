@@ -118,7 +118,7 @@ public class SiteSnapshotVariationsTest
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    argsMap.put("url", getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("title", "Details of Example Database");

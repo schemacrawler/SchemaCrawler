@@ -39,11 +39,13 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.test.utility.TestOutputStream;
 
+@Disabled
 public class ApiExampleTest
   extends BaseDatabaseTest
 {

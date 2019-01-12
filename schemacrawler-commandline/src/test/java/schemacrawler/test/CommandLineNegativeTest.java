@@ -116,7 +116,7 @@ public class CommandLineNegativeTest
     try (final TestWriter outFile = outputFile;)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("url", getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.TRUE.toString());

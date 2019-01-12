@@ -34,11 +34,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import schemacrawler.test.utility.BaseDatabaseTest;
 import schemacrawler.tools.options.TextOutputFormat;
 
+@Disabled
 public class ExecutableExampleTest
   extends BaseDatabaseTest
 {

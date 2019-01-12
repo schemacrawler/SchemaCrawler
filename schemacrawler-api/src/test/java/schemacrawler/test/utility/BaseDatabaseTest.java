@@ -60,10 +60,7 @@ public abstract class BaseDatabaseTest
   extends BaseSchemaCrawlerTest
 {
 
-  static
-  {
-    TestDatabase.initialize();
-  }
+  private final static TestDatabase testDatabase = TestDatabase.initialize();
 
   protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
@@ -84,6 +81,26 @@ public abstract class BaseDatabaseTest
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
+  }
+
+  protected String getConnectionUrl()
+  {
+    return testDatabase.getConnectionUrl();
+  }
+
+  protected String getDatabase()
+  {
+    return testDatabase.getDatabase();
+  }
+
+  public String getHost()
+  {
+    return testDatabase.getHost();
+  }
+
+  public int getPort()
+  {
+    return testDatabase.getPort();
   }
 
   /**
@@ -142,7 +159,7 @@ public abstract class BaseDatabaseTest
     final UserCredentials userCredentials = new SingleUseUserCredentials("sa",
                                                                          "");
     final Map<String, String> map = new HashMap<>();
-    map.put("url", TestDatabase.CONNECTION_STRING);
+    map.put("url", testDatabase.getConnectionUrl());
     final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,
                                                                               map);
     return connectionOptions;

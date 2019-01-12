@@ -36,7 +36,8 @@ final class NeuteredLinesFilter
 {
 
   private final Pattern[] neuters = {
-                                      Pattern.compile("url +jdbc:.*"),
+                                      //
+                                      Pattern.compile(".*jdbc:.*"),
                                       Pattern
                                         .compile("database product version.*"),
                                       Pattern.compile("driver version.*"),

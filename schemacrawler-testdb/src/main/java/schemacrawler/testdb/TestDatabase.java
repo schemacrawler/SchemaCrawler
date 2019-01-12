@@ -31,10 +31,12 @@ package schemacrawler.testdb;
 
 import static java.nio.file.Files.delete;
 import static java.nio.file.Files.walkFileTree;
+import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,31 +62,10 @@ public class TestDatabase
   private static final Logger LOGGER = Logger
     .getLogger(TestDatabase.class.getName());
 
-  public static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://localhost/schemacrawler";
-
+  private static final String CONNECTION_STRING = "jdbc:hsqldb:hsql://${host}:${port}/${database}";
   private static final String serverFileStem = "hsqldb.schemacrawler";
 
-  public static boolean initialized;
-
-  public static void initialize()
-  {
-    if (!initialized)
-    {
-      run(false);
-      initialized = true;
-    }
-  }
-
-  /**
-   * Starts up a test database in server mode.
-   *
-   * @param args
-   *        Command-line arguments
-   */
-  public static void main(final String[] args)
-  {
-    run(true);
-  }
+  private static TestDatabase testDatabase;
 
   /**
    * Delete files from the previous run of the database server.
@@ -128,36 +109,132 @@ public class TestDatabase
     });
   }
 
-  private static void run(final boolean trace)
+  private static int getFreePort()
   {
-    try
+    final int defaultPort = 9001;
+    try (ServerSocket socket = new ServerSocket(0))
     {
-      final TestDatabase testDatabase = new TestDatabase(CONNECTION_STRING,
-                                                         trace);
-      Runtime.getRuntime().addShutdownHook(new Thread()
+      socket.setReuseAddress(true);
+      final int port = socket.getLocalPort();
+      if (port <= 0)
       {
-        @Override
-        public void run()
-        {
-          testDatabase.stop();
-        }
-      });
-      testDatabase.start();
+        return defaultPort;
+      }
+      else
+      {
+        return port;
+      }
     }
-    catch (final Exception e)
+    catch (final IOException e)
     {
-      e.printStackTrace();
-      System.exit(1);
+      return defaultPort;
     }
   }
 
-  private final String url;
-  private final boolean trace;
-
-  public TestDatabase(final String url, final boolean trace)
+  private static String getLocalHost()
   {
-    this.url = url;
+    final String defaultPort = "localhost";
+    try (ServerSocket socket = new ServerSocket(0))
+    {
+      socket.setReuseAddress(true);
+      return socket.getInetAddress().getHostAddress();
+    }
+    catch (final IOException e)
+    {
+      return defaultPort;
+    }
+  }
+
+  public static TestDatabase initialize()
+  {
+    if (testDatabase == null)
+    {
+      try
+      {
+        final int port = getFreePort();
+        testDatabase = new TestDatabase(false,
+                                        getLocalHost(),
+                                        port,
+                                        String.format("schemacrawler%d", port));
+
+        testDatabase.start();
+      }
+      catch (final Exception e)
+      {
+        e.printStackTrace();
+        System.exit(1);
+      }
+    }
+    return testDatabase;
+  }
+
+  /**
+   * Starts up a test database in server mode.
+   *
+   * @param args
+   *        Command-line arguments
+   * @throws Exception
+   */
+  public static void main(final String[] args)
+    throws Exception
+  {
+    final TestDatabase testDatabase = new TestDatabase(true,
+                                                       "localhost",
+                                                       9001,
+                                                       "schemacrawler");
+
+    testDatabase.start();
+  }
+
+  private final boolean trace;
+  private final String host;
+  private final int port;
+  private final String database;
+  private final String url;
+
+  private TestDatabase(final boolean trace,
+                       final String host,
+                       final int port,
+                       final String database)
+  {
     this.trace = trace;
+    this.host = requireNonNull(host);
+    this.port = port;
+    this.database = requireNonNull(database);
+
+    url = CONNECTION_STRING.replace("${host}", host)
+      .replace("${port}", String.valueOf(port))
+      .replace("${database}", database);
+
+    LOGGER.log(Level.CONFIG, url);
+  }
+
+  private Connection getConnection()
+    throws SQLException
+  {
+    final Connection connection = DriverManager.getConnection(url, "sa", "");
+    connection.setAutoCommit(true);
+    return connection;
+  }
+
+  public String getConnectionUrl()
+  {
+    return url;
+  }
+
+  public String getDatabase()
+  {
+    return database;
+  }
+
+  public String getHost()
+  {
+    return host;
+  }
+
+  public int getPort()
+  {
+    return port;
   }
 
   /**
@@ -170,6 +247,8 @@ public class TestDatabase
                String.format("%s - Setting up database", toString()));
     // Attempt to delete the database files
     deleteServerFiles();
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> stop()));
 
     // Set up writers
     final PrintWriter logWriter;
@@ -202,7 +281,9 @@ public class TestDatabase
     server.setTrace(trace);
     server.setLogWriter(logWriter);
     server.setErrWriter(errWriter);
-    server.setDatabaseName(0, "schemacrawler");
+    server.setAddress(host);
+    server.setPort(port);
+    server.setDatabaseName(0, database);
     server.setDatabasePath(0, serverFileStem);
     server.start();
 
@@ -235,14 +316,6 @@ public class TestDatabase
       LOGGER.log(Level.WARNING, e.getMessage(), e);
     }
     LOGGER.log(Level.INFO, "SHUTDOWN database");
-  }
-
-  private Connection getConnection()
-    throws SQLException
-  {
-    final Connection connection = DriverManager.getConnection(url, "SA", "");
-    connection.setAutoCommit(true);
-    return connection;
   }
 
 }

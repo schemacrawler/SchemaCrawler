@@ -99,7 +99,7 @@ public class MetadataRetrievalStrategyTest
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+    argsMap.put("url", getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("g", configFile.toString());

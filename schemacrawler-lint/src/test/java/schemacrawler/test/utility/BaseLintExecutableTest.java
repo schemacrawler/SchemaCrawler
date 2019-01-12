@@ -61,7 +61,7 @@ public abstract class BaseLintExecutableTest
     try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", "jdbc:hsqldb:hsql://localhost/schemacrawler");
+      argsMap.put("url", getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
 
