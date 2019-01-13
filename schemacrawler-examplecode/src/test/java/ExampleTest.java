@@ -28,27 +28,48 @@ http://www.gnu.org/licenses/
 */
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.testdb.TestDatabase;
+import schemacrawler.tools.options.TextOutputFormat;
 
-@Disabled
-public class ApiExampleTest
-  extends BaseDatabaseTest
+public class ExampleTest
+  extends BaseSchemaCrawlerTest
 {
+
+  private static TestDatabase testDatabase;
+
+  @BeforeAll
+  public static void startDatabase()
+  {
+    testDatabase = TestDatabase.startDefaultTestDatabase(false);
+  }
+
+  @AfterAll
+  public static void stopDatabase()
+  {
+    testDatabase.stop();
+  }
 
   private TestOutputStream out;
   private TestOutputStream err;
@@ -69,6 +90,34 @@ public class ApiExampleTest
   {
     System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+  }
+
+  @Test
+  public void executableExample()
+    throws Exception
+  {
+    // Test
+    final Path tempFile = Files.createTempFile("sc", ".out").toAbsolutePath();
+    ExecutableExample.main(new String[] { tempFile.toString() });
+
+    final List<String> failures = compareOutput("ExecutableExample.html",
+                                                tempFile,
+                                                TextOutputFormat.html.name());
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void resultSetExample()
+    throws Exception
+  {
+    ResultSetExample.main(new String[0]);
+
+    assertThat(fileResource(out),
+               hasSameContentAs(classpathResource("ResultSetExample.txt")));
+    assertThat(fileResource(err), hasNoContent());
   }
 
   @BeforeEach

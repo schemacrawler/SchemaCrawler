@@ -168,6 +168,27 @@ public class TestDatabase
     return testDatabase;
   }
 
+  public static TestDatabase startDefaultTestDatabase(final boolean trace)
+  {
+    try
+    {
+      final TestDatabase testDatabase = new TestDatabase(trace,
+                                                         "localhost",
+                                                         9001,
+                                                         "schemacrawler");
+
+      testDatabase.start();
+
+      return testDatabase;
+    }
+    catch (final Exception e)
+    {
+      e.printStackTrace();
+      System.exit(1);
+      return null;
+    }
+  }
+
   /**
    * Starts up a test database in server mode.
    *
@@ -178,12 +199,7 @@ public class TestDatabase
   public static void main(final String[] args)
     throws Exception
   {
-    final TestDatabase testDatabase = new TestDatabase(true,
-                                                       "localhost",
-                                                       9001,
-                                                       "schemacrawler");
-
-    testDatabase.start();
+    startDefaultTestDatabase(true);
   }
 
   private final boolean trace;
