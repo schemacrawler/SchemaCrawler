@@ -41,23 +41,28 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class NoEmptyTablesCommandLineTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
   @Test
-  public void noEmptyTables(final TestInfo testInfo)
+  public void noEmptyTables(final TestInfo testInfo,
+                            final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     clean(HIDE_EMPTY_TABLES_OUTPUT);
@@ -74,7 +79,7 @@ public class NoEmptyTablesCommandLineTest
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Map<String, String> args = new HashMap<>();
-    args.put("url", getConnectionUrl());
+    args.put("url", connectionInfo.getConnectionUrl());
     args.put("user", "sa");
     args.put("password", "");
     args.put("infolevel", infoLevel.name());

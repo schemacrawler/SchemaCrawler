@@ -46,6 +46,7 @@ import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import sf.util.IOUtility;
 
 public class SiteHTMLVariationsTest
@@ -68,7 +69,8 @@ public class SiteHTMLVariationsTest
   }
 
   @Test
-  public void html(final TestInfo testInfo)
+  public void html(final TestInfo testInfo,
+                   final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -76,11 +78,13 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_2_portablenames(final TestInfo testInfo)
+  public void html_2_portablenames(final TestInfo testInfo,
+                                   final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -89,12 +93,15 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_3_important_columns(final TestInfo testInfo)
-    throws Exception
+  public void
+    html_3_important_columns(final TestInfo testInfo,
+                             final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -103,11 +110,13 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_4_ordinals(final TestInfo testInfo)
+  public void html_4_ordinals(final TestInfo testInfo,
+                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -117,11 +126,13 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_5_alphabetical(final TestInfo testInfo)
+  public void html_5_alphabetical(final TestInfo testInfo,
+                                  final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -131,11 +142,13 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_6_grep(final TestInfo testInfo)
+  public void html_6_grep(final TestInfo testInfo,
+                          final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -146,12 +159,15 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   @Test
-  public void html_7_grep_onlymatching(final TestInfo testInfo)
-    throws Exception
+  public void
+    html_7_grep_onlymatching(final TestInfo testInfo,
+                             final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -162,7 +178,8 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, directory.resolve(currentMethodName(testInfo) + ".html"));
+    run(connectionInfo, args, config,
+        directory.resolve(currentMethodName(testInfo) + ".html"));
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -176,13 +193,14 @@ public class SiteHTMLVariationsTest
     return configFile;
   }
 
-  private void run(final Map<String, String> argsMap,
+  private void run(DatabaseConnectionInfo connectionInfo,
+                   final Map<String, String> argsMap,
                    final Map<String, String> config, final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", getConnectionUrl());
+    argsMap.put("url", connectionInfo.getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("title", "Details of Example Database");

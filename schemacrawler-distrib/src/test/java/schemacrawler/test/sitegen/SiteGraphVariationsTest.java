@@ -46,6 +46,7 @@ import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import sf.util.IOUtility;
 
 public class SiteGraphVariationsTest
@@ -67,8 +68,20 @@ public class SiteGraphVariationsTest
     directory = resolveTargetFromRootPath(testInfo, "diagram-examples");
   }
 
+  private Path createConfig(final Map<String, String> config)
+    throws IOException
+  {
+    final String prefix = SiteGraphVariationsTest.class.getName();
+    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
+    final Properties configProperties = new Properties();
+    configProperties.putAll(config);
+    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
+    return configFile;
+  }
+
   @Test
-  public void diagram(final TestInfo testInfo)
+  public void diagram(final TestInfo testInfo,
+                      final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -76,12 +89,14 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_10_no_schema_colors(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_10_no_schema_colors(final TestInfo testInfo,
+                                final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -90,11 +105,12 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_11_title(final TestInfo testInfo)
+  public void diagram_11_title(final TestInfo testInfo,
+                               final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -103,12 +119,14 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_12_graphviz_attributes(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_12_graphviz_attributes(final TestInfo testInfo,
+                                   final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -129,12 +147,14 @@ public class SiteGraphVariationsTest
     // Test
     config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_2_portablenames(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_2_portablenames(final TestInfo testInfo,
+                            final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -142,12 +162,14 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_3_important_columns(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_3_important_columns(final TestInfo testInfo,
+                                final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -156,11 +178,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_4_ordinals(final TestInfo testInfo)
+  public void diagram_4_ordinals(final TestInfo testInfo,
+                                 final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -170,12 +193,14 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_5_alphabetical(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_5_alphabetical(final TestInfo testInfo,
+                           final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -184,11 +209,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_6_grep(final TestInfo testInfo)
+  public void diagram_6_grep(final TestInfo testInfo,
+                             final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -199,12 +225,14 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_7_grep_onlymatching(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_7_grep_onlymatching(final TestInfo testInfo,
+                                final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -215,12 +243,14 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_8_no_cardinality(final TestInfo testInfo)
-    throws Exception
+  public void
+    diagram_8_no_cardinality(final TestInfo testInfo,
+                             final DatabaseConnectionInfo connectionInfo)
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -230,11 +260,12 @@ public class SiteGraphVariationsTest
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   @Test
-  public void diagram_9_row_counts(final TestInfo testInfo)
+  public void diagram_9_row_counts(final TestInfo testInfo,
+                                   final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -244,18 +275,7 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_row_counts", "true");
 
-    run(args, config, diagramPath(testInfo));
-  }
-
-  private Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
-    final String prefix = SiteGraphVariationsTest.class.getName();
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
+    run(connectionInfo, args, config, diagramPath(testInfo));
   }
 
   private Path diagramPath(final TestInfo testInfo)
@@ -263,13 +283,14 @@ public class SiteGraphVariationsTest
     return directory.resolve(currentMethodName(testInfo) + ".png");
   }
 
-  private void run(final Map<String, String> argsMap,
+  private void run(final DatabaseConnectionInfo connectionInfo,
+                   final Map<String, String> argsMap,
                    final Map<String, String> config, final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", getConnectionUrl());
+    argsMap.put("url", connectionInfo.getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("title", "Details of Example Database");

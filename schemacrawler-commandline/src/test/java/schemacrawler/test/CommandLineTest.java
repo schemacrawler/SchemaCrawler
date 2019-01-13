@@ -44,14 +44,18 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CommandLineTest
   extends BaseDatabaseTest
 {
@@ -59,7 +63,8 @@ public class CommandLineTest
   private static final String COMMAND_LINE_OUTPUT = "command_line_output/";
 
   @Test
-  public void commandLineOverridesWithConfig(final TestInfo testInfo)
+  public void commandLineOverridesWithConfig(final TestInfo testInfo,
+                                             final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -78,11 +83,12 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testInfo, args, config, "brief");
+    run(testInfo, connectionInfo, args, config, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithColumnsSorting(final TestInfo testInfo)
+  public void commandLineRoutinesWithColumnsSorting(final TestInfo testInfo,
+                                                    final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -92,11 +98,12 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithoutColumnsSorting(final TestInfo testInfo)
+  public void commandLineRoutinesWithoutColumnsSorting(final TestInfo testInfo,
+                                                       final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -106,11 +113,12 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithoutSorting(final TestInfo testInfo)
+  public void commandLineRoutinesWithoutSorting(final TestInfo testInfo,
+                                                final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -120,11 +128,12 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithSorting(final TestInfo testInfo)
+  public void commandLineRoutinesWithSorting(final TestInfo testInfo,
+                                             final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -134,11 +143,12 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithColumnsSorting(final TestInfo testInfo)
+  public void commandLineTablesWithColumnsSorting(final TestInfo testInfo,
+                                                  final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -147,11 +157,12 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithoutColumnsSorting(final TestInfo testInfo)
+  public void commandLineTablesWithoutColumnsSorting(final TestInfo testInfo,
+                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -160,11 +171,12 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithoutSorting(final TestInfo testInfo)
+  public void commandLineTablesWithoutSorting(final TestInfo testInfo,
+                                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -173,11 +185,12 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithSorting(final TestInfo testInfo)
+  public void commandLineTablesWithSorting(final TestInfo testInfo,
+                                           final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -186,11 +199,12 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithConfig(final TestInfo testInfo)
+  public void commandLineWithConfig(final TestInfo testInfo,
+                                    final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -207,11 +221,12 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testInfo, args, config, "brief");
+    run(testInfo, connectionInfo, args, config, "brief");
   }
 
   @Test
-  public void commandLineWithDefaults(final TestInfo testInfo)
+  public void commandLineWithDefaults(final TestInfo testInfo,
+                                      final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -219,11 +234,12 @@ public class CommandLineTest
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithNonDefaults(final TestInfo testInfo)
+  public void commandLineWithNonDefaults(final TestInfo testInfo,
+                                         final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
@@ -233,11 +249,12 @@ public class CommandLineTest
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
 
-    run(testInfo, args, null, "brief");
+    run(testInfo, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithQueryCommand(final TestInfo testInfo)
+  public void commandLineWithQueryCommand(final TestInfo testInfo,
+                                          final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 
@@ -245,11 +262,12 @@ public class CommandLineTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(testInfo, args, config, "SELECT * FROM BOOKS.Authors");
+    run(testInfo, connectionInfo, args, config, "SELECT * FROM BOOKS.Authors");
   }
 
   @Test
-  public void commandLineWithQueryInConfig(final TestInfo testInfo)
+  public void commandLineWithQueryInConfig(final TestInfo testInfo,
+                                           final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final String command = "query1";
@@ -259,11 +277,12 @@ public class CommandLineTest
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT * FROM BOOKS.Books");
 
-    run(testInfo, args, config, command);
+    run(testInfo, connectionInfo, args, config, command);
   }
 
   @Test
-  public void commandLineWithQueryOverInConfig(final TestInfo testInfo)
+  public void commandLineWithQueryOverInConfig(final TestInfo testInfo,
+                                               final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final String command = "query2";
@@ -273,7 +292,7 @@ public class CommandLineTest
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
-    run(testInfo, args, config, command);
+    run(testInfo, connectionInfo, args, config, command);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -288,6 +307,7 @@ public class CommandLineTest
   }
 
   private void run(final TestInfo testInfo,
+                   final DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final String command)
@@ -296,7 +316,7 @@ public class CommandLineTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      argsMap.put("url", getConnectionUrl());
+      argsMap.put("url", connectionInfo.getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.TRUE.toString());

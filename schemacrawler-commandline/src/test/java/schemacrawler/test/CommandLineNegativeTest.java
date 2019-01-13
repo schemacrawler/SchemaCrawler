@@ -50,15 +50,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CommandLineNegativeTest
   extends BaseDatabaseTest
 {
@@ -76,13 +80,14 @@ public class CommandLineNegativeTest
   }
 
   @Test
-  public void commandLine_BadCommand(final TestInfo testInfo)
+  public void commandLine_BadCommand(final TestInfo testInfo,
+                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("command", "badcommand");
 
-    run(testInfo, argsMapOverride, null);
+    run(testInfo, argsMapOverride, null, connectionInfo);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -98,14 +103,15 @@ public class CommandLineNegativeTest
 
   private void run(final TestInfo testInfo,
                    final Map<String, String> argsMapOverride,
-                   final Map<String, String> config)
+                   final Map<String, String> config,
+                   final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final TestWriter outputFile = new TestWriter();
     try (final TestWriter outFile = outputFile;)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", getConnectionUrl());
+      argsMap.put("url", connectionInfo.getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.TRUE.toString());

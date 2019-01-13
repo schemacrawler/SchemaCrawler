@@ -95,11 +95,6 @@ public abstract class BaseDatabaseTest
     }
   }
 
-  protected String getConnectionUrl()
-  {
-    return testDatabase.getConnectionUrl();
-  }
-
   /**
    * Loads a properties file from a CLASSPATH resource.
    *

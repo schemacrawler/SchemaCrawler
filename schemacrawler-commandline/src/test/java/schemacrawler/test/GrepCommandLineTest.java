@@ -45,23 +45,27 @@ import java.util.List;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class GrepCommandLineTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String GREP_OUTPUT = "grep_output/";
 
   @Test
-  public void grep()
+  public void grep(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     clean(GREP_OUTPUT);
@@ -113,7 +117,7 @@ public class GrepCommandLineTest
 
       final List<String> args = new ArrayList<>(Arrays
         .asList(new String[] {
-                               "-url=" + getConnectionUrl(),
+                               "-url=" + connectionInfo.getConnectionUrl(),
                                "-user=sa",
                                "-password=",
                                "-g=" + additionalProperties.toString(),

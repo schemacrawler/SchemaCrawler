@@ -53,6 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -185,7 +186,7 @@ public class SpinThroughTest
   }
 
   @Test
-  public void spinThroughMain()
+  public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final List<String> failures = new ArrayList<>();
@@ -210,7 +211,7 @@ public class SpinThroughTest
                                                      outputFormat);
 
           final Map<String, String> argsMap = new HashMap<>();
-          argsMap.put("url", getConnectionUrl());
+          argsMap.put("url", connectionInfo.getConnectionUrl());
           argsMap.put("user", "sa");
           argsMap.put("password", null);
           argsMap.put("g", hsqldbProperties.toString());

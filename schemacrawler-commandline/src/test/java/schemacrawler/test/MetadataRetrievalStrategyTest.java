@@ -48,20 +48,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class MetadataRetrievalStrategyTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT = "metadata_retrieval_strategy_output/";
@@ -77,7 +81,8 @@ public class MetadataRetrievalStrategyTest
   }
 
   @Test
-  public void overrideMetadataRetrievalStrategy(final TestInfo testInfo)
+  public void overrideMetadataRetrievalStrategy(final TestInfo testInfo,
+                                                final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
@@ -99,7 +104,7 @@ public class MetadataRetrievalStrategyTest
     final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("url", getConnectionUrl());
+    argsMap.put("url", connectionInfo.getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("g", configFile.toString());

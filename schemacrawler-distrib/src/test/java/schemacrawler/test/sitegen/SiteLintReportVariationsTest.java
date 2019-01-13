@@ -46,6 +46,7 @@ import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
@@ -71,7 +72,7 @@ public class SiteLintReportVariationsTest
   }
 
   @Test
-  public void lint_reports()
+  public void lint_reports(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     for (final OutputFormat outputFormat: new OutputFormat[] {
@@ -96,7 +97,8 @@ public class SiteLintReportVariationsTest
 
       final Map<String, String> config = new HashMap<>();
 
-      run(args, config, directory.resolve("lint_report." + extension));
+      run(connectionInfo, args, config,
+          directory.resolve("lint_report." + extension));
     }
   }
 
@@ -111,13 +113,14 @@ public class SiteLintReportVariationsTest
     return configFile;
   }
 
-  private void run(final Map<String, String> argsMap,
+  private void run(DatabaseConnectionInfo connectionInfo,
+                   final Map<String, String> argsMap,
                    final Map<String, String> config, final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", getConnectionUrl());
+    argsMap.put("url", connectionInfo.getConnectionUrl());
     argsMap.put("user", "sa");
     argsMap.put("password", "");
     argsMap.put("title", "Lint Report of Example Database");

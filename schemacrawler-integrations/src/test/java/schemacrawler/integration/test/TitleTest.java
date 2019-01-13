@@ -44,16 +44,20 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TitleTest
   extends BaseDatabaseTest
 {
@@ -61,7 +65,7 @@ public class TitleTest
   private static final String TITLE_OUTPUT = "title_output/";
 
   @Test
-  public void commandLineWithTitle()
+  public void commandLineWithTitle(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     clean(TITLE_OUTPUT);
@@ -85,6 +89,7 @@ public class TitleTest
             null,
             command,
             outputFormat,
+            connectionInfo,
             "commandLineWithTitle_" + command + "." + outputFormat.getFormat());
       }
     }
@@ -105,13 +110,14 @@ public class TitleTest
                    final Map<String, String> config,
                    final String command,
                    final OutputFormat outputFormat,
+                   final DatabaseConnectionInfo connectionInfo,
                    final String referenceFile)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      argsMap.put("url", getConnectionUrl());
+      argsMap.put("url", connectionInfo.getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("noinfo", Boolean.FALSE.toString());
