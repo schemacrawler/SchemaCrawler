@@ -44,6 +44,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +52,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
@@ -61,6 +63,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
@@ -72,6 +75,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class OfflineSnapshotTest
   extends BaseDatabaseTest
 {
@@ -191,7 +195,7 @@ public class OfflineSnapshotTest
   }
 
   @BeforeEach
-  public void serializeCatalog()
+  public void serializeCatalog(final Connection connection)
     throws SchemaCrawlerException, IOException
   {
 
@@ -201,7 +205,7 @@ public class OfflineSnapshotTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
     assertThat("Could not find any schemas",
                catalog.getSchemas(),

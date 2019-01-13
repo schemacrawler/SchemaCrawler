@@ -35,9 +35,11 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
+import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -47,9 +49,11 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TableTypesTest
   extends BaseDatabaseTest
 {
@@ -57,62 +61,64 @@ public class TableTypesTest
   private static final String TABLE_TYPES_OUTPUT = "table_types/";
 
   @Test
-  public void all()
+  public void all(final Connection connection)
     throws Exception
   {
-    test("all.txt", null);
+    test(connection, "all.txt", null);
   }
 
   @Test
-  public void bad()
+  public void bad(final Connection connection)
     throws Exception
   {
-    test("bad.txt", "BAD TABLE TYPE");
+    test(connection, "bad.txt", "BAD TABLE TYPE");
   }
 
   @Test
-  public void defaultTableTypes()
+  public void defaultTableTypes(final Connection connection)
     throws Exception
   {
-    test("default.txt", "default");
+    test(connection, "default.txt", "default");
   }
 
   @Test
-  public void global_temporary()
+  public void global_temporary(final Connection connection)
     throws Exception
   {
-    test("global_temporary.txt", "GLOBAL TEMPORARY");
+    test(connection, "global_temporary.txt", "GLOBAL TEMPORARY");
   }
 
   @Test
-  public void mixed()
+  public void mixed(final Connection connection)
     throws Exception
   {
-    test("mixed.txt", " global temporary, view ");
+    test(connection, "mixed.txt", " global temporary, view ");
   }
 
   @Test
-  public void none()
+  public void none(final Connection connection)
     throws Exception
   {
-    test("none.txt", "");
+    test(connection, "none.txt", "");
   }
 
   @Test
-  public void system()
+  public void system(final Connection connection)
     throws Exception
   {
-    test("system.txt", "SYSTEM TABLE");
+    test(connection, "system.txt", "SYSTEM TABLE");
   }
 
   @Test
-  public void tables()
+  public void tables(final Connection connection)
     throws Exception
   {
-    test("tables.txt", "TABLE");
+    test(connection, "tables.txt", "TABLE");
   }
 
-  private void test(final String referenceFile, final String tableTypes)
+  private void test(Connection connection,
+                    final String referenceFile,
+                    final String tableTypes)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -126,8 +132,9 @@ public class TableTypesTest
         schemaCrawlerOptionsBuilder.tableTypes(tableTypes);
       }
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptionsBuilder
-        .toOptions());
+      final Catalog catalog = getCatalog(connection,
+                                         schemaCrawlerOptionsBuilder
+                                           .toOptions());
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
       for (final Schema schema: schemas)
@@ -156,10 +163,10 @@ public class TableTypesTest
   }
 
   @Test
-  public void views()
+  public void views(final Connection connection)
     throws Exception
   {
-    test("views.txt", "VIEW");
+    test(connection, "views.txt", "VIEW");
   }
 
 }

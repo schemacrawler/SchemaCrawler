@@ -34,7 +34,10 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 
+import java.sql.Connection;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -49,20 +52,22 @@ import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerDeepTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void tableEquals()
+  public void tableEquals(final Connection connection)
     throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .newSchemaCrawlerOptions();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
 
     final Schema systemSchema = new SchemaReference("PUBLIC", "SYSTEM_LOBS");
     assertThat("Should not find any tables",

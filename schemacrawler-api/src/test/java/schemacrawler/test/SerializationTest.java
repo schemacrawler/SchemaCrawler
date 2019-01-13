@@ -37,25 +37,30 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 
+import java.sql.Connection;
+
 import org.apache.commons.lang3.SerializationUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SerializationTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void catalogSerialization()
+  public void catalogSerialization(final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());
     assertThat("Could not find any schemas",
                catalog.getSchemas(),

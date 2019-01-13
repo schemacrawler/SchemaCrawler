@@ -36,11 +36,13 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -50,6 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -57,12 +60,14 @@ import schemacrawler.tools.analysis.associations.WeakAssociationForeignKey;
 import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class WeakAssociationsTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void weakAssociations(final TestInfo testInfo)
+  public void weakAssociations(final TestInfo testInfo,
+                               final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -75,7 +80,7 @@ public class WeakAssociationsTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog baseCatalog = getCatalog(schemaCrawlerOptions);
+      final Catalog baseCatalog = getCatalog(connection, schemaCrawlerOptions);
       final CatalogWithAssociations catalog = new CatalogWithAssociations(baseCatalog);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));

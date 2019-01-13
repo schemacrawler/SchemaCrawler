@@ -34,9 +34,11 @@ import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
+import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -47,20 +49,23 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.NamedObjectSort;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SortingTest
   extends BaseDatabaseTest
 {
 
   @SuppressWarnings("boxing")
-  private void checkColumnSort(final String tableName,
+  private void checkColumnSort(Connection connection,
+                               final String tableName,
                                final String[] expectedValues,
                                final boolean sortAlphabetically)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Schema not found", schema, notNullValue());
 
@@ -87,13 +92,14 @@ public class SortingTest
   }
 
   @SuppressWarnings("boxing")
-  private void checkFkSort(final String tableName,
+  private void checkFkSort(Connection connection,
+                           final String tableName,
                            final String[] expectedValues,
                            final boolean sortAlphabetically)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Schema not found", schema, notNullValue());
 
@@ -123,13 +129,14 @@ public class SortingTest
     }
   }
 
-  private void checkIndexSort(final String tableName,
+  private void checkIndexSort(Connection connection,
+                              final String tableName,
                               final String[] expectedValues,
                               final boolean sortAlphabetically)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
     assertThat("Table count does not match", tables, arrayWithSize(10));
@@ -157,7 +164,7 @@ public class SortingTest
   }
 
   @Test
-  public void columnSort()
+  public void columnSort(final Connection connection)
     throws Exception
   {
 
@@ -176,13 +183,13 @@ public class SortingTest
                                                sortedNatural.length);
     Arrays.sort(sortedAlpha);
 
-    checkColumnSort("AUTHORS", sortedAlpha, true);
-    checkColumnSort("AUTHORS", sortedNatural, false);
+    checkColumnSort(connection, "AUTHORS", sortedAlpha, true);
+    checkColumnSort(connection, "AUTHORS", sortedNatural, false);
 
   }
 
   @Test
-  public void fkSort()
+  public void fkSort(final Connection connection)
     throws Exception
   {
 
@@ -194,13 +201,13 @@ public class SortingTest
                                                sortedNatural.length);
     Arrays.sort(sortedAlpha);
 
-    checkFkSort("BOOKAUTHORS", sortedAlpha, true);
-    checkFkSort("BOOKAUTHORS", sortedNatural, false);
+    checkFkSort(connection, "BOOKAUTHORS", sortedAlpha, true);
+    checkFkSort(connection, "BOOKAUTHORS", sortedNatural, false);
 
   }
 
   @Test
-  public void indexSort()
+  public void indexSort(final Connection connection)
     throws Exception
   {
 
@@ -212,8 +219,8 @@ public class SortingTest
                                                sortedNatural.length);
     Arrays.sort(sortedAlpha);
 
-    checkIndexSort("AUTHORS", sortedAlpha, true);
-    checkIndexSort("AUTHORS", sortedNatural, false);
+    checkIndexSort(connection, "AUTHORS", sortedAlpha, true);
+    checkIndexSort(connection, "AUTHORS", sortedNatural, false);
 
   }
 

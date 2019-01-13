@@ -103,13 +103,13 @@ public class SpringIntegrationTest
   }
 
   @Test
-  public void testSchema()
+  public void testSchema(final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = appContext
       .getBean("schemaCrawlerOptions", SchemaCrawlerOptions.class);
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),

@@ -43,6 +43,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static sf.util.Utility.isBlank;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -53,6 +54,7 @@ import java.util.TreeMap;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
@@ -84,15 +86,18 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void columnDataTypes(final TestInfo testInfo)
+  public void columnDataTypes(final TestInfo testInfo,
+                              final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -109,7 +114,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Collection<ColumnDataType> columnDataTypes = catalog
         .getColumnDataTypes();
@@ -127,13 +133,13 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void columnLookup(final TestInfo testInfo)
+  public void columnLookup(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .newSchemaCrawlerOptions();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat(catalog, notNullValue());
     final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
     assertThat(schema, notNullValue());
@@ -146,7 +152,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void columns(final TestInfo testInfo)
+  public void columns(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -163,7 +169,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
@@ -228,7 +235,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void counts(final TestInfo testInfo)
+  public void counts(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -245,7 +252,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
@@ -275,7 +283,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void databaseInfo(final TestInfo testInfo)
+  public void databaseInfo(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -292,7 +300,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final DatabaseInfo databaseInfo = catalog.getDatabaseInfo();
       final Collection<DatabaseProperty> dbProperties = databaseInfo
@@ -390,7 +399,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void relatedTables(final TestInfo testInfo)
+  public void relatedTables(final TestInfo testInfo,
+                            final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -402,7 +412,7 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
       assertThat("Table count does not match", tables, arrayWithSize(13));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
@@ -421,7 +431,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void relatedTablesWithTableRestriction(final TestInfo testInfo)
+  public void relatedTablesWithTableRestriction(final TestInfo testInfo,
+                                                final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -433,7 +444,7 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaCrawlerOptions);
+      final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
       final Table[] tables = catalog.getTables().toArray(new Table[0]);
       assertThat("Table count does not match", tables, arrayWithSize(1));
       Arrays.sort(tables, NamedObjectSort.alphabetical);
@@ -452,7 +463,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void routineDefinitions(final TestInfo testInfo)
+  public void routineDefinitions(final TestInfo testInfo,
+                                 final Connection connection)
     throws Exception
   {
     final Config config = loadHsqldbConfig();
@@ -466,7 +478,8 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+    final Catalog catalog = getCatalog(connection,
+                                       schemaRetrievalOptions,
                                        schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Routine[] routines = catalog.getRoutines(schema)
@@ -481,7 +494,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void schemaEquals(final TestInfo testInfo)
+  public void schemaEquals(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
 
@@ -491,7 +504,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema schema1 = new SchemaReference("PUBLIC", "BOOKS");
     assertThat("Could not find any tables",
                catalog.getTables(schema1),
@@ -518,7 +531,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void sequences(final TestInfo testInfo)
+  public void sequences(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -538,7 +551,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertThat("BOOKS Schema not found", schema, notNullValue());
@@ -560,7 +574,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void synonyms(final TestInfo testInfo)
+  public void synonyms(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -580,7 +594,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").get();
       assertThat("BOOKS Schema not found", schema, notNullValue());
@@ -600,7 +615,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void tableConstraints(final TestInfo testInfo)
+  public void tableConstraints(final TestInfo testInfo,
+                               final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -613,7 +629,8 @@ public class SchemaCrawlerTest
 
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(6));
@@ -650,7 +667,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void tables(final TestInfo testInfo)
+  public void tables(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -667,7 +684,8 @@ public class SchemaCrawlerTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog catalog = getCatalog(schemaRetrievalOptions,
+      final Catalog catalog = getCatalog(connection,
+                                         schemaRetrievalOptions,
                                          schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
@@ -696,7 +714,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void tablesSort(final TestInfo testInfo)
+  public void tablesSort(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
 
@@ -719,7 +737,7 @@ public class SchemaCrawlerTest
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
     assertThat("Schema count does not match", schemas, arrayWithSize(5));
     final Schema schema = schemas[0];
@@ -749,7 +767,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void triggers(final TestInfo testInfo)
+  public void triggers(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final Config config = loadHsqldbConfig();
@@ -759,7 +777,8 @@ public class SchemaCrawlerTest
 
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+    final Catalog catalog = getCatalog(connection,
+                                       schemaRetrievalOptions,
                                        schemaCrawlerOptions);
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final Table[] tables = catalog.getTables(schema).toArray(new Table[0]);
@@ -781,7 +800,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void viewDefinitions(final TestInfo testInfo)
+  public void viewDefinitions(final TestInfo testInfo,
+                              final Connection connection)
     throws Exception
   {
     final Config config = loadHsqldbConfig();
@@ -795,7 +815,8 @@ public class SchemaCrawlerTest
     schemaCrawlerOptionsBuilder
       .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
 
-    final Catalog catalog = getCatalog(schemaRetrievalOptions,
+    final Catalog catalog = getCatalog(connection,
+                                       schemaRetrievalOptions,
                                        schemaCrawlerOptionsBuilder.toOptions());
     final Schema schema = new SchemaReference("PUBLIC", "BOOKS");
     final View view = (View) catalog.lookupTable(schema, "AUTHORSLIST").get();

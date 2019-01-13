@@ -35,9 +35,11 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 
+import java.sql.Connection;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.crawl.NotLoadedException;
 import schemacrawler.schema.Catalog;
@@ -49,7 +51,9 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerReferenceTest
   extends BaseDatabaseTest
 {
@@ -103,14 +107,14 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferences()
+  public void fkReferences(final Connection connection)
     throws Exception
   {
 
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
 
     int fkReferenceCount = 0;
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
     for (final Table table: tables)
     {
@@ -133,7 +137,7 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferencesForGreppedAndFilteredTables1()
+  public void fkReferencesForGreppedAndFilteredTables1(final Connection connection)
     throws Exception
   {
 
@@ -145,7 +149,7 @@ public class SchemaCrawlerReferenceTest
       .toOptions();
 
     int fkReferenceCount = 0;
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
     for (final Table table: tables)
     {
@@ -169,7 +173,7 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferencesForGreppedAndFilteredTables2()
+  public void fkReferencesForGreppedAndFilteredTables2(final Connection connection)
     throws Exception
   {
 
@@ -181,7 +185,7 @@ public class SchemaCrawlerReferenceTest
       .toOptions();
 
     int fkReferenceCount = 0;
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
     for (final Table table: tables)
     {
@@ -205,7 +209,7 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferencesForGreppedTables1()
+  public void fkReferencesForGreppedTables1(final Connection connection)
     throws Exception
   {
 
@@ -215,7 +219,7 @@ public class SchemaCrawlerReferenceTest
       .toOptions();
 
     int fkReferenceCount = 0;
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
     for (final Table table: tables)
     {
@@ -239,7 +243,7 @@ public class SchemaCrawlerReferenceTest
   }
 
   @Test
-  public void fkReferencesForGreppedTables2()
+  public void fkReferencesForGreppedTables2(final Connection connection)
     throws Exception
   {
 
@@ -249,7 +253,7 @@ public class SchemaCrawlerReferenceTest
       .toOptions();
 
     int fkReferenceCount = 0;
-    final Catalog catalog = getCatalog(schemaCrawlerOptions);
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     final Collection<Table> tables = catalog.getTables();
     for (final Table table: tables)
     {

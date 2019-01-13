@@ -29,7 +29,6 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;

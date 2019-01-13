@@ -75,7 +75,7 @@ public class TableCountsTest
       final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
         .toOptions();
 
-      final Catalog baseCatalog = getCatalog(schemaCrawlerOptions);
+      final Catalog baseCatalog = getCatalog(connection, schemaCrawlerOptions);
       final CatalogWithCounts catalog = new CatalogWithCounts(baseCatalog,
                                                               connection,
                                                               schemaCrawlerOptions);

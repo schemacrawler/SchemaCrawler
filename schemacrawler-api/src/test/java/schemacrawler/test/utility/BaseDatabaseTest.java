@@ -38,7 +38,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Properties;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -48,51 +47,31 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.testdb.TestDatabase;
 
 public abstract class BaseDatabaseTest
   extends BaseSchemaCrawlerTest
 {
 
-  private final static TestDatabase testDatabase = TestDatabase.initialize();
-
-  protected Catalog getCatalog(final SchemaCrawlerOptions schemaCrawlerOptions)
-    throws SchemaCrawlerException
-  {
-    return getCatalog(SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
-                      schemaCrawlerOptions);
-  }
-
-  protected Catalog getCatalog(final SchemaRetrievalOptions schemaRetrievalOptions,
+  protected Catalog getCatalog(final Connection connection,
                                final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
-    final SchemaCrawler schemaCrawler = new SchemaCrawler(getConnection(),
+    return getCatalog(connection,
+                      SchemaRetrievalOptionsBuilder.newSchemaRetrievalOptions(),
+                      schemaCrawlerOptions);
+  }
+
+  protected Catalog getCatalog(final Connection connection,
+                               final SchemaRetrievalOptions schemaRetrievalOptions,
+                               final SchemaCrawlerOptions schemaCrawlerOptions)
+    throws SchemaCrawlerException
+  {
+    final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
                                                           schemaRetrievalOptions,
                                                           schemaCrawlerOptions);
     final Catalog catalog = schemaCrawler.crawl();
 
     return catalog;
-  }
-
-  /**
-   * Gets the connection.
-   *
-   * @return Connection
-   * @throws SchemaCrawlerException
-   *         On an exception
-   */
-  private Connection getConnection()
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      return testDatabase.getConnection();
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
   }
 
   /**
