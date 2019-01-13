@@ -1,10 +1,11 @@
 # SchemaCrawler Change History
 
 
-<a name="a15.03.05"></a>
-## Release 15.03.04 - 2018-12-29
+<a name="a15.04.01"></a>
+## Release 15.04.01 - 2019-01-29
 
 - Add server information for MySQL
+- Convert tests to JUnit 5
 
 
 <a name="a15.03.04"></a>
@@ -54,8 +55,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.03.04"></a>
-## Release 15.03.04 - 2018-10-14
+<a name="a15.04.01"></a>
+## Release 15.04.01 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 

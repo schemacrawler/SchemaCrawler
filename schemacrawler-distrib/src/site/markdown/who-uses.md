@@ -75,3 +75,4 @@ SchemaCrawler in the press, and in online articles and blogs.
 - Allison Tharp's blog post, [Using SchemaCrawler to Generate a SQLite DB Graph](http://www.techtrek.io/using-schemacrawler-to-generate-a-sqlite-db-graph/)
 - [Adrien Sales](https://www.linkedin.com/in/adrien-sales)' presentation, [database continuous deployment and development](http://dsi-ville-noumea.github.io/presentation-continuous-database/)
 - Tobias Weis' blog, [Short: Schema diagram from an existing sqlite database](http://blog.tobias-weis.de/short-schema-diagram-from-an-existing-sqlite-database/)
+- Joost Hietbrink's article [Create a database ERD in your CI/CD pipeline](https://www.webuildinternet.com/2018/01/21/create_database_erd_in_your_ci_cd_pipeline/)
