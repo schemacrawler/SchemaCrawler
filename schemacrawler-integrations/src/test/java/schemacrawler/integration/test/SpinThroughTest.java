@@ -91,6 +91,29 @@ public class SpinThroughTest
     hsqldbProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
+  private Path createTempFile(final SchemaTextDetailType schemaTextDetailType,
+                              final InfoLevel infoLevel,
+                              final OutputFormat outputFormat)
+    throws IOException
+  {
+    return IOUtility.createTempFilePath(String
+      .format("%s.%s", schemaTextDetailType, infoLevel),
+                                        outputFormat.getFormat());
+  }
+
+  private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
+                               final InfoLevel infoLevel,
+                               final OutputFormat outputFormat)
+  {
+    final String referenceFile = String.format("%d%d.%s_%s.%s",
+                                               schemaTextDetailType.ordinal(),
+                                               infoLevel.ordinal(),
+                                               schemaTextDetailType,
+                                               infoLevel,
+                                               outputFormat.getFormat());
+    return referenceFile;
+  }
+
   @Test
   public void spinThroughExecutable()
     throws Exception
@@ -208,29 +231,6 @@ public class SpinThroughTest
     {
       fail(failures.toString());
     }
-  }
-
-  private Path createTempFile(final SchemaTextDetailType schemaTextDetailType,
-                              final InfoLevel infoLevel,
-                              final OutputFormat outputFormat)
-    throws IOException
-  {
-    return IOUtility.createTempFilePath(String
-      .format("%s.%s", schemaTextDetailType, infoLevel),
-                                        outputFormat.getFormat());
-  }
-
-  private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
-                               final InfoLevel infoLevel,
-                               final OutputFormat outputFormat)
-  {
-    final String referenceFile = String.format("%d%d.%s_%s.%s",
-                                               schemaTextDetailType.ordinal(),
-                                               infoLevel.ordinal(),
-                                               schemaTextDetailType,
-                                               infoLevel,
-                                               outputFormat.getFormat());
-    return referenceFile;
   }
 
 }

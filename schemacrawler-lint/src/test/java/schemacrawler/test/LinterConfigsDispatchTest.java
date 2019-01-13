@@ -43,23 +43,28 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.sql.Connection;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.BaseLintExecutableTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
 {
@@ -123,14 +128,16 @@ public class LinterConfigsDispatchTest
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigCommandLine(final TestInfo testInfo)
+  public void testSystemExitLinterConfigCommandLine(final TestInfo testInfo,
+                                                    final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lintdispatch", "terminate_system");
 
-    executeLintCommandLine(TextOutputFormat.text,
+    executeLintCommandLine(connectionInfo,
+                           TextOutputFormat.text,
                            "/schemacrawler-linter-configs-with-dispatch.xml",
                            additionalConfig,
                            "schemacrawler-linter-configs-with-dispatch");
@@ -140,14 +147,16 @@ public class LinterConfigsDispatchTest
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigExecutable(final TestInfo testInfo)
+  public void testSystemExitLinterConfigExecutable(final TestInfo testInfo,
+                                                   final Connection connection)
     throws Exception
   {
 
     final Config additionalConfig = new Config();
     additionalConfig.put("lintdispatch", "terminate_system");
 
-    executeLintExecutable(TextOutputFormat.text,
+    executeLintExecutable(connection,
+                          TextOutputFormat.text,
                           "/schemacrawler-linter-configs-with-dispatch.xml",
                           additionalConfig,
                           "schemacrawler-linter-configs-with-dispatch");

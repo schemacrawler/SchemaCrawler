@@ -38,6 +38,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.Utility.isBlank;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +52,8 @@ public abstract class BaseLintExecutableTest
   extends BaseExecutableTest
 {
 
-  protected void executeLintCommandLine(final OutputFormat outputFormat,
+  protected void executeLintCommandLine(DatabaseConnectionInfo connectionInfo,
+                                        final OutputFormat outputFormat,
                                         final String linterConfigsResource,
                                         final Config additionalConfig,
                                         final String referenceFileName)
@@ -61,7 +63,7 @@ public abstract class BaseLintExecutableTest
     try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", getConnectionUrl());
+      argsMap.put("url", connectionInfo.getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
 
@@ -90,7 +92,8 @@ public abstract class BaseLintExecutableTest
                                        outputFormat.getFormat()));
   }
 
-  protected void executeLintExecutable(final OutputFormat outputFormat,
+  protected void executeLintExecutable(Connection connection,
+                                       final OutputFormat outputFormat,
                                        final String linterConfigsResource,
                                        final Config additionalConfig,
                                        final String referenceFileName)
@@ -111,7 +114,10 @@ public abstract class BaseLintExecutableTest
       lintExecutable.setAdditionalConfiguration(config);
     }
 
-    executeExecutable(lintExecutable, outputFormat, referenceFileName + ".txt");
+    executeExecutable(connection,
+                      lintExecutable,
+                      outputFormat,
+                      referenceFileName + ".txt");
   }
 
 }

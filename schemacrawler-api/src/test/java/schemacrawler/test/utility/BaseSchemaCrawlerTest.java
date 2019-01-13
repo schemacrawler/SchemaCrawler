@@ -55,9 +55,14 @@ public abstract class BaseSchemaCrawlerTest
     applyApplicationLogLevel(Level.OFF);
   }
 
-  protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()
+  protected String currentMethodFullName(final TestInfo testInfo)
   {
-    return schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    requireNonNull(testInfo, "No test info provided");
+    return testInfo.getTestMethod()
+      .map(method -> String.format("%s.%s",
+                                   method.getDeclaringClass().getSimpleName(),
+                                   method.getName()))
+      .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
   protected String currentMethodName(final TestInfo testInfo)
@@ -67,14 +72,9 @@ public abstract class BaseSchemaCrawlerTest
       .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
-  protected String currentMethodFullName(final TestInfo testInfo)
+  protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()
   {
-    requireNonNull(testInfo, "No test info provided");
-    return testInfo.getTestMethod()
-      .map(method -> String.format("%s.%s",
-                                   method.getDeclaringClass().getSimpleName(),
-                                   method.getName()))
-      .orElseThrow(() -> new RuntimeException("Could not find test method"));
+    return schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
   }
 
 }

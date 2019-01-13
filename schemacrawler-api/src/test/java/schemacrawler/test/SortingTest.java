@@ -53,67 +53,6 @@ public class SortingTest
   extends BaseDatabaseTest
 {
 
-  @Test
-  public void columnSort()
-    throws Exception
-  {
-
-    final String[] sortedNatural = new String[] {
-                                                  "ID",
-                                                  "FIRSTNAME",
-                                                  "LASTNAME",
-                                                  "ADDRESS1",
-                                                  "ADDRESS2",
-                                                  "CITY",
-                                                  "STATE",
-                                                  "POSTALCODE",
-                                                  "COUNTRY", };
-
-    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
-                                               sortedNatural.length);
-    Arrays.sort(sortedAlpha);
-
-    checkColumnSort("AUTHORS", sortedAlpha, true);
-    checkColumnSort("AUTHORS", sortedNatural, false);
-
-  }
-
-  @Test
-  public void fkSort()
-    throws Exception
-  {
-
-    final String[] sortedNatural = new String[] {
-                                                  "Z_FK_AUTHOR",
-                                                  "SYS_FK_10128", };
-
-    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
-                                               sortedNatural.length);
-    Arrays.sort(sortedAlpha);
-
-    checkFkSort("BOOKAUTHORS", sortedAlpha, true);
-    checkFkSort("BOOKAUTHORS", sortedNatural, false);
-
-  }
-
-  @Test
-  public void indexSort()
-    throws Exception
-  {
-
-    final String[] sortedNatural = new String[] {
-                                                  "SYS_IDX_PK_AUTHORS_10111",
-                                                  "IDX_B_AUTHORS",
-                                                  "IDX_A_AUTHORS", };
-    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
-                                               sortedNatural.length);
-    Arrays.sort(sortedAlpha);
-
-    checkIndexSort("AUTHORS", sortedAlpha, true);
-    checkIndexSort("AUTHORS", sortedNatural, false);
-
-  }
-
   @SuppressWarnings("boxing")
   private void checkColumnSort(final String tableName,
                                final String[] expectedValues,
@@ -215,6 +154,67 @@ public class SortingTest
         }
       }
     }
+  }
+
+  @Test
+  public void columnSort()
+    throws Exception
+  {
+
+    final String[] sortedNatural = new String[] {
+                                                  "ID",
+                                                  "FIRSTNAME",
+                                                  "LASTNAME",
+                                                  "ADDRESS1",
+                                                  "ADDRESS2",
+                                                  "CITY",
+                                                  "STATE",
+                                                  "POSTALCODE",
+                                                  "COUNTRY", };
+
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
+
+    checkColumnSort("AUTHORS", sortedAlpha, true);
+    checkColumnSort("AUTHORS", sortedNatural, false);
+
+  }
+
+  @Test
+  public void fkSort()
+    throws Exception
+  {
+
+    final String[] sortedNatural = new String[] {
+                                                  "Z_FK_AUTHOR",
+                                                  "SYS_FK_10128", };
+
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
+
+    checkFkSort("BOOKAUTHORS", sortedAlpha, true);
+    checkFkSort("BOOKAUTHORS", sortedNatural, false);
+
+  }
+
+  @Test
+  public void indexSort()
+    throws Exception
+  {
+
+    final String[] sortedNatural = new String[] {
+                                                  "SYS_IDX_PK_AUTHORS_10111",
+                                                  "IDX_B_AUTHORS",
+                                                  "IDX_A_AUTHORS", };
+    final String[] sortedAlpha = Arrays.copyOf(sortedNatural,
+                                               sortedNatural.length);
+    Arrays.sort(sortedAlpha);
+
+    checkIndexSort("AUTHORS", sortedAlpha, true);
+    checkIndexSort("AUTHORS", sortedNatural, false);
+
   }
 
 }

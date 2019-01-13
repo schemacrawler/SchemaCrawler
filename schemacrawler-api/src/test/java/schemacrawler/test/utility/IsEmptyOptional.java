@@ -47,6 +47,12 @@ public class IsEmptyOptional<T>
   }
 
   @Override
+  public void describeTo(final Description description)
+  {
+    description.appendText("an Optional<T> that is empty");
+  }
+
+  @Override
   protected boolean matchesSafely(final Optional<T> item,
                                   final Description mismatchDescription)
   {
@@ -57,12 +63,6 @@ public class IsEmptyOptional<T>
       return false;
     }
     return true;
-  }
-
-  @Override
-  public void describeTo(final Description description)
-  {
-    description.appendText("an Optional<T> that is empty");
   }
 
 }

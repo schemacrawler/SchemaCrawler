@@ -85,17 +85,6 @@ public class CommandLineNegativeTest
     run(testInfo, argsMapOverride, null);
   }
 
-  @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   private Path createConfig(final Map<String, String> config)
     throws IOException
   {
@@ -150,6 +139,17 @@ public class CommandLineNegativeTest
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
                                                   + currentMethodName(testInfo)
                                                   + ".stderr.txt")));
+  }
+
+  @BeforeEach
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
 }

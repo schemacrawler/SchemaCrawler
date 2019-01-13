@@ -39,7 +39,7 @@ public class CompleteBuildCondition
 {
 
   @Override
-  public ConditionEvaluationResult evaluateExecutionCondition(ExtensionContext context)
+  public ConditionEvaluationResult evaluateExecutionCondition(final ExtensionContext context)
   {
     final String isCompleteBuildPropertyValue = System.getProperty("complete");
     final boolean isCompleteBuild = isCompleteBuildPropertyValue != null

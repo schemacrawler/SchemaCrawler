@@ -34,18 +34,21 @@ import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -56,49 +59,15 @@ import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerXmlOutputTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String XML_OUTPUT = "xml_output/";
 
-  @Test
-  public void validCountXMLOutput()
-    throws Exception
-  {
-    // clean(XML_OUTPUT);
-
-    final List<String> failures = new ArrayList<>();
-
-    checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
-
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
-
-  @Test
-  public void validXMLOutput()
-    throws Exception
-  {
-    // clean(XML_OUTPUT);
-
-    final List<String> failures = new ArrayList<>();
-
-    checkValidXmlOutput(Operation.count.name(), failures);
-    checkValidXmlOutput(Operation.dump.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.brief.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.schema.name(), failures);
-    checkValidXmlOutput(SchemaTextDetailType.details.name(), failures);
-
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
-  }
-
-  private void checkValidXmlOutput(final String command,
+  private void checkValidXmlOutput(final Connection connection,
+                                   final String command,
                                    final List<String> failures)
     throws IOException, Exception, SchemaCrawlerException
   {
@@ -129,12 +98,56 @@ public class SchemaCrawlerXmlOutputTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
     executable.setOutputOptions(outputOptions);
-    executable.setConnection(getConnection());
+    executable.setConnection(connection);
     executable.execute();
 
     failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
                                   testOutputFile,
                                   TextOutputFormat.html.getFormat()));
+  }
+
+  @Test
+  public void validCountXMLOutput(final Connection connection)
+    throws Exception
+  {
+    // clean(XML_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    checkValidXmlOutput(connection,
+                        SchemaTextDetailType.details.name(),
+                        failures);
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
+  }
+
+  @Test
+  public void validXMLOutput(final Connection connection)
+    throws Exception
+  {
+    // clean(XML_OUTPUT);
+
+    final List<String> failures = new ArrayList<>();
+
+    checkValidXmlOutput(connection, Operation.count.name(), failures);
+    checkValidXmlOutput(connection, Operation.dump.name(), failures);
+    checkValidXmlOutput(connection,
+                        SchemaTextDetailType.brief.name(),
+                        failures);
+    checkValidXmlOutput(connection,
+                        SchemaTextDetailType.schema.name(),
+                        failures);
+    checkValidXmlOutput(connection,
+                        SchemaTextDetailType.details.name(),
+                        failures);
+
+    if (failures.size() > 0)
+    {
+      fail(failures.toString());
+    }
   }
 
 }

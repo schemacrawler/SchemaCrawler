@@ -112,13 +112,6 @@ public class TableTypesTest
     test("tables.txt", "TABLE");
   }
 
-  @Test
-  public void views()
-    throws Exception
-  {
-    test("views.txt", "VIEW");
-  }
-
   private void test(final String referenceFile, final String tableTypes)
     throws Exception
   {
@@ -160,6 +153,13 @@ public class TableTypesTest
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(TABLE_TYPES_OUTPUT
                                                   + referenceFile)));
+  }
+
+  @Test
+  public void views()
+    throws Exception
+  {
+    test("views.txt", "VIEW");
   }
 
 }

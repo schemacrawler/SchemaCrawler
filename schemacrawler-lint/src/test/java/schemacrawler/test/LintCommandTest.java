@@ -29,50 +29,60 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import java.sql.Connection;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.BaseLintExecutableTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.TextOutputFormat;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintCommandTest
   extends BaseLintExecutableTest
 {
 
   @Test
-  public void commandlineLintReport()
+  public void commandlineLintReport(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    executeLintCommandLine(TextOutputFormat.text,
+    executeLintCommandLine(connectionInfo,
+                           TextOutputFormat.text,
                            null,
                            null,
                            "executableForLint");
   }
 
   @Test
-  public void commandlineLintReportWithConfig()
+  public void commandlineLintReportWithConfig(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    executeLintCommandLine(TextOutputFormat.text,
+    executeLintCommandLine(connectionInfo,
+                           TextOutputFormat.text,
                            "/schemacrawler-linter-configs-test.xml",
                            null,
                            "executableForLintWithConfig");
   }
 
   @Test
-  public void executableLintReport()
+  public void executableLintReport(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text,
+    executeLintExecutable(connection,
+                          TextOutputFormat.text,
                           null,
                           null,
                           "executableForLint");
   }
 
   @Test
-  public void executableLintReportWithConfig()
+  public void executableLintReportWithConfig(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text,
+    executeLintExecutable(connection,
+                          TextOutputFormat.text,
                           "/schemacrawler-linter-configs-test.xml",
                           null,
                           "executableForLintWithConfig");

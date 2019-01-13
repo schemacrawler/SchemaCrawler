@@ -34,8 +34,11 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
+import java.sql.Connection;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -45,19 +48,46 @@ import schemacrawler.schema.SchemaReference;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpringIntegrationTest
   extends BaseDatabaseTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");
 
+  private void executeAndCheckForOutputFile(final String executableName,
+                                            final Connection connection,
+                                            final SchemaCrawlerExecutable executable,
+                                            final SchemaRetrievalOptions schemaRetrievalOptions)
+    throws Exception
+  {
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
+    {
+      final OutputOptions outputOptions = (OutputOptions) FieldUtils
+        .readField(executable, "outputOptions", true);
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder(outputOptions).withOutputWriter(out);
+
+      executable.setOutputOptions(outputOptionsBuilder.toOptions());
+
+      executable.setConnection(connection);
+      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
+      executable.execute();
+
+    }
+    assertThat(fileResource(testout),
+               hasSameContentAs(classpathResource(executableName + ".txt")));
+  }
+
   @Test
-  public void testExecutables()
+  public void testExecutables(final Connection connection)
     throws Exception
   {
     final String beanDefinitionName = "executableForSchema";
@@ -67,6 +97,7 @@ public class SpringIntegrationTest
       .getBean("schemaRetrievalOptions", SchemaRetrievalOptions.class);
 
     executeAndCheckForOutputFile(beanDefinitionName,
+                                 connection,
                                  executable,
                                  schemaRetrievalOptions);
   }
@@ -83,30 +114,6 @@ public class SpringIntegrationTest
     assertThat("Unexpected number of tables in the schema",
                catalog.getTables(schema),
                hasSize(10));
-  }
-
-  private void executeAndCheckForOutputFile(final String executableName,
-                                            final SchemaCrawlerExecutable executable,
-                                            final SchemaRetrievalOptions schemaRetrievalOptions)
-    throws Exception
-  {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptions outputOptions = (OutputOptions) FieldUtils
-        .readField(executable, "outputOptions", true);
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder(outputOptions).withOutputWriter(out);
-
-      executable.setOutputOptions(outputOptionsBuilder.toOptions());
-
-      executable.setConnection(getConnection());
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      executable.execute();
-
-    }
-    assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(executableName + ".txt")));
   }
 
 }

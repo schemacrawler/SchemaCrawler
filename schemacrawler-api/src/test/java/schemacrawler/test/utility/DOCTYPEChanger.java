@@ -97,6 +97,51 @@ public final class DOCTYPEChanger
     super(new BufferedReader(in));
   }
 
+  protected void addDocType()
+  {
+    myBuffer.append("!DOCTYPE ");
+    myBuffer.append(rootElement);
+    if (publicIdentifier.equals(""))
+    {
+      if (!systemIdentifier.equals(""))
+      {
+        myBuffer.append(" SYSTEM '");
+        myBuffer.append(systemIdentifier);
+        myBuffer.append("'");
+      }
+    }
+    else
+    {
+      myBuffer.append(" PUBLIC '");
+      myBuffer.append(publicIdentifier);
+      myBuffer.append("' '");
+      myBuffer.append(systemIdentifier);
+      myBuffer.append("'");
+    }
+    myBuffer.append(" ");
+
+    if (!internalSubsetContent.equals(""))
+    {
+      myBuffer.append(" [\n");
+      myBuffer.append(internalSubsetContent);
+      myBuffer.append("\n]");
+    }
+
+    myBuffer.append(">\n");
+    docStarted = true;
+
+  }
+
+  protected int feedFromInternalBuffer()
+  {
+    // feed out the buffer a character at a time
+    final int retChar = myBuffer.charAt(0);
+    myBuffer.reverse();
+    myBuffer.setLength(myBuffer.length() - 1);
+    myBuffer.reverse();
+    return retChar;
+  }
+
   /**
    * Returns the internal subset.
    */
@@ -300,51 +345,6 @@ public final class DOCTYPEChanger
   public void setSystemIdentifier(final String identifier)
   {
     systemIdentifier = identifier;
-  }
-
-  protected void addDocType()
-  {
-    myBuffer.append("!DOCTYPE ");
-    myBuffer.append(rootElement);
-    if (publicIdentifier.equals(""))
-    {
-      if (!systemIdentifier.equals(""))
-      {
-        myBuffer.append(" SYSTEM '");
-        myBuffer.append(systemIdentifier);
-        myBuffer.append("'");
-      }
-    }
-    else
-    {
-      myBuffer.append(" PUBLIC '");
-      myBuffer.append(publicIdentifier);
-      myBuffer.append("' '");
-      myBuffer.append(systemIdentifier);
-      myBuffer.append("'");
-    }
-    myBuffer.append(" ");
-
-    if (!internalSubsetContent.equals(""))
-    {
-      myBuffer.append(" [\n");
-      myBuffer.append(internalSubsetContent);
-      myBuffer.append("\n]");
-    }
-
-    myBuffer.append(">\n");
-    docStarted = true;
-
-  }
-
-  protected int feedFromInternalBuffer()
-  {
-    // feed out the buffer a character at a time
-    final int retChar = myBuffer.charAt(0);
-    myBuffer.reverse();
-    myBuffer.setLength(myBuffer.length() - 1);
-    myBuffer.reverse();
-    return retChar;
   }
 
 }

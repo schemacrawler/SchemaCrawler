@@ -34,6 +34,8 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 
+import java.sql.Connection;
+
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
@@ -41,25 +43,34 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseExecutableTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
-  protected void executeExecutable(final SchemaCrawlerExecutable executable,
+  protected void executeExecutable(final Connection connection,
+                                   final SchemaCrawlerExecutable executable,
                                    final OutputFormat outputFormat,
                                    final String referenceFileName)
     throws Exception
   {
-    executeExecutable(executable, outputFormat.getFormat(), referenceFileName);
+    executeExecutable(connection,
+                      executable,
+                      outputFormat.getFormat(),
+                      referenceFileName);
   }
 
-  protected void executeExecutable(final SchemaCrawlerExecutable executable,
+  protected void executeExecutable(final Connection connection,
+                                   final SchemaCrawlerExecutable executable,
                                    final String referenceFileName)
     throws Exception
   {
-    executeExecutable(executable, TextOutputFormat.text, referenceFileName);
+    executeExecutable(connection,
+                      executable,
+                      TextOutputFormat.text,
+                      referenceFileName);
   }
 
-  protected void executeExecutable(final SchemaCrawlerExecutable executable,
+  protected void executeExecutable(final Connection connection,
+                                   final SchemaCrawlerExecutable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
     throws Exception
@@ -71,7 +82,7 @@ public abstract class BaseExecutableTest
         .newOutputOptions(outputFormatValue, out);
 
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
+      executable.setConnection(connection);
       executable.execute();
     }
     assertThat(fileResource(testout),
@@ -80,12 +91,16 @@ public abstract class BaseExecutableTest
   }
 
   protected void executeExecutable(final String command,
+                                   final Connection connection,
                                    final String outputFormatValue,
                                    final String referenceFileName)
     throws Exception
   {
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executeExecutable(executable, outputFormatValue, referenceFileName);
+    executeExecutable(connection,
+                      executable,
+                      outputFormatValue,
+                      referenceFileName);
   }
 
 }

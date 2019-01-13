@@ -29,54 +29,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import java.sql.Connection;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ScriptingTest
   extends BaseExecutableTest
 {
-
-  @Test
-  public void executableGroovy()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(),
-                      "/plaintextschema.groovy",
-                      "script_output.txt");
-  }
-
-  @Test
-  public void executableJavaScript()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(),
-                      "/plaintextschema.js",
-                      "script_output.txt");
-  }
-
-  @Test
-  public void executablePython()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(),
-                      "/plaintextschema.py",
-                      "script_output.txt");
-  }
-
-  @Test
-  public void executableRuby()
-    throws Exception
-  {
-    executeExecutable(createScriptExecutable(),
-                      "/plaintextschema.rb",
-                      "script_output_rb.txt");
-  }
 
   private SchemaCrawlerExecutable createScriptExecutable()
     throws SchemaCrawlerException
@@ -90,6 +59,46 @@ public class ScriptingTest
     final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable("script");
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return scriptExecutable;
+  }
+
+  @Test
+  public void executableGroovy(final Connection connection)
+    throws Exception
+  {
+    executeExecutable(connection,
+                      createScriptExecutable(),
+                      "/plaintextschema.groovy",
+                      "script_output.txt");
+  }
+
+  @Test
+  public void executableJavaScript(final Connection connection)
+    throws Exception
+  {
+    executeExecutable(connection,
+                      createScriptExecutable(),
+                      "/plaintextschema.js",
+                      "script_output.txt");
+  }
+
+  @Test
+  public void executablePython(final Connection connection)
+    throws Exception
+  {
+    executeExecutable(connection,
+                      createScriptExecutable(),
+                      "/plaintextschema.py",
+                      "script_output.txt");
+  }
+
+  @Test
+  public void executableRuby(final Connection connection)
+    throws Exception
+  {
+    executeExecutable(connection,
+                      createScriptExecutable(),
+                      "/plaintextschema.rb",
+                      "script_output_rb.txt");
   }
 
 }

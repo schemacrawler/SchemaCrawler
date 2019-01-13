@@ -39,11 +39,13 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -51,7 +53,8 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
@@ -63,8 +66,9 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintOutputTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";
@@ -72,7 +76,7 @@ public class LintOutputTest
   private static final String JSON_OUTPUT = "lint_json_output/";
 
   @Test
-  public void compareCompositeOutput()
+  public void compareCompositeOutput(final Connection connection)
     throws Exception
   {
     clean(COMPOSITE_OUTPUT);
@@ -121,7 +125,7 @@ public class LintOutputTest
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.setConnection(getConnection());
+        executable.setConnection(connection);
         executable.execute();
 
         failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
@@ -136,7 +140,7 @@ public class LintOutputTest
   }
 
   @Test
-  public void compareJsonOutput()
+  public void compareJsonOutput(final Connection connection)
     throws Exception
   {
     clean(JSON_OUTPUT);
@@ -158,7 +162,7 @@ public class LintOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
+      executable.setConnection(connection);
       executable.execute();
     }
     assertThat(fileResource(testout),
@@ -168,7 +172,7 @@ public class LintOutputTest
   }
 
   @Test
-  public void compareTextOutput()
+  public void compareTextOutput(final Connection connection)
     throws Exception
   {
     clean(TEXT_OUTPUT);
@@ -190,7 +194,7 @@ public class LintOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("lint");
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
+      executable.setConnection(connection);
       executable.execute();
     }
     assertThat(fileResource(testout),

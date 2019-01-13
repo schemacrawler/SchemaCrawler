@@ -71,21 +71,7 @@ public class SchemaCrawlerJsonOutputTest
     clean(JSON_EXTRA_OUTPUT);
   }
 
-  @Test
-  public void noTableJsonOutput(TestInfo testInfo)
-    throws Exception
-  {
-    jsonOutput(testInfo, fullName -> false, "");
-  }
-
-  @Test
-  public void singleTableJsonOutput(TestInfo testInfo)
-    throws Exception
-  {
-    jsonOutput(testInfo, fullName -> fullName.contains("Counts"), "%Counts");
-  }
-
-  private void jsonOutput(TestInfo testInfo,
+  private void jsonOutput(final TestInfo testInfo,
                           final InclusionRule tableInclusionRule,
                           final String tableName)
     throws Exception
@@ -135,6 +121,20 @@ public class SchemaCrawlerJsonOutputTest
     {
       fail(failures.toString());
     }
+  }
+
+  @Test
+  public void noTableJsonOutput(final TestInfo testInfo)
+    throws Exception
+  {
+    jsonOutput(testInfo, fullName -> false, "");
+  }
+
+  @Test
+  public void singleTableJsonOutput(final TestInfo testInfo)
+    throws Exception
+  {
+    jsonOutput(testInfo, fullName -> fullName.contains("Counts"), "%Counts");
   }
 
 }

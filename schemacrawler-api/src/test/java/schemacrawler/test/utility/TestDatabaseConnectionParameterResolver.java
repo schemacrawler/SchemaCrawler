@@ -51,23 +51,9 @@ public class TestDatabaseConnectionParameterResolver
     return parameter.getType().equals(Connection.class);
   }
 
-  private boolean isParameterConnectionUrl(final Parameter parameter)
+  private boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
   {
-    return parameter.isNamePresent()
-           && parameter.getName().equals("connectionUrl")
-           && parameter.getType().equals(String.class);
-  }
-
-  private boolean isParameterDatabase(final Parameter parameter)
-  {
-    return parameter.isNamePresent() && parameter.getName().equals("database")
-           && parameter.getType().equals(String.class);
-  }
-
-  private boolean isParameterPort(final Parameter parameter)
-  {
-    return parameter.isNamePresent() && parameter.getName().equals("port")
-           && parameter.getType().equals(int.class);
+    return parameter.getType().equals(DatabaseConnectionInfo.class);
   }
 
   @Override
@@ -82,17 +68,12 @@ public class TestDatabaseConnectionParameterResolver
       {
         return testDatabase.getConnection();
       }
-      else if (isParameterPort(parameter))
+      else if (isParameterDatabaseConnectionInfo(parameter))
       {
-        return testDatabase.getPort();
-      }
-      else if (isParameterDatabase(parameter))
-      {
-        return testDatabase.getDatabase();
-      }
-      else if (isParameterConnectionUrl(parameter))
-      {
-        return testDatabase.getConnectionUrl();
+        return new DatabaseConnectionInfo(testDatabase.getHost(),
+                                          testDatabase.getPort(),
+                                          testDatabase.getDatabase(),
+                                          testDatabase.getConnectionUrl());
       }
       else
       {
@@ -112,17 +93,13 @@ public class TestDatabaseConnectionParameterResolver
     throws ParameterResolutionException
   {
     boolean hasConnection;
-    boolean hasPort;
-    boolean hasDatabase;
-    boolean hasConnectionUrl;
+    boolean hasDatabaseConnectionInfo;
     final Parameter parameter = parameterContext.getParameter();
 
     hasConnection = isParameterConnection(parameter);
-    hasPort = isParameterPort(parameter);
-    hasDatabase = isParameterDatabase(parameter);
-    hasConnectionUrl = isParameterConnectionUrl(parameter);
+    hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
 
-    return hasConnection || hasPort || hasDatabase || hasConnectionUrl;
+    return hasConnection || hasDatabaseConnectionInfo;
   }
 
 }

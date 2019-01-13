@@ -76,17 +76,6 @@ public class CommandLineHelpTest
     run(testInfo, args, null);
   }
 
-  @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
-  }
-
   private void run(final TestInfo testInfo,
                    final Map<String, String> argsMap,
                    final Map<String, String> config)
@@ -103,6 +92,17 @@ public class CommandLineHelpTest
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
                                                   + currentMethodName(testInfo)
                                                   + ".txt")));
+  }
+
+  @BeforeEach
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
 }

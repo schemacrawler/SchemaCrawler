@@ -32,27 +32,34 @@ package schemacrawler.test;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintSqlTest
   extends BaseExecutableTest
 {
 
   @Test
-  public void executableLintSQLReport()
+  public void executableLintSQLReport(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(TextOutputFormat.text, "executableLintSQLReport");
+    executeLintExecutable(connection,
+                          TextOutputFormat.text,
+                          "executableLintSQLReport");
   }
 
-  private void executeLintExecutable(final OutputFormat outputFormat,
+  private void executeLintExecutable(final Connection connection,
+                                     final OutputFormat outputFormat,
                                      final String referenceFileName)
     throws Exception
   {
@@ -64,7 +71,10 @@ public class LintSqlTest
 
     lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
 
-    executeExecutable(lintExecutable, outputFormat, referenceFileName + ".txt");
+    executeExecutable(connection,
+                      lintExecutable,
+                      outputFormat,
+                      referenceFileName + ".txt");
   }
 
 }

@@ -55,6 +55,22 @@ public class DirectedGraphTest
 
   }
 
+  private DirectedGraph<String> makeGraph()
+  {
+
+    final DirectedGraph<String> graph = new DirectedGraph<String>("")
+    {
+      {
+        addEdge("A", "B");
+        addEdge("B", "C");
+        addEdge("A", "D");
+        addVertex("E");
+      }
+    };
+
+    return graph;
+  }
+
   @Test
   public void noCycles()
     throws Exception
@@ -107,22 +123,6 @@ public class DirectedGraphTest
     assertThrows(GraphException.class,
                  () -> topologicalSort(graph),
                  () -> Arrays.asList("E", "A", "D", "B", "C").toString());
-  }
-
-  private DirectedGraph<String> makeGraph()
-  {
-
-    final DirectedGraph<String> graph = new DirectedGraph<String>("")
-    {
-      {
-        addEdge("A", "B");
-        addEdge("B", "C");
-        addEdge("A", "D");
-        addVertex("E");
-      }
-    };
-
-    return graph;
   }
 
 }

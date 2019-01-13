@@ -35,74 +35,86 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TemplatingIntegrationTest
   extends BaseExecutableTest
 {
 
   @Test
-  public void commandlineFreeMarker()
+  public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     executeCommandlineAndCheckForOutputFile("freemarker",
+                                            connectionInfo,
                                             "plaintextschema.ftl",
                                             "executableForFreeMarker");
   }
 
   @Test
-  public void commandlineThymeleaf()
+  public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     executeCommandlineAndCheckForOutputFile("thymeleaf",
+                                            connectionInfo,
                                             "plaintextschema.thymeleaf",
                                             "executableForThymeleaf");
   }
 
   @Test
-  public void commandlineVelocity()
+  public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     executeCommandlineAndCheckForOutputFile("velocity",
+                                            connectionInfo,
                                             "plaintextschema.vm",
                                             "executableForVelocity");
   }
 
   @Test
-  public void executableFreeMarker()
+  public void executableFreeMarker(final Connection connection)
     throws Exception
   {
     executeExecutable("freemarker",
+                      connection,
                       "plaintextschema.ftl",
                       "executableForFreeMarker.txt");
   }
 
   @Test
-  public void executableThymeleaf()
+  public void executableThymeleaf(final Connection connection)
     throws Exception
   {
     executeExecutable("thymeleaf",
+                      connection,
                       "plaintextschema.thymeleaf",
                       "executableForThymeleaf.txt");
   }
 
   @Test
-  public void executableVelocity()
+  public void executableVelocity(final Connection connection)
     throws Exception
   {
     executeExecutable("velocity",
+                      connection,
                       "plaintextschema.vm",
                       "executableForVelocity.txt");
   }
 
   private void executeCommandlineAndCheckForOutputFile(final String command,
+                                                       final DatabaseConnectionInfo connectionInfo,
                                                        final String outputFormatValue,
                                                        final String referenceFileName)
     throws Exception
@@ -111,7 +123,7 @@ public class TemplatingIntegrationTest
     try (final TestWriter out = testout;)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", getConnectionUrl());
+      argsMap.put("url", connectionInfo.getConnectionUrl());
       argsMap.put("user", "sa");
       argsMap.put("password", "");
       argsMap.put("infolevel", "standard");

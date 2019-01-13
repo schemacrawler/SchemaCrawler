@@ -75,26 +75,6 @@ public abstract class BaseDatabaseTest
     return catalog;
   }
 
-  protected String getConnectionUrl()
-  {
-    return testDatabase.getConnectionUrl();
-  }
-
-  protected String getDatabase()
-  {
-    return testDatabase.getDatabase();
-  }
-
-  public String getHost()
-  {
-    return testDatabase.getHost();
-  }
-
-  public int getPort()
-  {
-    return testDatabase.getPort();
-  }
-
   /**
    * Gets the connection.
    *
@@ -113,6 +93,26 @@ public abstract class BaseDatabaseTest
     {
       throw new SchemaCrawlerException(e.getMessage(), e);
     }
+  }
+
+  protected String getConnectionUrl()
+  {
+    return testDatabase.getConnectionUrl();
+  }
+
+  protected String getDatabase()
+  {
+    return testDatabase.getDatabase();
+  }
+
+  public String getHost()
+  {
+    return testDatabase.getHost();
+  }
+
+  public int getPort()
+  {
+    return testDatabase.getPort();
   }
 
   /**

@@ -36,13 +36,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.NamedObject;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CoverageTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   @Test
@@ -82,11 +85,10 @@ public class CoverageTest
   }
 
   @Test
-  public void retrieverConnectionClosed()
+  public void retrieverConnectionClosed(final Connection connection)
     throws SQLException, SchemaCrawlerException
   {
     assertThrows(SQLException.class, () -> {
-      final Connection connection = getConnection();
       connection.close();
       new RetrieverConnection(connection, null);
     });
