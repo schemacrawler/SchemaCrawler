@@ -29,16 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.sql.Connection;
-import java.util.Properties;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -47,6 +39,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import sf.util.PropertiesUtility;
 
 public abstract class BaseDatabaseTest
   extends BaseSchemaCrawlerTest
@@ -74,34 +68,11 @@ public abstract class BaseDatabaseTest
     return catalog;
   }
 
-  /**
-   * Loads a properties file from a CLASSPATH resource.
-   *
-   * @param resource
-   *        A CLASSPATH resource.
-   * @return Config loaded from classpath resource
-   * @throws IOException
-   *         On an exception
-   */
-  protected Config loadConfigFromClasspathResource(final String resource)
-    throws IOException
-  {
-    final InputStream stream = BaseDatabaseTest.class
-      .getResourceAsStream(resource);
-    requireNonNull(stream, "Could not load config from resource, " + resource);
-    final Reader reader = new InputStreamReader(stream, UTF_8);
-    final Properties properties = new Properties();
-    try (final BufferedReader bufferedReader = new BufferedReader(reader);)
-    {
-      properties.load(bufferedReader);
-    }
-    return new Config(properties);
-  }
-
   protected Config loadHsqldbConfig()
     throws IOException
   {
-    return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+    return PropertiesUtility
+      .loadConfig(new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
   }
 
 }

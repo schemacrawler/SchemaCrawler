@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.FileInputResource;
-import schemacrawler.utility.PropertiesUtility;
+import sf.util.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 
 /**

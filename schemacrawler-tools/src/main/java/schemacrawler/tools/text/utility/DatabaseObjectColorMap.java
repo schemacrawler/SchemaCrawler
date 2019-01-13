@@ -29,7 +29,7 @@ package schemacrawler.tools.text.utility;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.utility.PropertiesUtility.loadProperties;
+import static sf.util.PropertiesUtility.loadProperties;
 import static sf.util.Utility.isBlank;
 
 import java.io.IOException;

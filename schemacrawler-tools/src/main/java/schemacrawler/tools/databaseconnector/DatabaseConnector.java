@@ -47,7 +47,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.iosource.InputResource;
-import schemacrawler.utility.PropertiesUtility;
+import sf.util.PropertiesUtility;
 
 public abstract class DatabaseConnector
   implements Options

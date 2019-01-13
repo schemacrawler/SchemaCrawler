@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.utility;
+package sf.util;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -38,8 +38,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.iosource.InputResource;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
 public class PropertiesUtility
 {
