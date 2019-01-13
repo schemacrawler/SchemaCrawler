@@ -39,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
@@ -87,7 +88,10 @@ public class SQLiteExecuableTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(sqliteDbFile, executable, currentMethodFullName);
+    executeExecutable(createConnection(sqliteDbFile),
+                      executable,
+                      TextOutputFormat.text,
+                      currentMethodFullName);
   }
 
 }

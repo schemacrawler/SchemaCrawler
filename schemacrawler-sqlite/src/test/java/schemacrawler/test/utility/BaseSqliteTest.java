@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -51,7 +52,7 @@ import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
-  extends BaseSchemaCrawlerTest
+  extends BaseExecutableTest
 {
 
   protected DataSource createDataSource(final Path sqliteDbFile)
@@ -96,29 +97,10 @@ public abstract class BaseSqliteTest
     return sqliteDbFile;
   }
 
-  protected void executeExecutable(final Path sqliteDbFile,
-                                   final SchemaCrawlerExecutable executable,
-                                   final String referenceFileName)
-    throws Exception
+  protected Connection createConnection(Path sqliteDbFile)
+    throws SQLException, SchemaCrawlerException
   {
-    final String outputFormatValue = TextOutputFormat.text.name();
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormatValue, out);
-
-      executable.setOutputOptions(outputOptions);
-      try (Connection connection = createDataSource(sqliteDbFile)
-        .getConnection();)
-      {
-        executable.setConnection(connection);
-        executable.execute();
-      }
-    }
-    assertThat(fileResource(testout),
-               hasSameContentAndTypeAs(classpathResource(referenceFileName),
-                                       outputFormatValue));
+    return createDataSource(sqliteDbFile).getConnection();
   }
 
 }
