@@ -2,7 +2,7 @@
 
 SchemaCrawler is a free database schema discovery and comprehension tool.
 SchemaCrawler has a good mix of useful features for data governance. You can
-[search for database schema objects](schemacrawler_grep.html) using regular
+[search for database schema objects](schemacrawler-grep.html) using regular
 expressions, and output the schema and data in a readable text format. The
 output serves for database documentation, and is designed to be
 [diff-ed](http://en.wikipedia.org/wiki/Diff) against other database schemas.
@@ -39,7 +39,7 @@ browser. All formats are designed to be easy to
 [diff](http://en.wikipedia.org/wiki/Diff), or find differences with other
 schemas that may have been output in the same format.
 
-SchemaCrawler has [grep](schemacrawler_grep.html) functionality that allows
+SchemaCrawler has [grep](schemacrawler-grep.html) functionality that allows
 you to search for table and column names using regular expressions.
 SchemaCrawler is capable of creating entity-relationship diagrams in
 [DOT format,](http://www.graphviz.org/doc/info/lang.html ) which
