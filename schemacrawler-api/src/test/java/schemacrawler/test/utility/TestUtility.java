@@ -166,6 +166,10 @@ public final class TestUtility
     {
       contentEquals = false;
     }
+    else if ("png".equals(outputFormat))
+    {
+      contentEquals = true;
+    }
     else
     {
       final Reader fileReader = readerForFile(testOutputTempFile, isCompressed);
@@ -188,6 +192,10 @@ public final class TestUtility
     else if ("json".equals(outputFormat))
     {
       validateJSON(testOutputTempFile, failures);
+    }
+    else if ("png".equals(outputFormat))
+    {
+      validateDiagram(testOutputTempFile);
     }
 
     if (!contentEquals)

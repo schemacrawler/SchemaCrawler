@@ -72,6 +72,15 @@ public class LinterConfigsDispatchTest
   private TestOutputStream out;
   private TestOutputStream err;
 
+  private void checkSystemErrLog(final TestInfo testInfo)
+    throws Exception
+  {
+    assertThat(fileResource(out), hasNoContent());
+    assertThat(fileResource(err),
+               hasSameContentAs(classpathResource(currentMethodName(testInfo)
+                                                  + ".log")));
+  }
+
   @AfterEach
   public void cleanUpStreams()
   {
@@ -155,22 +164,12 @@ public class LinterConfigsDispatchTest
     final Config additionalConfig = new Config();
     additionalConfig.put("lintdispatch", "terminate_system");
 
-    executeLintExecutable(connection,
-                          TextOutputFormat.text,
+    executableLint(connection,
                           "/schemacrawler-linter-configs-with-dispatch.xml",
                           additionalConfig,
                           "schemacrawler-linter-configs-with-dispatch");
 
     checkSystemErrLog(testInfo);
-  }
-
-  private void checkSystemErrLog(final TestInfo testInfo)
-    throws Exception
-  {
-    assertThat(fileResource(out), hasNoContent());
-    assertThat(fileResource(err),
-               hasSameContentAs(classpathResource(currentMethodName(testInfo)
-                                                  + ".log")));
   }
 
 }

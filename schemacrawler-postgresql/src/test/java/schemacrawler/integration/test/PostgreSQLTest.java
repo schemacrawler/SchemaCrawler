@@ -56,6 +56,7 @@ import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -169,7 +170,10 @@ public class PostgreSQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "testPostgreSQLWithConnection.txt");
+    executeExecutable(getConnection(),
+                      executable,
+                      TextOutputFormat.text,
+                      "testPostgreSQLWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 

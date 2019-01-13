@@ -41,6 +41,7 @@ import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -108,7 +109,10 @@ public class MonetDBTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "testMonetDBWithConnection.txt");
+    executeExecutable(getConnection(),
+                      executable,
+                      TextOutputFormat.text,
+                      "testMonetDBWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed MonetDB test successfully");
   }
 

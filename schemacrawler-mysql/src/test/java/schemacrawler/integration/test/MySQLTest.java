@@ -59,6 +59,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
@@ -170,7 +171,10 @@ public class MySQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "testMySQLWithConnection.txt");
+    executeExecutable(getConnection(),
+                      executable,
+                      TextOutputFormat.text,
+                      "testMySQLWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed MySQL test successfully");
   }
 

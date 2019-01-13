@@ -70,19 +70,14 @@ public class LintCommandTest
   public void executableLintReport(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(connection,
-                          TextOutputFormat.text,
-                          null,
-                          null,
-                          "executableForLint");
+    executableLint(connection, null, null, "executableForLint");
   }
 
   @Test
   public void executableLintReportWithConfig(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(connection,
-                          TextOutputFormat.text,
+    executableLint(connection,
                           "/schemacrawler-linter-configs-test.xml",
                           null,
                           "executableForLintWithConfig");

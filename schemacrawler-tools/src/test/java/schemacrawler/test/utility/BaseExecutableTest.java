@@ -34,42 +34,48 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 
+import java.nio.file.Path;
 import java.sql.Connection;
 
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseExecutableTest
   extends BaseSchemaCrawlerTest
 {
 
-  protected void executeExecutable(final Connection connection,
+  protected SchemaCrawlerExecutable createExecutable(final String command)
+    throws SchemaCrawlerException
+  {
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(command);
+    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    return scriptExecutable;
+  }
+
+  protected Path executeExecutable(final Connection connection,
                                    final SchemaCrawlerExecutable executable,
                                    final OutputFormat outputFormat,
                                    final String referenceFileName)
     throws Exception
   {
-    executeExecutable(connection,
-                      executable,
-                      outputFormat.getFormat(),
-                      referenceFileName);
+    return executeExecutable(connection,
+                             executable,
+                             outputFormat.getFormat(),
+                             referenceFileName);
   }
 
-  protected void executeExecutable(final Connection connection,
-                                   final SchemaCrawlerExecutable executable,
-                                   final String referenceFileName)
-    throws Exception
-  {
-    executeExecutable(connection,
-                      executable,
-                      TextOutputFormat.text,
-                      referenceFileName);
-  }
-
-  protected void executeExecutable(final Connection connection,
+  protected Path executeExecutable(final Connection connection,
                                    final SchemaCrawlerExecutable executable,
                                    final String outputFormatValue,
                                    final String referenceFileName)
@@ -78,29 +84,18 @@ public abstract class BaseExecutableTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormatValue, out);
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder().withOutputFormatValue(outputFormatValue)
+        .withOutputWriter(out);
 
-      executable.setOutputOptions(outputOptions);
+      executable.setOutputOptions(outputOptionsBuilder.toOptions());
       executable.setConnection(connection);
       executable.execute();
     }
     assertThat(fileResource(testout),
                hasSameContentAndTypeAs(classpathResource(referenceFileName),
                                        outputFormatValue));
-  }
-
-  protected void executeExecutable(final String command,
-                                   final Connection connection,
-                                   final String outputFormatValue,
-                                   final String referenceFileName)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executeExecutable(connection,
-                      executable,
-                      outputFormatValue,
-                      referenceFileName);
+    return testout.getFilePath();
   }
 
 }

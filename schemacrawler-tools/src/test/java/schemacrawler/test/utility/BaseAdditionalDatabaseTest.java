@@ -28,11 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.ConsoleHandler;
@@ -47,14 +42,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
-  extends BaseSchemaCrawlerTest
+  extends BaseExecutableTest
 {
 
   protected final static Logger LOGGER = Logger
@@ -96,27 +87,6 @@ public abstract class BaseAdditionalDatabaseTest
     ds.setDefaultAutoCommit(false);
 
     dataSource = ds;
-  }
-
-  protected void executeExecutable(final SchemaCrawlerExecutable executable,
-                                   final String referenceFileName)
-    throws Exception
-  {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(TextOutputFormat.text, out);
-
-      executable.setOutputOptions(outputOptions);
-      if (!executable.hasConnection())
-      {
-        executable.setConnection(getConnection());
-      }
-      executable.execute();
-    }
-    assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(referenceFileName)));
   }
 
   protected final Connection getConnection()

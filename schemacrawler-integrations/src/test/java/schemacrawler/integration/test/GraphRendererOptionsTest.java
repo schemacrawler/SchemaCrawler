@@ -33,7 +33,6 @@ import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.validateDiagram;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -59,10 +58,7 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class GraphRendererOptionsTest
@@ -410,7 +406,10 @@ public class GraphRendererOptionsTest
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
-    final Path testDiagramFile = executeGraphExecutable(connection, executable);
+    final Path testDiagramFile = executeExecutable(connection,
+                                                   executable,
+                                                   GraphOutputFormat.png,
+                                                   "");
     copy(testDiagramFile,
          directory.resolve(testMethodName + ".png"),
          REPLACE_EXISTING);
@@ -421,27 +420,6 @@ public class GraphRendererOptionsTest
                       executable,
                       GraphOutputFormat.scdot,
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
-  }
-
-  private Path executeGraphExecutable(final Connection connection,
-                                      final SchemaCrawlerExecutable executable)
-    throws Exception
-  {
-    final String outputFormatValue = GraphOutputFormat.png.getFormat();
-
-    final Path testOutputFile = IOUtility.createTempFilePath("sc",
-                                                             outputFormatValue);
-
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions(outputFormatValue, testOutputFile);
-
-    executable.setOutputOptions(outputOptions);
-    executable.setConnection(connection);
-    executable.execute();
-
-    validateDiagram(testOutputFile);
-
-    return testOutputFile;
   }
 
 }

@@ -41,6 +41,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -77,7 +78,10 @@ public class DerbyTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "testDerbyWithConnection.txt");
+    executeExecutable(getConnection(),
+                      executable,
+                      TextOutputFormat.text,
+                      "testDerbyWithConnection.txt");
     LOGGER.log(Level.INFO, "Completed Apache Derby test successfully");
   }
 

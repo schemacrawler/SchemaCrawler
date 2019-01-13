@@ -29,52 +29,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-
-import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintOptionsBuilder;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintSqlTest
-  extends BaseExecutableTest
+  extends BaseLintExecutableTest
 {
 
   @Test
   public void executableLintSQLReport(final Connection connection)
     throws Exception
   {
-    executeLintExecutable(connection,
-                          TextOutputFormat.text,
+    executableLint(connection,
+                          "/schemacrawler-linter-configs-sql.xml",
+                          null,
                           "executableLintSQLReport");
-  }
-
-  private void executeLintExecutable(final Connection connection,
-                                     final OutputFormat outputFormat,
-                                     final String referenceFileName)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
-
-    final Path linterConfigsFile = copyResourceToTempFile("/schemacrawler-linter-configs-sql.xml");
-    final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
-    optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
-
-    lintExecutable.setAdditionalConfiguration(optionsBuilder.toConfig());
-
-    executeExecutable(connection,
-                      lintExecutable,
-                      outputFormat,
-                      referenceFileName + ".txt");
   }
 
 }

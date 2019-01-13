@@ -3,6 +3,7 @@
 .svn
 .idea/
 **/*.iml
+*.png
 .settings/com.atlassian.clover.eclipse.core.prefs
 /schemacrawler-db2/*.jar
 /schemacrawler-distrib/*.bnd

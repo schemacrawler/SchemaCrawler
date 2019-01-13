@@ -34,31 +34,53 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.integration.test.utility.BaseIntegrationTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ScriptingTest
-  extends BaseExecutableTest
+  extends BaseIntegrationTest
 {
 
-  private SchemaCrawlerExecutable createScriptExecutable()
-    throws SchemaCrawlerException
+  @Test
+  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
+    executeCommandline(connectionInfo,
+                       "script",
+                       "/plaintextschema.groovy",
+                       "script_output.txt");
+  }
 
-    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable("script");
-    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    return scriptExecutable;
+  @Test
+  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    executeCommandline(connectionInfo,
+                       "script",
+                       "/plaintextschema.js",
+                       "script_output.txt");
+  }
+
+  @Test
+  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    executeCommandline(connectionInfo,
+                       "script",
+                       "/plaintextschema.py",
+                       "script_output.txt");
+  }
+
+  @Test
+  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    executeCommandline(connectionInfo,
+                       "script",
+                       "/plaintextschema.rb",
+                       "script_output_rb.txt");
   }
 
   @Test
@@ -66,7 +88,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(connection,
-                      createScriptExecutable(),
+                      createExecutable("script"),
                       "/plaintextschema.groovy",
                       "script_output.txt");
   }
@@ -76,7 +98,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(connection,
-                      createScriptExecutable(),
+                      createExecutable("script"),
                       "/plaintextschema.js",
                       "script_output.txt");
   }
@@ -86,7 +108,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(connection,
-                      createScriptExecutable(),
+                      createExecutable("script"),
                       "/plaintextschema.py",
                       "script_output.txt");
   }
@@ -96,7 +118,7 @@ public class ScriptingTest
     throws Exception
   {
     executeExecutable(connection,
-                      createScriptExecutable(),
+                      createExecutable("script"),
                       "/plaintextschema.rb",
                       "script_output_rb.txt");
   }

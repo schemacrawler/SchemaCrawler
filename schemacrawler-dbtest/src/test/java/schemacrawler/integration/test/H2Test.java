@@ -42,6 +42,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -78,7 +79,10 @@ public class H2Test
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(executable, "testH2WithConnection.txt");
+    executeExecutable(getConnection(),
+                      executable,
+                      TextOutputFormat.text,
+                      "testH2WithConnection.txt");
     LOGGER.log(Level.INFO, "Completed H2 test successfully");
   }
 

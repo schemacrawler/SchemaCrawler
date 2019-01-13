@@ -77,4 +77,5 @@ public class BaseSiteVariationsTest
     Files.createDirectories(projectRoot);
     return projectRoot;
   }
+
 }

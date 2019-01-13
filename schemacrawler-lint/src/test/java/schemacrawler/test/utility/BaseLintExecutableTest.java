@@ -47,12 +47,13 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseLintExecutableTest
   extends BaseExecutableTest
 {
 
-  protected void executeLintCommandLine(DatabaseConnectionInfo connectionInfo,
+  protected void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
                                         final OutputFormat outputFormat,
                                         final String linterConfigsResource,
                                         final Config additionalConfig,
@@ -92,11 +93,10 @@ public abstract class BaseLintExecutableTest
                                        outputFormat.getFormat()));
   }
 
-  protected void executeLintExecutable(Connection connection,
-                                       final OutputFormat outputFormat,
-                                       final String linterConfigsResource,
-                                       final Config additionalConfig,
-                                       final String referenceFileName)
+  protected void executableLint(final Connection connection,
+                                final String linterConfigsResource,
+                                final Config additionalConfig,
+                                final String referenceFileName)
     throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
@@ -116,7 +116,7 @@ public abstract class BaseLintExecutableTest
 
     executeExecutable(connection,
                       lintExecutable,
-                      outputFormat,
+                      TextOutputFormat.text,
                       referenceFileName + ".txt");
   }
 

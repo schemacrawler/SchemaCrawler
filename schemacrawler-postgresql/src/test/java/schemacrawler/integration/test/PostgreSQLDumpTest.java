@@ -36,6 +36,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +56,7 @@ import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -98,9 +100,14 @@ public class PostgreSQLDumpTest
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
-    executable.setConnection(postgreSQLDumpLoader.createDatabaseConnection());
 
-    executeExecutable(executable, "testPostgreSQLExecutableWithDump.txt");
+    final Connection connection = postgreSQLDumpLoader
+      .createDatabaseConnection();
+
+    executeExecutable(connection,
+                      executable,
+                      TextOutputFormat.text,
+                      "testPostgreSQLExecutableWithDump.txt");
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
