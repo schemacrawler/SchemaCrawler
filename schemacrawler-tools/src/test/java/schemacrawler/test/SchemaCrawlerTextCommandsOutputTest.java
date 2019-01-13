@@ -35,14 +35,18 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.clean;
 
+import java.sql.Connection;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -52,6 +56,7 @@ import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerTextCommandsOutputTest
   extends BaseDatabaseTest
 {
@@ -66,21 +71,21 @@ public class SchemaCrawlerTextCommandsOutputTest
   }
 
   @Test
-  public void countOutput()
+  public void countOutput(final Connection connection)
     throws Exception
   {
-    testOperationOutput(Operation.count);
+    testOperationOutput(connection, Operation.count);
   }
 
   @Test
-  public void dumpOutput()
+  public void dumpOutput(final Connection connection)
     throws Exception
   {
-    testOperationOutput(Operation.dump);
+    testOperationOutput(connection, Operation.dump);
   }
 
   @Test
-  public void queryOutput()
+  public void queryOutput(final Connection connection)
     throws Exception
   {
     final String queryCommand = "all_tables";
@@ -89,11 +94,11 @@ public class SchemaCrawlerTextCommandsOutputTest
       .put(queryCommand,
            "SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES ORDER BY TABLE_SCHEM, TABLE_NAME");
 
-    textOutputTest(queryCommand, config);
+    textOutputTest(queryCommand, connection, config);
   }
 
   @Test
-  public void queryOverOutput()
+  public void queryOverOutput(final Connection connection)
     throws Exception
   {
     final String queryCommand = "dump_tables";
@@ -102,25 +107,25 @@ public class SchemaCrawlerTextCommandsOutputTest
       .put(queryCommand,
            "SELECT ${orderbycolumns} FROM ${table} ORDER BY ${orderbycolumns}");
 
-    textOutputTest(queryCommand, config);
+    textOutputTest(queryCommand, connection, config);
   }
 
   @Test
-  public void quickdumpOutput()
+  public void quickdumpOutput(final Connection connection)
     throws Exception
   {
-    testOperationOutput(Operation.quickdump);
+    testOperationOutput(connection, Operation.quickdump);
   }
 
   @Test
-  public void schemaOutput()
+  public void schemaOutput(final Connection connection)
     throws Exception
   {
-    textOutputTest(SchemaTextDetailType.brief.name(), new Config());
+    textOutputTest(SchemaTextDetailType.brief.name(), connection, new Config());
   }
 
   @Test
-  public void sortedColumnsOutput()
+  public void sortedColumnsOutput(final Connection connection)
     throws Exception
   {
     final String queryCommand = "dump_tables_sorted_columns";
@@ -130,23 +135,26 @@ public class SchemaCrawlerTextCommandsOutputTest
     config.put(queryCommand,
                "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}");
 
-    textOutputTest(queryCommand, config);
+    textOutputTest(queryCommand, connection, config);
   }
 
   @Test
-  public void streamedOutput()
+  public void streamedOutput(final Connection connection)
     throws Exception
   {
-    textOutputTest(SchemaTextDetailType.brief.name(), new Config());
+    textOutputTest(SchemaTextDetailType.brief.name(), connection, new Config());
   }
 
-  private void testOperationOutput(final Operation operation)
+  private void testOperationOutput(final Connection connection,
+                                   final Operation operation)
     throws Exception
   {
-    textOutputTest(operation.name(), new Config());
+    textOutputTest(operation.name(), connection, new Config());
   }
 
-  private void textOutputTest(final String command, final Config config)
+  private void textOutputTest(final String command,
+                              final Connection connection,
+                              final Config config)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -175,7 +183,7 @@ public class SchemaCrawlerTextCommandsOutputTest
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
       executable.setAdditionalConfiguration(config);
       executable.setOutputOptions(outputOptions);
-      executable.setConnection(getConnection());
+      executable.setConnection(connection);
       executable.execute();
     }
     assertThat(fileResource(testout),

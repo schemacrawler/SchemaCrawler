@@ -34,12 +34,14 @@ import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ExcludeAll;
@@ -50,6 +52,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -58,6 +61,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerJsonOutputTest
   extends BaseDatabaseTest
 {
@@ -72,6 +76,7 @@ public class SchemaCrawlerJsonOutputTest
   }
 
   private void jsonOutput(final TestInfo testInfo,
+                          final Connection connection,
                           final InclusionRule tableInclusionRule,
                           final String tableName)
     throws Exception
@@ -109,7 +114,7 @@ public class SchemaCrawlerJsonOutputTest
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setAdditionalConfiguration(schemaTextOptions);
-    executable.setConnection(getConnection());
+    executable.setConnection(connection);
     executable
       .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
     executable.execute();
@@ -124,17 +129,22 @@ public class SchemaCrawlerJsonOutputTest
   }
 
   @Test
-  public void noTableJsonOutput(final TestInfo testInfo)
+  public void noTableJsonOutput(final TestInfo testInfo,
+                                final Connection connection)
     throws Exception
   {
-    jsonOutput(testInfo, fullName -> false, "");
+    jsonOutput(testInfo, connection, fullName -> false, "");
   }
 
   @Test
-  public void singleTableJsonOutput(final TestInfo testInfo)
+  public void singleTableJsonOutput(final TestInfo testInfo,
+                                    final Connection connection)
     throws Exception
   {
-    jsonOutput(testInfo, fullName -> fullName.contains("Counts"), "%Counts");
+    jsonOutput(testInfo,
+               connection,
+               fullName -> fullName.contains("Counts"),
+               "%Counts");
   }
 
 }

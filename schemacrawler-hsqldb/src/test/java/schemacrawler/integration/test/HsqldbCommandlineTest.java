@@ -44,7 +44,6 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -55,6 +54,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
@@ -64,19 +64,22 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class HsqldbCommandlineTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   @Test
-  public void testHsqldbMain()
+  public void testHsqldbMain(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
 
@@ -100,11 +103,10 @@ public class HsqldbCommandlineTest
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      System.out.println(getConnectionUrl());
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("server", "hsqldb");
-      argsMap.put("port", String.valueOf(getPort()));
-      argsMap.put("database", getDatabase());
+      argsMap.put("port", String.valueOf(connectionInfo.getPort()));
+      argsMap.put("database", connectionInfo.getDatabase());
       argsMap.put("user", "sa");
       argsMap.put("password", null);
       argsMap.put("g", testConfigFile.toString());
@@ -125,11 +127,10 @@ public class HsqldbCommandlineTest
   }
 
   @Test
-  public void testHsqldbWithConnection()
+  public void testHsqldbWithConnection(final Connection connection)
     throws Exception
   {
 
-    final Connection connection = checkConnection(getConnection());
     final DatabaseConnector hsqldbSystemConnector = new HyperSQLDatabaseConnector();
 
     final SchemaRetrievalOptions schemaRetrievalOptions = hsqldbSystemConnector

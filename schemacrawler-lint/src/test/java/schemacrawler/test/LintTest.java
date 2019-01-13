@@ -37,9 +37,11 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
+import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -49,6 +51,7 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
 import schemacrawler.tools.lint.LintCollector;
@@ -57,6 +60,7 @@ import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.lint.Linters;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest
   extends BaseDatabaseTest
 {
@@ -64,7 +68,7 @@ public class LintTest
   private static final String LINTS_OUTPUT = "lints_output/";
 
   @Test
-  public void lints()
+  public void lints(final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -91,7 +95,7 @@ public class LintTest
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                           getConnection(),
+                                                           connection,
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertThat(lintCollector.size(), is(51));
@@ -119,7 +123,7 @@ public class LintTest
   }
 
   @Test
-  public void lintsWithExcludedColumns()
+  public void lintsWithExcludedColumns(final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -142,7 +146,7 @@ public class LintTest
     final Linters linters = new Linters(linterConfigs);
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
-                                                           getConnection(),
+                                                           connection,
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
     assertThat(lintCollector.size(), is(40));

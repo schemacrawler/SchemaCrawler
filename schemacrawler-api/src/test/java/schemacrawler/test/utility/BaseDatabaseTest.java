@@ -82,7 +82,7 @@ public abstract class BaseDatabaseTest
    * @throws SchemaCrawlerException
    *         On an exception
    */
-  protected Connection getConnection()
+  private Connection getConnection()
     throws SchemaCrawlerException
   {
     try
@@ -98,21 +98,6 @@ public abstract class BaseDatabaseTest
   protected String getConnectionUrl()
   {
     return testDatabase.getConnectionUrl();
-  }
-
-  protected String getDatabase()
-  {
-    return testDatabase.getDatabase();
-  }
-
-  public String getHost()
-  {
-    return testDatabase.getHost();
-  }
-
-  public int getPort()
-  {
-    return testDatabase.getPort();
   }
 
   /**

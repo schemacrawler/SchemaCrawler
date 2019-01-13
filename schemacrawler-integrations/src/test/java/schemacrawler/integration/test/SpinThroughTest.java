@@ -35,6 +35,7 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
@@ -51,6 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -62,6 +65,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpinThroughTest
   extends BaseDatabaseTest
 {
@@ -115,7 +119,7 @@ public class SpinThroughTest
   }
 
   @Test
-  public void spinThroughExecutable()
+  public void spinThroughExecutable(final Connection connection)
     throws Exception
   {
     final List<String> failures = new ArrayList<>();
@@ -162,7 +166,7 @@ public class SpinThroughTest
           executable.setOutputOptions(outputOptions);
           executable
             .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-          executable.setConnection(getConnection());
+          executable.setConnection(connection);
           executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder
             .toOptions());
           executable.execute();

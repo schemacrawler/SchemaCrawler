@@ -35,10 +35,12 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
+import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -48,17 +50,19 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
 import schemacrawler.tools.analysis.counts.CountsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TableCountsTest
   extends BaseDatabaseTest
 {
 
   @Test
-  public void tableCounts(final TestInfo testInfo)
+  public void tableCounts(final TestInfo testInfo, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -73,7 +77,7 @@ public class TableCountsTest
 
       final Catalog baseCatalog = getCatalog(schemaCrawlerOptions);
       final CatalogWithCounts catalog = new CatalogWithCounts(baseCatalog,
-                                                              getConnection(),
+                                                              connection,
                                                               schemaCrawlerOptions);
       final Schema[] schemas = catalog.getSchemas().toArray(new Schema[0]);
       assertThat("Schema count does not match", schemas, arrayWithSize(5));
