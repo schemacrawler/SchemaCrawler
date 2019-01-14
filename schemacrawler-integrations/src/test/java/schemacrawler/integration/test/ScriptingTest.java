@@ -29,8 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
 
@@ -90,40 +94,40 @@ public class ScriptingTest
   public void executableGroovy(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("script"),
-                      "/plaintextschema.groovy",
-                      "script_output.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("script"),
+                                                "/plaintextschema.groovy")),
+               hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
   public void executableJavaScript(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("script"),
-                      "/plaintextschema.js",
-                      "script_output.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("script"),
+                                                "/plaintextschema.js")),
+               hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
   public void executablePython(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("script"),
-                      "/plaintextschema.py",
-                      "script_output.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("script"),
+                                                "/plaintextschema.py")),
+               hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
   public void executableRuby(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("script"),
-                      "/plaintextschema.rb",
-                      "script_output_rb.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("script"),
+                                                "/plaintextschema.rb")),
+               hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 
 }

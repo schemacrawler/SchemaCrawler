@@ -28,7 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -43,7 +47,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -80,10 +83,8 @@ public class DerbyTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executableExecution(getConnection(),
-                      executable,
-                      TextOutputFormat.text,
-                      "testDerbyWithConnection.txt");
+    assertThat(outputFileOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource("testDerbyWithConnection.txt")));
     LOGGER.log(Level.INFO, "Completed Apache Derby test successfully");
   }
 

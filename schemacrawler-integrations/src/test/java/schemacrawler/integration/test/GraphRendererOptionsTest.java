@@ -32,7 +32,11 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.nio.file.Path;
@@ -408,19 +412,21 @@ public class GraphRendererOptionsTest
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
     final Path testDiagramFile = executableExecution(connection,
-                                                   executable,
-                                                   GraphOutputFormat.png,
-                                                   "");
+                                                     executable,
+                                                     GraphOutputFormat.png);
     copy(testDiagramFile,
          directory.resolve(testMethodName + ".png"),
          REPLACE_EXISTING);
 
     // Check DOT file
     final String referenceFileName = testMethodName;
-    executableExecution(connection,
-                      executable,
-                      GraphOutputFormat.scdot,
-                      GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executable,
+                                                GraphOutputFormat.scdot)),
+               hasSameContentAndTypeAs(classpathResource(GRAPH_OPTIONS_OUTPUT
+                                                         + referenceFileName
+                                                         + ".dot"),
+                                       GraphOutputFormat.scdot));
   }
 
 }

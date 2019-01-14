@@ -29,7 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.nio.file.Path;
 
@@ -41,7 +45,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
@@ -90,10 +93,9 @@ public class SQLiteExecuableTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executableExecution(createConnection(sqliteDbFile),
-                      executable,
-                      TextOutputFormat.text,
-                      currentMethodFullName);
+    assertThat(outputFileOf(executableExecution(createConnection(sqliteDbFile),
+                                                executable)),
+               hasSameContentAs(classpathResource(currentMethodFullName)));
   }
 
 }

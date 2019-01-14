@@ -28,7 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
 
@@ -57,10 +61,11 @@ public class SpringIntegrationTest
     final SchemaCrawlerExecutable executable = appContext
       .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
-    executableExecution(connection,
-                      executable,
-                      TextOutputFormat.text,
-                      beanDefinitionName + ".txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executable,
+                                                TextOutputFormat.text)),
+               hasSameContentAs(classpathResource(beanDefinitionName
+                                                  + ".txt")));
   }
 
 }

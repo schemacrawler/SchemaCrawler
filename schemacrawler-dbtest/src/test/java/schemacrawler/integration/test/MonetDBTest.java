@@ -28,7 +28,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,7 +47,6 @@ import nl.cwi.monetdb.embedded.env.MonetDBEmbeddedException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -111,10 +114,8 @@ public class MonetDBTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executableExecution(getConnection(),
-                      executable,
-                      TextOutputFormat.text,
-                      "testMonetDBWithConnection.txt");
+    assertThat(outputFileOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource("testMonetDBWithConnection.txt")));
     LOGGER.log(Level.INFO, "Completed MonetDB test successfully");
   }
 

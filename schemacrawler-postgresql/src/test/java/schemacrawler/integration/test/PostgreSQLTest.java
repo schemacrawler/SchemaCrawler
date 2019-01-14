@@ -31,6 +31,9 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.IOException;
@@ -57,7 +60,6 @@ import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.server.postgresql.PostgreSQLDatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
@@ -171,10 +173,8 @@ public class PostgreSQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executableExecution(getConnection(),
-                      executable,
-                      TextOutputFormat.text,
-                      "testPostgreSQLWithConnection.txt");
+    assertThat(outputFileOf(executableExecution(getConnection(), executable)),
+               hasSameContentAs(classpathResource("testPostgreSQLWithConnection.txt")));
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 

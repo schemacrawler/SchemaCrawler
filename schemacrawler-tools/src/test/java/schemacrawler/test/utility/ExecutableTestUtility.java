@@ -30,13 +30,11 @@ package schemacrawler.test.utility;
 
 
 import static java.util.Objects.requireNonNull;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+
+import org.hamcrest.Matcher;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -47,6 +45,7 @@ import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.options.TextOutputFormat;
 
 public final class ExecutableTestUtility
 {
@@ -67,14 +66,28 @@ public final class ExecutableTestUtility
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
-                                         final OutputFormat outputFormat,
-                                         final String referenceFileName)
+                                         final OutputFormat outputFormat)
     throws Exception
   {
     return executableExecution(connection,
                                executable,
-                               outputFormat.getFormat(),
-                               referenceFileName);
+                               outputFormat.getFormat());
+  }
+
+  public static Path executableExecution(final Connection connection,
+                                         final SchemaCrawlerExecutable executable)
+    throws Exception
+  {
+    return executableExecution(connection,
+                               executable,
+                               TextOutputFormat.text.getFormat());
+  }
+
+  public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
+                                                               final OutputFormat outputFormat)
+  {
+    return FileHasContent.hasSameContentAndTypeAs(classpathInputResource,
+                                                  outputFormat.getFormat());
   }
 
   public static InputResource outputFileOf(final Path filePath)
@@ -92,8 +105,7 @@ public final class ExecutableTestUtility
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
-                                         final String outputFormatValue,
-                                         final String referenceFileName)
+                                         final String outputFormatValue)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -107,9 +119,6 @@ public final class ExecutableTestUtility
       executable.setConnection(connection);
       executable.execute();
     }
-    assertThat(fileResource(testout),
-               hasSameContentAndTypeAs(classpathResource(referenceFileName),
-                                       outputFormatValue));
     return testout.getFilePath();
   }
 

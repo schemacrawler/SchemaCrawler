@@ -29,8 +29,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
 
@@ -80,30 +84,30 @@ public class TemplatingIntegrationTest
   public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("freemarker"),
-                      "/plaintextschema.ftl",
-                      "executableForFreeMarker.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("freemarker"),
+                                                "/plaintextschema.ftl")),
+               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
   public void executableThymeleaf(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("thymeleaf"),
-                      "/plaintextschema.thymeleaf",
-                      "executableForThymeleaf.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("thymeleaf"),
+                                                "/plaintextschema.thymeleaf")),
+               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
   public void executableVelocity(final Connection connection)
     throws Exception
   {
-    executableExecution(connection,
-                      executableOf("velocity"),
-                      "/plaintextschema.vm",
-                      "executableForVelocity.txt");
+    assertThat(outputFileOf(executableExecution(connection,
+                                                executableOf("velocity"),
+                                                "/plaintextschema.vm")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
 }
