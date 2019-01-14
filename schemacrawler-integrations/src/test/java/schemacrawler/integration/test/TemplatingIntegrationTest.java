@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.createExecutable;
-import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 
 import java.sql.Connection;
 
@@ -80,8 +80,8 @@ public class TemplatingIntegrationTest
   public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("freemarker"),
+    executableExecution(connection,
+                      executableOf("freemarker"),
                       "/plaintextschema.ftl",
                       "executableForFreeMarker.txt");
   }
@@ -90,8 +90,8 @@ public class TemplatingIntegrationTest
   public void executableThymeleaf(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("thymeleaf"),
+    executableExecution(connection,
+                      executableOf("thymeleaf"),
                       "/plaintextschema.thymeleaf",
                       "executableForThymeleaf.txt");
   }
@@ -100,8 +100,8 @@ public class TemplatingIntegrationTest
   public void executableVelocity(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("velocity"),
+    executableExecution(connection,
+                      executableOf("velocity"),
                       "/plaintextschema.vm",
                       "executableForVelocity.txt");
   }

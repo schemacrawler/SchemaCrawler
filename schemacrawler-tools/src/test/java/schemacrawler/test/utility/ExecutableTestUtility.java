@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
@@ -42,13 +43,15 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public final class ExecutableTestUtility
 {
 
-  public static SchemaCrawlerExecutable createExecutable(final String command)
+  public static SchemaCrawlerExecutable executableOf(final String command)
     throws SchemaCrawlerException
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -62,22 +65,35 @@ public final class ExecutableTestUtility
     return scriptExecutable;
   }
 
-  public static Path executeExecutable(final Connection connection,
-                                       final SchemaCrawlerExecutable executable,
-                                       final OutputFormat outputFormat,
-                                       final String referenceFileName)
+  public static Path executableExecution(final Connection connection,
+                                         final SchemaCrawlerExecutable executable,
+                                         final OutputFormat outputFormat,
+                                         final String referenceFileName)
     throws Exception
   {
-    return executeExecutable(connection,
-                             executable,
-                             outputFormat.getFormat(),
-                             referenceFileName);
+    return executableExecution(connection,
+                               executable,
+                               outputFormat.getFormat(),
+                               referenceFileName);
   }
 
-  public static Path executeExecutable(final Connection connection,
-                                       final SchemaCrawlerExecutable executable,
-                                       final String outputFormatValue,
-                                       final String referenceFileName)
+  public static InputResource outputFileOf(final Path filePath)
+  {
+    requireNonNull(filePath, "No file path provided");
+    try
+    {
+      return FileInputResource.allowEmptyFileInputResource(filePath);
+    }
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static Path executableExecution(final Connection connection,
+                                         final SchemaCrawlerExecutable executable,
+                                         final String outputFormatValue,
+                                         final String referenceFileName)
     throws Exception
   {
     final TestWriter testout = new TestWriter();

@@ -29,8 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.createExecutable;
-import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 
 import java.sql.Connection;
 
@@ -90,8 +90,8 @@ public class ScriptingTest
   public void executableGroovy(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("script"),
+    executableExecution(connection,
+                      executableOf("script"),
                       "/plaintextschema.groovy",
                       "script_output.txt");
   }
@@ -100,8 +100,8 @@ public class ScriptingTest
   public void executableJavaScript(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("script"),
+    executableExecution(connection,
+                      executableOf("script"),
                       "/plaintextschema.js",
                       "script_output.txt");
   }
@@ -110,8 +110,8 @@ public class ScriptingTest
   public void executablePython(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("script"),
+    executableExecution(connection,
+                      executableOf("script"),
                       "/plaintextschema.py",
                       "script_output.txt");
   }
@@ -120,8 +120,8 @@ public class ScriptingTest
   public void executableRuby(final Connection connection)
     throws Exception
   {
-    executeExecutable(connection,
-                      createExecutable("script"),
+    executableExecution(connection,
+                      executableOf("script"),
                       "/plaintextschema.rb",
                       "script_output_rb.txt");
   }

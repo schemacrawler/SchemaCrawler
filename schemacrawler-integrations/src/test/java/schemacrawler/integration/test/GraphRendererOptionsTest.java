@@ -32,7 +32,7 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
-import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.nio.file.Path;
@@ -407,7 +407,7 @@ public class GraphRendererOptionsTest
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
-    final Path testDiagramFile = executeExecutable(connection,
+    final Path testDiagramFile = executableExecution(connection,
                                                    executable,
                                                    GraphOutputFormat.png,
                                                    "");
@@ -417,7 +417,7 @@ public class GraphRendererOptionsTest
 
     // Check DOT file
     final String referenceFileName = testMethodName;
-    executeExecutable(connection,
+    executableExecution(connection,
                       executable,
                       GraphOutputFormat.scdot,
                       GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot");

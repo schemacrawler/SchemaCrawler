@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 
 import java.sql.Connection;
 
@@ -57,7 +57,7 @@ public class SpringIntegrationTest
     final SchemaCrawlerExecutable executable = appContext
       .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
-    executeExecutable(connection,
+    executableExecution(connection,
                       executable,
                       TextOutputFormat.text,
                       beanDefinitionName + ".txt");

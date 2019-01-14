@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 
 import java.nio.file.Path;
 
@@ -84,7 +84,7 @@ public class AdditionalCasesTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    executeExecutable(createConnection(sqliteDbFile),
+    executableExecution(createConnection(sqliteDbFile),
                       executable,
                       TextOutputFormat.text,
                       currentMethodFullName);
