@@ -32,6 +32,7 @@ package schemacrawler.integration.test;
 import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.nio.file.Path;
@@ -52,7 +53,7 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
@@ -62,7 +63,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class GraphRendererOptionsTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";

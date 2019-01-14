@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
 import static sf.util.DatabaseUtility.checkConnection;
 
 import java.io.IOException;

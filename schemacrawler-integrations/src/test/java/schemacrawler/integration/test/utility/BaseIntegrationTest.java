@@ -39,12 +39,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestWriter;
 
 public abstract class BaseIntegrationTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   protected void executeCommandline(final DatabaseConnectionInfo connectionInfo,

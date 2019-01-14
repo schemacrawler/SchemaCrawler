@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+
 import java.sql.SQLException;
 import java.util.logging.Level;
 

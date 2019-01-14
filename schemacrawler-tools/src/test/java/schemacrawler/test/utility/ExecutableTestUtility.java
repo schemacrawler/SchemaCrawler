@@ -45,11 +45,10 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
-public abstract class BaseExecutableTest
-  extends BaseSchemaCrawlerTest
+public final class ExecutableTestUtility
 {
 
-  protected SchemaCrawlerExecutable createExecutable(final String command)
+  public static SchemaCrawlerExecutable createExecutable(final String command)
     throws SchemaCrawlerException
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -63,10 +62,10 @@ public abstract class BaseExecutableTest
     return scriptExecutable;
   }
 
-  protected Path executeExecutable(final Connection connection,
-                                   final SchemaCrawlerExecutable executable,
-                                   final OutputFormat outputFormat,
-                                   final String referenceFileName)
+  public static Path executeExecutable(final Connection connection,
+                                       final SchemaCrawlerExecutable executable,
+                                       final OutputFormat outputFormat,
+                                       final String referenceFileName)
     throws Exception
   {
     return executeExecutable(connection,
@@ -75,10 +74,10 @@ public abstract class BaseExecutableTest
                              referenceFileName);
   }
 
-  protected Path executeExecutable(final Connection connection,
-                                   final SchemaCrawlerExecutable executable,
-                                   final String outputFormatValue,
-                                   final String referenceFileName)
+  public static Path executeExecutable(final Connection connection,
+                                       final SchemaCrawlerExecutable executable,
+                                       final String outputFormatValue,
+                                       final String referenceFileName)
     throws Exception
   {
     final TestWriter testout = new TestWriter();

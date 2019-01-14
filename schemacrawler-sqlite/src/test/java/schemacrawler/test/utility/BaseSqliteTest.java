@@ -28,11 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -44,15 +39,11 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.testdb.SqlScript;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   protected DataSource createDataSource(final Path sqliteDbFile)

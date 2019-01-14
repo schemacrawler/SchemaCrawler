@@ -30,6 +30,7 @@ package schemacrawler.test.utility;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
@@ -50,7 +51,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public abstract class BaseLintExecutableTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   protected void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,

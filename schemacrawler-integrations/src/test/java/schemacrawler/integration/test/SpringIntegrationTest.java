@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
@@ -35,14 +37,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.test.utility.BaseExecutableTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpringIntegrationTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");

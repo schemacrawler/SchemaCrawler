@@ -29,6 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static schemacrawler.test.utility.ExecutableTestUtility.createExecutable;
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
+
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;

@@ -45,11 +45,11 @@ import schemacrawler.testdb.TestSchemaCreator;
 
 @ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
-  extends BaseExecutableTest
+  extends BaseSchemaCrawlerTest
 {
 
   protected final static Logger LOGGER = Logger
-    .getLogger(BaseExecutableTest.class.getName());
+    .getLogger(ExecutableTestUtility.class.getName());
 
   @BeforeAll
   public static final void startLogging()

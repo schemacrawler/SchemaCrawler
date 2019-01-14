@@ -34,6 +34,7 @@ import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static com.wix.mysql.distribution.Version.v5_6_latest;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static schemacrawler.test.utility.ExecutableTestUtility.executeExecutable;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
