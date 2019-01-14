@@ -127,6 +127,7 @@
                     <exclude>**/*Test.*</exclude>
                     <exclude>**/Test*.*</exclude>
                   </excludes>
+                  <destFile>${project.basedir}/../target/jacoco.exec</destFile>
                 </configuration>
                 <goals>
                   <goal>report</goal>
