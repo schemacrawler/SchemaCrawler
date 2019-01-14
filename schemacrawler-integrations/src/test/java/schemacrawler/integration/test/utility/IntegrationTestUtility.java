@@ -29,28 +29,22 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test.utility;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestWriter;
 
-public abstract class BaseIntegrationTest
-  extends BaseSchemaCrawlerTest
+public final class IntegrationTestUtility
 {
 
-  protected void executeCommandline(final DatabaseConnectionInfo connectionInfo,
-                                    final String command,
-                                    final String outputFormatValue,
-                                    final String referenceFileName)
+  public static Path commandLineExecution(final DatabaseConnectionInfo connectionInfo,
+                                          final String command,
+                                          final String outputFormatValue)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -68,8 +62,12 @@ public abstract class BaseIntegrationTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(referenceFileName)));
+    return testout.getFilePath();
+  }
+
+  private IntegrationTestUtility()
+  {
+    // Prevent instantiation
   }
 
 }

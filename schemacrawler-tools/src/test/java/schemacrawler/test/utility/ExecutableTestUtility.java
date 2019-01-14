@@ -50,18 +50,13 @@ import schemacrawler.tools.options.TextOutputFormat;
 public final class ExecutableTestUtility
 {
 
-  public static SchemaCrawlerExecutable executableOf(final String command)
-    throws SchemaCrawlerException
+  public static Path executableExecution(final Connection connection,
+                                         final SchemaCrawlerExecutable executable)
+    throws Exception
   {
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder()
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-      .toOptions();
-
-    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(command);
-    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    return scriptExecutable;
+    return executableExecution(connection,
+                               executable,
+                               TextOutputFormat.text.getFormat());
   }
 
   public static Path executableExecution(final Connection connection,
@@ -75,12 +70,36 @@ public final class ExecutableTestUtility
   }
 
   public static Path executableExecution(final Connection connection,
-                                         final SchemaCrawlerExecutable executable)
+                                         final SchemaCrawlerExecutable executable,
+                                         final String outputFormatValue)
     throws Exception
   {
-    return executableExecution(connection,
-                               executable,
-                               TextOutputFormat.text.getFormat());
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
+    {
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder().withOutputFormatValue(outputFormatValue)
+        .withOutputWriter(out);
+
+      executable.setOutputOptions(outputOptionsBuilder.toOptions());
+      executable.setConnection(connection);
+      executable.execute();
+    }
+    return testout.getFilePath();
+  }
+
+  public static SchemaCrawlerExecutable executableOf(final String command)
+    throws SchemaCrawlerException
+  {
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(command);
+    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    return scriptExecutable;
   }
 
   public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
@@ -103,23 +122,9 @@ public final class ExecutableTestUtility
     }
   }
 
-  public static Path executableExecution(final Connection connection,
-                                         final SchemaCrawlerExecutable executable,
-                                         final String outputFormatValue)
-    throws Exception
+  private ExecutableTestUtility()
   {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder().withOutputFormatValue(outputFormatValue)
-        .withOutputWriter(out);
-
-      executable.setOutputOptions(outputOptionsBuilder.toOptions());
-      executable.setConnection(connection);
-      executable.execute();
-    }
-    return testout.getFilePath();
+    // Prevent instantiation
   }
 
 }

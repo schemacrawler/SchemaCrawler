@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.integration.test.utility.IntegrationTestUtility.commandLineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
@@ -41,43 +42,43 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.integration.test.utility.BaseIntegrationTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TemplatingIntegrationTest
-  extends BaseIntegrationTest
+  extends BaseSchemaCrawlerTest
 {
 
   @Test
   public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    executeCommandline(connectionInfo,
-                       "freemarker",
-                       "/plaintextschema.ftl",
-                       "executableForFreeMarker.txt");
+    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+                                                 "freemarker",
+                                                 "/plaintextschema.ftl")),
+               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
   public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    executeCommandline(connectionInfo,
-                       "thymeleaf",
-                       "/plaintextschema.thymeleaf",
-                       "executableForThymeleaf.txt");
+    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+                                                 "thymeleaf",
+                                                 "/plaintextschema.thymeleaf")),
+               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
   public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    executeCommandline(connectionInfo,
-                       "velocity",
-                       "/plaintextschema.vm",
-                       "executableForVelocity.txt");
+    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+                                                 "velocity",
+                                                 "/plaintextschema.vm")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
   @Test
