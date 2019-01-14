@@ -40,6 +40,7 @@ import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,7 +63,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -77,7 +78,7 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class OfflineSnapshotTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";

@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -50,14 +51,14 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LoadSnapshotTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private Path serializedCatalogFile;

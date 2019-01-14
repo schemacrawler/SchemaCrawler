@@ -42,12 +42,11 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.PropertiesUtility;
 
-public abstract class BaseDatabaseTest
-  extends BaseSchemaCrawlerTest
+public final class DatabaseTestUtility
 {
 
-  protected Catalog getCatalog(final Connection connection,
-                               final SchemaCrawlerOptions schemaCrawlerOptions)
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
     return getCatalog(connection,
@@ -55,9 +54,9 @@ public abstract class BaseDatabaseTest
                       schemaCrawlerOptions);
   }
 
-  protected Catalog getCatalog(final Connection connection,
-                               final SchemaRetrievalOptions schemaRetrievalOptions,
-                               final SchemaCrawlerOptions schemaCrawlerOptions)
+  public static Catalog getCatalog(final Connection connection,
+                                   final SchemaRetrievalOptions schemaRetrievalOptions,
+                                   final SchemaCrawlerOptions schemaCrawlerOptions)
     throws SchemaCrawlerException
   {
     final SchemaCrawler schemaCrawler = new SchemaCrawler(connection,
@@ -68,11 +67,16 @@ public abstract class BaseDatabaseTest
     return catalog;
   }
 
-  protected Config loadHsqldbConfig()
+  public static Config loadHsqldbConfig()
     throws IOException
   {
     return PropertiesUtility
       .loadConfig(new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+  }
+
+  private DatabaseTestUtility()
+  {
+    // Prevent instantiation
   }
 
 }

@@ -54,7 +54,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.integration.objectdiffer.SchemaCrawlerDifferBuilder;
@@ -64,7 +64,7 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 public class DiffTest
   extends
-  BaseDatabaseTest
+  BaseSchemaCrawlerTest
 {
 
   @Test

@@ -40,13 +40,13 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class BaseSiteVariationsTest
   extends
-  BaseDatabaseTest
+  BaseSchemaCrawlerTest
 {
 
   protected Path resolveTargetFromRootPath(final TestInfo testInfo,

@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
+import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 
 import java.sql.Connection;
 
@@ -51,12 +52,12 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerDeepTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   @Test

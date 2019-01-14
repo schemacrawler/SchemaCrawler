@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseDatabaseTest;
+import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.lint.Lint;
@@ -62,7 +63,7 @@ import schemacrawler.tools.lint.Linters;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest
-  extends BaseDatabaseTest
+  extends BaseSchemaCrawlerTest
 {
 
   private static final String LINTS_OUTPUT = "lints_output/";
