@@ -37,6 +37,8 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -73,6 +75,10 @@ public final class DatabaseTestUtility
     return PropertiesUtility
       .loadConfig(new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
   }
+
+  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
+  .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+  .toOptions();
 
   private DatabaseTestUtility()
   {

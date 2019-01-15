@@ -66,6 +66,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -136,7 +137,7 @@ public class HsqldbCommandlineTest
     final SchemaRetrievalOptions schemaRetrievalOptions = hsqldbSystemConnector
       .getSchemaRetrievalOptionsBuilder(connection).toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     requireNonNull(schemaRetrievalOptions,
                    "No database specific override options provided");
 

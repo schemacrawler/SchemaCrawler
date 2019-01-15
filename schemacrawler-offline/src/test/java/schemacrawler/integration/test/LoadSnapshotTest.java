@@ -52,6 +52,7 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import sf.util.IOUtility;
@@ -84,7 +85,7 @@ public class LoadSnapshotTest
     throws SchemaCrawlerException, IOException
   {
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
     assertThat("Could not obtain catalog", catalog, notNullValue());

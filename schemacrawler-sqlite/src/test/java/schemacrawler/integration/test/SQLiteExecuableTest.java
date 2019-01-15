@@ -43,6 +43,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.testdb.TestSchemaCreator;
@@ -86,7 +87,7 @@ public class SQLiteExecuableTest
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions options = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder
       .newSchemaTextOptions();

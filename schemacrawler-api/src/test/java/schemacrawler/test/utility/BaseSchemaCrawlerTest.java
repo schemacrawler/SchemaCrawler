@@ -35,27 +35,14 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.BeforeAll;
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-
 public abstract class BaseSchemaCrawlerTest
 {
-
-  private final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-    .toOptions();
 
   @BeforeAll
   public static void setApplicationLogLevel()
     throws Exception
   {
     applyApplicationLogLevel(Level.OFF);
-  }
-
-  protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()
-  {
-    return schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
   }
 
 }

@@ -57,6 +57,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -103,7 +104,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -208,7 +209,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.brief.name(),
@@ -223,7 +224,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
     executableGraph(SchemaTextDetailType.schema.name(),
@@ -326,7 +327,7 @@ public class GraphRendererOptionsTest
     graphOptionsBuilder.showRowCounts();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,
@@ -353,7 +354,7 @@ public class GraphRendererOptionsTest
     graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     executableGraph(SchemaTextDetailType.schema.name(),
                     connection,

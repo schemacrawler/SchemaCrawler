@@ -87,6 +87,7 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -645,7 +646,7 @@ public class SchemaCrawlerTest
       final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
         .newSchemaRetrievalOptions(config);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+      final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
       final Catalog catalog = getCatalog(connection,
                                          schemaRetrievalOptions,
@@ -797,7 +798,7 @@ public class SchemaCrawlerTest
     final SchemaRetrievalOptions schemaRetrievalOptions = SchemaRetrievalOptionsBuilder
       .newSchemaRetrievalOptions(config);
 
-    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsWithMaximumSchemaInfoLevel();
+    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final Catalog catalog = getCatalog(connection,
                                        schemaRetrievalOptions,
