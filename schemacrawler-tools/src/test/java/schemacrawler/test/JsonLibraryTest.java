@@ -18,11 +18,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import sf.util.IOUtility;
 
+@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class JsonLibraryTest
   extends BaseSchemaCrawlerTest

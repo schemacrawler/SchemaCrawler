@@ -40,6 +40,7 @@ import java.util.Arrays;
 import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -48,11 +49,13 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.SqlScript;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.utility.SchemaCrawlerUtility;
 import sf.util.IOUtility;
 
+@ExtendWith(TestLoggingExtension.class)
 public class TempTablesTest
   extends BaseSqliteTest
 {

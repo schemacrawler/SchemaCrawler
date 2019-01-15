@@ -43,6 +43,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
 
+@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
   extends BaseSchemaCrawlerTest

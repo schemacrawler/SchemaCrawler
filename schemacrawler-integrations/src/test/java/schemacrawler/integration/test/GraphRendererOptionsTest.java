@@ -40,7 +40,6 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,12 +60,14 @@ import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
+@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class GraphRendererOptionsTest
@@ -85,16 +86,13 @@ public class GraphRendererOptionsTest
   }
 
   @BeforeAll
-  public static void setupDirectory()
+  public static void setupDirectory(final TestContext testContext)
     throws Exception
   {
-    final Path codePath = Paths.get(GraphRendererOptionsTest.class
-      .getProtectionDomain().getCodeSource().getLocation().toURI()).normalize()
-      .toAbsolutePath();
-    directory = codePath
-      .resolve("../../../schemacrawler-docs/graphs/"
-               + GraphRendererOptionsTest.class.getSimpleName())
-      .normalize().toAbsolutePath();
+    directory = testContext
+      .resolveTargetFromRootPath("../schemacrawler-docs/graphs/"
+                                 + GraphRendererOptionsTest.class
+                                   .getSimpleName());
     FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);
   }

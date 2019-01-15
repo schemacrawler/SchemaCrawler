@@ -28,21 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.test.utility;
 
-
-import static sf.util.Utility.applyApplicationLogLevel;
-
-import java.util.logging.Level;
-
-import org.junit.jupiter.api.BeforeAll;
-
 public abstract class BaseSchemaCrawlerTest
 {
-
-  @BeforeAll
-  public static void setApplicationLogLevel()
-    throws Exception
-  {
-    applyApplicationLogLevel(Level.OFF);
-  }
 
 }

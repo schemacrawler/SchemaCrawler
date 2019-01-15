@@ -42,10 +42,12 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -54,6 +56,8 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestLoggingExtension.class)
 public class TestSqliteDistribution
 {
 
