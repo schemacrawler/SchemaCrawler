@@ -93,7 +93,7 @@ public class PrimaryKeyWeakAssociationsTest
                                 final String databaseSqlResource)
     throws Exception
   {
-    final String currentMethodFullName = testContext.currentMethodFullName();
+    final String currentMethodFullName = testContext.testMethodFullName();
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
 
     final Config config = new Config();

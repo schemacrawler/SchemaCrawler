@@ -58,7 +58,7 @@ public class ForeignKeyWithoutReferencedPrimaryKeyTest
   public void foreignKeyWithoutReferencedPrimaryKey(final TestContext testContext)
     throws Exception
   {
-    run(testContext.currentMethodName(),
+    run(testContext.testMethodName(),
         "/foreignKeyWithoutReferencedPrimaryKey.sql",
         "schema");
   }

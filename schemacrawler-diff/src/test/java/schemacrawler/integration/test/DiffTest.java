@@ -77,7 +77,7 @@ public class DiffTest
     final Catalog catalog1 = getCatalog("/test1.db");
     final Catalog catalog2 = getCatalog("/test2.db");
 
-    final String currentMethodFullName = testContext.currentMethodFullName();
+    final String currentMethodFullName = testContext.testMethodFullName();
 
     final SchemaCrawlerDifferBuilder objectDifferBuilder = new SchemaCrawlerDifferBuilder();
 
@@ -153,7 +153,7 @@ public class DiffTest
                             final String database)
     throws Exception
   {
-    final String currentMethodFullName = testContext.currentMethodFullName();
+    final String currentMethodFullName = testContext.testMethodFullName();
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {

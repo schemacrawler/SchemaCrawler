@@ -147,7 +147,7 @@ public class CommandLineNegativeTest
     assertThat(fileResource(err),
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
                                                   + testContext
-                                                    .currentMethodName()
+                                                    .testMethodName()
                                                   + ".stderr.txt")));
   }
 

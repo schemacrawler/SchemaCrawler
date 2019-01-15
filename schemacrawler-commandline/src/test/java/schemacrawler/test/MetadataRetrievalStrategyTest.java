@@ -99,7 +99,7 @@ public class MetadataRetrievalStrategyTest
                MetadataRetrievalStrategy.data_dictionary_all.name());
     final Path configFile = writeConfigToTempFile(config);
 
-    final String referenceFile = testContext.currentMethodName() + ".txt";
+    final String referenceFile = testContext.testMethodName() + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 

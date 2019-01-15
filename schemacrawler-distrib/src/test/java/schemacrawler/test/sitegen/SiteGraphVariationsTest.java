@@ -54,8 +54,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class SiteGraphVariationsTest
-  extends
-  BaseSiteVariationsTest
 {
 
   private Path directory;
@@ -284,7 +282,7 @@ public class SiteGraphVariationsTest
 
   private Path diagramPath(final TestContext testContext)
   {
-    return directory.resolve(testContext.currentMethodName() + ".png");
+    return directory.resolve(testContext.testMethodName() + ".png");
   }
 
   private void run(final DatabaseConnectionInfo connectionInfo,

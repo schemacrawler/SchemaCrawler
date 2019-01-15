@@ -94,7 +94,7 @@ public class CommandLineHelpTest
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
                                                   + testContext
-                                                    .currentMethodName()
+                                                    .testMethodName()
                                                   + ".txt")));
   }
 

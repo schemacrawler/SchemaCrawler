@@ -60,14 +60,14 @@ public class SQLiteExecuableTest
   public void count(final TestContext testContext)
     throws Exception
   {
-    run(testContext.currentMethodFullName(), "count");
+    run(testContext.testMethodFullName(), "count");
   }
 
   @Test
   public void dump(final TestContext testContext)
     throws Exception
   {
-    run(testContext.currentMethodFullName(), "dump");
+    run(testContext.testMethodFullName(), "dump");
   }
 
   private void run(final String currentMethodFullName, final String command)

@@ -62,7 +62,7 @@ public class JsonLibraryTest
     throws Exception
   {
 
-    final String referenceFile = testContext.currentMethodName() + ".json";
+    final String referenceFile = testContext.testMethodName() + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());

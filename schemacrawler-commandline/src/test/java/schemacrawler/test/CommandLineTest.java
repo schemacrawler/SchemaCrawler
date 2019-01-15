@@ -350,7 +350,7 @@ public class CommandLineTest
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
                                                   + testContext
-                                                    .currentMethodName()
+                                                    .testMethodName()
                                                   + ".txt")));
   }
 

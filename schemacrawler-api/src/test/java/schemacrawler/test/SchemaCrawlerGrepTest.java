@@ -100,7 +100,7 @@ public class SchemaCrawlerGrepTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -174,7 +174,7 @@ public class SchemaCrawlerGrepTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -211,7 +211,7 @@ public class SchemaCrawlerGrepTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -250,7 +250,7 @@ public class SchemaCrawlerGrepTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
 
   }
 

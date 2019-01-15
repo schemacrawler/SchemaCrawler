@@ -88,7 +88,7 @@ public class SchemaCrawlerJsonOutputTest
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
-    final String referenceFile = testContext.currentMethodName() + ".json";
+    final String referenceFile = testContext.testMethodName() + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());

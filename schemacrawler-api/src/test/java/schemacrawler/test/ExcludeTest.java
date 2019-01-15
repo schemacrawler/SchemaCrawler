@@ -110,7 +110,7 @@ public class ExcludeTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
 }

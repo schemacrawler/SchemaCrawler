@@ -80,7 +80,7 @@ public class LinterConfigsDispatchTest
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodName() + ".log")));
+                 .testMethodName() + ".log")));
   }
 
   @AfterEach

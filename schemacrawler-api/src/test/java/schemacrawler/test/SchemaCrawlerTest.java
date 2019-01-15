@@ -134,7 +134,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -239,7 +239,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -288,7 +288,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -342,7 +342,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   private String printColumnDataType(final ColumnDataType columnDataType)
@@ -439,7 +439,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -472,7 +472,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -586,7 +586,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -629,7 +629,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -682,7 +682,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test
@@ -730,7 +730,7 @@ public class SchemaCrawlerTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
   @Test

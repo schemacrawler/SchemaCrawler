@@ -110,7 +110,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -128,7 +128,7 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -145,7 +145,7 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -164,7 +164,7 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -181,7 +181,7 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -200,7 +200,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -215,7 +215,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -230,7 +230,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -252,7 +252,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -275,7 +275,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -294,7 +294,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -313,7 +313,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -332,7 +332,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -359,7 +359,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   @Test
@@ -379,7 +379,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    testContext.currentMethodName());
+                    testContext.testMethodName());
   }
 
   private void executableGraph(final String command,

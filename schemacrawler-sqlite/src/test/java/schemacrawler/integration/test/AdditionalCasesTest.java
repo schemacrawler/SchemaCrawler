@@ -58,17 +58,17 @@ public class AdditionalCasesTest
   public void advancedUsage(final TestContext testContext)
     throws Exception
   {
-    run(testContext.currentMethodFullName(), "/advanced_usage.sql", "details");
+    run(testContext.testMethodFullName(), "/advanced_usage.sql", "details");
   }
 
   @Test
   public void quotedCreateScript(final TestContext testContext)
     throws Exception
   {
-    run(testContext.currentMethodFullName(),
+    run(testContext.testMethodFullName(),
         "/identifiers_unquoted.sql",
         "schema");
-    run(testContext.currentMethodFullName(),
+    run(testContext.testMethodFullName(),
         "/identifiers_quoted.sql",
         "schema");
   }

@@ -108,7 +108,7 @@ public class ResultColumnsTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
 }

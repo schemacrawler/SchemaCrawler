@@ -74,7 +74,7 @@ public class NoEmptyTablesCommandLineTest
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.maximum;
 
-    final String referenceFile = testContext.currentMethodName() + ".txt";
+    final String referenceFile = testContext.testMethodName() + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 

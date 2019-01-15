@@ -54,7 +54,7 @@ public final class TestContext
     this.optionalTestMethod = extensionContext.getTestMethod();
   }
 
-  public String currentMethodFullName()
+  public String testMethodFullName()
   {
     return optionalTestMethod
       .map(method -> String.format("%s.%s",
@@ -63,7 +63,7 @@ public final class TestContext
       .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
-  public String currentMethodName()
+  public String testMethodName()
   {
     return optionalTestMethod.map(method -> method.getName())
       .orElseThrow(() -> new RuntimeException("Could not find test method"));

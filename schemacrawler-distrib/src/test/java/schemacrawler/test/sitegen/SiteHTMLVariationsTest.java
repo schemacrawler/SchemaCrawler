@@ -50,12 +50,12 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import sf.util.IOUtility;
 
+@ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SiteHTMLVariationsTest
-  extends
-  BaseSiteVariationsTest
 {
 
   private Path directory;
@@ -83,7 +83,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -98,7 +98,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -115,7 +115,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -131,7 +131,7 @@ public class SiteHTMLVariationsTest
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -147,7 +147,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -164,7 +164,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
@@ -183,7 +183,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
 
     run(connectionInfo, args, config,
-        directory.resolve(testContext.currentMethodName() + ".html"));
+        directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   private Path createConfig(final Map<String, String> config)

@@ -113,7 +113,7 @@ public class WeakAssociationsTest
 
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(testContext
-                 .currentMethodFullName())));
+                 .testMethodFullName())));
   }
 
 }
