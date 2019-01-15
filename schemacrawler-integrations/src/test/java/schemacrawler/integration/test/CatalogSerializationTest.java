@@ -53,7 +53,6 @@ import org.nustaq.serialization.FSTObjectOutput;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
@@ -62,7 +61,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CatalogSerializationTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

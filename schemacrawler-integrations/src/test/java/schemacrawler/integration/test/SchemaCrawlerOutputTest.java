@@ -54,7 +54,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -71,7 +70,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerOutputTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String COMPOSITE_OUTPUT = "composite_output/";

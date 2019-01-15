@@ -47,13 +47,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SerializationTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

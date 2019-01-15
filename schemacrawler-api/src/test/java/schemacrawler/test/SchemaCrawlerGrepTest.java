@@ -54,7 +54,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -63,7 +62,6 @@ import schemacrawler.test.utility.TestWriter;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SchemaCrawlerGrepTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

@@ -47,7 +47,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -63,7 +62,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerXmlOutputTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String XML_OUTPUT = "xml_output/";

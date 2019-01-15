@@ -45,7 +45,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -58,7 +57,6 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerTextCommandsOutputTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String COMMAND_OUTPUT = "command_output/";

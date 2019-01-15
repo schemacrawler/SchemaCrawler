@@ -54,7 +54,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -67,7 +66,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class CommandLineNegativeTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
@@ -146,8 +144,7 @@ public class CommandLineNegativeTest
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
-                                                  + testContext
-                                                    .testMethodName()
+                                                  + testContext.testMethodName()
                                                   + ".stderr.txt")));
   }
 

@@ -50,7 +50,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -61,7 +60,6 @@ import sf.util.SchemaCrawlerLogger;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class ExcludeTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger

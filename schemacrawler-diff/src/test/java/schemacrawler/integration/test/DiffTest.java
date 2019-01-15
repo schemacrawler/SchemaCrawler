@@ -54,7 +54,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -67,8 +66,6 @@ import schemacrawler.utility.SchemaCrawlerUtility;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class DiffTest
-  extends
-  BaseSchemaCrawlerTest
 {
 
   @Test

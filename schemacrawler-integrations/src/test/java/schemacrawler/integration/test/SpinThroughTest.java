@@ -53,7 +53,6 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestUtility;
@@ -69,7 +68,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpinThroughTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";

@@ -49,7 +49,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
@@ -59,7 +58,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class GrepCommandLineTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String GREP_OUTPUT = "grep_output/";

@@ -44,7 +44,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -57,7 +56,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class NoEmptyTablesCommandLineTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";

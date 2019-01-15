@@ -64,7 +64,6 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.server.hsqldb.HyperSQLDatabaseConnector;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -76,7 +75,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class HsqldbCommandlineTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

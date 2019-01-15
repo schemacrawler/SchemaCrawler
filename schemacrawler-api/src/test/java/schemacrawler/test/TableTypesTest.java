@@ -49,14 +49,12 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TableTypesTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String TABLE_TYPES_OUTPUT = "table_types/";

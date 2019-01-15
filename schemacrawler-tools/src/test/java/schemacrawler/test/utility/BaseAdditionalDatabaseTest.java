@@ -46,7 +46,6 @@ import schemacrawler.testdb.TestSchemaCreator;
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(CompleteBuildCondition.class)
 public abstract class BaseAdditionalDatabaseTest
-  extends BaseSchemaCrawlerTest
 {
 
   protected final static Logger LOGGER = Logger

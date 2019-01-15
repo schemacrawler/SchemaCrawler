@@ -53,7 +53,6 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -68,7 +67,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintOutputTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String TEXT_OUTPUT = "lint_text_output/";

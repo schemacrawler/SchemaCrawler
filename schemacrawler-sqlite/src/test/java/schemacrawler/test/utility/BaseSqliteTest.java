@@ -43,7 +43,6 @@ import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
-  extends BaseSchemaCrawlerTest
 {
 
   protected DataSource createDataSource(final Path sqliteDbFile)

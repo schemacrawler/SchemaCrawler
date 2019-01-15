@@ -51,13 +51,11 @@ import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerReferenceTest
-  extends BaseSchemaCrawlerTest
 {
 
   private void assertReferencedColumnDoesNotExist(final Catalog catalog,

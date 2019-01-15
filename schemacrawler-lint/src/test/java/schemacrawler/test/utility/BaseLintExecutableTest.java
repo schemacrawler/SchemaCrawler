@@ -52,7 +52,6 @@ import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
 
 public abstract class BaseLintExecutableTest
-  extends BaseSchemaCrawlerTest
 {
 
   protected void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,

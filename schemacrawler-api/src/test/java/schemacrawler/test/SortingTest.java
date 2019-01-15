@@ -49,14 +49,12 @@ import schemacrawler.schema.Schema;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SortingTest
-  extends BaseSchemaCrawlerTest
 {
 
   @SuppressWarnings("boxing")

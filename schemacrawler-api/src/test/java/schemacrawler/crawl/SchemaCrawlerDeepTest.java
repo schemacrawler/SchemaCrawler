@@ -52,12 +52,10 @@ import schemacrawler.schema.Table;
 import schemacrawler.schema.Trigger;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerDeepTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

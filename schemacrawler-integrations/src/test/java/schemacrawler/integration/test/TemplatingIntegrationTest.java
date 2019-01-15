@@ -42,13 +42,11 @@ import java.sql.Connection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TemplatingIntegrationTest
-  extends BaseSchemaCrawlerTest
 {
 
   @Test

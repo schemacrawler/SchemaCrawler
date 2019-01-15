@@ -49,7 +49,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
@@ -60,7 +59,6 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TitleTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String TITLE_OUTPUT = "title_output/";

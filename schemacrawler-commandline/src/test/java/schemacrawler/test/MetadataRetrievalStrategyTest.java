@@ -53,7 +53,6 @@ import schemacrawler.Main;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -67,7 +66,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class MetadataRetrievalStrategyTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String METADATA_RETRIEVAL_STRATEGY_OUTPUT = "metadata_retrieval_strategy_output/";

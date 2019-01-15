@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
@@ -27,7 +26,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class JsonLibraryTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String JSON_LIBRARY_OUTPUT = "json_library_output/";

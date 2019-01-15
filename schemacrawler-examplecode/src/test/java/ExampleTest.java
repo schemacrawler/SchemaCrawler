@@ -48,13 +48,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.testdb.TestDatabase;
 import schemacrawler.tools.options.TextOutputFormat;
 
 public class ExampleTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static TestDatabase testDatabase;

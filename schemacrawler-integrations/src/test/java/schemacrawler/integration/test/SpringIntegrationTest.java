@@ -41,14 +41,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpringIntegrationTest
-  extends BaseSchemaCrawlerTest
 {
 
   private final ApplicationContext appContext = new ClassPathXmlApplicationContext("context.xml");

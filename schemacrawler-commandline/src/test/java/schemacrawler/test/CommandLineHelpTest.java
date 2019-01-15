@@ -46,7 +46,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
@@ -54,7 +53,6 @@ import schemacrawler.test.utility.TestWriter;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class CommandLineHelpTest
-  extends BaseSchemaCrawlerTest
 {
 
   private static final String COMMAND_LINE_HELP_OUTPUT = "command_line_help_output/";
@@ -93,8 +91,7 @@ public class CommandLineHelpTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
-                                                  + testContext
-                                                    .testMethodName()
+                                                  + testContext.testMethodName()
                                                   + ".txt")));
   }
 
