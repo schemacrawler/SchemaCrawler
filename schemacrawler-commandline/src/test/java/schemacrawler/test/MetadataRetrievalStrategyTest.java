@@ -47,7 +47,6 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
@@ -56,6 +55,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.OutputFormat;
@@ -64,6 +65,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class MetadataRetrievalStrategyTest
   extends BaseSchemaCrawlerTest
 {
@@ -81,7 +83,7 @@ public class MetadataRetrievalStrategyTest
   }
 
   @Test
-  public void overrideMetadataRetrievalStrategy(final TestInfo testInfo,
+  public void overrideMetadataRetrievalStrategy(final TestContext testContext,
                                                 final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -97,7 +99,7 @@ public class MetadataRetrievalStrategyTest
                MetadataRetrievalStrategy.data_dictionary_all.name());
     final Path configFile = writeConfigToTempFile(config);
 
-    final String referenceFile = currentMethodName(testInfo) + ".txt";
+    final String referenceFile = testContext.currentMethodName() + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 

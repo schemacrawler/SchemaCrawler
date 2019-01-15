@@ -45,7 +45,7 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_postgresql()
+  public void testContextrmationSchema_postgresql()
     throws Exception
   {
 

@@ -55,7 +55,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
@@ -88,17 +87,20 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class SchemaCrawlerTest
   extends BaseSchemaCrawlerTest
 {
 
   @Test
-  public void columnDataTypes(final TestInfo testInfo,
+  public void columnDataTypes(final TestContext testContext,
                               final Connection connection)
     throws Exception
   {
@@ -131,11 +133,13 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void columnLookup(final TestInfo testInfo, final Connection connection)
+  public void columnLookup(final TestContext testContext,
+                           final Connection connection)
     throws Exception
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
@@ -154,7 +158,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void columns(final TestInfo testInfo, final Connection connection)
+  public void columns(final TestContext testContext,
+                      final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -233,11 +238,12 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void counts(final TestInfo testInfo, final Connection connection)
+  public void counts(final TestContext testContext, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -281,11 +287,13 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void databaseInfo(final TestInfo testInfo, final Connection connection)
+  public void databaseInfo(final TestContext testContext,
+                           final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -333,7 +341,8 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   private String printColumnDataType(final ColumnDataType columnDataType)
@@ -401,7 +410,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void relatedTables(final TestInfo testInfo,
+  public void relatedTables(final TestContext testContext,
                             final Connection connection)
     throws Exception
   {
@@ -429,11 +438,12 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void relatedTablesWithTableRestriction(final TestInfo testInfo,
+  public void relatedTablesWithTableRestriction(final TestContext testContext,
                                                 final Connection connection)
     throws Exception
   {
@@ -461,11 +471,12 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void routineDefinitions(final TestInfo testInfo,
+  public void routineDefinitions(final TestContext testContext,
                                  final Connection connection)
     throws Exception
   {
@@ -496,7 +507,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void schemaEquals(final TestInfo testInfo, final Connection connection)
+  public void schemaEquals(final TestContext testContext,
+                           final Connection connection)
     throws Exception
   {
 
@@ -533,7 +545,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void sequences(final TestInfo testInfo, final Connection connection)
+  public void sequences(final TestContext testContext,
+                        final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -572,11 +585,13 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void synonyms(final TestInfo testInfo, final Connection connection)
+  public void synonyms(final TestContext testContext,
+                       final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -613,11 +628,12 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void tableConstraints(final TestInfo testInfo,
+  public void tableConstraints(final TestContext testContext,
                                final Connection connection)
     throws Exception
   {
@@ -665,11 +681,12 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void tables(final TestInfo testInfo, final Connection connection)
+  public void tables(final TestContext testContext, final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -712,11 +729,13 @@ public class SchemaCrawlerTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void tablesSort(final TestInfo testInfo, final Connection connection)
+  public void tablesSort(final TestContext testContext,
+                         final Connection connection)
     throws Exception
   {
 
@@ -769,7 +788,8 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void triggers(final TestInfo testInfo, final Connection connection)
+  public void triggers(final TestContext testContext,
+                       final Connection connection)
     throws Exception
   {
     final Config config = loadHsqldbConfig();
@@ -802,7 +822,7 @@ public class SchemaCrawlerTest
   }
 
   @Test
-  public void viewDefinitions(final TestInfo testInfo,
+  public void viewDefinitions(final TestContext testContext,
                               final Connection connection)
     throws Exception
   {

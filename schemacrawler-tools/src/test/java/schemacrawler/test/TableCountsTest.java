@@ -40,7 +40,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
@@ -51,6 +50,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
@@ -58,12 +59,14 @@ import schemacrawler.tools.analysis.counts.CountsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class TableCountsTest
   extends BaseSchemaCrawlerTest
 {
 
   @Test
-  public void tableCounts(final TestInfo testInfo, final Connection connection)
+  public void tableCounts(final TestContext testContext,
+                          final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -96,7 +99,8 @@ public class TableCountsTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
 }

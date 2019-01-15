@@ -44,7 +44,7 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_oracle()
+  public void testContextrmationSchema_oracle()
     throws Exception
   {
 

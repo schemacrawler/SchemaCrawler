@@ -38,33 +38,36 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class SQLiteExecuableTest
   extends BaseSqliteTest
 {
 
   @Test
-  public void count(final TestInfo testInfo)
+  public void count(final TestContext testContext)
     throws Exception
   {
-    run(currentMethodFullName(testInfo), "count");
+    run(testContext.currentMethodFullName(), "count");
   }
 
   @Test
-  public void dump(final TestInfo testInfo)
+  public void dump(final TestContext testContext)
     throws Exception
   {
-    run(currentMethodFullName(testInfo), "dump");
+    run(testContext.currentMethodFullName(), "dump");
   }
 
   private void run(final String currentMethodFullName, final String command)

@@ -43,15 +43,18 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class SiteLintReportVariationsTest
   extends
   BaseSiteVariationsTest
@@ -60,7 +63,7 @@ public class SiteLintReportVariationsTest
   private Path directory;
 
   @BeforeEach
-  public void _setupDirectory(final TestInfo testInfo)
+  public void _setupDirectory(final TestContext testContext)
     throws IOException,
     URISyntaxException
   {
@@ -69,7 +72,7 @@ public class SiteLintReportVariationsTest
       return;
     }
 
-    directory = resolveTargetFromRootPath(testInfo, "lint-report-examples");
+    directory = testContext.resolveTargetFromRootPath("lint-report-examples");
   }
 
   @Test

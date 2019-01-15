@@ -38,32 +38,39 @@ import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class AdditionalCasesTest
   extends BaseSqliteTest
 {
 
   @Test
-  public void advancedUsage(final TestInfo testInfo)
+  public void advancedUsage(final TestContext testContext)
     throws Exception
   {
-    run(currentMethodFullName(testInfo), "/advanced_usage.sql", "details");
+    run(testContext.currentMethodFullName(), "/advanced_usage.sql", "details");
   }
 
   @Test
-  public void quotedCreateScript(final TestInfo testInfo)
+  public void quotedCreateScript(final TestContext testContext)
     throws Exception
   {
-    run(currentMethodFullName(testInfo), "/identifiers_unquoted.sql", "schema");
-    run(currentMethodFullName(testInfo), "/identifiers_quoted.sql", "schema");
+    run(testContext.currentMethodFullName(),
+        "/identifiers_unquoted.sql",
+        "schema");
+    run(testContext.currentMethodFullName(),
+        "/identifiers_quoted.sql",
+        "schema");
   }
 
   private void run(final String currentMethodFullName,

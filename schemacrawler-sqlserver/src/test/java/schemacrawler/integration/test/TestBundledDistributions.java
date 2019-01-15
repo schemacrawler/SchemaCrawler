@@ -44,7 +44,7 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_sqlserver()
+  public void testContextrmationSchema_sqlserver()
     throws Exception
   {
 

@@ -41,7 +41,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
@@ -52,12 +51,15 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.utility.NamedObjectSort;
 import sf.util.SchemaCrawlerLogger;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class ExcludeTest
   extends BaseSchemaCrawlerTest
 {
@@ -66,7 +68,7 @@ public class ExcludeTest
     .getLogger(ExcludeTest.class.getName());
 
   @Test
-  public void excludeColumns(final TestInfo testInfo,
+  public void excludeColumns(final TestContext testContext,
                              final Connection connection)
     throws Exception
   {
@@ -107,7 +109,8 @@ public class ExcludeTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
 }

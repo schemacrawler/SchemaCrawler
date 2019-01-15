@@ -40,13 +40,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -54,6 +55,7 @@ import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class NoEmptyTablesCommandLineTest
   extends BaseSchemaCrawlerTest
 {
@@ -61,7 +63,7 @@ public class NoEmptyTablesCommandLineTest
   private static final String HIDE_EMPTY_TABLES_OUTPUT = "no_empty_tables_output/";
 
   @Test
-  public void noEmptyTables(final TestInfo testInfo,
+  public void noEmptyTables(final TestContext testContext,
                             final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -72,7 +74,7 @@ public class NoEmptyTablesCommandLineTest
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.maximum;
 
-    final String referenceFile = currentMethodName(testInfo) + ".txt";
+    final String referenceFile = testContext.currentMethodName() + ".txt";
     final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
                                                              "data");
 

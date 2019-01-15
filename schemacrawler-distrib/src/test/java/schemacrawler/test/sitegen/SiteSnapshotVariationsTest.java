@@ -43,16 +43,19 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class SiteSnapshotVariationsTest
   extends
   BaseSiteVariationsTest
@@ -61,7 +64,7 @@ public class SiteSnapshotVariationsTest
   private Path directory;
 
   @BeforeEach
-  public void _setupDirectory(final TestInfo testInfo)
+  public void _setupDirectory(final TestContext testContext)
     throws IOException,
     URISyntaxException
   {
@@ -69,7 +72,7 @@ public class SiteSnapshotVariationsTest
     {
       return;
     }
-    directory = resolveTargetFromRootPath(testInfo, "snapshot-examples");
+    directory = testContext.resolveTargetFromRootPath("snapshot-examples");
   }
 
   @Test

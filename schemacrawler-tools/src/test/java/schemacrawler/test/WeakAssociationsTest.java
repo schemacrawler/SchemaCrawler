@@ -42,7 +42,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
@@ -53,6 +52,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
@@ -62,12 +63,13 @@ import schemacrawler.tools.analysis.associations.WeakAssociationsUtility;
 import schemacrawler.utility.NamedObjectSort;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class WeakAssociationsTest
   extends BaseSchemaCrawlerTest
 {
 
   @Test
-  public void weakAssociations(final TestInfo testInfo,
+  public void weakAssociations(final TestContext testContext,
                                final Connection connection)
     throws Exception
   {
@@ -110,7 +112,8 @@ public class WeakAssociationsTest
     }
 
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
 }

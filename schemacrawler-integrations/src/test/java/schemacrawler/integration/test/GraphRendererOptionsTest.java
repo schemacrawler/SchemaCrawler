@@ -48,7 +48,6 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.IncludeAll;
@@ -58,6 +57,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
@@ -66,6 +67,7 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class GraphRendererOptionsTest
   extends BaseSchemaCrawlerTest
 {
@@ -97,7 +99,7 @@ public class GraphRendererOptionsTest
   }
 
   @Test
-  public void executableForGraph_00(final TestInfo testInfo,
+  public void executableForGraph_00(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -108,11 +110,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_01(final TestInfo testInfo,
+  public void executableForGraph_01(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -126,11 +128,11 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_02(final TestInfo testInfo,
+  public void executableForGraph_02(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -143,11 +145,11 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_03(final TestInfo testInfo,
+  public void executableForGraph_03(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -162,11 +164,11 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_04(final TestInfo testInfo,
+  public void executableForGraph_04(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -179,11 +181,11 @@ public class GraphRendererOptionsTest
                     connection,
                     SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions(),
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_05(final TestInfo testInfo,
+  public void executableForGraph_05(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -198,11 +200,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_06(final TestInfo testInfo,
+  public void executableForGraph_06(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -213,11 +215,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_07(final TestInfo testInfo,
+  public void executableForGraph_07(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -228,11 +230,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_08(final TestInfo testInfo,
+  public void executableForGraph_08(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -250,11 +252,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_09(final TestInfo testInfo,
+  public void executableForGraph_09(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -273,11 +275,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_10(final TestInfo testInfo,
+  public void executableForGraph_10(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -292,11 +294,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_11(final TestInfo testInfo,
+  public void executableForGraph_11(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -311,11 +313,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_12(final TestInfo testInfo,
+  public void executableForGraph_12(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -330,11 +332,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_13(final TestInfo testInfo,
+  public void executableForGraph_13(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
@@ -357,11 +359,11 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   @Test
-  public void executableForGraph_lintschema(final TestInfo testInfo,
+  public void executableForGraph_lintschema(final TestContext testContext,
                                             final Connection connection)
     throws Exception
   {
@@ -377,7 +379,7 @@ public class GraphRendererOptionsTest
                     connection,
                     schemaCrawlerOptions,
                     graphOptions,
-                    currentMethodName(testInfo));
+                    testContext.currentMethodName());
   }
 
   private void executableGraph(final String command,

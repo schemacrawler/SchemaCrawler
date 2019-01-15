@@ -44,7 +44,7 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_sqlite()
+  public void testContextrmationSchema_sqlite()
     throws Exception
   {
 

@@ -44,7 +44,7 @@ public class TestBundledDistributions
 {
 
   @Test
-  public void testInformationSchema_hsqldb()
+  public void testContextrmationSchema_hsqldb()
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();

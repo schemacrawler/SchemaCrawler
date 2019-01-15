@@ -43,7 +43,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
@@ -56,16 +55,20 @@ import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class SchemaCrawlerGrepTest
   extends BaseSchemaCrawlerTest
 {
 
   @Test
-  public void grepColumns(final TestInfo testInfo, final Connection connection)
+  public void grepColumns(final TestContext testContext,
+                          final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -96,7 +99,8 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
@@ -136,7 +140,8 @@ public class SchemaCrawlerGrepTest
   }
 
   @Test
-  public void grepCombined(final TestInfo testInfo, final Connection connection)
+  public void grepCombined(final TestContext testContext,
+                           final Connection connection)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
@@ -168,11 +173,12 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void grepDefinitions(final TestInfo testInfo,
+  public void grepDefinitions(final TestContext testContext,
                               final Connection connection)
     throws Exception
   {
@@ -204,11 +210,12 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
   }
 
   @Test
-  public void grepProcedures(final TestInfo testInfo,
+  public void grepProcedures(final TestContext testContext,
                              final Connection connection)
     throws Exception
   {
@@ -242,7 +249,8 @@ public class SchemaCrawlerGrepTest
       }
     }
     assertThat(fileResource(testout),
-               hasSameContentAs(classpathResource(currentMethodFullName(testInfo))));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodFullName())));
 
   }
 

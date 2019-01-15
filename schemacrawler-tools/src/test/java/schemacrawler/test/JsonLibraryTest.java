@@ -13,14 +13,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.utility.org.json.JSONArray;
 import schemacrawler.tools.text.utility.org.json.JSONObject;
 import sf.util.IOUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class JsonLibraryTest
   extends BaseSchemaCrawlerTest
 {
@@ -35,30 +38,31 @@ public class JsonLibraryTest
   }
 
   @Test
-  public void emptyJsonArray(final TestInfo testInfo)
+  public void emptyJsonArray(final TestContext testContext)
     throws Exception
   {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put("array", new JSONArray());
 
-    testJson(testInfo, jsonObject);
+    testJson(testContext, jsonObject);
   }
 
   @Test
-  public void emptyJsonObject(final TestInfo testInfo)
+  public void emptyJsonObject(final TestContext testContext)
     throws Exception
   {
     final JSONObject jsonObject = new JSONObject();
     jsonObject.put("object", new JSONObject());
 
-    testJson(testInfo, jsonObject);
+    testJson(testContext, jsonObject);
   }
 
-  private void testJson(final TestInfo testInfo, final JSONObject jsonObject)
+  private void testJson(final TestContext testContext,
+                        final JSONObject jsonObject)
     throws Exception
   {
 
-    final String referenceFile = currentMethodName(testInfo) + ".json";
+    final String referenceFile = testContext.currentMethodName() + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());

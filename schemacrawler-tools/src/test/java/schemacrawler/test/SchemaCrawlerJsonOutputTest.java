@@ -41,7 +41,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schemacrawler.Config;
@@ -53,6 +52,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -63,6 +64,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class SchemaCrawlerJsonOutputTest
   extends BaseSchemaCrawlerTest
 {
@@ -76,7 +78,7 @@ public class SchemaCrawlerJsonOutputTest
     clean(JSON_EXTRA_OUTPUT);
   }
 
-  private void jsonOutput(final TestInfo testInfo,
+  private void jsonOutput(final TestContext testContext,
                           final Connection connection,
                           final InclusionRule tableInclusionRule,
                           final String tableName)
@@ -86,7 +88,7 @@ public class SchemaCrawlerJsonOutputTest
     final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.standard;
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
-    final String referenceFile = currentMethodName(testInfo) + ".json";
+    final String referenceFile = testContext.currentMethodName() + ".json";
 
     final Path testOutputFile = IOUtility
       .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());
@@ -130,19 +132,19 @@ public class SchemaCrawlerJsonOutputTest
   }
 
   @Test
-  public void noTableJsonOutput(final TestInfo testInfo,
+  public void noTableJsonOutput(final TestContext testContext,
                                 final Connection connection)
     throws Exception
   {
-    jsonOutput(testInfo, connection, fullName -> false, "");
+    jsonOutput(testContext, connection, fullName -> false, "");
   }
 
   @Test
-  public void singleTableJsonOutput(final TestInfo testInfo,
+  public void singleTableJsonOutput(final TestContext testContext,
                                     final Connection connection)
     throws Exception
   {
-    jsonOutput(testInfo,
+    jsonOutput(testContext,
                connection,
                fullName -> fullName.contains("Counts"),
                "%Counts");

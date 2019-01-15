@@ -43,13 +43,16 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import sf.util.IOUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class SiteGraphVariationsTest
   extends
   BaseSiteVariationsTest
@@ -58,7 +61,7 @@ public class SiteGraphVariationsTest
   private Path directory;
 
   @BeforeEach
-  public void _setupDirectory(final TestInfo testInfo)
+  public void _setupDirectory(final TestContext testContext)
     throws IOException,
     URISyntaxException
   {
@@ -66,7 +69,7 @@ public class SiteGraphVariationsTest
     {
       return;
     }
-    directory = resolveTargetFromRootPath(testInfo, "diagram-examples");
+    directory = testContext.resolveTargetFromRootPath("diagram-examples");
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -81,7 +84,7 @@ public class SiteGraphVariationsTest
   }
 
   @Test
-  public void diagram(final TestInfo testInfo,
+  public void diagram(final TestContext testContext,
                       final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -90,12 +93,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_10_no_schema_colors(final TestInfo testInfo,
+    diagram_10_no_schema_colors(final TestContext testContext,
                                 final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -106,11 +109,11 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.no_schema_colors", "true");
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
-  public void diagram_11_title(final TestInfo testInfo,
+  public void diagram_11_title(final TestContext testContext,
                                final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -120,12 +123,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_12_graphviz_attributes(final TestInfo testInfo,
+    diagram_12_graphviz_attributes(final TestContext testContext,
                                    final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -148,12 +151,12 @@ public class SiteGraphVariationsTest
     // Test
     config.put("schemacrawler.graph.graphviz.graph.splines", "ortho");
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_2_portablenames(final TestInfo testInfo,
+    diagram_2_portablenames(final TestContext testContext,
                             final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -163,12 +166,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_3_important_columns(final TestInfo testInfo,
+    diagram_3_important_columns(final TestContext testContext,
                                 final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -179,11 +182,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
-  public void diagram_4_ordinals(final TestInfo testInfo,
+  public void diagram_4_ordinals(final TestContext testContext,
                                  final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -194,12 +197,12 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_5_alphabetical(final TestInfo testInfo,
+    diagram_5_alphabetical(final TestContext testContext,
                            final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -210,11 +213,11 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
-  public void diagram_6_grep(final TestInfo testInfo,
+  public void diagram_6_grep(final TestContext testContext,
                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -226,12 +229,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_7_grep_onlymatching(final TestInfo testInfo,
+    diagram_7_grep_onlymatching(final TestContext testContext,
                                 final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -244,12 +247,12 @@ public class SiteGraphVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
   public void
-    diagram_8_no_cardinality(final TestInfo testInfo,
+    diagram_8_no_cardinality(final TestContext testContext,
                              final DatabaseConnectionInfo connectionInfo)
       throws Exception
   {
@@ -261,11 +264,11 @@ public class SiteGraphVariationsTest
     config.put("schemacrawler.graph.show.primarykey.cardinality", "false");
     config.put("schemacrawler.graph.show.foreignkey.cardinality", "false");
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
   @Test
-  public void diagram_9_row_counts(final TestInfo testInfo,
+  public void diagram_9_row_counts(final TestContext testContext,
                                    final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -276,12 +279,12 @@ public class SiteGraphVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_row_counts", "true");
 
-    run(connectionInfo, args, config, diagramPath(testInfo));
+    run(connectionInfo, args, config, diagramPath(testContext));
   }
 
-  private Path diagramPath(final TestInfo testInfo)
+  private Path diagramPath(final TestContext testContext)
   {
-    return directory.resolve(currentMethodName(testInfo) + ".png");
+    return directory.resolve(testContext.currentMethodName() + ".png");
   }
 
   private void run(final DatabaseConnectionInfo connectionInfo,

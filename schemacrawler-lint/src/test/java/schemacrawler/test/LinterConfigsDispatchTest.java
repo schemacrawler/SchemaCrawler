@@ -48,7 +48,6 @@ import java.sql.Connection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
@@ -57,6 +56,8 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.BaseLintExecutableTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.lint.LintSeverity;
@@ -65,6 +66,7 @@ import schemacrawler.tools.lint.LinterConfigs;
 import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
 {
@@ -72,13 +74,13 @@ public class LinterConfigsDispatchTest
   private TestOutputStream out;
   private TestOutputStream err;
 
-  private void checkSystemErrLog(final TestInfo testInfo)
+  private void checkSystemErrLog(final TestContext testContext)
     throws Exception
   {
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
-               hasSameContentAs(classpathResource(currentMethodName(testInfo)
-                                                  + ".log")));
+               hasSameContentAs(classpathResource(testContext
+                 .currentMethodName() + ".log")));
   }
 
   @AfterEach
@@ -137,7 +139,7 @@ public class LinterConfigsDispatchTest
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigCommandLine(final TestInfo testInfo,
+  public void testSystemExitLinterConfigCommandLine(final TestContext testContext,
                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -151,12 +153,12 @@ public class LinterConfigsDispatchTest
                            additionalConfig,
                            "schemacrawler-linter-configs-with-dispatch");
 
-    checkSystemErrLog(testInfo);
+    checkSystemErrLog(testContext);
   }
 
   @Test
   @ExpectSystemExitWithStatus(1)
-  public void testSystemExitLinterConfigExecutable(final TestInfo testInfo,
+  public void testSystemExitLinterConfigExecutable(final TestContext testContext,
                                                    final Connection connection)
     throws Exception
   {
@@ -165,11 +167,11 @@ public class LinterConfigsDispatchTest
     additionalConfig.put("lintdispatch", "terminate_system");
 
     executableLint(connection,
-                          "/schemacrawler-linter-configs-with-dispatch.xml",
-                          additionalConfig,
-                          "schemacrawler-linter-configs-with-dispatch");
+                   "/schemacrawler-linter-configs-with-dispatch.xml",
+                   additionalConfig,
+                   "schemacrawler-linter-configs-with-dispatch");
 
-    checkSystemErrLog(testInfo);
+    checkSystemErrLog(testContext);
   }
 
 }

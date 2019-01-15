@@ -50,13 +50,14 @@ import java.util.Properties;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
@@ -64,6 +65,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class CommandLineNegativeTest
   extends BaseSchemaCrawlerTest
 {
@@ -81,14 +83,14 @@ public class CommandLineNegativeTest
   }
 
   @Test
-  public void commandLine_BadCommand(final TestInfo testInfo,
+  public void commandLine_BadCommand(final TestContext testContext,
                                      final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
     final Map<String, String> argsMapOverride = new HashMap<>();
     argsMapOverride.put("command", "badcommand");
 
-    run(testInfo, argsMapOverride, null, connectionInfo);
+    run(testContext, argsMapOverride, null, connectionInfo);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -102,7 +104,7 @@ public class CommandLineNegativeTest
     return configFile;
   }
 
-  private void run(final TestInfo testInfo,
+  private void run(final TestContext testContext,
                    final Map<String, String> argsMapOverride,
                    final Map<String, String> config,
                    final DatabaseConnectionInfo connectionInfo)
@@ -144,7 +146,8 @@ public class CommandLineNegativeTest
     assertThat(fileResource(out), hasNoContent());
     assertThat(fileResource(err),
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
-                                                  + currentMethodName(testInfo)
+                                                  + testContext
+                                                    .currentMethodName()
                                                   + ".stderr.txt")));
   }
 

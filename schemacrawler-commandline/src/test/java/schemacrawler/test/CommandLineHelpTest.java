@@ -43,13 +43,16 @@ import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.test.utility.TestWriter;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class CommandLineHelpTest
   extends BaseSchemaCrawlerTest
 {
@@ -67,16 +70,16 @@ public class CommandLineHelpTest
   }
 
   @Test
-  public void commandLineHelpDefaults(final TestInfo testInfo)
+  public void commandLineHelpDefaults(final TestContext testContext)
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("h", null);
 
-    run(testInfo, args, null);
+    run(testContext, args, null);
   }
 
-  private void run(final TestInfo testInfo,
+  private void run(final TestContext testContext,
                    final Map<String, String> argsMap,
                    final Map<String, String> config)
     throws Exception
@@ -90,7 +93,8 @@ public class CommandLineHelpTest
     }
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
-                                                  + currentMethodName(testInfo)
+                                                  + testContext
+                                                    .currentMethodName()
                                                   + ".txt")));
   }
 

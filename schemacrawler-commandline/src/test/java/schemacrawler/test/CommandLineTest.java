@@ -44,19 +44,21 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestContextParameterResolver.class)
 public class CommandLineTest
   extends BaseSchemaCrawlerTest
 {
@@ -64,7 +66,7 @@ public class CommandLineTest
   private static final String COMMAND_LINE_OUTPUT = "command_line_output/";
 
   @Test
-  public void commandLineOverridesWithConfig(final TestInfo testInfo,
+  public void commandLineOverridesWithConfig(final TestContext testContext,
                                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -84,11 +86,11 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testInfo, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, args, config, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithColumnsSorting(final TestInfo testInfo,
+  public void commandLineRoutinesWithColumnsSorting(final TestContext testContext,
                                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -99,11 +101,11 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithoutColumnsSorting(final TestInfo testInfo,
+  public void commandLineRoutinesWithoutColumnsSorting(final TestContext testContext,
                                                        final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -114,11 +116,11 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithoutSorting(final TestInfo testInfo,
+  public void commandLineRoutinesWithoutSorting(final TestContext testContext,
                                                 final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -129,11 +131,11 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineRoutinesWithSorting(final TestInfo testInfo,
+  public void commandLineRoutinesWithSorting(final TestContext testContext,
                                              final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -144,11 +146,11 @@ public class CommandLineTest
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithColumnsSorting(final TestInfo testInfo,
+  public void commandLineTablesWithColumnsSorting(final TestContext testContext,
                                                   final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -158,11 +160,11 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithoutColumnsSorting(final TestInfo testInfo,
+  public void commandLineTablesWithoutColumnsSorting(final TestContext testContext,
                                                      final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -172,11 +174,11 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithoutSorting(final TestInfo testInfo,
+  public void commandLineTablesWithoutSorting(final TestContext testContext,
                                               final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -186,11 +188,11 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineTablesWithSorting(final TestInfo testInfo,
+  public void commandLineTablesWithSorting(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -200,11 +202,11 @@ public class CommandLineTest
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithConfig(final TestInfo testInfo,
+  public void commandLineWithConfig(final TestContext testContext,
                                     final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -222,11 +224,11 @@ public class CommandLineTest
     config.put("schemacrawler.synonym.pattern.include", ".*");
     config.put("schemacrawler.synonym.pattern.exclude", "");
 
-    run(testInfo, connectionInfo, args, config, "brief");
+    run(testContext, connectionInfo, args, config, "brief");
   }
 
   @Test
-  public void commandLineWithDefaults(final TestInfo testInfo,
+  public void commandLineWithDefaults(final TestContext testContext,
                                       final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -235,11 +237,11 @@ public class CommandLineTest
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithNonDefaults(final TestInfo testInfo,
+  public void commandLineWithNonDefaults(final TestContext testContext,
                                          final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -250,11 +252,11 @@ public class CommandLineTest
     args.put("sequences", ".*");
     args.put("synonyms", ".*");
 
-    run(testInfo, connectionInfo, args, null, "brief");
+    run(testContext, connectionInfo, args, null, "brief");
   }
 
   @Test
-  public void commandLineWithQueryCommand(final TestInfo testInfo,
+  public void commandLineWithQueryCommand(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -263,11 +265,15 @@ public class CommandLineTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(testInfo, connectionInfo, args, config, "SELECT * FROM BOOKS.Authors");
+    run(testContext,
+        connectionInfo,
+        args,
+        config,
+        "SELECT * FROM BOOKS.Authors");
   }
 
   @Test
-  public void commandLineWithQueryInConfig(final TestInfo testInfo,
+  public void commandLineWithQueryInConfig(final TestContext testContext,
                                            final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -278,11 +284,11 @@ public class CommandLineTest
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT * FROM BOOKS.Books");
 
-    run(testInfo, connectionInfo, args, config, command);
+    run(testContext, connectionInfo, args, config, command);
   }
 
   @Test
-  public void commandLineWithQueryOverInConfig(final TestInfo testInfo,
+  public void commandLineWithQueryOverInConfig(final TestContext testContext,
                                                final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
@@ -293,7 +299,7 @@ public class CommandLineTest
     final Map<String, String> config = new HashMap<>();
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
-    run(testInfo, connectionInfo, args, config, command);
+    run(testContext, connectionInfo, args, config, command);
   }
 
   private Path createConfig(final Map<String, String> config)
@@ -307,7 +313,7 @@ public class CommandLineTest
     return configFile;
   }
 
-  private void run(final TestInfo testInfo,
+  private void run(final TestContext testContext,
                    final DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
                    final Map<String, String> config,
@@ -343,7 +349,8 @@ public class CommandLineTest
 
     assertThat(fileResource(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
-                                                  + currentMethodName(testInfo)
+                                                  + testContext
+                                                    .currentMethodName()
                                                   + ".txt")));
   }
 

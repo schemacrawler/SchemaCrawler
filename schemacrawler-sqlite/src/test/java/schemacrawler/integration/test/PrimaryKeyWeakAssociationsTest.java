@@ -42,7 +42,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -52,6 +52,8 @@ import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.associations.WeakAssociation;
@@ -61,36 +63,37 @@ import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import schemacrawler.utility.NamedObjectSort;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
+@ExtendWith(TestContextParameterResolver.class)
 public class PrimaryKeyWeakAssociationsTest
   extends BaseSqliteTest
 {
 
   @Test
-  public void weakAssociations1(final TestInfo testInfo)
+  public void weakAssociations1(final TestContext testContext)
     throws Exception
   {
-    weakAssociations(testInfo, "/pk_test_1.sql");
+    weakAssociations(testContext, "/pk_test_1.sql");
   }
 
   @Test
-  public void weakAssociations2(final TestInfo testInfo)
+  public void weakAssociations2(final TestContext testContext)
     throws Exception
   {
-    weakAssociations(testInfo, "/pk_test_2.sql");
+    weakAssociations(testContext, "/pk_test_2.sql");
   }
 
   @Test
-  public void weakAssociations3(final TestInfo testInfo)
+  public void weakAssociations3(final TestContext testContext)
     throws Exception
   {
-    weakAssociations(testInfo, "/pk_test_3.sql");
+    weakAssociations(testContext, "/pk_test_3.sql");
   }
 
-  private void weakAssociations(final TestInfo testInfo,
+  private void weakAssociations(final TestContext testContext,
                                 final String databaseSqlResource)
     throws Exception
   {
-    final String currentMethodFullName = currentMethodFullName(testInfo);
+    final String currentMethodFullName = testContext.currentMethodFullName();
     final Path sqliteDbFile = createTestDatabase(databaseSqlResource);
 
     final Config config = new Config();

@@ -29,13 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.applyApplicationLogLevel;
 
 import java.util.logging.Level;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInfo;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -53,23 +51,6 @@ public abstract class BaseSchemaCrawlerTest
     throws Exception
   {
     applyApplicationLogLevel(Level.OFF);
-  }
-
-  protected String currentMethodFullName(final TestInfo testInfo)
-  {
-    requireNonNull(testInfo, "No test info provided");
-    return testInfo.getTestMethod()
-      .map(method -> String.format("%s.%s",
-                                   method.getDeclaringClass().getSimpleName(),
-                                   method.getName()))
-      .orElseThrow(() -> new RuntimeException("Could not find test method"));
-  }
-
-  protected String currentMethodName(final TestInfo testInfo)
-  {
-    requireNonNull(testInfo, "No test info provided");
-    return testInfo.getTestMethod().map(method -> method.getName())
-      .orElseThrow(() -> new RuntimeException("Could not find test method"));
   }
 
   protected SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel()

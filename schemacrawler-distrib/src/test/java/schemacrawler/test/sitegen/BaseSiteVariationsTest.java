@@ -28,16 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import static java.nio.file.Files.createDirectories;
-import static java.util.Objects.requireNonNull;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.BaseSchemaCrawlerTest;
@@ -48,34 +38,5 @@ public class BaseSiteVariationsTest
   extends
   BaseSchemaCrawlerTest
 {
-
-  protected Path resolveTargetFromRootPath(final TestInfo testInfo,
-                                           final String relativePath)
-    throws URISyntaxException,
-    IOException
-  {
-    requireNonNull(testInfo, "No test info provided");
-    final Path projectRootPath = getProjectRootPath(testInfo);
-    final Path directory = projectRootPath
-      .resolve(Paths.get("target", "_website")).resolve(relativePath)
-      .normalize().toAbsolutePath();
-    createDirectories(directory);
-    return directory;
-  }
-
-  private Path getProjectRootPath(final TestInfo testInfo)
-    throws URISyntaxException,
-    IOException
-  {
-    requireNonNull(testInfo, "No test info provided");
-    final Class<?> testClass = testInfo.getTestClass()
-      .orElseThrow(() -> new RuntimeException("Could not find test class"));
-    final Path codePath = Paths.get(testClass.getProtectionDomain()
-      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    final Path projectRoot = codePath.resolve("../..").normalize()
-      .toAbsolutePath();
-    Files.createDirectories(projectRoot);
-    return projectRoot;
-  }
 
 }
