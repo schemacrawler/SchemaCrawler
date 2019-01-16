@@ -29,14 +29,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -117,18 +124,9 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final List<String> failures = new ArrayList<>();
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
-      for (final String command: commands)
-      {
+    assertAll(getOutputFormats().stream()
+      .flatMap(outputFormat -> Arrays.stream(commands).map(command -> () -> {
         final String referenceFile = command + "." + outputFormat.getFormat();
-
-        final Path testOutputFile = IOUtility
-          .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-        final OutputOptions outputOptions = OutputOptionsBuilder
-          .newOutputOptions(outputFormat, testOutputFile);
 
         final Config config = loadHsqldbConfig();
 
@@ -148,22 +146,17 @@ public class SchemaCrawlerOutputTest
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.setConnection(connection);
         executable
           .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-        executable.execute();
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputFormat.getFormat()));
-      }
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+        assertThat(outputFileOf(executableExecution(connection,
+                                                    executable,
+                                                    outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(COMPOSITE_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
+      })));
   }
 
   @Test
