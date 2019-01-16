@@ -222,54 +222,43 @@ public class SchemaCrawlerOutputTest
   {
     clean(IDENTIFIER_QUOTING_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
 
-    for (final IdentifierQuotingStrategy identifierQuotingStrategy: IdentifierQuotingStrategy
-      .values())
-    {
-      final OutputFormat outputFormat = TextOutputFormat.text;
-      textOptionsBuilder
-        .withIdentifierQuotingStrategy(identifierQuotingStrategy);
-      final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+    assertAll(Arrays.stream(IdentifierQuotingStrategy.values())
+      .map(identifierQuotingStrategy -> () -> {
 
-      final String referenceFile = "schema_" + identifierQuotingStrategy.name()
-                                   + "." + outputFormat.getFormat();
+        final OutputFormat outputFormat = TextOutputFormat.text;
+        textOptionsBuilder
+          .withIdentifierQuotingStrategy(identifierQuotingStrategy);
+        final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
+        final String referenceFile = "schema_"
+                                     + identifierQuotingStrategy.name() + "."
+                                     + outputFormat.getFormat();
 
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+          .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+          .includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+          .toOptions();
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
-        .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
+          .name());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+          .builder(textOptions).toConfig());
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
-        .name());
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-        .builder(textOptions).toConfig());
-      executable.setConnection(connection);
-      executable.execute();
-
-      failures.addAll(compareOutput(IDENTIFIER_QUOTING_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+        assertThat(outputFileOf(executableExecution(connection,
+                                                    executable,
+                                                    outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(IDENTIFIER_QUOTING_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
+      }));
   }
 
   @Test
