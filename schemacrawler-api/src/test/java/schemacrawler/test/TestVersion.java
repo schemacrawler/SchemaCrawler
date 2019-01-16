@@ -30,7 +30,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 
 import java.io.FileDescriptor;
@@ -73,7 +73,7 @@ public class TestVersion
   {
     Version.main(new String[0]);
     assertThat(out.getFileContents(), startsWith("SchemaCrawler 15.04.01"));
-    assertThat(fileResource(err), hasNoContent());
+    assertThat(outputOf(err), hasNoContent());
   }
 
 }

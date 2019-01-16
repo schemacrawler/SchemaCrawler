@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -118,7 +118,7 @@ public class HsqldbCommandlineTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource("hsqldb.main" + "."
                                                          + outputFormat
                                                            .getFormat()),

@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
@@ -156,7 +156,7 @@ public class TableTypesTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(TABLE_TYPES_OUTPUT
                                                   + referenceFile)));
   }

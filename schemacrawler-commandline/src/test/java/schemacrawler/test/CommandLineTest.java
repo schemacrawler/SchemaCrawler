@@ -33,7 +33,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -345,7 +345,7 @@ public class CommandLineTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
                                                   + testContext.testMethodName()
                                                   + ".txt")));

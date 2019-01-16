@@ -63,7 +63,7 @@ public class FileHasContent
     }
   }
 
-  public static InputResource fileResource(final TestOutputCapture testoutput)
+  public static InputResource outputOf(final TestOutputCapture testoutput)
   {
     requireNonNull(testoutput, "No test output cature provided");
     final Path filePath = testoutput.getFilePath();

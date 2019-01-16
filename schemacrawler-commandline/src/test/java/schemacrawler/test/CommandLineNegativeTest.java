@@ -33,7 +33,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -140,9 +140,9 @@ public class CommandLineNegativeTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
 
-    assertThat(fileResource(outputFile), hasNoContent());
-    assertThat(fileResource(out), hasNoContent());
-    assertThat(fileResource(err),
+    assertThat(outputOf(outputFile), hasNoContent());
+    assertThat(outputOf(out), hasNoContent());
+    assertThat(outputOf(err),
                hasSameContentAs(classpathResource(COMMAND_LINE_NEGATIVE_OUTPUT
                                                   + testContext.testMethodName()
                                                   + ".stderr.txt")));

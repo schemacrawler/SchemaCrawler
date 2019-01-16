@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -107,7 +107,7 @@ public class LintTest
         out.println(lint);
       }
     }
-    assertThat(fileResource(testout1),
+    assertThat(outputOf(testout1),
                hasSameContentAs(classpathResource(LINTS_OUTPUT
                                                   + "schemacrawler.lints.txt")));
 
@@ -116,7 +116,7 @@ public class LintTest
     {
       out.println(linters.getLintSummary());
     }
-    assertThat(fileResource(testout2),
+    assertThat(outputOf(testout2),
                hasSameContentAs(classpathResource(LINTS_OUTPUT
                                                   + "schemacrawler.lints.summary.txt")));
   }
@@ -158,7 +158,7 @@ public class LintTest
         out.println(lint);
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(LINTS_OUTPUT
                                                   + "schemacrawler.lints.excluded_columns.txt")));
   }

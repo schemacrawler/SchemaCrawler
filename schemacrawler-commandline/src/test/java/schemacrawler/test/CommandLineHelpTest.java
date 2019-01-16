@@ -30,7 +30,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -89,7 +89,7 @@ public class CommandLineHelpTest
       Main.main(flattenCommandlineArgs(argsMap));
       out.write(this.out.getFileContents());
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
                                                   + testContext.testMethodName()
                                                   + ".txt")));

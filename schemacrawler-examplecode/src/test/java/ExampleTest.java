@@ -30,7 +30,7 @@ http://www.gnu.org/licenses/
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
@@ -78,9 +78,9 @@ public class ExampleTest
   {
     ApiExample.main(new String[0]);
 
-    assertThat(fileResource(out),
+    assertThat(outputOf(out),
                hasSameContentAs(classpathResource("ApiExample.txt")));
-    assertThat(fileResource(err), hasNoContent());
+    assertThat(outputOf(err), hasNoContent());
   }
 
   @AfterEach
@@ -113,9 +113,9 @@ public class ExampleTest
   {
     ResultSetExample.main(new String[0]);
 
-    assertThat(fileResource(out),
+    assertThat(outputOf(out),
                hasSameContentAs(classpathResource("ResultSetExample.txt")));
-    assertThat(fileResource(err), hasNoContent());
+    assertThat(outputOf(err), hasNoContent());
   }
 
   @BeforeEach

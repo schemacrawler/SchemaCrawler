@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
@@ -88,7 +88,7 @@ public abstract class BaseLintExecutableTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource(referenceFileName
                                                          + ".txt"),
                                        outputFormat.getFormat()));

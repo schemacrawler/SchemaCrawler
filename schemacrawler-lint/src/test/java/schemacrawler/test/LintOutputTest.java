@@ -32,7 +32,7 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.clean;
@@ -163,7 +163,7 @@ public class LintOutputTest
       executable.setConnection(connection);
       executable.execute();
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource(JSON_OUTPUT
                                                          + "lints.json"),
                                        TextOutputFormat.json.getFormat()));
@@ -195,7 +195,7 @@ public class LintOutputTest
       executable.setConnection(connection);
       executable.execute();
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(TEXT_OUTPUT + "lint.txt")));
   }
 

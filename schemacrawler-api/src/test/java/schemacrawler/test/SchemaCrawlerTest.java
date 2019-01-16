@@ -40,7 +40,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static sf.util.Utility.isBlank;
@@ -133,7 +133,7 @@ public class SchemaCrawlerTest
         out.println(printColumnDataType(columnDataType));
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -238,7 +238,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -287,7 +287,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -341,7 +341,7 @@ public class SchemaCrawlerTest
         out.println(dbProperty);
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -438,7 +438,7 @@ public class SchemaCrawlerTest
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -471,7 +471,7 @@ public class SchemaCrawlerTest
                     + table.getRelatedTables(TableRelationshipType.parent));
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -585,7 +585,7 @@ public class SchemaCrawlerTest
         out.println("  cycle?: " + sequence.isCycle());
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -628,7 +628,7 @@ public class SchemaCrawlerTest
                     + synonym.getReferencedObject().getClass().getSimpleName());
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -681,7 +681,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -729,7 +729,7 @@ public class SchemaCrawlerTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }

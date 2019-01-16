@@ -30,7 +30,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -118,7 +118,7 @@ public class MetadataRetrievalStrategyTest
     Main.main(flattenCommandlineArgs(argsMap));
 
     // Check that System.err has an error
-    assertThat(fileResource(out), hasNoContent());
+    assertThat(outputOf(out), hasNoContent());
     final String errorLog = err.getFileContents();
     assertThat(errorLog, containsString("No tables SQL provided"));
 

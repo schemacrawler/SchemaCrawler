@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
@@ -96,7 +96,7 @@ public class SchemaCrawlerGrepTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -170,7 +170,7 @@ public class SchemaCrawlerGrepTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -207,7 +207,7 @@ public class SchemaCrawlerGrepTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
   }
@@ -246,7 +246,7 @@ public class SchemaCrawlerGrepTest
         }
       }
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
 

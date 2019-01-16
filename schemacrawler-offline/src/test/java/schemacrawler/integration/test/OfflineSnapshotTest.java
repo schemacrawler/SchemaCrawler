@@ -36,7 +36,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.fileResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -102,7 +102,7 @@ public class OfflineSnapshotTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
                                                   + "details.txt")));
 
@@ -130,7 +130,7 @@ public class OfflineSnapshotTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
                                                   + "offlineWithFilters.txt")));
   }
@@ -162,7 +162,7 @@ public class OfflineSnapshotTest
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
                                                   + "offlineWithSchemaFilters.txt")));
   }
@@ -247,7 +247,7 @@ public class OfflineSnapshotTest
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
       executable.execute();
     }
-    assertThat(fileResource(testout),
+    assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource(referenceFileName),
                                        TextOutputFormat.text.getFormat()));
   }
