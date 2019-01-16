@@ -503,8 +503,6 @@ public class SchemaCrawlerOutputTest
   {
     clean(SHOW_WEAK_ASSOCIATIONS_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
@@ -512,16 +510,10 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.weakAssociations();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "schema_standard."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
@@ -537,21 +529,16 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
-      executable.execute();
 
-      failures
-        .addAll(compareOutput(SHOW_WEAK_ASSOCIATIONS_OUTPUT + referenceFile,
-                              testOutputFile,
-                              outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
@@ -560,8 +547,6 @@ public class SchemaCrawlerOutputTest
   {
     clean(TABLE_ROW_COUNT_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
@@ -569,16 +554,10 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.showRowCounts();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
@@ -594,20 +573,16 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
-      executable.execute();
 
-      failures.addAll(compareOutput(TABLE_ROW_COUNT_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(TABLE_ROW_COUNT_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
