@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import java.io.IOException;
 import java.sql.Connection;
 
 import schemacrawler.crawl.SchemaCrawler;
@@ -46,6 +45,10 @@ import sf.util.PropertiesUtility;
 
 public final class DatabaseTestUtility
 {
+
+  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
+    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    .toOptions();
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -70,15 +73,18 @@ public final class DatabaseTestUtility
   }
 
   public static Config loadHsqldbConfig()
-    throws IOException
   {
-    return PropertiesUtility
-      .loadConfig(new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties"));
-  }
+    try
+    {
+      final ClasspathInputResource inputResource = new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+      return PropertiesUtility.loadConfig(inputResource);
+    }
 
-  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-  .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-  .toOptions();
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e.getMessage(), e);
+    }
+  }
 
   private DatabaseTestUtility()
   {

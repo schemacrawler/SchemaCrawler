@@ -37,7 +37,6 @@ import java.sql.Connection;
 import org.hamcrest.Matcher;
 
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -52,44 +51,63 @@ public final class ExecutableTestUtility
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable)
-    throws Exception
   {
-    return executableExecution(connection,
-                               executable,
-                               TextOutputFormat.text.getFormat());
+    try
+    {
+      return executableExecution(connection,
+                                 executable,
+                                 TextOutputFormat.text.getFormat());
+    }
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
                                          final OutputFormat outputFormat)
-    throws Exception
   {
-    return executableExecution(connection,
-                               executable,
-                               outputFormat.getFormat());
+    try
+    {
+      return executableExecution(connection,
+                                 executable,
+                                 outputFormat.getFormat());
+    }
+
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
                                          final String outputFormatValue)
-    throws Exception
   {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder().withOutputFormatValue(outputFormatValue)
-        .withOutputWriter(out);
+      final TestWriter testout = new TestWriter();
+      try (final TestWriter out = testout;)
+      {
+        final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+          .builder().withOutputFormatValue(outputFormatValue)
+          .withOutputWriter(out);
 
-      executable.setOutputOptions(outputOptionsBuilder.toOptions());
-      executable.setConnection(connection);
-      executable.execute();
+        executable.setOutputOptions(outputOptionsBuilder.toOptions());
+        executable.setConnection(connection);
+        executable.execute();
+      }
+      return testout.getFilePath();
     }
-    return testout.getFilePath();
+
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e.getMessage(), e);
+    }
   }
 
   public static SchemaCrawlerExecutable executableOf(final String command)
-    throws SchemaCrawlerException
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder()
