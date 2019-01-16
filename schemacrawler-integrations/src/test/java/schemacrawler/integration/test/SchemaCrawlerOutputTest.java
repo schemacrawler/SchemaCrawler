@@ -273,54 +273,45 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final List<String> failures = new ArrayList<>();
     final InfoLevel infoLevel = InfoLevel.maximum;
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-      .values())
-    {
-      final String referenceFile = schemaTextDetailType + "_" + infoLevel
-                                   + ".json";
 
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, TextOutputFormat.json.getFormat());
+    assertAll(Arrays.stream(SchemaTextDetailType.values())
+      .map(schemaTextDetailType -> () -> {
 
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(TextOutputFormat.json, testOutputFile);
+        final String referenceFile = schemaTextDetailType + "_" + infoLevel
+                                     + ".json";
+        final OutputFormat outputFormat = TextOutputFormat.json;
 
-      final Config config = loadHsqldbConfig();
+        final Config config = loadHsqldbConfig();
 
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder().fromConfig(config);
+        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+          .builder().fromConfig(config);
 
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-        .includeAllSequences().includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+          .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+          .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+          .includeAllSequences().includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+          .toOptions();
 
-      final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-        .builder(textOptions);
+        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+          .builder(textOptions);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-        .name());
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
-      executable
-        .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-      executable.execute();
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
+          .name());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable
+          .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+        executable
+          .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-      failures.addAll(compareOutput(JSON_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputOptions.getOutputFormatValue()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+        assertThat(outputFileOf(executableExecution(connection,
+                                                    executable,
+                                                    outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(JSON_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
+      }));
   }
 
   @Test
