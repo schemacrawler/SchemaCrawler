@@ -320,24 +320,16 @@ public class SchemaCrawlerOutputTest
   {
     clean(NO_REMARKS_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
       .showJdbcDriverInfo(false);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.detailed())
@@ -349,20 +341,16 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
         .builder(textOptions).toConfig());
-      executable.setConnection(connection);
-      executable.execute();
 
-      failures.addAll(compareOutput(NO_REMARKS_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(NO_REMARKS_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
@@ -371,24 +359,16 @@ public class SchemaCrawlerOutputTest
   {
     clean(NO_SCHEMA_COLORS_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
       .showJdbcDriverInfo(false).noSchemaColors();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
         .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
@@ -400,20 +380,16 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.schema
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
         .builder(textOptions).toConfig());
-      executable.setConnection(connection);
-      executable.execute();
 
-      failures.addAll(compareOutput(NO_SCHEMA_COLORS_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(NO_SCHEMA_COLORS_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
