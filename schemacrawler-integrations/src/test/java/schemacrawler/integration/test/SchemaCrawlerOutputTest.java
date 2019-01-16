@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 
@@ -116,7 +116,7 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream()
+    assertAll(outputFormats().stream()
       .flatMap(outputFormat -> Arrays.stream(commands).map(command -> () -> {
 
         final String referenceFile = command + "." + outputFormat.getFormat();
@@ -143,7 +143,7 @@ public class SchemaCrawlerOutputTest
         executable
           .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-        assertThat(outputFileOf(executableExecution(connection,
+        assertThat(outputOf(executableExecution(connection,
                                                     executable,
                                                     outputFormat)),
                    hasSameContentAndTypeAs(classpathResource(COMPOSITE_OUTPUT
@@ -167,7 +167,7 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.noConstraintNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -199,7 +199,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(HIDE_CONSTRAINT_NAMES_OUTPUT
@@ -244,7 +244,7 @@ public class SchemaCrawlerOutputTest
         executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
           .builder(textOptions).toConfig());
 
-        assertThat(outputFileOf(executableExecution(connection,
+        assertThat(outputOf(executableExecution(connection,
                                                     executable,
                                                     outputFormat)),
                    hasSameContentAndTypeAs(classpathResource(IDENTIFIER_QUOTING_OUTPUT
@@ -297,7 +297,7 @@ public class SchemaCrawlerOutputTest
         executable
           .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-        assertThat(outputFileOf(executableExecution(connection,
+        assertThat(outputOf(executableExecution(connection,
                                                     executable,
                                                     outputFormat)),
                    hasSameContentAndTypeAs(classpathResource(JSON_OUTPUT
@@ -318,7 +318,7 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo(false);
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
@@ -336,7 +336,7 @@ public class SchemaCrawlerOutputTest
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
         .builder(textOptions).toConfig());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(NO_REMARKS_OUTPUT
@@ -357,7 +357,7 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo(false).noSchemaColors();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "schema_detailed."
                                    + outputFormat.getFormat();
@@ -375,7 +375,7 @@ public class SchemaCrawlerOutputTest
       executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
         .builder(textOptions).toConfig());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(NO_SCHEMA_COLORS_OUTPUT
@@ -397,7 +397,7 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.showOrdinalNumbers();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -429,7 +429,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(ORDINAL_OUTPUT
@@ -450,7 +450,7 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo().showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "routines." + outputFormat.getFormat();
 
@@ -480,7 +480,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(ROUTINES_OUTPUT
@@ -502,7 +502,7 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.weakAssociations();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "schema_standard."
                                    + outputFormat.getFormat();
@@ -524,7 +524,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(SHOW_WEAK_ASSOCIATIONS_OUTPUT
@@ -546,7 +546,7 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.showRowCounts();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -568,7 +568,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(TABLE_ROW_COUNT_OUTPUT
@@ -589,7 +589,7 @@ public class SchemaCrawlerOutputTest
       .showJdbcDriverInfo().showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+    assertAll(outputFormats().stream().map(outputFormat -> () -> {
 
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
@@ -621,7 +621,7 @@ public class SchemaCrawlerOutputTest
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-      assertThat(outputFileOf(executableExecution(connection,
+      assertThat(outputOf(executableExecution(connection,
                                                   executable,
                                                   outputFormat)),
                  hasSameContentAndTypeAs(classpathResource(UNQUALIFIED_NAMES_OUTPUT
@@ -630,7 +630,7 @@ public class SchemaCrawlerOutputTest
     }));
   }
 
-  private Set<OutputFormat> getOutputFormats()
+  private Set<OutputFormat> outputFormats()
   {
     final Set<OutputFormat> outputFormats = new HashSet<>();
     outputFormats

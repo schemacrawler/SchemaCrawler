@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static sf.util.DatabaseUtility.checkConnection;
@@ -173,7 +173,7 @@ public class PostgreSQLTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    assertThat(outputFileOf(executableExecution(getConnection(), executable)),
+    assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource("testPostgreSQLWithConnection.txt")));
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }

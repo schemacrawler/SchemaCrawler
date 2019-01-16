@@ -35,7 +35,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
 
@@ -419,7 +419,7 @@ public class GraphRendererOptionsTest
 
     // Check DOT file
     final String referenceFileName = testMethodName;
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executable,
                                                 GraphOutputFormat.scdot)),
                hasSameContentAndTypeAs(classpathResource(GRAPH_OPTIONS_OUTPUT

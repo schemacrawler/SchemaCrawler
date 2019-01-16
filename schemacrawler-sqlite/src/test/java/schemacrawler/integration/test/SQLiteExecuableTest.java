@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
@@ -99,7 +99,7 @@ public class SQLiteExecuableTest
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
       .builder(textOptions).toConfig());
 
-    assertThat(outputFileOf(executableExecution(createConnection(sqliteDbFile),
+    assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
                                                 executable)),
                hasSameContentAs(classpathResource(currentMethodFullName)));
   }

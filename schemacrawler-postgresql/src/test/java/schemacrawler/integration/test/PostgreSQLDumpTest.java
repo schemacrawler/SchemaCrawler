@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -105,7 +105,7 @@ public class PostgreSQLDumpTest
     final Connection connection = postgreSQLDumpLoader
       .createDatabaseConnection();
 
-    assertThat(outputFileOf(executableExecution(connection, executable)),
+    assertThat(outputOf(executableExecution(connection, executable)),
                hasSameContentAs(classpathResource("testPostgreSQLExecutableWithDump.txt")));
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }

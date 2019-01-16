@@ -31,7 +31,7 @@ package schemacrawler.test.utility;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.fileResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
@@ -115,7 +115,7 @@ public abstract class BaseLintExecutableTest
       lintExecutable.setAdditionalConfiguration(config);
     }
 
-    assertThat(outputFileOf(executableExecution(connection, lintExecutable)),
+    assertThat(outputOf(executableExecution(connection, lintExecutable)),
                hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 

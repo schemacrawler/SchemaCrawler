@@ -127,7 +127,7 @@ public final class ExecutableTestUtility
                                                   outputFormat.getFormat());
   }
 
-  public static InputResource outputFileOf(final Path filePath)
+  public static InputResource outputOf(final Path filePath)
   {
     requireNonNull(filePath, "No file path provided");
     try

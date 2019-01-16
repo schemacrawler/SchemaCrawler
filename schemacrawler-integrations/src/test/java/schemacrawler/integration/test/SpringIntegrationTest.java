@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
@@ -59,7 +59,7 @@ public class SpringIntegrationTest
     final SchemaCrawlerExecutable executable = appContext
       .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executable,
                                                 TextOutputFormat.text)),
                hasSameContentAs(classpathResource(beanDefinitionName

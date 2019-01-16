@@ -33,7 +33,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.integration.test.utility.IntegrationTestUtility.commandLineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
@@ -53,7 +53,7 @@ public class ScriptingTest
   public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+    assertThat(outputOf(commandLineExecution(connectionInfo,
                                                  "script",
                                                  "/plaintextschema.groovy")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -63,7 +63,7 @@ public class ScriptingTest
   public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+    assertThat(outputOf(commandLineExecution(connectionInfo,
                                                  "script",
                                                  "/plaintextschema.js")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -73,7 +73,7 @@ public class ScriptingTest
   public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+    assertThat(outputOf(commandLineExecution(connectionInfo,
                                                  "script",
                                                  "/plaintextschema.py")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -83,7 +83,7 @@ public class ScriptingTest
   public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputFileOf(commandLineExecution(connectionInfo,
+    assertThat(outputOf(commandLineExecution(connectionInfo,
                                                  "script",
                                                  "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
@@ -93,7 +93,7 @@ public class ScriptingTest
   public void executableGroovy(final Connection connection)
     throws Exception
   {
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executableOf("script"),
                                                 "/plaintextschema.groovy")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -103,7 +103,7 @@ public class ScriptingTest
   public void executableJavaScript(final Connection connection)
     throws Exception
   {
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executableOf("script"),
                                                 "/plaintextschema.js")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -113,7 +113,7 @@ public class ScriptingTest
   public void executablePython(final Connection connection)
     throws Exception
   {
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executableOf("script"),
                                                 "/plaintextschema.py")),
                hasSameContentAs(classpathResource("script_output.txt")));
@@ -123,7 +123,7 @@ public class ScriptingTest
   public void executableRuby(final Connection connection)
     throws Exception
   {
-    assertThat(outputFileOf(executableExecution(connection,
+    assertThat(outputOf(executableExecution(connection,
                                                 executableOf("script"),
                                                 "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
