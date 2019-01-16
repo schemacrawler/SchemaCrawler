@@ -452,23 +452,15 @@ public class SchemaCrawlerOutputTest
   {
     clean(ROUTINES_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo().showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "routines." + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -491,22 +483,18 @@ public class SchemaCrawlerOutputTest
       final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
         .name());
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-      executable.execute();
 
-      failures.addAll(compareOutput(ROUTINES_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(ROUTINES_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
