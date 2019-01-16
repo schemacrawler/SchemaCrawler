@@ -398,8 +398,6 @@ public class SchemaCrawlerOutputTest
   {
     clean(ORDINAL_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
@@ -407,16 +405,10 @@ public class SchemaCrawlerOutputTest
     textOptionsBuilder.showOrdinalNumbers();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -434,28 +426,24 @@ public class SchemaCrawlerOutputTest
         .builder(textOptions);
       schemaTextOptionsBuilder.sortTables(true);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(SchemaTextDetailType.details
-                                                                             + ","
-                                                                             + Operation.count
-                                                                             + ","
-                                                                             + Operation.dump);
+      final String command = String.format("%s,%s,%s",
+                                           SchemaTextDetailType.details,
+                                           Operation.count,
+                                           Operation.dump);
+      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-      executable.execute();
 
-      failures.addAll(compareOutput(ORDINAL_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(ORDINAL_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   @Test
