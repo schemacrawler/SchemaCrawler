@@ -31,22 +31,17 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.ExecutableTestUtility.outputFileOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -65,15 +60,12 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.utility.IdentifierQuotingStrategy;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SchemaCrawlerOutputTest
@@ -591,24 +583,16 @@ public class SchemaCrawlerOutputTest
   {
     clean(UNQUALIFIED_NAMES_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
       .showJdbcDriverInfo().showUnqualifiedNames();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    for (final OutputFormat outputFormat: getOutputFormats())
-    {
+    assertAll(getOutputFormats().stream().map(outputFormat -> () -> {
+
       final String referenceFile = "details_maximum."
                                    + outputFormat.getFormat();
-
-      final Path testOutputFile = IOUtility
-        .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(outputFormat, testOutputFile);
 
       final Config config = loadHsqldbConfig();
 
@@ -632,22 +616,18 @@ public class SchemaCrawlerOutputTest
                                                                              + ","
                                                                              + Operation.dump);
       executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setOutputOptions(outputOptions);
       executable
         .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-      executable.setConnection(connection);
       executable
         .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-      executable.execute();
 
-      failures.addAll(compareOutput(UNQUALIFIED_NAMES_OUTPUT + referenceFile,
-                                    testOutputFile,
-                                    outputFormat.getFormat()));
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+      assertThat(outputFileOf(executableExecution(connection,
+                                                  executable,
+                                                  outputFormat)),
+                 hasSameContentAndTypeAs(classpathResource(UNQUALIFIED_NAMES_OUTPUT
+                                                           + referenceFile),
+                                         outputFormat));
+    }));
   }
 
   private Set<OutputFormat> getOutputFormats()
