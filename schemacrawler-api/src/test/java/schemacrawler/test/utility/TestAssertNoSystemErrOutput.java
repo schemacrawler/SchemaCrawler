@@ -47,7 +47,7 @@ public class TestAssertNoSystemErrOutput
   private TestOutputStream err;
 
   @Override
-  public void afterEach(ExtensionContext context)
+  public void afterEach(final ExtensionContext context)
     throws Exception
   {
     System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
@@ -58,7 +58,7 @@ public class TestAssertNoSystemErrOutput
   }
 
   @Override
-  public void beforeEach(ExtensionContext context)
+  public void beforeEach(final ExtensionContext context)
     throws Exception
   {
     err = new TestOutputStream();

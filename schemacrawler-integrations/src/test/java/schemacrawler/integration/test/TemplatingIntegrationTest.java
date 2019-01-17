@@ -53,14 +53,6 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class TemplatingIntegrationTest
 {
 
-  private Map<String, String> additionalArgsMap()
-  {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("schemas", "((?!FOR_LINT).)*");
-    argsMap.put("infolevel", "standard");
-    return argsMap;
-  }
-
   @Test
   public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -122,6 +114,14 @@ public class TemplatingIntegrationTest
                                             executableOf("velocity"),
                                             "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
+  }
+
+  private Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("infolevel", "standard");
+    return argsMap;
   }
 
 }

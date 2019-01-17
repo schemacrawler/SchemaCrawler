@@ -76,6 +76,25 @@ public class SchemaCrawlerJsonOutputTest
     clean(JSON_EXTRA_OUTPUT);
   }
 
+  @Test
+  public void noTableJsonOutput(final TestContext testContext,
+                                final Connection connection)
+    throws Exception
+  {
+    jsonOutput(testContext, connection, fullName -> false, "");
+  }
+
+  @Test
+  public void singleTableJsonOutput(final TestContext testContext,
+                                    final Connection connection)
+    throws Exception
+  {
+    jsonOutput(testContext,
+               connection,
+               fullName -> fullName.contains("Counts"),
+               "%Counts");
+  }
+
   private void jsonOutput(final TestContext testContext,
                           final Connection connection,
                           final InclusionRule tableInclusionRule,
@@ -127,25 +146,6 @@ public class SchemaCrawlerJsonOutputTest
     {
       fail(failures.toString());
     }
-  }
-
-  @Test
-  public void noTableJsonOutput(final TestContext testContext,
-                                final Connection connection)
-    throws Exception
-  {
-    jsonOutput(testContext, connection, fullName -> false, "");
-  }
-
-  @Test
-  public void singleTableJsonOutput(final TestContext testContext,
-                                    final Connection connection)
-    throws Exception
-  {
-    jsonOutput(testContext,
-               connection,
-               fullName -> fullName.contains("Counts"),
-               "%Counts");
   }
 
 }

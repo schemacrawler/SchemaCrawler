@@ -92,40 +92,6 @@ public class SpinThroughTest
     hsqldbProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
-  private Stream<InfoLevel> infoLevels()
-  {
-    return Arrays.stream(InfoLevel.values())
-      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
-  }
-
-  private Stream<OutputFormat> outputFormats()
-  {
-    return Arrays.stream(new OutputFormat[] {
-                                              TextOutputFormat.text,
-                                              TextOutputFormat.html,
-                                              TextOutputFormat.json,
-                                              GraphOutputFormat.htmlx,
-                                              GraphOutputFormat.scdot });
-  }
-
-  private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
-                               final InfoLevel infoLevel,
-                               final OutputFormat outputFormat)
-  {
-    final String referenceFile = String.format("%d%d.%s_%s.%s",
-                                               schemaTextDetailType.ordinal(),
-                                               infoLevel.ordinal(),
-                                               schemaTextDetailType,
-                                               infoLevel,
-                                               outputFormat.getFormat());
-    return referenceFile;
-  }
-
-  private Stream<SchemaTextDetailType> schemaTextDetailTypes()
-  {
-    return Arrays.stream(SchemaTextDetailType.values());
-  }
-
   @Test
   public void spinThroughExecutable(final Connection connection)
     throws Exception
@@ -203,6 +169,40 @@ public class SpinThroughTest
                                              outputFormat));
 
         }))));
+  }
+
+  private Stream<InfoLevel> infoLevels()
+  {
+    return Arrays.stream(InfoLevel.values())
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+  }
+
+  private Stream<OutputFormat> outputFormats()
+  {
+    return Arrays.stream(new OutputFormat[] {
+                                              TextOutputFormat.text,
+                                              TextOutputFormat.html,
+                                              TextOutputFormat.json,
+                                              GraphOutputFormat.htmlx,
+                                              GraphOutputFormat.scdot });
+  }
+
+  private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
+                               final InfoLevel infoLevel,
+                               final OutputFormat outputFormat)
+  {
+    final String referenceFile = String.format("%d%d.%s_%s.%s",
+                                               schemaTextDetailType.ordinal(),
+                                               infoLevel.ordinal(),
+                                               schemaTextDetailType,
+                                               infoLevel,
+                                               outputFormat.getFormat());
+    return referenceFile;
+  }
+
+  private Stream<SchemaTextDetailType> schemaTextDetailTypes()
+  {
+    return Arrays.stream(SchemaTextDetailType.values());
   }
 
 }

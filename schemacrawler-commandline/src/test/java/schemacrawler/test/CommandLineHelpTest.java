@@ -30,8 +30,8 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileDescriptor;
@@ -77,6 +77,17 @@ public class CommandLineHelpTest
     run(testContext, args, null);
   }
 
+  @BeforeEach
+  public void setUpStreams()
+    throws Exception
+  {
+    out = new TestOutputStream();
+    System.setOut(new PrintStream(out));
+
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
+  }
+
   private void run(final TestContext testContext,
                    final Map<String, String> argsMap,
                    final Map<String, String> config)
@@ -93,17 +104,6 @@ public class CommandLineHelpTest
                hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
                                                   + testContext.testMethodName()
                                                   + ".txt")));
-  }
-
-  @BeforeEach
-  public void setUpStreams()
-    throws Exception
-  {
-    out = new TestOutputStream();
-    System.setOut(new PrintStream(out));
-
-    err = new TestOutputStream();
-    System.setErr(new PrintStream(err));
   }
 
 }

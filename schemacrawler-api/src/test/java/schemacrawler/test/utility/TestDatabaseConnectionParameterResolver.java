@@ -46,16 +46,6 @@ public class TestDatabaseConnectionParameterResolver
 
   private final static TestDatabase testDatabase = TestDatabase.initialize();
 
-  private boolean isParameterConnection(final Parameter parameter)
-  {
-    return parameter.getType().equals(Connection.class);
-  }
-
-  private boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
-  {
-    return parameter.getType().equals(DatabaseConnectionInfo.class);
-  }
-
   @Override
   public Object resolveParameter(final ParameterContext parameterContext,
                                  final ExtensionContext extensionContext)
@@ -100,6 +90,16 @@ public class TestDatabaseConnectionParameterResolver
     hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
 
     return hasConnection || hasDatabaseConnectionInfo;
+  }
+
+  private boolean isParameterConnection(final Parameter parameter)
+  {
+    return parameter.getType().equals(Connection.class);
+  }
+
+  private boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
+  {
+    return parameter.getType().equals(DatabaseConnectionInfo.class);
   }
 
 }

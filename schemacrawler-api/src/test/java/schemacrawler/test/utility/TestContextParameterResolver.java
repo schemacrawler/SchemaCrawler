@@ -40,11 +40,6 @@ public class TestContextParameterResolver
   implements ParameterResolver
 {
 
-  private boolean isParameterTestContext(final Parameter parameter)
-  {
-    return parameter.getType().equals(TestContext.class);
-  }
-
   @Override
   public Object resolveParameter(final ParameterContext parameterContext,
                                  final ExtensionContext extensionContext)
@@ -69,6 +64,11 @@ public class TestContextParameterResolver
     final Parameter parameter = parameterContext.getParameter();
 
     return isParameterTestContext(parameter);
+  }
+
+  private boolean isParameterTestContext(final Parameter parameter)
+  {
+    return parameter.getType().equals(TestContext.class);
   }
 
 }

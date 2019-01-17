@@ -63,20 +63,6 @@ public class FileHasContent
     }
   }
 
-  public static InputResource outputOf(final TestOutputCapture testoutput)
-  {
-    requireNonNull(testoutput, "No test output cature provided");
-    final Path filePath = testoutput.getFilePath();
-    try
-    {
-      return FileInputResource.allowEmptyFileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e);
-    }
-  }
-
   public static Matcher<InputResource> hasNoContent()
   {
     return new FileHasContent(null, null);
@@ -107,6 +93,20 @@ public class FileHasContent
     return new FileHasContent(classpathInputResource, null);
   }
 
+  public static InputResource outputOf(final TestOutputCapture testoutput)
+  {
+    requireNonNull(testoutput, "No test output cature provided");
+    final Path filePath = testoutput.getFilePath();
+    try
+    {
+      return FileInputResource.allowEmptyFileInputResource(filePath);
+    }
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
+
   private final InputResource referenceFileResource;
   private final String outputFormatValue;
   private List<String> failures;
@@ -132,6 +132,36 @@ public class FileHasContent
   public void describeTo(final Description description)
   {
     description.appendValue(referenceFileResource);
+  }
+
+  @Override
+  public boolean matches(final Object actualValue)
+  {
+    try
+    {
+      // Clear failures from previous match
+      failures = null;
+
+      final String referenceFile = getReferenceFile();
+      final Path file = getFilePath(actualValue);
+
+      if (isBlank(referenceFile))
+      {
+        // Check if the file contents are empty
+        return !exists(file) || size(file) == 0;
+      }
+      else
+      {
+        // Check file contents
+        final String outputFormatValue = getNonNullOutputFormatValue();
+        failures = compareOutput(referenceFile, file, outputFormatValue, false);
+        return failures != null && failures.isEmpty();
+      }
+    }
+    catch (final Exception e)
+    {
+      throw new RuntimeException(e);
+    }
   }
 
   private Path getFilePath(final Object actualValue)
@@ -171,36 +201,6 @@ public class FileHasContent
         .getClasspathResource().substring(1);
     }
     return referenceFile;
-  }
-
-  @Override
-  public boolean matches(final Object actualValue)
-  {
-    try
-    {
-      // Clear failures from previous match
-      failures = null;
-
-      final String referenceFile = getReferenceFile();
-      final Path file = getFilePath(actualValue);
-
-      if (isBlank(referenceFile))
-      {
-        // Check if the file contents are empty
-        return !exists(file) || size(file) == 0;
-      }
-      else
-      {
-        // Check file contents
-        final String outputFormatValue = getNonNullOutputFormatValue();
-        failures = compareOutput(referenceFile, file, outputFormatValue, false);
-        return failures != null && failures.isEmpty();
-      }
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e);
-    }
   }
 
 }

@@ -58,54 +58,6 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class SchemaCrawlerReferenceTest
 {
 
-  private void assertReferencedColumnDoesNotExist(final Catalog catalog,
-                                                  final Column column,
-                                                  final boolean assertDataNotLoaded)
-  {
-    final Table table = column.getParent();
-    assertThat("Primary key table table should not be in the database - "
-               + table.getName(),
-               catalog.lookupTable(table.getSchema(), table.getName()),
-               emptyOptional());
-    assertThat("Column references do not match",
-               column == table.lookupColumn(column.getName()).get(),
-               is(true));
-
-    if (assertDataNotLoaded)
-    {
-      try
-      {
-        table.getTableType();
-        fail("An exception should be thrown indicating that this table was not loaded from the database");
-      }
-      catch (final NotLoadedException e)
-      {
-        // Expected exception
-      }
-      try
-      {
-        column.getColumnDataType();
-        fail("An exception should be thrown indicating that this table was not loaded from the database");
-      }
-      catch (final NotLoadedException e)
-      {
-        // Expected exception
-      }
-    }
-  }
-
-  private void assertReferencedColumnExists(final Catalog catalog,
-                                            final Column column)
-  {
-    assertThat(column, notNullValue());
-    final Table table = column.getParent();
-    assertThat("Table references do not match - " + table.getName(),
-               table == catalog.lookupTable(table.getSchema(), table.getName())
-                 .get());
-    assertThat("Column references do not match",
-               column == table.lookupColumn(column.getName()).get());
-  }
-
   @Test
   public void fkReferences(final Connection connection)
     throws Exception
@@ -274,6 +226,54 @@ public class SchemaCrawlerReferenceTest
     }
 
     assertThat(fkReferenceCount, is(1));
+  }
+
+  private void assertReferencedColumnDoesNotExist(final Catalog catalog,
+                                                  final Column column,
+                                                  final boolean assertDataNotLoaded)
+  {
+    final Table table = column.getParent();
+    assertThat("Primary key table table should not be in the database - "
+               + table.getName(),
+               catalog.lookupTable(table.getSchema(), table.getName()),
+               emptyOptional());
+    assertThat("Column references do not match",
+               column == table.lookupColumn(column.getName()).get(),
+               is(true));
+
+    if (assertDataNotLoaded)
+    {
+      try
+      {
+        table.getTableType();
+        fail("An exception should be thrown indicating that this table was not loaded from the database");
+      }
+      catch (final NotLoadedException e)
+      {
+        // Expected exception
+      }
+      try
+      {
+        column.getColumnDataType();
+        fail("An exception should be thrown indicating that this table was not loaded from the database");
+      }
+      catch (final NotLoadedException e)
+      {
+        // Expected exception
+      }
+    }
+  }
+
+  private void assertReferencedColumnExists(final Catalog catalog,
+                                            final Column column)
+  {
+    assertThat(column, notNullValue());
+    final Table table = column.getParent();
+    assertThat("Table references do not match - " + table.getName(),
+               table == catalog.lookupTable(table.getSchema(), table.getName())
+                 .get());
+    assertThat("Column references do not match",
+               column == table.lookupColumn(column.getName()).get());
   }
 
 }

@@ -40,8 +40,8 @@ import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.DatabaseTestUtility.getCatalog;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static sf.util.Utility.isBlank;
 
@@ -344,70 +344,6 @@ public class SchemaCrawlerTest
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext
                  .testMethodFullName())));
-  }
-
-  private String printColumnDataType(final ColumnDataType columnDataType)
-  {
-    final StringBuffer buffer = new StringBuffer();
-
-    final boolean isUserDefined = columnDataType.isUserDefined();
-    final String typeName = columnDataType.getFullName();
-    final String dataType = (isUserDefined? "user defined ": "")
-                            + "column data-type";
-    final String nullable = (columnDataType.isNullable()? "": "not ")
-                            + "nullable";
-    final String autoIncrementable = (columnDataType
-      .isAutoIncrementable()? "": "not ") + "auto-incrementable";
-
-    final String createParameters = columnDataType.getCreateParameters();
-    final String definedWith = "defined with "
-                               + (isBlank(createParameters)? "no parameters"
-                                                           : createParameters);
-
-    final String literalPrefix = columnDataType.getLiteralPrefix();
-    final String literalPrefixText = isBlank(literalPrefix)? "no literal prefix"
-                                                           : "literal prefix "
-                                                             + literalPrefix;
-
-    final String literalSuffix = columnDataType.getLiteralSuffix();
-    final String literalSuffixText = isBlank(literalSuffix)? "no literal suffix"
-                                                           : "literal suffix "
-                                                             + literalSuffix;
-
-    final String javaSqlType = "java.sql.Types: "
-                               + columnDataType.getJavaSqlType().getName();
-
-    final String precision = "precision " + columnDataType.getPrecision();
-    final String minimumScale = "minimum scale "
-                                + columnDataType.getMinimumScale();
-    final String maximumScale = "maximum scale "
-                                + columnDataType.getMaximumScale();
-
-    buffer.append(typeName).append("\n").append("  ").append(dataType)
-      .append("\n").append("  ").append(definedWith).append("\n").append("  ")
-      .append(nullable).append("\n").append("  ").append(autoIncrementable)
-      .append("\n").append("  ").append(literalPrefixText).append("\n")
-      .append("  ").append(literalSuffixText).append("\n").append("  ")
-      .append(columnDataType.getSearchable().toString()).append("\n")
-      .append("  ").append(precision).append("\n").append("  ")
-      .append(minimumScale).append("\n").append("  ").append(maximumScale)
-      .append("\n").append("  ").append(javaSqlType);
-    if (isUserDefined)
-    {
-      final String baseTypeName;
-      final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
-      if (baseColumnDataType == null)
-      {
-        baseTypeName = "";
-      }
-      else
-      {
-        baseTypeName = baseColumnDataType.getFullName();
-      }
-      buffer.append("\n").append("  ").append("based on ").append(baseTypeName);
-    }
-
-    return buffer.toString();
   }
 
   @Test
@@ -850,6 +786,70 @@ public class SchemaCrawlerTest
     assertThat("View definition not found",
                isBlank(view.getDefinition()),
                is(false));
+  }
+
+  private String printColumnDataType(final ColumnDataType columnDataType)
+  {
+    final StringBuffer buffer = new StringBuffer();
+
+    final boolean isUserDefined = columnDataType.isUserDefined();
+    final String typeName = columnDataType.getFullName();
+    final String dataType = (isUserDefined? "user defined ": "")
+                            + "column data-type";
+    final String nullable = (columnDataType.isNullable()? "": "not ")
+                            + "nullable";
+    final String autoIncrementable = (columnDataType
+      .isAutoIncrementable()? "": "not ") + "auto-incrementable";
+
+    final String createParameters = columnDataType.getCreateParameters();
+    final String definedWith = "defined with "
+                               + (isBlank(createParameters)? "no parameters"
+                                                           : createParameters);
+
+    final String literalPrefix = columnDataType.getLiteralPrefix();
+    final String literalPrefixText = isBlank(literalPrefix)? "no literal prefix"
+                                                           : "literal prefix "
+                                                             + literalPrefix;
+
+    final String literalSuffix = columnDataType.getLiteralSuffix();
+    final String literalSuffixText = isBlank(literalSuffix)? "no literal suffix"
+                                                           : "literal suffix "
+                                                             + literalSuffix;
+
+    final String javaSqlType = "java.sql.Types: "
+                               + columnDataType.getJavaSqlType().getName();
+
+    final String precision = "precision " + columnDataType.getPrecision();
+    final String minimumScale = "minimum scale "
+                                + columnDataType.getMinimumScale();
+    final String maximumScale = "maximum scale "
+                                + columnDataType.getMaximumScale();
+
+    buffer.append(typeName).append("\n").append("  ").append(dataType)
+      .append("\n").append("  ").append(definedWith).append("\n").append("  ")
+      .append(nullable).append("\n").append("  ").append(autoIncrementable)
+      .append("\n").append("  ").append(literalPrefixText).append("\n")
+      .append("  ").append(literalSuffixText).append("\n").append("  ")
+      .append(columnDataType.getSearchable().toString()).append("\n")
+      .append("  ").append(precision).append("\n").append("  ")
+      .append(minimumScale).append("\n").append("  ").append(maximumScale)
+      .append("\n").append("  ").append(javaSqlType);
+    if (isUserDefined)
+    {
+      final String baseTypeName;
+      final ColumnDataType baseColumnDataType = columnDataType.getBaseType();
+      if (baseColumnDataType == null)
+      {
+        baseTypeName = "";
+      }
+      else
+      {
+        baseTypeName = baseColumnDataType.getFullName();
+      }
+      buffer.append("\n").append("  ").append("based on ").append(baseTypeName);
+    }
+
+    return buffer.toString();
   }
 
 }

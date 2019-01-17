@@ -63,37 +63,6 @@ public class DatabaseScriptsTest
   @Autowired
   private ResourceLoader resourceLoader;
 
-  private String getScriptName(final String path)
-  {
-    final String scriptName;
-    final Matcher matcher = fileNamePattern.matcher(path);
-    if (matcher.matches())
-    {
-      scriptName = matcher.group(1);
-    }
-    else
-    {
-      scriptName = null;
-    }
-    return scriptName;
-  }
-
-  private List<String> loadResources(final String pattern)
-    throws IOException
-  {
-    final Resource[] resources = ResourcePatternUtils
-      .getResourcePatternResolver(resourceLoader).getResources(pattern);
-    final List<String> scripts = new ArrayList<>();
-    for (final Resource classpathResource: resources)
-    {
-      final String scriptName = getScriptName(classpathResource.getURL()
-        .getPath());
-      scripts.add(scriptName);
-    }
-    scripts.sort(naturalOrder());
-    return scripts;
-  }
-
   @BeforeEach
   public void setup()
     throws IOException
@@ -141,6 +110,37 @@ public class DatabaseScriptsTest
     {
       fail(failedScripts.stream().collect(Collectors.joining("\n")));
     }
+  }
+
+  private String getScriptName(final String path)
+  {
+    final String scriptName;
+    final Matcher matcher = fileNamePattern.matcher(path);
+    if (matcher.matches())
+    {
+      scriptName = matcher.group(1);
+    }
+    else
+    {
+      scriptName = null;
+    }
+    return scriptName;
+  }
+
+  private List<String> loadResources(final String pattern)
+    throws IOException
+  {
+    final Resource[] resources = ResourcePatternUtils
+      .getResourcePatternResolver(resourceLoader).getResources(pattern);
+    final List<String> scripts = new ArrayList<>();
+    for (final Resource classpathResource: resources)
+    {
+      final String scriptName = getScriptName(classpathResource.getURL()
+        .getPath());
+      scripts.add(scriptName);
+    }
+    scripts.sort(naturalOrder());
+    return scripts;
   }
 
 }

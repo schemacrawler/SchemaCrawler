@@ -66,46 +66,6 @@ public class SchemaCrawlerXmlOutputTest
 
   private static final String XML_OUTPUT = "xml_output/";
 
-  private void checkValidXmlOutput(final Connection connection,
-                                   final String command,
-                                   final List<String> failures)
-    throws IOException, Exception, SchemaCrawlerException
-  {
-    final String referenceFile = command + ".html";
-    final Path testOutputFile = IOUtility
-      .createTempFilePath(referenceFile, TextOutputFormat.html.getFormat());
-
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions(TextOutputFormat.html, testOutputFile);
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-
-    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
-      .readField(executable, "schemaCrawlerOptions", true);
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().fromOptions(schemaCrawlerOptions)
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
-      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-      .includeAllRoutines();
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
-
-    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
-      .builder();
-    textOptionsBuilder.sortTables().noSchemaCrawlerInfo(false)
-      .showDatabaseInfo().showJdbcDriverInfo();
-    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
-
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
-    executable.setOutputOptions(outputOptions);
-    executable.setConnection(connection);
-    executable.execute();
-
-    failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  TextOutputFormat.html.getFormat()));
-  }
-
   @Test
   public void validCountXMLOutput(final Connection connection)
     throws Exception
@@ -148,6 +108,46 @@ public class SchemaCrawlerXmlOutputTest
     {
       fail(failures.toString());
     }
+  }
+
+  private void checkValidXmlOutput(final Connection connection,
+                                   final String command,
+                                   final List<String> failures)
+    throws IOException, Exception, SchemaCrawlerException
+  {
+    final String referenceFile = command + ".html";
+    final Path testOutputFile = IOUtility
+      .createTempFilePath(referenceFile, TextOutputFormat.html.getFormat());
+
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(TextOutputFormat.html, testOutputFile);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+
+    final SchemaCrawlerOptions schemaCrawlerOptions = (SchemaCrawlerOptions) FieldUtils
+      .readField(executable, "schemaCrawlerOptions", true);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().fromOptions(schemaCrawlerOptions)
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.minimum())
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeAllRoutines();
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptionsBuilder.toOptions());
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
+    textOptionsBuilder.sortTables().noSchemaCrawlerInfo(false)
+      .showDatabaseInfo().showJdbcDriverInfo();
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+      .builder(textOptions).toConfig());
+    executable.setOutputOptions(outputOptions);
+    executable.setConnection(connection);
+    executable.execute();
+
+    failures.addAll(compareOutput(XML_OUTPUT + referenceFile,
+                                  testOutputFile,
+                                  TextOutputFormat.html.getFormat()));
   }
 
 }

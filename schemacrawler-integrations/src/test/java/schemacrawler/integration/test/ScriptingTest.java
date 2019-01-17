@@ -53,14 +53,6 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class ScriptingTest
 {
 
-  private Map<String, String> additionalArgsMap()
-  {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("schemas", "((?!FOR_LINT).)*");
-    argsMap.put("infolevel", "standard");
-    return argsMap;
-  }
-
   @Test
   public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -144,6 +136,14 @@ public class ScriptingTest
                                             executableOf("script"),
                                             "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
+  }
+
+  private Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("infolevel", "standard");
+    return argsMap;
   }
 
 }

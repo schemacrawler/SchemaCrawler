@@ -96,22 +96,6 @@ import sf.util.IOUtility;
 public final class TestUtility
 {
 
-  private static Path buildDirectory()
-    throws Exception
-  {
-    final StackTraceElement ste = currentMethodStackTraceElement();
-    final Class<?> callingClass = Class.forName(ste.getClassName());
-    final Path codePath = Paths.get(callingClass.getProtectionDomain()
-      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    final boolean isInTarget = codePath.toString().contains("target");
-    if (!isInTarget)
-    {
-      throw new RuntimeException("Not in build directory, " + codePath);
-    }
-    final Path directory = codePath.resolve("..");
-    return directory.normalize().toAbsolutePath();
-  }
-
   public static void clean(final String dirname)
     throws Exception
   {
@@ -222,6 +206,91 @@ public final class TestUtility
     return failures;
   }
 
+  public static Path copyResourceToTempFile(final String resource)
+    throws IOException
+  {
+    if (isBlank(resource))
+    {
+      throw new IOException("Cannot read empty resource");
+    }
+
+    try (final InputStream resourceStream = TestUtility.class
+      .getResourceAsStream(resource);)
+    {
+      requireNonNull(resourceStream, "Resource not found, " + resource);
+      return writeToTempFile(resourceStream);
+    }
+  }
+
+  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
+  {
+    final List<String> argsList = new ArrayList<>();
+    for (final Map.Entry<String, String> arg: argsMap.entrySet())
+    {
+      final String key = arg.getKey();
+      final String value = arg.getValue();
+      if (value != null)
+      {
+        argsList.add(String.format("-%s=%s", key, value));
+      }
+      else
+      {
+        argsList.add(String.format("-%s", key));
+      }
+    }
+    final String[] args = argsList.toArray(new String[0]);
+    return args;
+  }
+
+  public static Reader readerForResource(final String resource,
+                                         final Charset encoding)
+    throws IOException
+  {
+    return readerForResource(resource, encoding, false);
+  }
+
+  public static void validateDiagram(final Path diagramFile)
+    throws IOException
+  {
+    assertThat("Diagram file not created", exists(diagramFile), is(true));
+    assertThat("Diagram file has 0 bytes size",
+               size(diagramFile),
+               greaterThan(0L));
+  }
+
+  public static Path writeConfigToTempFile(final Config config)
+    throws IOException
+  {
+    requireNonNull(config, "No properties provided");
+    final Path tempFile = IOUtility.createTempFilePath("output", "data")
+      .normalize().toAbsolutePath();
+
+    final Writer tempFileWriter = newBufferedWriter(tempFile,
+                                                    WRITE,
+                                                    TRUNCATE_EXISTING,
+                                                    CREATE);
+    config.toProperties().store(tempFileWriter,
+                                "Store config to temporary file for testing");
+
+    return tempFile;
+  }
+
+  private static Path buildDirectory()
+    throws Exception
+  {
+    final StackTraceElement ste = currentMethodStackTraceElement();
+    final Class<?> callingClass = Class.forName(ste.getClassName());
+    final Path codePath = Paths.get(callingClass.getProtectionDomain()
+      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
+    final boolean isInTarget = codePath.toString().contains("target");
+    if (!isInTarget)
+    {
+      throw new RuntimeException("Not in build directory, " + codePath);
+    }
+    final Path directory = codePath.resolve("..");
+    return directory.normalize().toAbsolutePath();
+  }
+
   private static boolean contentEquals(final Reader expectedInputReader,
                                        final Reader actualInputReader,
                                        final List<String> failures,
@@ -277,22 +346,6 @@ public final class TestUtility
     }
   }
 
-  public static Path copyResourceToTempFile(final String resource)
-    throws IOException
-  {
-    if (isBlank(resource))
-    {
-      throw new IOException("Cannot read empty resource");
-    }
-
-    try (final InputStream resourceStream = TestUtility.class
-      .getResourceAsStream(resource);)
-    {
-      requireNonNull(resourceStream, "Resource not found, " + resource);
-      return writeToTempFile(resourceStream);
-    }
-  }
-
   private static StackTraceElement currentMethodStackTraceElement()
   {
     final Pattern baseTestClassName = Pattern.compile(".*\\.Base.*Test");
@@ -337,26 +390,6 @@ public final class TestUtility
     }
   }
 
-  public static String[] flattenCommandlineArgs(final Map<String, String> argsMap)
-  {
-    final List<String> argsList = new ArrayList<>();
-    for (final Map.Entry<String, String> arg: argsMap.entrySet())
-    {
-      final String key = arg.getKey();
-      final String value = arg.getValue();
-      if (value != null)
-      {
-        argsList.add(String.format("-%s=%s", key, value));
-      }
-      else
-      {
-        argsList.add(String.format("-%s", key));
-      }
-    }
-    final String[] args = argsList.toArray(new String[0]);
-    return args;
-  }
-
   private static Reader openNewCompressedInputReader(final InputStream inputStream,
                                                      final Charset charset)
     throws IOException
@@ -394,13 +427,6 @@ public final class TestUtility
     return bufferedReader;
   }
 
-  public static Reader readerForResource(final String resource,
-                                         final Charset encoding)
-    throws IOException
-  {
-    return readerForResource(resource, encoding, false);
-  }
-
   private static Reader readerForResource(final String resource,
                                           final Charset encoding,
                                           final boolean isCompressed)
@@ -434,15 +460,6 @@ public final class TestUtility
       reader = null;
     }
     return reader;
-  }
-
-  public static void validateDiagram(final Path diagramFile)
-    throws IOException
-  {
-    assertThat("Diagram file not created", exists(diagramFile), is(true));
-    assertThat("Diagram file has 0 bytes size",
-               size(diagramFile),
-               greaterThan(0L));
   }
 
   private static boolean validateJSON(final Path testOutputFile,
@@ -520,23 +537,6 @@ public final class TestUtility
       }
     });
     builder.parse(new InputSource(readerForFile(testOutputFile)));
-  }
-
-  public static Path writeConfigToTempFile(final Config config)
-    throws IOException
-  {
-    requireNonNull(config, "No properties provided");
-    final Path tempFile = IOUtility.createTempFilePath("output", "data")
-      .normalize().toAbsolutePath();
-
-    final Writer tempFileWriter = newBufferedWriter(tempFile,
-                                                    WRITE,
-                                                    TRUNCATE_EXISTING,
-                                                    CREATE);
-    config.toProperties().store(tempFileWriter,
-                                "Store config to temporary file for testing");
-
-    return tempFile;
   }
 
   private static Path writeToTempFile(final InputStream resourceStream)

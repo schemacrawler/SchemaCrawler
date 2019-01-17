@@ -47,9 +47,9 @@ public class LintSqlTest
     throws Exception
   {
     executableLint(connection,
-                          "/schemacrawler-linter-configs-sql.xml",
-                          null,
-                          "executableLintSQLReport");
+                   "/schemacrawler-linter-configs-sql.xml",
+                   null,
+                   "executableLintSQLReport");
   }
 
 }

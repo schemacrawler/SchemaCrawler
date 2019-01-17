@@ -45,13 +45,30 @@ import org.junit.platform.commons.util.ToStringBuilder;
 public final class TestContext
 {
 
+  private static Object nullSafeGet(final Optional<?> optional)
+  {
+    return optional != null? optional.orElse(null): null;
+  }
+
   private final Optional<Class<?>> optionalTestClass;
+
   private final Optional<Method> optionalTestMethod;
 
-  TestContext(ExtensionContext extensionContext)
+  TestContext(final ExtensionContext extensionContext)
   {
-    this.optionalTestClass = extensionContext.getTestClass();
-    this.optionalTestMethod = extensionContext.getTestMethod();
+    optionalTestClass = extensionContext.getTestClass();
+    optionalTestMethod = extensionContext.getTestMethod();
+  }
+
+  public Path resolveTargetFromRootPath(final String relativePath)
+    throws URISyntaxException, IOException
+  {
+    final Path projectRootPath = getProjectRootPath();
+    final Path directory = projectRootPath
+      .resolve(Paths.get("target", "_website")).resolve(relativePath)
+      .normalize().toAbsolutePath();
+    createDirectories(directory);
+    return directory;
   }
 
   public String testMethodFullName()
@@ -73,30 +90,14 @@ public final class TestContext
   public String toString()
   {
     return new ToStringBuilder(this)
-      .append("testClass", nullSafeGet(this.optionalTestClass))
-      .append("testMethod", nullSafeGet(this.optionalTestMethod)).toString();
-  }
-
-  private static Object nullSafeGet(Optional<?> optional)
-  {
-    return optional != null? optional.orElse(null): null;
-  }
-
-  public Path resolveTargetFromRootPath(final String relativePath)
-    throws URISyntaxException, IOException
-  {
-    final Path projectRootPath = getProjectRootPath();
-    final Path directory = projectRootPath
-      .resolve(Paths.get("target", "_website")).resolve(relativePath)
-      .normalize().toAbsolutePath();
-    createDirectories(directory);
-    return directory;
+      .append("testClass", nullSafeGet(optionalTestClass))
+      .append("testMethod", nullSafeGet(optionalTestMethod)).toString();
   }
 
   private Path getProjectRootPath()
     throws URISyntaxException, IOException
   {
-    final Class<?> testClass = this.optionalTestClass
+    final Class<?> testClass = optionalTestClass
       .orElseThrow(() -> new RuntimeException("Could not find test class"));
     final Path codePath = Paths.get(testClass.getProtectionDomain()
       .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();

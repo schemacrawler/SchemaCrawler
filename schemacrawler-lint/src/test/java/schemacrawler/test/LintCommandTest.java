@@ -78,9 +78,9 @@ public class LintCommandTest
     throws Exception
   {
     executableLint(connection,
-                          "/schemacrawler-linter-configs-test.xml",
-                          null,
-                          "executableForLintWithConfig");
+                   "/schemacrawler-linter-configs-test.xml",
+                   null,
+                   "executableForLintWithConfig");
   }
 
 }

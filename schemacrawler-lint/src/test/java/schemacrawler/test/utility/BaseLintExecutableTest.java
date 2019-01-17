@@ -57,6 +57,31 @@ import schemacrawler.tools.options.OutputFormat;
 public abstract class BaseLintExecutableTest
 {
 
+  protected void executableLint(final Connection connection,
+                                final String linterConfigsResource,
+                                final Config additionalConfig,
+                                final String referenceFileName)
+    throws Exception
+  {
+    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+    if (!isBlank(linterConfigsResource))
+    {
+      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
+      final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
+      optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
+
+      final Config config = optionsBuilder.toConfig();
+      if (additionalConfig != null)
+      {
+        config.putAll(additionalConfig);
+      }
+      lintExecutable.setAdditionalConfiguration(config);
+    }
+
+    assertThat(outputOf(executableExecution(connection, lintExecutable)),
+               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
+  }
+
   protected void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
                                         final OutputFormat outputFormat,
                                         final String linterConfigsResource,
@@ -95,31 +120,6 @@ public abstract class BaseLintExecutableTest
                hasSameContentAndTypeAs(classpathResource(referenceFileName
                                                          + ".txt"),
                                        outputFormat.getFormat()));
-  }
-
-  protected void executableLint(final Connection connection,
-                                final String linterConfigsResource,
-                                final Config additionalConfig,
-                                final String referenceFileName)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
-    if (!isBlank(linterConfigsResource))
-    {
-      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
-      final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
-      optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
-
-      final Config config = optionsBuilder.toConfig();
-      if (additionalConfig != null)
-      {
-        config.putAll(additionalConfig);
-      }
-      lintExecutable.setAdditionalConfiguration(config);
-    }
-
-    assertThat(outputOf(executableExecution(connection, lintExecutable)),
-               hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
 }
