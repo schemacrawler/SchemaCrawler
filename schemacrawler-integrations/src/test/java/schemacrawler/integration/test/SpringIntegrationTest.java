@@ -60,8 +60,8 @@ public class SpringIntegrationTest
       .getBean(beanDefinitionName, SchemaCrawlerExecutable.class);
 
     assertThat(outputOf(executableExecution(connection,
-                                                executable,
-                                                TextOutputFormat.text)),
+                                            executable,
+                                            TextOutputFormat.text)),
                hasSameContentAs(classpathResource(beanDefinitionName
                                                   + ".txt")));
   }

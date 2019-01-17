@@ -38,29 +38,47 @@ import java.util.Map;
 import schemacrawler.Main;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestWriter;
+import schemacrawler.tools.options.OutputFormat;
 
 public final class IntegrationTestUtility
 {
 
-  public static Path commandLineExecution(final DatabaseConnectionInfo connectionInfo,
+  public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
                                           final String command,
+                                          final Map<String, String> argsMap,
+                                          final OutputFormat outputFormat)
+    throws Exception
+  {
+    return commandlineExecution(connectionInfo,
+                                command,
+                                argsMap,
+                                outputFormat.getFormat());
+  }
+
+  public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
+                                          final String command,
+                                          final Map<String, String> argsMap,
                                           final String outputFormatValue)
     throws Exception
   {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
-      final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("url", connectionInfo.getConnectionUrl());
-      argsMap.put("user", "sa");
-      argsMap.put("password", "");
-      argsMap.put("infolevel", "standard");
-      argsMap.put("command", command);
-      argsMap.put("schemas", "((?!FOR_LINT).)*");
-      argsMap.put("outputformat", outputFormatValue);
-      argsMap.put("outputfile", out.toString());
+      final Map<String, String> commandlineArgsMap = new HashMap<>();
+      commandlineArgsMap.put("url", connectionInfo.getConnectionUrl());
+      commandlineArgsMap.put("user", "sa");
+      commandlineArgsMap.put("password", "");
+      commandlineArgsMap.put("command", command);
+      commandlineArgsMap.put("outputformat", outputFormatValue);
+      commandlineArgsMap.put("outputfile", out.toString());
 
-      Main.main(flattenCommandlineArgs(argsMap));
+      // Override and add to command-line arguments
+      if (argsMap != null)
+      {
+        commandlineArgsMap.putAll(argsMap);
+      }
+
+      Main.main(flattenCommandlineArgs(commandlineArgsMap));
     }
     return testout.getFilePath();
   }

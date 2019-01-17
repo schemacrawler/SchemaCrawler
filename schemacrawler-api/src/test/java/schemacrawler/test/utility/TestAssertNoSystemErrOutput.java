@@ -28,22 +28,41 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static sf.util.Utility.applyApplicationLogLevel;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.is;
 
-import java.util.logging.Level;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
-import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.AfterEachCallback;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class TestLoggingExtension
-  implements BeforeAllCallback
+public class TestAssertNoSystemErrOutput
+  implements BeforeEachCallback, AfterEachCallback
 {
 
+  private TestOutputStream err;
+
   @Override
-  public void beforeAll(final ExtensionContext context)
+  public void afterEach(ExtensionContext context)
     throws Exception
   {
-    applyApplicationLogLevel(Level.OFF);
+    System.setErr(new PrintStream(new FileOutputStream(FileDescriptor.err)));
+
+    assertThat("Expected no System.err output",
+               err.getFileContents(),
+               is(emptyString()));
+  }
+
+  @Override
+  public void beforeEach(ExtensionContext context)
+    throws Exception
+  {
+    err = new TestOutputStream();
+    System.setErr(new PrintStream(err));
   }
 
 }

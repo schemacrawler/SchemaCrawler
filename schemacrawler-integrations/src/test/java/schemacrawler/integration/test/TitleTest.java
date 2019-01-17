@@ -33,8 +33,8 @@ import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -50,6 +50,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
@@ -57,6 +58,7 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
+@ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TitleTest
 {

@@ -420,8 +420,8 @@ public class GraphRendererOptionsTest
     // Check DOT file
     final String referenceFileName = testMethodName;
     assertThat(outputOf(executableExecution(connection,
-                                                executable,
-                                                GraphOutputFormat.scdot)),
+                                            executable,
+                                            GraphOutputFormat.scdot)),
                hasSameContentAndTypeAs(classpathResource(GRAPH_OPTIONS_OUTPUT
                                                          + referenceFileName
                                                          + ".dot"),

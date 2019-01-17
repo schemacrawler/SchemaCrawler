@@ -33,9 +33,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static sf.util.Utility.isBlank;
@@ -45,12 +45,15 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
 
+@ExtendWith(TestAssertNoSystemErrOutput.class)
 public abstract class BaseLintExecutableTest
 {
 

@@ -30,7 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.integration.test.utility.IntegrationTestUtility.commandLineExecution;
+import static schemacrawler.integration.test.utility.IntegrationTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
@@ -38,24 +38,37 @@ import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
+@ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TemplatingIntegrationTest
 {
+
+  private Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("infolevel", "standard");
+    return argsMap;
+  }
 
   @Test
   public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandLineExecution(connectionInfo,
-                                                 "freemarker",
-                                                 "/plaintextschema.ftl")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "freemarker",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
@@ -63,9 +76,10 @@ public class TemplatingIntegrationTest
   public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandLineExecution(connectionInfo,
-                                                 "thymeleaf",
-                                                 "/plaintextschema.thymeleaf")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "thymeleaf",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
@@ -73,9 +87,10 @@ public class TemplatingIntegrationTest
   public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandLineExecution(connectionInfo,
-                                                 "velocity",
-                                                 "/plaintextschema.vm")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "velocity",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
@@ -84,8 +99,8 @@ public class TemplatingIntegrationTest
     throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
-                                                executableOf("freemarker"),
-                                                "/plaintextschema.ftl")),
+                                            executableOf("freemarker"),
+                                            "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
@@ -94,8 +109,8 @@ public class TemplatingIntegrationTest
     throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
-                                                executableOf("thymeleaf"),
-                                                "/plaintextschema.thymeleaf")),
+                                            executableOf("thymeleaf"),
+                                            "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
@@ -104,8 +119,8 @@ public class TemplatingIntegrationTest
     throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
-                                                executableOf("velocity"),
-                                                "/plaintextschema.vm")),
+                                            executableOf("velocity"),
+                                            "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 

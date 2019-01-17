@@ -51,60 +51,40 @@ public final class ExecutableTestUtility
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable)
+    throws Exception
   {
-    try
-    {
-      return executableExecution(connection,
-                                 executable,
-                                 TextOutputFormat.text.getFormat());
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    return executableExecution(connection,
+                               executable,
+                               TextOutputFormat.text.getFormat());
   }
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
                                          final OutputFormat outputFormat)
+    throws Exception
   {
-    try
-    {
-      return executableExecution(connection,
-                                 executable,
-                                 outputFormat.getFormat());
-    }
-
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    return executableExecution(connection,
+                               executable,
+                               outputFormat.getFormat());
   }
 
   public static Path executableExecution(final Connection connection,
                                          final SchemaCrawlerExecutable executable,
                                          final String outputFormatValue)
+    throws Exception
   {
-    try
+    final TestWriter testout = new TestWriter();
+    try (final TestWriter out = testout;)
     {
-      final TestWriter testout = new TestWriter();
-      try (final TestWriter out = testout;)
-      {
-        final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-          .builder().withOutputFormatValue(outputFormatValue)
-          .withOutputWriter(out);
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+        .builder().withOutputFormatValue(outputFormatValue)
+        .withOutputWriter(out);
 
-        executable.setOutputOptions(outputOptionsBuilder.toOptions());
-        executable.setConnection(connection);
-        executable.execute();
-      }
-      return testout.getFilePath();
+      executable.setOutputOptions(outputOptionsBuilder.toOptions());
+      executable.setConnection(connection);
+      executable.execute();
     }
-
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    return testout.getFilePath();
   }
 
   public static SchemaCrawlerExecutable executableOf(final String command)
