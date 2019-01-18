@@ -25,7 +25,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean package jacoco:report coveralls:report
+  - mvn -Dcomplete clean package jacoco:report-aggregate coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
