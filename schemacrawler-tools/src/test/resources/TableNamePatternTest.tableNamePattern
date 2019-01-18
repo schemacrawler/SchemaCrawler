@@ -1,0 +1,8 @@
+schema: PUBLIC.BOOKS
+  table: PUBLIC.BOOKS."Global Counts"
+schema: PUBLIC.FOR_LINT
+  table: PUBLIC.FOR_LINT."Global Counts"
+schema: PUBLIC.INFORMATION_SCHEMA
+schema: PUBLIC.PUBLIC
+schema: PUBLIC."PUBLISHER SALES"
+schema: PUBLIC.SYSTEM_LOBS
