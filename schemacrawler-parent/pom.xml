@@ -119,25 +119,32 @@
                 </goals>
               </execution>
               <execution>
+                <id>report</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>report</goal>
+                </goals>
+                <configuration>
+                  <excludes>
+                    <exclude>**/JSON*.*</exclude>
+                    <exclude>**/*Test.*</exclude>
+                    <exclude>**/Test*.*</exclude>
+                  </excludes>
+                </configuration>
+              </execution>
+              <execution>
                 <id>report-aggregate</id>
                 <phase>prepare-package</phase>
                 <goals>
                   <goal>report-aggregate</goal>
                 </goals>
                 <configuration>
-                  <title>SchemaCrawler</title>
-                  <footer>Code Coverage Report for SchemaCrawler
-                    ${project.version}</footer>
+                  <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
                   <includes>
                     <!-- Analyze class files only to exclude shaded agent JAR from 
                       report -->
                     <include>**/*.class</include>
                   </includes>
-                  <excludes>
-                    <exclude>**/JSON*.*</exclude>
-                    <exclude>**/*Test.*</exclude>
-                    <exclude>**/Test*.*</exclude>
-                  </excludes>
                 </configuration>
               </execution>
             </executions>
