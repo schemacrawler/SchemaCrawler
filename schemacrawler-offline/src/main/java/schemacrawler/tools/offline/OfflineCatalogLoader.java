@@ -1,7 +1,6 @@
 package schemacrawler.tools.offline;
 
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.sql.Connection;
@@ -16,8 +15,6 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
 public final class OfflineCatalogLoader
@@ -83,12 +80,8 @@ public final class OfflineCatalogLoader
 
     final Path offlineDatabasePath = ((OfflineConnection) connection)
       .getOfflineDatabasePath();
-    final OutputOptions inputOptions = OutputOptionsBuilder.builder()
-      .fromConfig(additionalConfiguration)
-      .withCompressedInputFile(offlineDatabasePath).toOptions();
-
-    final File inputFile = inputOptions.getInputFile().toFile();
-    final FileInputStream inputFileStream = new FileInputStream(inputFile);
+    final FileInputStream inputFileStream = new FileInputStream(offlineDatabasePath
+      .toFile());
     final XmlSerializedCatalog catalog = new XmlSerializedCatalog(inputFileStream);
     return catalog;
   }

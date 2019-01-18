@@ -34,6 +34,9 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import javax.script.Compilable;
@@ -46,6 +49,10 @@ import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.InputResource;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 
@@ -84,8 +91,14 @@ public final class ScriptCommand
   {
     checkCatalog();
 
+    final Charset inputCharset = outputOptions.getInputCharset();
+    // The output format value is the script file or resource name
+    final String outputFormatValue = outputOptions.getOutputFormatValue();
+
     final ScriptEngine scriptEngine = getScriptEngine();
-    try (final Reader reader = outputOptions.openNewInputReader();
+    try (
+        final Reader reader = createInputResource(outputFormatValue)
+          .openNewInputReader(inputCharset);
         final Writer writer = outputOptions.openNewOutputWriter();)
     {
       final CommandChain chain = new CommandChain(this);
@@ -109,6 +122,36 @@ public final class ScriptCommand
       }
     }
 
+  }
+
+  private InputResource createInputResource(final String inputResourceName)
+  {
+    InputResource inputResource = null;
+    try
+    {
+      final Path filePath = Paths.get(inputResourceName);
+      inputResource = new FileInputResource(filePath);
+    }
+    catch (final Exception e)
+    {
+      // No-op
+    }
+    try
+    {
+      if (inputResource == null)
+      {
+        inputResource = new ClasspathInputResource(inputResourceName);
+      }
+    }
+    catch (final Exception e)
+    {
+      // No-op
+    }
+    if (inputResource == null)
+    {
+      inputResource = new EmptyInputResource();
+    }
+    return inputResource;
   }
 
   @Override

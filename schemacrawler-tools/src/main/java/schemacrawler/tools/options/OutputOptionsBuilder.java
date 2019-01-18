@@ -15,14 +15,9 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.CompressedFileInputResource;
 import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
 import schemacrawler.tools.iosource.WriterOutputResource;
 
@@ -84,7 +79,6 @@ public final class OutputOptionsBuilder
   }
 
   private OutputResource outputResource;
-  private InputResource inputResource;
   private String outputFormatValue;
   private Charset inputEncodingCharset;
   private Charset outputEncodingCharset;
@@ -129,7 +123,6 @@ public final class OutputOptionsBuilder
     this.withInputEncoding(options.getInputCharset())
       .withOutputEncoding(options.getOutputCharset())
       .withOutputFormatValue(options.getOutputFormatValue());
-    inputResource = options.getInputResource();
     outputResource = options.getOutputResource();
 
     return this;
@@ -147,11 +140,6 @@ public final class OutputOptionsBuilder
   @Override
   public OutputOptions toOptions()
   {
-    // Set any values that have not been explicitly set to defaults
-    if (inputResource == null)
-    {
-      withInputResource(createInputResource(outputFormatValue));
-    }
     withInputEncoding(inputEncodingCharset);
     withOutputResource(outputResource);
     withOutputEncoding(inputEncodingCharset);
@@ -176,31 +164,10 @@ public final class OutputOptionsBuilder
         .getFormat(): fileExtension;
     }
 
-    return new OutputOptions(inputResource,
-                             inputEncodingCharset,
+    return new OutputOptions(inputEncodingCharset,
                              outputResource,
                              outputEncodingCharset,
                              outputFormatValue);
-  }
-
-  /**
-   * Sets the name of the input file for compressed input. It is
-   * important to note that the input encoding should be available at
-   * this point.
-   *
-   * @param inputFile
-   *        Path to compressed file.
-   * @throws IOException
-   *         When file cannot be read
-   * @return Builder
-   */
-  public OutputOptionsBuilder withCompressedInputFile(final Path inputFile)
-    throws IOException
-  {
-    requireNonNull(inputFile, "No input file provided");
-    inputResource = new CompressedFileInputResource(inputFile,
-                                                    SCHEMACRAWLER_DATA);
-    return this;
   }
 
   /**
@@ -259,54 +226,6 @@ public final class OutputOptionsBuilder
     {
       inputEncodingCharset = UTF_8;
     }
-    return this;
-  }
-
-  /**
-   * Sets the name of the input file. It is important to note that the
-   * input encoding should be available at this point.
-   *
-   * @param inputFile
-   *        Input path.
-   * @throws IOException
-   *         When file cannot be read
-   * @return Builder
-   */
-  public OutputOptionsBuilder withInputFile(final Path inputFile)
-    throws IOException
-  {
-    requireNonNull(inputFile, "No input file provided");
-    inputResource = new FileInputResource(inputFile);
-    return this;
-  }
-
-  public OutputOptionsBuilder withInputResource(final InputResource inputResource)
-  {
-    if (inputResource == null)
-    {
-      this.inputResource = new EmptyInputResource();
-    }
-    else
-    {
-      this.inputResource = inputResource;
-    }
-    return this;
-  }
-
-  /**
-   * Sets the name of the input resource, first from a file, failing
-   * which from the classpath. It is important to note that the input
-   * encoding should be available at this point.
-   *
-   * @param inputResourceName
-   *        Input resource name, which could be a file path, or a
-   *        classpath resource.
-   * @return Builder
-   */
-  public OutputOptionsBuilder withInputResourceName(final String inputResourceName)
-  {
-    requireNonNull(inputResourceName, "No input resource name provided");
-    inputResource = createInputResource(inputResourceName);
     return this;
   }
 
@@ -395,11 +314,6 @@ public final class OutputOptionsBuilder
       {
         this.outputResource = new ConsoleOutputResource();
       }
-      else if (!(inputResource instanceof EmptyInputResource))
-      {
-        // Tacky hack for script
-        this.outputResource = new ConsoleOutputResource();
-      }
       else
       {
         final String extension;
@@ -433,36 +347,6 @@ public final class OutputOptionsBuilder
     requireNonNull(writer, "No output writer provided");
     outputResource = new WriterOutputResource(writer);
     return this;
-  }
-
-  private InputResource createInputResource(final String inputResourceName)
-  {
-    InputResource inputResource = null;
-    try
-    {
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    try
-    {
-      if (inputResource == null)
-      {
-        inputResource = new ClasspathInputResource(inputResourceName);
-      }
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    if (inputResource == null)
-    {
-      inputResource = new EmptyInputResource();
-    }
-    return inputResource;
   }
 
 }

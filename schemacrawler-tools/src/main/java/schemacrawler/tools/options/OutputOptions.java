@@ -32,20 +32,14 @@ package schemacrawler.tools.options;
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
-import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.iosource.CompressedFileInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.iosource.OutputResource;
 import sf.util.ObjectToString;
 
@@ -59,19 +53,15 @@ public final class OutputOptions
 {
 
   private final OutputResource outputResource;
-  private final InputResource inputResource;
   private final String outputFormatValue;
   private final Charset inputEncodingCharset;
   private final Charset outputEncodingCharset;
 
-  OutputOptions(final InputResource inputResource,
-                final Charset inputEncodingCharset,
+  OutputOptions(final Charset inputEncodingCharset,
                 final OutputResource outputResource,
                 final Charset outputEncodingCharset,
                 final String outputFormatValue)
   {
-    this.inputResource = requireNonNull(inputResource,
-                                        "No input resource provided");
     this.inputEncodingCharset = requireNonNull(inputEncodingCharset,
                                                "No input encoding provided");
     this.outputResource = requireNonNull(outputResource,
@@ -88,29 +78,6 @@ public final class OutputOptions
   public Charset getInputCharset()
   {
     return inputEncodingCharset;
-  }
-
-  public Path getInputFile()
-  {
-    final Path inputFile;
-    if (inputResource instanceof FileInputResource)
-    {
-      inputFile = ((FileInputResource) inputResource).getInputFile();
-    }
-    else if (inputResource instanceof CompressedFileInputResource)
-    {
-      inputFile = ((CompressedFileInputResource) inputResource).getInputFile();
-    }
-    else
-    {
-      // Create input file path
-      inputFile = Paths.get(".",
-                            String.format("schemacrawler-%s.%s",
-                                          UUID.randomUUID(),
-                                          outputFormatValue))
-        .normalize().toAbsolutePath();
-    }
-    return inputFile;
   }
 
   /**
@@ -146,20 +113,6 @@ public final class OutputOptions
   }
 
   /**
-   * Gets the input reader. If the input resource is null, first set it
-   * to a value based off the output format value.
-   *
-   * @return Input reader
-   * @throws IOException
-   *         On an exception
-   */
-  public Reader openNewInputReader()
-    throws IOException
-  {
-    return inputResource.openNewInputReader(inputEncodingCharset);
-  }
-
-  /**
    * Gets the output reader. If the output resource is null, first set
    * it to console output.
    *
@@ -189,11 +142,6 @@ public final class OutputOptions
   public String toString()
   {
     return ObjectToString.toString(this);
-  }
-
-  InputResource getInputResource()
-  {
-    return inputResource;
   }
 
   OutputResource getOutputResource()

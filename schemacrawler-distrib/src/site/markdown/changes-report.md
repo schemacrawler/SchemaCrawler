@@ -6,6 +6,7 @@
 
 - Add server information for MySQL
 - Convert tests to JUnit 5
+- Remove input resource from output options, and let each command fend for itself
 
 
 <a name="a15.03.04"></a>

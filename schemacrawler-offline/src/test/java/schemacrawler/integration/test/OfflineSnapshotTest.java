@@ -36,9 +36,9 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -182,13 +182,12 @@ public class OfflineSnapshotTest
       .builder();
     schemaTextOptionsBuilder.noInfo(false);
 
-    final OutputOptions inputOptions = OutputOptionsBuilder.builder()
-      .withCompressedInputFile(serializedCatalogFile).toOptions();
+    final Connection connection = new OfflineConnection(serializedCatalogFile);
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setOutputOptions(inputOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+    executable.setConnection(connection);
 
     executeExecutable(executable, OFFLINE_EXECUTABLE_OUTPUT + "details.txt");
   }
