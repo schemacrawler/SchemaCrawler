@@ -77,11 +77,6 @@ public class FileHasContent
     {
       throw new RuntimeException("No classpath resource to match with");
     }
-    if (!(classpathInputResource instanceof ClasspathInputResource))
-    {
-      System.err.printf("No classpath resource <%s> to match with",
-                        classpathInputResource);
-    }
     if (validateOutputFormat && isBlank(outputFormatValue))
     {
       throw new RuntimeException("No output format provided");
