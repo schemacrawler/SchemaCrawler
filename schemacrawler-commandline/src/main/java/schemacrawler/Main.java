@@ -39,11 +39,11 @@ import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.commandline.ApplicationOptions;
 import schemacrawler.tools.commandline.ApplicationOptionsParser;
 import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
-import schemacrawler.tools.options.ApplicationOptions;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**

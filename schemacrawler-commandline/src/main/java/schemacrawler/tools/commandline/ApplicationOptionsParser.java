@@ -35,7 +35,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
-import schemacrawler.tools.options.ApplicationOptions;
 
 /**
  * Parses the command-line.

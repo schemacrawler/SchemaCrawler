@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.options;
+package schemacrawler.tools.commandline;
 
 
 import static sf.util.Utility.isBlank;
