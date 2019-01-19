@@ -206,7 +206,7 @@ public class FileHasContent
     }
     else
     {
-      referenceFile = referenceFileResource.getDescription().substring(1);
+      referenceFile = referenceFileResource.toString().substring(1);
     }
     return referenceFile;
   }
