@@ -30,19 +30,19 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
 
-import java.nio.file.Path;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,14 +56,12 @@ import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintOutputTest
@@ -93,26 +91,17 @@ public class LintOutputTest
                                                        + SchemaTextDetailType.brief
                                                        + "," + "lint", };
 
-    final List<String> failures = new ArrayList<>();
-    for (final OutputFormat outputFormat: EnumSet
-      .complementOf(EnumSet.of(TextOutputFormat.tsv)))
-    {
-      for (final String command: commands)
-      {
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    assertAll(outputFormats()
+      .flatMap(outputFormat -> Arrays.stream(commands).map(command -> () -> {
+
         final String referenceFile = command + "." + outputFormat.getFormat();
-
-        final Path testOutputFile = IOUtility
-          .createTempFilePath(referenceFile, outputFormat.getFormat());
-
-        final OutputOptions outputOptions = OutputOptionsBuilder
-          .newOutputOptions(outputFormat, testOutputFile);
-
-        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-          .builder()
-          .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"))
-          .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
-        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-          .toOptions();
 
         final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
           .builder();
@@ -121,20 +110,16 @@ public class LintOutputTest
 
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-        executable.setOutputOptions(outputOptions);
         executable.setAdditionalConfiguration(queriesConfig);
-        executable.setConnection(connection);
-        executable.execute();
 
-        failures.addAll(compareOutput(COMPOSITE_OUTPUT + referenceFile,
-                                      testOutputFile,
-                                      outputFormat.getFormat()));
-      }
-    }
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+        assertThat(outputOf(executableExecution(connection,
+                                                executable,
+                                                outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(COMPOSITE_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
+
+      })));
   }
 
   @Test
@@ -197,6 +182,14 @@ public class LintOutputTest
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(TEXT_OUTPUT + "lint.txt")));
+  }
+
+  private Stream<TextOutputFormat> outputFormats()
+  {
+    return Arrays.stream(new TextOutputFormat[] {
+                                                  TextOutputFormat.text,
+                                                  TextOutputFormat.html,
+                                                  TextOutputFormat.json });
   }
 
 }
