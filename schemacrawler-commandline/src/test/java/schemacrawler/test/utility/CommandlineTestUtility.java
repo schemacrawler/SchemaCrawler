@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test.utility;
+package schemacrawler.test.utility;
 
 
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
@@ -40,7 +40,7 @@ import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.OutputFormat;
 
-public final class IntegrationTestUtility
+public final class CommandlineTestUtility
 {
 
   public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
@@ -83,7 +83,7 @@ public final class IntegrationTestUtility
     return testout.getFilePath();
   }
 
-  private IntegrationTestUtility()
+  private CommandlineTestUtility()
   {
     // Prevent instantiation
   }
