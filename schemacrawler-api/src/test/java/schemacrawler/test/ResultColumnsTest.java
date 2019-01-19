@@ -91,6 +91,11 @@ public class ResultColumnsTest
         assertThat("Could not obtain result columns",
                    resultColumns,
                    notNullValue());
+
+        out.println("full-name: " + resultColumns.getFullName());
+        out.println("columns: " + resultColumns.getColumnsListAsString());
+        out.println();
+
         final ResultsColumn[] columns = resultColumns.getColumns()
           .toArray(new ResultsColumn[0]);
         for (final ResultsColumn column: columns)
@@ -102,7 +107,17 @@ public class ResultColumnsTest
           out.println("  type: "
                       + column.getColumnDataType().getJavaSqlType().getName());
         }
+
+        out.println();
+        out.println();
+        out.println("lookup C2: "
+                    + resultColumns.lookupColumn("C2").orElse(null));
+        out.println("lookup PRICE: "
+                    + resultColumns.lookupColumn("PRICE").orElse(null));
+        out.println("lookup NOT_A_COLUMN: "
+                    + resultColumns.lookupColumn("NOT_A_COLUMN").orElse(null));
       }
+
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(testContext

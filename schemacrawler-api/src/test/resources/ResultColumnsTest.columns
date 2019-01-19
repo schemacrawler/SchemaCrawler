@@ -1,3 +1,6 @@
+full-name: 
+columns: PUBLIC.BOOKS.BOOKS.TITLE, C2, PUBLIC.BOOKS.BOOKS.PRICE
+
 column: PUBLIC.BOOKS.BOOKS.TITLE
   database type: VARCHAR
   type: VARCHAR
@@ -7,3 +10,8 @@ column: C2
 column: PUBLIC.BOOKS.BOOKS.PRICE
   database type: DOUBLE
   type: DOUBLE
+
+
+lookup C2: C2
+lookup PRICE: PUBLIC.BOOKS.BOOKS.PRICE
+lookup NOT_A_COLUMN: null
