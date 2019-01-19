@@ -56,7 +56,7 @@ import schemacrawler.test.utility.TestUtility;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
+import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
@@ -79,45 +79,44 @@ public class SpinThroughOperationsExecutableTest
     throws Exception
   {
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
-      .flatMap(outputFormat -> schemaTextDetailTypes()
-        .map(schemaTextDetailType -> () -> {
+      .flatMap(outputFormat -> operations().map(operation -> () -> {
 
-          final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
+        final String referenceFile = referenceFile(operation,
+                                                   infoLevel,
+                                                   outputFormat);
 
-          final Config config = loadHsqldbConfig();
+        final Config config = loadHsqldbConfig();
 
-          final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-            .builder();
-          schemaRetrievalOptionsBuilder.fromConfig(config);
+        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+          .builder();
+        schemaRetrievalOptionsBuilder.fromConfig(config);
 
-          final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-            .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-            .includeAllSequences().includeAllSynonyms().includeAllRoutines();
-          final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-            .toOptions();
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+          .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
+          .includeAllSequences().includeAllSynonyms().includeAllRoutines();
+        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+          .toOptions();
 
-          final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-            .builder();
-          schemaTextOptionsBuilder.noInfo(false);
+        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+          .builder();
+        schemaTextOptionsBuilder.noInfo(false);
 
-          final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-            .name());
-          executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-          executable
-            .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-          executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder
-            .toOptions());
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(operation
+          .name());
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable
+          .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
+        executable
+          .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
 
-          assertThat(outputOf(executableExecution(connection,
-                                                  executable,
-                                                  outputFormat)),
-                     hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OPERATIONS_OUTPUT
-                                                               + referenceFile),
-                                             outputFormat));
+        assertThat(outputOf(executableExecution(connection,
+                                                executable,
+                                                outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OPERATIONS_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
 
-        }))));
+      }))));
   }
 
   private Stream<InfoLevel> infoLevels()
@@ -134,22 +133,22 @@ public class SpinThroughOperationsExecutableTest
                                                   TextOutputFormat.json });
   }
 
-  private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
+  private String referenceFile(final Operation operation,
                                final InfoLevel infoLevel,
                                final OutputFormat outputFormat)
   {
     final String referenceFile = String.format("%d%d.%s_%s.%s",
-                                               schemaTextDetailType.ordinal(),
+                                               operation.ordinal(),
                                                infoLevel.ordinal(),
-                                               schemaTextDetailType,
+                                               operation,
                                                infoLevel,
                                                outputFormat.getFormat());
     return referenceFile;
   }
 
-  private Stream<SchemaTextDetailType> schemaTextDetailTypes()
+  private Stream<Operation> operations()
   {
-    return Arrays.stream(SchemaTextDetailType.values());
+    return Arrays.stream(Operation.values());
   }
 
 }

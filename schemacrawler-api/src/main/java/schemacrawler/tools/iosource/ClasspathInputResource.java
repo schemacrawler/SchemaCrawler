@@ -70,6 +70,12 @@ public class ClasspathInputResource
   }
 
   @Override
+  public String getDescription()
+  {
+    return InputReader.class.getResource(classpathResource).toExternalForm();
+  }
+
+  @Override
   public Reader openNewInputReader(final Charset charset)
     throws IOException
   {
@@ -88,7 +94,7 @@ public class ClasspathInputResource
   @Override
   public String toString()
   {
-    return InputReader.class.getResource(classpathResource).toExternalForm();
+    return classpathResource;
   }
 
 }

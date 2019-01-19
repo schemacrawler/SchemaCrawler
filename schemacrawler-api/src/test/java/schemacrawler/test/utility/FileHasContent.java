@@ -43,6 +43,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
 import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
 
@@ -59,7 +60,7 @@ public class FileHasContent
     }
     catch (final Exception e)
     {
-      throw new RuntimeException(e);
+      return new EmptyInputResource("/" + classpathResource);
     }
   }
 
@@ -68,29 +69,37 @@ public class FileHasContent
     return new FileHasContent(null, null);
   }
 
-  public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
-                                                               final String outputFormatValue)
+  private static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
+                                                                final String outputFormatValue,
+                                                                boolean validateOutputFormat)
   {
-    if (classpathInputResource == null
-        || !(classpathInputResource instanceof ClasspathInputResource))
+    if (classpathInputResource == null)
     {
       throw new RuntimeException("No classpath resource to match with");
     }
-    if (isBlank(outputFormatValue))
+    if (!(classpathInputResource instanceof ClasspathInputResource))
+    {
+      System.err.printf("No classpath resource <%s> to match with",
+                        classpathInputResource);
+    }
+    if (validateOutputFormat && isBlank(outputFormatValue))
     {
       throw new RuntimeException("No output format provided");
     }
     return new FileHasContent(classpathInputResource, outputFormatValue);
   }
 
+  public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
+                                                               final String outputFormatValue)
+  {
+    return hasSameContentAndTypeAs(classpathInputResource,
+                                   outputFormatValue,
+                                   true);
+  }
+
   public static Matcher<InputResource> hasSameContentAs(final InputResource classpathInputResource)
   {
-    if (classpathInputResource == null
-        || !(classpathInputResource instanceof ClasspathInputResource))
-    {
-      throw new RuntimeException("No file resource to match with");
-    }
-    return new FileHasContent(classpathInputResource, null);
+    return hasSameContentAndTypeAs(classpathInputResource, null, false);
   }
 
   public static InputResource outputOf(final TestOutputCapture testoutput)
@@ -197,8 +206,7 @@ public class FileHasContent
     }
     else
     {
-      referenceFile = ((ClasspathInputResource) referenceFileResource)
-        .getClasspathResource().substring(1);
+      referenceFile = referenceFileResource.getDescription().substring(1);
     }
     return referenceFile;
   }
