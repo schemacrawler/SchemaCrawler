@@ -48,6 +48,7 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -78,6 +79,18 @@ public class SpinThroughOperationsExecutableTest
   public void spinThroughOperationsExecutable(final Connection connection)
     throws Exception
   {
+    final Config config = loadHsqldbConfig();
+
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+      .builder();
+    schemaRetrievalOptionsBuilder.fromConfig(config);
+    final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
+      .toOptions();
+
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
+    schemaTextOptionsBuilder.noInfo(false);
+
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
       .flatMap(outputFormat -> operations().map(operation -> () -> {
 
@@ -91,29 +104,18 @@ public class SpinThroughOperationsExecutableTest
                                                    infoLevel,
                                                    outputFormat);
 
-        final Config config = loadHsqldbConfig();
-
-        final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-          .builder();
-        schemaRetrievalOptionsBuilder.fromConfig(config);
-
         final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
           .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
           .includeAllSequences().includeAllSynonyms().includeAllRoutines();
         final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
           .toOptions();
 
-        final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-          .builder();
-        schemaTextOptionsBuilder.noInfo(false);
-
         final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(operation
           .name());
         executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
         executable
           .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-        executable
-          .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+        executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
 
         assertThat(outputOf(executableExecution(connection,
                                                 executable,
