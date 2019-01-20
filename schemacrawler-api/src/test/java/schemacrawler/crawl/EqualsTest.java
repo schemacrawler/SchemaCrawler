@@ -54,6 +54,12 @@ public class EqualsTest
   }
 
   @Test
+  public void color()
+  {
+    EqualsVerifier.forClass(sf.util.Color.class).verify();
+  }
+
+  @Test
   public void databaseServerType()
   {
     EqualsVerifier.forClass(DatabaseServerType.class)
