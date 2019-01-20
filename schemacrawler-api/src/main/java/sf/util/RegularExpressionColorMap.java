@@ -87,11 +87,6 @@ public class RegularExpressionColorMap
     }
   }
 
-  public boolean isEmpty()
-  {
-    return colorMap.isEmpty();
-  }
-
   public Optional<Color> match(final String value)
   {
     for (final Entry<Pattern, Color> entry: colorMap.entrySet())
