@@ -32,13 +32,24 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static sf.util.Utility.commonPrefix;
 import static sf.util.Utility.isBlank;
+import static sf.util.Utility.isClassAvailable;
 import static sf.util.Utility.toSnakeCase;
 
 import org.junit.jupiter.api.Test;
 
 public class UtilityTest
 {
+  @Test
+  public void commonPrefixTest()
+  {
+    assertThat(commonPrefix("preTest", null), is(""));
+    assertThat(commonPrefix(null, "preCompile"), is(""));
+    assertThat(commonPrefix("preTest", "preCompile"), is("pre"));
+    assertThat(commonPrefix("something", "nothing"), is(""));
+    assertThat(commonPrefix("preTest", ""), is(""));
+  }
 
   @Test
   public void isBlankTest()
@@ -58,6 +69,13 @@ public class UtilityTest
     assertThat(!isBlank(" a"), is(true));
     assertThat(!isBlank("a "), is(true));
     assertThat(!isBlank("a b"), is(true));
+  }
+
+  @Test
+  public void isClassAvailableTest()
+  {
+    assertThat(isClassAvailable("java.lang.String"), is(true));
+    assertThat(isClassAvailable("com.example.Unknown"), is(false));
   }
 
   @Test
