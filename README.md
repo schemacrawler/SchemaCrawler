@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler)
-[![Coverage Status](https://img.shields.io/codecov/c/github/schemacrawler/SchemaCrawler/master.svg)](https://codecov.io/gh/schemacrawler/SchemaCrawler)
+[![Coverage Status](https://coveralls.io/repos/github/schemacrawler/SchemaCrawler/badge.svg)](https://coveralls.io/github/schemacrawler/SchemaCrawler)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
 [![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
