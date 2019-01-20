@@ -93,21 +93,6 @@ public class DirectedGraph<T extends Comparable<? super T>>
     return new HashSet<>(edges);
   }
 
-  public Set<DirectedEdge<T>> getIncomingEdges(final Vertex<T> vertexTo)
-  {
-    Objects.requireNonNull(vertexTo, "No vertex provided");
-
-    final Set<DirectedEdge<T>> incomingEdges = new HashSet<>();
-    for (final DirectedEdge<T> edge: edges)
-    {
-      if (edge.getTo().equals(vertexTo))
-      {
-        incomingEdges.add(edge);
-      }
-    }
-    return incomingEdges;
-  }
-
   /**
    * @return the name
    */

@@ -40,6 +40,8 @@ import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import sf.util.graph.DirectedEdge;
+import sf.util.graph.Vertex;
 
 public class EqualsTest
 {
@@ -56,6 +58,12 @@ public class EqualsTest
   {
     EqualsVerifier.forClass(DatabaseServerType.class)
       .withIgnoredFields("databaseSystemName").verify();
+  }
+
+  @Test
+  public void directedEdge()
+  {
+    EqualsVerifier.forClass(DirectedEdge.class).verify();
   }
 
   @Test
@@ -98,6 +106,13 @@ public class EqualsTest
                         new TableReference(table1),
                         new TableReference(table2))
       .suppress(Warning.STRICT_INHERITANCE).verify();
+  }
+
+  @Test
+  public void vertex()
+  {
+    EqualsVerifier.forClass(Vertex.class).withIgnoredFields("attributes")
+      .verify();
   }
 
 }
