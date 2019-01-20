@@ -39,10 +39,10 @@ import java.util.List;
 import java.util.UUID;
 
 import schemacrawler.schema.Catalog;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;

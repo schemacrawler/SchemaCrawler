@@ -32,7 +32,6 @@ package schemacrawler.tools.commandline;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 
 /**
  * Parses the command-line.

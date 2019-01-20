@@ -43,7 +43,7 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;

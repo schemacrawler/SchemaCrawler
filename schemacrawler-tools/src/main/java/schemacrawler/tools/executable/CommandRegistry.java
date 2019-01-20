@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.iosource.EmptyInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
@@ -166,7 +166,7 @@ public final class CommandRegistry
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
-      throw new SchemaCrawlerCommandLineException(String
+      throw new SchemaCrawlerRuntimeException(String
         .format("Cannot run command <%s>", command));
     }
 

@@ -34,7 +34,6 @@ import static sf.util.Utility.isBlank;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 
 /**
  * Parses the command-line.

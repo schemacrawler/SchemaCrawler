@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline;
 
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;

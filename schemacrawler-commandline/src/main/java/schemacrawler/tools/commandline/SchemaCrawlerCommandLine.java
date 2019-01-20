@@ -33,7 +33,6 @@ import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;

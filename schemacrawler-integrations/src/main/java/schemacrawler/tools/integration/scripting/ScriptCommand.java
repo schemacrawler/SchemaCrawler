@@ -45,8 +45,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 
-import schemacrawler.schemacrawler.SchemaCrawlerCommandLineException;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import schemacrawler.tools.iosource.ClasspathInputResource;

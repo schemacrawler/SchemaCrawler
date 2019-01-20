@@ -8,6 +8,11 @@ import nl.jqno.equalsverifier.Warning;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
+import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 
 public class EqualsTest
 {
@@ -17,6 +22,22 @@ public class EqualsTest
   {
     EqualsVerifier.forClass(BaseProductVersion.class)
       .suppress(Warning.STRICT_INHERITANCE).verify();
+  }
+
+  @Test
+  public void databaseServerType()
+  {
+    EqualsVerifier.forClass(DatabaseServerType.class)
+      .withIgnoredFields("databaseSystemName").verify();
+  }
+
+  @Test
+  public void inclusionRules()
+  {
+    EqualsVerifier.forClass(IncludeAll.class).verify();
+    EqualsVerifier.forClass(ExcludeAll.class).verify();
+    EqualsVerifier.forClass(RegularExpressionInclusionRule.class).verify();
+    EqualsVerifier.forClass(RegularExpressionExclusionRule.class).verify();
   }
 
   @Test
