@@ -33,6 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static sf.util.Utility.commonPrefix;
+import static sf.util.Utility.containsWhitespace;
 import static sf.util.Utility.isBlank;
 import static sf.util.Utility.isClassAvailable;
 import static sf.util.Utility.toSnakeCase;
@@ -41,6 +42,7 @@ import org.junit.jupiter.api.Test;
 
 public class UtilityTest
 {
+
   @Test
   public void commonPrefixTest()
   {
@@ -49,6 +51,15 @@ public class UtilityTest
     assertThat(commonPrefix("preTest", "preCompile"), is("pre"));
     assertThat(commonPrefix("something", "nothing"), is(""));
     assertThat(commonPrefix("preTest", ""), is(""));
+  }
+
+  @Test
+  public void containsWhitespaceTest()
+  {
+    assertThat(containsWhitespace(null), is(false));
+    assertThat(containsWhitespace("\t" + "abcd"), is(true));
+    assertThat(containsWhitespace("abcd" + "\t"), is(true));
+    assertThat(containsWhitespace("ab" + "\t" + "cd"), is(true));
   }
 
   @Test
