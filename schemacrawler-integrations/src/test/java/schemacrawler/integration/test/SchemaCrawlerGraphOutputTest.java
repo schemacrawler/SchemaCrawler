@@ -32,6 +32,7 @@ package schemacrawler.integration.test;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import schemacrawler.test.AbstractSchemaCrawlerOutputTest;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 
