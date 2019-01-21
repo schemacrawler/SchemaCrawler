@@ -32,8 +32,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.ExecutableTestUtility.outputOf;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;

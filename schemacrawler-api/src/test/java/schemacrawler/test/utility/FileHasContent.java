@@ -42,38 +42,59 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
-import schemacrawler.tools.iosource.InputResource;
-
 public class FileHasContent
-  extends BaseMatcher<InputResource>
+  extends BaseMatcher<TestResource>
 {
 
-  public static InputResource classpathResource(final String classpathResource)
+  public static TestResource classpathResource(final String classpathResource)
   {
-    try
-    {
-      requireNonNull(classpathResource, "No classpath resource provided");
-      return new ClasspathInputResource("/" + classpathResource);
-    }
-    catch (final Exception e)
-    {
-      return new EmptyInputResource("/" + classpathResource);
-    }
+    requireNonNull(classpathResource, "No classpath resource provided");
+    return new TestResource("/" + classpathResource);
   }
 
-  public static Matcher<InputResource> hasNoContent()
+  public static Matcher<TestResource> hasNoContent()
   {
     return new FileHasContent(null, null);
   }
 
-  private static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
-                                                                final String outputFormatValue,
-                                                                boolean validateOutputFormat)
+  public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
+                                                              final String outputFormatValue)
   {
-    if (classpathInputResource == null)
+    return hasSameContentAndTypeAs(classpathTestResource,
+                                   outputFormatValue,
+                                   true);
+  }
+
+  public static Matcher<TestResource> hasSameContentAs(final TestResource classpathTestResource)
+  {
+    return hasSameContentAndTypeAs(classpathTestResource, null, false);
+  }
+
+  public static TestResource outputOf(final TestOutputCapture testoutput)
+  {
+    requireNonNull(testoutput, "No test output capture provided");
+    final Path filePath = testoutput.getFilePath();
+    return outputOf(filePath);
+
+  }
+
+  public static TestResource outputOf(final Path filePath)
+  {
+    if (filePath == null)
+    {
+      return new TestResource();
+    }
+    else
+    {
+      return new TestResource(filePath);
+    }
+  }
+
+  private static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
+                                                               final String outputFormatValue,
+                                                               final boolean validateOutputFormat)
+  {
+    if (classpathTestResource == null)
     {
       throw new RuntimeException("No classpath resource to match with");
     }
@@ -81,41 +102,14 @@ public class FileHasContent
     {
       throw new RuntimeException("No output format provided");
     }
-    return new FileHasContent(classpathInputResource, outputFormatValue);
+    return new FileHasContent(classpathTestResource, outputFormatValue);
   }
 
-  public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
-                                                               final String outputFormatValue)
-  {
-    return hasSameContentAndTypeAs(classpathInputResource,
-                                   outputFormatValue,
-                                   true);
-  }
-
-  public static Matcher<InputResource> hasSameContentAs(final InputResource classpathInputResource)
-  {
-    return hasSameContentAndTypeAs(classpathInputResource, null, false);
-  }
-
-  public static InputResource outputOf(final TestOutputCapture testoutput)
-  {
-    requireNonNull(testoutput, "No test output cature provided");
-    final Path filePath = testoutput.getFilePath();
-    try
-    {
-      return FileInputResource.allowEmptyFileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private final InputResource referenceFileResource;
+  private final TestResource referenceFileResource;
   private final String outputFormatValue;
   private List<String> failures;
 
-  public FileHasContent(final InputResource referenceFileResource,
+  public FileHasContent(final TestResource referenceFileResource,
                         final String outputFormatValue)
   {
     this.referenceFileResource = referenceFileResource;
@@ -170,11 +164,12 @@ public class FileHasContent
 
   private Path getFilePath(final Object actualValue)
   {
-    if (actualValue == null || !(actualValue instanceof FileInputResource))
+    if (actualValue == null || !(actualValue instanceof TestResource))
     {
       throw new RuntimeException("No file input resource provided");
     }
-    final Path file = ((FileInputResource) actualValue).getInputFile();
+    final Path file = ((TestResource) actualValue).getFileResource()
+      .orElseThrow(() -> new RuntimeException("No file input resource provided"));
     return file;
   }
 
@@ -201,7 +196,8 @@ public class FileHasContent
     }
     else
     {
-      referenceFile = referenceFileResource.toString().substring(1);
+      referenceFile = referenceFileResource.getClasspathResource()
+        .map(resource -> resource.substring(1)).orElse(null);
     }
     return referenceFile;
   }

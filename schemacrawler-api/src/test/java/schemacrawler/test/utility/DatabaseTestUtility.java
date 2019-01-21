@@ -29,7 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.util.Properties;
 
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -40,15 +49,9 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.PropertiesUtility;
 
 public final class DatabaseTestUtility
 {
-
-  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
-    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-    .toOptions();
 
   public static Catalog getCatalog(final Connection connection,
                                    final SchemaCrawlerOptions schemaCrawlerOptions)
@@ -72,19 +75,39 @@ public final class DatabaseTestUtility
     return catalog;
   }
 
-  public static Config loadHsqldbConfig()
+  /**
+   * Loads a properties file from a CLASSPATH resource.
+   *
+   * @param resource
+   *        A CLASSPATH resource.
+   * @return Config loaded from classpath resource
+   * @throws IOException
+   *         On an exception
+   */
+  protected static Config loadConfigFromClasspathResource(final String resource)
+    throws IOException
   {
-    try
+    final InputStream stream = DatabaseTestUtility.class
+      .getResourceAsStream(resource);
+    requireNonNull(stream, "Could not load config from resource, " + resource);
+    final Reader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+    final Properties properties = new Properties();
+    try (final BufferedReader bufferedReader = new BufferedReader(reader);)
     {
-      final ClasspathInputResource inputResource = new ClasspathInputResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
-      return PropertiesUtility.loadConfig(inputResource);
+      properties.load(bufferedReader);
     }
-
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    return new Config(properties);
   }
+
+  public static Config loadHsqldbConfig()
+    throws IOException
+  {
+    return loadConfigFromClasspathResource("/hsqldb.INFORMATION_SCHEMA.config.properties");
+  }
+
+  public final static SchemaCrawlerOptions schemaCrawlerOptionsWithMaximumSchemaInfoLevel = SchemaCrawlerOptionsBuilder
+    .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+    .toOptions();
 
   private DatabaseTestUtility()
   {

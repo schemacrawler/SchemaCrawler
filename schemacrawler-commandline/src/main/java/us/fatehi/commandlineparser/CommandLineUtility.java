@@ -48,7 +48,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.ConfigParser;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.PropertiesUtility;
+import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;

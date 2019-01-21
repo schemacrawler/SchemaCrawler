@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static java.util.Objects.requireNonNull;
-
 import java.nio.file.Path;
 import java.sql.Connection;
 
@@ -40,8 +38,6 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.iosource.FileInputResource;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -100,24 +96,11 @@ public final class ExecutableTestUtility
     return scriptExecutable;
   }
 
-  public static Matcher<InputResource> hasSameContentAndTypeAs(final InputResource classpathInputResource,
-                                                               final OutputFormat outputFormat)
+  public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
+                                                              final OutputFormat outputFormat)
   {
-    return FileHasContent.hasSameContentAndTypeAs(classpathInputResource,
+    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
                                                   outputFormat.getFormat());
-  }
-
-  public static InputResource outputOf(final Path filePath)
-  {
-    requireNonNull(filePath, "No file path provided");
-    try
-    {
-      return FileInputResource.allowEmptyFileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      throw new RuntimeException(e);
-    }
   }
 
   private ExecutableTestUtility()

@@ -50,14 +50,7 @@ public class FileInputResource
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(FileInputResource.class.getName());
 
-  public static FileInputResource allowEmptyFileInputResource(final Path filePath)
-    throws IOException
-  {
-    return new FileInputResource(filePath, true);
-  }
-
   private final Path inputFile;
-  private final boolean allowEmptyFile;
 
   public FileInputResource(final Path filePath)
     throws IOException
@@ -70,8 +63,7 @@ public class FileInputResource
   {
     inputFile = requireNonNull(filePath, "No file path provided").normalize()
       .toAbsolutePath();
-    this.allowEmptyFile = allowEmptyFile;
-    if (!allowEmptyFile && !isFileReadable(inputFile))
+    if (!isFileReadable(inputFile))
     {
       final IOException e = new IOException("Cannot read file, " + inputFile);
       LOGGER.log(Level.FINE, e.getMessage(), e);
@@ -90,7 +82,7 @@ public class FileInputResource
   {
     requireNonNull(charset, "No input charset provided");
 
-    if (allowEmptyFile && !exists(inputFile))
+    if (!exists(inputFile))
     {
       return new StringReader("");
     }
