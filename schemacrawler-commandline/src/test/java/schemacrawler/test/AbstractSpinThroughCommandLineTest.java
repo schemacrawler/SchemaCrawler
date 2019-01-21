@@ -25,14 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.integration.test;
+package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -40,7 +38,6 @@ import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,29 +48,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.test.utility.TestUtility;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class SpinThroughGraphTest
+public abstract class AbstractSpinThroughCommandLineTest
 {
 
-  private static final String SPIN_THROUGH_OUTPUT = "spin_through_graph_output/";
+  private static final String SPIN_THROUGH_OUTPUT = "spin_through_output/";
 
   @BeforeAll
   public static void clean()
@@ -89,52 +79,6 @@ public class SpinThroughGraphTest
     throws IOException
   {
     hsqldbProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
-  }
-
-  @Test
-  public void spinThroughExecutable(final Connection connection)
-    throws Exception
-  {
-    assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
-      .flatMap(outputFormat -> schemaTextDetailTypes()
-        .map(schemaTextDetailType -> () -> {
-
-          final String referenceFile = referenceFile(schemaTextDetailType,
-                                                     infoLevel,
-                                                     outputFormat);
-
-          final Config config = loadHsqldbConfig();
-
-          final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-            .builder();
-          schemaRetrievalOptionsBuilder.fromConfig(config);
-
-          final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-            .builder().withSchemaInfoLevel(infoLevel.toSchemaInfoLevel())
-            .includeAllSequences().includeAllSynonyms().includeAllRoutines();
-          final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-            .toOptions();
-
-          final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-            .builder();
-          schemaTextOptionsBuilder.noInfo(false);
-
-          final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(schemaTextDetailType
-            .name());
-          executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-          executable
-            .setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
-          executable.setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder
-            .toOptions());
-
-          assertThat(outputOf(executableExecution(connection,
-                                                  executable,
-                                                  outputFormat)),
-                     hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
-                                                               + referenceFile),
-                                             outputFormat));
-
-        }))));
   }
 
   @Test
@@ -176,12 +120,7 @@ public class SpinThroughGraphTest
       .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
-  private Stream<GraphOutputFormat> outputFormats()
-  {
-    return Arrays.stream(new GraphOutputFormat[] {
-                                                   GraphOutputFormat.htmlx,
-                                                   GraphOutputFormat.scdot });
-  }
+  protected abstract Stream<OutputFormat> outputFormats();
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
                                final InfoLevel infoLevel,
