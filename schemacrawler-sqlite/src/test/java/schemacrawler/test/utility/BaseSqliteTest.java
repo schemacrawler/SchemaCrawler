@@ -37,8 +37,8 @@ import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.testdb.SqlScript;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
 import sf.util.IOUtility;
 

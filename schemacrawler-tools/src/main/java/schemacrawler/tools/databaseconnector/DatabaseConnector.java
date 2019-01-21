@@ -41,8 +41,6 @@ import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
 

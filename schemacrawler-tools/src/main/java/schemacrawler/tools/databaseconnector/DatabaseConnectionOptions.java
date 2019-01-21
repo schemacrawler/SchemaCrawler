@@ -31,9 +31,6 @@ package schemacrawler.tools.databaseconnector;
 
 import java.util.Map;
 
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
-
 public final class DatabaseConnectionOptions
   extends BaseDatabaseConnectionOptions
 {

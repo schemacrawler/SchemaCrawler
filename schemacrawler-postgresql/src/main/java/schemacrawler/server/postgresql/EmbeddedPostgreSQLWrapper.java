@@ -44,10 +44,10 @@ import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.ConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
+import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 import sf.util.SchemaCrawlerLogger;
 

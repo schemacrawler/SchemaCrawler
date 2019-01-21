@@ -34,7 +34,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.UserCredentials;
 
 public interface ConnectionOptions
   extends Options, DataSource

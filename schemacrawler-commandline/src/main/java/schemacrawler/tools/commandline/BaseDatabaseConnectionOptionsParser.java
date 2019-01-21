@@ -35,8 +35,8 @@ import java.util.logging.Level;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SingleUseUserCredentials;
-import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
+import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 
 /**

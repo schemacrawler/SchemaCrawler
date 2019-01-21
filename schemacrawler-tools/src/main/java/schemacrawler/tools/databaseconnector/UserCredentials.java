@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+package schemacrawler.tools.databaseconnector;
 
 
 public interface UserCredentials

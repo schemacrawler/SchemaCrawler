@@ -36,9 +36,9 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.schemacrawler.UserCredentials;
 import schemacrawler.tools.databaseconnector.ConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector

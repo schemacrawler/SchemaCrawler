@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
