@@ -35,6 +35,7 @@ import nl.jqno.equalsverifier.Warning;
 import schemacrawler.BaseProductVersion;
 import schemacrawler.schema.SchemaReference;
 import schemacrawler.schema.Table;
+import schemacrawler.schema.TableType;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
@@ -119,6 +120,18 @@ public class EqualsTest
   public void schemaInfoLevel()
   {
     EqualsVerifier.forClass(SchemaInfoLevel.class).verify();
+  }
+
+  @Test
+  public void schemaReference()
+  {
+    EqualsVerifier.forClass(SchemaReference.class).verify();
+  }
+
+  @Test
+  public void tableType()
+  {
+    EqualsVerifier.forClass(TableType.class).verify();
   }
 
   @Test
