@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.schemacrawler;
+package schemacrawler.tools.databaseconnector;
 
 
 import static sf.util.Utility.isBlank;
@@ -34,6 +34,8 @@ import static sf.util.Utility.isBlank;
 import java.util.Map;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 

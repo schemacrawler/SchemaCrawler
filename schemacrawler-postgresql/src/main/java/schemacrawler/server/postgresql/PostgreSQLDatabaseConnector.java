@@ -40,12 +40,12 @@ import java.util.logging.Level;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConfigConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.databaseconnector.ConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConfigConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.SchemaCrawlerLogger;

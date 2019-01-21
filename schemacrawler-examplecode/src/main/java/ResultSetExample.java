@@ -12,8 +12,8 @@ import javax.sql.DataSource;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ResultSetExample

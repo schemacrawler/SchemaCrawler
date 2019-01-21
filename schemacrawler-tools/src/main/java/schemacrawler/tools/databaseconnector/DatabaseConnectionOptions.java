@@ -25,23 +25,28 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.schemacrawler;
+
+package schemacrawler.tools.databaseconnector;
 
 
-import java.sql.Driver;
-import java.sql.SQLException;
+import java.util.Map;
 
-import javax.sql.DataSource;
+import schemacrawler.schemacrawler.SingleUseUserCredentials;
+import schemacrawler.schemacrawler.UserCredentials;
 
-public interface ConnectionOptions
-  extends Options, DataSource
+public final class DatabaseConnectionOptions
+  extends BaseDatabaseConnectionOptions
 {
 
-  String getConnectionUrl();
+  public DatabaseConnectionOptions(final String connectionUrl)
+  {
+    super(new SingleUseUserCredentials(), connectionUrlToMap(connectionUrl));
+  }
 
-  Driver getJdbcDriver()
-    throws SQLException;
-
-  UserCredentials getUserCredentials();
+  public DatabaseConnectionOptions(final UserCredentials userCredentials,
+                                   final Map<String, String> properties)
+  {
+    super(userCredentials, properties);
+  }
 
 }

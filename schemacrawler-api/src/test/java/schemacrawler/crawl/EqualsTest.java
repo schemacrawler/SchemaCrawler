@@ -40,6 +40,7 @@ import schemacrawler.schemacrawler.ExcludeAll;
 import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
+import schemacrawler.schemacrawler.SchemaInfoLevel;
 import sf.util.graph.DirectedEdge;
 import sf.util.graph.Vertex;
 
@@ -112,6 +113,12 @@ public class EqualsTest
                         new TableReference(table1),
                         new TableReference(table2))
       .suppress(Warning.STRICT_INHERITANCE).verify();
+  }
+
+  @Test
+  public void schemaInfoLevel()
+  {
+    EqualsVerifier.forClass(SchemaInfoLevel.class).verify();
   }
 
   @Test

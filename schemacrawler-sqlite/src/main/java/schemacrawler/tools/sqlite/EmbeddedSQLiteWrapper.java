@@ -34,9 +34,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
+import schemacrawler.tools.databaseconnector.ConnectionOptions;
 import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 
 public class EmbeddedSQLiteWrapper

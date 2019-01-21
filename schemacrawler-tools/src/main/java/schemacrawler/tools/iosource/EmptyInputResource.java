@@ -38,18 +38,6 @@ public class EmptyInputResource
   implements InputResource
 {
 
-  private final String resourceName;
-
-  public EmptyInputResource()
-  {
-    this(null);
-  }
-
-  public EmptyInputResource(final String resourceName)
-  {
-    this.resourceName = resourceName;
-  }
-
   @Override
   public Reader openNewInputReader(final Charset charset)
   {
@@ -60,14 +48,7 @@ public class EmptyInputResource
   @Override
   public String toString()
   {
-    if (resourceName == null)
-    {
-      return "<empty>";
-    }
-    else
-    {
-      return resourceName;
-    }
+    return "<empty>";
   }
 
 }

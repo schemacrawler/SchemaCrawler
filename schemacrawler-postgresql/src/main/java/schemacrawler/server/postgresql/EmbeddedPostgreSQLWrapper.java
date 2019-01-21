@@ -43,11 +43,11 @@ import de.flapdoodle.embed.process.config.IRuntimeConfig;
 import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.ConnectionOptions;
-import schemacrawler.schemacrawler.DatabaseConnectionOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SingleUseUserCredentials;
 import schemacrawler.schemacrawler.UserCredentials;
+import schemacrawler.tools.databaseconnector.ConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 import sf.util.SchemaCrawlerLogger;
 
