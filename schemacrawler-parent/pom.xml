@@ -132,21 +132,6 @@
                   </excludes>
                 </configuration>
               </execution>
-              <execution>
-                <id>report-aggregate</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>report-aggregate</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
-                  <includes>
-                    <!-- Analyze class files only to exclude shaded agent JAR from 
-                      report -->
-                    <include>**/*.class</include>
-                  </includes>
-                </configuration>
-              </execution>
             </executions>
           </plugin>
         </plugins>
