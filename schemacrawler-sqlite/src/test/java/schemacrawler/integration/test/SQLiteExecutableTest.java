@@ -55,7 +55,7 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
-public class SQLiteExecuableTest
+public class SQLiteExecutableTest
   extends BaseSqliteTest
 {
 
