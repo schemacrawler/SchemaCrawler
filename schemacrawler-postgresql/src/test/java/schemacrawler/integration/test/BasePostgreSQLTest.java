@@ -37,7 +37,7 @@ import static ru.yandex.qatools.embed.postgresql.distribution.Version.V11_1;
 import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.test.utility.BaseAdditionalDatabaseTest;
 
-public class BasePostgreSQLTest
+public abstract class BasePostgreSQLTest
   extends BaseAdditionalDatabaseTest
 {
 
