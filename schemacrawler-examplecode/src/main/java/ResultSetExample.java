@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
@@ -56,7 +55,7 @@ public final class ResultSetExample
   }
 
   private static Connection getConnection()
-    throws SchemaCrawlerException, SQLException
+    throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);

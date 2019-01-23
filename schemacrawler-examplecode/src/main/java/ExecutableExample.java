@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -58,7 +57,7 @@ public final class ExecutableExample
   }
 
   private static Connection getConnection()
-    throws SchemaCrawlerException, SQLException
+    throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
     final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);
