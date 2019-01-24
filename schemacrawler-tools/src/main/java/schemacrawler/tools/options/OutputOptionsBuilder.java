@@ -23,8 +23,6 @@ public final class OutputOptionsBuilder
   implements OptionsBuilder<OutputOptionsBuilder, OutputOptions>
 {
 
-  private static final String SCHEMACRAWLER_DATA = "schemacrawler.data";
-
   private static final String SC_INPUT_ENCODING = "schemacrawler.encoding.input";
   private static final String SC_OUTPUT_ENCODING = "schemacrawler.encoding.output";
 
