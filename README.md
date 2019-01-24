@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler)
 [![Coverage Status](https://coveralls.io/repos/github/schemacrawler/SchemaCrawler/badge.svg)](https://coveralls.io/github/schemacrawler/SchemaCrawler)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=schemacrawler_SchemaCrawler&metric=alert_status)](https://sonarcloud.io/dashboard?id=schemacrawler_SchemaCrawler)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=alert_status)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
 [![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
