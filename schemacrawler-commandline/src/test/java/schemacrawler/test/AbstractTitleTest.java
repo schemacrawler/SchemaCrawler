@@ -34,17 +34,13 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -69,8 +65,6 @@ public abstract class AbstractTitleTest
     TestUtility.clean(TITLE_OUTPUT);
   }
 
-  private Path hsqldbProperties;
-
   @Test
   public void commandLineWithTitle(final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -81,10 +75,8 @@ public abstract class AbstractTitleTest
         final String referenceFile = referenceFile(command, outputFormat);
 
         final Map<String, String> argsMap = new HashMap<>();
-        argsMap.put("g", hsqldbProperties.toString());
         argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
-        argsMap.put("infolevel", InfoLevel.maximum.name());
-        argsMap.put("noinfo", Boolean.FALSE.toString());
+        argsMap.put("infolevel", InfoLevel.standard.name());
         argsMap.put("title", "Database Design for Books and Publishers");
 
         assertThat(outputOf(commandlineExecution(connectionInfo,
@@ -96,13 +88,6 @@ public abstract class AbstractTitleTest
                                            outputFormat));
 
       })));
-  }
-
-  @BeforeEach
-  public void copyResources()
-    throws IOException
-  {
-    hsqldbProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
   }
 
   protected Stream<String> commands()
