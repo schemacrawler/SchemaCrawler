@@ -41,7 +41,9 @@ public class GraphTitleTest
 
   public Stream<OutputFormat> outputFormats()
   {
-    return Arrays.stream(new OutputFormat[] { GraphOutputFormat.scdot });
+    return Arrays.stream(new OutputFormat[] {
+                                              GraphOutputFormat.scdot,
+                                              GraphOutputFormat.htmlx });
   }
 
 }
