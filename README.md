@@ -1,11 +1,15 @@
 [![Build Status](https://travis-ci.org/schemacrawler/SchemaCrawler.svg?branch=master)](https://travis-ci.org/schemacrawler/SchemaCrawler)
 [![Coverage Status](https://coveralls.io/repos/github/schemacrawler/SchemaCrawler/badge.svg)](https://coveralls.io/github/schemacrawler/SchemaCrawler)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=alert_status)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
 
 [![The Central Repository](https://img.shields.io/maven-central/v/us.fatehi/schemacrawler.svg)](https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*)
 [![Main distribution](https://img.shields.io/badge/zip-download-blue.svg)](https://github.com/schemacrawler/SchemaCrawler/releases/latest)
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
+
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=security_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
 
 
 
