@@ -31,6 +31,8 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -104,6 +106,33 @@ public class QueryUtilityTest
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
 
     executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule);
+  }
+
+  @Test
+  public void executeForScalar(final TestContext testContext,
+                               final Connection cxn)
+    throws Exception
+  {
+    final Query query = new Query("Select scalar",
+                                  "SELECT POSTALCODE FROM PUBLIC.BOOKS.AUTHORS WHERE LASTNAME = 'Shaffer'");
+
+    final Object scalar = QueryUtility.executeForScalar(query, cxn);
+
+    assertThat(scalar, notNullValue());
+    assertThat(scalar, is("37032"));
+  }
+
+  @Test
+  public void executeForScalarNotPresent(final TestContext testContext,
+                                         final Connection cxn)
+    throws Exception
+  {
+    final Query query = new Query("Select scalar",
+                                  "SELECT POSTALCODE FROM PUBLIC.BOOKS.AUTHORS WHERE LASTNAME = 'Fatehi'");
+
+    final Object scalar = QueryUtility.executeForScalar(query, cxn);
+
+    assertThat(scalar, nullValue());
   }
 
   private void executeAgainstSchemaTest(final TestContext testContext,
