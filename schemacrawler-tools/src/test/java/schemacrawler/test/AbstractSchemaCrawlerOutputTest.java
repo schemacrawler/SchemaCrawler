@@ -77,6 +77,7 @@ public abstract class AbstractSchemaCrawlerOutputTest
   private static final String UNQUALIFIED_NAMES_OUTPUT = "unqualified_names_output/";
   private static final String ROUTINES_OUTPUT = "routines_output/";
   private static final String NO_REMARKS_OUTPUT = "no_remarks_output/";
+  private static final String WITH_TITLE_OUTPUT = "with_title_output/";
   private static final String NO_SCHEMA_COLORS_OUTPUT = "no_schema_colors_output/";
   private static final String IDENTIFIER_QUOTING_OUTPUT = "identifier_quoting_output/";
 
@@ -625,6 +626,46 @@ public abstract class AbstractSchemaCrawlerOutputTest
                                                            + referenceFile),
                                          outputFormat));
     }));
+  }
+
+  @Test
+  public void titleOutput(final Connection connection)
+    throws Exception
+  {
+    clean(WITH_TITLE_OUTPUT);
+
+    final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
+      .builder();
+    textOptionsBuilder.noRemarks().noSchemaCrawlerInfo().showDatabaseInfo(false)
+      .showJdbcDriverInfo(false);
+    final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
+
+    assertAll(Arrays.asList("list", "schema").stream()
+      .flatMap(command -> outputFormats().map(outputFormat -> () -> {
+
+        final String referenceFile = String
+          .format("%s_with_title.%s", command, outputFormat.getFormat());
+
+        final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+          .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+          .includeSchemas(new RegularExpressionInclusionRule(".*\\.BOOKS"))
+          .title("Database Design for Books and Publishers");
+        final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+          .toOptions();
+
+        final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+        executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+        executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
+          .builder(textOptions).toConfig());
+
+        assertThat(outputOf(executableExecution(connection,
+                                                executable,
+                                                outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(WITH_TITLE_OUTPUT
+                                                             + referenceFile),
+                                           outputFormat));
+      })));
+
   }
 
   protected abstract Stream<OutputFormat> outputFormats();
