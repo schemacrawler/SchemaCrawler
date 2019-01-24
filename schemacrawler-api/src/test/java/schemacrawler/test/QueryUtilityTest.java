@@ -30,12 +30,15 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.jupiter.api.Test;
@@ -60,11 +63,55 @@ public class QueryUtilityTest
                                    final Connection cxn)
     throws Exception
   {
-
     final Query query = new Query("Tables for schema",
                                   "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
     final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("BOOKS");
 
+    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule);
+  }
+
+  @Test
+  public void executeAgainstSchemaNoMatch(final TestContext testContext,
+                                          final Connection cxn)
+    throws Exception
+  {
+    final Query query = new Query("Tables for schema",
+                                  "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE REGEXP_MATCHES(TABLE_SCHEMA, '${schemas}') ORDER BY TABLE_NAME");
+    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
+
+    int rows = 0;
+    try (final Connection connection = cxn;
+        final Statement statement = connection.createStatement();
+        final ResultSet resultSet = QueryUtility
+          .executeAgainstSchema(query, statement, schemaInclusionRule);)
+    {
+      while (resultSet.next())
+      {
+        rows++;
+      }
+    }
+
+    assertThat(rows, is(0));
+  }
+
+  @Test
+  public void executeAgainstSchemaNoTemplate(final TestContext testContext,
+                                             final Connection cxn)
+    throws Exception
+  {
+    final Query query = new Query("Tables for schema",
+                                  "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA= 'BOOKS' ORDER BY TABLE_NAME");
+    final InclusionRule schemaInclusionRule = new RegularExpressionInclusionRule("NONE");
+
+    executeAgainstSchemaTest(testContext, cxn, query, schemaInclusionRule);
+  }
+
+  private void executeAgainstSchemaTest(final TestContext testContext,
+                                        final Connection cxn,
+                                        final Query query,
+                                        final InclusionRule schemaInclusionRule)
+    throws IOException, SQLException
+  {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
