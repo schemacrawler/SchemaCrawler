@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.oracle;
 
 
+import static schemacrawler.utility.QueryUtility.executeForScalar;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -42,7 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-import sf.util.DatabaseUtility;
+import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -98,9 +100,9 @@ public final class OracleDatabaseConnector
       String catalogScope = "ALL";
       try
       {
-        final Object scalar = DatabaseUtility
-          .executeSqlForScalar(connection,
-                               "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1");
+        final Query query = new Query("Check access to DBA tables",
+                                      "SELECT TABLE_NAME FROM DBA_TABLES WHERE ROWNUM = 1");
+        final Object scalar = executeForScalar(query, connection);
         if (scalar != null)
         {
           catalogScope = "DBA";
