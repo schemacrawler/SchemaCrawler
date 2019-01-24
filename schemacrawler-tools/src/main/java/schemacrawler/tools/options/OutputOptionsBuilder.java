@@ -6,7 +6,6 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
-import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
@@ -15,7 +14,6 @@ import java.util.UUID;
 
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.OptionsBuilder;
-import schemacrawler.tools.iosource.CompressedFileOutputResource;
 import schemacrawler.tools.iosource.ConsoleOutputResource;
 import schemacrawler.tools.iosource.FileOutputResource;
 import schemacrawler.tools.iosource.OutputResource;
@@ -168,25 +166,6 @@ public final class OutputOptionsBuilder
                              outputResource,
                              outputEncodingCharset,
                              outputFormatValue);
-  }
-
-  /**
-   * Sets the name of the output file for compressed output. It is
-   * important to note that the output encoding should be available at
-   * this point.
-   *
-   * @param outputFile
-   *        Output path.
-   * @throws IOException
-   * @return Builder
-   */
-  public OutputOptionsBuilder withCompressedOutputFile(final Path outputFile)
-    throws IOException
-  {
-    requireNonNull(outputFile, "No output file provided");
-    outputResource = new CompressedFileOutputResource(outputFile,
-                                                      SCHEMACRAWLER_DATA);
-    return this;
   }
 
   public OutputOptionsBuilder withConsoleOutput()
