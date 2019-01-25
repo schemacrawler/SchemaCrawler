@@ -245,15 +245,15 @@ final class DataTextFormatter
 
   private void printHeader()
   {
-    if (operation != null)
+    if (operation == null)
     {
-      formattingHelper.writeHeader(DocumentHeaderType.subTitle,
-                                   operation.getDescription());
-    }
-    else
-    {
+      // If there is no operation, assume that the command is a query
       formattingHelper.writeHeader(DocumentHeaderType.subTitle, "Query");
+      return;
     }
+
+    formattingHelper.writeHeader(DocumentHeaderType.subTitle,
+                                 operation.getDescription());
 
     if (operation == Operation.count)
     {
