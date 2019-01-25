@@ -146,17 +146,16 @@ public final class DatabaseUtility
                                      final boolean throwSQLException)
     throws SQLException
   {
-    ResultSet results = null;
     if (statement == null)
     {
-      return results;
+      return null;
     }
     if (isBlank(sql))
     {
       LOGGER.log(Level.FINE,
                  "No SQL provided",
                  new RuntimeException("No SQL provided"));
-      return results;
+      return null;
     }
 
     try
@@ -164,9 +163,10 @@ public final class DatabaseUtility
       statement.clearWarnings();
 
       final boolean hasResults = statement.execute(sql);
+      logSQLWarnings(statement);
       if (hasResults)
       {
-        results = statement.getResultSet();
+        return statement.getResultSet();
       }
       else
       {
@@ -176,11 +176,9 @@ public final class DatabaseUtility
                new StringFormat("No results. Update count of %d for query: %s",
                                 updateCount,
                                 sql));
+        return null;
       }
 
-      logSQLWarnings(statement);
-
-      return results;
     }
     catch (final SQLException e)
     {
