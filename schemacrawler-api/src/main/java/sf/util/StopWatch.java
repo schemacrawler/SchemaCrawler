@@ -108,14 +108,6 @@ public final class StopWatch
     return running;
   }
 
-  /**
-   * Return the number of tasks timed.
-   */
-  public int size()
-  {
-    return tasks.size();
-  }
-
   private void start(final String taskName)
   {
     if (running)

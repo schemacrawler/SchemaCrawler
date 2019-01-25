@@ -62,6 +62,12 @@ public class EqualsTest
   }
 
   @Test
+  public void columnReference()
+  {
+    EqualsVerifier.forClass(BaseColumnReference.class).verify();
+  }
+
+  @Test
   public void databaseServerType()
   {
     EqualsVerifier.forClass(DatabaseServerType.class)
