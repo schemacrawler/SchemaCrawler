@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import schemacrawler.utility.Identifiers;
@@ -88,45 +89,13 @@ public final class SchemaReference
     {
       return false;
     }
-    if (getClass() != obj.getClass())
+    if (!(obj instanceof SchemaReference))
     {
       return false;
     }
-    final SchemaReference other = (SchemaReference) obj;
-    if (attributeMap == null)
-    {
-      if (other.attributeMap != null)
-      {
-        return false;
-      }
-    }
-    else if (!attributeMap.equals(other.attributeMap))
-    {
-      return false;
-    }
-    if (catalogName == null)
-    {
-      if (other.catalogName != null)
-      {
-        return false;
-      }
-    }
-    else if (!catalogName.equals(other.catalogName))
-    {
-      return false;
-    }
-    if (schemaName == null)
-    {
-      if (other.schemaName != null)
-      {
-        return false;
-      }
-    }
-    else if (!schemaName.equals(other.schemaName))
-    {
-      return false;
-    }
-    return true;
+    final Schema other = (Schema) obj;
+    return Objects.equals(catalogName, other.getCatalogName())
+           && Objects.equals(schemaName, other.getName());
   }
 
   /**
@@ -208,13 +177,7 @@ public final class SchemaReference
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (attributeMap == null? 0: attributeMap.hashCode());
-    result = prime * result + (catalogName == null? 0: catalogName.hashCode());
-    result = prime * result + (schemaName == null? 0: schemaName.hashCode());
-    return result;
+    return Objects.hash(catalogName, schemaName);
   }
 
   /**

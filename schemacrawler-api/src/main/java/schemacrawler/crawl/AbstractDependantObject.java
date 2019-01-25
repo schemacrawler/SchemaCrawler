@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.DependantObject;
@@ -70,37 +71,22 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
     this.parent = parent;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final boolean equals(final Object obj)
+  public boolean equals(final Object obj)
   {
-    if (!super.equals(obj))
-    {
-      return false;
-    }
     if (this == obj)
     {
       return true;
     }
-    if (obj == null)
+    if (!super.equals(obj))
     {
       return false;
     }
-    final DependantObject<D> other = (DependantObject<D>) obj;
-    if (parent == null)
-    {
-      if (other.getParent() != null)
-      {
-        return false;
-      }
-    }
-    else if (!parent.equals(other.getParent()))
+    if (!(obj instanceof DependantObject))
     {
       return false;
     }
-    return true;
+    return Objects.equals(parent, ((DependantObject<?>) obj).getParent());
   }
 
   /**
@@ -133,16 +119,12 @@ abstract class AbstractDependantObject<D extends DatabaseObject>
     return Identifiers.STANDARD.quoteShortName(this);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final int hashCode()
+  public int hashCode()
   {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + (parent == null? 0: parent.hashCode());
-    result = prime * result + super.hashCode();
+    result = prime * result + Objects.hash(parent);
     return result;
   }
 

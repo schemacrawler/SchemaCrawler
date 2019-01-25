@@ -33,6 +33,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import schemacrawler.schema.DatabaseObject;
 import schemacrawler.schema.NamedObject;
@@ -108,37 +109,22 @@ abstract class AbstractDatabaseObject
     return super.compareTo(obj);
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public boolean equals(final Object obj)
   {
-    if (!super.equals(obj))
-    {
-      return false;
-    }
     if (this == obj)
     {
       return true;
     }
-    if (obj == null)
+    if (!super.equals(obj))
     {
       return false;
     }
-    final AbstractDatabaseObject other = (AbstractDatabaseObject) obj;
-    if (schema == null)
-    {
-      if (other.schema != null)
-      {
-        return false;
-      }
-    }
-    else if (!schema.equals(other.schema))
+    if (!(obj instanceof DatabaseObject))
     {
       return false;
     }
-    return true;
+    return Objects.equals(schema, ((DatabaseObject) obj).getSchema());
   }
 
   /**
@@ -156,16 +142,12 @@ abstract class AbstractDatabaseObject
     return schema;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public int hashCode()
   {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + (schema == null? 0: schema.hashCode());
-    result = prime * result + super.hashCode();
+    result = prime * result + Objects.hash(schema);
     return result;
   }
 
