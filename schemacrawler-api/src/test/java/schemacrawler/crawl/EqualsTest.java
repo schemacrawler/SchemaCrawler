@@ -123,6 +123,12 @@ public class EqualsTest
   }
 
   @Test
+  public void property()
+  {
+    EqualsVerifier.forClass(AbstractProperty.class).verify();
+  }
+
+  @Test
   public void schemaInfoLevel()
   {
     EqualsVerifier.forClass(SchemaInfoLevel.class).verify();

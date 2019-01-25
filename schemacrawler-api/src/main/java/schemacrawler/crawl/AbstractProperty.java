@@ -32,6 +32,7 @@ import static sf.util.Utility.isBlank;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 import schemacrawler.schema.Property;
 
@@ -61,9 +62,6 @@ abstract class AbstractProperty
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final boolean equals(final Object obj)
   {
@@ -75,34 +73,13 @@ abstract class AbstractProperty
     {
       return false;
     }
-    if (!(obj instanceof AbstractProperty))
+    if (!(obj instanceof Property))
     {
       return false;
     }
-    final AbstractProperty other = (AbstractProperty) obj;
-    if (name == null)
-    {
-      if (other.name != null)
-      {
-        return false;
-      }
-    }
-    else if (!name.equals(other.name))
-    {
-      return false;
-    }
-    if (value == null)
-    {
-      if (other.value != null)
-      {
-        return false;
-      }
-    }
-    else if (!value.equals(other.value))
-    {
-      return false;
-    }
-    return true;
+    final Property other = (Property) obj;
+    return Objects.equals(name, other.getName())
+           && Objects.equals(value, other.getValue());
   }
 
   /**
@@ -123,17 +100,10 @@ abstract class AbstractProperty
     return value;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (name == null? 0: name.hashCode());
-    result = prime * result + (value == null? 0: value.hashCode());
-    return result;
+    return Objects.hash(name, value);
   }
 
 }
