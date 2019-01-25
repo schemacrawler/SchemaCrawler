@@ -186,33 +186,33 @@ public final class SchemaCrawlerOptionsBuilder
     schemaInclusionRule = config
       .getInclusionRuleWithDefault(SC_SCHEMA_PATTERN_INCLUDE,
                                    SC_SCHEMA_PATTERN_EXCLUDE,
-                                   () -> new IncludeAll());
+                                   IncludeAll::new);
     synonymInclusionRule = config
       .getInclusionRuleWithDefault(SC_SYNONYM_PATTERN_INCLUDE,
                                    SC_SYNONYM_PATTERN_EXCLUDE,
-                                   () -> new ExcludeAll());
+                                   ExcludeAll::new);
     sequenceInclusionRule = config
       .getInclusionRuleWithDefault(SC_SEQUENCE_PATTERN_INCLUDE,
                                    SC_SEQUENCE_PATTERN_EXCLUDE,
-                                   () -> new ExcludeAll());
+                                   ExcludeAll::new);
 
     tableInclusionRule = config
       .getInclusionRuleWithDefault(SC_TABLE_PATTERN_INCLUDE,
                                    SC_TABLE_PATTERN_EXCLUDE,
-                                   () -> new IncludeAll());
+                                   IncludeAll::new);
     columnInclusionRule = config
       .getInclusionRuleWithDefault(SC_COLUMN_PATTERN_INCLUDE,
                                    SC_COLUMN_PATTERN_EXCLUDE,
-                                   () -> new IncludeAll());
+                                   IncludeAll::new);
 
     routineInclusionRule = config
       .getInclusionRuleWithDefault(SC_ROUTINE_PATTERN_INCLUDE,
                                    SC_ROUTINE_PATTERN_EXCLUDE,
-                                   () -> new ExcludeAll());
+                                   ExcludeAll::new);
     routineColumnInclusionRule = config
       .getInclusionRuleWithDefault(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
                                    SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
-                                   () -> new IncludeAll());
+                                   IncludeAll::new);
 
     grepColumnInclusionRule = config
       .getOptionalInclusionRule(SC_GREP_COLUMN_PATTERN_INCLUDE,
