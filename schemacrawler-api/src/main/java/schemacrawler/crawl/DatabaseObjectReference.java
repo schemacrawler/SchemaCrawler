@@ -69,7 +69,7 @@ class DatabaseObjectReference<D extends DatabaseObject>
   }
 
   @Override
-  public boolean equals(final Object obj)
+  public final boolean equals(final Object obj)
   {
     return partial.equals(obj);
   }
@@ -103,7 +103,7 @@ class DatabaseObjectReference<D extends DatabaseObject>
   }
 
   @Override
-  public int hashCode()
+  public final int hashCode()
   {
     return partial.hashCode();
   }

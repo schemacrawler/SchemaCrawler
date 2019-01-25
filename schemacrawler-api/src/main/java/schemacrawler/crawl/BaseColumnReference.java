@@ -30,6 +30,8 @@ package schemacrawler.crawl;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
+
 import schemacrawler.schema.Column;
 import schemacrawler.schema.ColumnReference;
 
@@ -80,7 +82,7 @@ public abstract class BaseColumnReference
   }
 
   @Override
-  public boolean equals(final Object obj)
+  public final boolean equals(final Object obj)
   {
     if (this == obj)
     {
@@ -90,30 +92,13 @@ public abstract class BaseColumnReference
     {
       return false;
     }
+    if (!(obj instanceof BaseColumnReference))
+    {
+      return false;
+    }
     final ColumnReference other = (ColumnReference) obj;
-    if (foreignKeyColumn == null)
-    {
-      if (other.getForeignKeyColumn() != null)
-      {
-        return false;
-      }
-    }
-    else if (!foreignKeyColumn.equals(other.getForeignKeyColumn()))
-    {
-      return false;
-    }
-    if (primaryKeyColumn == null)
-    {
-      if (other.getPrimaryKeyColumn() != null)
-      {
-        return false;
-      }
-    }
-    else if (!primaryKeyColumn.equals(other.getPrimaryKeyColumn()))
-    {
-      return false;
-    }
-    return true;
+    return Objects.equals(foreignKeyColumn, other.getForeignKeyColumn())
+           && Objects.equals(primaryKeyColumn, other.getPrimaryKeyColumn());
   }
 
   /**
@@ -135,15 +120,9 @@ public abstract class BaseColumnReference
   }
 
   @Override
-  public int hashCode()
+  public final int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (foreignKeyColumn == null? 0: foreignKeyColumn.hashCode());
-    result = prime * result
-             + (primaryKeyColumn == null? 0: primaryKeyColumn.hashCode());
-    return result;
+    return Objects.hash(foreignKeyColumn, primaryKeyColumn);
   }
 
   @Override

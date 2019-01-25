@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -98,23 +99,12 @@ public class WeakAssociationForeignKey
     {
       return false;
     }
-    if (getClass() != obj.getClass())
+    if (!(obj instanceof WeakAssociationForeignKey))
     {
       return false;
     }
     final WeakAssociationForeignKey other = (WeakAssociationForeignKey) obj;
-    if (columnReferences == null)
-    {
-      if (other.columnReferences != null)
-      {
-        return false;
-      }
-    }
-    else if (!columnReferences.equals(other.columnReferences))
-    {
-      return false;
-    }
-    return true;
+    return Objects.equals(columnReferences, other.columnReferences);
   }
 
   @Override
@@ -138,11 +128,7 @@ public class WeakAssociationForeignKey
   @Override
   public int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result
-             + (columnReferences == null? 0: columnReferences.hashCode());
-    return result;
+    return Objects.hash(columnReferences);
   }
 
   public boolean isValid()
