@@ -116,7 +116,7 @@ public final class StopWatch
     return tasks.size();
   }
 
-  public void start(final String taskName)
+  private void start(final String taskName)
   {
     if (running)
     {
@@ -129,7 +129,7 @@ public final class StopWatch
     start = Instant.now();
   }
 
-  public void stop()
+  private void stop()
   {
     if (!running)
     {
