@@ -125,7 +125,8 @@ public class EqualsTest
   @Test
   public void schemaReference()
   {
-    EqualsVerifier.forClass(SchemaReference.class).verify();
+    EqualsVerifier.forClass(SchemaReference.class)
+      .withIgnoredFields("attributeMap").verify();
   }
 
   @Test
