@@ -48,21 +48,6 @@ public final class Query
   private final boolean hasName;
   private final String name;
   private final String query;
-  private final boolean throwSQLException;
-
-  /**
-   * Definition of a query, including a name, and parameterized or
-   * regular SQL.
-   *
-   * @param name
-   *        Query name.
-   * @param query
-   *        Query SQL.
-   */
-  public Query(final String name, final String query)
-  {
-    this(name, query, false);
-  }
 
   /**
    * Definition of a query, including a name, and parameterized or
@@ -75,9 +60,7 @@ public final class Query
    * @param throwSQLException
    *        Whether the query should throw a SQL exception on an error.
    */
-  public Query(final String name,
-               final String query,
-               final boolean throwSQLException)
+  public Query(final String name, final String query)
   {
     final boolean isNameProvided = !isBlank(name);
     final boolean isQueryProvided = !isBlank(query);
@@ -96,7 +79,6 @@ public final class Query
     {
       throw new IllegalArgumentException("No SQL found for query");
     }
-    this.throwSQLException = throwSQLException;
   }
 
   /**
@@ -139,17 +121,6 @@ public final class Query
   {
     final Set<String> keys = extractTemplateVariables(query);
     return keys.contains("table");
-  }
-
-  /**
-   * Whether the query should throw a SQL exception on an error during
-   * execution.
-   *
-   * @return Whether the query should throw a SQL exception on an error
-   */
-  public boolean isThrowSQLException()
-  {
-    return throwSQLException;
   }
 
   /**
