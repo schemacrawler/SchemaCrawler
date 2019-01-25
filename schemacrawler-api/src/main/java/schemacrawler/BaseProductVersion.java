@@ -31,6 +31,8 @@ package schemacrawler;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Objects;
+
 /**
  * Operating system information.
  *
@@ -60,7 +62,7 @@ public class BaseProductVersion
   }
 
   @Override
-  public boolean equals(final Object obj)
+  public final boolean equals(final Object obj)
   {
     if (this == obj)
     {
@@ -74,30 +76,9 @@ public class BaseProductVersion
     {
       return false;
     }
-    final BaseProductVersion other = (BaseProductVersion) obj;
-    if (productName == null)
-    {
-      if (other.productName != null)
-      {
-        return false;
-      }
-    }
-    else if (!productName.equals(other.productName))
-    {
-      return false;
-    }
-    if (productVersion == null)
-    {
-      if (other.productVersion != null)
-      {
-        return false;
-      }
-    }
-    else if (!productVersion.equals(other.productVersion))
-    {
-      return false;
-    }
-    return true;
+    final ProductVersion other = (ProductVersion) obj;
+    return Objects.equals(productName, other.getProductName())
+           && Objects.equals(productVersion, other.getProductVersion());
   }
 
   @Override
@@ -113,14 +94,9 @@ public class BaseProductVersion
   }
 
   @Override
-  public int hashCode()
+  public final int hashCode()
   {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + (productName == null? 0: productName.hashCode());
-    result = prime * result
-             + (productVersion == null? 0: productVersion.hashCode());
-    return result;
+    return Objects.hash(productName, productVersion);
   }
 
   /**
