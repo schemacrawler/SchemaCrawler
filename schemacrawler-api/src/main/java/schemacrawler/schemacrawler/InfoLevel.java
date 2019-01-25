@@ -48,7 +48,7 @@ public enum InfoLevel
  maximum(() -> maximum());
 
   @FunctionalInterface
-  interface ToSchemaInfoLevelFunction
+  private interface ToSchemaInfoLevelFunction
   {
     SchemaInfoLevel toSchemaInfoLevel();
   }

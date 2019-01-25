@@ -76,7 +76,7 @@ public final class Vertex<T>
     return true;
   }
 
-  public <V> V getAttribute(final String key)
+  <V> V getAttribute(final String key)
   {
     return (V) attributes.get(key);
   }
@@ -86,7 +86,7 @@ public final class Vertex<T>
     return value;
   }
 
-  public boolean hasAttribute(final String key)
+  boolean hasAttribute(final String key)
   {
     return attributes.containsKey(key);
   }
@@ -100,7 +100,7 @@ public final class Vertex<T>
     return result;
   }
 
-  public void putAttribute(final String key, final Object value)
+  void putAttribute(final String key, final Object value)
   {
     attributes.put(key, value);
   }
