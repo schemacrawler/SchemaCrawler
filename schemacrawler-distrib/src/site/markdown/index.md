@@ -51,10 +51,11 @@ Examples are provided for all of these with the
 [download](http://github.com/schemacrawler/SchemaCrawler/releases/).
 
 SchemaCrawler is integrated with templating engines, such
-as [Apache Velocity](http://velocity.apache.org/), [Thymeleaf](http://www.thymeleaf.org/) or
-[&lt;FreeMarker&gt;](http://freemarker.org/). You can write templates to
-generate SQL scripts or any other text output. However, you will need to download the
-templating engine separately, since these are not part of the SchemaCrawler download.
+as [Apache Velocity](http://velocity.apache.org/), [Thymeleaf](http://www.thymeleaf.org/),
+[&lt;FreeMarker&gt;](http://freemarker.org/) and [Mustache](https://mustache.github.io/). 
+You can write templates to generate SQL scripts or any other text output. 
+However, you will need to download the templating engine separately, since these are 
+not part of the SchemaCrawler download.
 
 Complete SchemaCrawler command-line help is available with the -h or -help command-line
 options.

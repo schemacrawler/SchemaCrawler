@@ -52,7 +52,7 @@ public class ThymeleafCommandProvider
   @Override
   public String getDescription()
   {
-    return "Render a Freemarker template against a schema";
+    return "Render a Thymeleaf template against a schema";
   }
 
   @Override

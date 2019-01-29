@@ -2,11 +2,12 @@
 
 
 <a name="a15.04.01"></a>
-## Release 15.04.01 - 2019-01-29
+## Release 15.04.01 - 2019-02-02
 
 - Add server information for MySQL
 - Convert tests to JUnit 5
 - Remove input resource from output options, and let each command fend for itself
+- Added integrations with Mustache for templated output
 
 
 <a name="a15.03.04"></a>
