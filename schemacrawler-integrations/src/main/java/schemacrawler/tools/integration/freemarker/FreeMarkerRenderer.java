@@ -96,8 +96,8 @@ public final class FreeMarkerRenderer
                    freemarker.log.Logger.LIBRARY_NAME_JUL);
 
     LOGGER.log(Level.INFO,
-               new StringFormat("Rendering using FreeMarker, version %s"
-                                + Configuration.getVersion().toString()));
+               new StringFormat("Rendering using FreeMarker, version %s",
+                                Configuration.getVersion()));
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);

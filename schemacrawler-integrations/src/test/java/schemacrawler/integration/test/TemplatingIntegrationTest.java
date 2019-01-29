@@ -52,7 +52,6 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class TemplatingIntegrationTest
 {
-
   @Test
   public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -62,6 +61,17 @@ public class TemplatingIntegrationTest
                                              additionalArgsMap(),
                                              "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+  }
+
+  @Test
+  public void commandlineMustache(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "mustache",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.mustache")),
+               hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
@@ -94,6 +104,16 @@ public class TemplatingIntegrationTest
                                             executableOf("freemarker"),
                                             "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+  }
+
+  @Test
+  public void executableMustache(final Connection connection)
+    throws Exception
+  {
+    assertThat(outputOf(executableExecution(connection,
+                                            executableOf("mustache"),
+                                            "/plaintextschema.mustache")),
+               hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test

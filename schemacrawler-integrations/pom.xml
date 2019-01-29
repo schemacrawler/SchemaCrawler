@@ -49,7 +49,7 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.apache.velocity</groupId>
       <artifactId>velocity-engine-scripting</artifactId>
@@ -67,6 +67,11 @@
       <artifactId>freemarker</artifactId>
       <version>2.3.28</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.github.spullara.mustache.java</groupId>
+      <artifactId>compiler</artifactId>
+      <version>0.9.6</version>
     </dependency>
     <dependency>
       <groupId>de.ruedigermoeller</groupId>

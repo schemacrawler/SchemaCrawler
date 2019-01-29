@@ -1,0 +1,14 @@
+--- Command ---
+
+-c=mustache (short for -command=mustache)
+  Processes a Mustache template
+  
+--- Output Options ---
+
+-fmt=<outputformat> (short for -outputformat=<outputformat>)
+	Where <outputformat> is the file path or class path to the Mustache 
+	template
+
+-o=<outputfile> (short for -outputfile=<outputfile>)
+	Optional 
+	<outputfile> is the path to the output file
