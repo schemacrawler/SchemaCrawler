@@ -2546,6 +2546,21 @@
         ]
       },
       {
+        "name": "othersDeletesAreVisibleForTYPE_FORWARD_ONLYResultSets",
+        "description": "others deletes are visible for TYPE_FORWARD_ONLY result sets",
+        "value": false
+      },
+      {
+        "name": "othersDeletesAreVisibleForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "others deletes are visible for TYPE_SCROLL_INSENSITIVE result sets",
+        "value": false
+      },
+      {
+        "name": "othersDeletesAreVisibleForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "others deletes are visible for TYPE_SCROLL_SENSITIVE result sets",
+        "value": false
+      },
+      {
         "name": "othersInsertsAreVisibleForTYPE_FORWARD_ONLYResultSets",
         "description": "others inserts are visible for TYPE_FORWARD_ONLY result sets",
         "value": false
@@ -3128,6 +3143,21 @@
         ]
       },
       {
+        "name": "updatesAreDetectedForTYPE_FORWARD_ONLYResultSets",
+        "description": "updates are detected for TYPE_FORWARD_ONLY result sets",
+        "value": false
+      },
+      {
+        "name": "updatesAreDetectedForTYPE_SCROLL_INSENSITIVEResultSets",
+        "description": "updates are detected for TYPE_SCROLL_INSENSITIVE result sets",
+        "value": false
+      },
+      {
+        "name": "updatesAreDetectedForTYPE_SCROLL_SENSITIVEResultSets",
+        "description": "updates are detected for TYPE_SCROLL_SENSITIVE result sets",
+        "value": false
+      },
+      {
         "name": "usesLocalFilePerTable",
         "description": "uses local file per table",
         "value": false
@@ -3141,8 +3171,8 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "4c191012-c9a6-48d3-a193-37ab44b16a1b",
-    "crawlTimestamp": "2018-09-25 22:42:45",
+    "runId": "e22da1fa-80a6-4aad-b0df-a86f498061a9",
+    "crawlTimestamp": "2019-01-28 23:34:09",
     "title": ""
   },
   "routines": [
@@ -3234,7 +3264,7 @@
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://localhost/schemacrawler",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:61135/schemacrawler61135",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

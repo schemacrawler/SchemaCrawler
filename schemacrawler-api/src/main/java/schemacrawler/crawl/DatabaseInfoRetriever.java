@@ -129,31 +129,6 @@ final class DatabaseInfoRetriever
     return !notPropertyMethod;
   }
 
-  /**
-   * Checks if a method is a database property result set type.
-   *
-   * @param method
-   *        Method
-   * @return Whether a method is a database property result set type
-   */
-  private static boolean isDatabasePropertyResultSetType(final Method method)
-  {
-    final String[] databasePropertyResultSetTypes = new String[] {
-                                                                   "deletesAreDetected",
-                                                                   "insertsAreDetected",
-                                                                   "updatesAreDetected",
-                                                                   "othersDeletesAreVisible",
-                                                                   "othersInsertsAreVisible",
-                                                                   "othersUpdatesAreVisible",
-                                                                   "ownDeletesAreVisible",
-                                                                   "ownInsertsAreVisible",
-                                                                   "ownUpdatesAreVisible",
-                                                                   "supportsResultSetType" };
-    final boolean isDatabasePropertyResultSetType = Arrays
-      .binarySearch(databasePropertyResultSetTypes, method.getName()) >= 0;
-    return isDatabasePropertyResultSetType;
-  }
-
   private static ImmutableDatabaseProperty retrieveResultSetTypeProperty(final DatabaseMetaData dbMetaData,
                                                                          final Method method,
                                                                          final int resultSetType,
@@ -193,7 +168,8 @@ final class DatabaseInfoRetriever
     {
       try
       {
-        if (ignoreMethods.contains(method.getName()))
+        if (method.getParameterTypes().length > 0
+            || ignoreMethods.contains(method.getName()))
         {
           continue;
         }
@@ -203,6 +179,7 @@ final class DatabaseInfoRetriever
                new StringFormat("Retrieving database property using method <%s>",
                                 method));
 
+        final Object methodReturnValue = method.invoke(dbMetaData);
         if (isDatabasePropertyListMethod(method))
         {
           final String value = (String) method.invoke(dbMetaData);
@@ -212,9 +189,8 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertyMethod(method))
         {
-          final Object value = method.invoke(dbMetaData);
-          dbProperties
-            .add(new ImmutableDatabaseProperty(method.getName(), value));
+          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
+                                                         methodReturnValue));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
@@ -224,24 +200,7 @@ final class DatabaseInfoRetriever
           dbProperties.add(new ImmutableDatabaseProperty(method
             .getName(), resultsList.toArray(new String[resultsList.size()])));
         }
-        else if (isDatabasePropertyResultSetType(method))
-        {
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_FORWARD_ONLY,
-                                               "TYPE_FORWARD_ONLY"));
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_SCROLL_INSENSITIVE,
-                                               "TYPE_SCROLL_INSENSITIVE"));
-          dbProperties
-            .add(retrieveResultSetTypeProperty(dbMetaData,
-                                               method,
-                                               ResultSet.TYPE_SCROLL_SENSITIVE,
-                                               "TYPE_SCROLL_SENSITIVE"));
-        }
+
       }
       catch (final IllegalAccessException | InvocationTargetException e)
       {
@@ -251,18 +210,21 @@ final class DatabaseInfoRetriever
       }
       catch (final AbstractMethodError | SQLFeatureNotSupportedException e)
       {
-        logSQLFeatureNotSupported(new StringFormat("Could not execute method %s",
+        logSQLFeatureNotSupported(new StringFormat("Database metadata method <%s> not supported",
                                                    method),
                                   e);
       }
       catch (final SQLException e)
       {
-        logPossiblyUnsupportedSQLFeature(new StringFormat("Could not execute method %s",
+        logPossiblyUnsupportedSQLFeature(new StringFormat("SQL exception invoking method <%s>",
                                                           method),
                                          e);
       }
 
     }
+
+    final Collection<ImmutableDatabaseProperty> resultSetTypesProperties = retrieveResultSetTypesProperties(dbMetaData);
+    dbProperties.addAll(resultSetTypesProperties);
 
     dbInfo.addAll(dbProperties);
 
@@ -596,6 +558,60 @@ final class DatabaseInfoRetriever
       }
     }
 
+  }
+
+  private Collection<ImmutableDatabaseProperty> retrieveResultSetTypesProperties(final DatabaseMetaData dbMetaData)
+  {
+    final Collection<ImmutableDatabaseProperty> dbProperties = new ArrayList<>();
+    final String[] resultSetTypesMethods = new String[] {
+                                                          "deletesAreDetected",
+                                                          "insertsAreDetected",
+                                                          "updatesAreDetected",
+                                                          "othersInsertsAreVisible",
+                                                          "othersDeletesAreVisible",
+                                                          "othersUpdatesAreVisible",
+                                                          "ownDeletesAreVisible",
+                                                          "ownInsertsAreVisible",
+                                                          "ownUpdatesAreVisible",
+                                                          "supportsResultSetType" };
+    for (final String methodName: resultSetTypesMethods)
+    {
+      try
+      {
+        final Method method = DatabaseMetaData.class.getMethod(methodName,
+                                                               int.class);
+        LOGGER
+          .log(Level.FINER,
+               new StringFormat("Retrieving database property using method <%s>",
+                                method));
+
+        dbProperties
+          .add(retrieveResultSetTypeProperty(dbMetaData,
+                                             method,
+                                             ResultSet.TYPE_FORWARD_ONLY,
+                                             "TYPE_FORWARD_ONLY"));
+        dbProperties
+          .add(retrieveResultSetTypeProperty(dbMetaData,
+                                             method,
+                                             ResultSet.TYPE_SCROLL_INSENSITIVE,
+                                             "TYPE_SCROLL_INSENSITIVE"));
+        dbProperties
+          .add(retrieveResultSetTypeProperty(dbMetaData,
+                                             method,
+                                             ResultSet.TYPE_SCROLL_SENSITIVE,
+                                             "TYPE_SCROLL_SENSITIVE"));
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE,
+                   new StringFormat("Could not execute method <%s>",
+                                    methodName),
+                   e.getCause());
+        continue;
+      }
+    }
+
+    return dbProperties;
   }
 
 }

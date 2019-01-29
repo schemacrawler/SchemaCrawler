@@ -319,7 +319,7 @@ public class SchemaCrawlerTest
         .getProperties();
       assertThat("Database property count does not match",
                  dbProperties,
-                 hasSize(158));
+                 hasSize(164));
       final Collection<Property> serverInfo = databaseInfo.getServerInfo();
       assertThat("Server info property count does not match",
                  serverInfo,
