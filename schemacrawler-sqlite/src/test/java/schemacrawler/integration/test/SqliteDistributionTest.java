@@ -58,7 +58,7 @@ import sf.util.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestLoggingExtension.class)
-public class TestSqliteDistribution
+public class SqliteDistributionTest
 {
 
   private DatabaseConnector dbConnector;
