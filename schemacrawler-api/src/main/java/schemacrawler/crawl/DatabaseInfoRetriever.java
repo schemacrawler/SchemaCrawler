@@ -485,10 +485,7 @@ final class DatabaseInfoRetriever
     }
     finally
     {
-      if (results != null)
-      {
-        results.close();
-      }
+      results.close();
       if (statement != null)
       {
         statement.close();
