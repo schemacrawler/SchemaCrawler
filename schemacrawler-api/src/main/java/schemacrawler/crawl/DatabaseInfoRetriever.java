@@ -182,10 +182,10 @@ final class DatabaseInfoRetriever
         final Object methodReturnValue = method.invoke(dbMetaData);
         if (isDatabasePropertyListMethod(method))
         {
-          final String value = (String) method.invoke(dbMetaData);
+          final String value = (String) methodReturnValue;
           final String[] list = value == null? new String[0]: value.split(",");
-          dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
-                                                         Arrays.asList(list)));
+          dbProperties
+            .add(new ImmutableDatabaseProperty(method.getName(), list));
         }
         else if (isDatabasePropertyMethod(method))
         {
@@ -194,7 +194,7 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
-          final ResultSet results = (ResultSet) method.invoke(dbMetaData);
+          final ResultSet results = (ResultSet) methodReturnValue;
           final List<String> resultsList = DatabaseUtility
             .readResultsVector(results);
           dbProperties.add(new ImmutableDatabaseProperty(method
