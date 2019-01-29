@@ -197,15 +197,14 @@ final class DatabaseInfoRetriever
         {
           continue;
         }
+
+        LOGGER
+          .log(Level.FINER,
+               new StringFormat("Retrieving database property using method <%s>",
+                                method));
+
         if (isDatabasePropertyListMethod(method))
         {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER
-              .log(Level.FINER,
-                   new StringFormat("Retrieving database property using method <%s>",
-                                    method));
-          }
           final String value = (String) method.invoke(dbMetaData);
           final String[] list = value == null? new String[0]: value.split(",");
           dbProperties.add(new ImmutableDatabaseProperty(method.getName(),
@@ -213,26 +212,12 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertyMethod(method))
         {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER
-              .log(Level.FINER,
-                   new StringFormat("Retrieving database property using method <%s>",
-                                    method));
-          }
           final Object value = method.invoke(dbMetaData);
           dbProperties
             .add(new ImmutableDatabaseProperty(method.getName(), value));
         }
         else if (isDatabasePropertiesResultSetMethod(method))
         {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER
-              .log(Level.FINER,
-                   new StringFormat("Retrieving database property using method <%s>",
-                                    method));
-          }
           final ResultSet results = (ResultSet) method.invoke(dbMetaData);
           final List<String> resultsList = DatabaseUtility
             .readResultsVector(results);
@@ -241,13 +226,6 @@ final class DatabaseInfoRetriever
         }
         else if (isDatabasePropertyResultSetType(method))
         {
-          if (LOGGER.isLoggable(Level.FINE))
-          {
-            LOGGER
-              .log(Level.FINER,
-                   new StringFormat("Retrieving database property using method <%s>",
-                                    method));
-          }
           dbProperties
             .add(retrieveResultSetTypeProperty(dbMetaData,
                                                method,
@@ -357,7 +335,6 @@ final class DatabaseInfoRetriever
     catch (final SQLException e)
     {
       LOGGER.log(Level.WARNING, "Could not obtain database information", e);
-      return;
     }
 
   }
