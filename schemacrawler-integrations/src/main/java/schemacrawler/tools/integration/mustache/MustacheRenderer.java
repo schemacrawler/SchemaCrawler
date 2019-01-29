@@ -29,10 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.mustache;
 
 
+import static schemacrawler.tools.iosource.InputResourceUtility.createInputResource;
+
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -42,9 +42,6 @@ import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -86,14 +83,14 @@ public final class MustacheRenderer
     checkCatalog();
 
     final String templateLocation = outputOptions.getOutputFormatValue();
-    InputResource inputResource = createInputResource(templateLocation);
+    final InputResource inputResource = createInputResource(templateLocation);
 
     LOGGER.log(Level.INFO,
                new StringFormat("Rendering template <%s> using Mustache",
                                 templateLocation));
 
-    final MustacheFactory mf = new DefaultMustacheFactory();
-    final Mustache mustache = mf
+    final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
+    final Mustache mustache = mustacheFactory
       .compile(inputResource.openNewInputReader(StandardCharsets.UTF_8),
                templateLocation);
 
@@ -107,36 +104,7 @@ public final class MustacheRenderer
       // Evaluate the template
       mustache.execute(writer, context).flush();
     }
-  }
 
-  private InputResource createInputResource(final String inputResourceName)
-  {
-    InputResource inputResource = null;
-    try
-    {
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    try
-    {
-      if (inputResource == null)
-      {
-        inputResource = new ClasspathInputResource(inputResourceName);
-      }
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    if (inputResource == null)
-    {
-      inputResource = new EmptyInputResource();
-    }
-    return inputResource;
   }
 
   @Override

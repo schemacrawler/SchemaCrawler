@@ -29,14 +29,13 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import static schemacrawler.tools.iosource.InputResourceUtility.createInputResource;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import javax.script.Compilable;
@@ -49,10 +48,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
-import schemacrawler.tools.iosource.InputResource;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
 
@@ -122,36 +117,6 @@ public final class ScriptCommand
       }
     }
 
-  }
-
-  private InputResource createInputResource(final String inputResourceName)
-  {
-    InputResource inputResource = null;
-    try
-    {
-      final Path filePath = Paths.get(inputResourceName);
-      inputResource = new FileInputResource(filePath);
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    try
-    {
-      if (inputResource == null)
-      {
-        inputResource = new ClasspathInputResource(inputResourceName);
-      }
-    }
-    catch (final Exception e)
-    {
-      // No-op
-    }
-    if (inputResource == null)
-    {
-      inputResource = new EmptyInputResource();
-    }
-    return inputResource;
   }
 
   @Override
