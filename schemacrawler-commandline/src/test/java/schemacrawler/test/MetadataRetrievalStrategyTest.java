@@ -30,17 +30,16 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.test.utility.TestUtility.writeConfigToTempFile;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +48,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -61,7 +59,6 @@ import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -87,38 +84,27 @@ public class MetadataRetrievalStrategyTest
   {
     clean(METADATA_RETRIEVAL_STRATEGY_OUTPUT);
 
-    new ArrayList<>();
-
     final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
     final InfoLevel infoLevel = InfoLevel.minimum;
+    final OutputFormat outputFormat = TextOutputFormat.text;
 
     final Config config = new Config();
     config.put("schemacrawler.schema.retrieval.strategy.tables",
                MetadataRetrievalStrategy.data_dictionary_all.name());
     final Path configFile = writeConfigToTempFile(config);
 
-    final String referenceFile = testContext.testMethodName() + ".txt";
-    final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
-                                                             "data");
-
-    final OutputFormat outputFormat = TextOutputFormat.text;
-
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("url", connectionInfo.getConnectionUrl());
-    argsMap.put("user", "sa");
-    argsMap.put("password", "");
     argsMap.put("g", configFile.toString());
     argsMap.put("infolevel", infoLevel.name());
-    argsMap.put("command", schemaTextDetailType.name());
-    argsMap.put("outputformat", outputFormat.getFormat());
-    argsMap.put("outputfile", testOutputFile.toString());
     argsMap.put("noinfo", "true");
-    // argsMap.put("loglevel", Level.SEVERE.getName());
-
-    Main.main(flattenCommandlineArgs(argsMap));
 
     // Check that System.err has an error
-    assertThat(outputOf(out), hasNoContent());
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             schemaTextDetailType.name(),
+                                             argsMap,
+                                             outputFormat)),
+               hasNoContent());
+
     final String errorLog = err.getFileContents();
     assertThat(errorLog, containsString("No tables SQL provided"));
 

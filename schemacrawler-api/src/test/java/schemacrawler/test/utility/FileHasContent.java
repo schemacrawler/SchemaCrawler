@@ -35,8 +35,11 @@ import static java.util.Objects.requireNonNull;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
 import static sf.util.Utility.isBlank;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
@@ -70,14 +73,6 @@ public class FileHasContent
     return hasSameContentAndTypeAs(classpathTestResource, null, false);
   }
 
-  public static TestResource outputOf(final TestOutputCapture testoutput)
-  {
-    requireNonNull(testoutput, "No test output capture provided");
-    final Path filePath = testoutput.getFilePath();
-    return outputOf(filePath);
-
-  }
-
   public static TestResource outputOf(final Path filePath)
   {
     if (filePath == null)
@@ -88,6 +83,14 @@ public class FileHasContent
     {
       return new TestResource(filePath);
     }
+  }
+
+  public static TestResource outputOf(final TestOutputCapture testoutput)
+  {
+    requireNonNull(testoutput, "No test output capture provided");
+    final Path filePath = testoutput.getFilePath();
+    return outputOf(filePath);
+
   }
 
   private static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
@@ -120,7 +123,30 @@ public class FileHasContent
   public void describeMismatch(final Object item, final Description description)
   {
     // description.appendText("was ").appendValue(item);
-    if (failures != null)
+    if (referenceFileResource == null)
+    {
+      String value;
+      if (item instanceof TestResource)
+      {
+        try
+        {
+          final Path fileResource = ((TestResource) item).getFileResource()
+            .orElse(null);
+          value = Files.lines(fileResource).limit(5)
+            .collect(Collectors.joining("\n"));
+        }
+        catch (IOException e)
+        {
+          value = "<some output>";
+        }
+      }
+      else
+      {
+        value = "<some output>";
+      }
+      description.appendText("was: " + value);
+    }
+    else if (failures != null)
     {
       description.appendValueList("mismatched on:\n", "\n", "", failures);
     }
@@ -129,7 +155,14 @@ public class FileHasContent
   @Override
   public void describeTo(final Description description)
   {
-    description.appendValue(referenceFileResource);
+    if (referenceFileResource == null)
+    {
+      description.appendValue("no output");
+    }
+    else
+    {
+      description.appendValue(referenceFileResource);
+    }
   }
 
   @Override
