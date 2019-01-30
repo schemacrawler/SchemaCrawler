@@ -35,6 +35,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
@@ -69,8 +70,6 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
@@ -230,23 +229,17 @@ public class OfflineSnapshotTest
                                    final String referenceFileName)
     throws Exception
   {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(TextOutputFormat.text, out);
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-        .builder();
-      schemaRetrievalOptionsBuilder
-        .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
+    final OfflineConnection connection = new OfflineConnection(serializedCatalogFile);
 
-      executable.setOutputOptions(outputOptions);
-      executable.setConnection(new OfflineConnection(serializedCatalogFile));
-      executable
-        .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
-      executable.execute();
-    }
-    assertThat(outputOf(testout),
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
+      .builder();
+    schemaRetrievalOptionsBuilder
+      .withDatabaseServerType(OfflineDatabaseConnector.DB_SERVER_TYPE);
+
+    executable
+      .setSchemaRetrievalOptions(schemaRetrievalOptionsBuilder.toOptions());
+
+    assertThat(outputOf(executableExecution(connection, executable)),
                hasSameContentAndTypeAs(classpathResource(referenceFileName),
                                        TextOutputFormat.text.getFormat()));
   }
