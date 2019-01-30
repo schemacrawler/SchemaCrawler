@@ -30,6 +30,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
@@ -46,11 +47,7 @@ import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.base.CommonTextOptionsBuilder;
 import schemacrawler.tools.text.operation.Operation;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -136,13 +133,6 @@ public class SchemaCrawlerTextCommandsOutputTest
     textOutputTest(queryCommand, connection, config);
   }
 
-  @Test
-  public void streamedOutput(final Connection connection)
-    throws Exception
-  {
-    textOutputTest(SchemaTextDetailType.brief.name(), connection, new Config());
-  }
-
   private void testOperationOutput(final Connection connection,
                                    final Operation operation)
     throws Exception
@@ -155,36 +145,27 @@ public class SchemaCrawlerTextCommandsOutputTest
                               final Config config)
     throws Exception
   {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
-    {
-      final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-        .builder()
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
-        .includeAllRoutines();
-      final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
-        .toOptions();
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionExclusionRule(".*\\.FOR_LINT"))
+      .includeAllRoutines();
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
 
-      final OutputOptions outputOptions = OutputOptionsBuilder
-        .newOutputOptions(TextOutputFormat.text, out);
+    final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder
+      .builder();
+    commonTextOptions.fromConfig(config);
+    commonTextOptions.noInfo();
+    commonTextOptions.noHeader();
+    commonTextOptions.noFooter();
+    commonTextOptions.sortTables(true);
+    config.putAll(commonTextOptions.toConfig());
 
-      final CommonTextOptionsBuilder commonTextOptions = CommonTextOptionsBuilder
-        .builder();
-      commonTextOptions.fromConfig(config);
-      commonTextOptions.noInfo();
-      commonTextOptions.noHeader();
-      commonTextOptions.noFooter();
-      commonTextOptions.sortTables(true);
-      config.putAll(commonTextOptions.toConfig());
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setAdditionalConfiguration(config);
 
-      final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-      executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-      executable.setAdditionalConfiguration(config);
-      executable.setOutputOptions(outputOptions);
-      executable.setConnection(connection);
-      executable.execute();
-    }
-    assertThat(outputOf(testout),
+    assertThat(outputOf(executableExecution(connection, executable)),
                hasSameContentAs(classpathResource(COMMAND_OUTPUT + command
                                                   + ".txt")));
   }
