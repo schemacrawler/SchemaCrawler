@@ -38,6 +38,13 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+        <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-commandline</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.ginsberg</groupId>
       <artifactId>junit5-system-exit</artifactId>
