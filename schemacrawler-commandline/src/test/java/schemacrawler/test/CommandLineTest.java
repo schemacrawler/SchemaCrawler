@@ -28,33 +28,25 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.nio.file.Files.newBufferedWriter;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -300,17 +292,6 @@ public class CommandLineTest
     run(testContext, connectionInfo, args, config, command);
   }
 
-  private Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
-    final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
-  }
-
   private void run(final TestContext testContext,
                    final DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
@@ -318,34 +299,23 @@ public class CommandLineTest
                    final String command)
     throws Exception
   {
-    final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    argsMap.put("noinfo", Boolean.TRUE.toString());
+    argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
+    argsMap.put("infolevel", "maximum");
+
+    final Config runConfig = new Config();
+    final Config informationSchema = loadHsqldbConfig();
+    runConfig.putAll(informationSchema);
+    if (config != null)
     {
-      argsMap.put("url", connectionInfo.getConnectionUrl());
-      argsMap.put("user", "sa");
-      argsMap.put("password", "");
-      argsMap.put("noinfo", Boolean.TRUE.toString());
-      argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
-      argsMap.put("infolevel", "maximum");
-      argsMap.put("command", command);
-      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
-      argsMap.put("outputfile", out.toString());
-
-      final Config runConfig = new Config();
-      final Config informationSchema = loadHsqldbConfig();
-      runConfig.putAll(informationSchema);
-      if (config != null)
-      {
-        runConfig.putAll(config);
-      }
-
-      final Path configFile = createConfig(runConfig);
-      argsMap.put("g", configFile.toString());
-
-      Main.main(flattenCommandlineArgs(argsMap));
+      runConfig.putAll(config);
     }
 
-    assertThat(outputOf(testout),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             command,
+                                             argsMap,
+                                             runConfig,
+                                             TextOutputFormat.text)),
                hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
                                                   + testContext.testMethodName()
                                                   + ".txt")));
