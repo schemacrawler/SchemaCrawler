@@ -28,30 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.compareOutput;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
@@ -67,39 +63,19 @@ public class NoEmptyTablesCommandLineTest
   {
     clean(HIDE_EMPTY_TABLES_OUTPUT);
 
-    final List<String> failures = new ArrayList<>();
-
-    final SchemaTextDetailType schemaTextDetailType = SchemaTextDetailType.schema;
-    final InfoLevel infoLevel = InfoLevel.maximum;
-
     final String referenceFile = testContext.testMethodName() + ".txt";
-    final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
-                                                             "data");
 
-    final OutputFormat outputFormat = TextOutputFormat.text;
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("infolevel", InfoLevel.maximum.name());
+    argsMap.put("noinfo", "true");
+    argsMap.put("noemptytables", "true");
 
-    final Map<String, String> args = new HashMap<>();
-    args.put("url", connectionInfo.getConnectionUrl());
-    args.put("user", "sa");
-    args.put("password", "");
-    args.put("infolevel", infoLevel.name());
-    args.put("command", schemaTextDetailType.name());
-    args.put("outputformat", outputFormat.getFormat());
-    args.put("outputfile", testOutputFile.toString());
-    args.put("noinfo", "true");
-    args.put("routines", "");
-    args.put("noemptytables", "true");
-
-    Main.main(flattenCommandlineArgs(args));
-
-    failures.addAll(compareOutput(HIDE_EMPTY_TABLES_OUTPUT + referenceFile,
-                                  testOutputFile,
-                                  outputFormat.getFormat()));
-
-    if (failures.size() > 0)
-    {
-      fail(failures.toString());
-    }
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             SchemaTextDetailType.schema.name(),
+                                             argsMap,
+                                             TextOutputFormat.text)),
+               hasSameContentAs(classpathResource(HIDE_EMPTY_TABLES_OUTPUT
+                                                  + referenceFile)));
   }
 
 }
