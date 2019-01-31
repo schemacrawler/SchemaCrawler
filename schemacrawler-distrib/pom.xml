@@ -34,6 +34,20 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-tools</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-commandline</artifactId>
+      <version>${project.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -231,12 +245,10 @@
             <phase>package</phase>
             <configuration>
               <target>
-                <property name="SchemaCrawler.home"
-                  location=".." />
+                <property name="SchemaCrawler.home" location=".." />
                 <property name="SchemaCrawler.version"
                   value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml"
-                  target="make" />
+                <ant antfile="src\assembly\distribution.xml" target="make" />
               </target>
             </configuration>
             <goals>

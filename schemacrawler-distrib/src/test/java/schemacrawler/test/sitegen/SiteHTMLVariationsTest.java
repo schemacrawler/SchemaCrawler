@@ -28,31 +28,28 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import sf.util.IOUtility;
+import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -64,8 +61,7 @@ public class SiteHTMLVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException,
-    URISyntaxException
+    throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -84,7 +80,9 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
@@ -99,15 +97,16 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void
-    html_3_important_columns(final TestContext testContext,
-                             final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+  public void html_3_important_columns(final TestContext testContext,
+                                       final DatabaseConnectionInfo connectionInfo)
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -116,7 +115,9 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
@@ -132,7 +133,9 @@ public class SiteHTMLVariationsTest
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
@@ -148,7 +151,9 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
@@ -165,15 +170,16 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
   }
 
   @Test
-  public void
-    html_7_grep_onlymatching(final TestContext testContext,
-                             final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+  public void html_7_grep_onlymatching(final TestContext testContext,
+                                       final DatabaseConnectionInfo connectionInfo)
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -184,40 +190,21 @@ public class SiteHTMLVariationsTest
 
     final Map<String, String> config = new HashMap<>();
 
-    run(connectionInfo, args, config,
+    run(connectionInfo,
+        args,
+        config,
         directory.resolve(testContext.testMethodName() + ".html"));
-  }
-
-  private Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
-    final String prefix = SiteHTMLVariationsTest.class.getName();
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
   }
 
   private void run(DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
-                   final Map<String, String> config, final Path outputFile)
+                   final Map<String, String> config,
+                   final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", connectionInfo.getConnectionUrl());
-    argsMap.put("user", "sa");
-    argsMap.put("password", "");
     argsMap.put("title", "Details of Example Database");
-    argsMap.put("tables", ".*");
-    argsMap.put("routines", "");
-    if (!argsMap.containsKey("command"))
-    {
-      argsMap.put("command", "schema");
-    }
-    argsMap.put("outputformat", "html");
-    argsMap.put("outputfile", outputFile.toString());
 
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();
@@ -227,10 +214,12 @@ public class SiteHTMLVariationsTest
       runConfig.putAll(config);
     }
 
-    final Path configFile = createConfig(runConfig);
-    argsMap.put("g", configFile.toString());
-
-    Main.main(flattenCommandlineArgs(argsMap));
+    final Path htmlFile = commandlineExecution(connectionInfo,
+                                               "schema",
+                                               argsMap,
+                                               runConfig,
+                                               TextOutputFormat.html);
+    move(htmlFile, outputFile);
   }
 
 }

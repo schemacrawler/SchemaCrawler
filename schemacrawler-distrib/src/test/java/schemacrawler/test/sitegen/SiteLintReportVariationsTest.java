@@ -28,25 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.newBufferedWriter;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import schemacrawler.Main;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestContext;
@@ -54,7 +49,6 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
-import sf.util.IOUtility;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -66,8 +60,7 @@ public class SiteLintReportVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException,
-    URISyntaxException
+    throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -84,10 +77,8 @@ public class SiteLintReportVariationsTest
     for (final OutputFormat outputFormat: new OutputFormat[] {
                                                                TextOutputFormat.html,
                                                                TextOutputFormat.json,
-                                                               TextOutputFormat.text,
-    })
+                                                               TextOutputFormat.text, })
     {
-      final String outputFormatValue = outputFormat.getFormat();
       final String extension;
       if (outputFormat == TextOutputFormat.text)
       {
@@ -95,56 +86,33 @@ public class SiteLintReportVariationsTest
       }
       else
       {
-        extension = outputFormatValue;
+        extension = outputFormat.getFormat();
       }
       final Map<String, String> args = new HashMap<>();
       args.put("infolevel", "maximum");
-      args.put("outputformat", outputFormatValue);
 
-      final Map<String, String> config = new HashMap<>();
-
-      run(connectionInfo, args, config,
+      run(connectionInfo,
+          args,
+          outputFormat,
           directory.resolve("lint_report." + extension));
     }
   }
 
-  private Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
-    final String prefix = SiteLintReportVariationsTest.class.getName();
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
-  }
-
   private void run(DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
-                   final Map<String, String> config, final Path outputFile)
+                   final OutputFormat outputFormat,
+                   final Path outputFile)
     throws Exception
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("url", connectionInfo.getConnectionUrl());
-    argsMap.put("user", "sa");
-    argsMap.put("password", "");
     argsMap.put("title", "Lint Report of Example Database");
-    argsMap.put("command", "lint");
-    argsMap.put("outputfile", outputFile.toString());
 
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
-    runConfig.putAll(informationSchema);
-    if (config != null)
-    {
-      runConfig.putAll(config);
-    }
-
-    final Path configFile = createConfig(runConfig);
-    argsMap.put("g", configFile.toString());
-
-    Main.main(flattenCommandlineArgs(argsMap));
+    final Path lintReportFile = commandlineExecution(connectionInfo,
+                                                     "lint",
+                                                     argsMap,
+                                                     outputFormat);
+    move(lintReportFile, outputFile);
   }
 
 }
