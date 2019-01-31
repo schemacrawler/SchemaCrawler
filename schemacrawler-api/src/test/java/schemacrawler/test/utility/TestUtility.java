@@ -35,7 +35,6 @@ import static java.nio.file.Files.deleteIfExists;
 import static java.nio.file.Files.exists;
 import static java.nio.file.Files.move;
 import static java.nio.file.Files.newBufferedReader;
-import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.Files.newInputStream;
 import static java.nio.file.Files.newOutputStream;
 import static java.nio.file.Files.size;
@@ -57,7 +56,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
-import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -90,7 +88,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
-import schemacrawler.schemacrawler.Config;
 import sf.util.IOUtility;
 
 public final class TestUtility
@@ -256,23 +253,6 @@ public final class TestUtility
     assertThat("Diagram file has 0 bytes size",
                size(diagramFile),
                greaterThan(0L));
-  }
-
-  public static Path writeConfigToTempFile(final Config config)
-    throws IOException
-  {
-    requireNonNull(config, "No properties provided");
-    final Path tempFile = IOUtility.createTempFilePath("output", "data")
-      .normalize().toAbsolutePath();
-
-    final Writer tempFileWriter = newBufferedWriter(tempFile,
-                                                    WRITE,
-                                                    TRUNCATE_EXISTING,
-                                                    CREATE);
-    config.toProperties().store(tempFileWriter,
-                                "Store config to temporary file for testing");
-
-    return tempFile;
   }
 
   private static Path buildDirectory()

@@ -106,6 +106,7 @@ public abstract class BaseLintExecutableTest
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "lint",
                                              argsMap,
+                                             additionalConfig,
                                              outputFormat)),
                hasSameContentAndTypeAs(classpathResource(referenceFileName
                                                          + ".txt"),

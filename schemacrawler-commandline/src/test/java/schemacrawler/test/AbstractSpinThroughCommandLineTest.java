@@ -34,17 +34,13 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
 import static schemacrawler.test.utility.FileHasContent.classpathResource;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -72,15 +68,6 @@ public abstract class AbstractSpinThroughCommandLineTest
     TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
-  private Path hsqldbProperties;
-
-  @BeforeEach
-  public void copyResources()
-    throws IOException
-  {
-    hsqldbProperties = copyResourceToTempFile("/hsqldb.INFORMATION_SCHEMA.config.properties");
-  }
-
   @Test
   public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
     throws Exception
@@ -96,7 +83,6 @@ public abstract class AbstractSpinThroughCommandLineTest
           final String command = schemaTextDetailType.name();
 
           final Map<String, String> argsMap = new HashMap<>();
-          argsMap.put("g", hsqldbProperties.toString());
           argsMap.put("sequences", ".*");
           argsMap.put("synonyms", ".*");
           argsMap.put("routines", ".*");
@@ -106,6 +92,7 @@ public abstract class AbstractSpinThroughCommandLineTest
           assertThat(outputOf(commandlineExecution(connectionInfo,
                                                    command,
                                                    argsMap,
+                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
                                                    outputFormat)),
                      hasSameContentAndTypeAs(classpathResource(SPIN_THROUGH_OUTPUT
                                                                + referenceFile),

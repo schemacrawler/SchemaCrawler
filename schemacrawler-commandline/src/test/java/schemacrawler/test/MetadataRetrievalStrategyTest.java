@@ -34,12 +34,10 @@ import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecu
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 import static schemacrawler.test.utility.TestUtility.clean;
-import static schemacrawler.test.utility.TestUtility.writeConfigToTempFile;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,10 +89,8 @@ public class MetadataRetrievalStrategyTest
     final Config config = new Config();
     config.put("schemacrawler.schema.retrieval.strategy.tables",
                MetadataRetrievalStrategy.data_dictionary_all.name());
-    final Path configFile = writeConfigToTempFile(config);
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("g", configFile.toString());
     argsMap.put("infolevel", infoLevel.name());
     argsMap.put("noinfo", "true");
 
@@ -102,6 +98,7 @@ public class MetadataRetrievalStrategyTest
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              schemaTextDetailType.name(),
                                              argsMap,
+                                             config,
                                              outputFormat)),
                hasNoContent());
 

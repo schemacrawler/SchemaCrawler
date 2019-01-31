@@ -29,19 +29,40 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static java.nio.file.Files.newBufferedWriter;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.StandardOpenOption.WRITE;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.Main;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestWriter;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputFormat;
+import sf.util.IOUtility;
 
 public final class CommandlineTestUtility
 {
+
+  public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
+                                          final String command,
+                                          final Map<String, String> argsMap,
+                                          final Config config,
+                                          final OutputFormat outputFormat)
+    throws Exception
+  {
+    return commandlineExecution(connectionInfo,
+                                command,
+                                argsMap,
+                                writeConfigToTempFile(config),
+                                outputFormat.getFormat());
+  }
 
   public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
                                           final String command,
@@ -52,6 +73,7 @@ public final class CommandlineTestUtility
     return commandlineExecution(connectionInfo,
                                 command,
                                 argsMap,
+                                (Path) null,
                                 outputFormat.getFormat());
   }
 
@@ -61,6 +83,35 @@ public final class CommandlineTestUtility
                                           final String outputFormatValue)
     throws Exception
   {
+    return commandlineExecution(connectionInfo,
+                                command,
+                                argsMap,
+                                (Path) null,
+                                outputFormatValue);
+  }
+
+  public static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
+                                          final String command,
+                                          final Map<String, String> argsMap,
+                                          final String propertiesFileResource,
+                                          final OutputFormat outputFormat)
+    throws Exception
+  {
+    final Path propertiesFile = copyResourceToTempFile(propertiesFileResource);
+    return commandlineExecution(connectionInfo,
+                                command,
+                                argsMap,
+                                propertiesFile,
+                                outputFormat.getFormat());
+  }
+
+  private static Path commandlineExecution(final DatabaseConnectionInfo connectionInfo,
+                                           final String command,
+                                           final Map<String, String> argsMap,
+                                           final Path propertiesFile,
+                                           final String outputFormatValue)
+    throws Exception
+  {
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout;)
     {
@@ -68,6 +119,10 @@ public final class CommandlineTestUtility
       commandlineArgsMap.put("url", connectionInfo.getConnectionUrl());
       commandlineArgsMap.put("user", "sa");
       commandlineArgsMap.put("password", "");
+      if (propertiesFile != null)
+      {
+        commandlineArgsMap.put("g", propertiesFile.toString());
+      }
       commandlineArgsMap.put("command", command);
       commandlineArgsMap.put("outputformat", outputFormatValue);
       commandlineArgsMap.put("outputfile", out.toString());
@@ -81,6 +136,27 @@ public final class CommandlineTestUtility
       Main.main(flattenCommandlineArgs(commandlineArgsMap));
     }
     return testout.getFilePath();
+  }
+
+  private static Path writeConfigToTempFile(final Config config)
+    throws IOException
+  {
+    if (config == null)
+    {
+      return null;
+    }
+
+    final Path tempFile = IOUtility.createTempFilePath("test", ".properties")
+      .normalize().toAbsolutePath();
+
+    final Writer tempFileWriter = newBufferedWriter(tempFile,
+                                                    WRITE,
+                                                    TRUNCATE_EXISTING,
+                                                    CREATE);
+    config.toProperties().store(tempFileWriter,
+                                "Store config to temporary file for testing");
+
+    return tempFile;
   }
 
   private CommandlineTestUtility()
