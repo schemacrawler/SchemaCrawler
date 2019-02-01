@@ -5,7 +5,7 @@
   <info organisation="schemacrawler" module="schemacrawler-velocity" />
   <dependencies>
     <dependency org="com.github.spullara.mustache.java"
-      name="mustache.java" rev="0.9.6" />
+      name="compiler" rev="0.9.6" />
 
     <exclude type="source" ext="jar" />
     <exclude type="sources" ext="jar" />
