@@ -8,6 +8,8 @@
 - Convert tests to JUnit 5
 - Remove input resource from output options, and let each command fend for itself
 - Added integrations with Mustache for templated output
+- Use JUnit 5 in archetype generated code
+- Use plain Java serialization for offline database
 
 
 <a name="a15.03.04"></a>

@@ -38,11 +38,6 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>de.ruedigermoeller</groupId>
-      <artifactId>fst</artifactId>
-      <version>2.57</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>

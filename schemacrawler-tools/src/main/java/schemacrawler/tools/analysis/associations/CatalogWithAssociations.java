@@ -54,15 +54,6 @@ public final class CatalogWithAssociations
     weakAssociations = weakAssociationsAnalyzer.analyzeTables();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> T getAttribute(final String name)
-  {
-    return getAttribute(name, (T) null);
-  }
-
   public Collection<WeakAssociationForeignKey> getWeakAssociations()
   {
     return weakAssociations;

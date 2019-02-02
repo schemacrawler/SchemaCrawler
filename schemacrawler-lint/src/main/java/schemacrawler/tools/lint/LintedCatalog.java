@@ -75,15 +75,6 @@ public final class LintedCatalog
     collector = linters.getCollector();
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> T getAttribute(final String name)
-  {
-    return getAttribute(name, (T) null);
-  }
-
   public LintCollector getCollector()
   {
     return collector;

@@ -65,6 +65,15 @@ public abstract class BaseCatalogDecorator
     this.catalog = requireNonNull(catalog, "No catalog provided");
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final <T> T getAttribute(final String name)
+  {
+    return catalog.getAttribute(name, (T) null);
+  }
+
   @Override
   public int compareTo(final NamedObject o)
   {

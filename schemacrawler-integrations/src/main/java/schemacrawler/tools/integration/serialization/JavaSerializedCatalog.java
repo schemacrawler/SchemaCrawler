@@ -32,22 +32,20 @@ import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Optional;
-
-import org.nustaq.serialization.FSTObjectInput;
-import org.nustaq.serialization.FSTObjectOutput;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.BaseCatalogDecorator;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
- * Decorates a database to allow for serialization to and from XML.
- *
- * @author sfatehi
+ * Decorates a database to allow for serialization to and from plain
+ * Java serialization.
  */
-public final class XmlSerializedCatalog
+public final class JavaSerializedCatalog
   extends BaseCatalogDecorator
   implements SerializableCatalog
 {
@@ -58,9 +56,9 @@ public final class XmlSerializedCatalog
     throws SchemaCrawlerException
   {
     requireNonNull(in, "No input stream provided");
-    try (final FSTObjectInput fstin = new FSTObjectInput(in);)
+    try (final ObjectInputStream objIn = new ObjectInputStream(in);)
     {
-      return (Catalog) fstin.readObject();
+      return (Catalog) objIn.readObject();
     }
     catch (ClassNotFoundException | IOException e)
     {
@@ -68,24 +66,15 @@ public final class XmlSerializedCatalog
     }
   }
 
-  public XmlSerializedCatalog(final Catalog catalog)
+  public JavaSerializedCatalog(final Catalog catalog)
   {
     super(catalog);
   }
 
-  public XmlSerializedCatalog(final InputStream in)
+  public JavaSerializedCatalog(final InputStream in)
     throws SchemaCrawlerException
   {
     this(readCatalog(in));
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> T getAttribute(final String name)
-  {
-    return getAttribute(name, (T) null);
   }
 
   /**
@@ -110,9 +99,9 @@ public final class XmlSerializedCatalog
     throws SchemaCrawlerException
   {
     requireNonNull(out, "No output stream provided");
-    try (final FSTObjectOutput fstout = new FSTObjectOutput(out);)
+    try (final ObjectOutputStream objOut = new ObjectOutputStream(out);)
     {
-      fstout.writeObject(catalog);
+      objOut.writeObject(catalog);
     }
     catch (final IOException e)
     {

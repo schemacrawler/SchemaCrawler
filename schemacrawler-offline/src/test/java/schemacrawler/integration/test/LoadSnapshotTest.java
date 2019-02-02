@@ -53,7 +53,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
 import sf.util.IOUtility;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -68,7 +68,7 @@ public class LoadSnapshotTest
   {
     final FileInputStream inputFileStream = new FileInputStream(serializedCatalogFile
       .toFile());
-    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(inputFileStream);
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(inputFileStream);
 
     final Schema schema = serializedCatalog.lookupSchema("PUBLIC.BOOKS")
       .orElse(null);
@@ -100,7 +100,7 @@ public class LoadSnapshotTest
     serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
                                                          "ser");
 
-    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(catalog);
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
     serializedCatalog
       .save(new FileOutputStream(serializedCatalogFile.toFile()));
     assertThat("Database was not serialized",

@@ -117,15 +117,6 @@ public final class CatalogWithCounts
     reduce(Table.class, getTableReducer(new TableCountFilter(options)));
   }
 
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final <T> T getAttribute(final String name)
-  {
-    return getAttribute(name, (T) null);
-  }
-
   public Map<Table, Long> getCounts()
   {
     return counts;

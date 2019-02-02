@@ -67,7 +67,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
 import schemacrawler.tools.offline.OfflineDatabaseConnector;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -79,6 +79,7 @@ public class OfflineSnapshotTest
 {
 
   private static final String OFFLINE_EXECUTABLE_OUTPUT = "offline_executable_output/";
+
   private Path serializedCatalogFile;
 
   @Test
@@ -216,7 +217,7 @@ public class OfflineSnapshotTest
 
     serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
                                                          "ser");
-    final XmlSerializedCatalog serializedCatalog = new XmlSerializedCatalog(catalog);
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
     serializedCatalog
       .save(new FileOutputStream(serializedCatalogFile.toFile()));
     assertThat("Database was not serialized",

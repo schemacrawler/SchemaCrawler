@@ -13,7 +13,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptions;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.catalogloader.CatalogLoader;
-import schemacrawler.tools.integration.serialization.XmlSerializedCatalog;
+import schemacrawler.tools.integration.serialization.JavaSerializedCatalog;
 import schemacrawler.tools.offline.jdbc.OfflineConnection;
 import sf.util.SchemaCrawlerLogger;
 
@@ -82,7 +82,7 @@ public final class OfflineCatalogLoader
       .getOfflineDatabasePath();
     final FileInputStream inputFileStream = new FileInputStream(offlineDatabasePath
       .toFile());
-    final XmlSerializedCatalog catalog = new XmlSerializedCatalog(inputFileStream);
+    final JavaSerializedCatalog catalog = new JavaSerializedCatalog(inputFileStream);
     return catalog;
   }
 

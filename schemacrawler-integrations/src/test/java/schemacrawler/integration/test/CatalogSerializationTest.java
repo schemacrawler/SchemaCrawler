@@ -47,8 +47,6 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.nustaq.serialization.FSTObjectInput;
-import org.nustaq.serialization.FSTObjectOutput;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
@@ -62,52 +60,6 @@ import sf.util.IOUtility;
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CatalogSerializationTest
 {
-
-  @Test
-  public void catalogSerializationWithFst(final Connection connection)
-    throws Exception
-  {
-    final SchemaCrawlerOptions schemaCrawlerOptions = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
-
-    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
-    assertThat("Could not obtain catalog", catalog, notNullValue());
-    assertThat("Could not find any schemas",
-               catalog.getSchemas(),
-               not(empty()));
-
-    final Schema schema = catalog.lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertThat("Could not obtain schema", schema, notNullValue());
-    assertThat("Unexpected number of tables in the schema",
-               catalog.getTables(schema),
-               hasSize(10));
-
-    final Path testOutputFile = IOUtility
-      .createTempFilePath("sc_fst_serialization", "fst");
-    try (
-        final FSTObjectOutput fstout = new FSTObjectOutput(new FileOutputStream(testOutputFile
-          .toFile()));)
-    {
-      fstout.writeObject(catalog);
-    }
-    assertThat("Catalog was not serialized",
-               Files.size(testOutputFile),
-               greaterThan(0L));
-
-    Catalog catalogDeserialized = null;
-    try (
-        final FSTObjectInput fstin = new FSTObjectInput(new FileInputStream(testOutputFile
-          .toFile()));)
-    {
-      catalogDeserialized = (Catalog) fstin.readObject();
-    }
-
-    final Schema schemaDeserialized = catalogDeserialized
-      .lookupSchema("PUBLIC.BOOKS").orElse(null);
-    assertThat("Could not obtain schema", schemaDeserialized, notNullValue());
-    assertThat("Unexpected number of tables in the schema",
-               catalogDeserialized.getTables(schemaDeserialized),
-               hasSize(10));
-  }
 
   @Test
   public void catalogSerializationWithJava(final Connection connection)

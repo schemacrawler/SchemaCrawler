@@ -82,7 +82,7 @@ public final class SerializationCommand
              String.format("schemacrawler-%s.%s", UUID.randomUUID(), "data")))
       .normalize().toAbsolutePath();
 
-    final SerializableCatalog serializableCatalog = new XmlSerializedCatalog(catalog);
+    final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(catalog);
     try (final OutputStream out = newOutputStream(outputFile);)
     {
       serializableCatalog.save(out);
