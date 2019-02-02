@@ -30,38 +30,20 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class TestBundledDistributions
+public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_postgresql()
-    throws Exception
-  {
-
-    final Connection connection = null;
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseConnector("postgresql");
-    assertThat(databaseSystemIdentifier
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(8));
-  }
-
-  @Test
-  public void testPlugin_postgresql()
+  public void testPlugin_offline()
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    assertTrue(registry.hasDatabaseSystemIdentifier("postgresql"));
+    assertThat(registry.hasDatabaseSystemIdentifier("offline"), is(true));
   }
 
 }

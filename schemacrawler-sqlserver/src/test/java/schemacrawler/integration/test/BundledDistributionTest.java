@@ -38,29 +38,29 @@ import org.junit.jupiter.api.Test;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class TestBundledDistributions
+public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_oracle()
+  public void testContextrmationSchema_sqlserver()
     throws Exception
   {
 
     final Connection connection = null;
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseConnector("oracle");
+      .lookupDatabaseConnector("sqlserver");
     assertThat(databaseSystemIdentifier
       .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(25));
+      .getInformationSchemaViews().size(), is(9));
   }
 
   @Test
-  public void testPlugin_oracle()
+  public void testPlugin_sqlserver()
     throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    assertThat(registry.hasDatabaseSystemIdentifier("oracle"), is(true));
+    assertThat(registry.hasDatabaseSystemIdentifier("sqlserver"), is(true));
   }
 
 }

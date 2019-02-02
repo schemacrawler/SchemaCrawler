@@ -2,7 +2,8 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,7 @@ public class TestCommandPlugin
     throws Exception
   {
     final CommandRegistry registry = new CommandRegistry();
-    assertTrue(registry.isCommandSupported("additional"));
+    assertThat(registry.isCommandSupported("additional"), is(true));
   }
 
 }

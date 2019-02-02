@@ -2,10 +2,10 @@
 #set( $symbol_dollar = '$' )
 #set( $symbol_escape = '\' )
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import schemacrawler.tools.lint.LinterRegistry;
 
@@ -17,7 +17,7 @@ public class TestLintPlugin
     throws Exception
   {
     final LinterRegistry registry = new LinterRegistry();
-    assertTrue(registry.hasLinter("${package}.AdditionalLinter"));
+    assertThat(registry.hasLinter("${package}.AdditionalLinter"), is(true));
   }
 
 }
