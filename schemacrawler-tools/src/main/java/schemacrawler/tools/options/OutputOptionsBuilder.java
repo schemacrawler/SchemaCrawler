@@ -301,7 +301,7 @@ public final class OutputOptionsBuilder
         }
         else
         {
-          extension = outputFormatValue;
+          extension = "out";
         }
 
         final Path randomOutputFile = Paths
