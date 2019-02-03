@@ -369,6 +369,11 @@ public final class Config
     config.putAll(m);
   }
 
+  public void putAll(final Properties properties)
+  {
+    config.putAll(propertiesMap(properties));
+  }
+
   @Override
   public String remove(final Object key)
   {

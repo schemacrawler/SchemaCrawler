@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
+import org.sqlite.SQLiteConfig;
+import org.sqlite.SQLiteOpenMode;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -81,6 +83,11 @@ public final class SQLiteDatabaseConnector
     {
       throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
     }
+
+    // Open database as read-only
+    final SQLiteConfig sqLiteConfig = new SQLiteConfig();
+    sqLiteConfig.setOpenMode(SQLiteOpenMode.READONLY);
+    additionalConfig.putAll(sqLiteConfig.toProperties());
 
     return super.newDatabaseConnectionOptions(userCredentials,
                                               additionalConfig);
