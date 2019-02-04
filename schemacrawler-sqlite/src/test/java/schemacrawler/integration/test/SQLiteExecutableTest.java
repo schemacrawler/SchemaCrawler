@@ -29,61 +29,47 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-
-import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.BaseSqliteTest;
-import schemacrawler.test.utility.DatabaseTestUtility;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
+import schemacrawler.test.utility.*;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
-public class SQLiteExecutableTest
-  extends BaseSqliteTest
+import java.nio.file.Path;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.*;
+
+@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class SQLiteExecutableTest
+    extends BaseSqliteTest
 {
 
-  @Test
-  public void count(final TestContext testContext)
-    throws Exception
+  @Test public void count(final TestContext testContext)
+      throws Exception
   {
     run(testContext.testMethodFullName(), "count");
   }
 
-  @Test
-  public void dump(final TestContext testContext)
-    throws Exception
+  @Test public void dump(final TestContext testContext)
+      throws Exception
   {
     run(testContext.testMethodFullName(), "dump");
   }
 
   private void run(final String currentMethodFullName, final String command)
-    throws Exception
+      throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-      .normalize().toAbsolutePath();
+        .normalize().toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
-                                          "jdbc:sqlite:" + sqliteDbFile,
-                                          null,
-                                          null,
-                                          "/sqlite.scripts.txt" });
+        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
 
     final Config config = new Config();
     config.put("server", "sqlite");
@@ -92,12 +78,13 @@ public class SQLiteExecutableTest
     final SchemaCrawlerOptions options = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
 
     final SchemaTextOptions textOptions = SchemaTextOptionsBuilder
-      .newSchemaTextOptions();
+        .newSchemaTextOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+        command);
     executable.setSchemaCrawlerOptions(options);
     executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
+                                              .builder(textOptions).toConfig());
 
     assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
                                             executable)),

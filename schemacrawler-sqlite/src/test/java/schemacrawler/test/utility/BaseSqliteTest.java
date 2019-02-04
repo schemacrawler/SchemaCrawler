@@ -28,54 +28,40 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import java.io.IOException;
+import org.apache.commons.dbcp2.BasicDataSource;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.testdb.SqlScript;
+import sf.util.IOUtility;
+
+import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.testdb.SqlScript;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
-import schemacrawler.tools.sqlite.SQLiteDatabaseConnector;
-import sf.util.IOUtility;
 
 public abstract class BaseSqliteTest
 {
 
   protected DataSource createDataSource(final Path sqliteDbFile)
-    throws SchemaCrawlerException
+      throws SchemaCrawlerException
   {
-
-    final Config config = new Config();
-    config.put("server", "sqlite");
-    config.put("database", sqliteDbFile.toString());
-
-    DataSource dataSource;
-    try
-    {
-      dataSource = new SQLiteDatabaseConnector()
-        .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
-    }
-    catch (final IOException e)
-    {
-      throw new SchemaCrawlerException(e.getMessage(), e);
-    }
+    final BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setUrl("jdbc:sqlite:" + sqliteDbFile);
+    dataSource.setUsername(null);
+    dataSource.setPassword(null);
+    dataSource.setDefaultAutoCommit(false);
 
     return dataSource;
   }
 
   protected Path createTestDatabase(final String databaseSqlResource)
-    throws Exception
+      throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("resource", "db")
-      .normalize().toAbsolutePath();
+        .normalize().toAbsolutePath();
 
     final DataSource dataSource = createDataSource(sqliteDbFile);
 
-    try (Connection connection = dataSource.getConnection();)
+    try (final Connection connection = dataSource.getConnection())
     {
       connection.setAutoCommit(false);
 
@@ -87,8 +73,8 @@ public abstract class BaseSqliteTest
     return sqliteDbFile;
   }
 
-  protected Connection createConnection(Path sqliteDbFile)
-    throws SQLException, SchemaCrawlerException
+  protected Connection createConnection(final Path sqliteDbFile)
+      throws SQLException, SchemaCrawlerException
   {
     return createDataSource(sqliteDbFile).getConnection();
   }

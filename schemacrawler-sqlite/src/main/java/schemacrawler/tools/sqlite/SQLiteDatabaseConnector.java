@@ -28,12 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.sqlite;
 
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.util.regex.Pattern;
-
-import org.sqlite.SQLiteConfig;
-import org.sqlite.SQLiteOpenMode;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -43,26 +37,30 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.regex.Pattern;
+
 public final class SQLiteDatabaseConnector
-  extends DatabaseConnector
+    extends DatabaseConnector
 {
 
   public SQLiteDatabaseConnector()
-    throws IOException
+      throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/help/Connections.sqlite.txt"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
-          (informationSchemaViewsBuilder,
-           connection) -> informationSchemaViewsBuilder
-             .fromResourceFolder("/sqlite.information_schema"),
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
+              .fromResourceFolder("/sqlite.information_schema"),
           url -> Pattern.matches("jdbc:sqlite:.*", url));
   }
 
-  @Override
-  public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
+  @Override public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(
+      final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super
+        .getSchemaRetrievalOptionsBuilder(connection);
     schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
     return schemaRetrievalOptionsBuilder;
   }
@@ -70,10 +68,9 @@ public final class SQLiteDatabaseConnector
   /**
    * {@inheritDoc}
    */
-  @Override
-  public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
-                                                        final Config additionalConfig)
-    throws SchemaCrawlerException
+  @Override public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
+                                                                  final Config additionalConfig)
+      throws SchemaCrawlerException
   {
     try
     {
@@ -84,13 +81,8 @@ public final class SQLiteDatabaseConnector
       throw new SchemaCrawlerException("Could not load SQLite JDBC driver", e);
     }
 
-    // Open database as read-only
-    final SQLiteConfig sqLiteConfig = new SQLiteConfig();
-    sqLiteConfig.setOpenMode(SQLiteOpenMode.READONLY);
-    additionalConfig.putAll(sqLiteConfig.toProperties());
-
-    return super.newDatabaseConnectionOptions(userCredentials,
-                                              additionalConfig);
+    return super
+        .newDatabaseConnectionOptions(userCredentials, additionalConfig);
   }
 
 }

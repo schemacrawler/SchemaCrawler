@@ -28,38 +28,21 @@ http://www.gnu.org/licenses/
 package schemacrawler.testdb;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static java.util.Objects.requireNonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Objects.requireNonNull;
+
 public class TestSchemaCreator
-  implements Runnable
+    implements Runnable
 {
-
-  public static void main(final String[] args)
-    throws Exception
-  {
-    final String connectionUrl = args[0];
-    final String user = args[1];
-    final String password = args[2];
-    final String scriptsResource = args[3];
-
-    final Connection connection = DriverManager
-      .getConnection(connectionUrl, user, password);
-    connection.setAutoCommit(false);
-    final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
-                                                                  scriptsResource);
-    schemaCreator.run();
-  }
 
   private final Connection connection;
   private final String scriptsResource;
-
   public TestSchemaCreator(final Connection connection,
                            final String scriptsResource)
   {
@@ -69,15 +52,31 @@ public class TestSchemaCreator
                                           "No script resource provided");
   }
 
-  @Override
-  public void run()
+  public static void main(final String[] args)
+      throws Exception
   {
-    try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(TestSchemaCreator.class
-          .getResourceAsStream(scriptsResource), UTF_8));)
+    final String connectionUrl = args[0];
+    final String user = args[1];
+    final String password = args[2];
+    final String scriptsResource = args[3];
+
+    try (final Connection connection = DriverManager
+        .getConnection(connectionUrl, user, password))
     {
-      reader.lines()
-        .forEach(line -> new SqlScript(line, connection).run());
+      connection.setAutoCommit(false);
+      final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
+                                                                    scriptsResource);
+      schemaCreator.run();
+    }
+  }
+
+  @Override public void run()
+  {
+    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
+        TestSchemaCreator.class.getResourceAsStream(scriptsResource),
+        UTF_8)))
+    {
+      reader.lines().forEach(line -> new SqlScript(line, connection).run());
     }
     catch (final IOException e)
     {

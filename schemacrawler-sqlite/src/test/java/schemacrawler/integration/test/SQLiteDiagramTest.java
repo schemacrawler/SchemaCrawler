@@ -29,17 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.file.Files.move;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-
-import java.nio.file.Path;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.test.utility.BaseSqliteTest;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -48,34 +39,34 @@ import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.sqlite.SchemaCrawlerSQLiteUtility;
 import sf.util.IOUtility;
 
-@ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestContextParameterResolver.class)
-public class SQLiteDiagramTest
-  extends BaseSqliteTest
+import java.nio.file.Path;
+
+import static java.nio.file.Files.move;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.FileHasContent.*;
+
+@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class SQLiteDiagramTest
+    extends BaseSqliteTest
 {
 
-  @Test
-  public void utility(final TestContext testContext)
-    throws Exception
+  @Test public void utility(final TestContext testContext)
+      throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-      .normalize().toAbsolutePath();
+        .normalize().toAbsolutePath();
     final Path sqliteDiagramTempFile = IOUtility
-      .createTempFilePath("sc", ".scdot").normalize().toAbsolutePath();
+        .createTempFilePath("sc", ".scdot").normalize().toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
-                                          "jdbc:sqlite:" + sqliteDbFile,
-                                          null,
-                                          null,
-                                          "/sqlite.scripts.txt" });
+        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
 
     final Path schemaCrawlerDiagramFile = SchemaCrawlerSQLiteUtility
-      .createSchemaCrawlerDiagram(sqliteDbFile, "scdot");
+        .createSchemaCrawlerDiagram(sqliteDbFile, "scdot");
     move(schemaCrawlerDiagramFile, sqliteDiagramTempFile);
 
     assertThat(outputOf(sqliteDiagramTempFile),
                hasSameContentAs(classpathResource(testContext
-                 .testMethodFullName())));
+                                                      .testMethodFullName())));
   }
 
 }
