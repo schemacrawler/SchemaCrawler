@@ -40,7 +40,8 @@ import static org.hamcrest.Matchers.is;
 public class BundledDistributionTest
 {
 
-  @Test public void testContextrmationSchema_sqlite()
+  @Test
+  public void testContextrmationSchema_sqlite()
       throws Exception
   {
 
@@ -53,7 +54,8 @@ public class BundledDistributionTest
                    .getInformationSchemaViews().size(), is(3));
   }
 
-  @Test public void testPlugin_sqlite()
+  @Test
+  public void testPlugin_sqlite()
       throws Exception
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();

@@ -45,11 +45,14 @@ import static java.nio.file.Files.move;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class SQLiteDiagramTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class SQLiteDiagramTest
     extends BaseSqliteTest
 {
 
-  @Test public void utility(final TestContext testContext)
+  @Test
+  public void utility(final TestContext testContext)
       throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")

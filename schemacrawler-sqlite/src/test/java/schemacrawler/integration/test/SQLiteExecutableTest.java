@@ -46,17 +46,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class SQLiteExecutableTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class SQLiteExecutableTest
     extends BaseSqliteTest
 {
 
-  @Test public void count(final TestContext testContext)
+  @Test
+  public void count(final TestContext testContext)
       throws Exception
   {
     run(testContext.testMethodFullName(), "count");
   }
 
-  @Test public void dump(final TestContext testContext)
+  @Test
+  public void dump(final TestContext testContext)
       throws Exception
   {
     run(testContext.testMethodFullName(), "dump");

@@ -54,23 +54,28 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.utility.MetaDataUtility.findForeignKeyCardinality;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class PrimaryKeyWeakAssociationsTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class PrimaryKeyWeakAssociationsTest
     extends BaseSqliteTest
 {
 
-  @Test public void weakAssociations1(final TestContext testContext)
+  @Test
+  public void weakAssociations1(final TestContext testContext)
       throws Exception
   {
     weakAssociations(testContext, "/pk_test_1.sql");
   }
 
-  @Test public void weakAssociations2(final TestContext testContext)
+  @Test
+  public void weakAssociations2(final TestContext testContext)
       throws Exception
   {
     weakAssociations(testContext, "/pk_test_2.sql");
   }
 
-  @Test public void weakAssociations3(final TestContext testContext)
+  @Test
+  public void weakAssociations3(final TestContext testContext)
       throws Exception
   {
     weakAssociations(testContext, "/pk_test_3.sql");

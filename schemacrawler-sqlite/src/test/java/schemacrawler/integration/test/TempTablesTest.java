@@ -53,11 +53,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.arrayWithSize;
 import static org.hamcrest.Matchers.is;
 
-@ExtendWith(TestLoggingExtension.class) public class TempTablesTest
+@ExtendWith(TestLoggingExtension.class)
+public class TempTablesTest
     extends BaseSqliteTest
 {
 
-  @Test public void tempTables()
+  @Test
+  public void tempTables()
       throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")

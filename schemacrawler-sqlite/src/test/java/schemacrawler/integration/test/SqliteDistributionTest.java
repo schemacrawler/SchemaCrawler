@@ -53,19 +53,23 @@ import static org.hamcrest.Matchers.is;
 import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestLoggingExtension.class) public class SqliteDistributionTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestLoggingExtension.class)
+public class SqliteDistributionTest
 {
 
   private DatabaseConnector dbConnector;
 
-  @BeforeEach public void setup()
+  @BeforeEach
+  public void setup()
       throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
   }
 
-  @Test public void testIdentifierQuoteString()
+  @Test
+  public void testIdentifierQuoteString()
       throws Exception
   {
 
@@ -74,7 +78,8 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
                    .toOptions().getIdentifierQuoteString(), is("\""));
   }
 
-  @Test public void testSqliteMain()
+  @Test
+  public void testSqliteMain()
       throws Exception
   {
     final OutputFormat outputFormat = TextOutputFormat.text;

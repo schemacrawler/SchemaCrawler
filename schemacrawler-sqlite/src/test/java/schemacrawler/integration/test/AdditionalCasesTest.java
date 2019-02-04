@@ -43,17 +43,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class AdditionalCasesTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class AdditionalCasesTest
     extends BaseSqliteTest
 {
 
-  @Test public void advancedUsage(final TestContext testContext)
+  @Test
+  public void advancedUsage(final TestContext testContext)
       throws Exception
   {
     run(testContext.testMethodFullName(), "/advanced_usage.sql", "details");
   }
 
-  @Test public void quotedCreateScript(final TestContext testContext)
+  @Test
+  public void quotedCreateScript(final TestContext testContext)
       throws Exception
   {
     run(testContext.testMethodFullName(),

@@ -44,11 +44,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-@ExtendWith(TestLoggingExtension.class) @ExtendWith(TestContextParameterResolver.class) public class ForeignKeyWithoutReferencedPrimaryKeyTest
+@ExtendWith(TestLoggingExtension.class)
+@ExtendWith(TestContextParameterResolver.class)
+public class ForeignKeyWithoutReferencedPrimaryKeyTest
     extends BaseSqliteTest
 {
 
-  @Test public void foreignKeyWithoutReferencedPrimaryKey(final TestContext testContext)
+  @Test
+  public void foreignKeyWithoutReferencedPrimaryKey(final TestContext testContext)
       throws Exception
   {
     run(testContext.testMethodName(),
