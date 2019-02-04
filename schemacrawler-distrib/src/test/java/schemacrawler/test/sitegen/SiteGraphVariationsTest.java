@@ -28,10 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.*;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -39,19 +41,13 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SiteGraphVariationsTest
@@ -61,7 +57,7 @@ public class SiteGraphVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
+      throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -73,7 +69,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram(final TestContext testContext,
                       final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -86,7 +82,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_10_no_schema_colors(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -101,7 +97,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_11_title(final TestContext testContext,
                                final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -115,7 +111,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_12_graphviz_attributes(final TestContext testContext,
                                              final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -142,7 +138,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_2_portablenames(final TestContext testContext,
                                       final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -156,7 +152,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_3_important_columns(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -171,7 +167,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_4_ordinals(final TestContext testContext,
                                  final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -186,7 +182,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_5_alphabetical(final TestContext testContext,
                                      final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -201,7 +197,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_6_grep(final TestContext testContext,
                              final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -217,7 +213,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_7_grep_onlymatching(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -234,7 +230,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_8_no_cardinality(final TestContext testContext,
                                        final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -250,7 +246,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_9_row_counts(final TestContext testContext,
                                    final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -271,7 +267,7 @@ public class SiteGraphVariationsTest
                    final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-    throws Exception
+      throws Exception
   {
     deleteIfExists(outputFile);
 

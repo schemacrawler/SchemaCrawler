@@ -28,9 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.test.utility.*;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -38,19 +41,12 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SiteLintReportVariationsTest
@@ -60,7 +56,7 @@ public class SiteLintReportVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-    throws IOException, URISyntaxException
+      throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -72,12 +68,10 @@ public class SiteLintReportVariationsTest
 
   @Test
   public void lint_reports(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
-    for (final OutputFormat outputFormat: new OutputFormat[] {
-                                                               TextOutputFormat.html,
-                                                               TextOutputFormat.json,
-                                                               TextOutputFormat.text, })
+    for (final OutputFormat outputFormat : new OutputFormat[] {
+        TextOutputFormat.html, TextOutputFormat.json, TextOutputFormat.text, })
     {
       final String extension;
       if (outputFormat == TextOutputFormat.text)
@@ -98,11 +92,11 @@ public class SiteLintReportVariationsTest
     }
   }
 
-  private void run(DatabaseConnectionInfo connectionInfo,
+  private void run(final DatabaseConnectionInfo connectionInfo,
                    final Map<String, String> argsMap,
                    final OutputFormat outputFormat,
                    final Path outputFile)
-    throws Exception
+      throws Exception
   {
     deleteIfExists(outputFile);
 

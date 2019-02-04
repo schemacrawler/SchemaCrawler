@@ -29,29 +29,27 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
-import static sf.util.Utility.isBlank;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.lint.executable.LintOptionsBuilder;
+import schemacrawler.tools.options.OutputFormat;
 
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintOptionsBuilder;
-import schemacrawler.tools.options.OutputFormat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static sf.util.Utility.isBlank;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 public abstract class BaseLintExecutableTest
 {
 
@@ -59,12 +57,14 @@ public abstract class BaseLintExecutableTest
                                 final String linterConfigsResource,
                                 final Config additionalConfig,
                                 final String referenceFileName)
-    throws Exception
+      throws Exception
   {
-    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable("lint");
+    final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable(
+        "lint");
     if (!isBlank(linterConfigsResource))
     {
-      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
+      final Path linterConfigsFile = copyResourceToTempFile(
+          linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
@@ -85,7 +85,7 @@ public abstract class BaseLintExecutableTest
                                         final String linterConfigsResource,
                                         final Config additionalConfig,
                                         final String referenceFileName)
-    throws Exception
+      throws Exception
   {
     final Map<String, String> argsMap = new HashMap<>();
 
@@ -94,7 +94,8 @@ public abstract class BaseLintExecutableTest
 
     if (!isBlank(linterConfigsResource))
     {
-      final Path linterConfigsFile = copyResourceToTempFile(linterConfigsResource);
+      final Path linterConfigsFile = copyResourceToTempFile(
+          linterConfigsResource);
       argsMap.put("linterconfigs", linterConfigsFile.toString());
     }
 
@@ -108,9 +109,8 @@ public abstract class BaseLintExecutableTest
                                              argsMap,
                                              additionalConfig,
                                              outputFormat)),
-               hasSameContentAndTypeAs(classpathResource(referenceFileName
-                                                         + ".txt"),
-                                       outputFormat));
+               hasSameContentAndTypeAs(classpathResource(
+                   referenceFileName + ".txt"), outputFormat));
   }
 
 }

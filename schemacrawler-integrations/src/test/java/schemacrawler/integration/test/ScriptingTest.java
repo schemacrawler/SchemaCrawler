@@ -29,33 +29,32 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
+import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class ScriptingTest
 {
 
   @Test
   public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "script",
@@ -66,7 +65,7 @@ public class ScriptingTest
 
   @Test
   public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "script",
@@ -77,7 +76,7 @@ public class ScriptingTest
 
   @Test
   public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "script",
@@ -88,7 +87,7 @@ public class ScriptingTest
 
   @Test
   public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "script",
@@ -99,7 +98,7 @@ public class ScriptingTest
 
   @Test
   public void executableGroovy(final Connection connection)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
                                             executableOf("script"),
@@ -109,7 +108,7 @@ public class ScriptingTest
 
   @Test
   public void executableJavaScript(final Connection connection)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
                                             executableOf("script"),
@@ -119,7 +118,7 @@ public class ScriptingTest
 
   @Test
   public void executablePython(final Connection connection)
-    throws Exception
+      throws Exception
   {
     System.setProperty("python.console.encoding", "UTF-8");
     assertThat(outputOf(executableExecution(connection,
@@ -130,7 +129,7 @@ public class ScriptingTest
 
   @Test
   public void executableRuby(final Connection connection)
-    throws Exception
+      throws Exception
   {
     assertThat(outputOf(executableExecution(connection,
                                             executableOf("script"),
