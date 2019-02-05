@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ivy-module version="2.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="schemacrawler" module="schemacrawler-graphviz-java" />
+<ivy-module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            version="2.0"
+            xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+  <info organisation="schemacrawler" module="schemacrawler-graphviz-java"/>
   <dependencies>
     <dependency org="guru.nidi" name="graphviz-java"
-      rev="0.8.0" />
+                rev="0.8.1"/>
 
-    <exclude type="source" ext="jar" />
-    <exclude type="sources" ext="jar" />
-    <exclude type="test" ext="jar" />
-    <exclude type="javadoc" ext="jar" />
+    <exclude type="source" ext="jar"/>
+    <exclude type="sources" ext="jar"/>
+    <exclude type="test" ext="jar"/>
+    <exclude type="javadoc" ext="jar"/>
   </dependencies>
 </ivy-module>

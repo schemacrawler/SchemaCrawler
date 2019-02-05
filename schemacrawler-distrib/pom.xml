@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>us.fatehi</groupId>
@@ -183,7 +183,7 @@
                 <artifactItem>
                   <groupId>mysql</groupId>
                   <artifactId>mysql-connector-java</artifactId>
-                  <version>8.0.13</version>
+                  <version>8.0.15</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
@@ -191,7 +191,7 @@
                 <artifactItem>
                   <groupId>com.microsoft.sqlserver</groupId>
                   <artifactId>mssql-jdbc</artifactId>
-                  <version>7.0.0.jre8</version>
+                  <version>7.2.0.jre8</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
@@ -245,10 +245,10 @@
             <phase>package</phase>
             <configuration>
               <target>
-                <property name="SchemaCrawler.home" location=".." />
+                <property name="SchemaCrawler.home" location=".."/>
                 <property name="SchemaCrawler.version"
-                  value="${project.version}" />
-                <ant antfile="src\assembly\distribution.xml" target="make" />
+                          value="${project.version}"/>
+                <ant antfile="src\assembly\distribution.xml" target="make"/>
               </target>
             </configuration>
             <goals>
