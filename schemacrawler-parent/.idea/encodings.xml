@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/../schemacrawler" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-maven-project" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-command" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-dbconnector" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-lint" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-commandline" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-db2" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-dbtest" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-diff" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-distrib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-docs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-examplecode" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-hsqldb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-integrations" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-lint" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-mysql" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-offline" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-oracle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-postgresql" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-sqlite" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-sqlserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-testdb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-tools" charset="UTF-8" />
+  </component>
+</project>
