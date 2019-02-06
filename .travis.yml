@@ -62,4 +62,4 @@ deploy:
 after_deploy:
   - cd $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dsonar.branch.name=$TRAVIS_BRANCH install sonar:sonar
+  - mvn -Dsonar.branch.name=master sonar:sonar
