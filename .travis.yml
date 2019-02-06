@@ -12,7 +12,6 @@ notifications:
 env:
   global:
     - SC_BUILD_DIR=`pwd`
-    - sonar.branch.name=$TRAVIS_TAG
 cache:
   directories:
     - .autoconf
@@ -30,7 +29,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean install jacoco:report coveralls:report sonar:sonar
+  - mvn -Dsonar.branch.name=$TRAVIS_TAG -Dcomplete clean install jacoco:report coveralls:report sonar:sonar
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
