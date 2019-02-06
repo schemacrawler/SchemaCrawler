@@ -9,7 +9,7 @@
   <version>15.04.01</version>
   <name>SchemaCrawler [Parent]</name>
   <description>Free database schema discovery and comprehension tool</description>
-  <url>https://github.com/schemacrawler/SchemaCrawler</url>
+  <url>https://www.schemacrawler.com</url>
   <inceptionYear>2003</inceptionYear>
   <licenses>
     <license>

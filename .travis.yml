@@ -29,7 +29,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dsonar.branch.name=$TRAVIS_TAG -Dcomplete clean install jacoco:report coveralls:report sonar:sonar
+  - mvn -Dcomplete clean install jacoco:report coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
@@ -59,3 +59,5 @@ deploy:
     local_dir: "./schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
+after_delpoy:
+  - mvn -Dsonar.branch.name=$TRAVIS_BRANCH install sonar:sonar
