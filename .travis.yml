@@ -12,6 +12,7 @@ notifications:
 env:
   global:
     - SC_BUILD_DIR=`pwd`
+    - sonar.branch.name=$TRAVIS_TAG
 cache:
   directories:
     - .autoconf
