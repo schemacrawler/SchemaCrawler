@@ -59,5 +59,5 @@ deploy:
     local_dir: "./schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
-after_delpoy:
+after_deploy:
   - mvn -Dsonar.branch.name=$TRAVIS_BRANCH install sonar:sonar
