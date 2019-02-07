@@ -59,7 +59,7 @@ deploy:
     local_dir: "./schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
-after_deploy:
+after_script:
   - cd $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
   - mvn -Dsonar.branch.name=master sonar:sonar
