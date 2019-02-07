@@ -6,11 +6,6 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/schemacrawler/schemacrawler.svg)](https://hub.docker.com/r/schemacrawler/schemacrawler/)
 [![Chocolatey](https://img.shields.io/chocolatey/v/schemacrawler.svg)](https://chocolatey.org/packages/schemacrawler)
 
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=security_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=us.fatehi%3Aschemacrawler-parent&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=us.fatehi%3Aschemacrawler-parent)
-
 
 
 # ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/raw/master/schemacrawler-docs/logo/schemacrawler_logo.png?raw=true) SchemaCrawler
