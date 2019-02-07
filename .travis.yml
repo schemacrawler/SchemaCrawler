@@ -29,7 +29,7 @@ addons:
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean install jacoco:report coveralls:report
+  - mvn -Dcomplete clean install jacoco:report coveralls:report sonar:sonar
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
@@ -59,7 +59,3 @@ deploy:
     local_dir: "./schemacrawler-distrib/target/_website"
     email: "sualeh@hotmail.com"
     name: "Sualeh Fatehi"
-after_script:
-  - cd $SC_BUILD_DIR
-  - cd "./schemacrawler-parent"
-  - mvn sonar:sonar
