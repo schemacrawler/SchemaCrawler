@@ -62,4 +62,4 @@ deploy:
 after_script:
   - cd $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dsonar.branch.name=master sonar:sonar
+  - mvn sonar:sonar
