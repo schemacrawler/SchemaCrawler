@@ -99,11 +99,10 @@ public final class OutputOptionsBuilder
       configProperties = config;
     }
 
-    this
-      .withInputEncoding(configProperties.getStringValue(SC_INPUT_ENCODING,
-                                                         UTF_8.name()))
-      .withOutputEncoding(configProperties.getStringValue(SC_OUTPUT_ENCODING,
-                                                          UTF_8.name()));
+    withInputEncoding(configProperties
+                        .getStringValue(SC_INPUT_ENCODING, UTF_8.name()))
+      .withOutputEncoding(configProperties
+                            .getStringValue(SC_OUTPUT_ENCODING, UTF_8.name()));
 
     return this;
   }
@@ -116,7 +115,7 @@ public final class OutputOptionsBuilder
       return this;
     }
 
-    this.withInputEncoding(options.getInputCharset())
+    withInputEncoding(options.getInputCharset())
       .withOutputEncoding(options.getOutputCharset())
       .withOutputFormatValue(options.getOutputFormatValue());
     outputResource = options.getOutputResource();
@@ -149,15 +148,16 @@ public final class OutputOptionsBuilder
       if (outputResource instanceof FileOutputResource)
       {
         fileExtension = getFileExtension(((FileOutputResource) outputResource)
-          .getOutputFile());
+                                           .getOutputFile());
       }
       else
       {
         fileExtension = null;
       }
 
-      outputFormatValue = isBlank(fileExtension)? TextOutputFormat.text
-        .getFormat(): fileExtension;
+      outputFormatValue =
+        isBlank(fileExtension)? TextOutputFormat.text.getFormat():
+        fileExtension;
     }
 
     return new OutputOptions(inputEncodingCharset,
@@ -189,8 +189,7 @@ public final class OutputOptionsBuilder
    * Set character encoding for input files, such as scripts and
    * templates.
    *
-   * @param inputEncoding
-   *        Input encoding
+   * @param inputEncoding Input encoding
    * @return Builder
    */
   public OutputOptionsBuilder withInputEncoding(final String inputEncoding)
@@ -222,8 +221,7 @@ public final class OutputOptionsBuilder
   /**
    * Set character encoding for output files.
    *
-   * @param outputEncoding
-   *        Output encoding
+   * @param outputEncoding Output encoding
    * @return Builder
    */
   public OutputOptionsBuilder withOutputEncoding(final String outputEncoding)
@@ -243,8 +241,7 @@ public final class OutputOptionsBuilder
    * Sets the name of the output file. It is important to note that the
    * output encoding should be available at this point.
    *
-   * @param outputFile
-   *        Output path.
+   * @param outputFile Output path.
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFile(final Path outputFile)
@@ -257,8 +254,7 @@ public final class OutputOptionsBuilder
   /**
    * Sets output format.
    *
-   * @param outputFormat
-   *        Output format
+   * @param outputFormat Output format
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFormat(final OutputFormat outputFormat)
@@ -271,8 +267,7 @@ public final class OutputOptionsBuilder
   /**
    * Sets output format value.
    *
-   * @param outputFormatValue
-   *        Output format value
+   * @param outputFormatValue Output format value
    * @return Builder
    */
   public OutputOptionsBuilder withOutputFormatValue(final String outputFormatValue)
@@ -286,8 +281,8 @@ public final class OutputOptionsBuilder
   {
     if (outputResource == null)
     {
-      if (outputFormatValue == null
-          || TextOutputFormat.text.name().equals(outputFormatValue))
+      if (outputFormatValue == null || TextOutputFormat.text.name()
+        .equals(outputFormatValue))
       {
         this.outputResource = new ConsoleOutputResource();
       }
@@ -299,16 +294,21 @@ public final class OutputOptionsBuilder
           // Tacky hack for htmlx format
           extension = "svg.html";
         }
+        else if (outputFormatValue.matches("[A-Za-z]+"))
+        {
+          extension = outputFormatValue;
+        }
         else
         {
           extension = "out";
         }
 
-        final Path randomOutputFile = Paths
-          .get(".",
-               String
-                 .format("schemacrawler-%s.%s", UUID.randomUUID(), extension))
-          .normalize().toAbsolutePath();
+        final Path randomOutputFile = Paths.get(".",
+                                                String.format(
+                                                  "schemacrawler-%s.%s",
+                                                  UUID.randomUUID(),
+                                                  extension)).normalize()
+          .toAbsolutePath();
         this.outputResource = new FileOutputResource(randomOutputFile);
       }
     }
