@@ -22,14 +22,10 @@ addons:
   apt:
     packages:
       - graphviz
-  sonarcloud:
-    organization: "schemacrawler-github"
-    token:
-      secure: "E/yZtMUKCeEPSOQu8kWNtUZHzp1r9qcBtOVqX3gmjZtIqcOSXopHMzAhl43n9xDg14T1AH0R/fGggXZsxPmgfttkMClZI0GsbTIhZmCg2+ICB7SD9x+JM0QZk3Es7fw8DsjbC8fQZ5EYk6ErvepXPg/YtRAvWQhYp3mQjd2HA84Lp+CAD2hSEydPcLweE7Cs5jQhq5Y+imtV6f7obJ2r2z3D0EILBxi9PrkOAInx0VQEyVniaNOn3cFZ42wtpUKjQbtPxLpT/IGLSh9s3uIv9ANibuZa+TzeDi0HU6Ca96U40OZx5j8h6uVF489o7LH/d7zonwXBiGh3kpTEOPDx6CVSk2TVtuREaXwm4e0uSkBcf6qy1VRh4XszZbjcD7qMF1+ZEeN/7IXxOCSJATD2buq7EhC7Zdbg1kR7GFxUDNoiI5LYDdrWRAXpoaKEszwOgD0WHT7ildGwtdXUcqML5+i/vvSvSt/LDQN/Xe32d0GHMvJQ9HHMtoxL0eCBDncNYE0ih5NzdgaYvAsPEq0wk7VGSIR7W4q7iWalWvD7QqMq8QGdbkZD6QyiEDu4ntx6MhHT7+IcwzOaLL7HbGk0CtBDKkB2hhjDuzeUoVHf1+q+eP6ff2S3TOyDbCMztuCCrUUcuPF61jvsN/I0PspNq7OuB484vfUUj3HN78eTHO8="
 script:
   - echo $SC_BUILD_DIR
   - cd "./schemacrawler-parent"
-  - mvn -Dcomplete clean install jacoco:report coveralls:report sonar:sonar
+  - mvn -Dcomplete clean install jacoco:report coveralls:report
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
