@@ -31,9 +31,11 @@
         <module name="schemacrawler-offline" />
         <module name="schemacrawler-oracle" />
         <module name="schemacrawler-postgresql" />
+        <module name="schemacrawler-sapiq" />
         <module name="schemacrawler-sqlite" />
         <module name="schemacrawler-sqlserver" />
         <module name="schemacrawler-testdb" />
+        <module name="schemacrawler-timesten" />
         <module name="schemacrawler-tools" />
       </profile>
     </annotationProcessing>
@@ -59,9 +61,11 @@
       <module name="schemacrawler-offline" options="-profile compact2 -Werror" />
       <module name="schemacrawler-oracle" options="-profile compact2 -Werror" />
       <module name="schemacrawler-postgresql" options="-profile compact2 -Werror" />
+      <module name="schemacrawler-sapiq" options="-profile compact2 -Werror" />
       <module name="schemacrawler-sqlite" options="-profile compact2 -Werror" />
       <module name="schemacrawler-sqlserver" options="-profile compact2 -Werror" />
       <module name="schemacrawler-testdb" options="-profile compact2 -Werror" />
+      <module name="schemacrawler-timesten" options="-profile compact2 -Werror" />
       <module name="schemacrawler-tools" options="-profile compact2 -Werror" />
     </option>
   </component>
