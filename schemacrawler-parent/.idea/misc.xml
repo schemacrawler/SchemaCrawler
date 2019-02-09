@@ -7,6 +7,9 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/../schemacrawler-diff/pom.xml" />
         <option value="$PROJECT_DIR$/../../SchemaCrawler-Database-Plugins/schemacrawler-database-plugins-parent/pom.xml" />
+        <option value="$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/../../SchemaCrawler-Shell/pom.xml" />
+        <option value="$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin - Usage Example/pom.xml" />
       </list>
     </option>
   </component>
