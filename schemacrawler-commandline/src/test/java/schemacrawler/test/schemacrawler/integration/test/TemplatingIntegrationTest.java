@@ -26,18 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test.schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -49,43 +50,55 @@ public class TemplatingIntegrationTest
 {
 
   @Test
-  public void executableFreeMarker(final Connection connection)
+  public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("freemarker"),
-                                            "/plaintextschema.ftl")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "freemarker",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
   @Test
-  public void executableMustache(final Connection connection)
+  public void commandlineMustache(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("mustache"),
-                                            "/plaintextschema.mustache")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "mustache",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.mustache")),
                hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
   @Test
-  public void executableThymeleaf(final Connection connection)
+  public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("thymeleaf"),
-                                            "/plaintextschema.thymeleaf")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "thymeleaf",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
   @Test
-  public void executableVelocity(final Connection connection)
+  public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("velocity"),
-                                            "/plaintextschema.vm")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "velocity",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
+  }
+
+  private Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("infolevel", "standard");
+    return argsMap;
   }
 
 }

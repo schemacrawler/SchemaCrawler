@@ -40,9 +40,9 @@ import java.util.UUID;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.analysis.associations.CatalogWithAssociations;
 import schemacrawler.tools.analysis.counts.CatalogWithCounts;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -86,9 +86,9 @@ public final class GraphRenderer
     }
     else
     {
-      throw new SchemaCrawlerException(String
-        .format("Cannot generate graph in %s output format",
-                graphOutputFormat));
+      throw new SchemaCrawlerException(String.format(
+        "Cannot generate graph in %s output format",
+        graphOutputFormat));
     }
   }
 
@@ -107,8 +107,8 @@ public final class GraphRenderer
     {
       aCatalog = new CatalogWithAssociations(aCatalog);
     }
-    if (graphOptions.isShowRowCounts()
-        || schemaCrawlerOptions.isNoEmptyTables())
+    if (graphOptions.isShowRowCounts() || schemaCrawlerOptions
+      .isNoEmptyTables())
     {
       aCatalog = new CatalogWithCounts(aCatalog,
                                        connection,
@@ -133,15 +133,18 @@ public final class GraphRenderer
         .newOutputOptions(GraphOutputFormat.dot, dotFile);
     }
 
-    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(dotFileOutputOptions);
+    final SchemaTraversalHandler formatter = getSchemaTraversalHandler(
+      dotFileOutputOptions);
 
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
     traverser.setTablesComparator(NamedObjectSort
-      .getNamedObjectSort(graphOptions.isAlphabeticalSortForTables()));
+                                    .getNamedObjectSort(graphOptions
+                                                          .isAlphabeticalSortForTables()));
     traverser.setRoutinesComparator(NamedObjectSort
-      .getNamedObjectSort(graphOptions.isAlphabeticalSortForRoutines()));
+                                      .getNamedObjectSort(graphOptions
+                                                            .isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
@@ -177,13 +180,12 @@ public final class GraphRenderer
       .withOutputFormat(graphOutputFormat)
       .withOutputFormatValue(graphOutputFormat.getFormat()).toOptions();
 
-    final Path outputFile = outputOptions.getOutputFile()
-      .orElseGet(() -> Paths
-        .get(".",
-             String.format("schemacrawler-%s.%s",
-                           UUID.randomUUID(),
-                           outputOptions.getOutputFormatValue())))
-      .normalize().toAbsolutePath();
+    final Path outputFile = outputOptions.getOutputFile().orElseGet(() -> Paths
+      .get(".",
+           String.format("schemacrawler-%s.%s",
+                         UUID.randomUUID(),
+                         outputOptions.getOutputFormatValue()))).normalize()
+      .toAbsolutePath();
 
     GraphExecutor graphExecutor;
     if (graphOutputFormat != GraphOutputFormat.scdot)
@@ -210,7 +212,7 @@ public final class GraphRenderer
       if (!graphExecutorAvailable)
       {
         final String message = readResourceFully("/dot.error.txt");
-        throw new SchemaCrawlerCommandLineException(message);
+        throw new SchemaCrawlerRuntimeException(message);
       }
 
     }

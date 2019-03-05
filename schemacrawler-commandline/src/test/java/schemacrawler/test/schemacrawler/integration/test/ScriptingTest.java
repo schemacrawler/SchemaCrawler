@@ -26,18 +26,19 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test.schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
 
-import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -49,44 +50,55 @@ public class ScriptingTest
 {
 
   @Test
-  public void executableGroovy(final Connection connection)
+  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("script"),
-                                            "/plaintextschema.groovy")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "script",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.groovy")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void executableJavaScript(final Connection connection)
+  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("script"),
-                                            "/plaintextschema.js")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "script",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.js")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void executablePython(final Connection connection)
+  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    System.setProperty("python.console.encoding", "UTF-8");
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("script"),
-                                            "/plaintextschema.py")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "script",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.py")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
   @Test
-  public void executableRuby(final Connection connection)
+  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("script"),
-                                            "/plaintextschema.rb")),
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "script",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
+  }
+
+  private Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("infolevel", "standard");
+    return argsMap;
   }
 
 }

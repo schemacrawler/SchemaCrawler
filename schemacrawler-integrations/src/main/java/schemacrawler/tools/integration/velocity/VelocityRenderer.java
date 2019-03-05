@@ -42,8 +42,7 @@ import org.apache.velocity.exception.ResourceNotFoundException;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
-
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -67,9 +66,9 @@ public final class VelocityRenderer
                                                         final String resourceLoaderPropertyName,
                                                         final String resourceLoaderPropertyValue)
   {
-    p.setProperty(resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER
-                  + "." + resourceLoaderPropertyName,
-                  resourceLoaderPropertyValue);
+    p.setProperty(
+      resourceLoaderName + "." + RuntimeConstants.RESOURCE_LOADER + "."
+      + resourceLoaderPropertyName, resourceLoaderPropertyValue);
   }
 
   public VelocityRenderer()
@@ -101,8 +100,8 @@ public final class VelocityRenderer
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
     {
-      templatePath = templatePath + ","
-                     + templateFilePath.getAbsoluteFile().getParent();
+      templatePath =
+        templatePath + "," + templateFilePath.getAbsoluteFile().getParent();
       templateLocation = templateFilePath.getName();
     }
 
@@ -140,22 +139,23 @@ public final class VelocityRenderer
     context.put("catalog", catalog);
     context.put("identifiers", identifiers);
 
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER
-        .log(Level.INFO,
-             new StringFormat("Reading Velocity template <%s>, with encoding <%s>",
-                              templateLocation,
-                              templateEncoding));
-      final Template template = ve.getTemplate(templateLocation,
-                                               templateEncoding);
+      LOGGER.log(Level.INFO,
+                 new StringFormat(
+                   "Reading Velocity template <%s>, with encoding <%s>",
+                   templateLocation,
+                   templateEncoding));
+      final Template template = ve
+        .getTemplate(templateLocation, templateEncoding);
       template.merge(context, writer);
     }
     catch (final ResourceNotFoundException e)
     {
-      throw new SchemaCrawlerCommandLineException("Please specify an Apache Velocity template",
-                                                  e);
+      throw new SchemaCrawlerRuntimeException(
+        "Please specify an Apache Velocity template",
+        e);
     }
 
   }

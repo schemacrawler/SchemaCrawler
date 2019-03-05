@@ -33,19 +33,14 @@ import static schemacrawler.tools.iosource.InputResourceUtility.createInputResou
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
+import javax.script.*;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.logging.Level;
 
-import javax.script.Compilable;
-import javax.script.CompiledScript;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
 import sf.util.ObjectToString;
@@ -60,10 +55,9 @@ public final class ScriptCommand
   extends BaseSchemaCrawlerCommand
 {
 
+  static final String COMMAND = "script";
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ScriptCommand.class.getName());
-
-  static final String COMMAND = "script";
 
   public ScriptCommand()
   {
@@ -91,10 +85,9 @@ public final class ScriptCommand
     final String outputFormatValue = outputOptions.getOutputFormatValue();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    try (
-        final Reader reader = createInputResource(outputFormatValue)
-          .openNewInputReader(inputCharset);
-        final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final Reader reader = createInputResource(outputFormatValue)
+      .openNewInputReader(inputCharset);
+      final Writer writer = outputOptions.openNewOutputWriter())
     {
       final CommandChain chain = new CommandChain(this);
 
@@ -131,7 +124,8 @@ public final class ScriptCommand
     final String scriptFileName = outputOptions.getOutputFormatValue();
     if (isBlank(scriptFileName))
     {
-      throw new SchemaCrawlerCommandLineException("Please specify a script to execute");
+      throw new SchemaCrawlerRuntimeException(
+        "Please specify a script to execute");
     }
     final String scriptExtension = getFileExtension(scriptFileName);
 
@@ -163,17 +157,15 @@ public final class ScriptCommand
       return;
     }
 
-    LOGGER
-      .log(level,
-           String
-             .format("Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                     scriptEngineFactory.getEngineName(),
-                     scriptEngineFactory.getEngineVersion(),
-                     scriptEngineFactory.getLanguageName(),
-                     scriptEngineFactory.getLanguageVersion(),
-                     ObjectToString.toString(scriptEngineFactory.getNames()),
-                     ObjectToString
-                       .toString(scriptEngineFactory.getExtensions())));
+    LOGGER.log(level,
+               String.format(
+                 "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                 scriptEngineFactory.getEngineName(),
+                 scriptEngineFactory.getEngineVersion(),
+                 scriptEngineFactory.getLanguageName(),
+                 scriptEngineFactory.getLanguageVersion(),
+                 ObjectToString.toString(scriptEngineFactory.getNames()),
+                 ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
 }
