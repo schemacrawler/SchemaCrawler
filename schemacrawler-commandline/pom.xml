@@ -16,7 +16,7 @@
 
     <dependency>
       <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-integrations</artifactId>
+      <artifactId>schemacrawler</artifactId>
       <version>${project.version}</version>
     </dependency>
 
