@@ -36,7 +36,6 @@
               <dependencySourceIncludes>
                 <dependencySourceInclude>us.fatehi:schemacrawler-api</dependencySourceInclude>
                 <dependencySourceInclude>us.fatehi:schemacrawler-tools</dependencySourceInclude>
-                <dependencySourceInclude>us.fatehi:schemacrawler-commandline</dependencySourceInclude>
                 <dependencySourceInclude>us.fatehi:schemacrawler-integrations</dependencySourceInclude>
               </dependencySourceIncludes>
             </configuration>
@@ -58,7 +57,6 @@
                 <includes>
                   <include>us.fatehi:schemacrawler-api</include>
                   <include>us.fatehi:schemacrawler-tools</include>
-                  <include>us.fatehi:schemacrawler-commandline</include>
                   <include>us.fatehi:schemacrawler-integrations</include>
                 </includes>
               </artifactSet>
