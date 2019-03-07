@@ -31,15 +31,22 @@ package schemacrawler.tools.lint.executable;
 import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.text.base.BaseTextOptionsBuilder;
 
 public final class LintOptionsBuilder
   extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions>
 {
 
+  private static final String SCHEMACRAWLER_LINT_PREFIX = "schemacrawler.lint.";
+
   private static final String CLI_LINTER_CONFIGS = "linterconfigs";
-  private static final String LINTER_CONFIGS = SCHEMACRAWLER_FORMAT_PREFIX
-                                               + CLI_LINTER_CONFIGS;
+  private static final String LINTER_CONFIGS =
+    SCHEMACRAWLER_LINT_PREFIX + CLI_LINTER_CONFIGS;
+
+  private static final String CLI_LINT_DISPATCH = "lintdispatch";
+  private static final String LINT_DISPATCH =
+    SCHEMACRAWLER_LINT_PREFIX + CLI_LINT_DISPATCH;
 
   public static LintOptionsBuilder builder()
   {
@@ -62,10 +69,12 @@ public final class LintOptionsBuilder
   }
 
   protected String linterConfigs;
+  protected LintDispatch lintDispatch;
 
   private LintOptionsBuilder()
   {
     linterConfigs = "";
+    lintDispatch = LintDispatch.none;
   }
 
   @Override
@@ -78,16 +87,32 @@ public final class LintOptionsBuilder
     super.fromConfig(map);
 
     final Config config = new Config(map);
+
+    final String linterConfigsKey;
     if (config.containsKey(CLI_LINTER_CONFIGS))
     {
       // Honor command-line option first
-      linterConfigs = config.getStringValue(CLI_LINTER_CONFIGS, "");
+      linterConfigsKey = CLI_LINTER_CONFIGS;
     }
     else
     {
       // Otherwise, take option from SchemaCrawler configuration file
-      linterConfigs = config.getStringValue(LINTER_CONFIGS, "");
+      linterConfigsKey = LINTER_CONFIGS;
     }
+    linterConfigs = config.getStringValue(linterConfigsKey, "");
+
+    final String lintDispatchKey;
+    if (config.containsKey(CLI_LINT_DISPATCH))
+    {
+      // Honor command-line option first
+      lintDispatchKey = CLI_LINT_DISPATCH;
+    }
+    else
+    {
+      // Otherwise, take option from SchemaCrawler configuration file
+      lintDispatchKey = LINT_DISPATCH;
+    }
+    lintDispatch = config.getEnumValue(lintDispatchKey, LintDispatch.none);
 
     return this;
   }
@@ -102,6 +127,7 @@ public final class LintOptionsBuilder
     super.fromOptions(options);
 
     linterConfigs = options.getLinterConfigs();
+    lintDispatch = options.getLintDispatch();
 
     return this;
   }
@@ -111,6 +137,7 @@ public final class LintOptionsBuilder
   {
     final Config config = super.toConfig();
     config.setStringValue(LINTER_CONFIGS, linterConfigs);
+    config.setEnumValue(LINT_DISPATCH, lintDispatch);
     return config;
   }
 
@@ -121,7 +148,7 @@ public final class LintOptionsBuilder
   }
 
   /**
-   * Whether to show LOBs.
+   * With the name of a linter configs file.
    */
   public LintOptionsBuilder withLinterConfigs(final String linterConfigs)
   {
@@ -132,6 +159,22 @@ public final class LintOptionsBuilder
     else
     {
       this.linterConfigs = linterConfigs;
+    }
+    return this;
+  }
+
+  /**
+   * With a lint dispatch strategy.
+   */
+  public LintOptionsBuilder withLintDispatch(final LintDispatch lintDispatch)
+  {
+    if (lintDispatch == null)
+    {
+      this.lintDispatch = LintDispatch.none;
+    }
+    else
+    {
+      this.lintDispatch = lintDispatch;
     }
     return this;
   }

@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public class LintOptions
@@ -35,11 +36,13 @@ public class LintOptions
 {
 
   private final String linterConfigs;
+  private final LintDispatch lintDispatch;
 
   public LintOptions(final LintOptionsBuilder builder)
   {
     super(builder);
     linterConfigs = builder.linterConfigs;
+    lintDispatch = builder.lintDispatch;
   }
 
   /**
@@ -50,6 +53,16 @@ public class LintOptions
   public String getLinterConfigs()
   {
     return linterConfigs;
+  }
+
+  /**
+   * Gets the dispatch strategy.
+   *
+   * @return Lint dispatch strategy.
+   */
+  public LintDispatch getLintDispatch()
+  {
+    return lintDispatch;
   }
 
 }

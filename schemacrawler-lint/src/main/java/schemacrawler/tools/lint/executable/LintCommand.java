@@ -116,8 +116,7 @@ public class LintCommand
       System.err.println(lintSummary);
     }
 
-    final LintDispatch lintDispatch = additionalConfiguration
-      .getEnumValue("lintdispatch", LintDispatch.none);
+    final LintDispatch lintDispatch = lintOptions.getLintDispatch();
     lintDispatch.dispatch();
   }
 
@@ -138,12 +137,11 @@ public class LintCommand
     formatter.handle(catalog);
 
     final List<? extends Table> tablesList = new ArrayList<>(catalog
-      .getTables());
-    Collections
-      .sort(tablesList,
-            NamedObjectSort
-              .getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
-    for (final Table table: tablesList)
+                                                               .getTables());
+    Collections.sort(tablesList,
+                     NamedObjectSort.getNamedObjectSort(lintOptions
+                                                          .isAlphabeticalSortForTables()));
+    for (final Table table : tablesList)
     {
       formatter.handle(table);
     }
