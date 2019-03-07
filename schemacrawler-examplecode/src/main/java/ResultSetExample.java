@@ -1,12 +1,7 @@
-import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
-import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
-import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
 
 import javax.sql.DataSource;
 
@@ -21,11 +16,6 @@ public final class ResultSetExample
   public static void main(final String[] args)
     throws Exception
   {
-    // Turn application logging on by applying the correct log level
-    applyApplicationLogLevel(Level.OFF);
-    // Log system properties and classpath
-    logSystemClasspath();
-    logSystemProperties();
 
     final String query = "SELECT                                                      \n"
                          + "  BOOKS.TITLE AS BOOKTITLE,                               \n"

@@ -13,14 +13,10 @@
   <packaging>jar</packaging>
   <name>SchemaCrawler for Microsoft SQL Server</name>
   <dependencies>
+
     <dependency>
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>us.fatehi</groupId>
-      <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -32,6 +28,13 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-commandline</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
       <version>7.2.0.jre8</version>
@@ -42,6 +45,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+
   </dependencies>
   <build>
     <plugins>
