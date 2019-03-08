@@ -48,6 +48,10 @@ public final class LintOptionsBuilder
   private static final String LINT_DISPATCH =
     SCHEMACRAWLER_LINT_PREFIX + CLI_LINT_DISPATCH;
 
+  private static final String CLI_RUN_ALL_LINTERS = "runalllinters";
+  private static final String RUN_ALL_LINTERS =
+    SCHEMACRAWLER_LINT_PREFIX + CLI_RUN_ALL_LINTERS;
+
   public static LintOptionsBuilder builder()
   {
     return new LintOptionsBuilder();
@@ -70,11 +74,13 @@ public final class LintOptionsBuilder
 
   protected String linterConfigs;
   protected LintDispatch lintDispatch;
+  protected boolean runAllLinters;
 
   private LintOptionsBuilder()
   {
     linterConfigs = "";
     lintDispatch = LintDispatch.none;
+    runAllLinters = true;
   }
 
   @Override
@@ -114,6 +120,19 @@ public final class LintOptionsBuilder
     }
     lintDispatch = config.getEnumValue(lintDispatchKey, LintDispatch.none);
 
+    final String runAllLintersKey;
+    if (config.containsKey(CLI_RUN_ALL_LINTERS))
+    {
+      // Honor command-line option first
+      runAllLintersKey = CLI_RUN_ALL_LINTERS;
+    }
+    else
+    {
+      // Otherwise, take option from SchemaCrawler configuration file
+      runAllLintersKey = RUN_ALL_LINTERS;
+    }
+    runAllLinters = config.getBooleanValue(runAllLintersKey, true);
+
     return this;
   }
 
@@ -128,6 +147,7 @@ public final class LintOptionsBuilder
 
     linterConfigs = options.getLinterConfigs();
     lintDispatch = options.getLintDispatch();
+    runAllLinters = options.isRunAllLinters();
 
     return this;
   }
@@ -138,6 +158,7 @@ public final class LintOptionsBuilder
     final Config config = super.toConfig();
     config.setStringValue(LINTER_CONFIGS, linterConfigs);
     config.setEnumValue(LINT_DISPATCH, lintDispatch);
+    config.setBooleanValue(RUN_ALL_LINTERS, runAllLinters);
     return config;
   }
 
@@ -176,6 +197,16 @@ public final class LintOptionsBuilder
     {
       this.lintDispatch = lintDispatch;
     }
+    return this;
+  }
+
+  /**
+   * With value for running all linters.
+   */
+  public LintOptionsBuilder runAllLinters(final boolean runAllLinters)
+  {
+    this.runAllLinters = runAllLinters;
+
     return this;
   }
 

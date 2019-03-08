@@ -37,12 +37,24 @@ public class LintOptions
 
   private final String linterConfigs;
   private final LintDispatch lintDispatch;
+  private final boolean runAllLinters;
 
   public LintOptions(final LintOptionsBuilder builder)
   {
     super(builder);
     linterConfigs = builder.linterConfigs;
     lintDispatch = builder.lintDispatch;
+    runAllLinters = builder.runAllLinters;
+  }
+
+  /**
+   * Whether to run all linters, including the ones that are not explicitly configured.
+   *
+   * @return Whether to run all linters.
+   */
+  public boolean isRunAllLinters()
+  {
+    return runAllLinters;
   }
 
   /**

@@ -73,7 +73,8 @@ public class LintCommand
 
     final LinterConfigs linterConfigs = readLinterConfigs(lintOptions,
                                                           additionalConfiguration);
-    final Linters linters = new Linters(linterConfigs);
+    final Linters linters = new Linters(linterConfigs,
+                                        lintOptions.isRunAllLinters());
 
     final LintedCatalog lintedCatalog = new LintedCatalog(catalog,
                                                           connection,

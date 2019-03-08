@@ -30,12 +30,8 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static org.hamcrest.Matchers.*;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.sql.Connection;
@@ -43,22 +39,12 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
-import schemacrawler.tools.lint.Lint;
-import schemacrawler.tools.lint.LintCollector;
-import schemacrawler.tools.lint.LintedCatalog;
-import schemacrawler.tools.lint.LinterConfig;
-import schemacrawler.tools.lint.LinterConfigs;
-import schemacrawler.tools.lint.Linters;
+import schemacrawler.tools.lint.*;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class LintTest
@@ -86,12 +72,13 @@ public class LintTest
                hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-    final LinterConfig linterConfig = new LinterConfig("schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
+    final LinterConfig linterConfig = new LinterConfig(
+      "schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns");
     linterConfig.setThreshold(0);
     linterConfig.put("bad-column-names", ".*\\.COUNTRY");
     linterConfigs.add(linterConfig);
 
-    final Linters linters = new Linters(linterConfigs);
+    final Linters linters = new Linters(linterConfigs, true);
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            connection,
@@ -100,25 +87,25 @@ public class LintTest
     assertThat(lintCollector.size(), is(51));
 
     final TestWriter testout1 = new TestWriter();
-    try (final TestWriter out = testout1;)
+    try (final TestWriter out = testout1)
     {
-      for (final Lint<?> lint: lintCollector)
+      for (final Lint<?> lint : lintCollector)
       {
         out.println(lint);
       }
     }
     assertThat(outputOf(testout1),
-               hasSameContentAs(classpathResource(LINTS_OUTPUT
-                                                  + "schemacrawler.lints.txt")));
+               hasSameContentAs(classpathResource(
+                 LINTS_OUTPUT + "schemacrawler.lints.txt")));
 
     final TestWriter testout2 = new TestWriter();
-    try (final TestWriter out = testout2;)
+    try (final TestWriter out = testout2)
     {
       out.println(linters.getLintSummary());
     }
     assertThat(outputOf(testout2),
-               hasSameContentAs(classpathResource(LINTS_OUTPUT
-                                                  + "schemacrawler.lints.summary.txt")));
+               hasSameContentAs(classpathResource(
+                 LINTS_OUTPUT + "schemacrawler.lints.summary.txt")));
   }
 
   @Test
@@ -142,7 +129,7 @@ public class LintTest
                hasSize(7));
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
-    final Linters linters = new Linters(linterConfigs);
+    final Linters linters = new Linters(linterConfigs, true);
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            connection,
@@ -151,16 +138,46 @@ public class LintTest
     assertThat(lintCollector.size(), is(40));
 
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
-      for (final Lint<?> lint: lintCollector)
+      for (final Lint<?> lint : lintCollector)
       {
         out.println(lint);
       }
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(LINTS_OUTPUT
-                                                  + "schemacrawler.lints.excluded_columns.txt")));
+               hasSameContentAs(classpathResource(
+                 LINTS_OUTPUT + "schemacrawler.lints.excluded_columns.txt")));
+  }
+
+  @Test
+  public void runNoLinters(final Connection connection)
+    throws Exception
+  {
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder()
+      .includeSchemas(new RegularExpressionInclusionRule(".*FOR_LINT"));
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    final Catalog catalog = getCatalog(connection, schemaCrawlerOptions);
+    assertThat(catalog, notNullValue());
+    assertThat(catalog.getSchemas().size(), is(1));
+    final Schema schema = catalog.lookupSchema("PUBLIC.FOR_LINT").orElse(null);
+    assertThat("FOR_LINT schema not found", schema, notNullValue());
+    assertThat("FOR_LINT tables not found",
+               catalog.getTables(schema),
+               hasSize(6));
+
+    final LinterConfigs linterConfigs = new LinterConfigs(new Config());
+    final Linters linters = new Linters(linterConfigs, false);
+    assertThat(linters.size(), is(0));
+
+    final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
+                                                           connection,
+                                                           linters);
+    final LintCollector lintCollector = lintedDatabase.getCollector();
+    assertThat(lintCollector.size(), is(0));
   }
 
 }
