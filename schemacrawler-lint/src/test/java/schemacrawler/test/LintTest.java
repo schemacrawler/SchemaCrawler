@@ -171,13 +171,15 @@ public class LintTest
 
     final LinterConfigs linterConfigs = new LinterConfigs(new Config());
     final Linters linters = new Linters(linterConfigs, false);
-    assertThat(linters.size(), is(0));
+    assertThat("All linters should be turned off", linters.size(), is(0));
 
     final LintedCatalog lintedDatabase = new LintedCatalog(catalog,
                                                            connection,
                                                            linters);
     final LintCollector lintCollector = lintedDatabase.getCollector();
-    assertThat(lintCollector.size(), is(0));
+    assertThat("All linters should be turned off, so there should be no lints",
+               lintCollector.size(),
+               is(0));
   }
 
 }
