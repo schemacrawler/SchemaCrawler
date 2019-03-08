@@ -7,8 +7,6 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 1 - API"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 2 - Tools"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 3 - Commandline"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 4 - Integrations"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -17,9 +15,9 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
@@ -27,5 +25,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/SchemaCrawler - 3 - Integrations"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
