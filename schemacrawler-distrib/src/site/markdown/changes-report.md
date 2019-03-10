@@ -1,14 +1,14 @@
 # SchemaCrawler Change History
 
-<a name="a15.05.01"></a>
-## Release 15.05.01 - 2019-03-10
+<a name="a15.06.01"></a>
+## Release 15.06.01 - 2019-03-10
 
 - Add option to run only configured linters, `-runalllinters=false`
 - Separate SchemaCrawler commandline jar from the main jar in preparation for enhancements
 
 
-<a name="a15.05.01"></a>
-## Release 15.05.01 - 2019-02-02
+<a name="a15.06.01"></a>
+## Release 15.06.01 - 2019-02-02
 
 - Add server information for MySQL
 - Convert tests to JUnit 5
@@ -65,8 +65,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.05.01"></a>
-## Release 15.05.01 - 2018-10-14
+<a name="a15.06.01"></a>
+## Release 15.06.01 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 
