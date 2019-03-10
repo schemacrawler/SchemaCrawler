@@ -28,6 +28,7 @@
     <file url="file://$PROJECT_DIR$/../schemacrawler-oracle" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-postgresql" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../schemacrawler-scripting" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-sqlite" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-sqlserver" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-testdb" charset="UTF-8" />

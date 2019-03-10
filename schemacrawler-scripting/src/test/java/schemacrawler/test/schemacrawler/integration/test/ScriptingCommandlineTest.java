@@ -46,7 +46,7 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingTest
+public class ScriptingCommandlineTest
 {
 
   @Test

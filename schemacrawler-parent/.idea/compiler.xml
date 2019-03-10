@@ -34,6 +34,7 @@
         <module name="schemacrawler-oracle" />
         <module name="schemacrawler-postgresql" />
         <module name="schemacrawler-sapiq" />
+        <module name="schemacrawler-scripting" />
         <module name="schemacrawler-shell" />
         <module name="schemacrawler-sqlite" />
         <module name="schemacrawler-sqlserver" />
@@ -66,6 +67,7 @@
       <module name="schemacrawler-oracle" options="-profile compact2 -Werror" />
       <module name="schemacrawler-postgresql" options="-profile compact2 -Werror" />
       <module name="schemacrawler-sapiq" options="-profile compact2 -Werror" />
+      <module name="schemacrawler-scripting" options="-profile compact2 -Werror" />
       <module name="schemacrawler-shell" options="-profile compact2 -Werror" />
       <module name="schemacrawler-sqlite" options="-profile compact2 -Werror" />
       <module name="schemacrawler-sqlserver" options="-profile compact2 -Werror" />
