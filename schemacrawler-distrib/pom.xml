@@ -23,6 +23,11 @@
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
+      <artifactId>schemacrawler-scripting</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-lint</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -118,6 +123,13 @@
                 <artifactItem>
                   <groupId>us.fatehi</groupId>
                   <artifactId>schemacrawler-commandline</artifactId>
+                  <version>${project.version}</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>us.fatehi</groupId>
+                  <artifactId>schemacrawler-scripting</artifactId>
                   <version>${project.version}</version>
                   <overWrite>true</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
