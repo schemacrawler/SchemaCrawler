@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import java.util.logging.Level;
+
 import picocli.CommandLine;
 
 public final class ApplicationOptionsParser
@@ -62,10 +64,10 @@ public final class ApplicationOptionsParser
   {
     commandLine.parse(args);
 
-    final ApplicationOptions options = new ApplicationOptions();
-    options.setApplicationLogLevel(loglevel.getLevel());
-    options.setShowHelp(showHelp);
-    options.setShowVersionOnly(showVersionOnly);
+    final Level level = loglevel.getLevel();
+    final ApplicationOptions options = new ApplicationOptions(level,
+                                                              showHelp,
+                                                              showVersionOnly);
 
     return options;
   }

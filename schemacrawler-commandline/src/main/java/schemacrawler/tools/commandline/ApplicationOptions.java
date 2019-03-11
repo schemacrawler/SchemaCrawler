@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Options;
@@ -37,9 +38,19 @@ public class ApplicationOptions
   implements Options
 {
 
-  private Level applicationLogLevel;
-  private boolean showHelp;
-  private boolean showVersionOnly;
+  private final Level applicationLogLevel;
+  private final boolean showHelp;
+  private final boolean showVersionOnly;
+
+  public ApplicationOptions(final Level applicationLogLevel,
+                            final boolean showHelp,
+                            final boolean showVersionOnly)
+  {
+    this.applicationLogLevel = Objects
+      .requireNonNull(applicationLogLevel, "No application log level provided");
+    this.showHelp = showHelp;
+    this.showVersionOnly = showVersionOnly;
+  }
 
   public Level getApplicationLogLevel()
   {
@@ -54,21 +65,6 @@ public class ApplicationOptions
   public boolean isShowVersionOnly()
   {
     return showVersionOnly;
-  }
-
-  public void setApplicationLogLevel(final Level applicationLogLevel)
-  {
-    this.applicationLogLevel = applicationLogLevel;
-  }
-
-  public void setShowHelp(final boolean showHelp)
-  {
-    this.showHelp = showHelp;
-  }
-
-  public void setShowVersionOnly(final boolean showVersionOnly)
-  {
-    this.showVersionOnly = showVersionOnly;
   }
 
 }
