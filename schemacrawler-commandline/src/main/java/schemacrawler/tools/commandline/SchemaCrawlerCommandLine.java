@@ -31,11 +31,7 @@ package schemacrawler.tools.commandline;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.databaseconnector.ConnectionOptions;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -70,12 +66,14 @@ public final class SchemaCrawlerCommandLine
   {
     if (argsMap == null || argsMap.isEmpty())
     {
-      throw new SchemaCrawlerCommandLineException("Please provide command-line arguments");
+      throw new SchemaCrawlerCommandLineException(
+        "Please provide command-line arguments");
     }
 
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(
+      argsMap);
     databaseConnector = dbServerTypeParser.getOptions();
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
@@ -86,13 +84,16 @@ public final class SchemaCrawlerCommandLine
     final CommandParser commandParser = new CommandParser(config);
     command = commandParser.getOptions().toString();
 
-    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(config);
+    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(
+      config);
     schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(config);
+    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
+      config);
     outputOptions = outputOptionsParser.getOptions();
 
-    final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(config);
+    final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(
+      config);
     additionalConfigOptionsParser.loadConfig();
 
     final UserCredentials userCredentials = parseConnectionOptions();
@@ -111,12 +112,13 @@ public final class SchemaCrawlerCommandLine
       throw new SchemaCrawlerException("No connection options provided");
     }
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      command);
     // Configure
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
-    try (final Connection connection = connectionOptions.getConnection();)
+    try (final Connection connection = connectionOptions.getConnection())
     {
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in
@@ -171,9 +173,6 @@ public final class SchemaCrawlerCommandLine
 
   /**
    * Parse connection options, for both ways of connecting.
-   *
-   * @param dbServerType
-   *        Database server type
    */
   private UserCredentials parseConnectionOptions()
     throws SchemaCrawlerException
@@ -185,7 +184,8 @@ public final class SchemaCrawlerCommandLine
     }
     else
     {
-      dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(config);
+      dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(
+        config);
     }
     dbConnectionOptionsParser.loadConfig();
     config.putAll(dbConnectionOptionsParser.getOptions());

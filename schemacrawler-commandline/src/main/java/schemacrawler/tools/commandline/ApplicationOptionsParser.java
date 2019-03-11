@@ -29,68 +29,50 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
+import picocli.CommandLine;
 
-import java.util.logging.Level;
-
-import schemacrawler.schemacrawler.Config;
-
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
 public final class ApplicationOptionsParser
-  extends BaseOptionsParser<ApplicationOptions>
 {
 
-  public ApplicationOptionsParser(final Config config)
+  private final CommandLine commandLine;
+
+  @CommandLine.Option(names = {
+    "-V", "--version" }, description = "Print SchemaCrawler version and exit")
+  private boolean showVersionOnly = false;
+  @CommandLine.Option(names = {
+    "-loglevel", "--log-level" }, description = "Set logging level")
+  private LogLevel loglevel = LogLevel.OFF;
+  @CommandLine.Option(names = {
+    "-h", "--help", "-?" }, description = "Show help")
+  private boolean showHelp = false;
+
+  @CommandLine.Parameters
+  private String[] remainder = new String[0];
+
+  public ApplicationOptionsParser()
   {
-    super(config);
-    normalizeOptionName("loglevel");
-    normalizeOptionName("help", "?", "h", "-help");
-    normalizeOptionName("version", "V", "-version");
+    commandLine = new CommandLine(this);
+    commandLine.setUnmatchedOptionsArePositionalParams(true);
+    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
+    commandLine.setTrimQuotes(true);
+    commandLine.setToggleBooleanFlags(false);
   }
 
-  @Override
-  public ApplicationOptions getOptions()
+  public ApplicationOptions parse(final String[] args)
   {
+    commandLine.parse(args);
+
     final ApplicationOptions options = new ApplicationOptions();
-
-    if (config.hasValue("loglevel"))
-    {
-      final String logLevelString = config.getStringValue("loglevel", "OFF");
-      if (!isBlank(logLevelString))
-      {
-        final Level applicationLogLevel;
-        try
-        {
-          applicationLogLevel = Level.parse(logLevelString.toUpperCase());
-        }
-        catch (final IllegalArgumentException e)
-        {
-          throw new SchemaCrawlerCommandLineException(String
-            .format("Please provide a valid log level, not <%s>",
-                    logLevelString), e);
-        }
-        options.setApplicationLogLevel(applicationLogLevel);
-      }
-      consumeOption("loglevel");
-    }
-
-    if (config.hasValue("help"))
-    {
-      options.setShowHelp(true);
-      consumeOption("help");
-    }
-    if (config.hasValue("version"))
-    {
-      options.setShowHelp(true);
-      options.setShowVersionOnly(true);
-      consumeOption("version");
-    }
+    options.setApplicationLogLevel(loglevel.getLevel());
+    options.setShowHelp(showHelp);
+    options.setShowVersionOnly(showVersionOnly);
 
     return options;
+  }
+
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
 }

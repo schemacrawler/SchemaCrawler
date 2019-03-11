@@ -30,20 +30,12 @@ package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
-import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
-import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
-import static us.fatehi.commandlineparser.CommandLineUtility.logSystemClasspath;
-import static us.fatehi.commandlineparser.CommandLineUtility.logSystemProperties;
+import static us.fatehi.commandlineparser.CommandLineUtility.*;
 
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.ApplicationOptions;
-import schemacrawler.tools.commandline.ApplicationOptionsParser;
-import schemacrawler.tools.commandline.CommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
+import schemacrawler.tools.commandline.*;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
@@ -61,11 +53,12 @@ public final class Main
     {
       applyApplicationLogLevel(Level.OFF);
 
-      final Config argsMap = CommandLineUtility.parseArgs(args);
-
-      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser(argsMap);
+      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
       final ApplicationOptions applicationOptions = applicationOptionsParser
-        .getOptions();
+        .parse(args);
+
+      final Config argsMap = CommandLineUtility
+        .parseArgs(applicationOptionsParser.getRemainder());
 
       applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
 
@@ -73,10 +66,9 @@ public final class Main
       logSystemClasspath();
       logSystemProperties();
 
-      final boolean showHelp = args.length == 0
-                               || args.length == 1 && Main.class
-                                 .getCanonicalName().equals(args[0])
-                               || applicationOptions.isShowHelp();
+      final boolean showHelp =
+        args.length == 0 || args.length == 1 && Main.class.getCanonicalName()
+          .equals(args[0]) || applicationOptions.isShowHelp();
 
       final CommandLine commandLine;
       if (showHelp)
@@ -103,8 +95,8 @@ public final class Main
       System.err
         .println("Re-run SchemaCrawler with just the\n-?\noption for help");
       System.err.println();
-      System.err
-        .println("Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
+      System.err.println(
+        "Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
       logSafeArguments(args);
       logFullStackTrace(Level.SEVERE, e);
     }
