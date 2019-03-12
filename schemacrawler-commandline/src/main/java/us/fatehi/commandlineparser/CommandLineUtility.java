@@ -32,14 +32,11 @@ import static sf.util.Utility.join;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.SortedMap;
-import java.util.StringJoiner;
-import java.util.TreeMap;
 import java.util.logging.Level;
 
+import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
@@ -61,6 +58,17 @@ public final class CommandLineUtility
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CommandLineUtility.class.getName());
 
+  public static CommandLine newCommandLine(final Object object)
+  {
+    final CommandLine commandLine;
+    commandLine = new CommandLine(object);
+    commandLine.setUnmatchedOptionsArePositionalParams(true);
+    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
+    commandLine.setTrimQuotes(true);
+    commandLine.setToggleBooleanFlags(false);
+    return commandLine;
+  }
+
   /**
    * Sets the application-wide log level.
    */
@@ -72,13 +80,10 @@ public final class CommandLineUtility
   /**
    * Loads configuration from a number of sources, in order of priority.
    *
-   * @param argsMap
-   *        Command-line arguments
-   * @param dbConnector
-   *        Database connector
+   * @param argsMap     Command-line arguments
+   * @param dbConnector Database connector
    * @return Loaded configuration
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @throws SchemaCrawlerException On an exception
    */
   public static Config loadConfig(final Config argsMap,
                                   final DatabaseConnector dbConnector)
@@ -95,8 +100,8 @@ public final class CommandLineUtility
     // 2. Load config from CLASSPATH, in place
     try
     {
-      config.putAll(PropertiesUtility
-        .loadConfig(new ClasspathInputResource("/schemacrawler.config.properties")));
+      config.putAll(PropertiesUtility.loadConfig(new ClasspathInputResource(
+        "/schemacrawler.config.properties")));
     }
     catch (final IOException e)
     {
@@ -154,7 +159,7 @@ public final class CommandLineUtility
 
     final StringJoiner argsList = new StringJoiner(System.lineSeparator());
     for (final Iterator<String> iterator = Arrays.asList(args)
-      .iterator(); iterator.hasNext();)
+      .iterator(); iterator.hasNext(); )
     {
       final String arg = iterator.next();
       if (arg == null)
@@ -208,12 +213,12 @@ public final class CommandLineUtility
     }
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<Object, Object> propertyValue: System.getProperties()
+    for (final Entry<Object, Object> propertyValue : System.getProperties()
       .entrySet())
     {
       final String name = (String) propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os."))
-          && !name.endsWith(".path"))
+      if ((name.startsWith("java.") || name.startsWith("os.")) && !name
+        .endsWith(".path"))
       {
         systemProperties.put(name, (String) propertyValue.getValue());
       }
@@ -227,13 +232,13 @@ public final class CommandLineUtility
   /**
    * Loads configuration from a number of command-line.
    *
-   * @param args
-   *        Command-line arguments
+   * @param args Command-line arguments
    * @return Parsed command-line arguments
    */
   public static Config parseArgs(final String[] args)
   {
-    final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(args);
+    final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(
+      args);
     argsParser.parse();
     final Config optionsMap = argsParser.getOptionsMap();
     return optionsMap;

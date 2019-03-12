@@ -79,7 +79,7 @@ public final class Main
       }
       else
       {
-        commandLine = new SchemaCrawlerCommandLine(argsMap);
+        commandLine = new SchemaCrawlerCommandLine(args, argsMap);
       }
       commandLine.execute();
     }

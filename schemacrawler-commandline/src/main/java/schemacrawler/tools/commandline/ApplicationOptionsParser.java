@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+
 import java.util.logging.Level;
 
 import picocli.CommandLine;
@@ -37,7 +39,6 @@ public final class ApplicationOptionsParser
 {
 
   private final CommandLine commandLine;
-
   @CommandLine.Option(names = {
     "-V", "--version" }, description = "Print SchemaCrawler version and exit")
   private boolean showVersionOnly = false;
@@ -47,17 +48,12 @@ public final class ApplicationOptionsParser
   @CommandLine.Option(names = {
     "-h", "--help", "-?" }, description = "Show help")
   private boolean showHelp = false;
-
   @CommandLine.Parameters
   private String[] remainder = new String[0];
 
   public ApplicationOptionsParser()
   {
-    commandLine = new CommandLine(this);
-    commandLine.setUnmatchedOptionsArePositionalParams(true);
-    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
-    commandLine.setTrimQuotes(true);
-    commandLine.setToggleBooleanFlags(false);
+    commandLine = newCommandLine(this);
   }
 
   public ApplicationOptions parse(final String[] args)

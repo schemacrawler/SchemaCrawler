@@ -61,7 +61,7 @@ public final class SchemaCrawlerCommandLine
 
   private final DatabaseConnector databaseConnector;
 
-  public SchemaCrawlerCommandLine(final Config argsMap)
+  public SchemaCrawlerCommandLine(final String[] args, final Config argsMap)
     throws SchemaCrawlerException
   {
     if (argsMap == null || argsMap.isEmpty())
@@ -90,7 +90,7 @@ public final class SchemaCrawlerCommandLine
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
       config);
-    outputOptions = outputOptionsParser.getOptions();
+    outputOptions = outputOptionsParser.parse(args);
 
     final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(
       config);

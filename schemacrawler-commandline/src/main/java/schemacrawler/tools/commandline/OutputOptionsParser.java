@@ -30,10 +30,12 @@ package schemacrawler.tools.commandline;
 
 
 import static sf.util.Utility.isBlank;
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
+import java.io.File;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -44,42 +46,53 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class OutputOptionsParser
-  extends BaseOptionsParser<OutputOptions>
 {
 
-  private static final String OUTPUT_FILE = "outputfile";
-  private static final String OUTPUT_FORMAT = "outputformat";
+  private final OutputOptionsBuilder outputOptionsBuilder;
 
-  final OutputOptionsBuilder outputOptionsBuilder;
+  private final CommandLine commandLine;
+
+  @CommandLine.Option(names = {
+    "-o",
+    "-outputfile",
+    "--output-file" }, description = "Outfile file path and name")
+  private File outputFile = null;
+  @CommandLine.Option(names = {
+    "-fmt",
+    "-outputformat",
+    "--output-format" }, description = "Outfile format")
+  private String outputFormatValue = null;
+
+  @CommandLine.Parameters
+  private String[] remainder = new String[0];
 
   public OutputOptionsParser(final Config config)
   {
-    super(config);
-    normalizeOptionName(OUTPUT_FORMAT, "fmt");
-    normalizeOptionName(OUTPUT_FILE, "o");
-
+    commandLine = newCommandLine(this);
     outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
   }
 
-  @Override
-  public OutputOptions getOptions()
+  public OutputOptions parse(final String[] args)
   {
-    final String outputFileName = config.getStringValue(OUTPUT_FILE, null);
-    consumeOption(OUTPUT_FILE);
-    if (!isBlank(outputFileName))
+    commandLine.parse(args);
+
+    if (outputFile != null)
     {
-      final Path outputFile = Paths.get(outputFileName).toAbsolutePath();
-      outputOptionsBuilder.withOutputFile(outputFile);
+      final Path outputFilePath = outputFile.toPath().toAbsolutePath();
+      outputOptionsBuilder.withOutputFile(outputFilePath);
     }
 
-    final String outputFormatValue = config.getStringValue(OUTPUT_FORMAT, null);
-    consumeOption(OUTPUT_FORMAT);
     if (!isBlank(outputFormatValue))
     {
       outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
     }
 
     return outputOptionsBuilder.toOptions();
+  }
+
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
 }
