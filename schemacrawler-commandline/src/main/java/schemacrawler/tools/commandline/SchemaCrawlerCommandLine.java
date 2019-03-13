@@ -81,8 +81,8 @@ public final class SchemaCrawlerCommandLine
 
     config = loadConfig(argsMap);
 
-    final CommandParser commandParser = new CommandParser(config);
-    command = commandParser.getOptions().toString();
+    final CommandParser commandParser = new CommandParser();
+    command = commandParser.parse(args).toString();
 
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(
       config);

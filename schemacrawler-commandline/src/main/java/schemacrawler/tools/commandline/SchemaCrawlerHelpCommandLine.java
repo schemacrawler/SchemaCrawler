@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Objects.requireNonNull;
-import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -72,12 +71,9 @@ public final class SchemaCrawlerHelpCommandLine
   /**
    * Shows help based on command-line options.
    *
-   * @param argsMap
-   *        Parsed command line arguments.
-   * @param showVersionOnly
-   *        Whether to show version message and exit.
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @param argsMap         Parsed command line arguments.
+   * @param showVersionOnly Whether to show version message and exit.
+   * @throws SchemaCrawlerException On an exception
    */
   public SchemaCrawlerHelpCommandLine(final Config argsMap,
                                       final boolean showVersionOnly)
@@ -85,7 +81,8 @@ public final class SchemaCrawlerHelpCommandLine
   {
     requireNonNull(argsMap, "No command-line arguments provided");
 
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(argsMap);
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(
+      argsMap);
     final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
 
     connectionHelpResource = dbConnector.getConnectionHelpResource();
@@ -95,20 +92,7 @@ public final class SchemaCrawlerHelpCommandLine
 
     out = new PrintWriter(System.out);
 
-    String command = null;
-    if (!argsMap.isEmpty())
-    {
-      final CommandParser parser = new CommandParser(argsMap);
-      if (parser.hasOptions())
-      {
-        command = parser.getOptions().toString();
-      }
-      if (isBlank(command))
-      {
-        command = null;
-      }
-    }
-    this.command = command;
+    command = null;
   }
 
   /**
@@ -140,7 +124,7 @@ public final class SchemaCrawlerHelpCommandLine
       final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
       printHelpText("/help/Connections.txt");
       out.println("Available servers are: ");
-      for (final DatabaseServerType availableServer: databaseConnectorRegistry)
+      for (final DatabaseServerType availableServer : databaseConnectorRegistry)
       {
         out.println("  " + availableServer);
       }
@@ -158,7 +142,7 @@ public final class SchemaCrawlerHelpCommandLine
     {
       printHelpText("/help/Command.txt");
       out.println("  Available commands are: ");
-      for (final CommandDescription availableCommand: commandRegistry)
+      for (final CommandDescription availableCommand : commandRegistry)
       {
         out.println("    " + availableCommand);
       }
@@ -184,7 +168,7 @@ public final class SchemaCrawlerHelpCommandLine
     {
       return;
     }
-    try (final Reader helpReader = helpResource.openNewInputReader(UTF_8);)
+    try (final Reader helpReader = helpResource.openNewInputReader(UTF_8))
     {
       IOUtility.copy(helpReader, out);
       out.println();

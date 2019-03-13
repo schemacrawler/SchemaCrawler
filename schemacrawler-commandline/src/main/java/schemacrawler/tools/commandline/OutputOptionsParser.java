@@ -46,6 +46,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class OutputOptionsParser
+  implements OptionsParser<OutputOptions>
 {
 
   private final OutputOptionsBuilder outputOptionsBuilder;
@@ -72,6 +73,7 @@ public final class OutputOptionsParser
     outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
   }
 
+  @Override
   public OutputOptions parse(final String[] args)
   {
     commandLine.parse(args);
@@ -90,6 +92,7 @@ public final class OutputOptionsParser
     return outputOptionsBuilder.toOptions();
   }
 
+  @Override
   public String[] getRemainder()
   {
     return remainder;

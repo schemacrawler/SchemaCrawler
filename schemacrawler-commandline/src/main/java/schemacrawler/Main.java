@@ -53,12 +53,11 @@ public final class Main
     {
       applyApplicationLogLevel(Level.OFF);
 
-      final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-      final ApplicationOptions applicationOptions = applicationOptionsParser
-        .parse(args);
+      final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+      final ApplicationOptions applicationOptions = optionsParser.parse(args);
 
       final Config argsMap = CommandLineUtility
-        .parseArgs(applicationOptionsParser.getRemainder());
+        .parseArgs(optionsParser.getRemainder());
 
       applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
 

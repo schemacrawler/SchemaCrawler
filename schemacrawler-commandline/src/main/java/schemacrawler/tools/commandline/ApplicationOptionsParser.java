@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 
 public final class ApplicationOptionsParser
+  implements OptionsParser<ApplicationOptions>
 {
 
   private final CommandLine commandLine;
@@ -56,6 +57,7 @@ public final class ApplicationOptionsParser
     commandLine = newCommandLine(this);
   }
 
+  @Override
   public ApplicationOptions parse(final String[] args)
   {
     commandLine.parse(args);
@@ -68,6 +70,7 @@ public final class ApplicationOptionsParser
     return options;
   }
 
+  @Override
   public String[] getRemainder()
   {
     return remainder;

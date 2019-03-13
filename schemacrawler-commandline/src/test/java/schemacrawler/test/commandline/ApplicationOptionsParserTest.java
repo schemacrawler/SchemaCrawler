@@ -21,14 +21,14 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = new String[0];
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(emptyArray()));
   }
 
@@ -37,14 +37,14 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--some-option" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(args));
   }
 
@@ -53,14 +53,14 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--help" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(true));
     assertThat(options.isShowVersionOnly(), is(false));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(emptyArray()));
   }
 
@@ -69,9 +69,9 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--help", "-h" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
     assertThrows(CommandLine.OverwrittenOptionException.class,
-                 () -> applicationOptionsParser.parse(args));
+                 () -> optionsParser.parse(args));
   }
 
   @Test
@@ -79,9 +79,9 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--log-level" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> applicationOptionsParser.parse(args));
+                 () -> optionsParser.parse(args));
   }
 
   @Test
@@ -89,9 +89,9 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--log-level", "BAD" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
     assertThrows(CommandLine.ParameterException.class,
-                 () -> applicationOptionsParser.parse(args));
+                 () -> optionsParser.parse(args));
   }
 
   @Test
@@ -99,14 +99,14 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--log-level", "FINE" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.FINE));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(emptyArray()));
   }
 
@@ -115,14 +115,14 @@ public class ApplicationOptionsParserTest
   {
     final String[] args = { "--log-level", "FinE" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.FINE));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(emptyArray()));
   }
 
@@ -132,14 +132,14 @@ public class ApplicationOptionsParserTest
     final String[] args = {
       "--log-level", "ALL", "-h", "--version", "additional", "-extra" };
 
-    final ApplicationOptionsParser applicationOptionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = applicationOptionsParser.parse(args);
+    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
+    final ApplicationOptions options = optionsParser.parse(args);
 
     assertThat(options.getApplicationLogLevel(), is(Level.ALL));
     assertThat(options.isShowHelp(), is(true));
     assertThat(options.isShowVersionOnly(), is(true));
 
-    final String[] remainder = applicationOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
       "additional", "-extra" }));
   }

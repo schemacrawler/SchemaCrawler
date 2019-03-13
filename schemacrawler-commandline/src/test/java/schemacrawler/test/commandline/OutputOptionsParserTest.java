@@ -22,13 +22,13 @@ public class OutputOptionsParserTest
   {
     final String[] args = new String[0];
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = outputOptionsParser.parse(args);
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
+    final OutputOptions options = optionsParser.parse(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue(), is("text"));
 
-    final String[] remainder = outputOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(emptyArray()));
   }
 
@@ -37,13 +37,13 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--some-option" };
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = outputOptionsParser.parse(args);
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
+    final OutputOptions options = optionsParser.parse(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue(), is("text"));
 
-    final String[] remainder = outputOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(args));
   }
 
@@ -52,9 +52,9 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--output-file" };
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(new Config());
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> outputOptionsParser.parse(args));
+                 () -> optionsParser.parse(args));
   }
 
   @Test
@@ -62,9 +62,9 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--output-format" };
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(new Config());
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> outputOptionsParser.parse(args));
+                 () -> optionsParser.parse(args));
   }
 
   @Test
@@ -78,15 +78,15 @@ public class OutputOptionsParserTest
       "additional",
       "-extra" };
 
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = outputOptionsParser.parse(args);
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
+    final OutputOptions options = optionsParser.parse(args);
 
     assertThat(options.getOutputFile()
                  .orElseThrow(() -> new IllegalArgumentException("No file found"))
                  .getFileName(), is(Paths.get("file.txt")));
     assertThat(options.getOutputFormatValue(), is("tables.js"));
 
-    final String[] remainder = outputOptionsParser.getRemainder();
+    final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
       "additional", "-extra" }));
   }
