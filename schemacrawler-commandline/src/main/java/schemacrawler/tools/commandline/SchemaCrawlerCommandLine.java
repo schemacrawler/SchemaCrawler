@@ -72,9 +72,8 @@ public final class SchemaCrawlerCommandLine
 
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(
-      argsMap);
-    databaseConnector = dbServerTypeParser.getOptions();
+    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser();
+    databaseConnector = dbServerTypeParser.parse(args);
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
@@ -96,7 +95,8 @@ public final class SchemaCrawlerCommandLine
       config);
     additionalConfigOptionsParser.loadConfig();
 
-    final UserCredentials userCredentials = parseConnectionOptions();
+    final UserCredentials userCredentials = parseConnectionOptions(
+      dbServerTypeParser.isBundled());
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     connectionOptions = databaseConnector
@@ -174,11 +174,11 @@ public final class SchemaCrawlerCommandLine
   /**
    * Parse connection options, for both ways of connecting.
    */
-  private UserCredentials parseConnectionOptions()
+  private UserCredentials parseConnectionOptions(final boolean isBundled)
     throws SchemaCrawlerException
   {
     final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
-    if (databaseConnector.isUnknownDatabaseSystem() || config.hasValue("url"))
+    if (!isBundled)
     {
       dbConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
     }

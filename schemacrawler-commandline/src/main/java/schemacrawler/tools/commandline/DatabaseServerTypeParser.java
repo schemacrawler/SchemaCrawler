@@ -29,7 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.Config;
+import static sf.util.Utility.isBlank;
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+
+import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -40,48 +43,77 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
  * @author Sualeh Fatehi
  */
 public final class DatabaseServerTypeParser
-  extends BaseOptionsParser<DatabaseConnector>
+  implements OptionsParser<DatabaseConnector>
 {
 
-  private static final String URL = "url";
-  private static final String SERVER = "server";
+  private final CommandLine commandLine;
 
-  public DatabaseServerTypeParser(final Config config)
+  @CommandLine.Option(names = {
+    "-server", "--server" }, description = "Database server type")
+  private String databaseSystemIdentifier = null;
+  @CommandLine.Option(names = {
+    "-url", "--url" }, description = "Database connection string")
+  private String connectionUrl = null;
+
+  @CommandLine.Parameters
+  private String[] remainder = new String[0];
+
+  public DatabaseServerTypeParser()
   {
-    super(config);
+    commandLine = newCommandLine(this);
   }
 
   @Override
-  public DatabaseConnector getOptions()
+  public DatabaseConnector parse(final String[] args)
     throws SchemaCrawlerException
   {
+    commandLine.parse(args);
+
+    if (!hasDatabaseSystemIdentifier() && isBlank(connectionUrl))
+    {
+      throw new SchemaCrawlerCommandLineException(
+        "Please specify a database connection");
+    }
+
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
 
-    final String databaseSystemIdentifier = config.getStringValue(SERVER, null);
-    if (config.hasValue(SERVER)
-        && !registry.hasDatabaseSystemIdentifier(databaseSystemIdentifier))
+    if (hasDatabaseSystemIdentifier() && !registry
+      .hasDatabaseSystemIdentifier(databaseSystemIdentifier))
     {
-      throw new SchemaCrawlerCommandLineException(String
-        .format("Unsupported server <%s> %n"
-                + "Please provide a database connection URL on the command-line, %n"
-                + "and re-run SchemaCrawler without the -server argument",
-                databaseSystemIdentifier));
+      throw new SchemaCrawlerCommandLineException(String.format(
+        "Unsupported server <%s> %n"
+        + "Please provide a database connection URL on the command-line, %n"
+        + "and re-run SchemaCrawler without the -server argument",
+        databaseSystemIdentifier));
     }
 
     final DatabaseConnector dbConnector;
-    if (databaseSystemIdentifier != null)
+    if (hasDatabaseSystemIdentifier())
     {
       dbConnector = registry.lookupDatabaseConnector(databaseSystemIdentifier);
-      consumeOption(SERVER);
     }
     else
     {
-      final String connectionUrl = config.getStringValue(URL, null);
       dbConnector = registry.lookupDatabaseConnectorFromUrl(connectionUrl);
-      // NOTE: Do not consume URL option, since it is needed later
     }
 
     return dbConnector;
+  }
+
+  private boolean hasDatabaseSystemIdentifier()
+  {
+    return !isBlank(databaseSystemIdentifier);
+  }
+
+  public boolean isBundled()
+  {
+    return hasDatabaseSystemIdentifier();
+  }
+
+  @Override
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
 }

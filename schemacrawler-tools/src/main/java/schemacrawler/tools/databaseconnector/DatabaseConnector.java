@@ -35,12 +35,7 @@ import java.sql.Connection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
-import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
 
@@ -119,16 +114,15 @@ public abstract class DatabaseConnector
    * Gets the complete bundled database specific configuration set,
    * including the SQL for information schema views.
    *
-   * @param connection
-   *        Database connection
+   * @param connection Database connection
    */
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
       .builder().withDatabaseServerType(dbServerType)
-      .withInformationSchemaViewsForConnection(informationSchemaViewsBuilderForConnection,
-                                               connection)
-      .fromConnnection(connection);
+      .withInformationSchemaViewsForConnection(
+        informationSchemaViewsBuilderForConnection,
+        connection).fromConnnection(connection);
 
     return schemaRetrievalOptionsBuilder;
   }
@@ -143,9 +137,8 @@ public abstract class DatabaseConnector
    * connection options are provided, from the command-line, and
    * configuration file.
    *
-   * @param additionalConfig
-   *        Configuration from the command-line, and from configuration
-   *        files.
+   * @param additionalConfig Configuration from the command-line, and from configuration
+   *                         files.
    */
   public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
                                                         final Config additionalConfig)
@@ -190,7 +183,14 @@ public abstract class DatabaseConnector
   @Override
   public String toString()
   {
-    return "Database connector for " + dbServerType;
+    if (dbServerType.isUnknownDatabaseSystem())
+    {
+      return "Database connector for unknown database system type";
+    }
+    else
+    {
+      return "Database connector for " + dbServerType;
+    }
   }
 
   /**
@@ -198,8 +198,7 @@ public abstract class DatabaseConnector
    * driver class can be loaded, and so on. Throws an exception if there
    * is a problem.
    *
-   * @throws SchemaCrawlerException
-   *         If there is a problem with creating connection options.
+   * @throws SchemaCrawlerException If there is a problem with creating connection options.
    */
   void checkDatabaseConnectionOptions()
     throws SchemaCrawlerException

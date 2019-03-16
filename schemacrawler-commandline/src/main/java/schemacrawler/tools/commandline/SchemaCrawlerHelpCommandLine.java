@@ -41,7 +41,6 @@ import schemacrawler.OperatingSystemInfo;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
@@ -65,8 +64,6 @@ public final class SchemaCrawlerHelpCommandLine
   private final PrintWriter out;
   private final String command;
   private final boolean showVersionOnly;
-  private final InputResource connectionHelpResource;
-  private final DatabaseServerType dbServerType;
 
   /**
    * Shows help based on command-line options.
@@ -80,13 +77,6 @@ public final class SchemaCrawlerHelpCommandLine
     throws SchemaCrawlerException
   {
     requireNonNull(argsMap, "No command-line arguments provided");
-
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser(
-      argsMap);
-    final DatabaseConnector dbConnector = dbServerTypeParser.getOptions();
-
-    connectionHelpResource = dbConnector.getConnectionHelpResource();
-    dbServerType = dbConnector.getDatabaseServerType();
 
     this.showVersionOnly = showVersionOnly;
 
@@ -104,10 +94,6 @@ public final class SchemaCrawlerHelpCommandLine
   {
     final CommandRegistry commandRegistry = new CommandRegistry();
 
-    if (dbServerType != null && !dbServerType.isUnknownDatabaseSystem())
-    {
-      out.println("SchemaCrawler for " + dbServerType.getDatabaseSystemName());
-    }
     printHelpText("/help/SchemaCrawler.txt");
     out.println();
     if (showVersionOnly)
@@ -119,21 +105,15 @@ public final class SchemaCrawlerHelpCommandLine
       return;
     }
 
-    if (connectionHelpResource == null)
+    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    printHelpText("/help/Connections.txt");
+    out.println("Available servers are: ");
+    for (final DatabaseServerType availableServer : databaseConnectorRegistry)
     {
-      final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
-      printHelpText("/help/Connections.txt");
-      out.println("Available servers are: ");
-      for (final DatabaseServerType availableServer : databaseConnectorRegistry)
-      {
-        out.println("  " + availableServer);
-      }
-      out.println();
+      out.println("  " + availableServer);
     }
-    else
-    {
-      printHelpText(connectionHelpResource);
-    }
+    out.println();
+
     printHelpText("/help/SchemaCrawlerOptions.txt");
     printHelpText("/help/Config.txt");
     printHelpText("/help/ApplicationOptions.txt");
