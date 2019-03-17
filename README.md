@@ -8,7 +8,7 @@
 
 
 
-# ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/raw/master/schemacrawler-docs/logo/schemacrawler_logo.svg?raw=true) SchemaCrawler
+# ![SchemaCrawler](https://github.com/sualeh/SchemaCrawler/raw/master/schemacrawler-docs/logo/schemacrawler_logo.png?raw=true) SchemaCrawler
 
 > **Please see the [SchemaCrawler website](http://www.schemacrawler.com/) for more details.**
 
