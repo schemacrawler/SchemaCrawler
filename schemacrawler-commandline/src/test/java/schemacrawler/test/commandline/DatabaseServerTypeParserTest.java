@@ -61,7 +61,7 @@ public class DatabaseServerTypeParserTest
     throws SchemaCrawlerException
   {
     final String[] args = {
-      "-url", "jdbc:hsqldb:url", "additional", "-extra" };
+      "--url", "jdbc:hsqldb:url", "additional", "-extra" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
     final DatabaseConnector options = optionsParser.parse(args);

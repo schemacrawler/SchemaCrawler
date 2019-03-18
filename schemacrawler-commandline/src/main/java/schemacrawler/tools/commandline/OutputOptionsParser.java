@@ -54,13 +54,9 @@ public final class OutputOptionsParser
   private final CommandLine commandLine;
 
   @CommandLine.Option(names = {
-    "-o",
-    "-outputfile",
-    "--output-file" }, description = "Outfile file path and name")
+    "-o", "--output-file" }, description = "Outfile file path and name")
   private File outputFile = null;
   @CommandLine.Option(names = {
-    "-fmt",
-    "-outputformat",
     "--output-format" }, description = "Outfile format")
   private String outputFormatValue = null;
 

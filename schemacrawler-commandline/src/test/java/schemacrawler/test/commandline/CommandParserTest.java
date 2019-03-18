@@ -49,7 +49,7 @@ public class CommandParserTest
   public void allArgs()
   {
     final String[] args = {
-      "-command", "a_command", "additional", "-extra" };
+      "--command", "a_command", "additional", "--extra" };
 
     final CommandParser optionsParser = new CommandParser();
     final Command options = optionsParser.parse(args);
@@ -58,7 +58,7 @@ public class CommandParserTest
 
     final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
-      "additional", "-extra" }));
+      "additional", "--extra" }));
   }
 
 }

@@ -49,10 +49,10 @@ public final class DatabaseServerTypeParser
   private final CommandLine commandLine;
 
   @CommandLine.Option(names = {
-    "-server", "--server" }, description = "Database server type")
+    "--server" }, description = "Database server type")
   private String databaseSystemIdentifier = null;
   @CommandLine.Option(names = {
-    "-url", "--url" }, description = "Database connection string")
+    "--url" }, description = "Database connection string")
   private String connectionUrl = null;
 
   @CommandLine.Parameters

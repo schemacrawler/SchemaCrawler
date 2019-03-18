@@ -71,9 +71,9 @@ public class OutputOptionsParserTest
   public void allArgs()
   {
     final String[] args = {
-      "-outputfile",
+      "--output-file",
       "file.txt",
-      "-outputformat",
+      "--output-format",
       "tables.js",
       "additional",
       "-extra" };

@@ -46,9 +46,7 @@ public final class CommandParser
   private final CommandLine commandLine;
 
   @CommandLine.Option(names = {
-    "-c",
-    "-command",
-    "--command" }, required = true, description = "SchemaCrawler command")
+    "-c", "--command" }, required = true, description = "SchemaCrawler command")
   private String command = null;
 
   @CommandLine.Parameters

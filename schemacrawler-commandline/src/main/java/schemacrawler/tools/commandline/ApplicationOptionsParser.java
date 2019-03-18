@@ -44,7 +44,7 @@ public final class ApplicationOptionsParser
     "-V", "--version" }, description = "Print SchemaCrawler version and exit")
   private boolean showVersionOnly = false;
   @CommandLine.Option(names = {
-    "-loglevel", "--log-level" }, description = "Set logging level")
+    "--log-level" }, description = "Set logging level")
   private LogLevel loglevel = LogLevel.OFF;
   @CommandLine.Option(names = {
     "-h", "--help", "-?" }, description = "Show help")

@@ -30,9 +30,7 @@ package schemacrawler.test.utility;
 
 
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -113,19 +111,19 @@ public final class CommandlineTestUtility
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> commandlineArgsMap = new HashMap<>();
-      commandlineArgsMap.put("url", connectionInfo.getConnectionUrl());
-      commandlineArgsMap.put("user", "sa");
-      commandlineArgsMap.put("password", "");
+      commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
+      commandlineArgsMap.put("u", "sa");
+      commandlineArgsMap.put("p", "");
       if (propertiesFile != null)
       {
         commandlineArgsMap.put("g", propertiesFile.toString());
       }
-      commandlineArgsMap.put("command", command);
-      commandlineArgsMap.put("outputformat", outputFormatValue);
-      commandlineArgsMap.put("outputfile", out.toString());
+      commandlineArgsMap.put("c", command);
+      commandlineArgsMap.put("-output-format", outputFormatValue);
+      commandlineArgsMap.put("-output-file", out.toString());
 
       // Override and add to command-line arguments
       if (argsMap != null)
@@ -153,8 +151,8 @@ public final class CommandlineTestUtility
                                                     WRITE,
                                                     TRUNCATE_EXISTING,
                                                     CREATE);
-    config.toProperties().store(tempFileWriter,
-                                "Store config to temporary file for testing");
+    config.toProperties()
+      .store(tempFileWriter, "Store config to temporary file for testing");
 
     return tempFile;
   }
