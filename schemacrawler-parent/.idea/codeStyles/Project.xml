@@ -25,6 +25,9 @@
       </option>
       <option name="JD_KEEP_EMPTY_LINES" value="false" />
     </JavaCodeStyleSettings>
+    <MarkdownNavigatorCodeStyleSettings>
+      <option name="RIGHT_MARGIN" value="72" />
+    </MarkdownNavigatorCodeStyleSettings>
     <XML>
       <option name="XML_TEXT_WRAP" value="0" />
       <option name="XML_KEEP_WHITE_SPACES_INSIDE_CDATA" value="true" />

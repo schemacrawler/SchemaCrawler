@@ -74,11 +74,11 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("routinetypes");
     normalizeOptionName("routines");
     normalizeOptionName("excludeinout");
-    normalizeOptionName("grepcolumns");
-    normalizeOptionName("grepinout");
-    normalizeOptionName("grepdef");
-    normalizeOptionName("invert-match");
-    normalizeOptionName("only-matching");
+    normalizeOptionName("-grep-columns");
+    normalizeOptionName("-grep-inout");
+    normalizeOptionName("-grep-def");
+    normalizeOptionName("-invert-match");
+    normalizeOptionName("-only-matching");
     normalizeOptionName("noemptytables", "hideemptytables");
     normalizeOptionName("parents");
     normalizeOptionName("children");
@@ -203,51 +203,51 @@ public final class SchemaCrawlerOptionsParser
       consumeOption("sequences");
     }
 
-    if (config.hasValue("invert-match"))
+    if (config.hasValue("-invert-match"))
     {
       optionsBuilder
-        .invertGrepMatch(config.getBooleanValue("invert-match", true));
-      consumeOption("invert-match");
+        .invertGrepMatch(config.getBooleanValue("-invert-match", true));
+      consumeOption("-invert-match");
     }
 
-    if (config.hasValue("only-matching"))
+    if (config.hasValue("-only-matching"))
     {
       optionsBuilder
-        .grepOnlyMatching(config.getBooleanValue("only-matching", true));
-      consumeOption("only-matching");
+        .grepOnlyMatching(config.getBooleanValue("-only-matching", true));
+      consumeOption("-only-matching");
     }
 
-    if (config.hasValue("grepcolumns"))
+    if (config.hasValue("-grep-columns"))
     {
       final InclusionRule grepColumnInclusionRule = config
-        .getInclusionRule("grepcolumns");
+        .getInclusionRule("-grep-columns");
       optionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
-      consumeOption("grepcolumns");
+      consumeOption("-grep-columns");
     }
     else
     {
       optionsBuilder.includeGreppedColumns(null);
     }
 
-    if (config.hasValue("grepinout"))
+    if (config.hasValue("-grep-inout"))
     {
       final InclusionRule grepRoutineColumnInclusionRule = config
-        .getInclusionRule("grepinout");
+        .getInclusionRule("-grep-inout");
       optionsBuilder
         .includeGreppedRoutineColumns(grepRoutineColumnInclusionRule);
-      consumeOption("grepinout");
+      consumeOption("-grep-inout");
     }
     else
     {
       optionsBuilder.includeGreppedRoutineColumns(null);
     }
 
-    if (config.hasValue("grepdef"))
+    if (config.hasValue("-grep-def"))
     {
-      final InclusionRule grepDefinitionInclusionRule = config
-        .getInclusionRule("grepdef");
-      optionsBuilder.includeGreppedDefinitions(grepDefinitionInclusionRule);
-      consumeOption("grepdef");
+      final InclusionRule grepDefInclusionRule = config
+        .getInclusionRule("-grep-def");
+      optionsBuilder.includeGreppedDefinitions(grepDefInclusionRule);
+      consumeOption("-grep-def");
     }
     else
     {

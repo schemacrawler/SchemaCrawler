@@ -78,7 +78,7 @@ public final class SchemaCrawlerCommandLine
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
 
-    config = loadConfig(argsMap);
+    config = loadConfig(args, argsMap);
 
     final CommandParser commandParser = new CommandParser();
     command = commandParser.parse(args).toString();
@@ -165,10 +165,10 @@ public final class SchemaCrawlerCommandLine
   /**
    * Loads configuration from a number of sources, in order of priority.
    */
-  private Config loadConfig(final Config argsMap)
+  private Config loadConfig(final String[] args, final Config argsMap)
     throws SchemaCrawlerException
   {
-    return CommandLineUtility.loadConfig(argsMap, databaseConnector);
+    return CommandLineUtility.loadConfig(args, argsMap, databaseConnector);
   }
 
   /**

@@ -29,16 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 
+import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 /**
  * Parses the command-line.
@@ -46,44 +50,64 @@ import sf.util.SchemaCrawlerLogger;
  * @author Sualeh Fatehi
  */
 public class ConfigParser
-  extends BaseConfigOptionsParser
+  implements OptionsParser<Config>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
 
-  private static final String CONFIG_FILE = "configfile";
+  private final CommandLine commandLine;
 
-  public ConfigParser(final Config config)
-  {
-    super(config);
-    normalizeOptionName(CONFIG_FILE, "g");
-  }
+  @CommandLine.Option(names = {
+    "-g",
+    "--config-file" }, description = "SchemaCrawler configuration properties file")
+  private File configFile = null;
 
-  public void consumeOptions()
+  @CommandLine.Parameters
+  private String[] remainder = new String[0];
+
+  public ConfigParser()
   {
-    consumeOption(CONFIG_FILE);
+    commandLine = newCommandLine(this);
   }
 
   @Override
-  public void loadConfig()
-    throws SchemaCrawlerException
+  public Config parse(final String[] args)
   {
+    commandLine.parse(args);
+
+    final Path configFilePath;
+    if (configFile == null)
+    {
+      configFilePath = Paths.get("schemacrawler.config.properties");
+    }
+    else
+    {
+      configFilePath = configFile.toPath();
+    }
+    final Path configFileFullPath = configFilePath.normalize().toAbsolutePath();
+
     try
     {
-      final String configfile = config
-        .getStringValue(CONFIG_FILE, "schemacrawler.config.properties");
-      final Path configFilePath = Paths.get(configfile).normalize()
-        .toAbsolutePath();
-      config.putAll(PropertiesUtility
-        .loadConfig(new FileInputResource(configFilePath)));
+      final Config config = PropertiesUtility
+        .loadConfig(new FileInputResource(configFileFullPath));
+      return config;
     }
     catch (final IOException e)
     {
-      LOGGER
-        .log(Level.CONFIG,
-             "schemacrawler.config.properties not found in the current directory");
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "SchemaCrawler configuration properties file not found, %s",
+                   configFileFullPath));
+
+      return new Config();
     }
+  }
+
+  @Override
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
 }

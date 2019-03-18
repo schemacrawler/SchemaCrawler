@@ -30,9 +30,7 @@ package schemacrawler.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.TestUtility.clean;
 import static schemacrawler.test.utility.TestUtility.compareOutput;
@@ -46,7 +44,6 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
@@ -71,23 +68,13 @@ public class GrepCommandLineTest
     final List<String> failures = new ArrayList<>();
 
     final String[][] grepArgs = new String[][] {
-                                                 new String[] {
-                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE", },
-                                                 new String[] {
-                                                                "-grepcolumns=.*\\..*NAME", },
-                                                 new String[] {
-                                                                "-grepdef=.*book authors.*", },
-                                                 new String[] {
-                                                                "-tables=",
-                                                                "-routines=.*",
-                                                                "-grepinout=.*\\.B_COUNT", },
-                                                 new String[] {
-                                                                "-tables=",
-                                                                "-routines=.*",
-                                                                "-grepinout=.*\\.B_OFFSET", },
-                                                 new String[] {
-                                                                "-grepcolumns=.*\\.STREET|.*\\.PRICE",
-                                                                "-grepdef=.*book authors.*", }, };
+      new String[] {
+        "--grep-columns=.*\\.STREET|.*\\.PRICE", }, new String[] {
+      "--grep-columns=.*\\..*NAME", }, new String[] {
+      "--grep-def=.*book authors.*", }, new String[] {
+      "-tables=", "-routines=.*", "--grep-inout=.*\\.B_COUNT", }, new String[] {
+      "-tables=", "-routines=.*", "--grep-inout=.*\\.B_OFFSET", }, new String[] {
+      "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*", }, };
     for (int i = 0; i < grepArgs.length; i++)
     {
       final String[] grepArgsForRun = grepArgs[i];
@@ -102,28 +89,27 @@ public class GrepCommandLineTest
                                               CREATE,
                                               TRUNCATE_EXISTING);
       final Properties properties = new Properties();
-      properties.load(this.getClass()
-        .getResourceAsStream("/hsqldb.INFORMATION_SCHEMA.config.properties"));
+      properties.load(this.getClass().getResourceAsStream(
+        "/hsqldb.INFORMATION_SCHEMA.config.properties"));
       properties.store(writer, this.getClass().getName());
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 
-      final Path testOutputFile = IOUtility.createTempFilePath(referenceFile,
-                                                               "data");
+      final Path testOutputFile = IOUtility
+        .createTempFilePath(referenceFile, "data");
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final List<String> args = new ArrayList<>(Arrays
-        .asList(new String[] {
-                               "-url=" + connectionInfo.getConnectionUrl(),
-                               "-user=sa",
-                               "-password=",
-                               "-g=" + additionalProperties.toString(),
-                               "-infolevel=" + infoLevel,
-                               "-command=" + schemaTextDetailType,
-                               "-outputformat=" + outputFormat.getFormat(),
-                               "-outputfile=" + testOutputFile.toString(),
-                               "-noinfo", }));
+      final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
+        "-url=" + connectionInfo.getConnectionUrl(),
+        "-user=sa",
+        "-password=",
+        "-g=" + additionalProperties.toString(),
+        "-infolevel=" + infoLevel,
+        "-command=" + schemaTextDetailType,
+        "-outputformat=" + outputFormat.getFormat(),
+        "-outputfile=" + testOutputFile.toString(),
+        "-noinfo", }));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));

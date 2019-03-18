@@ -85,7 +85,8 @@ public final class CommandLineUtility
    * @return Loaded configuration
    * @throws SchemaCrawlerException On an exception
    */
-  public static Config loadConfig(final Config argsMap,
+  public static Config loadConfig(final String[] args,
+                                  final Config argsMap,
                                   final DatabaseConnector dbConnector)
     throws SchemaCrawlerException
   {
@@ -114,12 +115,11 @@ public final class CommandLineUtility
     {
       config.putAll(argsMap);
     }
-    new ConfigParser(config).loadConfig();
+    final Config configFileConfig = new ConfigParser().parse(args);
+    config.putAll(configFileConfig);
 
     // 4. Override/ overwrite from the command-line options
     config.putAll(argsMap);
-
-    new ConfigParser(config).consumeOptions();
 
     return config;
   }
