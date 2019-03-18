@@ -33,13 +33,7 @@ import static sf.util.Utility.isBlank;
 
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.InclusionRule;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -74,11 +68,11 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("routinetypes");
     normalizeOptionName("routines");
     normalizeOptionName("excludeinout");
-    normalizeOptionName("-grep-columns");
-    normalizeOptionName("-grep-inout");
-    normalizeOptionName("-grep-def");
-    normalizeOptionName("-invert-match");
-    normalizeOptionName("-only-matching");
+    normalizeOptionName("grep-columns");
+    normalizeOptionName("grep-inout");
+    normalizeOptionName("grep-def");
+    normalizeOptionName("invert-match");
+    normalizeOptionName("only-matching");
     normalizeOptionName("noemptytables", "hideemptytables");
     normalizeOptionName("parents");
     normalizeOptionName("children");
@@ -102,8 +96,8 @@ public final class SchemaCrawlerOptionsParser
       .builder().fromConfig(config);
     if (config.hasValue("infolevel"))
     {
-      final InfoLevel infoLevel = config.getEnumValue("infolevel",
-                                                      InfoLevel.standard);
+      final InfoLevel infoLevel = config
+        .getEnumValue("infolevel", InfoLevel.standard);
       schemaInfoLevelBuilder.withInfoLevel(infoLevel);
       consumeOption("infolevel");
     }
@@ -124,15 +118,14 @@ public final class SchemaCrawlerOptionsParser
     }
     else
     {
-      LOGGER
-        .log(Level.WARNING,
-             "Please provide a -schemas option for efficient retrieval of database metadata");
+      LOGGER.log(Level.WARNING,
+                 "Please provide a -schemas option for efficient retrieval of database metadata");
     }
 
     if (config.hasValue("tabletypes"))
     {
-      final String tabletypes = config.getStringValue("tabletypes",
-                                                      DEFAULT_TABLE_TYPES);
+      final String tabletypes = config
+        .getStringValue("tabletypes", DEFAULT_TABLE_TYPES);
       if (!isBlank(tabletypes))
       {
         optionsBuilder.tableTypes(tabletypes);
@@ -203,51 +196,51 @@ public final class SchemaCrawlerOptionsParser
       consumeOption("sequences");
     }
 
-    if (config.hasValue("-invert-match"))
+    if (config.hasValue("invert-match"))
     {
       optionsBuilder
-        .invertGrepMatch(config.getBooleanValue("-invert-match", true));
-      consumeOption("-invert-match");
+        .invertGrepMatch(config.getBooleanValue("invert-match", true));
+      consumeOption("invert-match");
     }
 
-    if (config.hasValue("-only-matching"))
+    if (config.hasValue("only-matching"))
     {
       optionsBuilder
-        .grepOnlyMatching(config.getBooleanValue("-only-matching", true));
-      consumeOption("-only-matching");
+        .grepOnlyMatching(config.getBooleanValue("only-matching", true));
+      consumeOption("only-matching");
     }
 
-    if (config.hasValue("-grep-columns"))
+    if (config.hasValue("grep-columns"))
     {
       final InclusionRule grepColumnInclusionRule = config
-        .getInclusionRule("-grep-columns");
+        .getInclusionRule("grep-columns");
       optionsBuilder.includeGreppedColumns(grepColumnInclusionRule);
-      consumeOption("-grep-columns");
+      consumeOption("grep-columns");
     }
     else
     {
       optionsBuilder.includeGreppedColumns(null);
     }
 
-    if (config.hasValue("-grep-inout"))
+    if (config.hasValue("grep-inout"))
     {
       final InclusionRule grepRoutineColumnInclusionRule = config
-        .getInclusionRule("-grep-inout");
+        .getInclusionRule("grep-inout");
       optionsBuilder
         .includeGreppedRoutineColumns(grepRoutineColumnInclusionRule);
-      consumeOption("-grep-inout");
+      consumeOption("grep-inout");
     }
     else
     {
       optionsBuilder.includeGreppedRoutineColumns(null);
     }
 
-    if (config.hasValue("-grep-def"))
+    if (config.hasValue("grep-def"))
     {
       final InclusionRule grepDefInclusionRule = config
-        .getInclusionRule("-grep-def");
+        .getInclusionRule("grep-def");
       optionsBuilder.includeGreppedDefinitions(grepDefInclusionRule);
-      consumeOption("-grep-def");
+      consumeOption("grep-def");
     }
     else
     {
@@ -256,8 +249,8 @@ public final class SchemaCrawlerOptionsParser
 
     if (config.hasValue("noemptytables"))
     {
-      final boolean noEmptyTables = config.getBooleanValue("noemptytables",
-                                                           true);
+      final boolean noEmptyTables = config
+        .getBooleanValue("noemptytables", true);
       if (noEmptyTables)
       {
         optionsBuilder.noEmptyTables();
@@ -293,11 +286,11 @@ public final class SchemaCrawlerOptionsParser
   private void logOverride(final String inclusionRuleName,
                            final InclusionRule schemaInclusionRule)
   {
-    LOGGER
-      .log(Level.INFO,
-           new StringFormat("Overriding %s inclusion rule from command-line to %s",
-                            inclusionRuleName,
-                            schemaInclusionRule));
+    LOGGER.log(Level.INFO,
+               new StringFormat(
+                 "Overriding %s inclusion rule from command-line to %s",
+                 inclusionRuleName,
+                 schemaInclusionRule));
   }
 
 }

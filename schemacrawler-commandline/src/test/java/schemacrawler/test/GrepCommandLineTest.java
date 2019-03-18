@@ -69,12 +69,18 @@ public class GrepCommandLineTest
 
     final String[][] grepArgs = new String[][] {
       new String[] {
-        "--grep-columns=.*\\.STREET|.*\\.PRICE", }, new String[] {
-      "--grep-columns=.*\\..*NAME", }, new String[] {
-      "--grep-def=.*book authors.*", }, new String[] {
-      "-tables=", "-routines=.*", "--grep-inout=.*\\.B_COUNT", }, new String[] {
-      "-tables=", "-routines=.*", "--grep-inout=.*\\.B_OFFSET", }, new String[] {
-      "--grep-columns=.*\\.STREET|.*\\.PRICE", "--grep-def=.*book authors.*", }, };
+        "--grep-columns=.*\\.STREET|.*\\.PRICE", },
+      new String[] {
+        "--grep-columns=.*\\..*NAME", },
+      new String[] {
+        "--grep-def=.*book authors.*", },
+      new String[] {
+        "-tables=", "-routines=.*", "--grep-inout=.*\\.B_COUNT", },
+      new String[] {
+        "-tables=", "-routines=.*", "--grep-inout=.*\\.B_OFFSET", },
+      new String[] {
+        "--grep-columns=.*\\.STREET|.*\\.PRICE",
+        "--grep-def=.*book authors.*", }, };
     for (int i = 0; i < grepArgs.length; i++)
     {
       final String[] grepArgsForRun = grepArgs[i];
@@ -89,9 +95,9 @@ public class GrepCommandLineTest
                                               CREATE,
                                               TRUNCATE_EXISTING);
       final Properties properties = new Properties();
-      properties.load(this.getClass().getResourceAsStream(
+      properties.load(getClass().getResourceAsStream(
         "/hsqldb.INFORMATION_SCHEMA.config.properties"));
-      properties.store(writer, this.getClass().getName());
+      properties.store(writer, getClass().getName());
 
       final String referenceFile = String.format("grep%02d.txt", i + 1);
 
@@ -100,7 +106,7 @@ public class GrepCommandLineTest
 
       final OutputFormat outputFormat = TextOutputFormat.text;
 
-      final List<String> args = new ArrayList<>(Arrays.asList(new String[] {
+      final List<String> args = new ArrayList<>(Arrays.asList(
         "-url=" + connectionInfo.getConnectionUrl(),
         "-user=sa",
         "-password=",
@@ -109,7 +115,7 @@ public class GrepCommandLineTest
         "-command=" + schemaTextDetailType,
         "-outputformat=" + outputFormat.getFormat(),
         "-outputfile=" + testOutputFile.toString(),
-        "-noinfo", }));
+        "-noinfo"));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));
