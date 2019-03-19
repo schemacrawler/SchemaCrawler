@@ -156,7 +156,7 @@ public class SiteGraphVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
-    args.put("-command", "brief");
+    args.put("c", "brief");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
