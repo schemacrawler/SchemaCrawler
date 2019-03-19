@@ -1,7 +1,7 @@
 --- Application Options ---
 
--loglevel=<loglevel>
-  Sets the logging granularity, where <loglevel> is one of: 
+--log-level=<loglevel>
+  Sets the logging granularity, where <loglevel> is one of:
   OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL
   Optional, default OFF
 

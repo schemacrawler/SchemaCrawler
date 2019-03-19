@@ -7,5 +7,5 @@ Re-run SchemaCrawler with just the
 option for help
 
 Or, re-run SchemaCrawler with an additional
--loglevel=CONFIG
+--log-level=CONFIG
 option for details on the error

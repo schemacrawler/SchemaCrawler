@@ -27,7 +27,7 @@ Some guidelines for a quick response on [Stack Overflow] and the [SchemaCrawler 
 - Provide the steps that you took to reproduce the issue, and any steps that you took to 
 	solve the issue
 - Zip and attach the SchemaCrawler debug logs, which can be obtained by running 
-	SchemaCrawler with an additional `-loglevel=ALL` command-line argument
+	SchemaCrawler with an additional `--log-level=ALL` command-line argument
 
 
 [Stack Overflow]: http://stackoverflow.com/search?q=schemacrawler+is%3Aquestion

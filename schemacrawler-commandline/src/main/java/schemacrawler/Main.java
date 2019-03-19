@@ -95,7 +95,7 @@ public final class Main
         .println("Re-run SchemaCrawler with just the\n-?\noption for help");
       System.err.println();
       System.err.println(
-        "Or, re-run SchemaCrawler with an additional\n-loglevel=CONFIG\noption for details on the error");
+        "Or, re-run SchemaCrawler with an additional\n--log-level=CONFIG\noption for details on the error");
       logSafeArguments(args);
       logFullStackTrace(Level.SEVERE, e);
     }

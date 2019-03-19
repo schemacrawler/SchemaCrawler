@@ -75,7 +75,7 @@ Run SchemaCrawler withquery, with a query for the command `"-command=SELECT * FR
 ----------
 
 ### <a name="excluded-tables">How to see why certain tables or columns for excluded</a>
-Re-run SchemaCrawler with `-loglevel=ALL` on the command-line.
+Re-run SchemaCrawler with `--log-level=ALL` on the command-line.
 
 ----------
 
