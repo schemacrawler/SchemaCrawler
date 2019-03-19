@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -41,10 +39,12 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.*;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -57,7 +57,7 @@ public class SiteGraphVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-      throws IOException, URISyntaxException
+    throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -69,7 +69,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram(final TestContext testContext,
                       final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -82,7 +82,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_10_no_schema_colors(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -97,7 +97,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_11_title(final TestContext testContext,
                                final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -111,7 +111,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_12_graphviz_attributes(final TestContext testContext,
                                              final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -138,7 +138,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_2_portablenames(final TestContext testContext,
                                       final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -152,11 +152,11 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_3_important_columns(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
-    args.put("command", "brief");
+    args.put("-command", "brief");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -167,7 +167,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_4_ordinals(final TestContext testContext,
                                  final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -182,7 +182,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_5_alphabetical(final TestContext testContext,
                                      final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -197,12 +197,12 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_6_grep(final TestContext testContext,
                              final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("tabletypes", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
@@ -213,13 +213,13 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_7_grep_onlymatching(final TestContext testContext,
                                           final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("only-matching", "true");
+    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("-only-matching", "true");
     args.put("tabletypes", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
@@ -230,7 +230,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_8_no_cardinality(final TestContext testContext,
                                        final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -246,7 +246,7 @@ public class SiteGraphVariationsTest
   @Test
   public void diagram_9_row_counts(final TestContext testContext,
                                    final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -267,7 +267,7 @@ public class SiteGraphVariationsTest
                    final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-      throws Exception
+    throws Exception
   {
     deleteIfExists(outputFile);
 

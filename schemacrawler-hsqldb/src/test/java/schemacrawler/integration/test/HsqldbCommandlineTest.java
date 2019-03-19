@@ -30,18 +30,11 @@ package schemacrawler.integration.test;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 import static java.util.Objects.requireNonNull;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
+import static org.hamcrest.Matchers.*;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.IsEmptyOptional.emptyOptional;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
@@ -55,7 +48,6 @@ import java.util.Properties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.Main;
 import schemacrawler.crawl.SchemaCrawler;
 import schemacrawler.schema.Catalog;
@@ -82,46 +74,43 @@ public class HsqldbCommandlineTest
     throws Exception
   {
 
-    final Path testConfigFile = IOUtility.createTempFilePath("test",
-                                                             "properties");
-    try (
-        final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
-                                                                UTF_8,
-                                                                WRITE,
-                                                                TRUNCATE_EXISTING,
-                                                                CREATE));)
+    final Path testConfigFile = IOUtility
+      .createTempFilePath("test", "properties");
+    try (final Writer writer = new PrintWriter(newBufferedWriter(testConfigFile,
+                                                                 UTF_8,
+                                                                 WRITE,
+                                                                 TRUNCATE_EXISTING,
+                                                                 CREATE)))
     {
       final Properties properties = new Properties();
-      properties
-        .setProperty("hsqldb.tables",
-                     "SELECT TABLE_CAT, TABLE_SCHEM, TABLE_NAME, TABLE_TYPE, REMARKS FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
+      properties.setProperty("hsqldb.tables",
+                             "SELECT TABLE_CAT, TABLE_SCHEM, TABLE_NAME, TABLE_TYPE, REMARKS FROM INFORMATION_SCHEMA.SYSTEM_TABLES");
       properties.store(writer, "testHsqldbMain");
     }
 
     final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "hsqldb");
+      argsMap.put("-server", "hsqldb");
       argsMap.put("port", String.valueOf(connectionInfo.getPort()));
       argsMap.put("database", connectionInfo.getDatabase());
       argsMap.put("user", "sa");
       argsMap.put("password", null);
       argsMap.put("g", testConfigFile.toString());
       argsMap.put("noinfo", Boolean.FALSE.toString());
-      argsMap.put("command", "details,dump,count,hsqldb.tables");
+      argsMap.put("-command", "details,dump,count,hsqldb.tables");
       argsMap.put("infolevel", "maximum");
       argsMap.put("synonyms", ".*");
       argsMap.put("routines", ".*");
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAndTypeAs(classpathResource("hsqldb.main" + "."
-                                                         + outputFormat
-                                                           .getFormat()),
+               hasSameContentAndTypeAs(classpathResource(
+                 "hsqldb.main" + "." + outputFormat.getFormat()),
                                        outputFormat.getFormat()));
   }
 

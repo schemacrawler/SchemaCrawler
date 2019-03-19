@@ -28,6 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,16 +53,6 @@ import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestLoggingExtension.class)
 public class SqliteDistributionTest
@@ -62,7 +62,7 @@ public class SqliteDistributionTest
 
   @BeforeEach
   public void setup()
-      throws SchemaCrawlerException
+    throws SchemaCrawlerException
   {
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
     dbConnector = registry.lookupDatabaseConnector("sqlite");
@@ -70,41 +70,41 @@ public class SqliteDistributionTest
 
   @Test
   public void testIdentifierQuoteString()
-      throws Exception
+    throws Exception
   {
 
     final Connection connection = null;
     assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-                   .toOptions().getIdentifierQuoteString(), is("\""));
+                 .toOptions().getIdentifierQuoteString(), is("\""));
   }
 
   @Test
   public void testSqliteMain()
-      throws Exception
+    throws Exception
   {
     final OutputFormat outputFormat = TextOutputFormat.text;
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
       final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-          .normalize().toAbsolutePath();
+        .normalize().toAbsolutePath();
 
       TestSchemaCreator.main(new String[] {
-          "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
+        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
 
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "sqlite");
+      argsMap.put("-server", "sqlite");
       argsMap.put("database", sqliteDbFile.toString());
       argsMap.put("noinfo", Boolean.FALSE.toString());
-      argsMap.put("command", "details,dump,count");
+      argsMap.put("-command", "details,dump,count");
       argsMap.put("infolevel", InfoLevel.maximum.name());
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(
-                   "sqlite.main" + "." + outputFormat.getFormat())));
+                 "sqlite.main" + "." + outputFormat.getFormat())));
   }
 
 }

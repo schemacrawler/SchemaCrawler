@@ -30,16 +30,9 @@ package schemacrawler.integration.test;
 
 import static java.nio.file.Files.size;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
@@ -55,15 +48,10 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.Main;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestWriter;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -87,24 +75,24 @@ public class OfflineSnapshotTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "offline");
+      argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
-      argsMap.put("command", "details");
-      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-command", "details");
+      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
+      argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + "details.txt")));
+               hasSameContentAs(classpathResource(
+                 OFFLINE_EXECUTABLE_OUTPUT + "details.txt")));
 
   }
 
@@ -113,26 +101,26 @@ public class OfflineSnapshotTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "offline");
+      argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
-      argsMap.put("command", "details");
-      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
+      argsMap.put("-command", "details");
+      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
       argsMap.put("routines", "");
       argsMap.put("tables", ".*SALES");
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + "offlineWithFilters.txt")));
+               hasSameContentAs(classpathResource(
+                 OFFLINE_EXECUTABLE_OUTPUT + "offlineWithFilters.txt")));
   }
 
   @Test
@@ -140,22 +128,22 @@ public class OfflineSnapshotTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "offline");
+      argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
       argsMap.put("routines", ".*");
-      argsMap.put("command", "list");
-      argsMap.put("outputformat", TextOutputFormat.text.getFormat());
+      argsMap.put("-command", "list");
+      argsMap.put("-output-format", TextOutputFormat.text.getFormat());
       argsMap.put("schemas", "PUBLIC.BOOKS");
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-output-file", out.toString());
 
       final List<String> argsList = new ArrayList<>();
-      for (final Map.Entry<String, String> arg: argsMap.entrySet())
+      for (final Map.Entry<String, String> arg : argsMap.entrySet())
       {
         argsList.add(String.format("-%s=%s", arg.getKey(), arg.getValue()));
       }
@@ -163,8 +151,8 @@ public class OfflineSnapshotTest
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(OFFLINE_EXECUTABLE_OUTPUT
-                                                  + "offlineWithSchemaFilters.txt")));
+               hasSameContentAs(classpathResource(
+                 OFFLINE_EXECUTABLE_OUTPUT + "offlineWithSchemaFilters.txt")));
   }
 
   @Test
@@ -184,7 +172,8 @@ public class OfflineSnapshotTest
 
     final Connection connection = new OfflineConnection(serializedCatalogFile);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "details");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(schemaTextOptionsBuilder.toConfig());
     executable.setConnection(connection);
@@ -215,9 +204,10 @@ public class OfflineSnapshotTest
                catalog.getTables(schema),
                hasSize(10));
 
-    serializedCatalogFile = IOUtility.createTempFilePath("schemacrawler",
-                                                         "ser");
-    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(catalog);
+    serializedCatalogFile = IOUtility
+      .createTempFilePath("schemacrawler", "ser");
+    final JavaSerializedCatalog serializedCatalog = new JavaSerializedCatalog(
+      catalog);
     serializedCatalog
       .save(new FileOutputStream(serializedCatalogFile.toFile()));
     assertThat("Database was not serialized",
@@ -230,7 +220,8 @@ public class OfflineSnapshotTest
                                    final String referenceFileName)
     throws Exception
   {
-    final OfflineConnection connection = new OfflineConnection(serializedCatalogFile);
+    final OfflineConnection connection = new OfflineConnection(
+      serializedCatalogFile);
 
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
       .builder();

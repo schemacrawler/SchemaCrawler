@@ -30,9 +30,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.IOException;
@@ -45,14 +43,8 @@ import java.util.logging.Level;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Main;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.server.postgresql.EmbeddedPostgreSQLWrapper;
 import schemacrawler.test.utility.TestUtility;
 import schemacrawler.test.utility.TestWriter;
@@ -96,16 +88,19 @@ public class PostgreSQLDumpTest
     postgreSQLDumpLoader.startServer();
     postgreSQLDumpLoader.loadDatabaseFile(dumpFile);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "details");
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
+    executable
+      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
+                                    .toConfig());
 
     final Connection connection = postgreSQLDumpLoader
       .createDatabaseConnection();
 
     assertThat(outputOf(executableExecution(connection, executable)),
-               hasSameContentAs(classpathResource("testPostgreSQLExecutableWithDump.txt")));
+               hasSameContentAs(classpathResource(
+                 "testPostgreSQLExecutableWithDump.txt")));
     LOGGER.log(Level.INFO, "Completed PostgreSQL test successfully");
   }
 
@@ -114,22 +109,23 @@ public class PostgreSQLDumpTest
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final Map<String, String> argsMap = new HashMap<>();
-      argsMap.put("server", "postgresql");
+      argsMap.put("-server", "postgresql");
       argsMap.put("database", dumpFile.toString());
       argsMap.put("schemas", "public");
       argsMap.put("routines", ".*");
-      argsMap.put("command", "details");
+      argsMap.put("-command", "details");
       argsMap.put("infolevel", InfoLevel.maximum.name());
-      argsMap.put("outputfile", out.toString());
+      argsMap.put("-output-file", out.toString());
       // argsMap.put("loglevel", Level.ALL.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource("testPostgreSQLMainWithDump.txt")));
+               hasSameContentAs(classpathResource(
+                 "testPostgreSQLMainWithDump.txt")));
   }
 
 }

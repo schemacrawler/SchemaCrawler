@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.is;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -42,7 +41,7 @@ public class BundledDistributionTest
 {
 
   @Test
-  public void testContextrmationSchema_mysql()
+  public void testInformationSchema_mysql()
     throws Exception
   {
 
@@ -51,8 +50,8 @@ public class BundledDistributionTest
     final DatabaseConnector databaseSystemIdentifier = registry
       .lookupDatabaseConnector("mysql");
     assertThat(databaseSystemIdentifier
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(7));
+                 .getSchemaRetrievalOptionsBuilder(connection).toOptions()
+                 .getInformationSchemaViews().size(), is(7));
   }
 
   @Test

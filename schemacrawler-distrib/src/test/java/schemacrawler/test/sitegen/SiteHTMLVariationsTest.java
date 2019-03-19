@@ -28,12 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.test.utility.*;
-import schemacrawler.tools.options.TextOutputFormat;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -41,10 +39,12 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.test.utility.*;
+import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -57,7 +57,7 @@ public class SiteHTMLVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-      throws IOException, URISyntaxException
+    throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -69,7 +69,7 @@ public class SiteHTMLVariationsTest
   @Test
   public void html(final TestContext testContext,
                    final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -85,7 +85,7 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_2_portablenames(final TestContext testContext,
                                    final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
@@ -102,11 +102,11 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_3_important_columns(final TestContext testContext,
                                        final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
-    args.put("command", "brief");
+    args.put("-command", "brief");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -120,7 +120,7 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_4_ordinals(final TestContext testContext,
                               final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -138,7 +138,7 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_5_alphabetical(final TestContext testContext,
                                   final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
@@ -156,12 +156,12 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_6_grep(final TestContext testContext,
                           final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("tabletypes", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
@@ -175,13 +175,13 @@ public class SiteHTMLVariationsTest
   @Test
   public void html_7_grep_onlymatching(final TestContext testContext,
                                        final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
-    args.put("grepcolumns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("only-matching", "true");
+    args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
+    args.put("-only-matching", "true");
     args.put("tabletypes", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
@@ -196,7 +196,7 @@ public class SiteHTMLVariationsTest
                    final Map<String, String> argsMap,
                    final Map<String, String> config,
                    final Path outputFile)
-      throws Exception
+    throws Exception
   {
     deleteIfExists(outputFile);
 
