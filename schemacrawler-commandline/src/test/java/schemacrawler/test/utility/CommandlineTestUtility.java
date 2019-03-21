@@ -115,8 +115,8 @@ public final class CommandlineTestUtility
     {
       final Map<String, String> commandlineArgsMap = new HashMap<>();
       commandlineArgsMap.put("-url", connectionInfo.getConnectionUrl());
-      commandlineArgsMap.put("u", "sa");
-      commandlineArgsMap.put("p", "");
+      commandlineArgsMap.put("-user", "sa");
+      commandlineArgsMap.put("-password", "");
       if (propertiesFile != null)
       {
         commandlineArgsMap.put("g", propertiesFile.toString());

@@ -94,10 +94,10 @@ public class HsqldbCommandlineTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "hsqldb");
-      argsMap.put("port", String.valueOf(connectionInfo.getPort()));
-      argsMap.put("database", connectionInfo.getDatabase());
-      argsMap.put("user", "sa");
-      argsMap.put("password", null);
+      argsMap.put("-port", String.valueOf(connectionInfo.getPort()));
+      argsMap.put("-database", connectionInfo.getDatabase());
+      argsMap.put("-user", "sa");
+      argsMap.put("-password", "");
       argsMap.put("g", testConfigFile.toString());
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("-command", "details,dump,count,hsqldb.tables");

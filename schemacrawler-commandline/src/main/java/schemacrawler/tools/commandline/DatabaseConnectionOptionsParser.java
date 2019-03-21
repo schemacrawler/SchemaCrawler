@@ -29,50 +29,55 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.isBlank;
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+
+import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 
 /**
  * Options for the command-line.
- *
- * @author sfatehi
  */
-final class BundledDriverConnectionOptionsParser
-  extends BaseDatabaseConnectionOptionsParser
+public final class DatabaseConnectionOptionsParser
+  implements OptionsParser<Config>
 {
 
-  private static final String URLX = "urlx";
-  private static final String DATABASE = "database";
-  private static final String PORT = "port";
-  private static final String HOST = "host";
+  private final picocli.CommandLine commandLine;
 
-  BundledDriverConnectionOptionsParser(final Config config)
+  @CommandLine.Option(names = {
+    "--url" }, required = true, description = "Database connection string")
+  private String connectionUrl;
+
+  @CommandLine.Parameters
+  private String[] remainder = new String[0];
+
+  public DatabaseConnectionOptionsParser()
   {
-    super(config);
+    commandLine = newCommandLine(this);
   }
 
   @Override
-  public void loadConfig()
-    throws SchemaCrawlerException
+  public String[] getRemainder()
   {
-    super.loadConfig();
+    return remainder;
+  }
 
-    if (config.hasValue(HOST))
+  @Override
+  public Config parse(final String[] args)
+  {
+    commandLine.parse(args);
+
+    final Config config = new Config();
+
+    if (isBlank(connectionUrl))
     {
-      config.put(HOST, config.getStringValue(HOST, ""));
+      throw new SchemaCrawlerCommandLineException(
+        "Please provide a database connection string");
     }
-    if (config.hasValue(PORT))
-    {
-      config.put(PORT, String.valueOf(config.getIntegerValue(PORT, 0)));
-    }
-    if (config.hasValue(DATABASE))
-    {
-      config.put(DATABASE, config.getStringValue(DATABASE, ""));
-    }
-    if (config.hasValue(URLX))
-    {
-      config.put(URLX, config.getStringValue(URLX, ""));
-    }
+
+    config.put("url", connectionUrl);
+
+    return config;
   }
 
 }

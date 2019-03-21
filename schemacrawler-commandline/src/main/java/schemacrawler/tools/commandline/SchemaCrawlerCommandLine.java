@@ -29,6 +29,10 @@ package schemacrawler.tools.commandline;
 
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
@@ -58,7 +62,6 @@ public final class SchemaCrawlerCommandLine
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
   private final ConnectionOptions connectionOptions;
-
   private final DatabaseConnector databaseConnector;
 
   public SchemaCrawlerCommandLine(final String[] args, final Config argsMap)
@@ -95,12 +98,34 @@ public final class SchemaCrawlerCommandLine
       config);
     additionalConfigOptionsParser.loadConfig();
 
-    final UserCredentials userCredentials = parseConnectionOptions(
-      dbServerTypeParser.isBundled());
+    final UserCredentialsParser userCredentialsParser = new UserCredentialsParser();
+    final UserCredentials userCredentials = userCredentialsParser.parse(args);
+
+    final Config dbConnectionConfig = parseConnectionOptions(dbServerTypeParser
+                                                               .isBundled(),
+                                                             args);
+    config.putAll(dbConnectionConfig);
+
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
     connectionOptions = databaseConnector
       .newDatabaseConnectionOptions(userCredentials, config);
+  }
+
+  private String[] remainingArgs(final Config config)
+  {
+    final List<String> remainingArgs = new ArrayList<>();
+    final Set<Map.Entry<String, String>> entries = config.entrySet();
+    for (final Map.Entry<String, String> entry : entries)
+    {
+      remainingArgs.add(entry.getKey());
+      final String value = entry.getValue();
+      if (value != null)
+      {
+        remainingArgs.add(value);
+      }
+    }
+    return remainingArgs.toArray(new String[0]);
   }
 
   @Override
@@ -174,24 +199,20 @@ public final class SchemaCrawlerCommandLine
   /**
    * Parse connection options, for both ways of connecting.
    */
-  private UserCredentials parseConnectionOptions(final boolean isBundled)
+  private Config parseConnectionOptions(final boolean isBundled,
+                                        final String[] args)
     throws SchemaCrawlerException
   {
-    final BaseDatabaseConnectionOptionsParser dbConnectionOptionsParser;
+    final OptionsParser<Config> dbConnectionOptionsParser;
     if (!isBundled)
     {
-      dbConnectionOptionsParser = new CommandLineConnectionOptionsParser(config);
+      dbConnectionOptionsParser = new DatabaseConnectionOptionsParser();
     }
     else
     {
-      dbConnectionOptionsParser = new BundledDriverConnectionOptionsParser(
-        config);
+      dbConnectionOptionsParser = new DatabaseConfigConnectionOptionsParser();
     }
-    dbConnectionOptionsParser.loadConfig();
-    config.putAll(dbConnectionOptionsParser.getOptions());
-    final UserCredentials userCredentials = dbConnectionOptionsParser
-      .getUserCredentials();
-    return userCredentials;
+    return dbConnectionOptionsParser.parse(args);
   }
 
 }

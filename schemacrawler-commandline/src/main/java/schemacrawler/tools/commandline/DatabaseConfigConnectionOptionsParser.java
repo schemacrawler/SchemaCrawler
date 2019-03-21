@@ -29,69 +29,90 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
+import static java.util.stream.Collectors.joining;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
-import java.io.File;
-import java.nio.file.Path;
+import java.util.Map;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
- * Parses the command-line.
+ * Options for the command-line.
  *
- * @author Sualeh Fatehi
+ * @author sfatehi
  */
-public final class OutputOptionsParser
-  implements OptionsParser<OutputOptions>
+public final class DatabaseConfigConnectionOptionsParser
+  implements OptionsParser<Config>
 {
 
   private final CommandLine commandLine;
 
-  private final OutputOptionsBuilder outputOptionsBuilder;
+  @CommandLine.Option(names = {
+    "--host" }, description = "Database server host")
+  private String host;
 
   @CommandLine.Option(names = {
-    "-o", "--output-file" }, description = "Outfile file path and name")
-  private File outputFile = null;
+    "--port" }, description = "Database server port")
+  private int port;
+
   @CommandLine.Option(names = {
-    "--output-format" }, description = "Outfile format")
-  private String outputFormatValue = null;
+    "--database" }, description = "Database server host")
+  private String database;
+
+  @CommandLine.Option(names = {
+    "--urlx" }, description = "JDBC URL additional properties")
+  private Map<String, String> urlx;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
 
-  public OutputOptionsParser(final Config config)
+  public DatabaseConfigConnectionOptionsParser()
   {
     commandLine = newCommandLine(this);
-    outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
-  }
-
-  @Override
-  public OutputOptions parse(final String[] args)
-  {
-    commandLine.parse(args);
-
-    if (outputFile != null)
-    {
-      final Path outputFilePath = outputFile.toPath().toAbsolutePath();
-      outputOptionsBuilder.withOutputFile(outputFilePath);
-    }
-
-    if (!isBlank(outputFormatValue))
-    {
-      outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
-    }
-
-    return outputOptionsBuilder.toOptions();
   }
 
   @Override
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  @Override
+  public Config parse(final String[] args)
+  {
+    commandLine.parse(args);
+
+    final Config config = new Config();
+
+    if (host != null)
+    {
+      config.put("host", host);
+    }
+
+    if (port < 0 || port > 65535)
+    {
+      throw new SchemaCrawlerCommandLineException(
+        "Please provide a valid value for port, " + port);
+    }
+    if (port > 0)
+    {
+      config.put("port", String.valueOf(port));
+    }
+
+    if (database != null)
+    {
+      config.put("database", database);
+    }
+
+    if (urlx != null && !urlx.isEmpty())
+    {
+      final String urlxValue = urlx.entrySet().stream().map(Object::toString)
+        .collect(joining("&"));
+      config.put("urlx", urlxValue);
+    }
+
+    return config;
   }
 
 }
