@@ -31,6 +31,7 @@ package schemacrawler.tools.commandline;
 
 import static sf.util.Utility.isBlank;
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
@@ -54,9 +55,9 @@ public final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
-  public SchemaCrawlerOptionsParser(final Config config)
+  public SchemaCrawlerOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
   {
-    super(config);
+    super(new Config());
     normalizeOptionName("title");
     normalizeOptionName("infolevel", "i");
     normalizeOptionName("schemas");
@@ -77,7 +78,7 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("parents");
     normalizeOptionName("children");
 
-    optionsBuilder = SchemaCrawlerOptionsBuilder.builder().fromConfig(config);
+    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
   }
 
   @Override

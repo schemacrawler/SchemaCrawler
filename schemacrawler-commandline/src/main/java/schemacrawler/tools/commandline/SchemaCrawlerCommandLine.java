@@ -86,9 +86,12 @@ public final class SchemaCrawlerCommandLine
     final CommandParser commandParser = new CommandParser();
     command = commandParser.parse(args).toString();
 
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().fromConfig(config);
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(
-      config);
-    schemaCrawlerOptions = schemaCrawlerOptionsParser.getOptions();
+      schemaCrawlerOptionsBuilder);
+    schemaCrawlerOptionsParser.getOptions();
+    schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
       config);
