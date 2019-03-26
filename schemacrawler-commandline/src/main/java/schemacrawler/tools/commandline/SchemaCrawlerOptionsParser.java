@@ -55,9 +55,10 @@ public final class SchemaCrawlerOptionsParser
 
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
-  public SchemaCrawlerOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public SchemaCrawlerOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder,
+                                    final Config config)
   {
-    super(new Config());
+    super(config);
     normalizeOptionName("title");
     normalizeOptionName("infolevel", "i");
     normalizeOptionName("schemas");
@@ -74,9 +75,6 @@ public final class SchemaCrawlerOptionsParser
     normalizeOptionName("grep-def");
     normalizeOptionName("invert-match");
     normalizeOptionName("only-matching");
-    normalizeOptionName("noemptytables", "hideemptytables");
-    normalizeOptionName("parents");
-    normalizeOptionName("children");
 
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
   }
@@ -248,40 +246,7 @@ public final class SchemaCrawlerOptionsParser
       optionsBuilder.includeGreppedDefinitions(null);
     }
 
-    if (config.hasValue("noemptytables"))
-    {
-      final boolean noEmptyTables = config
-        .getBooleanValue("noemptytables", true);
-      if (noEmptyTables)
-      {
-        optionsBuilder.noEmptyTables();
-      }
-      consumeOption("noemptytables");
-    }
-
-    if (config.hasValue("parents"))
-    {
-      final int parentTableFilterDepth = config.getIntegerValue("parents", 0);
-      optionsBuilder.parentTableFilterDepth(parentTableFilterDepth);
-      consumeOption("parents");
-    }
-    else
-    {
-      optionsBuilder.parentTableFilterDepth(0);
-    }
-
-    if (config.hasValue("children"))
-    {
-      final int childTableFilterDepth = config.getIntegerValue("children", 0);
-      optionsBuilder.childTableFilterDepth(childTableFilterDepth);
-      consumeOption("children");
-    }
-    else
-    {
-      optionsBuilder.childTableFilterDepth(0);
-    }
-
-    return optionsBuilder.toOptions();
+    return null;
   }
 
   private void logOverride(final String inclusionRuleName,

@@ -30,9 +30,7 @@ package schemacrawler.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.clean;
 
 import java.util.HashMap;
@@ -40,7 +38,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
@@ -68,14 +65,14 @@ public class NoEmptyTablesCommandLineTest
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("infolevel", InfoLevel.maximum.name());
     argsMap.put("noinfo", "true");
-    argsMap.put("noemptytables", "true");
+    argsMap.put("-no-empty-tables", "true");
 
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              SchemaTextDetailType.schema.name(),
                                              argsMap,
                                              TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(HIDE_EMPTY_TABLES_OUTPUT
-                                                  + referenceFile)));
+               hasSameContentAs(classpathResource(
+                 HIDE_EMPTY_TABLES_OUTPUT + referenceFile)));
   }
 
 }
