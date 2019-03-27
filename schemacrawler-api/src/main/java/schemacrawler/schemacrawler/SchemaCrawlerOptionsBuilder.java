@@ -32,13 +32,8 @@ package schemacrawler.schemacrawler;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
+import java.util.regex.Pattern;
 
 import schemacrawler.schema.RoutineType;
 
@@ -169,8 +164,7 @@ public final class SchemaCrawlerOptionsBuilder
   /**
    * Options from properties.
    *
-   * @param config
-   *        Configuration properties
+   * @param config Configuration properties
    */
   @Override
   public SchemaCrawlerOptionsBuilder fromConfig(final Config config)
@@ -183,46 +177,46 @@ public final class SchemaCrawlerOptionsBuilder
     schemaInfoLevelBuilder = SchemaInfoLevelBuilder.builder()
       .fromConfig(config);
 
-    schemaInclusionRule = config
-      .getInclusionRuleWithDefault(SC_SCHEMA_PATTERN_INCLUDE,
-                                   SC_SCHEMA_PATTERN_EXCLUDE,
-                                   IncludeAll::new);
-    synonymInclusionRule = config
-      .getInclusionRuleWithDefault(SC_SYNONYM_PATTERN_INCLUDE,
-                                   SC_SYNONYM_PATTERN_EXCLUDE,
-                                   ExcludeAll::new);
-    sequenceInclusionRule = config
-      .getInclusionRuleWithDefault(SC_SEQUENCE_PATTERN_INCLUDE,
-                                   SC_SEQUENCE_PATTERN_EXCLUDE,
-                                   ExcludeAll::new);
+    schemaInclusionRule = config.getInclusionRuleWithDefault(
+      SC_SCHEMA_PATTERN_INCLUDE,
+      SC_SCHEMA_PATTERN_EXCLUDE,
+      IncludeAll::new);
+    synonymInclusionRule = config.getInclusionRuleWithDefault(
+      SC_SYNONYM_PATTERN_INCLUDE,
+      SC_SYNONYM_PATTERN_EXCLUDE,
+      ExcludeAll::new);
+    sequenceInclusionRule = config.getInclusionRuleWithDefault(
+      SC_SEQUENCE_PATTERN_INCLUDE,
+      SC_SEQUENCE_PATTERN_EXCLUDE,
+      ExcludeAll::new);
 
-    tableInclusionRule = config
-      .getInclusionRuleWithDefault(SC_TABLE_PATTERN_INCLUDE,
-                                   SC_TABLE_PATTERN_EXCLUDE,
-                                   IncludeAll::new);
-    columnInclusionRule = config
-      .getInclusionRuleWithDefault(SC_COLUMN_PATTERN_INCLUDE,
-                                   SC_COLUMN_PATTERN_EXCLUDE,
-                                   IncludeAll::new);
+    tableInclusionRule = config.getInclusionRuleWithDefault(
+      SC_TABLE_PATTERN_INCLUDE,
+      SC_TABLE_PATTERN_EXCLUDE,
+      IncludeAll::new);
+    columnInclusionRule = config.getInclusionRuleWithDefault(
+      SC_COLUMN_PATTERN_INCLUDE,
+      SC_COLUMN_PATTERN_EXCLUDE,
+      IncludeAll::new);
 
-    routineInclusionRule = config
-      .getInclusionRuleWithDefault(SC_ROUTINE_PATTERN_INCLUDE,
-                                   SC_ROUTINE_PATTERN_EXCLUDE,
-                                   ExcludeAll::new);
-    routineColumnInclusionRule = config
-      .getInclusionRuleWithDefault(SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                                   SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
-                                   IncludeAll::new);
+    routineInclusionRule = config.getInclusionRuleWithDefault(
+      SC_ROUTINE_PATTERN_INCLUDE,
+      SC_ROUTINE_PATTERN_EXCLUDE,
+      ExcludeAll::new);
+    routineColumnInclusionRule = config.getInclusionRuleWithDefault(
+      SC_ROUTINE_COLUMN_PATTERN_INCLUDE,
+      SC_ROUTINE_COLUMN_PATTERN_EXCLUDE,
+      IncludeAll::new);
 
-    grepColumnInclusionRule = config
-      .getOptionalInclusionRule(SC_GREP_COLUMN_PATTERN_INCLUDE,
-                                SC_GREP_COLUMN_PATTERN_EXCLUDE);
-    grepRoutineColumnInclusionRule = config
-      .getOptionalInclusionRule(SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
-                                SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
-    grepDefinitionInclusionRule = config
-      .getOptionalInclusionRule(SC_GREP_DEFINITION_PATTERN_INCLUDE,
-                                SC_GREP_DEFINITION_PATTERN_EXCLUDE);
+    grepColumnInclusionRule = config.getOptionalInclusionRule(
+      SC_GREP_COLUMN_PATTERN_INCLUDE,
+      SC_GREP_COLUMN_PATTERN_EXCLUDE);
+    grepRoutineColumnInclusionRule = config.getOptionalInclusionRule(
+      SC_GREP_ROUTINE_COLUMN_PATTERN_INCLUDE,
+      SC_GREP_ROUTINE_COLUMN_PATTERN_EXCLUDE);
+    grepDefinitionInclusionRule = config.getOptionalInclusionRule(
+      SC_GREP_DEFINITION_PATTERN_INCLUDE,
+      SC_GREP_DEFINITION_PATTERN_EXCLUDE);
 
     return this;
   }
@@ -324,6 +318,32 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public SchemaCrawlerOptionsBuilder includeSchemas(final Pattern schemaPattern)
+  {
+    schemaInclusionRule = new RegularExpressionInclusionRule(schemaPattern);
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeTables(final Pattern tablePattern)
+  {
+    tableInclusionRule = new RegularExpressionInclusionRule(tablePattern);
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
+  {
+    if (grepColumnPattern == null)
+    {
+      grepColumnInclusionRule = Optional.empty();
+    }
+    else
+    {
+      grepColumnInclusionRule = Optional
+        .of(new RegularExpressionInclusionRule(grepColumnPattern));
+    }
+    return this;
+  }
+
   public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final InclusionRule grepDefinitionInclusionRule)
   {
     this.grepDefinitionInclusionRule = Optional
@@ -331,10 +351,38 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public SchemaCrawlerOptionsBuilder includeGreppedDefinitions(final Pattern grepDefinitionPattern)
+  {
+    if (grepDefinitionPattern == null)
+    {
+      grepDefinitionInclusionRule = Optional.empty();
+    }
+    else
+    {
+      grepDefinitionInclusionRule = Optional
+        .of(new RegularExpressionInclusionRule(grepDefinitionPattern));
+    }
+    return this;
+  }
+
   public SchemaCrawlerOptionsBuilder includeGreppedRoutineColumns(final InclusionRule grepRoutineColumnInclusionRule)
   {
     this.grepRoutineColumnInclusionRule = Optional
       .ofNullable(grepRoutineColumnInclusionRule);
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeGreppedRoutineColumns(final Pattern grepRoutineColumnsPattern)
+  {
+    if (grepRoutineColumnsPattern == null)
+    {
+      grepRoutineColumnInclusionRule = Optional.empty();
+    }
+    else
+    {
+      grepRoutineColumnInclusionRule = Optional
+        .of(new RegularExpressionInclusionRule(grepRoutineColumnsPattern));
+    }
     return this;
   }
 
@@ -476,8 +524,7 @@ public final class SchemaCrawlerOptionsBuilder
   /**
    * Sets routine types from a comma-separated list of routine types.
    *
-   * @param routineTypesString
-   *        Comma-separated list of routine types.
+   * @param routineTypesString Comma-separated list of routine types.
    */
   public SchemaCrawlerOptionsBuilder routineTypes(final String routineTypesString)
   {
@@ -487,10 +534,11 @@ public final class SchemaCrawlerOptionsBuilder
       final String[] routineTypeStrings = routineTypesString.split(",");
       if (routineTypeStrings != null && routineTypeStrings.length > 0)
       {
-        for (final String routineTypeString: routineTypeStrings)
+        for (final String routineTypeString : routineTypeStrings)
         {
           final RoutineType routineType = enumValue(routineTypeString
-            .toLowerCase(Locale.ENGLISH), RoutineType.unknown);
+                                                      .toLowerCase(Locale.ENGLISH),
+                                                    RoutineType.unknown);
           routineTypes.add(routineType);
         }
       }
@@ -538,9 +586,8 @@ public final class SchemaCrawlerOptionsBuilder
    * of table types. For example: TABLE,VIEW,SYSTEM_TABLE,GLOBAL
    * TEMPORARY,ALIAS,SYNONYM
    *
-   * @param tableTypesString
-   *        Comma-separated list of table types. Can be null if all
-   *        supported table types are requested.
+   * @param tableTypesString Comma-separated list of table types. Can be null if all
+   *                         supported table types are requested.
    */
   public SchemaCrawlerOptionsBuilder tableTypes(final String tableTypesString)
   {
@@ -551,7 +598,7 @@ public final class SchemaCrawlerOptionsBuilder
       final String[] tableTypeStrings = tableTypesString.split(",");
       if (tableTypeStrings != null && tableTypeStrings.length > 0)
       {
-        for (final String tableTypeString: tableTypeStrings)
+        for (final String tableTypeString : tableTypeStrings)
         {
           tableTypes.add(tableTypeString.trim());
         }

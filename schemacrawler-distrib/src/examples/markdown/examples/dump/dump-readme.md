@@ -10,4 +10,4 @@ The dump example shows how to dump the contents of a database in a diff-able for
 4. Run `dump.cmd` (or `dump.sh` on Unix) 
 
 ## How to Experiment
-1. Try using grep options to include certain tables. For example, try using a command-line option of `-grepcolumns=.*\\.AUTHOR.*`
+1. Try using grep options to include certain tables. For example, try using a command-line option of `--grep-columns=.*\\.AUTHOR.*`

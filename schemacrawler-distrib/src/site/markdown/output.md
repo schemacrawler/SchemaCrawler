@@ -43,10 +43,10 @@ variations, with examples in SchemaCrawler's HTML output format:
     command-line option [(see
     HTML output)](html-examples/html_5_alphabetical.html).
 -   Grep for columns, and also display outgoing relationships, using
-    `-grepcolumns=.*\\.BOOKS\\..*\\.ID` as a command-line option, with
+    `--grep-columns=.*\\.BOOKS\\..*\\.ID` as a command-line option, with
     an appropriate regular expression [(see
     HTML output)](html-examples/html_6_grep.html).
 -   Grep for columns, but only show matching tables, using
-    `-grepcolumns=.*\\.BOOKS\\..*\\.ID` and `-only-matching` as
+    `--grep-columns=.*\\.BOOKS\\..*\\.ID` and `-only-matching` as
     command-line options [(see
     HTML output)](html-examples/html_7_grep_onlymatching.html).

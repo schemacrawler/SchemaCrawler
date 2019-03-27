@@ -29,13 +29,13 @@ sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks 
 sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks.Production -infolevel=standard -routines= -tables=AdventureWorks.Production.ProductCategory -command=dump
 
 11. Grep example
-sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=standard -routines= -grepcolumns=.*\..*ProductID -command=schema
+sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=standard -routines= --grep-columns=.*\..*ProductID -command=schema
 
 12. Routines, detailed
 sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.HumanResources -noinfo -infolevel=maximum -tables= -command=details
 
 13. Diagram
-sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=maximum -tabletypes=TABLE -routines= -grepcolumns=.*\..*CustomerID -command=schema -outputformat=pdf
+sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -infolevel=maximum -tabletypes=TABLE -routines= --grep-columns=.*\..*CustomerID -command=schema -outputformat=pdf
 
 14. Javascript
 sc -host=192.1612.01.013.139 -user=sa -password=sualeh -database=AdventureWorks -schemas=AdventureWorks\.(?:(?!sys).)* -tables=.*\..*\.Product.* -infolevel=standard -routines= -command=script -outputformat=tables.js

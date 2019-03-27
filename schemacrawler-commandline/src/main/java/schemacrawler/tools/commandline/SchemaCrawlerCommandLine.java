@@ -91,6 +91,9 @@ public final class SchemaCrawlerCommandLine
     final FilterOptionsParser filterOptionsParser = new FilterOptionsParser(
       schemaCrawlerOptionsBuilder);
     filterOptionsParser.parse(args);
+    final GrepOptionsParser grepOptionsParser = new GrepOptionsParser(
+      schemaCrawlerOptionsBuilder);
+    grepOptionsParser.parse(args);
     final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(
       schemaCrawlerOptionsBuilder,
       config);

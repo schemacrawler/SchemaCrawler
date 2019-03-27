@@ -75,9 +75,9 @@ public class GrepCommandLineTest
       new String[] {
         "--grep-def=.*book authors.*", },
       new String[] {
-        "-tables=", "-routines=.*", "--grep-inout=.*\\.B_COUNT", },
+        "-tables=", "-routines=.*", "--grep-in-out=.*\\.B_COUNT", },
       new String[] {
-        "-tables=", "-routines=.*", "--grep-inout=.*\\.B_OFFSET", },
+        "-tables=", "-routines=.*", "--grep-in-out=.*\\.B_OFFSET", },
       new String[] {
         "--grep-columns=.*\\.STREET|.*\\.PRICE",
         "--grep-def=.*book authors.*", }, };

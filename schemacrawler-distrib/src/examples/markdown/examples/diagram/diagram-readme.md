@@ -23,7 +23,7 @@ The diagram example demonstrates the integration of SchemaCrawler with Graphviz.
 3. Run `diagram.cmd` (or `diagram.sh` on Unix) 
 
 ## How to Experiment
-1. Try using grep options to include certain tables. For example, try using a command-line option of `-grepcolumns=.*\\.AUTHOR.*`
+1. Try using grep options to include certain tables. For example, try using a command-line option of `--grep-columns=.*\\.AUTHOR.*`
 2. Try controlling display of foreign-key names, column ordinal numbers, and schema names by setting the 
    following properties in the SchemaCrawler configuration file, `config/schemacrawler.config.properties`. 
 
