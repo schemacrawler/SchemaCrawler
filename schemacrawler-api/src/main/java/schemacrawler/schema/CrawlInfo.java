@@ -84,11 +84,4 @@ public interface CrawlInfo
    */
   String getSchemaCrawlerInfo();
 
-  /**
-   * Gets the title.
-   *
-   * @return Title
-   */
-  String getTitle();
-
 }

@@ -40,19 +40,7 @@ import java.util.function.Predicate;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.ColumnDataType;
-import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DatabaseObject;
-import schemacrawler.schema.NamedObject;
-import schemacrawler.schema.Reducer;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.SchemaReference;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
-import schemacrawler.schema.Table;
+import schemacrawler.schema.*;
 
 /**
  * Database and connection information. Created from metadata returned
@@ -64,6 +52,9 @@ final class MutableCatalog
   extends AbstractNamedObjectWithAttributes
   implements Catalog, Reducible
 {
+
+  private static final long serialVersionUID = 4051323422934251828L;
+
 
   private final class FilterBySchema
     implements Predicate<DatabaseObject>
@@ -79,26 +70,25 @@ final class MutableCatalog
     @Override
     public boolean test(final DatabaseObject databaseObject)
     {
-      return databaseObject != null
-             && databaseObject.getSchema().equals(schema);
+      return databaseObject != null && databaseObject.getSchema()
+        .equals(schema);
     }
 
   }
 
-  private static final long serialVersionUID = 4051323422934251828L;
+
   private final MutableDatabaseInfo databaseInfo;
   private final MutableJdbcDriverInfo jdbcDriverInfo;
   private final SchemaCrawlerInfo schemaCrawlerInfo;
   private final OperatingSystemInfo osInfo;
   private final JvmSystemInfo jvmInfo;
-  private ImmutableCrawlInfo crawlInfo;
   private final NamedObjectList<SchemaReference> schemas = new NamedObjectList<>();
   private final NamedObjectList<MutableColumnDataType> columnDataTypes = new NamedObjectList<>();
   private final NamedObjectList<MutableTable> tables = new NamedObjectList<>();
   private final NamedObjectList<MutableRoutine> routines = new NamedObjectList<>();
   private final NamedObjectList<MutableSynonym> synonyms = new NamedObjectList<>();
-
   private final NamedObjectList<MutableSequence> sequences = new NamedObjectList<>();
+  private ImmutableCrawlInfo crawlInfo;
 
   MutableCatalog(final String name)
   {
@@ -127,7 +117,7 @@ final class MutableCatalog
   {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<ColumnDataType> columnDataTypes = new ArrayList<>();
-    for (final ColumnDataType columnDataType: this.columnDataTypes)
+    for (final ColumnDataType columnDataType : this.columnDataTypes)
     {
       if (filter.test(columnDataType))
       {
@@ -187,7 +177,7 @@ final class MutableCatalog
   {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Routine> routines = new ArrayList<>();
-    for (final Routine routine: this.routines)
+    for (final Routine routine : this.routines)
     {
       if (filter.test(routine))
       {
@@ -232,7 +222,7 @@ final class MutableCatalog
   {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Sequence> sequences = new ArrayList<>();
-    for (final Sequence sequence: this.sequences)
+    for (final Sequence sequence : this.sequences)
     {
       if (filter.test(sequence))
       {
@@ -259,7 +249,7 @@ final class MutableCatalog
   {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Synonym> synonyms = new ArrayList<>();
-    for (final Synonym synonym: this.synonyms)
+    for (final Synonym synonym : this.synonyms)
     {
       if (filter.test(synonym))
       {
@@ -295,7 +285,7 @@ final class MutableCatalog
   {
     final FilterBySchema filter = new FilterBySchema(schema);
     final Collection<Table> tables = new ArrayList<>();
-    for (final Table table: this.tables)
+    for (final Table table : this.tables)
     {
       if (filter.test(table))
       {
@@ -337,7 +327,7 @@ final class MutableCatalog
     {
       return Optional.empty();
     }
-    for (final SchemaReference schema: schemas)
+    for (final SchemaReference schema : schemas)
     {
       if (name.equals(schema.getFullName()))
       {
@@ -482,7 +472,7 @@ final class MutableCatalog
   {
     final SchemaReference systemSchema = new SchemaReference();
     MutableColumnDataType columnDataType = null;
-    for (final MutableColumnDataType currentColumnDataType: columnDataTypes)
+    for (final MutableColumnDataType currentColumnDataType : columnDataTypes)
     {
       if (type == currentColumnDataType.getJavaSqlType().getVendorTypeNumber())
       {
@@ -501,9 +491,9 @@ final class MutableCatalog
     return routines.lookup(routineLookupKey);
   }
 
-  void setCrawlInfo(final String title)
+  void setCrawlInfo()
   {
-    crawlInfo = new ImmutableCrawlInfo(jdbcDriverInfo, databaseInfo, title);
+    crawlInfo = new ImmutableCrawlInfo(jdbcDriverInfo, databaseInfo);
   }
 
 }

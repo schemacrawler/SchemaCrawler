@@ -29,29 +29,15 @@ package schemacrawler.tools.executable;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.filter.ReducerFactory.getRoutineReducer;
-import static schemacrawler.filter.ReducerFactory.getSchemaReducer;
-import static schemacrawler.filter.ReducerFactory.getSequenceReducer;
-import static schemacrawler.filter.ReducerFactory.getSynonymReducer;
-import static schemacrawler.filter.ReducerFactory.getTableReducer;
+import static schemacrawler.filter.ReducerFactory.*;
 import static sf.util.Utility.isBlank;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Reducible;
-import schemacrawler.schema.Routine;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Sequence;
-import schemacrawler.schema.Synonym;
-import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaRetrievalOptions;
+import schemacrawler.schema.*;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.catalogloader.CatalogLoader;
 import schemacrawler.tools.catalogloader.CatalogLoaderRegistry;
 import schemacrawler.tools.options.OutputOptions;
@@ -96,6 +82,41 @@ public final class SchemaCrawlerExecutable
       .newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
+  }
+
+  public SchemaCrawlerOptions getSchemaCrawlerOptions()
+  {
+    return schemaCrawlerOptions;
+  }
+
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    if (schemaCrawlerOptions == null)
+    {
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
+        .newSchemaCrawlerOptions();
+    }
+    else
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+  }
+
+  public OutputOptions getOutputOptions()
+  {
+    return outputOptions;
+  }
+
+  public final void setOutputOptions(final OutputOptions outputOptions)
+  {
+    if (outputOptions == null)
+    {
+      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
+    }
+    else
+    {
+      this.outputOptions = outputOptions;
+    }
   }
 
   public final void execute()
@@ -162,31 +183,6 @@ public final class SchemaCrawlerExecutable
     this.connection = requireNonNull(connection, "No connection provided");
   }
 
-  public final void setOutputOptions(final OutputOptions outputOptions)
-  {
-    if (outputOptions == null)
-    {
-      this.outputOptions = OutputOptionsBuilder.newOutputOptions();
-    }
-    else
-    {
-      this.outputOptions = outputOptions;
-    }
-  }
-
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    if (schemaCrawlerOptions == null)
-    {
-      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .newSchemaCrawlerOptions();
-    }
-    else
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-  }
-
   public void setSchemaRetrievalOptions(final SchemaRetrievalOptions schemaRetrievalOptions)
   {
     this.schemaRetrievalOptions = schemaRetrievalOptions;
@@ -207,10 +203,9 @@ public final class SchemaCrawlerExecutable
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
     final CatalogLoader catalogLoader = catalogLoaderRegistry
       .lookupCatalogLoader(schemaRetrievalOptions.getDatabaseServerType()
-        .getDatabaseSystemIdentifier());
-    LOGGER
-      .log(Level.CONFIG,
-           new StringFormat("Catalog loader: %s", this.getClass().getName()));
+                             .getDatabaseSystemIdentifier());
+    LOGGER.log(Level.CONFIG,
+               new StringFormat("Catalog loader: %s", getClass().getName()));
 
     catalogLoader.setAdditionalConfiguration(additionalConfiguration);
     catalogLoader.setConnection(connection);
@@ -241,22 +236,22 @@ public final class SchemaCrawlerExecutable
   {
     if (LOGGER.isLoggable(Level.INFO))
     {
-      LOGGER
-        .log(Level.INFO,
-             String.format("Executing SchemaCrawler command <%s>", command));
+      LOGGER.log(Level.INFO,
+                 String
+                   .format("Executing SchemaCrawler command <%s>", command));
 
       if (LOGGER.isLoggable(Level.CONFIG))
       {
         LOGGER.log(Level.CONFIG,
-                   String.format("Executable: %s", this.getClass().getName()));
+                   String.format("Executable: %s", getClass().getName()));
         LOGGER.log(Level.CONFIG, ObjectToString.toString(schemaCrawlerOptions));
         LOGGER.log(Level.CONFIG, ObjectToString.toString(outputOptions));
         LOGGER.log(Level.CONFIG, schemaRetrievalOptions.toString());
 
         if (LOGGER.isLoggable(Level.FINE))
         {
-          LOGGER.log(Level.FINE,
-                     ObjectToString.toString(additionalConfiguration));
+          LOGGER
+            .log(Level.FINE, ObjectToString.toString(additionalConfiguration));
         }
       }
     }
@@ -264,16 +259,16 @@ public final class SchemaCrawlerExecutable
 
   private void reduceCatalog(final Catalog catalog)
   {
-    ((Reducible) catalog).reduce(Schema.class,
-                                 getSchemaReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Table.class,
-                                 getTableReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Routine.class,
-                                 getRoutineReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Synonym.class,
-                                 getSynonymReducer(schemaCrawlerOptions));
-    ((Reducible) catalog).reduce(Sequence.class,
-                                 getSequenceReducer(schemaCrawlerOptions));
+    ((Reducible) catalog)
+      .reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));
+    ((Reducible) catalog)
+      .reduce(Table.class, getTableReducer(schemaCrawlerOptions));
+    ((Reducible) catalog)
+      .reduce(Routine.class, getRoutineReducer(schemaCrawlerOptions));
+    ((Reducible) catalog)
+      .reduce(Synonym.class, getSynonymReducer(schemaCrawlerOptions));
+    ((Reducible) catalog)
+      .reduce(Sequence.class, getSequenceReducer(schemaCrawlerOptions));
   }
 
 }

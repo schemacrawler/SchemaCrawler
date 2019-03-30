@@ -46,8 +46,6 @@ public final class SchemaCrawlerOptions
 
   private final SchemaInfoLevel schemaInfoLevel;
 
-  private final String title;
-
   private final InclusionRule schemaInclusionRule;
   private final InclusionRule synonymInclusionRule;
   private final InclusionRule sequenceInclusionRule;
@@ -73,7 +71,6 @@ public final class SchemaCrawlerOptions
   private final int parentTableFilterDepth;
 
   SchemaCrawlerOptions(final SchemaInfoLevel schemaInfoLevel,
-                       final String title,
                        final InclusionRule schemaInclusionRule,
                        final InclusionRule synonymInclusionRule,
                        final InclusionRule sequenceInclusionRule,
@@ -94,7 +91,6 @@ public final class SchemaCrawlerOptions
                        final int parentTableFilterDepth)
   {
     this.schemaInfoLevel = schemaInfoLevel;
-    this.title = title;
     this.schemaInclusionRule = schemaInclusionRule;
     this.synonymInclusionRule = synonymInclusionRule;
     this.sequenceInclusionRule = sequenceInclusionRule;
@@ -275,11 +271,6 @@ public final class SchemaCrawlerOptions
     {
       return new HashSet<>(tableTypes);
     }
-  }
-
-  public String getTitle()
-  {
-    return title;
   }
 
   public boolean isGrepColumns()

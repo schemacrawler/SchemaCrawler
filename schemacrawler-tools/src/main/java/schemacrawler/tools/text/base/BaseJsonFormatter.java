@@ -33,12 +33,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.schema.CrawlInfo;
-import schemacrawler.schema.DatabaseInfo;
-import schemacrawler.schema.DatabaseProperty;
-import schemacrawler.schema.JdbcDriverInfo;
-import schemacrawler.schema.JdbcDriverProperty;
-import schemacrawler.schema.Property;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.text.utility.JsonFormattingHelper;
@@ -121,15 +116,14 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
         .put("crawlTimestamp", formatTimestamp(crawlInfo.getCrawlTimestamp()));
       jsonSchemaCrawlerHeaderInfo.put("runId", crawlInfo.getRunId());
 
-      jsonSchemaCrawlerHeaderInfo.put("title", crawlInfo.getTitle());
+      jsonSchemaCrawlerHeaderInfo.put("title", outputOptions.getTitle());
     }
     catch (final JSONException e)
     {
-      LOGGER
-        .log(Level.FINER,
-             new StringFormat("Error outputting SchemaCrawlerHeaderInfo: %s",
-                              e.getMessage()),
-             e);
+      LOGGER.log(Level.FINER,
+                 new StringFormat("Error outputting SchemaCrawlerHeaderInfo: %s",
+                                  e.getMessage()),
+                 e);
     }
   }
 
@@ -156,7 +150,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       {
         final JSONArray jsonServerInfoProperties = new JSONArray();
         jsonDbInfo.put("serverInfo", jsonServerInfoProperties);
-        for (final Property property: serverInfo)
+        for (final Property property : serverInfo)
         {
           final JSONObject jsonServerInfoProperty = new JSONObject();
           jsonServerInfoProperties.put(jsonServerInfoProperty);
@@ -172,7 +166,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       {
         final JSONArray jsonDbProperties = new JSONArray();
         jsonDbInfo.put("databaseProperties", jsonDbProperties);
-        for (final DatabaseProperty property: dbProperties)
+        for (final DatabaseProperty property : dbProperties)
         {
           final JSONObject jsonDbProperty = new JSONObject();
           jsonDbProperties.put(jsonDbProperty);
@@ -211,8 +205,8 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       jsonDriverInfo.put("driverVersion", driverInfo.getProductVersion());
       jsonDriverInfo.put("driverClassName", driverInfo.getDriverClassName());
       jsonDriverInfo.put("url", driverInfo.getConnectionUrl());
-      jsonDriverInfo.put("isJDBCCompliant",
-                         Boolean.toString(driverInfo.isJdbcCompliant()));
+      jsonDriverInfo
+        .put("isJDBCCompliant", Boolean.toString(driverInfo.isJdbcCompliant()));
 
       final Collection<JdbcDriverProperty> jdbcDriverProperties = driverInfo
         .getDriverProperties();
@@ -220,7 +214,7 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       {
         final JSONArray jsonJdbcDriverProperties = new JSONArray();
         jsonDriverInfo.put("jdbcDriverProperties", jsonJdbcDriverProperties);
-        for (final JdbcDriverProperty driverProperty: jdbcDriverProperties)
+        for (final JdbcDriverProperty driverProperty : jdbcDriverProperties)
         {
           jsonJdbcDriverProperties.put(printJdbcDriverProperty(driverProperty));
         }
@@ -250,10 +244,10 @@ public abstract class BaseJsonFormatter<O extends BaseTextOptions>
       final JSONObject jsonSchemaCrawlerInfo = new JSONObject();
       jsonRoot.put("schemaCrawlerInfo", jsonSchemaCrawlerInfo);
 
-      jsonSchemaCrawlerInfo.put("productName",
-                                schemaCrawlerInfo.getProductName());
-      jsonSchemaCrawlerInfo.put("productVersion",
-                                schemaCrawlerInfo.getProductVersion());
+      jsonSchemaCrawlerInfo
+        .put("productName", schemaCrawlerInfo.getProductName());
+      jsonSchemaCrawlerInfo
+        .put("productVersion", schemaCrawlerInfo.getProductVersion());
     }
     catch (final JSONException e)
     {

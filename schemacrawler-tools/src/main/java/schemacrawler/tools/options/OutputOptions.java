@@ -56,11 +56,13 @@ public final class OutputOptions
   private final String outputFormatValue;
   private final Charset inputEncodingCharset;
   private final Charset outputEncodingCharset;
+  private final String title;
 
   OutputOptions(final Charset inputEncodingCharset,
                 final OutputResource outputResource,
                 final Charset outputEncodingCharset,
-                final String outputFormatValue)
+                final String outputFormatValue,
+                final String title)
   {
     this.inputEncodingCharset = requireNonNull(inputEncodingCharset,
                                                "No input encoding provided");
@@ -70,6 +72,12 @@ public final class OutputOptions
                                                 "No output encoding provided");
     this.outputFormatValue = requireNonNull(outputFormatValue,
                                             "No output format value provided");
+    this.title = title;
+  }
+
+  public String getTitle()
+  {
+    return title;
   }
 
   /**
@@ -117,8 +125,7 @@ public final class OutputOptions
    * it to console output.
    *
    * @return Output writer
-   * @throws IOException
-   *         On an exception
+   * @throws IOException On an exception
    */
   public Writer openNewOutputWriter()
     throws IOException

@@ -78,12 +78,26 @@ public final class OutputOptionsBuilder
   private String outputFormatValue;
   private Charset inputEncodingCharset;
   private Charset outputEncodingCharset;
+  private String title;
 
   private OutputOptionsBuilder()
   {
     // Default values are set at the time of building options
     // All values are set to null, and corrected at the time of
     // converting to options
+  }
+
+  public OutputOptionsBuilder title(final String title)
+  {
+    if (isBlank(title))
+    {
+      this.title = "";
+    }
+    else
+    {
+      this.title = title;
+    }
+    return this;
   }
 
   @Override
@@ -117,7 +131,8 @@ public final class OutputOptionsBuilder
 
     withInputEncoding(options.getInputCharset())
       .withOutputEncoding(options.getOutputCharset())
-      .withOutputFormatValue(options.getOutputFormatValue());
+      .withOutputFormatValue(options.getOutputFormatValue())
+      .title(options.getTitle());
     outputResource = options.getOutputResource();
 
     return this;
@@ -160,10 +175,16 @@ public final class OutputOptionsBuilder
         fileExtension;
     }
 
+    if (isBlank(title))
+    {
+      title = "";
+    }
+
     return new OutputOptions(inputEncodingCharset,
                              outputResource,
                              outputEncodingCharset,
-                             outputFormatValue);
+                             outputFormatValue,
+                             title);
   }
 
   public OutputOptionsBuilder withConsoleOutput()

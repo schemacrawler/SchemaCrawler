@@ -91,7 +91,6 @@ public final class SchemaCrawlerOptionsBuilder
   }
 
   private SchemaInfoLevelBuilder schemaInfoLevelBuilder;
-  private String title;
 
   private InclusionRule schemaInclusionRule;
   private InclusionRule synonymInclusionRule;
@@ -124,8 +123,6 @@ public final class SchemaCrawlerOptionsBuilder
   {
     schemaInfoLevelBuilder = SchemaInfoLevelBuilder.builder()
       .withInfoLevel(InfoLevel.standard);
-
-    title = "";
 
     // All schemas are included by default
     schemaInclusionRule = new IncludeAll();
@@ -231,8 +228,6 @@ public final class SchemaCrawlerOptionsBuilder
 
     schemaInfoLevelBuilder = SchemaInfoLevelBuilder.builder()
       .fromOptions(options.getSchemaInfoLevel());
-
-    title = options.getTitle();
 
     schemaInclusionRule = options.getSchemaInclusionRule();
     synonymInclusionRule = options.getSynonymInclusionRule();
@@ -631,19 +626,6 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
-  public SchemaCrawlerOptionsBuilder title(final String title)
-  {
-    if (isBlank(title))
-    {
-      this.title = "";
-    }
-    else
-    {
-      this.title = title;
-    }
-    return this;
-  }
-
   @Override
   public Config toConfig()
   {
@@ -663,7 +645,6 @@ public final class SchemaCrawlerOptionsBuilder
     }
 
     return new SchemaCrawlerOptions(schemaInfoLevelBuilder.toOptions(),
-                                    title,
                                     schemaInclusionRule,
                                     synonymInclusionRule,
                                     sequenceInclusionRule,

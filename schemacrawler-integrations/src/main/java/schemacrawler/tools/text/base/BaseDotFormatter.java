@@ -95,7 +95,7 @@ public abstract class BaseDotFormatter
 
     TableRow row;
 
-    final String title = crawlInfo.getTitle();
+    final String title = outputOptions.getTitle();
     if (!isBlank(title))
     {
       row = new TableRow(TextOutputFormat.html);
@@ -112,8 +112,11 @@ public abstract class BaseDotFormatter
                            false,
                            Color.white,
                            1));
-      row.add(newTableCell(crawlInfo
-        .getSchemaCrawlerInfo(), Alignment.left, false, Color.white, 1));
+      row.add(newTableCell(crawlInfo.getSchemaCrawlerInfo(),
+                           Alignment.left,
+                           false,
+                           Color.white,
+                           1));
 
       formattingHelper.append(row.toString()).println();
 
@@ -140,8 +143,11 @@ public abstract class BaseDotFormatter
                            false,
                            Color.white,
                            1));
-      row.add(newTableCell(crawlInfo
-        .getDatabaseInfo(), Alignment.left, false, Color.white, 1));
+      row.add(newTableCell(crawlInfo.getDatabaseInfo(),
+                           Alignment.left,
+                           false,
+                           Color.white,
+                           1));
 
       formattingHelper.append(row.toString()).println();
     }
@@ -192,8 +198,8 @@ public abstract class BaseDotFormatter
       .append(" -=-=-=-=-=-=-=-=-=-=-=-=-=- */").println();
     formattingHelper.append("  graph [ ").println();
     formattingHelper.append("    label=<").println();
-    formattingHelper
-      .append("      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
+    formattingHelper.append(
+      "      <table border=\"1\" cellborder=\"0\" cellspacing=\"0\" color=\"#888888\">")
       .println();
   }
 
@@ -232,7 +238,7 @@ public abstract class BaseDotFormatter
                                         final String prefix)
   {
     final StringBuilder buffer = new StringBuilder();
-    for (final Entry<String, String> entry: graphvizAttributes.entrySet())
+    for (final Entry<String, String> entry : graphvizAttributes.entrySet())
     {
       final String[] key = entry.getKey().split("\\.");
       if (key.length == 2 && key[0].equals(prefix))
@@ -249,11 +255,16 @@ public abstract class BaseDotFormatter
     final Map<String, String> graphvizAttributes = options
       .getGraphvizAttributes();
     final String graphvizHeaderTemplate = readResourceFully("/dot.header.txt");
-    final String graphvizHeader = String
-      .format(graphvizHeaderTemplate,
-              makeGraphvizAttributes(graphvizAttributes, "graph"),
-              makeGraphvizAttributes(graphvizAttributes, "node"),
-              makeGraphvizAttributes(graphvizAttributes, "edge"));
+    final String graphvizHeader = String.format(graphvizHeaderTemplate,
+                                                makeGraphvizAttributes(
+                                                  graphvizAttributes,
+                                                  "graph"),
+                                                makeGraphvizAttributes(
+                                                  graphvizAttributes,
+                                                  "node"),
+                                                makeGraphvizAttributes(
+                                                  graphvizAttributes,
+                                                  "edge"));
     return graphvizHeader;
   }
 

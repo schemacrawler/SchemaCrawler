@@ -33,7 +33,6 @@ import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.hamcrest.Matcher;
-
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -70,11 +69,11 @@ public final class ExecutableTestUtility
     throws Exception
   {
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder().withOutputFormatValue(outputFormatValue)
-        .withOutputWriter(out);
+        .builder().fromOptions(executable.getOutputOptions())
+        .withOutputFormatValue(outputFormatValue).withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());
       executable.setConnection(connection);
@@ -91,7 +90,8 @@ public final class ExecutableTestUtility
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(
+      command);
     scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     return scriptExecutable;
   }
@@ -99,8 +99,8 @@ public final class ExecutableTestUtility
   public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
                                                               final OutputFormat outputFormat)
   {
-    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
-                                                  outputFormat.getFormat());
+    return FileHasContent
+      .hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
   }
 
   private ExecutableTestUtility()
