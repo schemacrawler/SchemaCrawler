@@ -50,10 +50,10 @@ public final class DatabaseServerTypeParser
 
   @CommandLine.Option(names = {
     "--server" }, description = "Database server type")
-  private String databaseSystemIdentifier = null;
+  private String databaseSystemIdentifier;
   @CommandLine.Option(names = {
     "--url" }, description = "Database connection string")
-  private String connectionUrl = null;
+  private String connectionUrl;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];

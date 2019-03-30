@@ -55,10 +55,10 @@ public final class OutputOptionsParser
 
   @CommandLine.Option(names = {
     "-o", "--output-file" }, description = "Outfile file path and name")
-  private File outputFile = null;
+  private File outputFile;
   @CommandLine.Option(names = {
     "--output-format" }, description = "Outfile format")
-  private String outputFormatValue = null;
+  private String outputFormatValue;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];

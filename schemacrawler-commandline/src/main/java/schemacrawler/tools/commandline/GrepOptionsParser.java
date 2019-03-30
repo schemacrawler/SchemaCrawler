@@ -52,19 +52,19 @@ public final class GrepOptionsParser
 
   @CommandLine.Option(names = {
     "--grep-columns" }, description = "grep for tables with column names matching pattern")
-  private Pattern grepcolumns = null;
+  private Pattern grepcolumns;
   @CommandLine.Option(names = {
     "--grep-in-out" }, description = "grep for routines with parameter names matching pattern")
-  private Pattern grepinout = null;
+  private Pattern grepinout;
   @CommandLine.Option(names = {
     "--grep-def" }, description = "grep for tables definitions containing pattern")
-  private Pattern grepdef = null;
+  private Pattern grepdef;
   @CommandLine.Option(names = {
     "--invert-match" }, description = "Invert the grep match")
-  private boolean invertMatch = false;
+  private boolean invertMatch;
   @CommandLine.Option(names = {
     "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
-  private boolean onlyMatching = false;
+  private boolean onlyMatching;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];

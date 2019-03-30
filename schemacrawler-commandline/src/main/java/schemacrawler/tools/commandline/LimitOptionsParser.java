@@ -52,24 +52,24 @@ public final class LimitOptionsParser
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
   @CommandLine.Option(names = { "--schemas" }, description = "Regular expression to match fully qualified names of schemas to include")
-  private Pattern schemas = null;
+  private Pattern schemas;
   @CommandLine.Option(names = { "--tables" }, description = "Regular expression to match fully qualified names of tables to include")
-  private Pattern tables = null;
+  private Pattern tables;
   @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
-  private Pattern excludecolumns = null;
+  private Pattern excludecolumns;
   @CommandLine.Option(names = { "--routines" }, description = "Regular expression to match fully qualified names of routines to include")
-  private Pattern routines = null;
+  private Pattern routines;
   @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
-  private Pattern excludeinout = null;
+  private Pattern excludeinout;
   @CommandLine.Option(names = { "--synonyms" }, description = "Regular expression to match fully qualified names of synonyms to include")
-  private Pattern synonyms = null;
+  private Pattern synonyms;
   @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
-  private Pattern sequences = null;
+  private Pattern sequences;
 
   @CommandLine.Option(names = { "--table-types" }, description = "Comma-separated list of table types")
-  private String tabletypes = null;
+  private String tabletypes;
   @CommandLine.Option(names = { "--routine-types" }, description = "Comma-separated list of routine types")
-  private String routinetypes = null;
+  private String routinetypes;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];

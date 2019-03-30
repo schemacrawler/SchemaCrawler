@@ -40,15 +40,17 @@ public final class ApplicationOptionsParser
 {
 
   private final CommandLine commandLine;
+
   @CommandLine.Option(names = {
     "-V", "--version" }, description = "Print SchemaCrawler version and exit")
-  private boolean showVersionOnly = false;
+  private boolean showVersionOnly;
   @CommandLine.Option(names = {
     "--log-level" }, description = "Set logging level")
-  private LogLevel loglevel = LogLevel.OFF;
+  private LogLevel loglevel;
   @CommandLine.Option(names = {
     "-h", "--help", "-?" }, description = "Show help")
-  private boolean showHelp = false;
+  private boolean showHelp;
+
   @CommandLine.Parameters
   private String[] remainder = new String[0];
 
@@ -62,6 +64,10 @@ public final class ApplicationOptionsParser
   {
     commandLine.parse(args);
 
+    if (loglevel == null)
+    {
+      loglevel = LogLevel.OFF;
+    }
     final Level level = loglevel.getLevel();
     final ApplicationOptions options = new ApplicationOptions(level,
                                                               showHelp,

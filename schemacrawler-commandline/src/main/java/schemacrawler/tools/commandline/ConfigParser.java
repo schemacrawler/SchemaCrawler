@@ -61,7 +61,7 @@ public class ConfigParser
   @CommandLine.Option(names = {
     "-g",
     "--config-file" }, description = "SchemaCrawler configuration properties file")
-  private File configFile = null;
+  private File configFile;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];

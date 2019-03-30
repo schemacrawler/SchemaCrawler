@@ -51,13 +51,13 @@ public final class FilterOptionsParser
 
   @CommandLine.Option(names = {
     "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
-  private int parents = 0;
+  private Integer parents;
   @CommandLine.Option(names = {
     "--children" }, description = "Number of generations of descendents for the tables selected by grep")
-  private int children = 0;
+  private Integer children;
   @CommandLine.Option(names = {
     "--no-empty-tables" }, description = "Include only tables that have rows of data")
-  private boolean noemptytables = false;
+  private boolean noemptytables;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -73,23 +73,30 @@ public final class FilterOptionsParser
   {
     commandLine.parse(args);
 
-    if (parents >= 0)
+    if (parents != null)
     {
-      optionsBuilder.parentTableFilterDepth(parents);
+      if (parents < 0)
+      {
+        optionsBuilder.parentTableFilterDepth(parents);
+      }
+      else
+      {
+        throw new SchemaCrawlerCommandLineException(
+          "Please provide a valid value for --parents");
+      }
     }
-    else
+
+    if (children != null)
     {
-      throw new SchemaCrawlerCommandLineException(
-        "Please provide a valid value for --parents");
-    }
-    if (children >= 0)
-    {
-      optionsBuilder.childTableFilterDepth(children);
-    }
-    else
-    {
-      throw new SchemaCrawlerCommandLineException(
-        "Please provide a valid value for --children");
+      if (children < 0)
+      {
+        optionsBuilder.childTableFilterDepth(children);
+      }
+      else
+      {
+        throw new SchemaCrawlerCommandLineException(
+          "Please provide a valid value for --children");
+      }
     }
 
     optionsBuilder.noEmptyTables(noemptytables);

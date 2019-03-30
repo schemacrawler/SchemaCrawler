@@ -54,7 +54,7 @@ public final class DatabaseConfigConnectionOptionsParser
 
   @CommandLine.Option(names = {
     "--port" }, description = "Database server port")
-  private int port;
+  private Integer port;
 
   @CommandLine.Option(names = {
     "--database" }, description = "Database server host")
@@ -90,14 +90,17 @@ public final class DatabaseConfigConnectionOptionsParser
       config.put("host", host);
     }
 
-    if (port < 0 || port > 65535)
+    if (port != null)
     {
-      throw new SchemaCrawlerCommandLineException(
-        "Please provide a valid value for port, " + port);
-    }
-    if (port > 0)
-    {
-      config.put("port", String.valueOf(port));
+      if (port < 0 || port > 65535)
+      {
+        throw new SchemaCrawlerCommandLineException(
+          "Please provide a valid value for port, " + port);
+      }
+      if (port > 0)
+      {
+        config.put("port", String.valueOf(port));
+      }
     }
 
     if (database != null)
