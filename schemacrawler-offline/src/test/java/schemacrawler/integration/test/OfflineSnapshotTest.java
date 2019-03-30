@@ -83,7 +83,7 @@ public class OfflineSnapshotTest
 
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("infolevel", "maximum");
-      argsMap.put("routines", ".*");
+      argsMap.put("-routines", ".*");
       argsMap.put("-command", "details");
       argsMap.put("-output-format", TextOutputFormat.text.getFormat());
       argsMap.put("-output-file", out.toString());
@@ -109,11 +109,10 @@ public class OfflineSnapshotTest
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
-      argsMap.put("routines", ".*");
       argsMap.put("-command", "details");
       argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("routines", "");
-      argsMap.put("tables", ".*SALES");
+      argsMap.put("-routines", "");
+      argsMap.put("-tables", ".*SALES");
       argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
@@ -136,10 +135,10 @@ public class OfflineSnapshotTest
 
       argsMap.put("noinfo", "true");
       argsMap.put("infolevel", "maximum");
-      argsMap.put("routines", ".*");
+      argsMap.put("-routines", ".*");
       argsMap.put("-command", "list");
       argsMap.put("-output-format", TextOutputFormat.text.getFormat());
-      argsMap.put("schemas", "PUBLIC.BOOKS");
+      argsMap.put("-schemas", "PUBLIC.BOOKS");
       argsMap.put("-output-file", out.toString());
 
       final List<String> argsList = new ArrayList<>();

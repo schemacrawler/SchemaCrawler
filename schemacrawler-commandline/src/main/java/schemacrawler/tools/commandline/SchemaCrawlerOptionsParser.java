@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
-
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -61,20 +59,6 @@ public final class SchemaCrawlerOptionsParser
     super(config);
     normalizeOptionName("title");
     normalizeOptionName("infolevel", "i");
-    normalizeOptionName("schemas");
-    normalizeOptionName("tabletypes");
-    normalizeOptionName("tables");
-    normalizeOptionName("excludecolumns");
-    normalizeOptionName("synonyms");
-    normalizeOptionName("sequences");
-    normalizeOptionName("routinetypes");
-    normalizeOptionName("routines");
-    normalizeOptionName("excludeinout");
-    normalizeOptionName("grep-columns");
-    normalizeOptionName("grep-inout");
-    normalizeOptionName("grep-def");
-    normalizeOptionName("invert-match");
-    normalizeOptionName("only-matching");
 
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
   }
@@ -106,94 +90,6 @@ public final class SchemaCrawlerOptionsParser
       schemaInfoLevelBuilder.withInfoLevel(InfoLevel.standard);
     }
     optionsBuilder.withSchemaInfoLevel(schemaInfoLevelBuilder);
-
-    if (config.hasValue("schemas"))
-    {
-      final InclusionRule schemaInclusionRule = config
-        .getInclusionRule("schemas");
-      logOverride("schemas", schemaInclusionRule);
-      optionsBuilder.includeSchemas(schemaInclusionRule);
-      consumeOption("schemas");
-    }
-    else
-    {
-      LOGGER.log(Level.WARNING,
-                 "Please provide a -schemas option for efficient retrieval of database metadata");
-    }
-
-    if (config.hasValue("tabletypes"))
-    {
-      final String tabletypes = config
-        .getStringValue("tabletypes", DEFAULT_TABLE_TYPES);
-      if (!isBlank(tabletypes))
-      {
-        optionsBuilder.tableTypes(tabletypes);
-      }
-      else
-      {
-        optionsBuilder.tableTypes((String) null);
-      }
-      consumeOption("tabletypes");
-    }
-
-    if (config.hasValue("tables"))
-    {
-      final InclusionRule tableInclusionRule = config
-        .getInclusionRule("tables");
-      logOverride("tables", tableInclusionRule);
-      optionsBuilder.includeTables(tableInclusionRule);
-      consumeOption("tables");
-    }
-    if (config.hasValue("excludecolumns"))
-    {
-      final InclusionRule columnInclusionRule = config
-        .getExclusionRule("excludecolumns");
-      logOverride("excludecolumns", columnInclusionRule);
-      optionsBuilder.includeColumns(columnInclusionRule);
-      consumeOption("excludecolumns");
-    }
-
-    if (config.hasValue("routinetypes"))
-    {
-      optionsBuilder.routineTypes(config.getStringValue("routinetypes",
-                                                        DEFAULT_ROUTINE_TYPES));
-      consumeOption("routinetypes");
-    }
-
-    if (config.hasValue("routines"))
-    {
-      final InclusionRule routineInclusionRule = config
-        .getInclusionRule("routines");
-      logOverride("routines", routineInclusionRule);
-      optionsBuilder.includeRoutines(routineInclusionRule);
-      consumeOption("routines");
-    }
-    if (config.hasValue("excludeinout"))
-    {
-      final InclusionRule routineColumnInclusionRule = config
-        .getExclusionRule("excludeinout");
-      logOverride("excludeinout", routineColumnInclusionRule);
-      optionsBuilder.includeRoutineColumns(routineColumnInclusionRule);
-      consumeOption("excludeinout");
-    }
-
-    if (config.hasValue("synonyms"))
-    {
-      final InclusionRule synonymInclusionRule = config
-        .getInclusionRule("synonyms");
-      logOverride("synonyms", synonymInclusionRule);
-      optionsBuilder.includeSynonyms(synonymInclusionRule);
-      consumeOption("synonyms");
-    }
-
-    if (config.hasValue("sequences"))
-    {
-      final InclusionRule sequenceInclusionRule = config
-        .getInclusionRule("sequences");
-      logOverride("sequences", sequenceInclusionRule);
-      optionsBuilder.includeSequences(sequenceInclusionRule);
-      consumeOption("sequences");
-    }
 
     return null;
   }

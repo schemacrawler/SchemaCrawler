@@ -114,8 +114,8 @@ public class PostgreSQLDumpTest
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "postgresql");
       argsMap.put("database", dumpFile.toString());
-      argsMap.put("schemas", "public");
-      argsMap.put("routines", ".*");
+      argsMap.put("-schemas", "public");
+      argsMap.put("-routines", ".*");
       argsMap.put("-command", "details");
       argsMap.put("infolevel", InfoLevel.maximum.name());
       argsMap.put("-output-file", out.toString());

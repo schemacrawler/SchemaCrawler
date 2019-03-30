@@ -96,7 +96,7 @@ public class ScriptingCommandlineTest
   private Map<String, String> additionalArgsMap()
   {
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("schemas", "((?!FOR_LINT).)*");
+    argsMap.put("-schemas", "((?!FOR_LINT).)*");
     argsMap.put("infolevel", "standard");
     return argsMap;
   }

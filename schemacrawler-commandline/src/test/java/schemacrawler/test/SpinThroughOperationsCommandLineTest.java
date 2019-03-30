@@ -28,6 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,18 +48,6 @@ import schemacrawler.test.utility.*;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -60,59 +60,59 @@ public class SpinThroughOperationsCommandLineTest
 
   @BeforeAll
   public static void clean()
-      throws Exception
+    throws Exception
   {
     TestUtility.clean(SPIN_THROUGH_OPERATIONS_OUTPUT);
   }
 
   @Test
   public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
-        .flatMap(outputFormat -> operations().map(operation -> () -> {
+      .flatMap(outputFormat -> operations().map(operation -> () -> {
 
-          // Special case where no output is generated
-          if (infoLevel == InfoLevel.minimum && operation == Operation.dump)
-          {
-            return;
-          }
+        // Special case where no output is generated
+        if (infoLevel == InfoLevel.minimum && operation == Operation.dump)
+        {
+          return;
+        }
 
-          final String referenceFile = referenceFile(operation,
-                                                     infoLevel,
-                                                     outputFormat);
+        final String referenceFile = referenceFile(operation,
+                                                   infoLevel,
+                                                   outputFormat);
 
-          final String command = operation.name();
+        final String command = operation.name();
 
-          final Map<String, String> argsMap = new HashMap<>();
-          argsMap.put("sequences", ".*");
-          argsMap.put("synonyms", ".*");
-          argsMap.put("routines", ".*");
-          argsMap.put("noinfo", Boolean.FALSE.toString());
-          argsMap.put("infolevel", infoLevel.name());
+        final Map<String, String> argsMap = new HashMap<>();
+        argsMap.put("-sequences", ".*");
+        argsMap.put("-synonyms", ".*");
+        argsMap.put("-routines", ".*");
+        argsMap.put("noinfo", Boolean.FALSE.toString());
+        argsMap.put("infolevel", infoLevel.name());
 
-          assertThat(outputOf(commandlineExecution(connectionInfo,
-                                                   command,
-                                                   argsMap,
-                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
-                                                   outputFormat)),
-                     hasSameContentAndTypeAs(classpathResource(
-                         SPIN_THROUGH_OPERATIONS_OUTPUT + referenceFile),
-                                             outputFormat));
+        assertThat(outputOf(commandlineExecution(connectionInfo,
+                                                 command,
+                                                 argsMap,
+                                                 "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                 outputFormat)),
+                   hasSameContentAndTypeAs(classpathResource(
+                     SPIN_THROUGH_OPERATIONS_OUTPUT + referenceFile),
+                                           outputFormat));
 
-        }))));
+      }))));
   }
 
   private Stream<InfoLevel> infoLevels()
   {
     return Arrays.stream(InfoLevel.values())
-        .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   private Stream<TextOutputFormat> outputFormats()
   {
     return Arrays.stream(new TextOutputFormat[] {
-        TextOutputFormat.text, TextOutputFormat.html, TextOutputFormat.json });
+      TextOutputFormat.text, TextOutputFormat.html, TextOutputFormat.json });
   }
 
   private String referenceFile(final Operation operation,

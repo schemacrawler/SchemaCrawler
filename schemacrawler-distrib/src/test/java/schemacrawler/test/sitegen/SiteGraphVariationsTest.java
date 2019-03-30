@@ -203,7 +203,7 @@ public class SiteGraphVariationsTest
     args.put("infolevel", "maximum");
     args.put("portablenames", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
-    args.put("tabletypes", "TABLE");
+    args.put("-table-types", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -220,7 +220,7 @@ public class SiteGraphVariationsTest
     args.put("portablenames", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-only-matching", "true");
-    args.put("tabletypes", "TABLE");
+    args.put("-table-types", "TABLE");
 
     final Map<String, String> config = new HashMap<>();
 

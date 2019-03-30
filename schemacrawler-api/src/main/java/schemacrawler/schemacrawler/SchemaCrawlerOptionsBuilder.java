@@ -330,6 +330,24 @@ public final class SchemaCrawlerOptionsBuilder
     return this;
   }
 
+  public SchemaCrawlerOptionsBuilder includeRoutines(final Pattern routinePattern)
+  {
+    routineInclusionRule = new RegularExpressionInclusionRule(routinePattern);
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeSequences(final Pattern sequencePattern)
+  {
+    sequenceInclusionRule = new RegularExpressionInclusionRule(sequencePattern);
+    return this;
+  }
+
+  public SchemaCrawlerOptionsBuilder includeSynonyms(final Pattern synonymPattern)
+  {
+    synonymInclusionRule = new RegularExpressionInclusionRule(synonymPattern);
+    return this;
+  }
+
   public SchemaCrawlerOptionsBuilder includeGreppedColumns(final Pattern grepColumnPattern)
   {
     if (grepColumnPattern == null)

@@ -136,5 +136,5 @@ in the `lib/` folder.
 
 Typical command-line arguments will look like:
 ```
--url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler -schemas=schemacrawler -user=schemacrawler -password=schemacrawler -tabletypes=UNKNOWN,VIEW -infolevel=standard -command=schema
+-url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler -schemas=schemacrawler -user=schemacrawler -password=schemacrawler --table-types=UNKNOWN,VIEW -infolevel=standard -command=schema
 ```

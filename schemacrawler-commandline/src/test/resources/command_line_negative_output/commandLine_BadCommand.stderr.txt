@@ -1,6 +1,6 @@
 SchemaCrawler 15.06.01
 
-Error: Please specify a database connection
+Error: Unknown command <badcommand>: unexpected token: BADCOMMAND
 
 Re-run SchemaCrawler with just the
 -?

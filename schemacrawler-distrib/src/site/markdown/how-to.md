@@ -94,7 +94,7 @@ Also see the [filtering and grep command-line options.](faq.html#commands)
 ----------
 
 ### <a name="excluded-views">How to exclude database views from the output</a>
-Use the `-tabletypes` command-line option, without VIEW. For example, you can provide `-tabletypes=TABLE`. 
+Use the `--table-types` command-line option, without VIEW. For example, you can provide `--table-types=TABLE`. 
 Further, see the [details on the command-line options.](faq.html#commands)
 
 ----------
@@ -107,7 +107,7 @@ Further, see the [details on the command-line options.](faq.html#commands)
 ----------
 
 ### <a name="excluded-functions">How to exclude database functions from the output</a>
-Use the `-routinetypes=FUNCTION` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
+Use the `--routine-types=FUNCTION` command-line option. Further, see the [details on the command-line options.](faq.html#commands)
 
 ----------
 
@@ -315,7 +315,7 @@ See [SchemaCrawler Lint](lint.html) for details.
 
 ### <a name="pgsql_materialized_views">How to obtain Oracle and PostgreSQL materialized views</a>
 
-PostgreSQL materialized views are a table type called "MATERIALIZED VIEW". Use an additional SchemaCrawler command-line option, `"-tabletypes=TABLE,VIEW,MATERIALIZED VIEW"`. Notice the double-quotes, since there is a space between
+PostgreSQL materialized views are a table type called "MATERIALIZED VIEW". Use an additional SchemaCrawler command-line option, `"--table-types=TABLE,VIEW,MATERIALIZED VIEW"`. Notice the double-quotes, since there is a space between
 `MATERIALIZED` and `VIEW`.
 
 ----------

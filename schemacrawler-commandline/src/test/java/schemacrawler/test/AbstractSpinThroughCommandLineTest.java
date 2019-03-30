@@ -28,6 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
+import static schemacrawler.test.utility.FileHasContent.classpathResource;
+import static schemacrawler.test.utility.FileHasContent.outputOf;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,18 +47,6 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.test.utility.*;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -59,48 +59,47 @@ public abstract class AbstractSpinThroughCommandLineTest
 
   @BeforeAll
   public static void clean()
-      throws Exception
+    throws Exception
   {
     TestUtility.clean(SPIN_THROUGH_OUTPUT);
   }
 
   @Test
   public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
-        .flatMap(outputFormat -> schemaTextDetailTypes()
-            .map(schemaTextDetailType -> () -> {
+      .flatMap(outputFormat -> schemaTextDetailTypes()
+        .map(schemaTextDetailType -> () -> {
 
-              final String referenceFile = referenceFile(schemaTextDetailType,
-                                                         infoLevel,
-                                                         outputFormat);
+          final String referenceFile = referenceFile(schemaTextDetailType,
+                                                     infoLevel,
+                                                     outputFormat);
 
-              final String command = schemaTextDetailType.name();
+          final String command = schemaTextDetailType.name();
 
-              final Map<String, String> argsMap = new HashMap<>();
-              argsMap.put("sequences", ".*");
-              argsMap.put("synonyms", ".*");
-              argsMap.put("routines", ".*");
-              argsMap.put("noinfo", Boolean.FALSE.toString());
-              argsMap.put("infolevel", infoLevel.name());
+          final Map<String, String> argsMap = new HashMap<>();
+          argsMap.put("-sequences", ".*");
+          argsMap.put("-synonyms", ".*");
+          argsMap.put("-routines", ".*");
+          argsMap.put("noinfo", Boolean.FALSE.toString());
+          argsMap.put("infolevel", infoLevel.name());
 
-              assertThat(outputOf(commandlineExecution(connectionInfo,
-                                                       command,
-                                                       argsMap,
-                                                       "/hsqldb.INFORMATION_SCHEMA.config.properties",
-                                                       outputFormat)),
-                         hasSameContentAndTypeAs(classpathResource(
-                             SPIN_THROUGH_OUTPUT + referenceFile),
-                                                 outputFormat));
+          assertThat(outputOf(commandlineExecution(connectionInfo,
+                                                   command,
+                                                   argsMap,
+                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                   outputFormat)),
+                     hasSameContentAndTypeAs(classpathResource(
+                       SPIN_THROUGH_OUTPUT + referenceFile), outputFormat));
 
-            }))));
+        }))));
   }
 
   private Stream<InfoLevel> infoLevels()
   {
     return Arrays.stream(InfoLevel.values())
-        .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
 
   protected abstract Stream<OutputFormat> outputFormats();

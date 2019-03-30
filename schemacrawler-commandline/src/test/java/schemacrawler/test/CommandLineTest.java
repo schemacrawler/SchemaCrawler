@@ -31,16 +31,13 @@ package schemacrawler.test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.DatabaseTestUtility.loadHsqldbConfig;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestContext;
@@ -61,10 +58,10 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("tables", ".*");
-    args.put("routines", ".*");
-    args.put("sequences", ".*");
-    args.put("synonyms", ".*");
+    args.put("-tables", ".*");
+    args.put("-routines", ".*");
+    args.put("-sequences", ".*");
+    args.put("-synonyms", ".*");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.table.pattern.include", ".*");
@@ -85,8 +82,8 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("tables", "");
-    args.put("routines", ".*");
+    args.put("-tables", "");
+    args.put("-routines", ".*");
     args.put("sortcolumns", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -100,8 +97,8 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("tables", "");
-    args.put("routines", ".*");
+    args.put("-tables", "");
+    args.put("-routines", ".*");
     args.put("sortcolumns", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -115,8 +112,8 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("tables", "");
-    args.put("routines", ".*");
+    args.put("-tables", "");
+    args.put("-routines", ".*");
     args.put("sortroutines", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -130,8 +127,8 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("tables", "");
-    args.put("routines", ".*");
+    args.put("-tables", "");
+    args.put("-routines", ".*");
     args.put("sortroutines", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
@@ -145,7 +142,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("routines", "");
+    args.put("-routines", "");
     args.put("sortcolumns", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
@@ -159,7 +156,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("routines", "");
+    args.put("-routines", "");
     args.put("sortcolumns", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
@@ -173,7 +170,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("routines", "");
+    args.put("-routines", "");
     args.put("sorttables", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
@@ -187,7 +184,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("routines", "");
+    args.put("-routines", "");
     args.put("sorttables", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
@@ -237,10 +234,10 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("portablenames", Boolean.TRUE.toString());
-    args.put("tables", "");
-    args.put("routines", ".*");
-    args.put("sequences", ".*");
-    args.put("synonyms", ".*");
+    args.put("-tables", "");
+    args.put("-routines", ".*");
+    args.put("-sequences", ".*");
+    args.put("-synonyms", ".*");
 
     run(testContext, connectionInfo, args, null, "brief");
   }
@@ -300,7 +297,7 @@ public class CommandLineTest
     throws Exception
   {
     argsMap.put("noinfo", Boolean.TRUE.toString());
-    argsMap.put("schemas", ".*\\.(?!FOR_LINT).*");
+    argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
     argsMap.put("infolevel", "maximum");
 
     final Config runConfig = new Config();
@@ -316,9 +313,8 @@ public class CommandLineTest
                                              argsMap,
                                              runConfig,
                                              TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(COMMAND_LINE_OUTPUT
-                                                  + testContext.testMethodName()
-                                                  + ".txt")));
+               hasSameContentAs(classpathResource(
+                 COMMAND_LINE_OUTPUT + testContext.testMethodName() + ".txt")));
   }
 
 }

@@ -35,6 +35,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
@@ -50,25 +51,25 @@ public final class LimitOptionsParser
   private final CommandLine commandLine;
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of schemas to include")
+  @CommandLine.Option(names = { "--schemas" }, description = "Regular expression to match fully qualified names of schemas to include")
   private Pattern schemas = null;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of tables to include")
+  @CommandLine.Option(names = { "--tables" }, description = "Regular expression to match fully qualified names of tables to include")
   private Pattern tables = null;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
-  private Pattern excludecolumns;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of routines to include")
-  private Pattern routines;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of parameters to exclude")
-  private Pattern excludeinout;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of synonyms to include")
-  private Pattern synonyms;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Regular expression to match fully qualified names of sequences to include")
-  private Pattern sequences;
+  @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
+  private Pattern excludecolumns = null;
+  @CommandLine.Option(names = { "--routines" }, description = "Regular expression to match fully qualified names of routines to include")
+  private Pattern routines = null;
+  @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
+  private Pattern excludeinout = null;
+  @CommandLine.Option(names = { "--synonyms" }, description = "Regular expression to match fully qualified names of synonyms to include")
+  private Pattern synonyms = null;
+  @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
+  private Pattern sequences = null;
 
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Comma-separated list of table types")
-  private String tabletypes;
-  @CommandLine.Option(names = { "--grep-columns" }, description = "Comma-separated list of routine types")
-  private String routinetypes;
+  @CommandLine.Option(names = { "--table-types" }, description = "Comma-separated list of table types")
+  private String tabletypes = null;
+  @CommandLine.Option(names = { "--routine-types" }, description = "Comma-separated list of routine types")
+  private String routinetypes = null;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -91,6 +92,38 @@ public final class LimitOptionsParser
     if (tables != null)
     {
       optionsBuilder.includeTables(tables);
+    }
+    if (excludecolumns != null)
+    {
+      optionsBuilder
+        .includeColumns(new RegularExpressionExclusionRule(excludecolumns));
+    }
+    if (routines != null)
+    {
+      optionsBuilder.includeRoutines(routines);
+    }
+    if (excludeinout != null)
+    {
+      optionsBuilder
+        .includeRoutineColumns(new RegularExpressionExclusionRule(excludeinout));
+    }
+
+    if (synonyms != null)
+    {
+      optionsBuilder.includeSynonyms(synonyms);
+    }
+    if (sequences != null)
+    {
+      optionsBuilder.includeSequences(sequences);
+    }
+
+    if (tabletypes != null)
+    {
+      optionsBuilder.tableTypes(tabletypes);
+    }
+    if (routinetypes != null)
+    {
+      optionsBuilder.routineTypes(routinetypes);
     }
 
     return null;
