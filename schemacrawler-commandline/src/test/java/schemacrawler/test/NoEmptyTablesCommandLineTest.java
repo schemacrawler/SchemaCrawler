@@ -63,7 +63,7 @@ public class NoEmptyTablesCommandLineTest
     final String referenceFile = testContext.testMethodName() + ".txt";
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("infolevel", InfoLevel.maximum.name());
+    argsMap.put("-info-level", InfoLevel.maximum.name());
     argsMap.put("noinfo", "true");
     argsMap.put("-no-empty-tables", "true");
 

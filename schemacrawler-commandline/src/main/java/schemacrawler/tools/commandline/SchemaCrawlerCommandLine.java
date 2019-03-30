@@ -97,10 +97,9 @@ public final class SchemaCrawlerCommandLine
     final LimitOptionsParser limitOptionsParser = new LimitOptionsParser(
       schemaCrawlerOptionsBuilder);
     limitOptionsParser.parse(args);
-    final SchemaCrawlerOptionsParser schemaCrawlerOptionsParser = new SchemaCrawlerOptionsParser(
-      schemaCrawlerOptionsBuilder,
-      config);
-    schemaCrawlerOptionsParser.getOptions();
+    final InfoLevelParser infoLevelParser = new InfoLevelParser(
+      schemaCrawlerOptionsBuilder);
+    infoLevelParser.parse(args);
     schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
@@ -123,22 +122,6 @@ public final class SchemaCrawlerCommandLine
     // provided configuration, and bundled configuration
     connectionOptions = databaseConnector
       .newDatabaseConnectionOptions(userCredentials, config);
-  }
-
-  private String[] remainingArgs(final Config config)
-  {
-    final List<String> remainingArgs = new ArrayList<>();
-    final Set<Map.Entry<String, String>> entries = config.entrySet();
-    for (final Map.Entry<String, String> entry : entries)
-    {
-      remainingArgs.add(entry.getKey());
-      final String value = entry.getValue();
-      if (value != null)
-      {
-        remainingArgs.add(value);
-      }
-    }
-    return remainingArgs.toArray(new String[0]);
   }
 
   @Override
@@ -198,6 +181,22 @@ public final class SchemaCrawlerCommandLine
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
+  }
+
+  private String[] remainingArgs(final Config config)
+  {
+    final List<String> remainingArgs = new ArrayList<>();
+    final Set<Map.Entry<String, String>> entries = config.entrySet();
+    for (final Map.Entry<String, String> entry : entries)
+    {
+      remainingArgs.add(entry.getKey());
+      final String value = entry.getValue();
+      if (value != null)
+      {
+        remainingArgs.add(value);
+      }
+    }
+    return remainingArgs.toArray(new String[0]);
   }
 
   /**

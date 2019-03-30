@@ -298,7 +298,7 @@ public class CommandLineTest
   {
     argsMap.put("noinfo", Boolean.TRUE.toString());
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-    argsMap.put("infolevel", "maximum");
+    argsMap.put("-info-level", "maximum");
 
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();

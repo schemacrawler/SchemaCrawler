@@ -89,7 +89,7 @@ public class SpinThroughOperationsCommandLineTest
         argsMap.put("-synonyms", ".*");
         argsMap.put("-routines", ".*");
         argsMap.put("noinfo", Boolean.FALSE.toString());
-        argsMap.put("infolevel", infoLevel.name());
+        argsMap.put("-info-level", infoLevel.name());
 
         assertThat(outputOf(commandlineExecution(connectionInfo,
                                                  command,

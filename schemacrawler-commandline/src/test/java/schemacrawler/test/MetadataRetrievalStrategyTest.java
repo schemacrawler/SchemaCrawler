@@ -45,15 +45,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.*;
 import schemacrawler.tools.options.OutputFormat;
 import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
@@ -91,7 +86,7 @@ public class MetadataRetrievalStrategyTest
                MetadataRetrievalStrategy.data_dictionary_all.name());
 
     final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("infolevel", infoLevel.name());
+    argsMap.put("-info-level", infoLevel.name());
     argsMap.put("noinfo", "true");
 
     // Check that System.err has an error
@@ -99,8 +94,7 @@ public class MetadataRetrievalStrategyTest
                                              schemaTextDetailType.name(),
                                              argsMap,
                                              config,
-                                             outputFormat)),
-               hasNoContent());
+                                             outputFormat)), hasNoContent());
 
     final String errorLog = err.getFileContents();
     assertThat(errorLog, containsString("No tables SQL provided"));

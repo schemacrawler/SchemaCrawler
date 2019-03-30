@@ -97,7 +97,7 @@ public class SqliteDistributionTest
       argsMap.put("database", sqliteDbFile.toString());
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("-command", "details,dump,count");
-      argsMap.put("infolevel", InfoLevel.maximum.name());
+      argsMap.put("-info-level", InfoLevel.maximum.name());
       argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));

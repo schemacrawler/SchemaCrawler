@@ -83,7 +83,7 @@ public abstract class AbstractSpinThroughCommandLineTest
           argsMap.put("-synonyms", ".*");
           argsMap.put("-routines", ".*");
           argsMap.put("noinfo", Boolean.FALSE.toString());
-          argsMap.put("infolevel", infoLevel.name());
+          argsMap.put("-info-level", infoLevel.name());
 
           assertThat(outputOf(commandlineExecution(connectionInfo,
                                                    command,
@@ -96,13 +96,13 @@ public abstract class AbstractSpinThroughCommandLineTest
         }))));
   }
 
+  protected abstract Stream<OutputFormat> outputFormats();
+
   private Stream<InfoLevel> infoLevels()
   {
     return Arrays.stream(InfoLevel.values())
       .filter(infoLevel -> infoLevel != InfoLevel.unknown);
   }
-
-  protected abstract Stream<OutputFormat> outputFormats();
 
   private String referenceFile(final SchemaTextDetailType schemaTextDetailType,
                                final InfoLevel infoLevel,

@@ -74,7 +74,7 @@ public abstract class AbstractTitleTest
 
                   final Map<String, String> argsMap = new HashMap<>();
                   argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-                  argsMap.put("infolevel", InfoLevel.standard.name());
+                  argsMap.put("-info-level", InfoLevel.standard.name());
                   argsMap
                     .put("-title", "Database Design for Books and Publishers");
 

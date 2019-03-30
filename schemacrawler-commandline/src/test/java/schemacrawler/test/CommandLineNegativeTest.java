@@ -119,7 +119,7 @@ public class CommandLineNegativeTest
       argsMap.put("-password", "");
       argsMap.put("noinfo", Boolean.TRUE.toString());
       argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-      argsMap.put("infolevel", "standard");
+      argsMap.put("-info-level", "standard");
       argsMap.put("-command", "brief");
       argsMap.put("-tables", "");
       argsMap.put("-routines", "");

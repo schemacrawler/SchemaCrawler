@@ -72,7 +72,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "maximum");
+    args.put("-info-level", "maximum");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -85,7 +85,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -100,7 +100,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("-title", "Books and Publishers Schema");
 
     final Map<String, String> config = new HashMap<>();
@@ -114,7 +114,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -141,7 +141,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "maximum");
+    args.put("-info-level", "maximum");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -155,7 +155,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("c", "brief");
     args.put("portablenames", "true");
 
@@ -170,7 +170,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -185,7 +185,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("portablenames", "true");
     args.put("sortcolumns", "true");
 
@@ -200,7 +200,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "maximum");
+    args.put("-info-level", "maximum");
     args.put("portablenames", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-table-types", "TABLE");
@@ -216,7 +216,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "maximum");
+    args.put("-info-level", "maximum");
     args.put("portablenames", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-only-matching", "true");
@@ -233,7 +233,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "standard");
+    args.put("-info-level", "standard");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();
@@ -249,7 +249,7 @@ public class SiteGraphVariationsTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("infolevel", "maximum");
+    args.put("-info-level", "maximum");
     args.put("portablenames", "true");
 
     final Map<String, String> config = new HashMap<>();

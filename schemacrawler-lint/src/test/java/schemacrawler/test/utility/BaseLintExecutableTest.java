@@ -29,17 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
-import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.lint.executable.LintOptionsBuilder;
-import schemacrawler.tools.options.OutputFormat;
-
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
@@ -47,6 +36,17 @@ import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAnd
 import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static sf.util.Utility.isBlank;
+
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.lint.executable.LintOptionsBuilder;
+import schemacrawler.tools.options.OutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -57,14 +57,14 @@ public abstract class BaseLintExecutableTest
                                 final String linterConfigsResource,
                                 final Config additionalConfig,
                                 final String referenceFileName)
-      throws Exception
+    throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable(
-        "lint");
+      "lint");
     if (!isBlank(linterConfigsResource))
     {
       final Path linterConfigsFile = copyResourceToTempFile(
-          linterConfigsResource);
+        linterConfigsResource);
       final LintOptionsBuilder optionsBuilder = LintOptionsBuilder.builder();
       optionsBuilder.withLinterConfigs(linterConfigsFile.toString());
 
@@ -85,17 +85,17 @@ public abstract class BaseLintExecutableTest
                                         final String linterConfigsResource,
                                         final Config additionalConfig,
                                         final String referenceFileName)
-      throws Exception
+    throws Exception
   {
     final Map<String, String> argsMap = new HashMap<>();
 
-    argsMap.put("infolevel", "standard");
+    argsMap.put("-info-level", "standard");
     argsMap.put("sortcolumns", "true");
 
     if (!isBlank(linterConfigsResource))
     {
       final Path linterConfigsFile = copyResourceToTempFile(
-          linterConfigsResource);
+        linterConfigsResource);
       argsMap.put("linterconfigs", linterConfigsFile.toString());
     }
 
@@ -110,7 +110,7 @@ public abstract class BaseLintExecutableTest
                                              additionalConfig,
                                              outputFormat)),
                hasSameContentAndTypeAs(classpathResource(
-                   referenceFileName + ".txt"), outputFormat));
+                 referenceFileName + ".txt"), outputFormat));
   }
 
 }

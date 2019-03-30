@@ -97,7 +97,7 @@ public class TemplatingCommandlineTest
   {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-schemas", "((?!FOR_LINT).)*");
-    argsMap.put("infolevel", "standard");
+    argsMap.put("-info-level", "standard");
     return argsMap;
   }
 

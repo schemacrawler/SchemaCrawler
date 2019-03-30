@@ -101,7 +101,7 @@ public class HsqldbCommandlineTest
       argsMap.put("g", testConfigFile.toString());
       argsMap.put("noinfo", Boolean.FALSE.toString());
       argsMap.put("-command", "details,dump,count,hsqldb.tables");
-      argsMap.put("infolevel", "maximum");
+      argsMap.put("-info-level", "maximum");
       argsMap.put("-synonyms", ".*");
       argsMap.put("-routines", ".*");
       argsMap.put("-output-file", out.toString());

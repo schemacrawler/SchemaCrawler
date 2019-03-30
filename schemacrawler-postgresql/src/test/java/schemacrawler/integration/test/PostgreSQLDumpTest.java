@@ -117,7 +117,7 @@ public class PostgreSQLDumpTest
       argsMap.put("-schemas", "public");
       argsMap.put("-routines", ".*");
       argsMap.put("-command", "details");
-      argsMap.put("infolevel", InfoLevel.maximum.name());
+      argsMap.put("-info-level", InfoLevel.maximum.name());
       argsMap.put("-output-file", out.toString());
       // argsMap.put("loglevel", Level.ALL.toString());
 

@@ -111,7 +111,7 @@ public class GrepCommandLineTest
         "--user=sa",
         "--password=",
         "-g=" + additionalProperties.toString(),
-        "-infolevel=" + infoLevel,
+        "--info-level=" + infoLevel,
         "--command=" + schemaTextDetailType,
         "--output-format=" + outputFormat.getFormat(),
         "--output-file=" + testOutputFile.toString(),

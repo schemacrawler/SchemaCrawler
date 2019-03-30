@@ -87,7 +87,7 @@ public class SiteSnapshotVariationsTest
       }
 
       final Map<String, String> args = new HashMap<>();
-      args.put("infolevel", "maximum");
+      args.put("-info-level", "maximum");
 
       run(connectionInfo,
           args,
