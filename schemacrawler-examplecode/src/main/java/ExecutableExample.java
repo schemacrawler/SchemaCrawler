@@ -1,11 +1,10 @@
 import static sf.util.Utility.isBlank;
 
+import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -38,7 +37,8 @@ public final class ExecutableExample
       .newOutputOptions(TextOutputFormat.html, outputFile);
     final String command = "schema";
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      command);
     executable.setSchemaCrawlerOptions(options);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(getConnection());

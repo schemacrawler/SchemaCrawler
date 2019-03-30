@@ -28,13 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.sitegen;
 
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.test.utility.*;
-import schemacrawler.tools.integration.graph.GraphOutputFormat;
-import schemacrawler.tools.options.OutputFormat;
-import schemacrawler.tools.options.TextOutputFormat;
+import static java.nio.file.Files.deleteIfExists;
+import static java.nio.file.Files.move;
+import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -42,9 +38,13 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.nio.file.Files.deleteIfExists;
-import static java.nio.file.Files.move;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.test.utility.*;
+import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.options.OutputFormat;
+import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
@@ -57,7 +57,7 @@ public class SiteSnapshotVariationsTest
 
   @BeforeEach
   public void _setupDirectory(final TestContext testContext)
-      throws IOException, URISyntaxException
+    throws IOException, URISyntaxException
   {
     if (directory != null)
     {
@@ -68,13 +68,13 @@ public class SiteSnapshotVariationsTest
 
   @Test
   public void snapshots(final DatabaseConnectionInfo connectionInfo)
-      throws Exception
+    throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-        TextOutputFormat.html,
-        TextOutputFormat.json,
-        TextOutputFormat.text,
-        GraphOutputFormat.htmlx })
+      TextOutputFormat.html,
+      TextOutputFormat.json,
+      TextOutputFormat.text,
+      GraphOutputFormat.htmlx })
     {
       final String extension;
       if ("htmlx".equals(outputFormat.getFormat()))
@@ -100,13 +100,13 @@ public class SiteSnapshotVariationsTest
                    final Map<String, String> argsMap,
                    final OutputFormat outputFormat,
                    final Path outputFile)
-      throws Exception
+    throws Exception
   {
     deleteIfExists(outputFile);
 
     final String command = "details,count,dump";
 
-    argsMap.put("title", "Details of Example Database");
+    argsMap.put("-title", "Details of Example Database");
 
     final Path snapshotFile = commandlineExecution(connectionInfo,
                                                    command,

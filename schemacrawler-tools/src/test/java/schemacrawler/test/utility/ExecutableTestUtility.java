@@ -72,7 +72,7 @@ public final class ExecutableTestUtility
     try (final TestWriter out = testout)
     {
       final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder().fromOptions(executable.getOutputOptions())
+        .builder(executable.getOutputOptions())
         .withOutputFormatValue(outputFormatValue).withOutputWriter(out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());

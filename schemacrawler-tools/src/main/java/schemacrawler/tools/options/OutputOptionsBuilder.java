@@ -41,37 +41,19 @@ public final class OutputOptionsBuilder
     return new OutputOptionsBuilder().toOptions();
   }
 
-  public static OutputOptions newOutputOptions(final Config config)
-  {
-    return new OutputOptionsBuilder().fromConfig(config).toOptions();
-  }
-
   public static OutputOptions newOutputOptions(final OutputFormat outputFormat,
                                                final Path outputFile)
   {
-    return new OutputOptionsBuilder().withOutputFormat(outputFormat)
+    return OutputOptionsBuilder.builder().withOutputFormat(outputFormat)
       .withOutputFile(outputFile).toOptions();
-  }
-
-  public static OutputOptions newOutputOptions(final OutputFormat outputFormat,
-                                               final Writer writer)
-  {
-    return new OutputOptionsBuilder().withOutputFormat(outputFormat)
-      .withOutputWriter(writer).toOptions();
   }
 
   public static OutputOptions newOutputOptions(final String outputFormatValue,
                                                final Path outputFile)
   {
-    return new OutputOptionsBuilder().withOutputFormatValue(outputFormatValue)
-      .withOutputFile(outputFile).toOptions();
-  }
-
-  public static OutputOptions newOutputOptions(final String outputFormatValue,
-                                               final Writer writer)
-  {
-    return new OutputOptionsBuilder().withOutputFormatValue(outputFormatValue)
-      .withOutputWriter(writer).toOptions();
+    return OutputOptionsBuilder.builder()
+      .withOutputFormatValue(outputFormatValue).withOutputFile(outputFile)
+      .toOptions();
   }
 
   private OutputResource outputResource;

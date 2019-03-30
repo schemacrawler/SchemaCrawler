@@ -48,16 +48,12 @@ public final class SchemaCrawlerOptionsParser
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerOptionsParser.class.getName());
 
-  private static final String DEFAULT_TABLE_TYPES = "TABLE,VIEW";
-  private static final String DEFAULT_ROUTINE_TYPES = "PROCEDURE,FUNCTION";
-
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
   public SchemaCrawlerOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder,
                                     final Config config)
   {
     super(config);
-    normalizeOptionName("title");
     normalizeOptionName("infolevel", "i");
 
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
@@ -67,11 +63,6 @@ public final class SchemaCrawlerOptionsParser
   public SchemaCrawlerOptions getOptions()
     throws SchemaCrawlerException
   {
-    if (config.hasValue("title"))
-    {
-      optionsBuilder.title(config.getStringValue("title", ""));
-      consumeOption("title");
-    }
 
     // Load schema info level configuration from config, and override
     // with command-line options

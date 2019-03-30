@@ -76,7 +76,7 @@ public abstract class AbstractTitleTest
                   argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
                   argsMap.put("infolevel", InfoLevel.standard.name());
                   argsMap
-                    .put("title", "Database Design for Books and Publishers");
+                    .put("-title", "Database Design for Books and Publishers");
 
                   assertThat(outputOf(commandlineExecution(connectionInfo,
                                                            command,

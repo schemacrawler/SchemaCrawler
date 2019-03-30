@@ -39,11 +39,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.ExcludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.databaseconnector.ConnectionOptions;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -75,7 +71,7 @@ public abstract class EmbeddedDatabaseWrapper
   public Path createDiagram(final String extension)
     throws Exception
   {
-    try (final Connection connection = createDatabaseConnection();)
+    try (final Connection connection = createDatabaseConnection())
     {
       return createDiagram(connection, extension);
     }
@@ -103,11 +99,11 @@ public abstract class EmbeddedDatabaseWrapper
   {
     final Path databaseFile = requireNonNull(dbFile,
                                              "No database file path provided")
-                                               .normalize().toAbsolutePath();
+      .normalize().toAbsolutePath();
     if (!isFileReadable(databaseFile))
     {
-      final IOException e = new IOException("Cannot read database file, "
-                                            + databaseFile);
+      final IOException e = new IOException(
+        "Cannot read database file, " + databaseFile);
       LOGGER.log(Level.FINE, e.getMessage(), e);
       throw e;
     }
@@ -130,7 +126,8 @@ public abstract class EmbeddedDatabaseWrapper
     final OutputOptions outputOptions = OutputOptionsBuilder
       .newOutputOptions(extension, diagramFile);
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("schema");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "schema");
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
     executable.setConnection(connection);

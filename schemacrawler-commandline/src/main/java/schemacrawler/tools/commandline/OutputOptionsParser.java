@@ -59,6 +59,9 @@ public final class OutputOptionsParser
   @CommandLine.Option(names = {
     "--output-format" }, description = "Outfile format")
   private String outputFormatValue;
+  @CommandLine.Option(names = {
+    "-m", "--title" }, description = "Title for output")
+  private String title;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -73,6 +76,11 @@ public final class OutputOptionsParser
   public OutputOptions parse(final String[] args)
   {
     commandLine.parse(args);
+
+    if (title != null)
+    {
+      outputOptionsBuilder.title(title);
+    }
 
     if (outputFile != null)
     {

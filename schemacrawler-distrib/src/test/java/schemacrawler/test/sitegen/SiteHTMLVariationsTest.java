@@ -200,7 +200,7 @@ public class SiteHTMLVariationsTest
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("title", "Details of Example Database");
+    argsMap.put("-title", "Details of Example Database");
 
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();

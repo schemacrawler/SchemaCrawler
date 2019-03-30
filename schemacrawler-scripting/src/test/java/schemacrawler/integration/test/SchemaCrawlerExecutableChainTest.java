@@ -45,7 +45,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -65,7 +64,8 @@ public class SchemaCrawlerExecutableChainTest
   public void chainJavaScript(final Connection connection)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("script");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "script");
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
@@ -84,13 +84,14 @@ public class SchemaCrawlerExecutableChainTest
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
+    executable
+      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
+                                    .toConfig());
     executable.setConnection(connection);
     executable.execute();
 
-    assertThat("Created files \"schema.txt\" and \"schema.png\""
-               + System.lineSeparator(),
+    assertThat("Created files \"schema.txt\" and \"schema.png\"" + System
+                 .lineSeparator(),
                equalTo(readFully(new FileReader(testOutputFile.toFile()))));
 
     final List<String> failures = compareOutput("schema.txt",

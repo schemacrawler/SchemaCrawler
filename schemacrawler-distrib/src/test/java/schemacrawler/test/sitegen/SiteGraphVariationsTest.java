@@ -101,7 +101,7 @@ public class SiteGraphVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("infolevel", "standard");
-    args.put("title", "Books and Publishers Schema");
+    args.put("-title", "Books and Publishers Schema");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -271,7 +271,7 @@ public class SiteGraphVariationsTest
   {
     deleteIfExists(outputFile);
 
-    argsMap.put("title", "Details of Example Database");
+    argsMap.put("-title", "Details of Example Database");
 
     final Config runConfig = new Config();
     final Config informationSchema = loadHsqldbConfig();

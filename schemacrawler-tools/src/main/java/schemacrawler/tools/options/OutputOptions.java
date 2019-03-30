@@ -75,6 +75,11 @@ public final class OutputOptions
     this.title = title;
   }
 
+  /**
+   * Title for the output.
+   *
+   * @return Title for the output
+   */
   public String getTitle()
   {
     return title;

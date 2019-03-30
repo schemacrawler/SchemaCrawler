@@ -51,10 +51,8 @@ public final class CommandChain
   /**
    * Copy configuration settings from another command.
    *
-   * @param scCommand
-   *        Other command
-   * @throws SchemaCrawlerException
-   *         On an exception
+   * @param scCommand Other command
+   * @throws SchemaCrawlerException On an exception
    */
   public CommandChain(final SchemaCrawlerCommand scCommand)
     throws SchemaCrawlerException
@@ -98,7 +96,8 @@ public final class CommandChain
 
     final Path outputFile = Paths.get(outputFileName);
     final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions(outputFormat, outputFile);
+      .builder(getOutputOptions()).withOutputFormatValue(outputFormat)
+      .withOutputFile(outputFile).toOptions();
 
     return addNextAndConfigureForExecution(command, outputOptions);
   }
