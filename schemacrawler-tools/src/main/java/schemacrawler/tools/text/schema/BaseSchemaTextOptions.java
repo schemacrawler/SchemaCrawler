@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.text.schema;
 
 
+import java.util.Objects;
+
 import schemacrawler.tools.text.base.BaseTextOptions;
 
 public abstract class BaseSchemaTextOptions
@@ -71,6 +73,52 @@ public abstract class BaseSchemaTextOptions
   public boolean isAlphabeticalSortForForeignKeys()
   {
     return isAlphabeticalSortForForeignKeys;
+  }
+
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (!(o instanceof BaseSchemaTextOptions))
+    {
+      return false;
+    }
+    final BaseSchemaTextOptions that = (BaseSchemaTextOptions) o;
+    return
+      isAlphabeticalSortForForeignKeys == that.isAlphabeticalSortForForeignKeys
+      && isAlphabeticalSortForIndexes == that.isAlphabeticalSortForIndexes
+      && isHideForeignKeyNames == that.isHideForeignKeyNames
+      && isHideIndexNames == that.isHideIndexNames
+      && isHidePrimaryKeyNames == that.isHidePrimaryKeyNames
+      && isHideRemarks == that.isHideRemarks
+      && isHideRoutineSpecificNames == that.isHideRoutineSpecificNames
+      && isHideTableConstraintNames == that.isHideTableConstraintNames
+      && isHideTriggerNames == that.isHideTriggerNames
+      && isShowWeakAssociations == that.isShowWeakAssociations
+      && isShowOrdinalNumbers == that.isShowOrdinalNumbers
+      && isShowStandardColumnTypeNames == that.isShowStandardColumnTypeNames
+      && isShowRowCounts == that.isShowRowCounts;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(isAlphabeticalSortForForeignKeys,
+                        isAlphabeticalSortForIndexes,
+                        isHideForeignKeyNames,
+                        isHideIndexNames,
+                        isHidePrimaryKeyNames,
+                        isHideRemarks,
+                        isHideRoutineSpecificNames,
+                        isHideTableConstraintNames,
+                        isHideTriggerNames,
+                        isShowWeakAssociations,
+                        isShowOrdinalNumbers,
+                        isShowStandardColumnTypeNames,
+                        isShowRowCounts);
   }
 
   public boolean isAlphabeticalSortForIndexes()

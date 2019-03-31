@@ -36,34 +36,34 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   extends BaseTextOptionsBuilder<BaseSchemaTextOptionsBuilder<B, O>, O>
 {
 
-  private static final String SHOW_ORDINAL_NUMBERS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                     + "show_ordinal_numbers";
-  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                + "show_standard_column_type_names";
-  private static final String SHOW_ROW_COUNTS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                + "show_row_counts";
+  private static final String SHOW_ORDINAL_NUMBERS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_ordinal_numbers";
+  private static final String SHOW_STANDARD_COLUMN_TYPE_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_standard_column_type_names";
+  private static final String SHOW_ROW_COUNTS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_row_counts";
 
-  private static final String HIDE_PRIMARY_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_primarykey_names";
-  private static final String HIDE_FOREIGN_KEY_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "hide_foreignkey_names";
-  private static final String HIDE_INDEX_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                 + "hide_index_names";
-  private static final String HIDE_CONSTRAINT_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                      + "hide_constraint_names";
-  private static final String HIDE_TRIGGER_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                   + "hide_trigger_names";
-  private static final String HIDE_ROUTINE_SPECIFIC_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                            + "hide_routine_specific_names";
-  private static final String HIDE_REMARKS = SCHEMACRAWLER_FORMAT_PREFIX
-                                             + "hide_remarks";
-  private static final String SHOW_WEAK_ASSOCIATIONS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "show_weak_associations";
+  private static final String HIDE_PRIMARY_KEY_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_primarykey_names";
+  private static final String HIDE_FOREIGN_KEY_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_foreignkey_names";
+  private static final String HIDE_INDEX_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_index_names";
+  private static final String HIDE_CONSTRAINT_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_constraint_names";
+  private static final String HIDE_TRIGGER_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_trigger_names";
+  private static final String HIDE_ROUTINE_SPECIFIC_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_routine_specific_names";
+  private static final String HIDE_REMARKS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "hide_remarks";
+  private static final String SHOW_WEAK_ASSOCIATIONS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_weak_associations";
 
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                     + "sort_alphabetically.table_indexes";
-  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                         + "sort_alphabetically.table_foreignkeys";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_INDEXES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.table_indexes";
+  private static final String SC_SORT_ALPHABETICALLY_TABLE_FOREIGNKEYS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.table_foreignkeys";
 
   protected boolean isAlphabeticalSortForForeignKeys;
   protected boolean isAlphabeticalSortForIndexes;
@@ -232,7 +232,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the -portablenames command-line argument.
+   * Corresponds to the --portable-names command-line argument.
    */
   public final B portableNames()
   {
@@ -240,7 +240,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the -portablenames=&lt;boolean&gt; command-line
+   * Corresponds to the --portable-names=&lt;boolean&gt; command-line
    * argument.
    */
   public final B portableNames(final boolean value)
@@ -325,8 +325,8 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
     config.setBooleanValue(HIDE_PRIMARY_KEY_NAMES, isHidePrimaryKeyNames);
     config.setBooleanValue(HIDE_INDEX_NAMES, isHideIndexNames);
     config.setBooleanValue(HIDE_TRIGGER_NAMES, isHideTriggerNames);
-    config.setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES,
-                           isHideRoutineSpecificNames);
+    config
+      .setBooleanValue(HIDE_ROUTINE_SPECIFIC_NAMES, isHideRoutineSpecificNames);
     config.setBooleanValue(HIDE_CONSTRAINT_NAMES, isHideTableConstraintNames);
     config.setBooleanValue(HIDE_REMARKS, isHideRemarks);
     config.setBooleanValue(SHOW_WEAK_ASSOCIATIONS, isShowWeakAssociations);

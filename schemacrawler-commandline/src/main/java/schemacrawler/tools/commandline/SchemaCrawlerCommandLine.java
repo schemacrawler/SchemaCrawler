@@ -41,6 +41,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import us.fatehi.commandlineparser.CommandLineUtility;
@@ -106,9 +107,15 @@ public final class SchemaCrawlerCommandLine
       config);
     outputOptions = outputOptionsParser.parse(args);
 
-    final AdditionalConfigOptionsParser additionalConfigOptionsParser = new AdditionalConfigOptionsParser(
-      config);
-    additionalConfigOptionsParser.loadConfig();
+    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
+      .builder().fromConfig(config);
+    final ShowOptionsParser showOptionsParser = new ShowOptionsParser(
+      schemaTextOptionsBuilder);
+    showOptionsParser.parse(args);
+    final SortOptionsParser sortOptionsParser = new SortOptionsParser(
+      schemaTextOptionsBuilder);
+    sortOptionsParser.parse(args);
+    config.putAll(schemaTextOptionsBuilder.toConfig());
 
     final UserCredentialsParser userCredentialsParser = new UserCredentialsParser();
     final UserCredentials userCredentials = userCredentialsParser.parse(args);

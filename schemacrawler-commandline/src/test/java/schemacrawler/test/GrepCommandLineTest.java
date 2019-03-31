@@ -115,7 +115,7 @@ public class GrepCommandLineTest
         "--command=" + schemaTextDetailType,
         "--output-format=" + outputFormat.getFormat(),
         "--output-file=" + testOutputFile.toString(),
-        "-noinfo"));
+        "--no-info"));
       args.addAll(Arrays.asList(grepArgsForRun));
 
       Main.main(args.toArray(new String[args.size()]));

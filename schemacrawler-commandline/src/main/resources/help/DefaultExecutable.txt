@@ -3,14 +3,14 @@
 -c=<command> (short for -command=<command>)
   Where <command> may be:
     brief
-      Shows basic schema information, for tables, views and routines, 
-      columns, primary keys, and foreign keys 
+      Shows basic schema information, for tables, views and routines,
+      columns, primary keys, and foreign keys
     schema
-      Shows the commonly needed detail of the schema, including details of 
-      tables, views and routines, columns, primary keys, indexes, foreign 
+      Shows the commonly needed detail of the schema, including details of
+      tables, views and routines, columns, primary keys, indexes, foreign
       keys, and triggers
     details
-      Shows maximum possible detail of the schema, including privileges, and 
+      Shows maximum possible detail of the schema, including privileges, and
       details of privileges, triggers, and check constraints
     count
       Shows counts of rows in the tables
@@ -20,16 +20,16 @@
       Shows data from all rows in the tables, but row order is not guaranteed -
       this can be used with a -infolevel=minimum for speed
     <query_name>
-      Shows results of query <query_name>, as specified in the configuration 
+      Shows results of query <query_name>, as specified in the configuration
       properties file
     <query>
-      Shows results of SQL <query>      
-      The query itself can contain the variables ${table}, ${columns} 
-      and ${tabletype},  or system properties referenced as 
+      Shows results of SQL <query>
+      The query itself can contain the variables ${table}, ${columns}
+      and ${tabletype},  or system properties referenced as
       ${<system-property-name>}
       Queries without any variables are executed exactly once; queries
       with variables are executed once for each table, with the variables
-      substituted      
+      substituted
   <command> may also be a comma-separated list of commands.
 
 -i=<infolevel> (short for -infolevel=<infolevel>)
@@ -37,82 +37,81 @@
   The info level determines the amount of database metadata retrieved,
   and also determines the time taken to crawl the schema
   Optional, defaults to standard
-  
+
 --- Sort Options ---
 
--sorttables=<boolean>
+--sort-tables=<boolean>
   Sort tables alphabetically
   <boolean> can be true or false
   Optional, defaults to true
-  
--sortcolumns=<boolean>
+
+--sort-columns=<boolean>
   Sort columns in a table alphabetically
   <boolean> can be true or false
   Optional, defaults to false
 
--sortinout=<boolean>
+--sort-in-out=<boolean>
   Sort parameters in a routine alphabetically
   <boolean> can be true or false
   Optional, defaults to false
 
 --- Show Options ---
 
--noinfo=<boolean>
+--no-info=<boolean>
   Hides database information
   <boolean> can be true or false
   Optional, defaults to false
-  
--noremarks=<boolean>
+
+--no-remarks=<boolean>
   Hides table and column remarks
   <boolean> can be true or false
   Optional, defaults to false
 
--weakassociations=<boolean>
+--weak-associations=<boolean>
   Shows inferred relationships between tables, based on
   common table and column naming conventions
   <boolean> can be true or false
   Optional, defaults to false
-  
--portablenames=<boolean>
+
+--portable-names=<boolean>
   Allows for easy comparison between databases, by hiding
-  foreign key names, constraint names, trigger names, 
-  specific names for routines, or index and primary key names, 
+  foreign key names, constraint names, trigger names,
+  specific names for routines, or index and primary key names,
   and not showing the fully-qualified table name
   <boolean> can be true or false
   Optional, defaults to false
 
 --- Run Options ---
 
--title=<title>
+--title=<title>
   Shows the title text as the title on the output
   Optional, defaults to no title being shown
 
 --- Output Options ---
-      
--fmt=<outputformat> (short for -outputformat=<outputformat>)
+
+--fmt=<outputformat> (short for -outputformat=<outputformat>)
   Format of the SchemaCrawler output, where <outputformat> is one of:
     text
       For text output (default)
     html
       For HTML5 output
     json
-      For JavaScript Object Notation output 
+      For JavaScript Object Notation output
     scdot
-      For Graphviz DOT output, for schema only           
+      For Graphviz DOT output, for schema only
 
   You can generate a database diagram using Graphviz
   For a diagram <outputformat> is one of dot, eps, gif, jpg, or png
   For a complete list Graphviz output formats, see http://www.graphviz.org/
   You can generate HTML output format with an embedded SVG diagram with
-  -fmt=htmlx  
+  --fmt=htmlx
   IMPORTANT: Graphviz needs to be installed, and available on the system PATH
   http://www.graphviz.org/
   If Graphviz is not installed, a DOT file is produced.
-    
+
   Optional, defaults to the format specified by the output file,
-  otherwise, text  
-        
+  otherwise, text
+
 -o=<outputfile> (short for -outputfile=<outputfile>)
   <outputfile> is the path to the output file
   Optional, defaults to the console (stdout)
- 

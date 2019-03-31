@@ -81,7 +81,7 @@ public class OfflineSnapshotTest
       argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
-      argsMap.put("noinfo", Boolean.FALSE.toString());
+      argsMap.put("-no-info", Boolean.FALSE.toString());
       argsMap.put("-info-level", "maximum");
       argsMap.put("-routines", ".*");
       argsMap.put("-command", "details");
@@ -107,7 +107,7 @@ public class OfflineSnapshotTest
       argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
-      argsMap.put("noinfo", "true");
+      argsMap.put("-no-info", "true");
       argsMap.put("-info-level", "maximum");
       argsMap.put("-command", "details");
       argsMap.put("-output-format", TextOutputFormat.text.getFormat());
@@ -133,7 +133,7 @@ public class OfflineSnapshotTest
       argsMap.put("-server", "offline");
       argsMap.put("database", serializedCatalogFile.toString());
 
-      argsMap.put("noinfo", "true");
+      argsMap.put("-no-info", "true");
       argsMap.put("-info-level", "maximum");
       argsMap.put("-routines", ".*");
       argsMap.put("-command", "list");

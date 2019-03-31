@@ -39,37 +39,37 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
   protected static final String SCHEMACRAWLER_FORMAT_PREFIX = "schemacrawler.format.";
 
-  private static final String NO_HEADER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_header";
-  private static final String NO_FOOTER = SCHEMACRAWLER_FORMAT_PREFIX
-                                          + "no_footer";
-  private static final String NO_SCHEMACRAWLER_INFO = SCHEMACRAWLER_FORMAT_PREFIX
-                                                      + "no_schemacrawler_info";
-  private static final String SHOW_DATABASE_INFO = SCHEMACRAWLER_FORMAT_PREFIX
-                                                   + "show_database_info";
-  private static final String SHOW_JDBC_DRIVER_INFO = SCHEMACRAWLER_FORMAT_PREFIX
-                                                      + "show_jdbc_driver_info";
-  private static final String APPEND_OUTPUT = SCHEMACRAWLER_FORMAT_PREFIX
-                                              + "append_output";
+  private static final String NO_HEADER =
+    SCHEMACRAWLER_FORMAT_PREFIX + "no_header";
+  private static final String NO_FOOTER =
+    SCHEMACRAWLER_FORMAT_PREFIX + "no_footer";
+  private static final String NO_SCHEMACRAWLER_INFO =
+    SCHEMACRAWLER_FORMAT_PREFIX + "no_schemacrawler_info";
+  private static final String SHOW_DATABASE_INFO =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_database_info";
+  private static final String SHOW_JDBC_DRIVER_INFO =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_jdbc_driver_info";
+  private static final String APPEND_OUTPUT =
+    SCHEMACRAWLER_FORMAT_PREFIX + "append_output";
 
-  private static final String SHOW_UNQUALIFIED_NAMES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                       + "show_unqualified_names";
+  private static final String SHOW_UNQUALIFIED_NAMES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "show_unqualified_names";
 
-  private static final String SORT_ALPHABETICALLY_TABLES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                           + "sort_alphabetically.tables";
-  private static final String SORT_ALPHABETICALLY_TABLE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                  + "sort_alphabetically.table_columns";
+  private static final String SORT_ALPHABETICALLY_TABLES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.tables";
+  private static final String SORT_ALPHABETICALLY_TABLE_COLUMNS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.table_columns";
 
-  private static final String SORT_ALPHABETICALLY_ROUTINES = SCHEMACRAWLER_FORMAT_PREFIX
-                                                             + "sort_alphabetically.routines";
-  private static final String SORT_ALPHABETICALLY_ROUTINE_COLUMNS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                                    + "sort_alphabetically.routine_columns";
+  private static final String SORT_ALPHABETICALLY_ROUTINES =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.routines";
+  private static final String SORT_ALPHABETICALLY_ROUTINE_COLUMNS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "sort_alphabetically.routine_columns";
 
-  private static final String NO_SCHEMA_COLORS = SCHEMACRAWLER_FORMAT_PREFIX
-                                                 + "no_schema_colors";
+  private static final String NO_SCHEMA_COLORS =
+    SCHEMACRAWLER_FORMAT_PREFIX + "no_schema_colors";
 
-  private static final String IDENTIFIER_QUOTING_STRATEGY = SCHEMACRAWLER_FORMAT_PREFIX
-                                                            + "identifier_quoting_strategy";
+  private static final String IDENTIFIER_QUOTING_STRATEGY =
+    SCHEMACRAWLER_FORMAT_PREFIX + "identifier_quoting_strategy";
 
   protected boolean isAlphabeticalSortForRoutineColumns;
   protected boolean isAlphabeticalSortForRoutines;
@@ -117,22 +117,21 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     isAlphabeticalSortForTables = config
       .getBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
-    isAlphabeticalSortForTableColumns = config
-      .getBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
-                       isAlphabeticalSortForTableColumns);
+    isAlphabeticalSortForTableColumns = config.getBooleanValue(
+      SORT_ALPHABETICALLY_TABLE_COLUMNS,
+      isAlphabeticalSortForTableColumns);
 
-    isAlphabeticalSortForRoutines = config
-      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINES,
-                       isAlphabeticalSortForRoutines);
-    isAlphabeticalSortForRoutineColumns = config
-      .getBooleanValue(SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
-                       isAlphabeticalSortForRoutineColumns);
+    isAlphabeticalSortForRoutines = config.getBooleanValue(
+      SORT_ALPHABETICALLY_ROUTINES,
+      isAlphabeticalSortForRoutines);
+    isAlphabeticalSortForRoutineColumns = config.getBooleanValue(
+      SORT_ALPHABETICALLY_ROUTINE_COLUMNS,
+      isAlphabeticalSortForRoutineColumns);
 
     isNoSchemaColors = config.getBooleanValue(NO_SCHEMA_COLORS);
 
-    identifierQuotingStrategy = config
-      .getEnumValue(IDENTIFIER_QUOTING_STRATEGY,
-                    IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words);
+    identifierQuotingStrategy = config.getEnumValue(IDENTIFIER_QUOTING_STRATEGY,
+                                                    IdentifierQuotingStrategy.quote_if_special_characters_and_reserved_words);
 
     return (B) this;
   }
@@ -272,7 +271,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sortinout command-line argument.
+   * Corresponds to the --sort-in-out command-line argument.
    */
   public final B sortInOut()
   {
@@ -280,7 +279,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sortinout=&lt;boolean&gt; command-line
+   * Corresponds to the --sort-in-out=&lt;boolean&gt; command-line
    * argument.
    */
   public final B sortInOut(final boolean value)
@@ -301,7 +300,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sortcolumns command-line argument.
+   * Corresponds to the --sort-columns command-line argument.
    */
   public final B sortTableColumns()
   {
@@ -309,7 +308,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sortcolumns=&lt;boolean&gt; command-line
+   * Corresponds to the --sort-columns=&lt;boolean&gt; command-line
    * argument.
    */
   public final B sortTableColumns(final boolean value)
@@ -319,7 +318,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sorttables command-line argument.
+   * Corresponds to the ---sort-tables command-line argument.
    */
   public final B sortTables()
   {
@@ -327,7 +326,7 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
   }
 
   /**
-   * Corresponds to the -sorttables=&lt;boolean&gt; command-line
+   * Corresponds to the --sort-tables=&lt;boolean&gt; command-line
    * argument.
    */
   public final B sortTables(final boolean value)
@@ -350,8 +349,8 @@ public abstract class BaseTextOptionsBuilder<B extends BaseTextOptionsBuilder<B,
 
     config.setBooleanValue(SHOW_UNQUALIFIED_NAMES, isShowUnqualifiedNames);
 
-    config.setBooleanValue(SORT_ALPHABETICALLY_TABLES,
-                           isAlphabeticalSortForTables);
+    config
+      .setBooleanValue(SORT_ALPHABETICALLY_TABLES, isAlphabeticalSortForTables);
     config.setBooleanValue(SORT_ALPHABETICALLY_TABLE_COLUMNS,
                            isAlphabeticalSortForTableColumns);
 

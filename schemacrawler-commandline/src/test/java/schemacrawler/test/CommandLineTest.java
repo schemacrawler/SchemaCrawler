@@ -84,7 +84,7 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<>();
     args.put("-tables", "");
     args.put("-routines", ".*");
-    args.put("sortcolumns", Boolean.TRUE.toString());
+    args.put("-sort-columns", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
@@ -99,7 +99,7 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<>();
     args.put("-tables", "");
     args.put("-routines", ".*");
-    args.put("sortcolumns", Boolean.FALSE.toString());
+    args.put("-sort-columns", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
@@ -143,7 +143,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-routines", "");
-    args.put("sortcolumns", Boolean.TRUE.toString());
+    args.put("-sort-columns", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
@@ -157,7 +157,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-routines", "");
-    args.put("sortcolumns", Boolean.FALSE.toString());
+    args.put("-sort-columns", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
@@ -171,7 +171,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-routines", "");
-    args.put("sorttables", Boolean.FALSE.toString());
+    args.put("-sort-tables", Boolean.FALSE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
@@ -185,7 +185,7 @@ public class CommandLineTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-routines", "");
-    args.put("sorttables", Boolean.TRUE.toString());
+    args.put("-sort-tables", Boolean.TRUE.toString());
     // Testing all tables, no routines
     // Testing no sequences, synonyms
 
@@ -220,7 +220,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("portablenames", Boolean.TRUE.toString());
+    args.put("-portable-names", Boolean.TRUE.toString());
     // Testing all tables, routines
     // Testing no sequences, synonyms
 
@@ -233,7 +233,7 @@ public class CommandLineTest
     throws Exception
   {
     final Map<String, String> args = new HashMap<>();
-    args.put("portablenames", Boolean.TRUE.toString());
+    args.put("-portable-names", Boolean.TRUE.toString());
     args.put("-tables", "");
     args.put("-routines", ".*");
     args.put("-sequences", ".*");
@@ -296,7 +296,7 @@ public class CommandLineTest
                    final String command)
     throws Exception
   {
-    argsMap.put("noinfo", Boolean.TRUE.toString());
+    argsMap.put("-no-info", Boolean.TRUE.toString());
     argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
     argsMap.put("-info-level", "maximum");
 

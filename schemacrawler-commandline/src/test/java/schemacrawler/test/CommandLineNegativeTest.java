@@ -117,7 +117,7 @@ public class CommandLineNegativeTest
       argsMap.put("-url", connectionInfo.getConnectionUrl());
       argsMap.put("-user", "sa");
       argsMap.put("-password", "");
-      argsMap.put("noinfo", Boolean.TRUE.toString());
+      argsMap.put("-no-info", Boolean.TRUE.toString());
       argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
       argsMap.put("-info-level", "standard");
       argsMap.put("-command", "brief");

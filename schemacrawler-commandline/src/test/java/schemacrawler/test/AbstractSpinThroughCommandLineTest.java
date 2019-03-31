@@ -82,7 +82,7 @@ public abstract class AbstractSpinThroughCommandLineTest
           argsMap.put("-sequences", ".*");
           argsMap.put("-synonyms", ".*");
           argsMap.put("-routines", ".*");
-          argsMap.put("noinfo", Boolean.FALSE.toString());
+          argsMap.put("-no-info", Boolean.FALSE.toString());
           argsMap.put("-info-level", infoLevel.name());
 
           assertThat(outputOf(commandlineExecution(connectionInfo,

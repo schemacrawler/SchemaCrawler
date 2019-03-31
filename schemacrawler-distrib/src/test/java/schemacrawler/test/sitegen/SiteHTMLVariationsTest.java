@@ -89,7 +89,7 @@ public class SiteHTMLVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
-    args.put("portablenames", "true");
+    args.put("-portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -107,7 +107,7 @@ public class SiteHTMLVariationsTest
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
     args.put("c", "brief");
-    args.put("portablenames", "true");
+    args.put("-portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -124,7 +124,7 @@ public class SiteHTMLVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
-    args.put("portablenames", "true");
+    args.put("-portable-names", "true");
 
     final Map<String, String> config = new HashMap<>();
     config.put("schemacrawler.format.show_ordinal_numbers", "true");
@@ -142,8 +142,8 @@ public class SiteHTMLVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "standard");
-    args.put("portablenames", "true");
-    args.put("sortcolumns", "true");
+    args.put("-portable-names", "true");
+    args.put("-sort-columns", "true");
 
     final Map<String, String> config = new HashMap<>();
 
@@ -160,7 +160,7 @@ public class SiteHTMLVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
-    args.put("portablenames", "true");
+    args.put("-portable-names", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-table-types", "TABLE");
 
@@ -179,7 +179,7 @@ public class SiteHTMLVariationsTest
   {
     final Map<String, String> args = new HashMap<>();
     args.put("-info-level", "maximum");
-    args.put("portablenames", "true");
+    args.put("-portable-names", "true");
     args.put("-grep-columns", ".*\\.BOOKS\\..*\\.ID");
     args.put("-only-matching", "true");
     args.put("-table-types", "TABLE");

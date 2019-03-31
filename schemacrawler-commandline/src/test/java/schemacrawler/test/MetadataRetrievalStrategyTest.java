@@ -87,7 +87,7 @@ public class MetadataRetrievalStrategyTest
 
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-info-level", infoLevel.name());
-    argsMap.put("noinfo", "true");
+    argsMap.put("-no-info", "true");
 
     // Check that System.err has an error
     assertThat(outputOf(commandlineExecution(connectionInfo,

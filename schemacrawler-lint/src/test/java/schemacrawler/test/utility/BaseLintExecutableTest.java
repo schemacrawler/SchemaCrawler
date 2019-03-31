@@ -90,7 +90,7 @@ public abstract class BaseLintExecutableTest
     final Map<String, String> argsMap = new HashMap<>();
 
     argsMap.put("-info-level", "standard");
-    argsMap.put("sortcolumns", "true");
+    argsMap.put("-sort-columns", "true");
 
     if (!isBlank(linterConfigsResource))
     {

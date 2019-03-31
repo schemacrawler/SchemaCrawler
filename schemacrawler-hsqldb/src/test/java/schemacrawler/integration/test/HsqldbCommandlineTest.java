@@ -99,7 +99,7 @@ public class HsqldbCommandlineTest
       argsMap.put("-user", "sa");
       argsMap.put("-password", "");
       argsMap.put("g", testConfigFile.toString());
-      argsMap.put("noinfo", Boolean.FALSE.toString());
+      argsMap.put("-no-info", Boolean.FALSE.toString());
       argsMap.put("-command", "details,dump,count,hsqldb.tables");
       argsMap.put("-info-level", "maximum");
       argsMap.put("-synonyms", ".*");
