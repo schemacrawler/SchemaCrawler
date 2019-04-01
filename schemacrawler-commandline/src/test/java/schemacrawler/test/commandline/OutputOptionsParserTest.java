@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.OutputOptionsParser;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 public class OutputOptionsParserTest
 {
@@ -22,8 +22,12 @@ public class OutputOptionsParserTest
   {
     final String[] args = new String[0];
 
-    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = optionsParser.parse(args);
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder();
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(
+      outputOptionsBuilder);
+    optionsParser.parse(args);
+    final OutputOptions options = outputOptionsBuilder.toOptions();
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue(), is("text"));
@@ -37,8 +41,12 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--some-option" };
 
-    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = optionsParser.parse(args);
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder();
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(
+      outputOptionsBuilder);
+    optionsParser.parse(args);
+    final OutputOptions options = outputOptionsBuilder.toOptions();
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue(), is("text"));
@@ -52,7 +60,11 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--output-file" };
 
-    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder();
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(
+      outputOptionsBuilder);
+
     assertThrows(CommandLine.MissingParameterException.class,
                  () -> optionsParser.parse(args));
   }
@@ -62,7 +74,11 @@ public class OutputOptionsParserTest
   {
     final String[] args = { "--output-format" };
 
-    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder();
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(
+      outputOptionsBuilder);
+
     assertThrows(CommandLine.MissingParameterException.class,
                  () -> optionsParser.parse(args));
   }
@@ -78,8 +94,12 @@ public class OutputOptionsParserTest
       "additional",
       "-extra" };
 
-    final OutputOptionsParser optionsParser = new OutputOptionsParser(new Config());
-    final OutputOptions options = optionsParser.parse(args);
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder();
+    final OutputOptionsParser optionsParser = new OutputOptionsParser(
+      outputOptionsBuilder);
+    optionsParser.parse(args);
+    final OutputOptions options = outputOptionsBuilder.toOptions();
 
     assertThat(options.getOutputFile()
                  .orElseThrow(() -> new IllegalArgumentException("No file found"))

@@ -53,7 +53,8 @@ public class PasswordParserTest
     final String[] args = new String[0];
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    final UserCredentials options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
@@ -68,7 +69,8 @@ public class PasswordParserTest
     final String[] args = { "--some-option" };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    final UserCredentials options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
@@ -83,7 +85,8 @@ public class PasswordParserTest
     final String[] args = { "--password", "pwd123" };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    final UserCredentials options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is("pwd123"));
@@ -103,7 +106,8 @@ public class PasswordParserTest
     final String[] args = { "--password:file", file.getAbsolutePath() };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    final UserCredentials options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
@@ -124,7 +128,8 @@ public class PasswordParserTest
     final String[] args = { "--password:file", file.getAbsolutePath() };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    final UserCredentials options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is("pwd123"));
@@ -140,8 +145,9 @@ public class PasswordParserTest
     final String[] args = { "--password:file", "./no-file.txt" };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getUserCredentials());
   }
 
   @Test
@@ -157,8 +163,9 @@ public class PasswordParserTest
       "--password:file", file.getAbsolutePath(), "--password", "pwd123" };
 
     final UserCredentialsParser optionsParser = new UserCredentialsParser();
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getUserCredentials());
   }
 
 }

@@ -34,7 +34,6 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import java.util.Objects;
 
 import picocli.CommandLine;
-import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 /**
@@ -43,7 +42,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class SortOptionsParser
-  implements OptionsParser<SchemaTextOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -68,7 +67,7 @@ public final class SortOptionsParser
   }
 
   @Override
-  public SchemaTextOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -90,7 +89,6 @@ public final class SortOptionsParser
       optionsBuilder.sortInOut(sortinout);
     }
 
-    return null;
   }
 
   @Override

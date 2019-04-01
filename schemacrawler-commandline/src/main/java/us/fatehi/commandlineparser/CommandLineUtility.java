@@ -115,7 +115,9 @@ public final class CommandLineUtility
     {
       config.putAll(argsMap);
     }
-    final Config configFileConfig = new ConfigParser().parse(args);
+    final ConfigParser configParser = new ConfigParser();
+    configParser.parse(args);
+    final Config configFileConfig = configParser.getConfig();
     config.putAll(configFileConfig);
 
     // 4. Override/ overwrite from the command-line options

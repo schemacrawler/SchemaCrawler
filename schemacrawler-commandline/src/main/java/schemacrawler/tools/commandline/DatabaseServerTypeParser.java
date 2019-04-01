@@ -43,7 +43,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
  * @author Sualeh Fatehi
  */
 public final class DatabaseServerTypeParser
-  implements OptionsParser<DatabaseConnector>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -64,10 +64,14 @@ public final class DatabaseServerTypeParser
   }
 
   @Override
-  public DatabaseConnector parse(final String[] args)
-    throws SchemaCrawlerException
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
+
+  public DatabaseConnector getDatabaseConnector()
+    throws SchemaCrawlerException
+  {
 
     if (!hasDatabaseSystemIdentifier() && isBlank(connectionUrl))
     {
@@ -98,11 +102,7 @@ public final class DatabaseServerTypeParser
     }
 
     return dbConnector;
-  }
 
-  private boolean hasDatabaseSystemIdentifier()
-  {
-    return !isBlank(databaseSystemIdentifier);
   }
 
   public boolean isBundled()
@@ -114,6 +114,11 @@ public final class DatabaseServerTypeParser
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  private boolean hasDatabaseSystemIdentifier()
+  {
+    return !isBlank(databaseSystemIdentifier);
   }
 
 }

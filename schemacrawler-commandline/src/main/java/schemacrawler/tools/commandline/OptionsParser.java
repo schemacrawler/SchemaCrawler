@@ -1,14 +1,10 @@
 package schemacrawler.tools.commandline;
 
 
-import schemacrawler.schemacrawler.Options;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-
-public interface OptionsParser<T extends Options>
+public interface OptionsParser
 {
 
-  T parse(String[] args)
-    throws SchemaCrawlerException;
+  void parse(String[] args);
 
   String[] getRemainder();
 

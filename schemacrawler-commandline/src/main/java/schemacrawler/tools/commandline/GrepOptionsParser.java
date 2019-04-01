@@ -35,7 +35,6 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 /**
@@ -44,7 +43,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class GrepOptionsParser
-  implements OptionsParser<SchemaCrawlerOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -76,7 +75,7 @@ public final class GrepOptionsParser
   }
 
   @Override
-  public SchemaCrawlerOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -102,7 +101,6 @@ public final class GrepOptionsParser
       optionsBuilder.grepOnlyMatching(onlyMatching);
     }
 
-    return null;
   }
 
   @Override

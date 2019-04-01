@@ -19,7 +19,8 @@ public class ConfigParserTest
     final String[] args = new String[0];
 
     final ConfigParser optionsParser = new ConfigParser();
-    final Config config = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final Config config = optionsParser.getConfig();
 
     assertThat("Config is not empty", config.isEmpty(), is(true));
 
@@ -33,7 +34,8 @@ public class ConfigParserTest
     final String[] args = { "--some-option" };
 
     final ConfigParser optionsParser = new ConfigParser();
-    final Config config = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final Config config = optionsParser.getConfig();
 
     assertThat("Config is not empty", config.isEmpty(), is(true));
 
@@ -58,7 +60,8 @@ public class ConfigParserTest
       "-g", "a_file", "additional", "--extra" };
 
     final ConfigParser optionsParser = new ConfigParser();
-    final Config config = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final Config config = optionsParser.getConfig();
 
     assertThat("Config is not empty", config.isEmpty(), is(true));
 

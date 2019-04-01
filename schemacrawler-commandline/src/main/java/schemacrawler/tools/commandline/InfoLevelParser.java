@@ -35,7 +35,6 @@ import java.util.Objects;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 /**
@@ -44,7 +43,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class InfoLevelParser
-  implements OptionsParser<SchemaCrawlerOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -65,7 +64,7 @@ public final class InfoLevelParser
   }
 
   @Override
-  public SchemaCrawlerOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -74,7 +73,6 @@ public final class InfoLevelParser
       optionsBuilder.withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     }
 
-    return null;
   }
 
   @Override

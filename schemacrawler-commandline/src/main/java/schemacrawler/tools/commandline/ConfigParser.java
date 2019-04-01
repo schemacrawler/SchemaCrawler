@@ -50,7 +50,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public class ConfigParser
-  implements OptionsParser<Config>
+  implements OptionsParser
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -72,10 +72,13 @@ public class ConfigParser
   }
 
   @Override
-  public Config parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
 
+  public Config getConfig()
+  {
     final Path configFilePath;
     if (configFile == null)
     {

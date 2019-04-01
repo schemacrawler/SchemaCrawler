@@ -36,8 +36,6 @@ import java.io.File;
 import java.nio.file.Path;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
@@ -46,7 +44,7 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class OutputOptionsParser
-  implements OptionsParser<OutputOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -66,14 +64,14 @@ public final class OutputOptionsParser
   @CommandLine.Parameters
   private String[] remainder = new String[0];
 
-  public OutputOptionsParser(final Config config)
+  public OutputOptionsParser(final OutputOptionsBuilder outputOptionsBuilder)
   {
     commandLine = newCommandLine(this);
-    outputOptionsBuilder = OutputOptionsBuilder.builder().fromConfig(config);
+    this.outputOptionsBuilder = outputOptionsBuilder;
   }
 
   @Override
-  public OutputOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -92,8 +90,6 @@ public final class OutputOptionsParser
     {
       outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
     }
-
-    return outputOptionsBuilder.toOptions();
   }
 
   @Override

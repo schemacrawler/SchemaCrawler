@@ -43,7 +43,7 @@ import schemacrawler.schemacrawler.Config;
  * @author sfatehi
  */
 public final class DatabaseConfigConnectionOptionsParser
-  implements OptionsParser<Config>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -79,10 +79,13 @@ public final class DatabaseConfigConnectionOptionsParser
   }
 
   @Override
-  public Config parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
 
+  public Config getConfig()
+  {
     final Config config = new Config();
 
     if (host != null)

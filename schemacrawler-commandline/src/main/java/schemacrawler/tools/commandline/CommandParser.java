@@ -40,10 +40,12 @@ import picocli.CommandLine;
  * @author Sualeh Fatehi
  */
 public final class CommandParser
-  implements OptionsParser<Command>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
 
   @CommandLine.Option(names = {
     "-c", "--command" }, required = true, description = "SchemaCrawler command")
@@ -58,18 +60,20 @@ public final class CommandParser
   }
 
   @Override
-  public Command parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
-    if (!isBlank(command))
+    if (isBlank(command))
     {
-      return new Command(command);
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No command provided");
     }
-    else
-    {
-      throw new SchemaCrawlerCommandLineException("Please specify a command");
-    }
+  }
+
+  public Command getCommand()
+  {
+    return new Command(command);
   }
 
   @Override

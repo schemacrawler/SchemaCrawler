@@ -47,7 +47,7 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
  * @author sfatehi
  */
 public final class UserCredentialsParser
-  implements OptionsParser<UserCredentials>
+  implements OptionsParser
 {
 
   protected final CommandLine commandLine;
@@ -80,9 +80,13 @@ public final class UserCredentialsParser
   }
 
   @Override
-  public UserCredentials parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
+
+  public UserCredentials getUserCredentials()
+  {
     return new SingleUseUserCredentials(user, getPassword());
   }
 

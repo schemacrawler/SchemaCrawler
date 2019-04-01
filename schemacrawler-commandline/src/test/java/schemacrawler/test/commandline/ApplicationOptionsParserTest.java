@@ -49,7 +49,8 @@ public class ApplicationOptionsParserTest
     final String[] args = new String[0];
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
@@ -65,7 +66,8 @@ public class ApplicationOptionsParserTest
     final String[] args = { "--some-option" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
@@ -81,7 +83,8 @@ public class ApplicationOptionsParserTest
     final String[] args = { "--help" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(true));
@@ -127,7 +130,8 @@ public class ApplicationOptionsParserTest
     final String[] args = { "--log-level", "FINE" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.FINE));
     assertThat(options.isShowHelp(), is(false));
@@ -143,7 +147,8 @@ public class ApplicationOptionsParserTest
     final String[] args = { "--log-level", "FinE" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.FINE));
     assertThat(options.isShowHelp(), is(false));
@@ -160,7 +165,8 @@ public class ApplicationOptionsParserTest
       "--log-level", "ALL", "-h", "--version", "additional", "-extra" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    final ApplicationOptions options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final ApplicationOptions options = optionsParser.getApplicationOptions();
 
     assertThat(options.getApplicationLogLevel(), is(Level.ALL));
     assertThat(options.isShowHelp(), is(true));

@@ -36,7 +36,6 @@ import java.util.regex.Pattern;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 /**
@@ -45,7 +44,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class LimitOptionsParser
-  implements OptionsParser<SchemaCrawlerOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -81,7 +80,7 @@ public final class LimitOptionsParser
   }
 
   @Override
-  public SchemaCrawlerOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -126,7 +125,6 @@ public final class LimitOptionsParser
       optionsBuilder.routineTypes(routinetypes);
     }
 
-    return null;
   }
 
   @Override

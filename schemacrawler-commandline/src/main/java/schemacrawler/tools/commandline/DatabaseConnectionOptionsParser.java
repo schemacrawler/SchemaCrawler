@@ -39,7 +39,7 @@ import schemacrawler.schemacrawler.Config;
  * Options for the command-line.
  */
 public final class DatabaseConnectionOptionsParser
-  implements OptionsParser<Config>
+  implements OptionsParser
 {
 
   private final picocli.CommandLine commandLine;
@@ -63,10 +63,13 @@ public final class DatabaseConnectionOptionsParser
   }
 
   @Override
-  public Config parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
 
+  public Config getConfig()
+  {
     final Config config = new Config();
 
     if (isBlank(connectionUrl))

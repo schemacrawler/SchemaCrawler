@@ -41,6 +41,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -77,7 +78,8 @@ public final class SchemaCrawlerCommandLine
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
     final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser();
-    databaseConnector = dbServerTypeParser.parse(args);
+    dbServerTypeParser.parse(args);
+    databaseConnector = dbServerTypeParser.getDatabaseConnector();
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
@@ -85,7 +87,8 @@ public final class SchemaCrawlerCommandLine
     config = loadConfig(args, argsMap);
 
     final CommandParser commandParser = new CommandParser();
-    command = commandParser.parse(args).toString();
+    commandParser.parse(args);
+    command = commandParser.getCommand().toString();
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder().fromConfig(config);
@@ -103,9 +106,12 @@ public final class SchemaCrawlerCommandLine
     infoLevelParser.parse(args);
     schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
+    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
+      .builder().fromConfig(config);
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
-      config);
-    outputOptions = outputOptionsParser.parse(args);
+      outputOptionsBuilder);
+    outputOptionsParser.parse(args);
+    outputOptions = outputOptionsBuilder.toOptions();
 
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
       .builder().fromConfig(config);
@@ -118,7 +124,9 @@ public final class SchemaCrawlerCommandLine
     config.putAll(schemaTextOptionsBuilder.toConfig());
 
     final UserCredentialsParser userCredentialsParser = new UserCredentialsParser();
-    final UserCredentials userCredentials = userCredentialsParser.parse(args);
+    userCredentialsParser.parse(args);
+    final UserCredentials userCredentials = userCredentialsParser
+      .getUserCredentials();
 
     final Config dbConnectionConfig = parseConnectionOptions(dbServerTypeParser
                                                                .isBundled(),
@@ -222,16 +230,20 @@ public final class SchemaCrawlerCommandLine
                                         final String[] args)
     throws SchemaCrawlerException
   {
-    final OptionsParser<Config> dbConnectionOptionsParser;
+    final Config config;
     if (!isBundled)
     {
-      dbConnectionOptionsParser = new DatabaseConnectionOptionsParser();
+      final DatabaseConnectionOptionsParser dbConnectionOptionsParser = new DatabaseConnectionOptionsParser();
+      dbConnectionOptionsParser.parse(args);
+      config = dbConnectionOptionsParser.getConfig();
     }
     else
     {
-      dbConnectionOptionsParser = new DatabaseConfigConnectionOptionsParser();
+      final DatabaseConfigConnectionOptionsParser dbConnectionOptionsParser = new DatabaseConfigConnectionOptionsParser();
+      dbConnectionOptionsParser.parse(args);
+      config = dbConnectionOptionsParser.getConfig();
     }
-    return dbConnectionOptionsParser.parse(args);
+    return config;
   }
 
 }

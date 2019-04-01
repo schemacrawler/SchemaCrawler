@@ -34,7 +34,6 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import java.util.Objects;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
 /**
@@ -43,7 +42,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
  * @author Sualeh Fatehi
  */
 public final class FilterOptionsParser
-  implements OptionsParser<SchemaCrawlerOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -69,7 +68,7 @@ public final class FilterOptionsParser
   }
 
   @Override
-  public SchemaCrawlerOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
 
@@ -104,7 +103,6 @@ public final class FilterOptionsParser
       optionsBuilder.noEmptyTables(noemptytables);
     }
 
-    return null;
   }
 
   @Override

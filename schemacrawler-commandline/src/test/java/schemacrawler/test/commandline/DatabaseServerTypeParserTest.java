@@ -20,9 +20,9 @@ public class DatabaseServerTypeParserTest
     final String[] args = new String[0];
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
-
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getDatabaseConnector());
   }
 
   @Test
@@ -31,9 +31,9 @@ public class DatabaseServerTypeParserTest
     final String[] args = { "--some-option" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
-
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getDatabaseConnector());
   }
 
   @Test
@@ -42,8 +42,9 @@ public class DatabaseServerTypeParserTest
     final String[] args = { "--server", "hsqldb", "--url", "jdbc:hsqldb:url" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getDatabaseConnector());
   }
 
   @Test
@@ -52,8 +53,9 @@ public class DatabaseServerTypeParserTest
     final String[] args = { "--server", "--url" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getDatabaseConnector());
   }
 
   @Test
@@ -64,7 +66,8 @@ public class DatabaseServerTypeParserTest
       "--url", "jdbc:hsqldb:url", "additional", "-extra" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
-    final DatabaseConnector options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final DatabaseConnector options = optionsParser.getDatabaseConnector();
 
     assertThat(optionsParser.isBundled(), is(false));
     assertThat(options.toString(),
@@ -83,9 +86,9 @@ public class DatabaseServerTypeParserTest
       "-server", "hsqldb", "additional", "-extra" };
 
     final DatabaseServerTypeParser optionsParser = new DatabaseServerTypeParser();
-
+    optionsParser.parse(args);
     assertThrows(SchemaCrawlerCommandLineException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getDatabaseConnector());
   }
 
 }

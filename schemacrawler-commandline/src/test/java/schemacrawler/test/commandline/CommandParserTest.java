@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.Command;
 import schemacrawler.tools.commandline.CommandParser;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 
 public class CommandParserTest
 {
@@ -80,7 +79,7 @@ public class CommandParserTest
       "--command", " " };
 
     final CommandParser optionsParser = new CommandParser();
-    assertThrows(SchemaCrawlerCommandLineException.class,
+    assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.parse(args));
   }
 
@@ -91,7 +90,8 @@ public class CommandParserTest
       "--command", "a_command", "additional", "--extra" };
 
     final CommandParser optionsParser = new CommandParser();
-    final Command options = optionsParser.parse(args);
+    optionsParser.parse(args);
+    final Command options = optionsParser.getCommand();
 
     assertThat(options.toString(), is("a_command"));
 

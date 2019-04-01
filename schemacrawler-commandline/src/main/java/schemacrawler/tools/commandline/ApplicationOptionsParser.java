@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 
 public final class ApplicationOptionsParser
-  implements OptionsParser<ApplicationOptions>
+  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -60,10 +60,13 @@ public final class ApplicationOptionsParser
   }
 
   @Override
-  public ApplicationOptions parse(final String[] args)
+  public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
 
+  public ApplicationOptions getApplicationOptions()
+  {
     if (loglevel == null)
     {
       loglevel = LogLevel.OFF;
@@ -72,7 +75,6 @@ public final class ApplicationOptionsParser
     final ApplicationOptions options = new ApplicationOptions(level,
                                                               showHelp,
                                                               showVersionOnly);
-
     return options;
   }
 
