@@ -57,7 +57,7 @@ public final class FilterOptionsParser
   private Integer children;
   @CommandLine.Option(names = {
     "--no-empty-tables" }, description = "Include only tables that have rows of data")
-  private boolean noemptytables;
+  private Boolean noemptytables;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -75,7 +75,7 @@ public final class FilterOptionsParser
 
     if (parents != null)
     {
-      if (parents < 0)
+      if (parents >= 0)
       {
         optionsBuilder.parentTableFilterDepth(parents);
       }
@@ -88,7 +88,7 @@ public final class FilterOptionsParser
 
     if (children != null)
     {
-      if (children < 0)
+      if (children >= 0)
       {
         optionsBuilder.childTableFilterDepth(children);
       }
@@ -99,7 +99,10 @@ public final class FilterOptionsParser
       }
     }
 
-    optionsBuilder.noEmptyTables(noemptytables);
+    if (noemptytables != null)
+    {
+      optionsBuilder.noEmptyTables(noemptytables);
+    }
 
     return null;
   }
