@@ -52,7 +52,7 @@ public final class InfoLevelParser
 
   @CommandLine.Option(names = {
     "-i",
-    "--info-level" }, description = "Comma-separated list of routine types")
+    "--info-level" }, required = true, description = "Comma-separated list of routine types")
   private InfoLevel infoLevel;
 
   @CommandLine.Parameters
