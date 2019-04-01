@@ -61,10 +61,10 @@ public final class GrepOptionsParser
   private Pattern grepdef;
   @CommandLine.Option(names = {
     "--invert-match" }, description = "Invert the grep match")
-  private boolean invertMatch;
+  private Boolean invertMatch;
   @CommandLine.Option(names = {
     "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
-  private boolean onlyMatching;
+  private Boolean onlyMatching;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -93,8 +93,14 @@ public final class GrepOptionsParser
       optionsBuilder.includeGreppedDefinitions(grepdef);
     }
 
-    optionsBuilder.invertGrepMatch(invertMatch);
-    optionsBuilder.grepOnlyMatching(onlyMatching);
+    if (invertMatch != null)
+    {
+      optionsBuilder.invertGrepMatch(invertMatch);
+    }
+    if (onlyMatching != null)
+    {
+      optionsBuilder.grepOnlyMatching(onlyMatching);
+    }
 
     return null;
   }
