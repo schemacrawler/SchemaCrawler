@@ -29,12 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static sf.util.Utility.enumValue;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import picocli.CommandLine;
+import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 
@@ -65,10 +67,10 @@ public final class LimitOptionsParser
   @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
   private Pattern sequences;
 
-  @CommandLine.Option(names = { "--table-types" }, description = "Comma-separated list of table types")
-  private String tabletypes;
-  @CommandLine.Option(names = { "--routine-types" }, description = "Comma-separated list of routine types")
-  private String routinetypes;
+  @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
+  private String[] tabletypes;
+  @CommandLine.Option(names = { "--routine-types" }, split = ",", description = "Comma-separated list of routine types")
+  private String[] routinetypes;
 
   @CommandLine.Parameters
   private String[] remainder = new String[0];
@@ -118,11 +120,11 @@ public final class LimitOptionsParser
 
     if (tabletypes != null)
     {
-      optionsBuilder.tableTypes(tabletypes);
+      optionsBuilder.tableTypes(Arrays.asList(tabletypes));
     }
     if (routinetypes != null)
     {
-      optionsBuilder.routineTypes(routinetypes);
+      optionsBuilder.routineTypes(routineTypes(routinetypes));
     }
 
   }
@@ -131,6 +133,28 @@ public final class LimitOptionsParser
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  /**
+   * Sets routine types from a comma-separated list of routine types.
+   *
+   * @param routineTypesArray Comma-separated list of routine types.
+   */
+  private Collection<RoutineType> routineTypes(final String[] routineTypesArray)
+  {
+    if (routineTypesArray == null)
+    {
+      return null;
+    }
+    final Collection<RoutineType> routineTypes = new HashSet<>();
+    for (final String routineTypeString : routineTypesArray)
+    {
+      final RoutineType routineType = enumValue(routineTypeString
+                                                  .toLowerCase(Locale.ENGLISH),
+                                                RoutineType.unknown);
+      routineTypes.add(routineType);
+    }
+    return routineTypes;
   }
 
 }
