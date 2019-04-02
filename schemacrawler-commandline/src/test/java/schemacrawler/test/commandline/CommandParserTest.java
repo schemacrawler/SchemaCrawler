@@ -34,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.Command;
 import schemacrawler.tools.commandline.CommandParser;
 
 public class CommandParserTest
@@ -91,9 +90,9 @@ public class CommandParserTest
 
     final CommandParser optionsParser = new CommandParser();
     optionsParser.parse(args);
-    final Command options = optionsParser.getCommand();
+    final String options = optionsParser.getCommand();
 
-    assertThat(options.toString(), is("a_command"));
+    assertThat(options, is("a_command"));
 
     final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {

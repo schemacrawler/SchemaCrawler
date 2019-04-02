@@ -71,9 +71,9 @@ public final class CommandParser
     }
   }
 
-  public Command getCommand()
+  public String getCommand()
   {
-    return new Command(command);
+    return command;
   }
 
   @Override
