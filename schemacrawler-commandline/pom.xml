@@ -51,7 +51,7 @@
     <dependency>
       <groupId>info.picocli</groupId>
       <artifactId>picocli</artifactId>
-      <version>3.9.5</version>
+      <version>4.0.0-alpha-1</version>
     </dependency>
 
     <dependency>

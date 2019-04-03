@@ -77,9 +77,9 @@ public final class SchemaCrawlerCommandLine
 
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
-    final DatabaseServerTypeParser dbServerTypeParser = new DatabaseServerTypeParser();
-    dbServerTypeParser.parse(args);
-    databaseConnector = dbServerTypeParser.getDatabaseConnector();
+    final ConnectionOptionsParser connectionOptionsParser = new ConnectionOptionsParser();
+    connectionOptionsParser.parse(args);
+    databaseConnector = connectionOptionsParser.getDatabaseConnector();
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
@@ -128,9 +128,8 @@ public final class SchemaCrawlerCommandLine
     final UserCredentials userCredentials = userCredentialsParser
       .getUserCredentials();
 
-    final Config dbConnectionConfig = parseConnectionOptions(dbServerTypeParser
-                                                               .isBundled(),
-                                                             args);
+    final Config dbConnectionConfig = connectionOptionsParser
+      .getDatabaseConnectionConfig();
     config.putAll(dbConnectionConfig);
 
     // Connect using connection options provided from the command-line,
@@ -221,29 +220,6 @@ public final class SchemaCrawlerCommandLine
     throws SchemaCrawlerException
   {
     return CommandLineUtility.loadConfig(args, argsMap, databaseConnector);
-  }
-
-  /**
-   * Parse connection options, for both ways of connecting.
-   */
-  private Config parseConnectionOptions(final boolean isBundled,
-                                        final String[] args)
-    throws SchemaCrawlerException
-  {
-    final Config config;
-    if (!isBundled)
-    {
-      final DatabaseConnectionOptionsParser dbConnectionOptionsParser = new DatabaseConnectionOptionsParser();
-      dbConnectionOptionsParser.parse(args);
-      config = dbConnectionOptionsParser.getConfig();
-    }
-    else
-    {
-      final DatabaseConfigConnectionOptionsParser dbConnectionOptionsParser = new DatabaseConfigConnectionOptionsParser();
-      dbConnectionOptionsParser.parse(args);
-      config = dbConnectionOptionsParser.getConfig();
-    }
-    return config;
   }
 
 }

@@ -30,45 +30,38 @@ package schemacrawler.tools.commandline;
 
 
 import static sf.util.Utility.isBlank;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-/**
- * Options for the command-line.
- */
-public final class DatabaseConnectionOptionsParser
-  implements OptionsParser
+public class DatabaseUrlConnectionOptions
+  implements DatabaseConnectable
 {
-
-  private final picocli.CommandLine commandLine;
-
   @CommandLine.Option(names = {
     "--url" }, required = true, description = "Database connection string")
   private String connectionUrl;
 
-  @CommandLine.Parameters
-  private String[] remainder = new String[0];
-
-  public DatabaseConnectionOptionsParser()
+  @Override
+  public DatabaseConnector getDatabaseConnector()
   {
-    commandLine = newCommandLine(this);
+    try
+    {
+      return new DatabaseConnectorRegistry()
+        .lookupDatabaseConnectorFromUrl(connectionUrl);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerCommandLineException(
+        "Please provide database connection options",
+        e);
+    }
   }
 
   @Override
-  public String[] getRemainder()
-  {
-    return remainder;
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-  }
-
-  public Config getConfig()
+  public Config getDatabaseConnectionConfig()
   {
     final Config config = new Config();
 

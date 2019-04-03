@@ -30,61 +30,53 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.stream.Collectors.joining;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.util.Map;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-/**
- * Options for the command-line.
- *
- * @author sfatehi
- */
-public final class DatabaseConfigConnectionOptionsParser
-  implements OptionsParser
+public class DatabaseConfigConnectionOptions
+  implements DatabaseConnectable
 {
 
-  private final CommandLine commandLine;
-
+  @CommandLine.Option(names = {
+    "--server" }, required = true, description = "Database server type")
+  private String databaseSystemIdentifier;
   @CommandLine.Option(names = {
     "--host" }, description = "Database server host")
   private String host;
-
   @CommandLine.Option(names = {
     "--port" }, description = "Database server port")
   private Integer port;
-
   @CommandLine.Option(names = {
-    "--database" }, description = "Database server host")
+    "--database" }, description = "Database name")
   private String database;
-
   @CommandLine.Option(names = {
     "--urlx" }, description = "JDBC URL additional properties")
   private Map<String, String> urlx;
 
-  @CommandLine.Parameters
-  private String[] remainder = new String[0];
-
-  public DatabaseConfigConnectionOptionsParser()
+  @Override
+  public DatabaseConnector getDatabaseConnector()
   {
-    commandLine = newCommandLine(this);
+    try
+    {
+      return new DatabaseConnectorRegistry()
+        .lookupDatabaseConnector(databaseSystemIdentifier);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerCommandLineException(
+        "Please provide database connection options",
+        e);
+    }
   }
 
   @Override
-  public String[] getRemainder()
-  {
-    return remainder;
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-  }
-
-  public Config getConfig()
+  public Config getDatabaseConnectionConfig()
   {
     final Config config = new Config();
 
@@ -120,5 +112,4 @@ public final class DatabaseConfigConnectionOptionsParser
 
     return config;
   }
-
 }
