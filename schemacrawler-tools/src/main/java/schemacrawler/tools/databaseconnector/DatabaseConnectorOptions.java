@@ -29,21 +29,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.databaseconnector;
 
 
-import java.util.Map;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.Options;
 
-public final class DatabaseConnectionOptions
-  extends BaseDatabaseConnectionOptions
+@FunctionalInterface
+public interface DatabaseConnectorOptions
+  extends Options
 {
 
-  public DatabaseConnectionOptions(final String connectionUrl)
-  {
-    super(new SingleUseUserCredentials(), connectionUrlToMap(connectionUrl));
-  }
-
-  public DatabaseConnectionOptions(final UserCredentials userCredentials,
-                                   final Map<String, String> properties)
-  {
-    super(userCredentials, properties);
-  }
+  DatabaseConnectionSource toDatabaseConnectionSource(Config config);
 
 }

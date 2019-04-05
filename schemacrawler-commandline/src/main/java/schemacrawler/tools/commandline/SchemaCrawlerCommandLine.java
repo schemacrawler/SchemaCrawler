@@ -36,7 +36,7 @@ import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.databaseconnector.ConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -63,7 +63,7 @@ public final class SchemaCrawlerCommandLine
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
   private final OutputOptions outputOptions;
-  private final ConnectionOptions connectionOptions;
+  private final DatabaseConnectionSource databaseConnectionSource;
   private final DatabaseConnector databaseConnector;
 
   public SchemaCrawlerCommandLine(final String[] args, final Config argsMap)
@@ -79,7 +79,9 @@ public final class SchemaCrawlerCommandLine
     // server argument, or the JDBC connection URL
     final ConnectionOptionsParser connectionOptionsParser = new ConnectionOptionsParser();
     connectionOptionsParser.parse(args);
-    databaseConnector = connectionOptionsParser.getDatabaseConnector();
+    final DatabaseConnectable databaseConnectable = connectionOptionsParser
+      .getDatabaseConnectable();
+    databaseConnector = databaseConnectable.getDatabaseConnector();
     LOGGER.log(Level.INFO,
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
@@ -128,21 +130,20 @@ public final class SchemaCrawlerCommandLine
     final UserCredentials userCredentials = userCredentialsParser
       .getUserCredentials();
 
-    final Config dbConnectionConfig = connectionOptionsParser
-      .getDatabaseConnectionConfig();
-    config.putAll(dbConnectionConfig);
+    config.putAll(databaseConnector.getConfig());
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    connectionOptions = databaseConnector
-      .newDatabaseConnectionOptions(userCredentials, config);
+    databaseConnectionSource = databaseConnector
+      .newDatabaseConnectionSource(databaseConnectable);
+    databaseConnectionSource.setUserCredentials(userCredentials);
   }
 
   @Override
   public void execute()
     throws Exception
   {
-    if (connectionOptions == null)
+    if (databaseConnectionSource == null)
     {
       throw new SchemaCrawlerException("No connection options provided");
     }
@@ -153,7 +154,7 @@ public final class SchemaCrawlerCommandLine
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
-    try (final Connection connection = connectionOptions.getConnection())
+    try (final Connection connection = databaseConnectionSource.getConnection())
     {
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in
@@ -180,11 +181,6 @@ public final class SchemaCrawlerCommandLine
   public final Config getConfig()
   {
     return config;
-  }
-
-  public final ConnectionOptions getConnectionOptions()
-  {
-    return connectionOptions;
   }
 
   public final OutputOptions getOutputOptions()

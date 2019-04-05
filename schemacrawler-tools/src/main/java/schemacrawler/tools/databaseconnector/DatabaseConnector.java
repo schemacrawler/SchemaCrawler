@@ -137,36 +137,16 @@ public abstract class DatabaseConnector
    * connection options are provided, from the command-line, and
    * configuration file.
    *
-   * @param additionalConfig Configuration from the command-line, and from configuration
-   *                         files.
+   * @param databaseConnectorOptions Configuration from the command-line
    */
-  public ConnectionOptions newDatabaseConnectionOptions(final UserCredentials userCredentials,
-                                                        final Config additionalConfig)
+  public DatabaseConnectionSource newDatabaseConnectionSource(final DatabaseConnectorOptions databaseConnectorOptions)
     throws SchemaCrawlerException
   {
-    requireNonNull(userCredentials,
-                   "No database connection user credentials provided");
+    requireNonNull(databaseConnectorOptions,
+                   "No database connection options provided");
 
-    final Config config = getConfig();
-    if (additionalConfig != null)
-    {
-      config.putAll(additionalConfig);
-      // Remove sensitive properties from the original configuration
-      additionalConfig.remove("user");
-      additionalConfig.remove("password");
-    }
-
-    final ConnectionOptions connectionOptions;
-    if (dbServerType.isUnknownDatabaseSystem() || config.hasValue("url"))
-    {
-      connectionOptions = new DatabaseConnectionOptions(userCredentials,
-                                                        config);
-    }
-    else
-    {
-      connectionOptions = new DatabaseConfigConnectionOptions(userCredentials,
-                                                              config);
-    }
+    final DatabaseConnectionSource connectionOptions = databaseConnectorOptions
+      .toDatabaseConnectionSource(getConfig());
 
     return connectionOptions;
   }
@@ -191,19 +171,6 @@ public abstract class DatabaseConnector
     {
       return "Database connector for " + dbServerType;
     }
-  }
-
-  /**
-   * Checks if the database connection options are valid, the JDBC
-   * driver class can be loaded, and so on. Throws an exception if there
-   * is a problem.
-   *
-   * @throws SchemaCrawlerException If there is a problem with creating connection options.
-   */
-  void checkDatabaseConnectionOptions()
-    throws SchemaCrawlerException
-  {
-    newDatabaseConnectionOptions(new SingleUseUserCredentials(), null);
   }
 
 }

@@ -29,53 +29,56 @@ package schemacrawler.tools.sqlite;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.DatabaseUtility.checkConnection;
+import static sf.util.IOUtility.createTempFilePath;
+import static sf.util.IOUtility.isFileReadable;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.databaseconnector.ConnectionOptions;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
-import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
+import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
+import sf.util.SchemaCrawlerLogger;
 
 public class EmbeddedSQLiteWrapper
-  extends EmbeddedDatabaseWrapper
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(EmbeddedSQLiteWrapper.class.getName());
 
   private Path databaseFile;
 
-  @Override
-  public ConnectionOptions createConnectionOptions()
+  public DatabaseConnectionSource createDatabaseConnectionSource()
     throws SchemaCrawlerException
   {
     requireNonNull(databaseFile, "Database file not loaded");
 
-    final Config config = new Config();
-    config.put("server", "sqlite");
-    config.put("database", databaseFile.toString());
     try
     {
-      final ConnectionOptions connectionOptions = new SQLiteDatabaseConnector()
-        .newDatabaseConnectionOptions(new SingleUseUserCredentials(), config);
+      final DatabaseConnectionSource connectionOptions = new SQLiteDatabaseConnector()
+        .newDatabaseConnectionSource(config -> new DatabaseConnectionSource(
+          getConnectionUrl(),
+          config));
       return connectionOptions;
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerException("Cannot read datad database file, "
-                                       + databaseFile,
-                                       e);
+      throw new SchemaCrawlerException(
+        "Cannot read SQLite database file, " + databaseFile, e);
     }
   }
 
-  @Override
   public String getConnectionUrl()
   {
     requireNonNull(databaseFile, "Database file not loaded");
     return "jdbc:sqlite:" + databaseFile.toString();
   }
 
-  @Override
   public String getDatabase()
   {
     if (databaseFile == null)
@@ -88,37 +91,62 @@ public class EmbeddedSQLiteWrapper
     }
   }
 
-  @Override
-  public String getPassword()
-  {
-    return "schemacrawler";
-  }
-
-  @Override
-  public String getUser()
-  {
-    return "schemacrawler";
-  }
-
-  @Override
   public void loadDatabaseFile(final Path dbFile)
     throws IOException
   {
     databaseFile = checkDatabaseFile(dbFile);
   }
 
-  @Override
-  public void startServer()
-    throws SchemaCrawlerException
+  public Path createDiagram(final String extension)
+    throws Exception
   {
-    // No-op
+    try (final Connection connection = createDatabaseConnectionSource()
+      .getConnection())
+    {
+      return createDiagram(connection, extension);
+    }
   }
 
-  @Override
-  public void stopServer()
-    throws SchemaCrawlerException
+  protected final Path checkDatabaseFile(final Path dbFile)
+    throws IOException
   {
-    // No-op
+    final Path databaseFile = requireNonNull(dbFile,
+                                             "No database file path provided")
+      .normalize().toAbsolutePath();
+    if (!isFileReadable(databaseFile))
+    {
+      final IOException e = new IOException(
+        "Cannot read database file, " + databaseFile);
+      LOGGER.log(Level.FINE, e.getMessage(), e);
+      throw e;
+    }
+    return databaseFile;
+  }
+
+  private Path createDiagram(final Connection connection,
+                             final String extension)
+    throws Exception
+  {
+    checkConnection(connection);
+
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
+      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.standard())
+      .includeRoutines(new ExcludeAll());
+    final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
+      .toOptions();
+
+    final Path diagramFile = createTempFilePath("schemacrawler", extension);
+    final OutputOptions outputOptions = OutputOptionsBuilder
+      .newOutputOptions(extension, diagramFile);
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "schema");
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    executable.setOutputOptions(outputOptions);
+    executable.setConnection(connection);
+    executable.execute();
+
+    return diagramFile;
   }
 
 }

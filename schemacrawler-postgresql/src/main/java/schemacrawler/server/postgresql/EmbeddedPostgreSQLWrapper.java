@@ -33,7 +33,6 @@ import static java.util.Objects.requireNonNull;
 import static ru.yandex.qatools.embed.postgresql.distribution.Version.V10_6;
 import static ru.yandex.qatools.embed.postgresql.util.SocketUtil.findFreePort;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -44,24 +43,20 @@ import ru.yandex.qatools.embed.postgresql.EmbeddedPostgres;
 import ru.yandex.qatools.embed.postgresql.distribution.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.databaseconnector.ConnectionOptions;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
-import schemacrawler.tools.integration.embeddeddb.EmbeddedDatabaseWrapper;
 import sf.util.SchemaCrawlerLogger;
 
 public class EmbeddedPostgreSQLWrapper
-  extends EmbeddedDatabaseWrapper
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(EmbeddedPostgreSQLWrapper.class.getName());
-
-  private Path databaseFile;
-  private EmbeddedPostgres postgreSQL;
   private final Thread hook;
   private final Version postgreSQLVersion;
+  private Path databaseFile;
+  private EmbeddedPostgres postgreSQL;
 
   public EmbeddedPostgreSQLWrapper()
   {
@@ -88,8 +83,7 @@ public class EmbeddedPostgreSQLWrapper
     });
   }
 
-  @Override
-  public ConnectionOptions createConnectionOptions()
+  public DatabaseConnectionSource createConnectionOptions()
     throws SchemaCrawlerException
   {
     try
@@ -99,11 +93,14 @@ public class EmbeddedPostgreSQLWrapper
       final Config config = new Config();
       config.put("url", getConnectionUrl());
 
-      final UserCredentials userCredentials = new SingleUseUserCredentials(getUser(),
-                                                                           getPassword());
-      final ConnectionOptions connectionOptions = new DatabaseConnectionOptions(userCredentials,
-                                                                                config);
-      return connectionOptions;
+      final UserCredentials userCredentials = new SingleUseUserCredentials(
+        getUser(),
+        getPassword());
+      final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
+        getConnectionUrl(),
+        config);
+      databaseConnectionSource.setUserCredentials(userCredentials);
+      return databaseConnectionSource;
     }
     catch (final Throwable e)
     {
@@ -119,29 +116,15 @@ public class EmbeddedPostgreSQLWrapper
       .exportToFile(dumpFile.toFile());
   }
 
-  @Override
   public String getConnectionUrl()
   {
     requireNonNull(postgreSQL, "Database server not started");
     final String connectionUrl = postgreSQL.getConnectionUrl()
-      .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL connection URL"));
+      .orElseThrow(() -> new RuntimeException(
+        "Cannot obtain PostgreSQL connection URL"));
     return connectionUrl;
   }
 
-  @Override
-  public void loadDatabaseFile(final Path dbFile)
-    throws IOException
-  {
-    requireNonNull(postgreSQL, "Database server not started");
-
-    databaseFile = checkDatabaseFile(dbFile);
-
-    postgreSQL.getProcess()
-      .orElseThrow(() -> new RuntimeException("Cannot obtain PostgreSQL process"))
-      .restoreFromFile(dbFile.toFile());
-  }
-
-  @Override
   public void startServer()
     throws SchemaCrawlerException
   {
@@ -172,7 +155,6 @@ public class EmbeddedPostgreSQLWrapper
     }
   }
 
-  @Override
   public void stopServer()
     throws SchemaCrawlerException
   {
@@ -184,19 +166,16 @@ public class EmbeddedPostgreSQLWrapper
     }
   }
 
-  @Override
   public String getPassword()
   {
     return "schemacrawler";
   }
 
-  @Override
   public String getUser()
   {
     return "schemacrawler";
   }
 
-  @Override
   public String getDatabase()
   {
     return "schemacrawler";

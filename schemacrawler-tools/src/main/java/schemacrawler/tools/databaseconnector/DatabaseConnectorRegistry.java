@@ -37,13 +37,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -74,7 +68,7 @@ public final class DatabaseConnectorRegistry
     {
       final ServiceLoader<DatabaseConnector> serviceLoader = ServiceLoader
         .load(DatabaseConnector.class);
-      for (final DatabaseConnector databaseConnector: serviceLoader)
+      for (final DatabaseConnector databaseConnector : serviceLoader)
       {
         final String databaseSystemIdentifier = databaseConnector
           .getDatabaseServerType().getDatabaseSystemIdentifier();
@@ -84,27 +78,25 @@ public final class DatabaseConnectorRegistry
                      new StringFormat("Loading database connector, %s=%s",
                                       databaseSystemIdentifier,
                                       databaseConnector.getClass().getName()));
-          // Validate that the JDBC driver is available
-          databaseConnector.checkDatabaseConnectionOptions();
           // Put in map
-          databaseConnectorRegistry.put(databaseSystemIdentifier,
-                                        databaseConnector);
+          databaseConnectorRegistry
+            .put(databaseSystemIdentifier, databaseConnector);
         }
         catch (final Exception e)
         {
-          LOGGER
-            .log(Level.CONFIG,
-                 new StringFormat("Could not load database connector, %s=%s",
-                                  databaseSystemIdentifier,
-                                  databaseConnector.getClass().getName()),
-                 e);
+          LOGGER.log(Level.CONFIG,
+                     new StringFormat("Could not load database connector, %s=%s",
+                                      databaseSystemIdentifier,
+                                      databaseConnector.getClass().getName()),
+                     e);
         }
       }
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Could not load database connector registry",
-                                       e);
+      throw new SchemaCrawlerException(
+        "Could not load database connector registry",
+        e);
     }
 
     return databaseConnectorRegistry;
@@ -128,7 +120,7 @@ public final class DatabaseConnectorRegistry
   public Iterator<DatabaseServerType> iterator()
   {
     final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry
       .values())
     {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
@@ -170,7 +162,7 @@ public final class DatabaseConnectorRegistry
       return DatabaseConnector.UNKNOWN;
     }
 
-    for (final DatabaseConnector databaseConnector: databaseConnectorRegistry
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry
       .values())
     {
       if (databaseConnector.supportsUrl(url))
@@ -193,7 +185,7 @@ public final class DatabaseConnectorRegistry
     {
       final StringBuilder buffer = new StringBuilder(1024);
       buffer.append("Registered JDBC drivers:");
-      for (final Driver driver: Collections.list(DriverManager.getDrivers()))
+      for (final Driver driver : Collections.list(DriverManager.getDrivers()))
       {
         buffer.append(String.format("%n%s %d.%d",
                                     driver.getClass().getName(),

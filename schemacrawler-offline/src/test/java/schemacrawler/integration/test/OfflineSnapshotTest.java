@@ -79,7 +79,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
-      argsMap.put("database", serializedCatalogFile.toString());
+      argsMap.put("-database", serializedCatalogFile.toString());
 
       argsMap.put("-no-info", Boolean.FALSE.toString());
       argsMap.put("-info-level", "maximum");
@@ -105,7 +105,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
-      argsMap.put("database", serializedCatalogFile.toString());
+      argsMap.put("-database", serializedCatalogFile.toString());
 
       argsMap.put("-no-info", "true");
       argsMap.put("-info-level", "maximum");
@@ -131,7 +131,7 @@ public class OfflineSnapshotTest
     {
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "offline");
-      argsMap.put("database", serializedCatalogFile.toString());
+      argsMap.put("-database", serializedCatalogFile.toString());
 
       argsMap.put("-no-info", "true");
       argsMap.put("-info-level", "maximum");

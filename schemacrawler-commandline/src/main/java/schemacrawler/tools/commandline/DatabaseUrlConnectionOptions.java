@@ -34,6 +34,7 @@ import static sf.util.Utility.isBlank;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -61,7 +62,16 @@ public class DatabaseUrlConnectionOptions
   }
 
   @Override
-  public Config getDatabaseConnectionConfig()
+  public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
+  {
+    config.putAll(getDatabaseConnectionConfig());
+
+    final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
+      connectionUrl);
+    return databaseConnectionSource;
+  }
+
+  private Config getDatabaseConnectionConfig()
   {
     final Config config = new Config();
 

@@ -1,18 +1,13 @@
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
-import schemacrawler.schema.Catalog;
-import schemacrawler.schema.Column;
-import schemacrawler.schema.Schema;
-import schemacrawler.schema.Table;
-import schemacrawler.schema.View;
+import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionOptions;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ApiExample
@@ -33,13 +28,13 @@ public final class ApiExample
     final SchemaCrawlerOptions options = optionsBuilder.toOptions();
 
     // Get the schema definition
-    final Catalog catalog = SchemaCrawlerUtility.getCatalog(getConnection(),
-                                                            options);
+    final Catalog catalog = SchemaCrawlerUtility
+      .getCatalog(getConnection(), options);
 
-    for (final Schema schema: catalog.getSchemas())
+    for (final Schema schema : catalog.getSchemas())
     {
       System.out.println(schema);
-      for (final Table table: catalog.getTables(schema))
+      for (final Table table : catalog.getTables(schema))
       {
         System.out.print("o--> " + table);
         if (table instanceof View)
@@ -51,10 +46,10 @@ public final class ApiExample
           System.out.println();
         }
 
-        for (final Column column: table.getColumns())
+        for (final Column column : table.getColumns())
         {
-          System.out.println("     o--> " + column + " ("
-                             + column.getColumnDataType() + ")");
+          System.out.println(
+            "     o--> " + column + " (" + column.getColumnDataType() + ")");
         }
       }
     }
@@ -65,7 +60,7 @@ public final class ApiExample
     throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DataSource dataSource = new DatabaseConnectionOptions(connectionUrl);
+    final DataSource dataSource = new DatabaseConnectionSource(connectionUrl);
     return dataSource.getConnection("sa", "");
   }
 

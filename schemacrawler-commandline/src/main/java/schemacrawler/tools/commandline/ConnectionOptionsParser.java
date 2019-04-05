@@ -32,8 +32,6 @@ package schemacrawler.tools.commandline;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 
 /**
  * Parses the command-line.
@@ -52,22 +50,16 @@ public final class ConnectionOptionsParser
   @CommandLine.Parameters
   private String[] remainder = new String[0];
 
-  private DatabaseConnector databaseConnector;
-  private Config databaseConnectionConfig;
+  private DatabaseConnectable databaseConnectable;
 
   public ConnectionOptionsParser()
   {
     commandLine = newCommandLine(this);
   }
 
-  public Config getDatabaseConnectionConfig()
+  public DatabaseConnectable getDatabaseConnectable()
   {
-    return databaseConnectionConfig;
-  }
-
-  public DatabaseConnector getDatabaseConnector()
-  {
-    return databaseConnector;
+    return databaseConnectable;
   }
 
   @Override
@@ -81,17 +73,12 @@ public final class ConnectionOptionsParser
                                                "No database connection options provided");
     }
 
-    final DatabaseConnectable databaseConnectable = databaseConnectionOptions
-      .getDatabaseConnectable();
+    databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
     if (databaseConnectable == null)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
                                                "No database connection options provided");
     }
-
-    databaseConnector = databaseConnectable.getDatabaseConnector();
-    databaseConnectionConfig = databaseConnectable
-      .getDatabaseConnectionConfig();
   }
 
   @Override

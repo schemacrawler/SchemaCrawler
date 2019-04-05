@@ -30,14 +30,19 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.stream.Collectors.joining;
+import static sf.util.Utility.isBlank;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import sf.util.TemplatingUtility;
 
 public class DatabaseConfigConnectionOptions
   implements DatabaseConnectable
@@ -76,7 +81,24 @@ public class DatabaseConfigConnectionOptions
   }
 
   @Override
-  public Config getDatabaseConnectionConfig()
+  public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
+  {
+    // Override host, port, database and urlx
+    config.putAll(getDatabaseConnectionConfig());
+
+    // Substitute templated URL with provided value
+    final String connectionUrl = parseConnectionUrl(config);
+    // Get additional driver properties
+    final Map<String, String> connectionProperties = parseConnectionProperties(
+      config);
+
+    final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
+      connectionUrl,
+      connectionProperties);
+    return databaseConnectionSource;
+  }
+
+  private Config getDatabaseConnectionConfig()
   {
     final Config config = new Config();
 
@@ -89,8 +111,7 @@ public class DatabaseConfigConnectionOptions
     {
       if (port < 0 || port > 65535)
       {
-        throw new SchemaCrawlerCommandLineException(
-          "Please provide a valid value for port, " + port);
+        throw new IllegalArgumentException("Invalid port number, " + port);
       }
       if (port > 0)
       {
@@ -112,4 +133,60 @@ public class DatabaseConfigConnectionOptions
 
     return config;
   }
+
+  private String parseConnectionUrl(final Config connectionProperties)
+  {
+    final String URL = "url";
+    final String oldConnectionUrl = connectionProperties.get(URL);
+
+    // Substitute parameters
+    TemplatingUtility.substituteVariables(connectionProperties);
+    final String connectionUrl = connectionProperties.get(URL);
+
+    // Check that all required parameters have been substituted
+    final Set<String> unmatchedVariables = TemplatingUtility
+      .extractTemplateVariables(connectionUrl);
+    if (!unmatchedVariables.isEmpty())
+    {
+      throw new IllegalArgumentException(String.format(
+        "Insufficient parameters for database connection URL: missing %s",
+        unmatchedVariables));
+    }
+
+    // Reset old connection URL
+    connectionProperties.put(URL, oldConnectionUrl);
+
+    return connectionUrl;
+  }
+
+  private Map<String, String> parseConnectionProperties(final Config connectionProperties)
+  {
+    final String URLX = "urlx";
+    final String connectionPropertiesString = connectionProperties.get(URLX);
+    final Map<String, String> urlxProperties = new HashMap<>();
+    if (!isBlank(connectionPropertiesString))
+    {
+      for (final String property : connectionPropertiesString.split(";"))
+      {
+        if (!isBlank(property))
+        {
+          final String[] propertyValues = property.split("=");
+          if (propertyValues.length >= 2)
+          {
+            final String key = propertyValues[0];
+            final String value = propertyValues[1];
+            if (key != null && value != null)
+            {
+              // Properties is based on Hashtable, which cannot take
+              // null keys or values
+              urlxProperties.put(key, value);
+            }
+          }
+        }
+      }
+    }
+
+    return urlxProperties;
+  }
+
 }
