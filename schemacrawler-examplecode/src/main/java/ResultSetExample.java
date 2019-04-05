@@ -1,12 +1,11 @@
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import schemacrawler.schema.ResultsColumn;
 import schemacrawler.schema.ResultsColumns;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ResultSetExample
@@ -45,11 +44,12 @@ public final class ResultSetExample
   }
 
   private static Connection getConnection()
-    throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DataSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    return dataSource.getConnection("sa", "");
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(
+      connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
   }
 
 }

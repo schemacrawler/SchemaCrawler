@@ -1,16 +1,15 @@
 import static sf.util.Utility.isBlank;
 
-import javax.sql.DataSource;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -48,11 +47,12 @@ public final class ExecutableExample
   }
 
   private static Connection getConnection()
-    throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DataSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    return dataSource.getConnection("sa", "");
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(
+      connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
   }
 
   private static Path getOutputFile(final String[] args)

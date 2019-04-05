@@ -154,7 +154,7 @@ public final class SchemaCrawlerCommandLine
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setAdditionalConfiguration(config);
-    try (final Connection connection = databaseConnectionSource.getConnection())
+    try (final Connection connection = databaseConnectionSource.get())
     {
       // Get partially built database specific options, built from the
       // classpath resources, and then override from config loaded in

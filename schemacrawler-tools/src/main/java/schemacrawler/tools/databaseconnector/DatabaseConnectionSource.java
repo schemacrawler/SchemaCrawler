@@ -32,19 +32,18 @@ package schemacrawler.tools.databaseconnector;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
-import javax.sql.DataSource;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.schemacrawler.SchemaCrawlerSQLException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 public final class DatabaseConnectionSource
-  implements DataSource
+  implements Supplier<Connection>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -81,18 +80,41 @@ public final class DatabaseConnectionSource
   }
 
   @Override
-  public final Connection getConnection()
-    throws SQLException
+  public final Connection get()
   {
     final String user = userCredentials.getUser();
     final String password = userCredentials.getPassword();
     return getConnection(user, password);
   }
 
-  @Override
-  public final Connection getConnection(final String user,
-                                        final String password)
+  public final Driver getJdbcDriver()
     throws SQLException
+  {
+    return getJdbcDriver(connectionUrl);
+  }
+
+  @Override
+  public final String toString()
+  {
+    String jdbcDriverClass = "<unknown>";
+    try
+    {
+      final Driver jdbcDriver = getJdbcDriver();
+      jdbcDriverClass = jdbcDriver.getClass().getName();
+    }
+    catch (final SQLException e)
+    {
+      jdbcDriverClass = "<unknown>";
+    }
+
+    final StringBuilder builder = new StringBuilder(1024);
+    builder.append("driver=").append(jdbcDriverClass)
+      .append(System.lineSeparator());
+    builder.append("url=").append(connectionUrl).append(System.lineSeparator());
+    return builder.toString();
+  }
+
+  private Connection getConnection(final String user, final String password)
   {
     if (isBlank(user))
     {
@@ -146,95 +168,12 @@ public final class DatabaseConnectionSource
       {
         username = "unspecified user";
       }
-      throw new SchemaCrawlerSQLException(String.format(
+      throw new SchemaCrawlerRuntimeException(String.format(
         "Could not connect to %s, for %s, with properties %s",
         connectionUrl,
         username,
         safeProperties(jdbcConnectionProperties)), e);
     }
-  }
-
-  public String getConnectionUrl()
-  {
-    return connectionUrl;
-  }
-
-  public final Driver getJdbcDriver()
-    throws SQLException
-  {
-    return getJdbcDriver(getConnectionUrl());
-  }
-
-  @Override
-  public int getLoginTimeout()
-    throws SQLException
-  {
-    return 0;
-  }
-
-  @Override
-  public void setLoginTimeout(final int seconds)
-    throws SQLException
-  {
-    throw newSQLFeatureNotSupportedException();
-  }
-
-  @Override
-  public PrintWriter getLogWriter()
-  {
-    return null;
-  }
-
-  @Override
-  public void setLogWriter(final PrintWriter out)
-    throws SQLException
-  {
-    if (out != null)
-    {
-      throw newSQLFeatureNotSupportedException();
-    }
-  }
-
-  @Override
-  public Logger getParentLogger()
-    throws SQLFeatureNotSupportedException
-  {
-    throw newSQLFeatureNotSupportedException();
-  }
-
-  @Override
-  public boolean isWrapperFor(final Class<?> iface)
-  {
-    return false;
-  }
-
-  @Override
-  public final String toString()
-  {
-    String jdbcDriverClass = "<unknown>";
-    try
-    {
-      final Driver jdbcDriver = getJdbcDriver();
-      jdbcDriverClass = jdbcDriver.getClass().getName();
-    }
-    catch (final SQLException e)
-    {
-      jdbcDriverClass = "<unknown>";
-    }
-
-    final StringBuilder builder = new StringBuilder(1024);
-    builder.append("driver=").append(jdbcDriverClass)
-      .append(System.lineSeparator());
-    builder.append("url=").append(getConnectionUrl())
-      .append(System.lineSeparator());
-    return builder.toString();
-  }
-
-  @Override
-  public <T> T unwrap(final Class<T> iface)
-    throws SQLException
-  {
-    throw newSQLFeatureNotSupportedException();
   }
 
   private Properties safeProperties(final Properties properties)
@@ -250,7 +189,6 @@ public final class DatabaseConnectionSource
   private Properties createConnectionProperties(final String connectionUrl,
                                                 final String user,
                                                 final String password)
-    throws SQLException
   {
     final List<String> skipProperties = Arrays.asList("server",
                                                       "host",
@@ -260,42 +198,52 @@ public final class DatabaseConnectionSource
                                                       "user",
                                                       "password",
                                                       "url");
-    final Driver jdbcDriver = getJdbcDriver(connectionUrl);
-    final DriverPropertyInfo[] propertyInfo = jdbcDriver
-      .getPropertyInfo(getConnectionUrl(), new Properties());
-    final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
-    for (final DriverPropertyInfo driverPropertyInfo : propertyInfo)
+    final Properties jdbcConnectionProperties;
+    try
     {
-      final String jdbcPropertyName = driverPropertyInfo.name.toLowerCase();
-      if (skipProperties.contains(jdbcPropertyName))
+      final Driver jdbcDriver = getJdbcDriver(connectionUrl);
+      final DriverPropertyInfo[] propertyInfo = jdbcDriver
+        .getPropertyInfo(this.connectionUrl, new Properties());
+      final Map<String, Boolean> jdbcDriverProperties = new HashMap<>();
+      for (final DriverPropertyInfo driverPropertyInfo : propertyInfo)
       {
-        continue;
-      }
-      jdbcDriverProperties.put(jdbcPropertyName, driverPropertyInfo.required);
-    }
-
-    final Properties jdbcConnectionProperties = new Properties();
-    if (user != null)
-    {
-      jdbcConnectionProperties.put("user", user);
-    }
-    if (password != null)
-    {
-      jdbcConnectionProperties.put("password", password);
-    }
-    if (connectionProperties != null)
-    {
-      for (final Map.Entry<String, String> connectionProperty : connectionProperties
-        .entrySet())
-      {
-        final String property = connectionProperty.getKey();
-        final String value = connectionProperty.getValue();
-        if (jdbcDriverProperties.containsKey(property.toLowerCase())
-            && value != null)
+        final String jdbcPropertyName = driverPropertyInfo.name.toLowerCase();
+        if (skipProperties.contains(jdbcPropertyName))
         {
-          jdbcConnectionProperties.put(property, value);
+          continue;
+        }
+        jdbcDriverProperties.put(jdbcPropertyName, driverPropertyInfo.required);
+      }
+
+      jdbcConnectionProperties = new Properties();
+      if (user != null)
+      {
+        jdbcConnectionProperties.put("user", user);
+      }
+      if (password != null)
+      {
+        jdbcConnectionProperties.put("password", password);
+      }
+      if (connectionProperties != null)
+      {
+        for (final Map.Entry<String, String> connectionProperty : connectionProperties
+          .entrySet())
+        {
+          final String property = connectionProperty.getKey();
+          final String value = connectionProperty.getValue();
+          if (jdbcDriverProperties.containsKey(property.toLowerCase())
+              && value != null)
+          {
+            jdbcConnectionProperties.put(property, value);
+          }
         }
       }
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerRuntimeException(
+        "Could not get connection properties",
+        e);
     }
 
     return jdbcConnectionProperties;
@@ -312,7 +260,7 @@ public final class DatabaseConnectionSource
     {
       throw new SchemaCrawlerSQLException(
         "Could not find a suitable JDBC driver for database connection URL, "
-        + getConnectionUrl(),
+        + this.connectionUrl,
         e);
     }
   }

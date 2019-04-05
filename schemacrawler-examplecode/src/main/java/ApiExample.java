@@ -1,6 +1,4 @@
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import schemacrawler.schema.*;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
@@ -8,6 +6,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
+import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.utility.SchemaCrawlerUtility;
 
 public final class ApiExample
@@ -57,11 +56,12 @@ public final class ApiExample
   }
 
   private static Connection getConnection()
-    throws SQLException
   {
     final String connectionUrl = "jdbc:hsqldb:hsql://localhost:9001/schemacrawler";
-    final DataSource dataSource = new DatabaseConnectionSource(connectionUrl);
-    return dataSource.getConnection("sa", "");
+    final DatabaseConnectionSource dataSource = new DatabaseConnectionSource(
+      connectionUrl);
+    dataSource.setUserCredentials(new SingleUseUserCredentials("sa", ""));
+    return dataSource.get();
   }
 
 }

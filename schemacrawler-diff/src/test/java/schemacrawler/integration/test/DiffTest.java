@@ -133,7 +133,7 @@ public class DiffTest
       .createDatabaseConnectionSource();
 
     final Catalog catalog = SchemaCrawlerUtility
-      .getCatalog(connectionOptions.getConnection(), schemaCrawlerOptions);
+      .getCatalog(connectionOptions.get(), schemaCrawlerOptions);
 
     return catalog;
   }

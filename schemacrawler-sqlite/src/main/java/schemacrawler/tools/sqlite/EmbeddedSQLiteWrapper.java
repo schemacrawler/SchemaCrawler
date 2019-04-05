@@ -100,8 +100,7 @@ public class EmbeddedSQLiteWrapper
   public Path createDiagram(final String extension)
     throws Exception
   {
-    try (final Connection connection = createDatabaseConnectionSource()
-      .getConnection())
+    try (final Connection connection = createDatabaseConnectionSource().get())
     {
       return createDiagram(connection, extension);
     }
