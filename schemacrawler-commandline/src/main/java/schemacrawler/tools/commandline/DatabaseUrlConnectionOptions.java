@@ -29,8 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
-
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -41,6 +39,7 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 public class DatabaseUrlConnectionOptions
   implements DatabaseConnectable
 {
+
   @CommandLine.Option(names = {
     "--url" }, required = true, description = "Database connection string")
   private String connectionUrl;
@@ -64,26 +63,10 @@ public class DatabaseUrlConnectionOptions
   @Override
   public DatabaseConnectionSource toDatabaseConnectionSource(final Config config)
   {
-    config.putAll(getDatabaseConnectionConfig());
-
     final DatabaseConnectionSource databaseConnectionSource = new DatabaseConnectionSource(
-      connectionUrl);
+      connectionUrl,
+      config);
     return databaseConnectionSource;
-  }
-
-  private Config getDatabaseConnectionConfig()
-  {
-    final Config config = new Config();
-
-    if (isBlank(connectionUrl))
-    {
-      throw new SchemaCrawlerCommandLineException(
-        "Please provide a database connection string");
-    }
-
-    config.put("url", connectionUrl);
-
-    return config;
   }
 
 }
