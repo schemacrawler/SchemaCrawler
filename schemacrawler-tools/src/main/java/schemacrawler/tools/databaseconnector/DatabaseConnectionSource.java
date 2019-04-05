@@ -288,9 +288,4 @@ public final class DatabaseConnectionSource
     }
   }
 
-  private SQLFeatureNotSupportedException newSQLFeatureNotSupportedException()
-  {
-    return new SQLFeatureNotSupportedException("Not supported", "HYC00");
-  }
-
 }
