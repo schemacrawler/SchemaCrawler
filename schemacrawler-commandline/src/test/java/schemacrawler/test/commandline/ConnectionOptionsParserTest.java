@@ -142,4 +142,27 @@ public class ConnectionOptionsParserTest
       "additional", "--extra" }));
   }
 
+  @Test
+  public void allArgs()
+  {
+    final String[] args = {
+      "--url",
+      "jdbc:newdb://somehost:1234/adatabase",
+      "--server",
+      "newdb",
+      "--host",
+      "somehost",
+      "--port",
+      "1234",
+      "--database",
+      "adatabase",
+      "additional",
+      "--extra" };
+
+    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+
+    assertThrows(CommandLine.MutuallyExclusiveArgsException.class,
+                 () -> optionsParser.parse(args));
+  }
+
 }
