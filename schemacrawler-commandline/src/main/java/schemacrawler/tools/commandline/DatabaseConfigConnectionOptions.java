@@ -49,7 +49,7 @@ public class DatabaseConfigConnectionOptions
 {
 
   @CommandLine.Option(names = {
-    "--server" }, required = true, description = "Database server type")
+    "--server" }, required = true, description = "Database server type", completionCandidates = AvailableServers.class)
   private String databaseSystemIdentifier;
   @CommandLine.Option(names = {
     "--host" }, description = "Database server host")

@@ -25,62 +25,44 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.tools.commandline;
 
 
-import static sf.util.Utility.isBlank;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import picocli.CommandLine;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
-public final class CommandParser
-  implements OptionsParser
+public class AvailableServers
+  implements Iterable<String>
 {
 
-  private final CommandLine commandLine;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  private final List<String> availableServers;
 
-  @CommandLine.Option(names = {
-    "-c",
-    "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
-  private String command;
-
-  @CommandLine.Parameters
-  private String[] remainder = new String[0];
-
-  public CommandParser()
+  public AvailableServers()
   {
-    commandLine = newCommandLine(this);
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-
-    if (isBlank(command))
+    availableServers = new ArrayList<>();
+    try
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No command provided");
+      new DatabaseConnectorRegistry()
+        .forEach(databaseServerType -> availableServers
+          .add(databaseServerType.getDatabaseSystemIdentifier()));
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerRuntimeException(
+        "Could not initialize command registry",
+        e);
     }
   }
 
-  public String getCommand()
-  {
-    return command;
-  }
-
   @Override
-  public String[] getRemainder()
+  public Iterator<String> iterator()
   {
-    return remainder;
+    return availableServers.iterator();
   }
 
 }
