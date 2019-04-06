@@ -86,7 +86,7 @@ public class ConnectionOptionsParserTest
   }
 
   @Test
-  public void allArgs()
+  public void url()
   {
     final String[] args = {
       "--url", "jdbc:database_url", "additional", "--extra" };
@@ -101,6 +101,41 @@ public class ConnectionOptionsParserTest
 
     assertThat(databaseConnectionSource.toString(),
                is("driver=<unknown>\r\nurl=jdbc:database_url\r\n"));
+
+    final String[] remainder = optionsParser.getRemainder();
+    assertThat(remainder, is(new String[] {
+      "additional", "--extra" }));
+  }
+
+  @Test
+  public void hostPort()
+  {
+    final String[] args = {
+      "--server",
+      "newdb",
+      "--host",
+      "somehost",
+      "--port",
+      "1234",
+      "--database",
+      "adatabase",
+      "additional",
+      "--extra" };
+
+    final Config config = new Config();
+    config.put("url", "jdbc:newdb://${host}:${port}/${database}");
+
+    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    optionsParser.parse(args);
+
+    final DatabaseConnectable databaseConnectable = optionsParser
+      .getDatabaseConnectable();
+    final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
+      .toDatabaseConnectionSource(config);
+
+    assertThat(databaseConnectionSource.toString(),
+               is(
+                 "driver=<unknown>\r\nurl=jdbc:newdb://somehost:1234/adatabase\r\n"));
 
     final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
