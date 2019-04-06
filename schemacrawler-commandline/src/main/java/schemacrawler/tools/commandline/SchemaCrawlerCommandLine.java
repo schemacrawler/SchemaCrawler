@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +41,13 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
-import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -58,7 +60,6 @@ public final class SchemaCrawlerCommandLine
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
-
   private final String command;
   private final Config config;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
@@ -66,13 +67,14 @@ public final class SchemaCrawlerCommandLine
   private final DatabaseConnectionSource databaseConnectionSource;
   private final DatabaseConnector databaseConnector;
 
-  public SchemaCrawlerCommandLine(final String[] args, final Config argsMap)
+  public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
   {
-    if (argsMap == null || argsMap.isEmpty())
+
+    if (args == null)
     {
-      throw new SchemaCrawlerCommandLineException(
-        "Please provide command-line arguments");
+      throw new SchemaCrawlerRuntimeException(
+        "No command-line arguments provided");
     }
 
     // Match the database connector in the best possible way, using the
@@ -86,7 +88,7 @@ public final class SchemaCrawlerCommandLine
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
 
-    config = loadConfig(args, argsMap);
+    config = loadConfig(args, databaseConnector);
 
     final CommandParser commandParser = new CommandParser();
     commandParser.parse(args);
@@ -193,6 +195,46 @@ public final class SchemaCrawlerCommandLine
     return schemaCrawlerOptions;
   }
 
+  /**
+   * Loads configuration from a number of sources, in order of priority.
+   *
+   * @param dbConnector Database connector
+   * @return Loaded configuration
+   * @throws SchemaCrawlerException On an exception
+   */
+  private Config loadConfig(final String[] args,
+                            final DatabaseConnector dbConnector)
+    throws SchemaCrawlerException
+  {
+    final Config config = new Config();
+
+    // 1. Get bundled database config
+    if (dbConnector != null)
+    {
+      config.putAll(dbConnector.getConfig());
+    }
+
+    // 2. Load config from CLASSPATH, in place
+    try
+    {
+      config.putAll(PropertiesUtility.loadConfig(new ClasspathInputResource(
+        "/schemacrawler.config.properties")));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG,
+                 "schemacrawler.config.properties not found on CLASSPATH");
+    }
+
+    // 3. Load config from files, in place
+    final ConfigParser configParser = new ConfigParser();
+    configParser.parse(args);
+    final Config configFileConfig = configParser.getConfig();
+    config.putAll(configFileConfig);
+
+    return config;
+  }
+
   private String[] remainingArgs(final Config config)
   {
     final List<String> remainingArgs = new ArrayList<>();
@@ -207,15 +249,6 @@ public final class SchemaCrawlerCommandLine
       }
     }
     return remainingArgs.toArray(new String[0]);
-  }
-
-  /**
-   * Loads configuration from a number of sources, in order of priority.
-   */
-  private Config loadConfig(final String[] args, final Config argsMap)
-    throws SchemaCrawlerException
-  {
-    return CommandLineUtility.loadConfig(args, argsMap, databaseConnector);
   }
 
 }
