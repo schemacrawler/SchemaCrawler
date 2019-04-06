@@ -48,6 +48,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
+import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
  * Utility for parsing the SchemaCrawler command-line.
@@ -132,7 +133,10 @@ public final class SchemaCrawlerCommandLine
     final UserCredentials userCredentials = userCredentialsParser
       .getUserCredentials();
 
+    final Config argsMap = CommandLineUtility.parseArgs(args);
+
     config.putAll(databaseConnector.getConfig());
+    config.putAll(argsMap);
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
