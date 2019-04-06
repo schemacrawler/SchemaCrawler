@@ -51,7 +51,7 @@ public final class ApplicationOptionsParser
     "-h", "--help", "-?" }, description = "Show help")
   private boolean showHelp;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public ApplicationOptionsParser()

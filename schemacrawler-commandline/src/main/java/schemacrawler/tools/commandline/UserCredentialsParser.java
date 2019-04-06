@@ -65,7 +65,7 @@ public final class UserCredentialsParser
     "--password" }, description = "Database password")
   private String passwordProvided;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public UserCredentialsParser()

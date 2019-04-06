@@ -72,7 +72,7 @@ public final class LimitOptionsParser
   @CommandLine.Option(names = { "--routine-types" }, split = ",", description = "Comma-separated list of routine types")
   private String[] routinetypes;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public LimitOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)

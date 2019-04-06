@@ -57,7 +57,7 @@ public final class ShowOptionsParser
   @CommandLine.Option(names = { "--portable-names" }, description = "Whether to use portable names")
   private Boolean portablenames;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public ShowOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)

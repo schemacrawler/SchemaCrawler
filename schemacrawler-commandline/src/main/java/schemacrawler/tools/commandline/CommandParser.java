@@ -52,7 +52,7 @@ public final class CommandParser
     "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
   private String command;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public CommandParser()

@@ -54,7 +54,7 @@ public final class InfoLevelParser
     "--info-level" }, required = true, description = "Comma-separated list of routine types")
   private InfoLevel infoLevel;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public InfoLevelParser(final SchemaCrawlerOptionsBuilder optionsBuilder)

@@ -61,7 +61,7 @@ public final class OutputOptionsParser
     "-m", "--title" }, description = "Title for output")
   private String title;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public OutputOptionsParser(final OutputOptionsBuilder outputOptionsBuilder)

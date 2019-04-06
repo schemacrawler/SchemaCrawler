@@ -47,7 +47,7 @@ public final class ConnectionOptionsParser
   private DatabaseConnectionOptions databaseConnectionOptions;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   private DatabaseConnectable databaseConnectable;

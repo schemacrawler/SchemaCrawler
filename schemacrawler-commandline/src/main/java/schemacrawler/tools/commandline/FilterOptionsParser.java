@@ -58,7 +58,7 @@ public final class FilterOptionsParser
     "--no-empty-tables" }, description = "Include only tables that have rows of data")
   private Boolean noemptytables;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public FilterOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)

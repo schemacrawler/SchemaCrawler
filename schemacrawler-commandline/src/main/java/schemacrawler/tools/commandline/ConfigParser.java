@@ -63,7 +63,7 @@ public class ConfigParser
     "--config-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public ConfigParser()

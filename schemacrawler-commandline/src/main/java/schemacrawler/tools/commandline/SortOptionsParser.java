@@ -57,7 +57,7 @@ public final class SortOptionsParser
   @CommandLine.Option(names = { "--sort-in-out" }, description = "Whether to routine parameters")
   private Boolean sortinout;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public SortOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)

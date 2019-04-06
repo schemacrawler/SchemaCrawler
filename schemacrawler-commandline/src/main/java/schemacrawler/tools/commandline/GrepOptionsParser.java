@@ -65,7 +65,7 @@ public final class GrepOptionsParser
     "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
   private Boolean onlyMatching;
 
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
   public GrepOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
