@@ -29,16 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
@@ -50,13 +50,13 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public class ConfigParser
-  implements OptionsParser
+  implements Callable<Config>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
 
-  private final CommandLine commandLine;
+  private final Config config;
 
   @CommandLine.Option(names = {
     "-g",
@@ -66,18 +66,49 @@ public class ConfigParser
   @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
-  public ConfigParser()
+  public ConfigParser(final Config config)
   {
-    commandLine = newCommandLine(this);
+    if (config == null)
+    {
+      this.config = new Config();
+    }
+    else
+    {
+      this.config = config;
+    }
+  }
+
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
   @Override
-  public void parse(final String[] args)
+  public Config call()
+    throws Exception
   {
-    commandLine.parse(args);
+    // 1. Use base config (likely from the bundled database plugin)
+
+    // 2. Load config from CLASSPATH, in place
+    try
+    {
+      config.putAll(PropertiesUtility.loadConfig(new ClasspathInputResource(
+        "/schemacrawler.config.properties")));
+    }
+    catch (final IOException e)
+    {
+      LOGGER.log(Level.CONFIG,
+                 "schemacrawler.config.properties not found on CLASSPATH");
+    }
+
+    // 3. Load config from file, in place
+    final Config configFileConfig = loadConfig();
+    config.putAll(configFileConfig);
+
+    return config;
   }
 
-  public Config getConfig()
+  private Config loadConfig()
   {
     final Path configFilePath;
     if (configFile == null)
@@ -105,12 +136,6 @@ public class ConfigParser
 
       return new Config();
     }
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
 }

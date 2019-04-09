@@ -28,12 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
@@ -41,11 +36,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
-import schemacrawler.utility.PropertiesUtility;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import us.fatehi.commandlineparser.CommandLineUtility;
@@ -89,7 +82,8 @@ public final class SchemaCrawlerCommandLine
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
 
-    config = loadConfig(args, databaseConnector);
+    config = picocli.CommandLine
+      .call(new ConfigParser(databaseConnector.getConfig()), args);
 
     final CommandParser commandParser = new CommandParser();
     commandParser.parse(args);
@@ -197,62 +191,6 @@ public final class SchemaCrawlerCommandLine
   public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
     return schemaCrawlerOptions;
-  }
-
-  /**
-   * Loads configuration from a number of sources, in order of priority.
-   *
-   * @param dbConnector Database connector
-   * @return Loaded configuration
-   * @throws SchemaCrawlerException On an exception
-   */
-  private Config loadConfig(final String[] args,
-                            final DatabaseConnector dbConnector)
-    throws SchemaCrawlerException
-  {
-    final Config config = new Config();
-
-    // 1. Get bundled database config
-    if (dbConnector != null)
-    {
-      config.putAll(dbConnector.getConfig());
-    }
-
-    // 2. Load config from CLASSPATH, in place
-    try
-    {
-      config.putAll(PropertiesUtility.loadConfig(new ClasspathInputResource(
-        "/schemacrawler.config.properties")));
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.CONFIG,
-                 "schemacrawler.config.properties not found on CLASSPATH");
-    }
-
-    // 3. Load config from files, in place
-    final ConfigParser configParser = new ConfigParser();
-    configParser.parse(args);
-    final Config configFileConfig = configParser.getConfig();
-    config.putAll(configFileConfig);
-
-    return config;
-  }
-
-  private String[] remainingArgs(final Config config)
-  {
-    final List<String> remainingArgs = new ArrayList<>();
-    final Set<Map.Entry<String, String>> entries = config.entrySet();
-    for (final Map.Entry<String, String> entry : entries)
-    {
-      remainingArgs.add(entry.getKey());
-      final String value = entry.getValue();
-      if (value != null)
-      {
-        remainingArgs.add(value);
-      }
-    }
-    return remainingArgs.toArray(new String[0]);
   }
 
 }
