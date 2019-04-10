@@ -9,7 +9,10 @@
         <option value="organizeImports" />
         <option value="reformat" />
         <option value="rearrange" />
+        <option value="compile" />
+        <option value="fieldCanBeFinal" />
         <option value="localCanBeFinal" />
+        <option value="methodMayBeStatic" />
         <option value="missingOverrideAnnotation" />
         <option value="useBlocks" />
         <option value="generateSerialVersionUID" />
@@ -18,6 +21,7 @@
         <option value="explicitTypeCanBeDiamond" />
         <option value="suppressAnnotation" />
         <option value="unnecessarySemicolon" />
+        <option value="accessCanBeTightened" />
       </set>
     </option>
     <option name="configurationPath" value="" />

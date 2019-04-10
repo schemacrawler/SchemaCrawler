@@ -35,7 +35,6 @@ import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.UserCredentials;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
@@ -128,11 +127,6 @@ public final class SchemaCrawlerCommandLine
     sortOptionsParser.parse(args);
     config.putAll(schemaTextOptionsBuilder.toConfig());
 
-    final UserCredentialsParser userCredentialsParser = new UserCredentialsParser();
-    userCredentialsParser.parse(args);
-    final UserCredentials userCredentials = userCredentialsParser
-      .getUserCredentials();
-
     final Config argsMap = CommandLineUtility.parseArgs(args);
 
     config.putAll(databaseConnector.getConfig());
@@ -142,7 +136,8 @@ public final class SchemaCrawlerCommandLine
     // provided configuration, and bundled configuration
     databaseConnectionSource = databaseConnector
       .newDatabaseConnectionSource(databaseConnectable);
-    databaseConnectionSource.setUserCredentials(userCredentials);
+    databaseConnectionSource
+      .setUserCredentials(connectionOptionsParser.getUserCredentials());
   }
 
   @Override

@@ -32,6 +32,7 @@ package schemacrawler.tools.commandline;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
+import schemacrawler.tools.databaseconnector.UserCredentials;
 
 /**
  * Parses the command-line.
@@ -43,14 +44,15 @@ public final class ConnectionOptionsParser
 {
 
   private final CommandLine commandLine;
+  private DatabaseConnectable databaseConnectable;
   @CommandLine.ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
+  @CommandLine.Unmatched
+  private String[] remainder;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
-  @CommandLine.Unmatched
-  private String[] remainder = new String[0];
-
-  private DatabaseConnectable databaseConnectable;
+  @CommandLine.Mixin
+  private UserCredentialsParser userCredentialsParser;
 
   public ConnectionOptionsParser()
   {
@@ -85,6 +87,19 @@ public final class ConnectionOptionsParser
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  UserCredentials getUserCredentials()
+  {
+
+    if (userCredentialsParser == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection credentials provided");
+    }
+    final UserCredentials userCredentials = userCredentialsParser
+      .getUserCredentials();
+    return userCredentials;
   }
 
 }

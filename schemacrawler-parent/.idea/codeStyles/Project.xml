@@ -10,7 +10,6 @@
     <JavaCodeStyleSettings>
       <option name="GENERATE_FINAL_LOCALS" value="true" />
       <option name="GENERATE_FINAL_PARAMETERS" value="true" />
-      <option name="REPLACE_INSTANCEOF_AND_CAST" value="true" />
       <option name="ALIGN_MULTILINE_ANNOTATION_PARAMETERS" value="true" />
       <option name="IMPORT_LAYOUT_TABLE">
         <value>

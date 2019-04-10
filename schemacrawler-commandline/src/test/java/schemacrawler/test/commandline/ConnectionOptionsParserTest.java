@@ -99,8 +99,8 @@ public class ConnectionOptionsParserTest
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
       .toDatabaseConnectionSource(new Config());
 
-    assertThat(databaseConnectionSource.toString(),
-               is("driver=<unknown>\r\nurl=jdbc:database_url\r\n"));
+    assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
+               is("driver=<unknown>\nurl=jdbc:database_url\n"));
 
     final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
@@ -133,9 +133,8 @@ public class ConnectionOptionsParserTest
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
       .toDatabaseConnectionSource(config);
 
-    assertThat(databaseConnectionSource.toString(),
-               is(
-                 "driver=<unknown>\r\nurl=jdbc:newdb://somehost:1234/adatabase\r\n"));
+    assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
+               is("driver=<unknown>\nurl=jdbc:newdb://somehost:1234/adatabase\n"));
 
     final String[] remainder = optionsParser.getRemainder();
     assertThat(remainder, is(new String[] {
