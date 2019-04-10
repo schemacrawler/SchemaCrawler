@@ -33,11 +33,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.Callable;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.utility.PropertiesUtility;
@@ -50,31 +50,31 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public class ConfigParser
-  implements Callable<Config>
+  implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
 
-  private final Config config;
+  private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
     "-g",
-    "--config-file" }, description = "SchemaCrawler configuration properties file")
+    "--state-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
 
   @CommandLine.Unmatched
   private String[] remainder = new String[0];
 
-  public ConfigParser(final Config config)
+  public ConfigParser(final SchemaCrawlerShellState state)
   {
-    if (config == null)
+    if (state == null)
     {
-      this.config = new Config();
+      this.state = new SchemaCrawlerShellState();
     }
     else
     {
-      this.config = config;
+      this.state = state;
     }
   }
 
@@ -84,28 +84,24 @@ public class ConfigParser
   }
 
   @Override
-  public Config call()
-    throws Exception
+  public void run()
   {
-    // 1. Use base config (likely from the bundled database plugin)
-
-    // 2. Load config from CLASSPATH, in place
+    // 1. Load state from CLASSPATH, in place
     try
     {
-      config.putAll(PropertiesUtility.loadConfig(new ClasspathInputResource(
-        "/schemacrawler.config.properties")));
+      state.setBaseConfiguration(PropertiesUtility
+                                   .loadConfig(new ClasspathInputResource(
+                                     "/schemacrawler.state.properties")));
     }
     catch (final IOException e)
     {
       LOGGER.log(Level.CONFIG,
-                 "schemacrawler.config.properties not found on CLASSPATH");
+                 "schemacrawler.state.properties not found on CLASSPATH");
     }
 
-    // 3. Load config from file, in place
+    // 2. Load state from file, in place
     final Config configFileConfig = loadConfig();
-    config.putAll(configFileConfig);
-
-    return config;
+    state.setBaseConfiguration(configFileConfig);
   }
 
   private Config loadConfig()
@@ -113,7 +109,7 @@ public class ConfigParser
     final Path configFilePath;
     if (configFile == null)
     {
-      configFilePath = Paths.get("schemacrawler.config.properties");
+      configFilePath = Paths.get("schemacrawler.state.properties");
     }
     else
     {

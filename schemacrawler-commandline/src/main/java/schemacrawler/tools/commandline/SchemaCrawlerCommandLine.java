@@ -32,6 +32,7 @@ import java.sql.Connection;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -56,10 +57,10 @@ public final class SchemaCrawlerCommandLine
     .getLogger(SchemaCrawlerCommandLine.class.getName());
   private final String command;
   private final Config config;
-  private final SchemaCrawlerOptions schemaCrawlerOptions;
-  private final OutputOptions outputOptions;
   private final DatabaseConnectionSource databaseConnectionSource;
   private final DatabaseConnector databaseConnector;
+  private final OutputOptions outputOptions;
+  private final SchemaCrawlerOptions schemaCrawlerOptions;
 
   public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
@@ -70,6 +71,10 @@ public final class SchemaCrawlerCommandLine
       throw new SchemaCrawlerRuntimeException(
         "No command-line arguments provided");
     }
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+
+    picocli.CommandLine.run(new ConfigParser(state), args);
 
     // Match the database connector in the best possible way, using the
     // server argument, or the JDBC connection URL
@@ -82,8 +87,9 @@ public final class SchemaCrawlerCommandLine
                new StringFormat("Using database plugin <%s>",
                                 databaseConnector.getDatabaseServerType()));
 
-    config = picocli.CommandLine
-      .call(new ConfigParser(databaseConnector.getConfig()), args);
+    config = new Config();
+    config.putAll(databaseConnector.getConfig());
+    config.putAll(state.getBaseConfiguration());
 
     final CommandParser commandParser = new CommandParser();
     commandParser.parse(args);

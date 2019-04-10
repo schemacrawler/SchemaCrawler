@@ -46,13 +46,37 @@ public class SchemaCrawlerShellState
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerShellState.class.getName());
-
+  private Config additionalConfiguration;
+  private Config baseConfiguration;
   private Catalog catalog;
   private DataSource dataSource;
-  private Config additionalConfiguration;
+  private OutputOptionsBuilder outputOptionsBuilder;
   private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
-  private OutputOptionsBuilder outputOptionsBuilder;
+
+  public Config getBaseConfiguration()
+  {
+    if (baseConfiguration != null)
+    {
+      return baseConfiguration;
+    }
+    else
+    {
+      return new Config();
+    }
+  }
+
+  public void setBaseConfiguration(final Config baseConfiguration)
+  {
+    if (baseConfiguration != null)
+    {
+      this.baseConfiguration = baseConfiguration;
+    }
+    else
+    {
+      this.baseConfiguration = new Config();
+    }
+  }
 
   public void disconnect()
   {

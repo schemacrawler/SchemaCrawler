@@ -76,6 +76,16 @@
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
       <arrangement>
+        <groups>
+          <group>
+            <type>GETTERS_AND_SETTERS</type>
+            <order>KEEP</order>
+          </group>
+          <group>
+            <type>OVERRIDDEN_METHODS</type>
+            <order>BY_NAME</order>
+          </group>
+        </groups>
         <rules>
           <section>
             <rule>
@@ -97,6 +107,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -109,6 +120,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -121,6 +133,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -133,6 +146,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -143,6 +157,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -185,6 +200,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -196,6 +212,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -218,6 +235,7 @@
                   <STATIC>true</STATIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -229,6 +247,7 @@
                   <PUBLIC>true</PUBLIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -240,6 +259,7 @@
                   <PROTECTED>true</PROTECTED>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -251,6 +271,7 @@
                   <PACKAGE_PRIVATE>true</PACKAGE_PRIVATE>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -262,6 +283,7 @@
                   <PRIVATE>true</PRIVATE>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -272,6 +294,7 @@
                   <PUBLIC>true</PUBLIC>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -282,6 +305,7 @@
                   <PROTECTED>true</PROTECTED>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -292,6 +316,7 @@
                   <PACKAGE_PRIVATE>true</PACKAGE_PRIVATE>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -302,6 +327,7 @@
                   <PRIVATE>true</PRIVATE>
                 </AND>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
@@ -309,6 +335,7 @@
               <match>
                 <FIELD>true</FIELD>
               </match>
+              <order>BY_NAME</order>
             </rule>
           </section>
           <section>
