@@ -49,8 +49,42 @@ public final class DatabaseConnectionSource
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(DatabaseConnectionSource.class.getName());
 
+  private static void logConnection(final Connection connection)
+  {
+    if (connection == null || !LOGGER.isLoggable(Level.INFO))
+    {
+      return;
+    }
+    try
+    {
+      final DatabaseMetaData dbMetaData = connection.getMetaData();
+      LOGGER.log(Level.INFO,
+                 new StringFormat(
+                   "Connected to %n%s %s %nusing JDBC driver %n%s %s",
+                   dbMetaData.getDatabaseProductName(),
+                   dbMetaData.getDatabaseProductVersion(),
+                   dbMetaData.getDriverName(),
+                   dbMetaData.getDriverVersion()));
+    }
+    catch (final SQLException e)
+    {
+      LOGGER.log(Level.WARNING, "Could not log connection information", e);
+    }
+  }
+
+  private static Properties safeProperties(final Properties properties)
+  {
+    final Properties logProperties = new Properties(properties);
+    if (properties.contains("password"))
+    {
+      logProperties.put("password", "*****");
+    }
+    return logProperties;
+  }
+
   private final Map<String, String> connectionProperties;
   private final String connectionUrl;
+  private Connection connection;
   private UserCredentials userCredentials;
 
   public DatabaseConnectionSource(final String connectionUrl)
@@ -82,9 +116,13 @@ public final class DatabaseConnectionSource
   @Override
   public final Connection get()
   {
-    final String user = userCredentials.getUser();
-    final String password = userCredentials.getPassword();
-    return getConnection(user, password);
+    if (connection == null)
+    {
+      final String user = userCredentials.getUser();
+      final String password = userCredentials.getPassword();
+      connection = getConnection(user, password);
+    }
+    return connection;
   }
 
   public final Driver getJdbcDriver()
@@ -112,6 +150,11 @@ public final class DatabaseConnectionSource
       .append(System.lineSeparator());
     builder.append("url=").append(connectionUrl).append(System.lineSeparator());
     return builder.toString();
+  }
+
+  public String getConnectionUrl()
+  {
+    return connectionUrl;
   }
 
   private Connection getConnection(final String user, final String password)
@@ -174,16 +217,6 @@ public final class DatabaseConnectionSource
         username,
         safeProperties(jdbcConnectionProperties)), e);
     }
-  }
-
-  private Properties safeProperties(final Properties properties)
-  {
-    final Properties logProperties = new Properties(properties);
-    if (properties.contains("password"))
-    {
-      logProperties.put("password", "*****");
-    }
-    return logProperties;
   }
 
   private Properties createConnectionProperties(final String connectionUrl,
@@ -262,29 +295,6 @@ public final class DatabaseConnectionSource
         "Could not find a suitable JDBC driver for database connection URL, "
         + this.connectionUrl,
         e);
-    }
-  }
-
-  private void logConnection(final Connection connection)
-  {
-    if (connection == null || !LOGGER.isLoggable(Level.INFO))
-    {
-      return;
-    }
-    try
-    {
-      final DatabaseMetaData dbMetaData = connection.getMetaData();
-      LOGGER.log(Level.INFO,
-                 new StringFormat(
-                   "Connected to %n%s %s %nusing JDBC driver %n%s %s",
-                   dbMetaData.getDatabaseProductName(),
-                   dbMetaData.getDatabaseProductVersion(),
-                   dbMetaData.getDriverName(),
-                   dbMetaData.getDriverVersion()));
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.WARNING, "Could not log connection information", e);
     }
   }
 

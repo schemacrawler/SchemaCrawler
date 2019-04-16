@@ -40,14 +40,13 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
  * @author Sualeh Fatehi
  */
 public final class ConnectionOptionsParser
-  implements OptionsParser
 {
 
   private final CommandLine commandLine;
   private DatabaseConnectable databaseConnectable;
   @CommandLine.ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
-  @CommandLine.Unmatched
+  @CommandLine.Parameters
   private String[] remainder;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
@@ -61,14 +60,6 @@ public final class ConnectionOptionsParser
 
   public DatabaseConnectable getDatabaseConnectable()
   {
-    return databaseConnectable;
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-
     if (databaseConnectionOptions == null)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
@@ -81,15 +72,11 @@ public final class ConnectionOptionsParser
       throw new CommandLine.ParameterException(spec.commandLine(),
                                                "No database connection options provided");
     }
+
+    return databaseConnectable;
   }
 
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
-  }
-
-  UserCredentials getUserCredentials()
+  public UserCredentials getUserCredentials()
   {
 
     if (userCredentialsParser == null)

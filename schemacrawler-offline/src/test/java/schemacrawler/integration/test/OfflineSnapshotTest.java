@@ -215,8 +215,8 @@ public class OfflineSnapshotTest
 
   }
 
-  protected void executeExecutable(final SchemaCrawlerExecutable executable,
-                                   final String referenceFileName)
+  private void executeExecutable(final SchemaCrawlerExecutable executable,
+                                 final String referenceFileName)
     throws Exception
   {
     final OfflineConnection connection = new OfflineConnection(

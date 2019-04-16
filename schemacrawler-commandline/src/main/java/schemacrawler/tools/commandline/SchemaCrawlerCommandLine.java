@@ -28,19 +28,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+
+import java.lang.reflect.Method;
 import java.sql.Connection;
-import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
-import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
 /**
@@ -55,11 +54,10 @@ public final class SchemaCrawlerCommandLine
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
   private final String command;
-  private final Config config;
-  private final DatabaseConnectionSource databaseConnectionSource;
-  private final DatabaseConnector databaseConnector;
   private final OutputOptions outputOptions;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
+
+  private final SchemaCrawlerShellState state;
 
   public SchemaCrawlerCommandLine(final String[] args)
     throws SchemaCrawlerException
@@ -71,31 +69,43 @@ public final class SchemaCrawlerCommandLine
         "No command-line arguments provided");
     }
 
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state = new SchemaCrawlerShellState();
 
-    picocli.CommandLine.run(new ConfigParser(state), args);
+    final picocli.CommandLine.IFactory factory = new picocli.CommandLine.IFactory()
+    {
+      @Override
+      public <K> K create(final Class<K> cls)
+        throws Exception
+      {
+        try
+        {
+          return cls.getConstructor(SchemaCrawlerShellState.class)
+            .newInstance(state);
+        }
+        catch (final Exception e)
+        {
+          return cls.getConstructor().newInstance();
+        }
+      }
+    };
 
-    // Match the database connector in the best possible way, using the
-    // server argument, or the JDBC connection URL
-    final ConnectionOptionsParser connectionOptionsParser = new ConnectionOptionsParser();
-    connectionOptionsParser.parse(args);
-    final DatabaseConnectable databaseConnectable = connectionOptionsParser
-      .getDatabaseConnectable();
-    databaseConnector = databaseConnectable.getDatabaseConnector();
-    LOGGER.log(Level.INFO,
-               new StringFormat("Using database plugin <%s>",
-                                databaseConnector.getDatabaseServerType()));
-
-    config = new Config();
-    config.putAll(databaseConnector.getConfig());
-    config.putAll(state.getBaseConfiguration());
+    newCommandLine(new ConfigParser(state), factory)
+      .parseWithHandlers(new picocli.CommandLine.RunLast(),
+                         new picocli.CommandLine.DefaultExceptionHandler<>(),
+                         args);
+    final Method connectMethod = picocli.CommandLine
+      .getCommandMethods(ConnectCommands.class, "connect").get(0);
+    newCommandLine(connectMethod, factory)
+      .parseWithHandlers(new picocli.CommandLine.RunLast(),
+                         new picocli.CommandLine.DefaultExceptionHandler<>(),
+                         args);
 
     final CommandParser commandParser = new CommandParser();
     commandParser.parse(args);
     command = commandParser.getCommand();
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().fromConfig(config);
+      .builder().fromConfig(state.getAdditionalConfiguration());
     final FilterOptionsParser filterOptionsParser = new FilterOptionsParser(
       schemaCrawlerOptionsBuilder);
     filterOptionsParser.parse(args);
@@ -111,14 +121,16 @@ public final class SchemaCrawlerCommandLine
     schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
 
     final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-      .builder().fromConfig(config);
+      .builder().fromConfig(state.getAdditionalConfiguration());
     final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
       outputOptionsBuilder);
     outputOptionsParser.parse(args);
     outputOptions = outputOptionsBuilder.toOptions();
 
+    final Config config = state.getAdditionalConfiguration();
+
     final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-      .builder().fromConfig(config);
+      .builder().fromConfig(state.getAdditionalConfiguration());
     final ShowOptionsParser showOptionsParser = new ShowOptionsParser(
       schemaTextOptionsBuilder);
     showOptionsParser.parse(args);
@@ -128,70 +140,30 @@ public final class SchemaCrawlerCommandLine
     config.putAll(schemaTextOptionsBuilder.toConfig());
 
     final Config argsMap = CommandLineUtility.parseArgs(args);
-
-    config.putAll(databaseConnector.getConfig());
     config.putAll(argsMap);
 
-    // Connect using connection options provided from the command-line,
-    // provided configuration, and bundled configuration
-    databaseConnectionSource = databaseConnector
-      .newDatabaseConnectionSource(databaseConnectable);
-    databaseConnectionSource
-      .setUserCredentials(connectionOptionsParser.getUserCredentials());
   }
 
   @Override
   public void execute()
     throws Exception
   {
-    if (databaseConnectionSource == null)
-    {
-      throw new SchemaCrawlerException("No connection options provided");
-    }
-
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
       command);
     // Configure
     executable.setOutputOptions(outputOptions);
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(config);
-    try (final Connection connection = databaseConnectionSource.get())
+    executable.setAdditionalConfiguration(state.getAdditionalConfiguration());
+    try (final Connection connection = state.getDataSource().getConnection())
     {
-      // Get partially built database specific options, built from the
-      // classpath resources, and then override from config loaded in
-      // from the command-line
-      final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = databaseConnector
-        .getSchemaRetrievalOptionsBuilder(connection);
-      schemaRetrievalOptionsBuilder.fromConfig(config);
-
-      final SchemaRetrievalOptions schemaRetrievalOptions = schemaRetrievalOptionsBuilder
-        .toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state
+        .getSchemaRetrievalOptionsBuilder().toOptions();
 
       // Execute the command
       executable.setConnection(connection);
       executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
       executable.execute();
     }
-  }
-
-  public final String getCommand()
-  {
-    return command;
-  }
-
-  public final Config getConfig()
-  {
-    return config;
-  }
-
-  public final OutputOptions getOutputOptions()
-  {
-    return outputOptions;
-  }
-
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
   }
 
 }

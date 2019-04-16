@@ -55,16 +55,13 @@ public class ConfigParser
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
-
+  @CommandLine.Unmatched
+  private final String[] remainder = new String[0];
   private final SchemaCrawlerShellState state;
-
   @CommandLine.Option(names = {
     "-g",
     "--state-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
-
-  @CommandLine.Unmatched
-  private String[] remainder = new String[0];
 
   public ConfigParser(final SchemaCrawlerShellState state)
   {
@@ -86,22 +83,28 @@ public class ConfigParser
   @Override
   public void run()
   {
+
+    final Config config = new Config();
+
     // 1. Load state from CLASSPATH, in place
     try
     {
-      state.setBaseConfiguration(PropertiesUtility
-                                   .loadConfig(new ClasspathInputResource(
-                                     "/schemacrawler.state.properties")));
+      final Config classpathConfig = PropertiesUtility
+        .loadConfig(new ClasspathInputResource(
+          "/schemacrawler.config.properties"));
+      config.putAll(classpathConfig);
     }
     catch (final IOException e)
     {
       LOGGER.log(Level.CONFIG,
-                 "schemacrawler.state.properties not found on CLASSPATH");
+                 "schemacrawler.config.properties not found on CLASSPATH");
     }
 
     // 2. Load state from file, in place
     final Config configFileConfig = loadConfig();
-    state.setBaseConfiguration(configFileConfig);
+    config.putAll(configFileConfig);
+
+    state.setBaseConfiguration(config);
   }
 
   private Config loadConfig()
@@ -109,7 +112,7 @@ public class ConfigParser
     final Path configFilePath;
     if (configFile == null)
     {
-      configFilePath = Paths.get("schemacrawler.state.properties");
+      configFilePath = Paths.get("schemacrawler.config.properties");
     }
     else
     {

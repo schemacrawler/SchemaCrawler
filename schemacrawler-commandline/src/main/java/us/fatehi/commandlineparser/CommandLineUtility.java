@@ -52,17 +52,6 @@ public final class CommandLineUtility
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(CommandLineUtility.class.getName());
 
-  public static CommandLine newCommandLine(final Object object)
-  {
-    final CommandLine commandLine;
-    commandLine = new CommandLine(object);
-    commandLine.setUnmatchedOptionsArePositionalParams(true);
-    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
-    commandLine.setTrimQuotes(true);
-    commandLine.setToggleBooleanFlags(false);
-    return commandLine;
-  }
-
   /**
    * Sets the application-wide log level.
    */
@@ -174,6 +163,29 @@ public final class CommandLineUtility
     LOGGER.log(Level.CONFIG,
                String.format("System properties: %n%s",
                              join(systemProperties, System.lineSeparator())));
+  }
+
+  public static CommandLine newCommandLine(final Object object)
+  {
+    final CommandLine commandLine;
+    commandLine = new CommandLine(object);
+    commandLine.setUnmatchedOptionsArePositionalParams(true);
+    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
+    commandLine.setTrimQuotes(true);
+    commandLine.setToggleBooleanFlags(false);
+    return commandLine;
+  }
+
+  public static CommandLine newCommandLine(final Object object,
+                                           final CommandLine.IFactory factory)
+  {
+    final CommandLine commandLine;
+    commandLine = new CommandLine(object, factory);
+    commandLine.setUnmatchedOptionsArePositionalParams(true);
+    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
+    commandLine.setTrimQuotes(true);
+    commandLine.setToggleBooleanFlags(false);
+    return commandLine;
   }
 
   /**
