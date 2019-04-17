@@ -34,9 +34,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.parser.CommandParser;
+import schemacrawler.tools.commandline.parser.CommandOptions;
 
-public class CommandParserTest
+public class CommandOptionsTest
 {
 
   @Test
@@ -44,7 +44,7 @@ public class CommandParserTest
   {
     final String[] args = new String[0];
 
-    final CommandParser optionsParser = new CommandParser();
+    final CommandOptions optionsParser = new CommandOptions();
     assertThrows(CommandLine.MissingParameterException.class,
                  () -> new CommandLine(optionsParser).parse(args));
   }
@@ -54,7 +54,7 @@ public class CommandParserTest
   {
     final String[] args = { "--some-option" };
 
-    final CommandParser optionsParser = new CommandParser();
+    final CommandOptions optionsParser = new CommandOptions();
 
     assertThrows(CommandLine.MissingParameterException.class,
                  () -> new CommandLine(optionsParser).parse(args));
@@ -65,7 +65,7 @@ public class CommandParserTest
   {
     final String[] args = { "--command" };
 
-    final CommandParser optionsParser = new CommandParser();
+    final CommandOptions optionsParser = new CommandOptions();
     assertThrows(CommandLine.MissingParameterException.class,
                  () -> new CommandLine(optionsParser).parse(args));
   }
@@ -76,7 +76,7 @@ public class CommandParserTest
     final String[] args = {
       "--command", " " };
 
-    final CommandParser optionsParser = new CommandParser();
+    final CommandOptions optionsParser = new CommandOptions();
     new CommandLine(optionsParser).parse(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getCommand());
@@ -88,7 +88,7 @@ public class CommandParserTest
     final String[] args = {
       "--command", "a_command", "additional", "--extra" };
 
-    final CommandParser optionsParser = new CommandParser();
+    final CommandOptions optionsParser = new CommandOptions();
     new CommandLine(optionsParser).parse(args);
     final String options = optionsParser.getCommand();
 

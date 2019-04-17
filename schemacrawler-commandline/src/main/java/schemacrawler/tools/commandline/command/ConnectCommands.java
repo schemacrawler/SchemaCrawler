@@ -42,7 +42,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.AvailableServers;
-import schemacrawler.tools.commandline.parser.ConnectionOptionsParser;
+import schemacrawler.tools.commandline.parser.ConnectionOptions;
 import schemacrawler.tools.commandline.parser.DatabaseConnectable;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
@@ -75,13 +75,13 @@ public class ConnectCommands
   }
 
   @CommandLine.Command(name = "connect", description = "Connect to a database")
-  public String connect(@CommandLine.Mixin final ConnectionOptionsParser connectionOptionsParser)
+  public String connect(@CommandLine.Mixin final ConnectionOptions connectionOptions)
   {
     try
     {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectable databaseConnectable = connectionOptionsParser
+      final DatabaseConnectable databaseConnectable = connectionOptions
         .getDatabaseConnectable();
       requireNonNull(databaseConnectable,
                      "No database connection options provided");
@@ -103,7 +103,7 @@ public class ConnectCommands
       loadSchemaCrawlerOptionsBuilder();
       createDataSource(databaseConnector,
                        databaseConnectable,
-                       connectionOptionsParser.getUserCredentials());
+                       connectionOptions.getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
       return success();

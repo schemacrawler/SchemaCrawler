@@ -29,42 +29,61 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.parser;
 
 
-import static sf.util.Utility.isBlank;
-
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
+import schemacrawler.tools.databaseconnector.UserCredentials;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class CommandParser
+public final class ConnectionOptions
 {
 
-  @CommandLine.Option(names = {
-    "-c",
-    "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
-  private String command;
+  @CommandLine.ArgGroup(exclusive = true)
+  private DatabaseConnectionOptions databaseConnectionOptions;
   @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
+  private String[] remainder;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
+  @CommandLine.Mixin
+  private UserCredentialsParser userCredentialsParser;
+
+  public DatabaseConnectable getDatabaseConnectable()
+  {
+    if (databaseConnectionOptions == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection options provided");
+    }
+
+    final DatabaseConnectable databaseConnectable = databaseConnectionOptions
+      .getDatabaseConnectable();
+    if (databaseConnectable == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection options provided");
+    }
+
+    return databaseConnectable;
+  }
 
   public String[] getRemainder()
   {
     return remainder;
   }
 
-  public String getCommand()
+  public UserCredentials getUserCredentials()
   {
-    if (isBlank(command))
+
+    if (userCredentialsParser == null)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No command provided");
+                                               "No database connection credentials provided");
     }
-
-    return command;
+    final UserCredentials userCredentials = userCredentialsParser
+      .getUserCredentials();
+    return userCredentials;
   }
 
 }

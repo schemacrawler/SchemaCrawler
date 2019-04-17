@@ -35,11 +35,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.parser.ConnectionOptionsParser;
+import schemacrawler.tools.commandline.parser.ConnectionOptions;
 import schemacrawler.tools.commandline.parser.DatabaseConnectable;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 
-public class ConnectionOptionsParserTest
+public class ConnectionOptionsTest
 {
 
   @Test
@@ -47,7 +47,7 @@ public class ConnectionOptionsParserTest
   {
     final String[] args = new String[0];
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
@@ -58,7 +58,7 @@ public class ConnectionOptionsParserTest
   {
     final String[] args = { "--some-option" };
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
@@ -69,7 +69,7 @@ public class ConnectionOptionsParserTest
   {
     final String[] args = { "--url" };
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     assertThrows(CommandLine.ParameterException.class,
                  () -> new CommandLine(optionsParser).parse(args));
   }
@@ -80,7 +80,7 @@ public class ConnectionOptionsParserTest
     final String[] args = {
       "--url", " " };
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
     assertThrows(IllegalArgumentException.class,
                  () -> optionsParser.getDatabaseConnectable()
@@ -93,7 +93,7 @@ public class ConnectionOptionsParserTest
     final String[] args = {
       "--url", "jdbc:database_url", "additional", "--extra" };
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser
@@ -127,7 +127,7 @@ public class ConnectionOptionsParserTest
     final Config config = new Config();
     config.put("url", "jdbc:newdb://${host}:${port}/${database}");
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser
@@ -160,7 +160,7 @@ public class ConnectionOptionsParserTest
       "additional",
       "--extra" };
 
-    final ConnectionOptionsParser optionsParser = new ConnectionOptionsParser();
+    final ConnectionOptions optionsParser = new ConnectionOptions();
 
     assertThrows(CommandLine.MutuallyExclusiveArgsException.class,
                  () -> new CommandLine(optionsParser).parse(args));
