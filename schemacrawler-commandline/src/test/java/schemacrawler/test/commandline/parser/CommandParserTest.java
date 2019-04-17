@@ -45,9 +45,8 @@ public class CommandParserTest
     final String[] args = new String[0];
 
     final CommandParser optionsParser = new CommandParser();
-
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> new CommandLine(optionsParser).parse(args));
   }
 
   @Test
@@ -58,7 +57,7 @@ public class CommandParserTest
     final CommandParser optionsParser = new CommandParser();
 
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> new CommandLine(optionsParser).parse(args));
   }
 
   @Test
@@ -68,7 +67,7 @@ public class CommandParserTest
 
     final CommandParser optionsParser = new CommandParser();
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> new CommandLine(optionsParser).parse(args));
   }
 
   @Test
@@ -78,8 +77,9 @@ public class CommandParserTest
       "--command", " " };
 
     final CommandParser optionsParser = new CommandParser();
+    new CommandLine(optionsParser).parse(args);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> optionsParser.getCommand());
   }
 
   @Test
@@ -89,7 +89,7 @@ public class CommandParserTest
       "--command", "a_command", "additional", "--extra" };
 
     final CommandParser optionsParser = new CommandParser();
-    optionsParser.parse(args);
+    new CommandLine(optionsParser).parse(args);
     final String options = optionsParser.getCommand();
 
     assertThat(options, is("a_command"));

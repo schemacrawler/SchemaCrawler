@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline.parser;
 
 
 import static sf.util.Utility.isBlank;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.AvailableCommands;
@@ -41,10 +40,8 @@ import schemacrawler.tools.commandline.AvailableCommands;
  * @author Sualeh Fatehi
  */
 public final class CommandParser
-  implements OptionsParser
 {
 
-  private final CommandLine commandLine;
   @CommandLine.Option(names = {
     "-c",
     "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
@@ -54,24 +51,6 @@ public final class CommandParser
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
 
-  public CommandParser()
-  {
-    commandLine = newCommandLine(this);
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-
-    if (isBlank(command))
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No command provided");
-    }
-  }
-
-  @Override
   public String[] getRemainder()
   {
     return remainder;
@@ -79,6 +58,12 @@ public final class CommandParser
 
   public String getCommand()
   {
+    if (isBlank(command))
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No command provided");
+    }
+
     return command;
   }
 
