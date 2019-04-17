@@ -87,10 +87,6 @@ public final class SchemaCrawlerCommandLine
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
 
-    final CommandOptions commandOptions = new CommandOptions();
-    newCommandLine(commandOptions, factory).parse(args);
-    command = commandOptions.getCommand();
-
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder().fromConfig(state.getAdditionalConfiguration());
     final FilterOptionsParser filterOptionsParser = new FilterOptionsParser(
@@ -129,6 +125,9 @@ public final class SchemaCrawlerCommandLine
     final Config argsMap = CommandLineUtility.parseArgs(args);
     config.putAll(argsMap);
 
+    final CommandOptions commandOptions = new CommandOptions();
+    newCommandLine(commandOptions, factory).parse(args);
+    command = commandOptions.getCommand();
   }
 
   @Override
