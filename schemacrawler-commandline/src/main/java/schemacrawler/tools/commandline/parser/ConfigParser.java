@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import java.io.File;
@@ -55,13 +55,13 @@ public class ConfigParser
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
   private final SchemaCrawlerShellState state;
   @CommandLine.Option(names = {
     "-g",
     "--state-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
+  @CommandLine.Unmatched
+  private String[] remainder;
 
   public ConfigParser(final SchemaCrawlerShellState state)
   {

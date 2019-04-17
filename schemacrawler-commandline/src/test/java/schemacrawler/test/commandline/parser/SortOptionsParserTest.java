@@ -1,11 +1,11 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.commandline.SortOptionsParser;
+import schemacrawler.tools.commandline.parser.SortOptionsParser;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 public class SortOptionsParserTest

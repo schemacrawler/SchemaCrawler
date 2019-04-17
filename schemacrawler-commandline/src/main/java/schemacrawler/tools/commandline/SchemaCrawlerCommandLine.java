@@ -34,6 +34,8 @@ import java.lang.reflect.Method;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.commandline.command.ConnectCommands;
+import schemacrawler.tools.commandline.parser.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
@@ -53,6 +55,7 @@ public final class SchemaCrawlerCommandLine
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
+
   private final String command;
   private final OutputOptions outputOptions;
   private final SchemaCrawlerOptions schemaCrawlerOptions;
@@ -71,23 +74,7 @@ public final class SchemaCrawlerCommandLine
 
     state = new SchemaCrawlerShellState();
 
-    final picocli.CommandLine.IFactory factory = new picocli.CommandLine.IFactory()
-    {
-      @Override
-      public <K> K create(final Class<K> cls)
-        throws Exception
-      {
-        try
-        {
-          return cls.getConstructor(SchemaCrawlerShellState.class)
-            .newInstance(state);
-        }
-        catch (final Exception e)
-        {
-          return cls.getConstructor().newInstance();
-        }
-      }
-    };
+    final picocli.CommandLine.IFactory factory = new StateFactory(state);
 
     newCommandLine(new ConfigParser(state), factory)
       .parseWithHandlers(new picocli.CommandLine.RunLast(),

@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.ConfigParser;
+import schemacrawler.tools.commandline.parser.ConfigParser;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 public class ConfigParserTest

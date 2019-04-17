@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
@@ -41,26 +41,25 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class SortOptionsParser
+public final class ShowOptionsParser
   implements OptionsParser
 {
 
   private final CommandLine commandLine;
   private final SchemaTextOptionsBuilder optionsBuilder;
 
-  @CommandLine.Option(names = { "--sort-tables" }, description = "Whether to sort tables")
-  private Boolean sorttables;
-  @CommandLine.Option(names = { "--sort-columns" }, description = "Whether to sort table columns")
-  private Boolean sortcolumns;
-  @CommandLine.Option(names = { "--sort-routines" }, description = "Whether to sort routines")
-  private Boolean sortroutines;
-  @CommandLine.Option(names = { "--sort-in-out" }, description = "Whether to routine parameters")
-  private Boolean sortinout;
-
+  @CommandLine.Option(names = { "--no-info" }, description = "Whether to show database information")
+  private Boolean noinfo;
+  @CommandLine.Option(names = { "--no-remarks" }, description = "Whether to sort remarks")
+  private Boolean noremarks;
+  @CommandLine.Option(names = { "--portable-names" }, description = "Whether to use portable names")
+  private Boolean portablenames;
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
+  @CommandLine.Option(names = { "--weak-associations" }, description = "Whether to weak associations")
+  private Boolean weakassociations;
 
-  public SortOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)
+  public ShowOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)
   {
     commandLine = newCommandLine(this);
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
@@ -71,22 +70,21 @@ public final class SortOptionsParser
   {
     commandLine.parse(args);
 
-    if (sorttables != null)
+    if (noinfo != null)
     {
-      optionsBuilder.sortTables(sorttables);
+      optionsBuilder.noInfo(noinfo);
     }
-    if (sortcolumns != null)
+    if (noremarks != null)
     {
-      optionsBuilder.sortTableColumns(sortcolumns);
+      optionsBuilder.noRemarks(noremarks);
     }
-
-    if (sortroutines != null)
+    if (weakassociations != null)
     {
-      optionsBuilder.sortRoutines(sortroutines);
+      optionsBuilder.weakAssociations(weakassociations);
     }
-    if (sortinout != null)
+    if (portablenames != null)
     {
-      optionsBuilder.sortInOut(sortinout);
+      optionsBuilder.portableNames(portablenames);
     }
 
   }

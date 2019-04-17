@@ -26,76 +26,62 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
-import static sf.util.Utility.isBlank;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
-import java.io.File;
-import java.nio.file.Path;
+import java.util.logging.Level;
 
 import picocli.CommandLine;
-import schemacrawler.tools.options.OutputOptionsBuilder;
+import schemacrawler.tools.commandline.ApplicationOptions;
+import schemacrawler.tools.commandline.LogLevel;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
-public final class OutputOptionsParser
+public final class ApplicationOptionsParser
   implements OptionsParser
 {
 
   private final CommandLine commandLine;
-
-  private final OutputOptionsBuilder outputOptionsBuilder;
-
   @CommandLine.Option(names = {
-    "-o", "--output-file" }, description = "Outfile file path and name")
-  private File outputFile;
-  @CommandLine.Option(names = {
-    "--output-format" }, description = "Outfile format")
-  private String outputFormatValue;
-  @CommandLine.Option(names = {
-    "-m", "--title" }, description = "Title for output")
-  private String title;
-
+    "--log-level" }, description = "Set logging level")
+  private LogLevel loglevel;
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
+  @CommandLine.Option(names = {
+    "-h", "--help", "-?" }, description = "Show help")
+  private boolean showHelp;
+  @CommandLine.Option(names = {
+    "-V", "--version" }, description = "Print SchemaCrawler version and exit")
+  private boolean showVersionOnly;
 
-  public OutputOptionsParser(final OutputOptionsBuilder outputOptionsBuilder)
+  public ApplicationOptionsParser()
   {
     commandLine = newCommandLine(this);
-    this.outputOptionsBuilder = outputOptionsBuilder;
   }
 
   @Override
   public void parse(final String[] args)
   {
     commandLine.parse(args);
-
-    if (title != null)
-    {
-      outputOptionsBuilder.title(title);
-    }
-
-    if (outputFile != null)
-    {
-      final Path outputFilePath = outputFile.toPath().toAbsolutePath();
-      outputOptionsBuilder.withOutputFile(outputFilePath);
-    }
-
-    if (!isBlank(outputFormatValue))
-    {
-      outputOptionsBuilder.withOutputFormatValue(outputFormatValue);
-    }
   }
 
   @Override
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  public ApplicationOptions getApplicationOptions()
+  {
+    if (loglevel == null)
+    {
+      loglevel = LogLevel.OFF;
+    }
+    final Level level = loglevel.getLevel();
+    final ApplicationOptions options = new ApplicationOptions(level,
+                                                              showHelp,
+                                                              showVersionOnly);
+    return options;
   }
 
 }

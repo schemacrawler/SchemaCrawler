@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -13,7 +13,7 @@ import picocli.CommandLine;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.GrepOptionsParser;
+import schemacrawler.tools.commandline.parser.GrepOptionsParser;
 
 public class GrepOptionsParserTest
 {

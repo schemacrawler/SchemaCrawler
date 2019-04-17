@@ -26,10 +26,8 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
-
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -42,21 +40,14 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 public final class ConnectionOptionsParser
 {
 
-  private final CommandLine commandLine;
-  private DatabaseConnectable databaseConnectable;
   @CommandLine.ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
-  @CommandLine.Parameters
+  @CommandLine.Unmatched
   private String[] remainder;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
   @CommandLine.Mixin
   private UserCredentialsParser userCredentialsParser;
-
-  public ConnectionOptionsParser()
-  {
-    commandLine = newCommandLine(this);
-  }
 
   public DatabaseConnectable getDatabaseConnectable()
   {
@@ -66,7 +57,8 @@ public final class ConnectionOptionsParser
                                                "No database connection options provided");
     }
 
-    databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
+    final DatabaseConnectable databaseConnectable = databaseConnectionOptions
+      .getDatabaseConnectable();
     if (databaseConnectable == null)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
@@ -74,6 +66,11 @@ public final class ConnectionOptionsParser
     }
 
     return databaseConnectable;
+  }
+
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
   public UserCredentials getUserCredentials()

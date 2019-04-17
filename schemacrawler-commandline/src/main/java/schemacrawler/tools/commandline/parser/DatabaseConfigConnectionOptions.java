@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static java.util.stream.Collectors.joining;
@@ -39,6 +39,8 @@ import java.util.Set;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.commandline.AvailableServers;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -48,6 +50,63 @@ public class DatabaseConfigConnectionOptions
   implements DatabaseConnectable
 {
 
+  private static Map<String, String> parseConnectionProperties(final Config connectionProperties)
+  {
+    final String URLX = "urlx";
+    final String connectionPropertiesString = connectionProperties.get(URLX);
+    final Map<String, String> urlxProperties = new HashMap<>();
+    if (!isBlank(connectionPropertiesString))
+    {
+      for (final String property : connectionPropertiesString.split(";"))
+      {
+        if (!isBlank(property))
+        {
+          final String[] propertyValues = property.split("=");
+          if (propertyValues.length >= 2)
+          {
+            final String key = propertyValues[0];
+            final String value = propertyValues[1];
+            if (key != null && value != null)
+            {
+              // Properties is based on Hashtable, which cannot take
+              // null keys or values
+              urlxProperties.put(key, value);
+            }
+          }
+        }
+      }
+    }
+
+    return urlxProperties;
+  }
+
+  private static String parseConnectionUrl(final Config connectionProperties)
+  {
+    final String URL = "url";
+    final String oldConnectionUrl = connectionProperties.get(URL);
+
+    // Substitute parameters
+    TemplatingUtility.substituteVariables(connectionProperties);
+    final String connectionUrl = connectionProperties.get(URL);
+
+    // Check that all required parameters have been substituted
+    final Set<String> unmatchedVariables = TemplatingUtility
+      .extractTemplateVariables(connectionUrl);
+    if (!unmatchedVariables.isEmpty())
+    {
+      throw new IllegalArgumentException(String.format(
+        "Insufficient parameters for database connection URL: missing %s",
+        unmatchedVariables));
+    }
+
+    // Reset old connection URL
+    connectionProperties.put(URL, oldConnectionUrl);
+
+    return connectionUrl;
+  }
+  @CommandLine.Option(names = {
+    "--database" }, description = "Database name")
+  private String database;
   @CommandLine.Option(names = {
     "--server" }, required = true, description = "Database server type", completionCandidates = AvailableServers.class)
   private String databaseSystemIdentifier;
@@ -57,9 +116,6 @@ public class DatabaseConfigConnectionOptions
   @CommandLine.Option(names = {
     "--port" }, description = "Database server port")
   private Integer port;
-  @CommandLine.Option(names = {
-    "--database" }, description = "Database name")
-  private String database;
   @CommandLine.Option(names = {
     "--urlx" }, description = "JDBC URL additional properties")
   private Map<String, String> urlx;
@@ -132,61 +188,6 @@ public class DatabaseConfigConnectionOptions
     }
 
     return config;
-  }
-
-  private String parseConnectionUrl(final Config connectionProperties)
-  {
-    final String URL = "url";
-    final String oldConnectionUrl = connectionProperties.get(URL);
-
-    // Substitute parameters
-    TemplatingUtility.substituteVariables(connectionProperties);
-    final String connectionUrl = connectionProperties.get(URL);
-
-    // Check that all required parameters have been substituted
-    final Set<String> unmatchedVariables = TemplatingUtility
-      .extractTemplateVariables(connectionUrl);
-    if (!unmatchedVariables.isEmpty())
-    {
-      throw new IllegalArgumentException(String.format(
-        "Insufficient parameters for database connection URL: missing %s",
-        unmatchedVariables));
-    }
-
-    // Reset old connection URL
-    connectionProperties.put(URL, oldConnectionUrl);
-
-    return connectionUrl;
-  }
-
-  private Map<String, String> parseConnectionProperties(final Config connectionProperties)
-  {
-    final String URLX = "urlx";
-    final String connectionPropertiesString = connectionProperties.get(URLX);
-    final Map<String, String> urlxProperties = new HashMap<>();
-    if (!isBlank(connectionPropertiesString))
-    {
-      for (final String property : connectionPropertiesString.split(";"))
-      {
-        if (!isBlank(property))
-        {
-          final String[] propertyValues = property.split("=");
-          if (propertyValues.length >= 2)
-          {
-            final String key = propertyValues[0];
-            final String value = propertyValues[1];
-            if (key != null && value != null)
-            {
-              // Properties is based on Hashtable, which cannot take
-              // null keys or values
-              urlxProperties.put(key, value);
-            }
-          }
-        }
-      }
-    }
-
-    return urlxProperties;
   }
 
 }

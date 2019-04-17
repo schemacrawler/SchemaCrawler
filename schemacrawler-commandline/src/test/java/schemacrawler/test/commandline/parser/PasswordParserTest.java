@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +41,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
-import schemacrawler.tools.commandline.UserCredentialsParser;
+import schemacrawler.tools.commandline.parser.UserCredentialsParser;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
 public class PasswordParserTest

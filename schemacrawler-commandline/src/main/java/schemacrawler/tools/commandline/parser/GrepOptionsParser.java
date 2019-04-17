@@ -26,12 +26,13 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -41,7 +42,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class FilterOptionsParser
+public final class GrepOptionsParser
   implements OptionsParser
 {
 
@@ -49,19 +50,25 @@ public final class FilterOptionsParser
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
 
   @CommandLine.Option(names = {
-    "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
-  private Integer parents;
+    "--grep-columns" }, description = "grep for tables with column names matching pattern")
+  private Pattern grepcolumns;
   @CommandLine.Option(names = {
-    "--children" }, description = "Number of generations of descendents for the tables selected by grep")
-  private Integer children;
+    "--grep-def" }, description = "grep for tables definitions containing pattern")
+  private Pattern grepdef;
   @CommandLine.Option(names = {
-    "--no-empty-tables" }, description = "Include only tables that have rows of data")
-  private Boolean noemptytables;
+    "--grep-in-out" }, description = "grep for routines with parameter names matching pattern")
+  private Pattern grepinout;
+  @CommandLine.Option(names = {
+    "--invert-match" }, description = "Invert the grep match")
+  private Boolean invertMatch;
+  @CommandLine.Option(names = {
+    "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
+  private Boolean onlyMatching;
 
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
 
-  public FilterOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public GrepOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
   {
     commandLine = newCommandLine(this);
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
@@ -72,35 +79,26 @@ public final class FilterOptionsParser
   {
     commandLine.parse(args);
 
-    if (parents != null)
+    if (grepcolumns != null)
     {
-      if (parents >= 0)
-      {
-        optionsBuilder.parentTableFilterDepth(parents);
-      }
-      else
-      {
-        throw new SchemaCrawlerCommandLineException(
-          "Please provide a valid value for --parents");
-      }
+      optionsBuilder.includeGreppedColumns(grepcolumns);
+    }
+    if (grepinout != null)
+    {
+      optionsBuilder.includeGreppedRoutineColumns(grepinout);
+    }
+    if (grepdef != null)
+    {
+      optionsBuilder.includeGreppedDefinitions(grepdef);
     }
 
-    if (children != null)
+    if (invertMatch != null)
     {
-      if (children >= 0)
-      {
-        optionsBuilder.childTableFilterDepth(children);
-      }
-      else
-      {
-        throw new SchemaCrawlerCommandLineException(
-          "Please provide a valid value for --children");
-      }
+      optionsBuilder.invertGrepMatch(invertMatch);
     }
-
-    if (noemptytables != null)
+    if (onlyMatching != null)
     {
-      optionsBuilder.noEmptyTables(noemptytables);
+      optionsBuilder.grepOnlyMatching(onlyMatching);
     }
 
   }

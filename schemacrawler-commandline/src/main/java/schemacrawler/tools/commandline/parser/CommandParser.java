@@ -26,13 +26,14 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static sf.util.Utility.isBlank;
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import picocli.CommandLine;
+import schemacrawler.tools.commandline.AvailableCommands;
 
 /**
  * Parses the command-line.
@@ -44,16 +45,14 @@ public final class CommandParser
 {
 
   private final CommandLine commandLine;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
-
   @CommandLine.Option(names = {
     "-c",
     "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
   private String command;
-
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
 
   public CommandParser()
   {
@@ -72,15 +71,15 @@ public final class CommandParser
     }
   }
 
-  public String getCommand()
-  {
-    return command;
-  }
-
   @Override
   public String[] getRemainder()
   {
     return remainder;
+  }
+
+  public String getCommand()
+  {
+    return command;
   }
 
 }

@@ -181,7 +181,7 @@ public final class CommandLineUtility
   {
     final CommandLine commandLine;
     commandLine = new CommandLine(object, factory);
-    commandLine.setUnmatchedOptionsArePositionalParams(true);
+    commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);

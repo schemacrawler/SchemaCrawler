@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.command;
 
 
 import static java.util.Objects.requireNonNull;
@@ -37,11 +37,16 @@ import java.util.logging.Level;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
+import schemacrawler.tools.commandline.AvailableServers;
+import schemacrawler.tools.commandline.parser.ConnectionOptionsParser;
+import schemacrawler.tools.commandline.parser.DatabaseConnectable;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -53,16 +58,15 @@ public class ConnectCommands
 
   @CommandLine.Command(description = "List available SchemaCrawler database plugins")
   public static void servers()
-    throws Exception
   {
     LOGGER.log(Level.INFO, "servers");
 
-    final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    for (final DatabaseServerType server : registry)
+    for (String server : new AvailableServers())
     {
       System.out.println(server);
     }
   }
+
   private final SchemaCrawlerShellState state;
 
   public ConnectCommands(final SchemaCrawlerShellState state)

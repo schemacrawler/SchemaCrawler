@@ -25,10 +25,17 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline;
+
+package schemacrawler.tools.commandline.parser;
 
 
-public class ConnectionOptionsParserTest
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
+
+public interface DatabaseConnectable
+  extends DatabaseConnectorOptions
 {
+
+  DatabaseConnector getDatabaseConnector();
 
 }

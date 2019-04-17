@@ -26,49 +26,39 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.util.Objects;
-import java.util.regex.Pattern;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class GrepOptionsParser
+public final class SortOptionsParser
   implements OptionsParser
 {
 
   private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
-
-  @CommandLine.Option(names = {
-    "--grep-columns" }, description = "grep for tables with column names matching pattern")
-  private Pattern grepcolumns;
-  @CommandLine.Option(names = {
-    "--grep-in-out" }, description = "grep for routines with parameter names matching pattern")
-  private Pattern grepinout;
-  @CommandLine.Option(names = {
-    "--grep-def" }, description = "grep for tables definitions containing pattern")
-  private Pattern grepdef;
-  @CommandLine.Option(names = {
-    "--invert-match" }, description = "Invert the grep match")
-  private Boolean invertMatch;
-  @CommandLine.Option(names = {
-    "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
-  private Boolean onlyMatching;
-
+  private final SchemaTextOptionsBuilder optionsBuilder;
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
+  @CommandLine.Option(names = { "--sort-columns" }, description = "Whether to sort table columns")
+  private Boolean sortcolumns;
+  @CommandLine.Option(names = { "--sort-in-out" }, description = "Whether to routine parameters")
+  private Boolean sortinout;
+  @CommandLine.Option(names = { "--sort-routines" }, description = "Whether to sort routines")
+  private Boolean sortroutines;
+  @CommandLine.Option(names = { "--sort-tables" }, description = "Whether to sort tables")
+  private Boolean sorttables;
 
-  public GrepOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public SortOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)
   {
     commandLine = newCommandLine(this);
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
@@ -79,26 +69,22 @@ public final class GrepOptionsParser
   {
     commandLine.parse(args);
 
-    if (grepcolumns != null)
+    if (sorttables != null)
     {
-      optionsBuilder.includeGreppedColumns(grepcolumns);
+      optionsBuilder.sortTables(sorttables);
     }
-    if (grepinout != null)
+    if (sortcolumns != null)
     {
-      optionsBuilder.includeGreppedRoutineColumns(grepinout);
-    }
-    if (grepdef != null)
-    {
-      optionsBuilder.includeGreppedDefinitions(grepdef);
+      optionsBuilder.sortTableColumns(sortcolumns);
     }
 
-    if (invertMatch != null)
+    if (sortroutines != null)
     {
-      optionsBuilder.invertGrepMatch(invertMatch);
+      optionsBuilder.sortRoutines(sortroutines);
     }
-    if (onlyMatching != null)
+    if (sortinout != null)
     {
-      optionsBuilder.grepOnlyMatching(onlyMatching);
+      optionsBuilder.sortInOut(sortinout);
     }
 
   }

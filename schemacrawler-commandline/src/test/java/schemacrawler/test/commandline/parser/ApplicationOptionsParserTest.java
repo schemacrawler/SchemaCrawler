@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,7 +38,7 @@ import java.util.logging.Level;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.ApplicationOptions;
-import schemacrawler.tools.commandline.ApplicationOptionsParser;
+import schemacrawler.tools.commandline.parser.ApplicationOptionsParser;
 
 public class ApplicationOptionsParserTest
 {

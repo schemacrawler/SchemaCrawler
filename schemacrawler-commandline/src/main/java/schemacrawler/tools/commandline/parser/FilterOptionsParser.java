@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
@@ -34,33 +34,33 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import java.util.Objects;
 
 import picocli.CommandLine;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class ShowOptionsParser
+public final class FilterOptionsParser
   implements OptionsParser
 {
 
   private final CommandLine commandLine;
-  private final SchemaTextOptionsBuilder optionsBuilder;
-
-  @CommandLine.Option(names = { "--no-info" }, description = "Whether to show database information")
-  private Boolean noinfo;
-  @CommandLine.Option(names = { "--no-remarks" }, description = "Whether to sort remarks")
-  private Boolean noremarks;
-  @CommandLine.Option(names = { "--weak-associations" }, description = "Whether to weak associations")
-  private Boolean weakassociations;
-  @CommandLine.Option(names = { "--portable-names" }, description = "Whether to use portable names")
-  private Boolean portablenames;
-
+  private final SchemaCrawlerOptionsBuilder optionsBuilder;
+  @CommandLine.Option(names = {
+    "--children" }, description = "Number of generations of descendents for the tables selected by grep")
+  private Integer children;
+  @CommandLine.Option(names = {
+    "--no-empty-tables" }, description = "Include only tables that have rows of data")
+  private Boolean noemptytables;
+  @CommandLine.Option(names = {
+    "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
+  private Integer parents;
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
 
-  public ShowOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)
+  public FilterOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
   {
     commandLine = newCommandLine(this);
     this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
@@ -71,21 +71,35 @@ public final class ShowOptionsParser
   {
     commandLine.parse(args);
 
-    if (noinfo != null)
+    if (parents != null)
     {
-      optionsBuilder.noInfo(noinfo);
+      if (parents >= 0)
+      {
+        optionsBuilder.parentTableFilterDepth(parents);
+      }
+      else
+      {
+        throw new SchemaCrawlerCommandLineException(
+          "Please provide a valid value for --parents");
+      }
     }
-    if (noremarks != null)
+
+    if (children != null)
     {
-      optionsBuilder.noRemarks(noremarks);
+      if (children >= 0)
+      {
+        optionsBuilder.childTableFilterDepth(children);
+      }
+      else
+      {
+        throw new SchemaCrawlerCommandLineException(
+          "Please provide a valid value for --children");
+      }
     }
-    if (weakassociations != null)
+
+    if (noemptytables != null)
     {
-      optionsBuilder.weakAssociations(weakassociations);
-    }
-    if (portablenames != null)
-    {
-      optionsBuilder.portableNames(portablenames);
+      optionsBuilder.noEmptyTables(noemptytables);
     }
 
   }

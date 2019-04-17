@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,7 +11,7 @@ import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevel;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
-import schemacrawler.tools.commandline.InfoLevelParser;
+import schemacrawler.tools.commandline.parser.InfoLevelParser;
 
 public class InfoLevelParserTest
 {

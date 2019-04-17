@@ -1,4 +1,4 @@
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 public interface OptionsParser

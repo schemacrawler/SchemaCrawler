@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.OutputOptionsParser;
+import schemacrawler.tools.commandline.parser.OutputOptionsParser;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 

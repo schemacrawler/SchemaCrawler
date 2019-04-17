@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.CommandParser;
+import schemacrawler.tools.commandline.parser.CommandParser;
 
 public class CommandParserTest
 {

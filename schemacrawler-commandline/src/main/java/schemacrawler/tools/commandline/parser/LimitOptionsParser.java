@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static sf.util.Utility.enumValue;
@@ -49,31 +49,49 @@ public final class LimitOptionsParser
   implements OptionsParser
 {
 
+  /**
+   * Sets routine types from a comma-separated list of routine types.
+   *
+   * @param routineTypesArray Comma-separated list of routine types.
+   */
+  private static Collection<RoutineType> routineTypes(final String[] routineTypesArray)
+  {
+    if (routineTypesArray == null)
+    {
+      return null;
+    }
+    final Collection<RoutineType> routineTypes = new HashSet<>();
+    for (final String routineTypeString : routineTypesArray)
+    {
+      final RoutineType routineType = enumValue(routineTypeString
+                                                  .toLowerCase(Locale.ENGLISH),
+                                                RoutineType.unknown);
+      routineTypes.add(routineType);
+    }
+    return routineTypes;
+  }
   private final CommandLine commandLine;
   private final SchemaCrawlerOptionsBuilder optionsBuilder;
-
-  @CommandLine.Option(names = { "--schemas" }, description = "Regular expression to match fully qualified names of schemas to include")
-  private Pattern schemas;
-  @CommandLine.Option(names = { "--tables" }, description = "Regular expression to match fully qualified names of tables to include")
-  private Pattern tables;
+  @CommandLine.Unmatched
+  private final String[] remainder = new String[0];
   @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
   private Pattern excludecolumns;
-  @CommandLine.Option(names = { "--routines" }, description = "Regular expression to match fully qualified names of routines to include")
-  private Pattern routines;
   @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
   private Pattern excludeinout;
-  @CommandLine.Option(names = { "--synonyms" }, description = "Regular expression to match fully qualified names of synonyms to include")
-  private Pattern synonyms;
-  @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
-  private Pattern sequences;
-
-  @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
-  private String[] tabletypes;
+  @CommandLine.Option(names = { "--routines" }, description = "Regular expression to match fully qualified names of routines to include")
+  private Pattern routines;
   @CommandLine.Option(names = { "--routine-types" }, split = ",", description = "Comma-separated list of routine types")
   private String[] routinetypes;
-
-  @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  @CommandLine.Option(names = { "--schemas" }, description = "Regular expression to match fully qualified names of schemas to include")
+  private Pattern schemas;
+  @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
+  private Pattern sequences;
+  @CommandLine.Option(names = { "--synonyms" }, description = "Regular expression to match fully qualified names of synonyms to include")
+  private Pattern synonyms;
+  @CommandLine.Option(names = { "--tables" }, description = "Regular expression to match fully qualified names of tables to include")
+  private Pattern tables;
+  @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
+  private String[] tabletypes;
 
   public LimitOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
   {
@@ -133,28 +151,6 @@ public final class LimitOptionsParser
   public String[] getRemainder()
   {
     return remainder;
-  }
-
-  /**
-   * Sets routine types from a comma-separated list of routine types.
-   *
-   * @param routineTypesArray Comma-separated list of routine types.
-   */
-  private Collection<RoutineType> routineTypes(final String[] routineTypesArray)
-  {
-    if (routineTypesArray == null)
-    {
-      return null;
-    }
-    final Collection<RoutineType> routineTypes = new HashSet<>();
-    for (final String routineTypeString : routineTypesArray)
-    {
-      final RoutineType routineType = enumValue(routineTypeString
-                                                  .toLowerCase(Locale.ENGLISH),
-                                                RoutineType.unknown);
-      routineTypes.add(routineType);
-    }
-    return routineTypes;
   }
 
 }

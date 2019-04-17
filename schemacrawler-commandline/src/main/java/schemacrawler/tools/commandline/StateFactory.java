@@ -25,60 +25,42 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-
 package schemacrawler.tools.commandline;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
-
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-/**
- * Parses the command-line.
- *
- * @author Sualeh Fatehi
- */
-public final class InfoLevelParser
-  implements OptionsParser
+public class StateFactory
+  implements CommandLine.IFactory
 {
 
-  private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
+  private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = {
-    "-i",
-    "--info-level" }, required = true, description = "Comma-separated list of routine types")
-  private InfoLevel infoLevel;
-
-  @CommandLine.Unmatched
-  private String[] remainder = new String[0];
-
-  public InfoLevelParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  StateFactory(final SchemaCrawlerShellState state)
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
+    this.state = requireNonNull(state, "No state provided");
   }
 
   @Override
-  public void parse(final String[] args)
+  public <K> K create(final Class<K> cls)
+    throws Exception
   {
-    commandLine.parse(args);
-
-    if (infoLevel != null)
+    if (cls == null)
     {
-      optionsBuilder.withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+      return null;
     }
-
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
+    try
+    {
+      return cls.getConstructor(SchemaCrawlerShellState.class)
+        .newInstance(state);
+    }
+    catch (final Exception e)
+    {
+      return cls.getConstructor().newInstance();
+    }
   }
 
 }

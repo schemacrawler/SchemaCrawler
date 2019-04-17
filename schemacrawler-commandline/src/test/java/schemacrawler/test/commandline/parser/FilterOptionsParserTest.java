@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline;
+package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.FilterOptionsParser;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
+import schemacrawler.tools.commandline.parser.FilterOptionsParser;
 
 public class FilterOptionsParserTest
 {

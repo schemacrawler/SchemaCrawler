@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.parser;
 
 
 import static sf.util.Utility.isBlank;
@@ -38,6 +38,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 import picocli.CommandLine;
+import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
@@ -51,22 +52,20 @@ public final class UserCredentialsParser
 {
 
   protected final CommandLine commandLine;
-
-  @CommandLine.Option(names = {
-    "--user" }, description = "Database user name")
-  private String user;
-  @CommandLine.Option(names = "--password:file", description = "Database password, read from a file")
-  private File passwordFile;
   @CommandLine.Option(names = "--password:env", description = "Database password, from an environmental variable value")
   private String passwordEnvironmentVariable;
+  @CommandLine.Option(names = "--password:file", description = "Database password, read from a file")
+  private File passwordFile;
   @CommandLine.Option(names = "--password:prompt", interactive = true, description = "Database password, prompted from the console")
   private String passwordPrompted;
   @CommandLine.Option(names = {
     "--password" }, description = "Database password")
   private String passwordProvided;
-
   @CommandLine.Unmatched
-  private String[] remainder = new String[0];
+  private final String[] remainder = new String[0];
+  @CommandLine.Option(names = {
+    "--user" }, description = "Database user name")
+  private String user;
 
   public UserCredentialsParser()
   {
@@ -74,15 +73,15 @@ public final class UserCredentialsParser
   }
 
   @Override
-  public String[] getRemainder()
-  {
-    return remainder;
-  }
-
-  @Override
   public void parse(final String[] args)
   {
     commandLine.parse(args);
+  }
+
+  @Override
+  public String[] getRemainder()
+  {
+    return remainder;
   }
 
   public UserCredentials getUserCredentials()
