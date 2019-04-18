@@ -40,6 +40,7 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
+@CommandLine.Command(name = "filter", description = "Filter database object metadata")
 public final class FilterOptionsParser
   implements Runnable
 {
