@@ -167,20 +167,21 @@ public final class CommandLineUtility
 
   public static CommandLine newCommandLine(final Object object)
   {
-    final CommandLine commandLine;
-    commandLine = new CommandLine(object);
-    commandLine.setUnmatchedOptionsArePositionalParams(true);
-    commandLine.setCaseInsensitiveEnumValuesAllowed(true);
-    commandLine.setTrimQuotes(true);
-    commandLine.setToggleBooleanFlags(false);
-    return commandLine;
+    return newCommandLine(object, null);
   }
 
   public static CommandLine newCommandLine(final Object object,
                                            final CommandLine.IFactory factory)
   {
     final CommandLine commandLine;
-    commandLine = new CommandLine(object, factory);
+    if (factory == null)
+    {
+      commandLine = new CommandLine(object);
+    }
+    else
+    {
+      commandLine = new CommandLine(object, factory);
+    }
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);

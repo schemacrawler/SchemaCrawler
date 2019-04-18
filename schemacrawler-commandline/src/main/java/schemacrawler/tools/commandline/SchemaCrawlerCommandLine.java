@@ -76,7 +76,7 @@ public final class SchemaCrawlerCommandLine
 
     final picocli.CommandLine.IFactory factory = new StateFactory(state);
 
-    newCommandLine(new ConfigParser(state), factory)
+    newCommandLine(new ConfigParser(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
@@ -87,11 +87,11 @@ public final class SchemaCrawlerCommandLine
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().fromConfig(state.getAdditionalConfiguration());
-    final FilterOptionsParser filterOptionsParser = new FilterOptionsParser(
-      schemaCrawlerOptionsBuilder);
-    filterOptionsParser.parse(args);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
+    newCommandLine(new FilterOptionsParser(state)).parseWithHandlers(
+      new picocli.CommandLine.RunLast(),
+      new picocli.CommandLine.DefaultExceptionHandler<>(),
+      args);
     final GrepOptionsParser grepOptionsParser = new GrepOptionsParser(
       schemaCrawlerOptionsBuilder);
     grepOptionsParser.parse(args);

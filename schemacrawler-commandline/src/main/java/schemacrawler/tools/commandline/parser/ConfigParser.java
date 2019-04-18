@@ -55,13 +55,13 @@ public class ConfigParser
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(ConfigParser.class.getName());
+
   private final SchemaCrawlerShellState state;
+
   @CommandLine.Option(names = {
     "-g",
     "--state-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
-  @CommandLine.Unmatched
-  private String[] remainder;
 
   public ConfigParser(final SchemaCrawlerShellState state)
   {
@@ -73,11 +73,6 @@ public class ConfigParser
     {
       this.state = state;
     }
-  }
-
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
   @Override

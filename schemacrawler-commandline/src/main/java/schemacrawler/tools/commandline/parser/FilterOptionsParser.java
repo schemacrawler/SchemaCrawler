@@ -29,13 +29,11 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.parser;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
-
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
  * Parses the command-line.
@@ -43,11 +41,10 @@ import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
  * @author Sualeh Fatehi
  */
 public final class FilterOptionsParser
-  implements OptionsParser
+  implements Runnable
 {
 
-  private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
+  private final SchemaCrawlerShellState state;
   @CommandLine.Option(names = {
     "--children" }, description = "Number of generations of descendents for the tables selected by grep")
   private Integer children;
@@ -57,19 +54,20 @@ public final class FilterOptionsParser
   @CommandLine.Option(names = {
     "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
   private Integer parents;
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
 
-  public FilterOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public FilterOptionsParser(final SchemaCrawlerShellState state)
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
+    this.state = requireNonNull(state, "No state provided");
   }
 
   @Override
-  public void parse(final String[] args)
+  public void run()
   {
-    commandLine.parse(args);
+
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state
+      .getSchemaCrawlerOptionsBuilder();
 
     if (parents != null)
     {
@@ -79,8 +77,8 @@ public final class FilterOptionsParser
       }
       else
       {
-        throw new SchemaCrawlerCommandLineException(
-          "Please provide a valid value for --parents");
+        throw new CommandLine.ParameterException(spec.commandLine(),
+                                                 "Please provide a valid value for --parents");
       }
     }
 
@@ -92,8 +90,8 @@ public final class FilterOptionsParser
       }
       else
       {
-        throw new SchemaCrawlerCommandLineException(
-          "Please provide a valid value for --children");
+        throw new CommandLine.ParameterException(spec.commandLine(),
+                                                 "Please provide a valid value for --children");
       }
     }
 
@@ -102,12 +100,6 @@ public final class FilterOptionsParser
       optionsBuilder.noEmptyTables(noemptytables);
     }
 
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
 }
