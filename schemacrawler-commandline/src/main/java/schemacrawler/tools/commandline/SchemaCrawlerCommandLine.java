@@ -33,6 +33,7 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.parser.*;
@@ -76,7 +77,7 @@ public final class SchemaCrawlerCommandLine
 
     final picocli.CommandLine.IFactory factory = new StateFactory(state);
 
-    newCommandLine(new ConfigParser(state))
+    newCommandLine(new ConfigFileCommand(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);

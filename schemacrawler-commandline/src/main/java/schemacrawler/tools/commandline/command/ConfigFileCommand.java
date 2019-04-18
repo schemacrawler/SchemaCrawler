@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import java.io.File;
@@ -49,12 +49,12 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-public class ConfigParser
+public class ConfigFileCommand
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConfigParser.class.getName());
+    .getLogger(ConfigFileCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
@@ -63,7 +63,7 @@ public class ConfigParser
     "--state-file" }, description = "SchemaCrawler configuration properties file")
   private File configFile;
 
-  public ConfigParser(final SchemaCrawlerShellState state)
+  public ConfigFileCommand(final SchemaCrawlerShellState state)
   {
     if (state == null)
     {

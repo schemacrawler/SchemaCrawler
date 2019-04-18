@@ -7,10 +7,10 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.parser.ConfigParser;
+import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class ConfigParserTest
+public class ConfigFileCommandTest
 {
 
   @Test
@@ -19,7 +19,7 @@ public class ConfigParserTest
     final String[] args = new String[0];
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigParser(state), args);
+    picocli.CommandLine.run(new ConfigFileCommand(state), args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
@@ -31,7 +31,7 @@ public class ConfigParserTest
     final String[] args = { "--some-option" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigParser(state), args);
+    picocli.CommandLine.run(new ConfigFileCommand(state), args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
@@ -43,7 +43,7 @@ public class ConfigParserTest
     final String[] args = { "-g" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigParser(state), args);
+    picocli.CommandLine.run(new ConfigFileCommand(state), args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not null", config, is(anEmptyMap()));
@@ -56,7 +56,7 @@ public class ConfigParserTest
       "-g", "a_file", "additional", "--extra" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigParser(state), args);
+    picocli.CommandLine.run(new ConfigFileCommand(state), args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
