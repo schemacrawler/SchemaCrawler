@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import static java.util.Objects.requireNonNull;
@@ -41,7 +41,7 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "filter", description = "Filter database object metadata")
-public final class FilterOptionsParser
+public final class FilterCommand
   implements Runnable
 {
 
@@ -58,7 +58,7 @@ public final class FilterOptionsParser
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
 
-  public FilterOptionsParser(final SchemaCrawlerShellState state)
+  public FilterCommand(final SchemaCrawlerShellState state)
   {
     this.state = requireNonNull(state, "No state provided");
   }

@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.parser.FilterOptionsParser;
+import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class FilterOptionsParserTest
+public class FilterCommandTest
 {
 
   @Test
@@ -29,8 +29,8 @@ public class FilterOptionsParserTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    final FilterOptionsParser optionsParser = new FilterOptionsParser(state);
-    newCommandLine(new FilterOptionsParser(state))
+    final FilterCommand optionsParser = new FilterCommand(state);
+    newCommandLine(new FilterCommand(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
@@ -50,8 +50,8 @@ public class FilterOptionsParserTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    final FilterOptionsParser optionsParser = new FilterOptionsParser(state);
-    newCommandLine(new FilterOptionsParser(state))
+    final FilterCommand optionsParser = new FilterCommand(state);
+    newCommandLine(new FilterCommand(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new ThrowExceptionHandler<>(),
                          args);
@@ -72,7 +72,7 @@ public class FilterOptionsParserTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(new FilterOptionsParser(state))
+                 () -> newCommandLine(new FilterCommand(state))
                    .parseWithHandlers(new picocli.CommandLine.RunLast(),
                                       new ThrowExceptionHandler<>(),
                                       args));
@@ -149,7 +149,7 @@ public class FilterOptionsParserTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(new FilterOptionsParser(state))
+                 () -> newCommandLine(new FilterCommand(state))
                    .parseWithHandlers(new picocli.CommandLine.RunLast(),
                                       new ThrowExceptionHandler<>(),
                                       args));
@@ -165,7 +165,7 @@ public class FilterOptionsParserTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(new FilterOptionsParser(state))
+                 () -> newCommandLine(new FilterCommand(state))
                    .parseWithHandlers(new picocli.CommandLine.RunLast(),
                                       new ThrowExceptionHandler<>(),
                                       args));
@@ -181,7 +181,7 @@ public class FilterOptionsParserTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(new FilterOptionsParser(state))
+                 () -> newCommandLine(new FilterCommand(state))
                    .parseWithHandlers(new picocli.CommandLine.RunLast(),
                                       new ThrowExceptionHandler<>(),
                                       args));
@@ -203,8 +203,8 @@ public class FilterOptionsParserTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    final FilterOptionsParser optionsParser = new FilterOptionsParser(state);
-    newCommandLine(new FilterOptionsParser(state))
+    final FilterCommand optionsParser = new FilterCommand(state);
+    newCommandLine(new FilterCommand(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);

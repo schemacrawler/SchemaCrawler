@@ -35,6 +35,7 @@ import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.command.ConnectCommands;
+import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.parser.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -88,7 +89,7 @@ public final class SchemaCrawlerCommandLine
                          args);
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
-    newCommandLine(new FilterOptionsParser(state)).parseWithHandlers(
+    newCommandLine(new FilterCommand(state)).parseWithHandlers(
       new picocli.CommandLine.RunLast(),
       new picocli.CommandLine.DefaultExceptionHandler<>(),
       args);
