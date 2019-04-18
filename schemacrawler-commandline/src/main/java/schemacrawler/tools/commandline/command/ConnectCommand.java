@@ -41,7 +41,6 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.commandline.AvailableServers;
 import schemacrawler.tools.commandline.parser.ConnectionOptions;
 import schemacrawler.tools.commandline.parser.DatabaseConnectable;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -51,32 +50,32 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-public class ConnectCommands
+@CommandLine.Command(name = "connect", description = "Connect to a database")
+public class ConnectCommand
+  implements Runnable
 {
+
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConnectCommands.class.getName());
-
-  @CommandLine.Command(description = "List available SchemaCrawler database plugins")
-  public static void servers()
-  {
-    LOGGER.log(Level.INFO, "servers");
-
-    for (String server : new AvailableServers())
-    {
-      System.out.println(server);
-    }
-  }
+    .getLogger(ConnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
+  @CommandLine.Mixin
+  private ConnectionOptions connectionOptions;
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
 
-  public ConnectCommands(final SchemaCrawlerShellState state)
+  public ConnectCommand(final SchemaCrawlerShellState state)
   {
     this.state = requireNonNull(state, "No state provided");
   }
 
-  @CommandLine.Command(name = "connect", description = "Connect to a database")
-  public String connect(@CommandLine.Mixin final ConnectionOptions connectionOptions)
+  public void run()
   {
+    if (connectionOptions==null) {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Please provide connection options");
+    }
+
     try
     {
       // Match the database connector in the best possible way, using the
@@ -97,7 +96,7 @@ public class ConnectCommands
       config.putAll(databaseConnector.getConfig());
       config.putAll(state.getBaseConfiguration());
 
-      sweep();
+      state.sweep();
 
       state.setAdditionalConfiguration(config);
       loadSchemaCrawlerOptionsBuilder();
@@ -106,36 +105,11 @@ public class ConnectCommands
                        connectionOptions.getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
-      return success();
     }
     catch (final SchemaCrawlerException | SQLException e)
     {
       throw new RuntimeException("Cannot connect to database", e);
     }
-  }
-
-  @CommandLine.Command(description = "Disconnect from a database")
-  public void disconnect()
-  {
-    LOGGER.log(Level.INFO, "disconnect");
-
-    state.disconnect();
-  }
-
-  @CommandLine.Command(description = "Connect to a database, using a connection URL specification")
-  public boolean isConnected()
-  {
-    final boolean isConnected = state.isConnected();
-    LOGGER.log(Level.INFO, new StringFormat("isConnected=%b", isConnected));
-    return isConnected;
-  }
-
-  @CommandLine.Command(description = "Disconnect from a database, and clear loaded catalog")
-  public void sweep()
-  {
-    LOGGER.log(Level.INFO, "sweep");
-
-    state.sweep();
   }
 
   private void createDataSource(final DatabaseConnector databaseConnector,
@@ -195,18 +169,6 @@ public class ConnectCommands
         .getSchemaRetrievalOptionsBuilder(connection);
       schemaRetrievalOptionsBuilder.fromConfig(config);
       state.setSchemaRetrievalOptionsBuilder(schemaRetrievalOptionsBuilder);
-    }
-  }
-
-  private String success()
-  {
-    if (isConnected())
-    {
-      return "Connected";
-    }
-    else
-    {
-      return "Not connected";
     }
   }
 

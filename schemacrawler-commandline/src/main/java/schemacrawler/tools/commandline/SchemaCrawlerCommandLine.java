@@ -30,11 +30,10 @@ package schemacrawler.tools.commandline;
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
-import java.lang.reflect.Method;
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.commandline.command.ConnectCommands;
+import schemacrawler.tools.commandline.command.ConnectCommand;
 import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.parser.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -81,9 +80,7 @@ public final class SchemaCrawlerCommandLine
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
-    final Method connectMethod = picocli.CommandLine
-      .getCommandMethods(ConnectCommands.class, "connect").get(0);
-    newCommandLine(connectMethod, factory)
+    newCommandLine(new ConnectCommand(state))
       .parseWithHandlers(new picocli.CommandLine.RunLast(),
                          new picocli.CommandLine.DefaultExceptionHandler<>(),
                          args);
