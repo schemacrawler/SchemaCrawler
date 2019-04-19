@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import picocli.CommandLine;

@@ -167,26 +167,19 @@ public final class CommandLineUtility
 
   public static CommandLine newCommandLine(final Object object)
   {
-    return newCommandLine(object, null);
-  }
-
-  public static CommandLine newCommandLine(final Object object,
-                                           final CommandLine.IFactory factory)
-  {
-    final CommandLine commandLine;
-    if (factory == null)
-    {
-      commandLine = new CommandLine(object);
-    }
-    else
-    {
-      commandLine = new CommandLine(object, factory);
-    }
+    final CommandLine commandLine = new CommandLine(object);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);
     return commandLine;
+  }
+
+  public static void runCommand(final Object object, String[] args) {
+    newCommandLine(object)
+      .parseWithHandlers(new picocli.CommandLine.RunLast(),
+                         new picocli.CommandLine.DefaultExceptionHandler<>(),
+                         args);
   }
 
   /**

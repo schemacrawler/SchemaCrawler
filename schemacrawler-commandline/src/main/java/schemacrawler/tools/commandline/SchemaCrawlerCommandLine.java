@@ -29,13 +29,12 @@ package schemacrawler.tools.commandline;
 
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+import static us.fatehi.commandlineparser.CommandLineUtility.runCommand;
 
 import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
-import schemacrawler.tools.commandline.command.ConfigFileCommand;
-import schemacrawler.tools.commandline.command.ConnectCommand;
-import schemacrawler.tools.commandline.command.FilterCommand;
+import schemacrawler.tools.commandline.command.*;
 import schemacrawler.tools.commandline.parser.*;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
@@ -75,32 +74,20 @@ public final class SchemaCrawlerCommandLine
 
     state = new SchemaCrawlerShellState();
 
-    final picocli.CommandLine.IFactory factory = new StateFactory(state);
+    runCommand(new ConfigFileCommand(state), args);
+    runCommand(new ConnectCommand(state), args);
 
-    newCommandLine(new ConfigFileCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
-                         args);
-    newCommandLine(new ConnectCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
-                         args);
+    runCommand(new FilterCommand(state), args);
+    runCommand(new GrepCommand(state), args);
+    runCommand(new LimitCommand(state), args);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state.getSchemaCrawlerOptionsBuilder();
-    newCommandLine(new FilterCommand(state)).parseWithHandlers(
-      new picocli.CommandLine.RunLast(),
-      new picocli.CommandLine.DefaultExceptionHandler<>(),
-      args);
-    final GrepOptionsParser grepOptionsParser = new GrepOptionsParser(
-      schemaCrawlerOptionsBuilder);
-    grepOptionsParser.parse(args);
-    final LimitOptionsParser limitOptionsParser = new LimitOptionsParser(
-      schemaCrawlerOptionsBuilder);
-    limitOptionsParser.parse(args);
+    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state
+      .getSchemaCrawlerOptionsBuilder();
     final InfoLevelParser infoLevelParser = new InfoLevelParser(
       schemaCrawlerOptionsBuilder);
     infoLevelParser.parse(args);
-    schemaCrawlerOptions = schemaCrawlerOptionsBuilder.toOptions();
+
+    schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder().toOptions();
 
     final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
       .builder().fromConfig(state.getAdditionalConfiguration());
@@ -125,7 +112,7 @@ public final class SchemaCrawlerCommandLine
     config.putAll(argsMap);
 
     final CommandOptions commandOptions = new CommandOptions();
-    newCommandLine(commandOptions, factory).parse(args);
+    newCommandLine(commandOptions).parse(args);
     command = commandOptions.getCommand();
   }
 

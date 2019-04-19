@@ -35,8 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.parser.ConnectionOptions;
-import schemacrawler.tools.commandline.parser.DatabaseConnectable;
+import schemacrawler.tools.commandline.command.ConnectionOptions;
+import schemacrawler.tools.commandline.command.DatabaseConnectable;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 
 public class ConnectionOptionsTest

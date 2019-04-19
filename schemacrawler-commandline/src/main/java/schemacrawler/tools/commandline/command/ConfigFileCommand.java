@@ -29,6 +29,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -65,14 +67,7 @@ public class ConfigFileCommand
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)
   {
-    if (state == null)
-    {
-      this.state = new SchemaCrawlerShellState();
-    }
-    else
-    {
-      this.state = state;
-    }
+    this.state = requireNonNull(state, "No state provided");
   }
 
   @Override

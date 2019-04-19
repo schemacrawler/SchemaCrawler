@@ -25,41 +25,29 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline;
 
+package schemacrawler.tools.commandline.command;
 
-import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class StateFactory
-  implements CommandLine.IFactory
+public class DatabaseConnectionOptions
 {
 
-  private final SchemaCrawlerShellState state;
+  @CommandLine.ArgGroup(exclusive = false)
+  private DatabaseConfigConnectionOptions databaseConfigConnectionOptions;
+  @CommandLine.ArgGroup(exclusive = false)
+  private DatabaseUrlConnectionOptions databaseUrlConnectionOptions;
 
-  StateFactory(final SchemaCrawlerShellState state)
+  DatabaseConnectable getDatabaseConnectable()
   {
-    this.state = requireNonNull(state, "No state provided");
-  }
-
-  @Override
-  public <K> K create(final Class<K> cls)
-    throws Exception
-  {
-    if (cls == null)
+    if (databaseConfigConnectionOptions != null)
     {
-      return null;
+      return databaseConfigConnectionOptions;
     }
-    try
+    else
     {
-      return cls.getConstructor(SchemaCrawlerShellState.class)
-        .newInstance(state);
-    }
-    catch (final Exception e)
-    {
-      return cls.getConstructor().newInstance();
+      return databaseUrlConnectionOptions;
     }
   }
 

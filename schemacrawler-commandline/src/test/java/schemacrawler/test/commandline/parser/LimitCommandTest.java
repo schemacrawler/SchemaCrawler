@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.command.FilterCommand;
+import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class FilterCommandTest
+public class LimitCommandTest
 {
 
   @Test
@@ -26,9 +26,9 @@ public class FilterCommandTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
+    newCommandLine(new LimitCommand(state))
+      .parseWithHandlers(new CommandLine.RunLast(),
+                         new CommandLine.DefaultExceptionHandler<>(),
                          args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
@@ -46,7 +46,7 @@ public class FilterCommandTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    runCommandInTest(new FilterCommand(state), args);
+    runCommandInTest(new LimitCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
@@ -64,7 +64,7 @@ public class FilterCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new FilterCommand(state), args));
+                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
   @Test
@@ -77,7 +77,7 @@ public class FilterCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new FilterCommand(state), args));
+                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
   @Test
@@ -90,7 +90,7 @@ public class FilterCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new FilterCommand(state), args));
+                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
   @Test
@@ -103,7 +103,7 @@ public class FilterCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new FilterCommand(state), args));
+                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
   @Test
@@ -122,9 +122,9 @@ public class FilterCommandTest
       .builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
+    newCommandLine(new LimitCommand(state))
+      .parseWithHandlers(new CommandLine.RunLast(),
+                         new CommandLine.DefaultExceptionHandler<>(),
                          args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 

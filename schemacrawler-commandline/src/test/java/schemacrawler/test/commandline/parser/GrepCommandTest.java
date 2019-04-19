@@ -2,9 +2,9 @@ package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyArray;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
 
 import java.util.regex.Pattern;
 
@@ -13,9 +13,10 @@ import picocli.CommandLine;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.tools.commandline.parser.GrepOptionsParser;
+import schemacrawler.tools.commandline.command.GrepCommand;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class GrepOptionsParserTest
+public class GrepCommandTest
 {
 
   @Test
@@ -25,9 +26,9 @@ public class GrepOptionsParserTest
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
-    final GrepOptionsParser optionsParser = new GrepOptionsParser(builder);
-
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
+    runCommandInTest(new GrepCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.isGrepColumns(), is(false));
@@ -35,9 +36,6 @@ public class GrepOptionsParserTest
     assertThat(schemaCrawlerOptions.isGrepDefinitions(), is(false));
     assertThat(schemaCrawlerOptions.isGrepInvertMatch(), is(false));
     assertThat(schemaCrawlerOptions.isGrepOnlyMatching(), is(false));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -47,9 +45,9 @@ public class GrepOptionsParserTest
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
-    final GrepOptionsParser optionsParser = new GrepOptionsParser(builder);
-
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
+    runCommandInTest(new GrepCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.isGrepColumns(), is(false));
@@ -57,9 +55,6 @@ public class GrepOptionsParserTest
     assertThat(schemaCrawlerOptions.isGrepDefinitions(), is(false));
     assertThat(schemaCrawlerOptions.isGrepInvertMatch(), is(false));
     assertThat(schemaCrawlerOptions.isGrepOnlyMatching(), is(false));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(args));
   }
 
   @Test
@@ -69,9 +64,10 @@ public class GrepOptionsParserTest
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
-    final GrepOptionsParser optionsParser = new GrepOptionsParser(builder);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> runCommandInTest(new GrepCommand(state), args));
   }
 
   @Test
@@ -81,10 +77,11 @@ public class GrepOptionsParserTest
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
-    final GrepOptionsParser optionsParser = new GrepOptionsParser(builder);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
 
     assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.parse(args));
+                 () -> runCommandInTest(new GrepCommand(state), args));
   }
 
   @Test
@@ -104,9 +101,9 @@ public class GrepOptionsParserTest
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
-    final GrepOptionsParser optionsParser = new GrepOptionsParser(builder);
-
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
+    runCommandInTest(new GrepCommand(state), args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.isGrepColumns(), is(true));
@@ -126,10 +123,6 @@ public class GrepOptionsParserTest
 
     assertThat(schemaCrawlerOptions.isGrepInvertMatch(), is(true));
     assertThat(schemaCrawlerOptions.isGrepOnlyMatching(), is(true));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(new String[] {
-      "additional", "-extra" }));
   }
 
 }

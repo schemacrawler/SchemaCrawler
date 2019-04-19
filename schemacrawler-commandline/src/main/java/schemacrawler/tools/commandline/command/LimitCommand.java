@@ -26,11 +26,10 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import static sf.util.Utility.enumValue;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -39,41 +38,19 @@ import picocli.CommandLine;
 import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class LimitOptionsParser
-  implements OptionsParser
+@CommandLine.Command(name = "limit", description = "Limit database object metadata")
+public final class LimitCommand
+  implements Runnable
 {
 
-  /**
-   * Sets routine types from a comma-separated list of routine types.
-   *
-   * @param routineTypesArray Comma-separated list of routine types.
-   */
-  private static Collection<RoutineType> routineTypes(final String[] routineTypesArray)
-  {
-    if (routineTypesArray == null)
-    {
-      return null;
-    }
-    final Collection<RoutineType> routineTypes = new HashSet<>();
-    for (final String routineTypeString : routineTypesArray)
-    {
-      final RoutineType routineType = enumValue(routineTypeString
-                                                  .toLowerCase(Locale.ENGLISH),
-                                                RoutineType.unknown);
-      routineTypes.add(routineType);
-    }
-    return routineTypes;
-  }
-  private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
+  private final SchemaCrawlerShellState state;
   @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
   private Pattern excludecolumns;
   @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
@@ -92,17 +69,15 @@ public final class LimitOptionsParser
   private Pattern tables;
   @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
   private String[] tabletypes;
-
-  public LimitOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public LimitCommand(final SchemaCrawlerShellState state)
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
+    this.state = Objects.requireNonNull(state);
   }
 
-  @Override
-  public void parse(final String[] args)
+  public void run()
   {
-    commandLine.parse(args);
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state
+      .getSchemaCrawlerOptionsBuilder();
 
     if (schemas != null)
     {
@@ -142,15 +117,29 @@ public final class LimitOptionsParser
     }
     if (routinetypes != null)
     {
-      optionsBuilder.routineTypes(routineTypes(routinetypes));
+      optionsBuilder.routineTypes(routineTypes());
     }
 
   }
 
-  @Override
-  public String[] getRemainder()
+  /**
+   * Sets routine types from a comma-separated list of routine types.
+   */
+  private Collection<RoutineType> routineTypes()
   {
-    return remainder;
+    if (routinetypes == null)
+    {
+      return null;
+    }
+    final Collection<RoutineType> routineTypesCollection = new HashSet<>();
+    for (final String routineTypeString : routinetypes)
+    {
+      final RoutineType routineType = enumValue(routineTypeString
+                                                  .toLowerCase(Locale.ENGLISH),
+                                                RoutineType.unknown);
+      routineTypesCollection.add(routineType);
+    }
+    return routineTypesCollection;
   }
 
 }

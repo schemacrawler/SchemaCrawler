@@ -33,13 +33,18 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.*;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
+import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import picocli.CommandLine;
 import schemacrawler.Main;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.options.OutputFormat;
@@ -155,6 +160,74 @@ public final class CommandlineTestUtility
       .store(tempFileWriter, "Store config to temporary file for testing");
 
     return tempFile;
+  }
+
+  public static void runCommandInTest(final Object object, String[] args)
+  {
+
+    class ThrowExceptionHandler<R>
+      extends CommandLine.AbstractHandler<R, ThrowExceptionHandler<R>>
+      implements CommandLine.IExceptionHandler2<R>
+    {
+      public List<Object> handleException(CommandLine.ParameterException ex,
+                                          PrintStream out,
+                                          CommandLine.Help.Ansi ansi,
+                                          String... args)
+      {
+        internalHandleParseException(ex, out, ansi, args);
+        return Collections.<Object>emptyList();
+      }
+
+      /**
+       * Prints the message of the specified exception, followed by the usage message for the command or subcommand
+       * whose input was invalid, to the stream returned by {@link #err()}.
+       *
+       * @param ex   the ParameterException describing the problem that occurred while parsing the command line arguments,
+       *             and the CommandLine representing the command or subcommand whose input was invalid
+       * @param args the command line arguments that could not be parsed
+       * @return the empty list
+       * @since 3.0
+       */
+      public R handleParseException(CommandLine.ParameterException ex,
+                                    String[] args)
+      {
+        internalHandleParseException(ex, err(), ansi(), args);
+        return returnResultOrExit(null);
+      }
+
+      private void internalHandleParseException(CommandLine.ParameterException ex,
+                                                PrintStream out,
+                                                CommandLine.Help.Ansi ansi,
+                                                String[] args)
+      {
+        throw ex;
+      }
+
+      /**
+       * This implementation always simply rethrows the specified exception.
+       *
+       * @param ex          the ExecutionException describing the problem that occurred while executing the {@code Runnable} or {@code Callable} command
+       * @param parseResult the result of parsing the command line arguments
+       * @return nothing: this method always rethrows the specified exception
+       * @throws CommandLine.ExecutionException always rethrows the specified exception
+       * @since 3.0
+       */
+      public R handleExecutionException(CommandLine.ExecutionException ex,
+                                        CommandLine.ParseResult parseResult)
+      {
+        return throwOrExit(ex);
+      }
+
+      @Override
+      protected ThrowExceptionHandler<R> self()
+      {
+        return this;
+      }
+    }
+
+    newCommandLine(object).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                             new ThrowExceptionHandler(),
+                                             args);
   }
 
   private CommandlineTestUtility()

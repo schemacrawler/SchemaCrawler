@@ -26,28 +26,28 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+import static java.util.Objects.requireNonNull;
 
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class GrepOptionsParser
-  implements OptionsParser
+@CommandLine.Command(name = "grep", description = "Grep database object metadata")
+public final class GrepCommand
+  implements Runnable
 {
 
-  private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
+  private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
     "--grep-columns" }, description = "grep for tables with column names matching pattern")
@@ -65,19 +65,15 @@ public final class GrepOptionsParser
     "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
   private Boolean onlyMatching;
 
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
-
-  public GrepOptionsParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public GrepCommand(final SchemaCrawlerShellState state)
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
+    this.state = requireNonNull(state);
   }
 
-  @Override
-  public void parse(final String[] args)
+  public void run()
   {
-    commandLine.parse(args);
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state
+      .getSchemaCrawlerOptionsBuilder();
 
     if (grepcolumns != null)
     {
@@ -101,12 +97,6 @@ public final class GrepOptionsParser
       optionsBuilder.grepOnlyMatching(onlyMatching);
     }
 
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
 }
