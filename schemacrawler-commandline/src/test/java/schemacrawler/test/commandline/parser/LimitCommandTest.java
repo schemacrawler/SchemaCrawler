@@ -11,10 +11,7 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.schema.RoutineType;
-import schemacrawler.schemacrawler.ExcludeAll;
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -76,66 +73,111 @@ public class LimitCommandTest
   }
 
   @Test
+  public void schemasBadValue()
+  {
+    runBadCommand(new String[] { "--schemas", "[" });
+  }
+
+  @Test
+  public void synonymsBadValue()
+  {
+    runBadCommand(new String[] { "--synonyms", "[" });
+  }
+
+  @Test
+  public void sequencesBadValue()
+  {
+    runBadCommand(new String[] { "--sequences", "[" });
+  }
+
+  @Test
   public void routinesBadValue()
   {
-    final String[] args = { "--routines", "[" };
-
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new LimitCommand(state), args));
+    runBadCommand(new String[] { "--routines", "[" });
   }
 
   @Test
   public void tablesBadValue()
   {
-    final String[] args = { "--tables", "[" };
+    runBadCommand(new String[] { "--tables", "[" });
+  }
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new LimitCommand(state), args));
+  @Test
+  public void excludeColumnsBadValue()
+  {
+    runBadCommand(new String[] { "--exclude-columns", "[" });
+  }
+
+  @Test
+  public void excludeInOutBadValue()
+  {
+    runBadCommand(new String[] { "--exclude-in-out", "[" });
   }
 
   @Test
   public void tablesNoValue()
   {
-    final String[] args = { "--tables" };
-
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new LimitCommand(state), args));
+    runBadCommand(new String[] { "--tables" });
   }
 
   @Test
   public void routinesNoValue()
   {
-    final String[] args = { "--routines" };
+    runBadCommand(new String[] { "--routines" });
+  }
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new LimitCommand(state), args));
+  @Test
+  public void schemasNoValue()
+  {
+    runBadCommand(new String[] { "--schemas" });
+  }
+
+  @Test
+  public void sequencesNoValue()
+  {
+    runBadCommand(new String[] { "--sequences" });
+  }
+
+  @Test
+  public void synonymsNoValue()
+  {
+    runBadCommand(new String[] { "--synonyms" });
+  }
+
+  @Test
+  public void excludeColumnsNoValue()
+  {
+    runBadCommand(new String[] { "--exclude-columns" });
+  }
+
+  @Test
+  public void excludeInOutNoValue()
+  {
+    runBadCommand(new String[] { "--exclude-in-out" });
   }
 
   @Test
   public void allArgs()
   {
     final String[] args = {
-      "--parents",
-      "2",
-      "--children",
-      "2",
-      "--no-empty-tables=true",
+      "--tables",
+      ".*regexp.*",
+      "--routines",
+      ".*regexp.*",
+      "--schemas",
+      ".*regexp.*",
+      "--sequences",
+      ".*regexp.*",
+      "--synonyms",
+      ".*regexp.*",
+      "--exclude-columns",
+      ".*regexp.*",
+      "--exclude-in-out",
+      ".*regexp.*",
+      "--table-types",
+      "CHAIR",
+      "--routine-types",
+      "FUNCtion",
       "additional",
       "-extra" };
 
@@ -150,25 +192,34 @@ public class LimitCommandTest
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
-               is(new IncludeAll()));
+               is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getSynonymInclusionRule(),
-               is(new ExcludeAll()));
+               is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getSequenceInclusionRule(),
-               is(new ExcludeAll()));
+               is(new RegularExpressionInclusionRule(".*regexp.*")));
 
     assertThat(schemaCrawlerOptions.getTableInclusionRule(),
-               is(new IncludeAll()));
+               is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getColumnInclusionRule(),
-               is(new IncludeAll()));
-    assertThat(schemaCrawlerOptions.getTableTypes(),
-               hasItems("TABLE", "BASE TABLE", "VIEW"));
+               is(new RegularExpressionExclusionRule(".*regexp.*")));
+    assertThat(schemaCrawlerOptions.getTableTypes(), hasItems("CHAIR"));
 
     assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
-               is(new ExcludeAll()));
+               is(new RegularExpressionInclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getRoutineColumnInclusionRule(),
-               is(new ExcludeAll()));
+               is(new RegularExpressionExclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getRoutineTypes(),
-               hasItems(RoutineType.function, RoutineType.procedure));
+               hasItems(RoutineType.function));
+  }
+
+  private void runBadCommand(final String[] args)
+  {
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
+      .builder();
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
+    assertThrows(CommandLine.ParameterException.class,
+                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
 }
