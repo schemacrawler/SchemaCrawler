@@ -1,6 +1,7 @@
 package schemacrawler.test.commandline.parser;
 
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,6 +10,9 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
+import schemacrawler.schema.RoutineType;
+import schemacrawler.schemacrawler.ExcludeAll;
+import schemacrawler.schemacrawler.IncludeAll;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.LimitCommand;
@@ -32,9 +36,26 @@ public class LimitCommandTest
                          args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(0));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(false));
+    assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getSynonymInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getSequenceInclusionRule(),
+               is(new ExcludeAll()));
+
+    assertThat(schemaCrawlerOptions.getTableInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getColumnInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getTableTypes(),
+               hasItems("TABLE", "BASE TABLE", "VIEW"));
+
+    assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getRoutineColumnInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getRoutineTypes(),
+               hasItems(RoutineType.function, RoutineType.procedure));
   }
 
   @Test
@@ -55,9 +76,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void parentsBadValue()
+  public void routinesBadValue()
   {
-    final String[] args = { "--parents", "-1" };
+    final String[] args = { "--routines", "[" };
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
@@ -68,9 +89,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void childrenBadValue()
+  public void tablesBadValue()
   {
-    final String[] args = { "--children", "-1" };
+    final String[] args = { "--tables", "[" };
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
@@ -81,9 +102,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void parentsNoValue()
+  public void tablesNoValue()
   {
-    final String[] args = { "--parents" };
+    final String[] args = { "--tables" };
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
@@ -94,9 +115,9 @@ public class LimitCommandTest
   }
 
   @Test
-  public void childrenNoValue()
+  public void routinesNoValue()
   {
-    final String[] args = { "--children" };
+    final String[] args = { "--routines" };
 
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
       .builder();
@@ -128,9 +149,26 @@ public class LimitCommandTest
                          args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
-    assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));
-    assertThat(schemaCrawlerOptions.getChildTableFilterDepth(), is(2));
-    assertThat(schemaCrawlerOptions.isNoEmptyTables(), is(true));
+    assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getSynonymInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getSequenceInclusionRule(),
+               is(new ExcludeAll()));
+
+    assertThat(schemaCrawlerOptions.getTableInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getColumnInclusionRule(),
+               is(new IncludeAll()));
+    assertThat(schemaCrawlerOptions.getTableTypes(),
+               hasItems("TABLE", "BASE TABLE", "VIEW"));
+
+    assertThat(schemaCrawlerOptions.getRoutineInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getRoutineColumnInclusionRule(),
+               is(new ExcludeAll()));
+    assertThat(schemaCrawlerOptions.getRoutineTypes(),
+               hasItems(RoutineType.function, RoutineType.procedure));
   }
 
 }
