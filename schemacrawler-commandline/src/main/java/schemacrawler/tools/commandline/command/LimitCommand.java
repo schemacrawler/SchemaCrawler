@@ -29,6 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
+import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
 
 import java.util.*;
@@ -51,6 +52,7 @@ public final class LimitCommand
 {
 
   private final SchemaCrawlerShellState state;
+
   @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
   private Pattern excludecolumns;
   @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
@@ -69,9 +71,10 @@ public final class LimitCommand
   private Pattern tables;
   @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
   private String[] tabletypes;
+
   public LimitCommand(final SchemaCrawlerShellState state)
   {
-    this.state = Objects.requireNonNull(state);
+    this.state = requireNonNull(state, "No state provided");
   }
 
   public void run()

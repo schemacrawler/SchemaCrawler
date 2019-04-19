@@ -164,7 +164,6 @@ public final class CommandlineTestUtility
 
   public static void parseCommand(final Object object, String[] args)
   {
-
     newCommandLine(object).parse(args);
   }
 

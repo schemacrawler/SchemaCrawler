@@ -2,13 +2,16 @@ package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static schemacrawler.test.utility.CommandlineTestUtility.runCommandInTest;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.tools.commandline.parser.SortOptionsParser;
+import schemacrawler.tools.commandline.command.SortCommand;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
-public class SortOptionsParserTest
+public class SortCommandTest
 {
 
   @Test
@@ -16,16 +19,15 @@ public class SortOptionsParserTest
   {
     final String[] args = new String[0];
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder();
-    final SortOptionsParser optionsParser = new SortOptionsParser(builder);
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    runCommandInTest(new SortCommand(state), args);
+
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
                is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat("Remainder is not empty", remainder.length, is(0));
   }
 
   @Test
@@ -33,16 +35,15 @@ public class SortOptionsParserTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder();
-    final SortOptionsParser optionsParser = new SortOptionsParser(builder);
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    runCommandInTest(new SortCommand(state), args);
+
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
                is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat("Remainder is not empty", remainder.length, is(1));
   }
 
   @Test
@@ -51,16 +52,15 @@ public class SortOptionsParserTest
     final String[] args = {
       "--sort-tables=false" };
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder();
-    final SortOptionsParser optionsParser = new SortOptionsParser(builder);
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    runCommandInTest(new SortCommand(state), args);
+
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
                is(equalTo(SchemaTextOptionsBuilder.builder().toOptions())));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -69,10 +69,11 @@ public class SortOptionsParserTest
     final String[] args = {
       "--sort-tables=true" };
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder();
-    final SortOptionsParser optionsParser = new SortOptionsParser(builder);
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    runCommandInTest(new SortCommand(state), args);
 
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
+      .fromConfig(state.getAdditionalConfiguration());
     assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
                is(false));
@@ -80,8 +81,6 @@ public class SortOptionsParserTest
     assertThat(builder.toOptions().isAlphabeticalSortForRoutineColumns(),
                is(false));
 
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -95,9 +94,11 @@ public class SortOptionsParserTest
       "additional",
       "--extra" };
 
-    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder();
-    final SortOptionsParser optionsParser = new SortOptionsParser(builder);
-    optionsParser.parse(args);
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    runCommandInTest(new SortCommand(state), args);
+
+    final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
+      .fromConfig(state.getAdditionalConfiguration());
 
     assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
@@ -106,9 +107,6 @@ public class SortOptionsParserTest
     assertThat(builder.toOptions().isAlphabeticalSortForRoutineColumns(),
                is(true));
 
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(new String[] {
-      "additional", "--extra" }));
   }
 
 }

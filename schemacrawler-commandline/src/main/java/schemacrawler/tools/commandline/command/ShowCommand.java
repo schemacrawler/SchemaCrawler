@@ -26,14 +26,14 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
-
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 
 /**
@@ -41,12 +41,12 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-public final class ShowOptionsParser
-  implements OptionsParser
+@CommandLine.Command(name = "show", description = "Show output")
+public final class ShowCommand
+  implements Runnable
 {
 
-  private final CommandLine commandLine;
-  private final SchemaTextOptionsBuilder optionsBuilder;
+  private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = { "--no-info" }, description = "Whether to show database information")
   private Boolean noinfo;
@@ -54,21 +54,18 @@ public final class ShowOptionsParser
   private Boolean noremarks;
   @CommandLine.Option(names = { "--portable-names" }, description = "Whether to use portable names")
   private Boolean portablenames;
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
   @CommandLine.Option(names = { "--weak-associations" }, description = "Whether to weak associations")
   private Boolean weakassociations;
 
-  public ShowOptionsParser(final SchemaTextOptionsBuilder optionsBuilder)
+  public ShowCommand(final SchemaCrawlerShellState state)
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
+    this.state = requireNonNull(state, "No state provided");
   }
 
-  @Override
-  public void parse(final String[] args)
+  public void run()
   {
-    commandLine.parse(args);
+    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
+      .builder().fromConfig(state.getAdditionalConfiguration());
 
     if (noinfo != null)
     {
@@ -87,12 +84,19 @@ public final class ShowOptionsParser
       optionsBuilder.portableNames(portablenames);
     }
 
-  }
+    // Set updated configuration options
+    final Config config;
+    if (state.getAdditionalConfiguration() != null)
+    {
+      config = state.getAdditionalConfiguration();
+    }
+    else
+    {
+      config = new Config();
+    }
+    config.putAll(optionsBuilder.toConfig());
+    state.setAdditionalConfiguration(config);
 
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
 }

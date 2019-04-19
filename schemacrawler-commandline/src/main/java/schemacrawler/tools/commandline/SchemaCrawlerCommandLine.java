@@ -35,12 +35,13 @@ import java.sql.Connection;
 
 import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.command.*;
-import schemacrawler.tools.commandline.parser.*;
+import schemacrawler.tools.commandline.parser.CommandOptions;
+import schemacrawler.tools.commandline.parser.InfoLevelParser;
+import schemacrawler.tools.commandline.parser.OutputOptionsParser;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
-import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
@@ -96,18 +97,10 @@ public final class SchemaCrawlerCommandLine
     outputOptionsParser.parse(args);
     outputOptions = outputOptionsBuilder.toOptions();
 
+    runCommand(new ShowCommand(state), args);
+    runCommand(new SortCommand(state), args);
+
     final Config config = state.getAdditionalConfiguration();
-
-    final SchemaTextOptionsBuilder schemaTextOptionsBuilder = SchemaTextOptionsBuilder
-      .builder().fromConfig(state.getAdditionalConfiguration());
-    final ShowOptionsParser showOptionsParser = new ShowOptionsParser(
-      schemaTextOptionsBuilder);
-    showOptionsParser.parse(args);
-    final SortOptionsParser sortOptionsParser = new SortOptionsParser(
-      schemaTextOptionsBuilder);
-    sortOptionsParser.parse(args);
-    config.putAll(schemaTextOptionsBuilder.toConfig());
-
     final Config argsMap = CommandLineUtility.parseArgs(args);
     config.putAll(argsMap);
 
