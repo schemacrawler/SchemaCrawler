@@ -26,11 +26,10 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import static sf.util.Utility.isBlank;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,11 +46,9 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
  *
  * @author sfatehi
  */
-public final class UserCredentialsParser
-  implements OptionsParser
+public final class UserCredentialsOptions
 {
 
-  protected final CommandLine commandLine;
   @CommandLine.Option(names = "--password:env", description = "Database password, from an environmental variable value")
   private String passwordEnvironmentVariable;
   @CommandLine.Option(names = "--password:file", description = "Database password, read from a file")
@@ -61,28 +58,9 @@ public final class UserCredentialsParser
   @CommandLine.Option(names = {
     "--password" }, description = "Database password")
   private String passwordProvided;
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
   @CommandLine.Option(names = {
     "--user" }, description = "Database user name")
   private String user;
-
-  public UserCredentialsParser()
-  {
-    commandLine = newCommandLine(this);
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
-  }
 
   public UserCredentials getUserCredentials()
   {

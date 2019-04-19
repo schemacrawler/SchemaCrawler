@@ -31,8 +31,8 @@ package schemacrawler.test.commandline.parser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
-import static org.hamcrest.collection.IsArrayWithSize.emptyArray;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +41,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
-import schemacrawler.tools.commandline.parser.UserCredentialsParser;
+import schemacrawler.tools.commandline.command.UserCredentialsOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
 public class PasswordParserTest
@@ -52,15 +52,12 @@ public class PasswordParserTest
   {
     final String[] args = new String[0];
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -68,15 +65,12 @@ public class PasswordParserTest
   {
     final String[] args = { "--some-option" };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(args));
   }
 
   @Test
@@ -84,15 +78,12 @@ public class PasswordParserTest
   {
     final String[] args = { "--password", "pwd123" };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is("pwd123"));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -105,15 +96,12 @@ public class PasswordParserTest
 
     final String[] args = { "--password:file", file.getAbsolutePath() };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is(nullValue()));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -127,15 +115,12 @@ public class PasswordParserTest
 
     final String[] args = { "--password:file", file.getAbsolutePath() };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
     assertThat(options.getPassword(), is("pwd123"));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
   }
 
   @Test
@@ -144,8 +129,8 @@ public class PasswordParserTest
   {
     final String[] args = { "--password:file", "./no-file.txt" };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     assertThrows(SchemaCrawlerCommandLineException.class,
                  () -> optionsParser.getUserCredentials());
   }
@@ -162,8 +147,8 @@ public class PasswordParserTest
     final String[] args = {
       "--password:file", file.getAbsolutePath(), "--password", "pwd123" };
 
-    final UserCredentialsParser optionsParser = new UserCredentialsParser();
-    optionsParser.parse(args);
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
     assertThrows(SchemaCrawlerCommandLineException.class,
                  () -> optionsParser.getUserCredentials());
   }

@@ -162,6 +162,12 @@ public final class CommandlineTestUtility
     return tempFile;
   }
 
+  public static void parseCommand(final Object object, String[] args)
+  {
+
+    newCommandLine(object).parse(args);
+  }
+
   public static void runCommandInTest(final Object object, String[] args)
   {
 
