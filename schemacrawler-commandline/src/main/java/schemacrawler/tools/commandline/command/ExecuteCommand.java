@@ -53,7 +53,7 @@ public class ExecuteCommand
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ExecuteCommands.class.getName());
+    .getLogger(AvailableCommandsCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 

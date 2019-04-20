@@ -31,6 +31,7 @@ package schemacrawler.test.commandline.parser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -59,7 +60,7 @@ public class ConnectionOptionsTest
     final String[] args = { "--some-option" };
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
-    new CommandLine(optionsParser).parse(args);
+    parseCommand(optionsParser, args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
   }
@@ -94,7 +95,7 @@ public class ConnectionOptionsTest
       "--url", "jdbc:database_url", "additional", "--extra" };
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
-    new CommandLine(optionsParser).parse(args);
+    parseCommand(optionsParser, args);
 
     final DatabaseConnectable databaseConnectable = optionsParser
       .getDatabaseConnectable();
@@ -103,10 +104,6 @@ public class ConnectionOptionsTest
 
     assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
                is("driver=<unknown>\nurl=jdbc:database_url\n"));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(new String[] {
-      "additional", "--extra" }));
   }
 
   @Test
@@ -128,7 +125,7 @@ public class ConnectionOptionsTest
     config.put("url", "jdbc:newdb://${host}:${port}/${database}");
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
-    new CommandLine(optionsParser).parse(args);
+    parseCommand(optionsParser, args);
 
     final DatabaseConnectable databaseConnectable = optionsParser
       .getDatabaseConnectable();
@@ -137,10 +134,6 @@ public class ConnectionOptionsTest
 
     assertThat(databaseConnectionSource.toString().replaceAll("\r", ""),
                is("driver=<unknown>\nurl=jdbc:newdb://somehost:1234/adatabase\n"));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(new String[] {
-      "additional", "--extra" }));
   }
 
   @Test
@@ -163,7 +156,7 @@ public class ConnectionOptionsTest
     final ConnectionOptions optionsParser = new ConnectionOptions();
 
     assertThrows(CommandLine.MutuallyExclusiveArgsException.class,
-                 () -> new CommandLine(optionsParser).parse(args));
+                 () -> parseCommand(optionsParser, args));
   }
 
 }

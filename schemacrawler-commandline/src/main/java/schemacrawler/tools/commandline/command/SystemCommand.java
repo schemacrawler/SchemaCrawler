@@ -29,31 +29,40 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import java.util.logging.Level;
-
 import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import sf.util.SchemaCrawlerLogger;
+import schemacrawler.tools.commandline.AvailableCommands;
+import schemacrawler.tools.commandline.AvailableServers;
 
-public class SystemCommands
+@CommandLine.Command(name = "version", description = "Print version and system information")
+public class SystemCommand
+  implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SystemCommands.class.getName());
-
-  @CommandLine.Command(name = "version")
-  public void systemInfo()
+  public void run()
   {
-    LOGGER.log(Level.INFO, "system-info");
-
     final SchemaCrawlerInfo scInfo = new SchemaCrawlerInfo();
     System.out.println(scInfo);
     final OperatingSystemInfo osInfo = new OperatingSystemInfo();
     System.out.println(osInfo);
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
     System.out.println(jvmInfo);
+
+    System.out.println();
+    System.out.println("Available SchemaCrawler commands:");
+    for (String command : new AvailableCommands())
+    {
+      System.out.println(command);
+    }
+
+    System.out.println();
+    System.out.println("Available database server types:");
+    for (String server : new AvailableServers())
+    {
+      System.out.println(server);
+    }
   }
 
 }

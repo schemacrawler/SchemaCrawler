@@ -60,6 +60,7 @@ public class LoadCommand
     "-i",
     "--info-level" }, required = true, description = "Determine the amount of database metadata retrieved")
   private InfoLevel infoLevel;
+
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
 

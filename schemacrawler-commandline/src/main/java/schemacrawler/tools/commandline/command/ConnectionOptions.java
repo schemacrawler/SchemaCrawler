@@ -42,8 +42,6 @@ public final class ConnectionOptions
 
   @CommandLine.ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
-  @CommandLine.Unmatched
-  private String[] remainder;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
   @CommandLine.Mixin
@@ -66,11 +64,6 @@ public final class ConnectionOptions
     }
 
     return databaseConnectable;
-  }
-
-  public String[] getRemainder()
-  {
-    return remainder;
   }
 
   public UserCredentials getUserCredentials()

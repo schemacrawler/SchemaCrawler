@@ -46,6 +46,7 @@ public final class FilterCommand
 {
 
   private final SchemaCrawlerShellState state;
+
   @CommandLine.Option(names = {
     "--children" }, description = "Number of generations of descendents for the tables selected by grep")
   private Integer children;
@@ -55,6 +56,7 @@ public final class FilterCommand
   @CommandLine.Option(names = {
     "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
   private Integer parents;
+
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
 

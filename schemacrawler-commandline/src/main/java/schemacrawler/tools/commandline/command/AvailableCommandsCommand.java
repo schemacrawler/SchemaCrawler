@@ -29,24 +29,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import java.util.logging.Level;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.AvailableCommands;
-import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "load", description = "Load database metadata")
-public class ExecuteCommands
+@CommandLine.Command(name = "commands", description = "List available SchemaCrawler commands")
+public class AvailableCommandsCommand
+  implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ExecuteCommands.class.getName());
-
-  @CommandLine.Command(description = "List available SchemaCrawler commands")
-  public static void commands()
+  public void run()
   {
-    LOGGER.log(Level.INFO, "commands");
-
     for (String command : new AvailableCommands())
     {
       System.out.println(command);
