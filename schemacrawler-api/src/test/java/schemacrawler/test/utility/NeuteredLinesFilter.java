@@ -64,8 +64,7 @@ final class NeuteredLinesFilter
                                       Pattern.compile("hostname\\s+.*"),
                                       Pattern.compile("  value\\s+\\d+\\s+"),
                                       // Operating systems
-                                      Pattern.compile("\\s+.*Windows\\s+.*"),
-                                      Pattern.compile("\\s+.*Linux\\s+.*"),};
+                                      Pattern.compile(".*(Windows|Linux).*"),};
 
   /**
    * Should we keep the line - that is, not ignore it?
