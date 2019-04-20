@@ -37,6 +37,7 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestContext;
@@ -63,18 +64,6 @@ public class ShellCommandsTest
   }
 
   @Test
-  public void system(final TestContext testContext)
-  {
-    new SystemCommand().run();
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out),
-               hasSameContentAs(classpathResource(
-                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
-                 + ".stdout.txt")));
-  }
-
-  @Test
   public void availableServers(final TestContext testContext)
   {
     new AvailableServersCommand().run();
@@ -87,6 +76,19 @@ public class ShellCommandsTest
   public void availableCommands(final TestContext testContext)
   {
     new AvailableCommandsCommand().run();
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(out),
+               hasSameContentAs(classpathResource(
+                 SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
+                 + ".stdout.txt")));
+  }
+
+  @Test
+  @Disabled
+  public void system(final TestContext testContext)
+  {
+    new SystemCommand().run();
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
