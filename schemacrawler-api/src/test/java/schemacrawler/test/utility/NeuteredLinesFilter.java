@@ -62,7 +62,10 @@ final class NeuteredLinesFilter
                                       // MySQL
                                       Pattern.compile("server_uuid\\s+.*"),
                                       Pattern.compile("hostname\\s+.*"),
-                                      Pattern.compile("  value\\s+\\d+\\s+"), };
+                                      Pattern.compile("  value\\s+\\d+\\s+"),
+                                      // Operating systems
+                                      Pattern.compile("\\s+.*Windows\\s+.*"),
+                                      Pattern.compile("\\s+.*Linux\\s+.*"),};
 
   /**
    * Should we keep the line - that is, not ignore it?
