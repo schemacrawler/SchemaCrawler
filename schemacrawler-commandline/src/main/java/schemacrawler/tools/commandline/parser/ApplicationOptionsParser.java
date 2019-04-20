@@ -38,7 +38,6 @@ import schemacrawler.tools.commandline.ApplicationOptions;
 import schemacrawler.tools.commandline.LogLevel;
 
 public final class ApplicationOptionsParser
-  implements OptionsParser
 {
 
   private final CommandLine commandLine;
@@ -59,13 +58,11 @@ public final class ApplicationOptionsParser
     commandLine = newCommandLine(this);
   }
 
-  @Override
   public void parse(final String[] args)
   {
     commandLine.parse(args);
   }
 
-  @Override
   public String[] getRemainder()
   {
     return remainder;

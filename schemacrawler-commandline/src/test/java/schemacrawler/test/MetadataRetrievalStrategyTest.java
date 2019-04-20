@@ -97,7 +97,8 @@ public class MetadataRetrievalStrategyTest
                                              outputFormat)), hasNoContent());
 
     final String errorLog = err.getFileContents();
-    assertThat(errorLog, containsString("No tables SQL provided"));
+    // Catalog retrieval should fail, since no data dictionary SQL to obtain tables is provided
+    assertThat(errorLog, containsString("Error: Cannot load catalog"));
 
   }
 

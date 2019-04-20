@@ -31,10 +31,11 @@ package schemacrawler.test.commandline.parser;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.parser.CommandOptions;
+import schemacrawler.tools.commandline.command.CommandOptions;
 
 public class CommandOptionsTest
 {
@@ -89,14 +90,10 @@ public class CommandOptionsTest
       "--command", "a_command", "additional", "--extra" };
 
     final CommandOptions optionsParser = new CommandOptions();
-    new CommandLine(optionsParser).parse(args);
+    parseCommand(optionsParser, args);
     final String options = optionsParser.getCommand();
 
     assertThat(options, is("a_command"));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(new String[] {
-      "additional", "--extra" }));
   }
 
 }

@@ -38,7 +38,6 @@ import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
 public class SchemaCrawlerShellState
@@ -50,7 +49,6 @@ public class SchemaCrawlerShellState
   private Config baseConfiguration;
   private Catalog catalog;
   private DataSource dataSource;
-  private OutputOptionsBuilder outputOptionsBuilder;
   private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
 
@@ -124,16 +122,6 @@ public class SchemaCrawlerShellState
     this.dataSource = dataSource;
   }
 
-  public OutputOptionsBuilder getOutputOptionsBuilder()
-  {
-    return outputOptionsBuilder;
-  }
-
-  public void setOutputOptionsBuilder(final OutputOptionsBuilder outputOptionsBuilder)
-  {
-    this.outputOptionsBuilder = outputOptionsBuilder;
-  }
-
   public SchemaCrawlerOptionsBuilder getSchemaCrawlerOptionsBuilder()
   {
     return schemaCrawlerOptionsBuilder;
@@ -158,9 +146,10 @@ public class SchemaCrawlerShellState
   {
     try (final Connection connection = dataSource.getConnection())
     {
-      LOGGER.log(Level.INFO,
-                 "Connected to: " + connection.getMetaData()
-                   .getDatabaseProductName());
+      if (!connection.isValid(0))
+      {
+        throw new SQLException("Connection is not valid");
+      }
     }
     catch (final NullPointerException | SQLException e)
     {
@@ -182,7 +171,6 @@ public class SchemaCrawlerShellState
     additionalConfiguration = null;
     schemaCrawlerOptionsBuilder = null;
     schemaRetrievalOptionsBuilder = null;
-    outputOptionsBuilder = null;
 
     disconnect();
   }

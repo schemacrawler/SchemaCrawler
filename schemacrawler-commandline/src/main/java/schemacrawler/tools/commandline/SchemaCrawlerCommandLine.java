@@ -28,20 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 import static us.fatehi.commandlineparser.CommandLineUtility.runCommand;
 
-import java.sql.Connection;
-
-import schemacrawler.schemacrawler.*;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.command.*;
-import schemacrawler.tools.commandline.parser.CommandOptions;
-import schemacrawler.tools.commandline.parser.InfoLevelParser;
-import schemacrawler.tools.commandline.parser.OutputOptionsParser;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
-import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 import us.fatehi.commandlineparser.CommandLineUtility;
 
@@ -57,14 +49,9 @@ public final class SchemaCrawlerCommandLine
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  private final String command;
-  private final OutputOptions outputOptions;
-  private final SchemaCrawlerOptions schemaCrawlerOptions;
-
   private final SchemaCrawlerShellState state;
 
   public SchemaCrawlerCommandLine(final String[] args)
-    throws SchemaCrawlerException
   {
 
     if (args == null)
@@ -82,21 +69,6 @@ public final class SchemaCrawlerCommandLine
     runCommand(new GrepCommand(state), args);
     runCommand(new LimitCommand(state), args);
 
-    final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = state
-      .getSchemaCrawlerOptionsBuilder();
-    final InfoLevelParser infoLevelParser = new InfoLevelParser(
-      schemaCrawlerOptionsBuilder);
-    infoLevelParser.parse(args);
-
-    schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder().toOptions();
-
-    final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-      .builder().fromConfig(state.getAdditionalConfiguration());
-    final OutputOptionsParser outputOptionsParser = new OutputOptionsParser(
-      outputOptionsBuilder);
-    outputOptionsParser.parse(args);
-    outputOptions = outputOptionsBuilder.toOptions();
-
     runCommand(new ShowCommand(state), args);
     runCommand(new SortCommand(state), args);
 
@@ -104,31 +76,14 @@ public final class SchemaCrawlerCommandLine
     final Config argsMap = CommandLineUtility.parseArgs(args);
     config.putAll(argsMap);
 
-    final CommandOptions commandOptions = new CommandOptions();
-    newCommandLine(commandOptions).parse(args);
-    command = commandOptions.getCommand();
+    runCommand(new LoadCommand(state), args);
+    runCommand(new ExecuteCommand(state), args);
   }
 
   @Override
   public void execute()
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-      command);
-    // Configure
-    executable.setOutputOptions(outputOptions);
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    executable.setAdditionalConfiguration(state.getAdditionalConfiguration());
-    try (final Connection connection = state.getDataSource().getConnection())
-    {
-      final SchemaRetrievalOptions schemaRetrievalOptions = state
-        .getSchemaRetrievalOptionsBuilder().toOptions();
-
-      // Execute the command
-      executable.setConnection(connection);
-      executable.setSchemaRetrievalOptions(schemaRetrievalOptions);
-      executable.execute();
-    }
   }
 
 }

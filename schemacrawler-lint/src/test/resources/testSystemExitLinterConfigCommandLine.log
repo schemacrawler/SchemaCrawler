@@ -20,6 +20,8 @@ Summary of schema lints:
 
 SchemaCrawler 15.06.01
 
+Error: Cannot execute SchemaCrawler command
+
 Re-run SchemaCrawler with just the
 -?
 option for help

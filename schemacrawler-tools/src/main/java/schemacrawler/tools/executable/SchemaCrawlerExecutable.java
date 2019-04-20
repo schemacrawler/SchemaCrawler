@@ -64,11 +64,12 @@ public final class SchemaCrawlerExecutable
     .getLogger(SchemaCrawlerExecutable.class.getName());
 
   private final String command;
-  private SchemaCrawlerOptions schemaCrawlerOptions;
-  private OutputOptions outputOptions;
   private Config additionalConfiguration;
-  private SchemaRetrievalOptions schemaRetrievalOptions;
+  private Catalog catalog;
   private Connection connection;
+  private OutputOptions outputOptions;
+  private SchemaCrawlerOptions schemaCrawlerOptions;
+  private SchemaRetrievalOptions schemaRetrievalOptions;
 
   public SchemaCrawlerExecutable(final String command)
   {
@@ -102,6 +103,16 @@ public final class SchemaCrawlerExecutable
     }
   }
 
+  public Catalog getCatalog()
+  {
+    return catalog;
+  }
+
+  public void setCatalog(final Catalog catalog)
+  {
+    this.catalog = catalog;
+  }
+
   public OutputOptions getOutputOptions()
   {
     return outputOptions;
@@ -122,15 +133,12 @@ public final class SchemaCrawlerExecutable
   public final void execute()
     throws Exception
   {
-    requireNonNull(connection, "No connection provided");
 
     if (schemaRetrievalOptions == null)
     {
       schemaRetrievalOptions = SchemaCrawlerUtility
         .matchSchemaRetrievalOptions(connection);
     }
-
-    logExecution();
 
     // Load the command to see if it is available
     // Fail early (before loading the catalog) if the command is not
@@ -139,18 +147,20 @@ public final class SchemaCrawlerExecutable
     scCommand.initialize();
     scCommand.checkAvailibility();
 
-    final Catalog catalog = loadCatalog();
+    if (catalog == null)
+    {
+      loadCatalog();
+    }
+
     // Reduce all once again, since the catalog may have been loaded
     // from an offline or other source
-    reduceCatalog(catalog);
+    reduceCatalog();
+
+    logExecution();
 
     scCommand.setCatalog(catalog);
     scCommand.setConnection(connection);
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Executing command <%s> using <%s>",
-                                command,
-                                scCommand.getClass().getName()));
     scCommand.execute();
   }
 
@@ -197,7 +207,7 @@ public final class SchemaCrawlerExecutable
     return ObjectToString.toString(this);
   }
 
-  private Catalog loadCatalog()
+  private void loadCatalog()
     throws Exception
   {
     final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
@@ -212,10 +222,8 @@ public final class SchemaCrawlerExecutable
     catalogLoader.setSchemaRetrievalOptions(schemaRetrievalOptions);
     catalogLoader.setSchemaCrawlerOptions(schemaCrawlerOptions);
 
-    final Catalog catalog = catalogLoader.loadCatalog();
+    catalog = catalogLoader.loadCatalog();
     requireNonNull(catalog, "Catalog could not be retrieved");
-
-    return catalog;
   }
 
   private SchemaCrawlerCommand loadCommand()
@@ -234,6 +242,14 @@ public final class SchemaCrawlerExecutable
 
   private void logExecution()
   {
+    if (!hasConnection())
+    {
+      LOGGER.log(Level.CONFIG,
+                 new StringFormat(
+                   "No connection available while executing SchemaCrawler command <%s>",
+                   command));
+    }
+
     if (LOGGER.isLoggable(Level.INFO))
     {
       LOGGER.log(Level.INFO,
@@ -257,7 +273,7 @@ public final class SchemaCrawlerExecutable
     }
   }
 
-  private void reduceCatalog(final Catalog catalog)
+  private void reduceCatalog()
   {
     ((Reducible) catalog)
       .reduce(Schema.class, getSchemaReducer(schemaCrawlerOptions));

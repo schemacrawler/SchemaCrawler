@@ -26,59 +26,39 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
-
-import java.util.Objects;
+import static sf.util.Utility.isBlank;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.InfoLevel;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.tools.commandline.AvailableCommands;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class InfoLevelParser
-  implements OptionsParser
+public final class CommandOptions
 {
 
-  private final CommandLine commandLine;
-  private final SchemaCrawlerOptionsBuilder optionsBuilder;
-
   @CommandLine.Option(names = {
-    "-i",
-    "--info-level" }, required = true, description = "Comma-separated list of routine types")
-  private InfoLevel infoLevel;
+    "-c",
+    "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
+  private String command;
 
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
 
-  public InfoLevelParser(final SchemaCrawlerOptionsBuilder optionsBuilder)
+  public String getCommand()
   {
-    commandLine = newCommandLine(this);
-    this.optionsBuilder = Objects.requireNonNull(optionsBuilder);
-  }
-
-  @Override
-  public void parse(final String[] args)
-  {
-    commandLine.parse(args);
-
-    if (infoLevel != null)
+    if (isBlank(command))
     {
-      optionsBuilder.withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No command provided");
     }
 
-  }
-
-  @Override
-  public String[] getRemainder()
-  {
-    return remainder;
+    return command;
   }
 
 }

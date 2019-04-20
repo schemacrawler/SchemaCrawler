@@ -26,45 +26,69 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.parser;
+package schemacrawler.tools.commandline.command;
 
 
 import static sf.util.Utility.isBlank;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Optional;
+
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
 
 /**
  * Parses the command-line.
  *
  * @author Sualeh Fatehi
  */
-public final class CommandOptions
+public final class CommandOutputOptions
 {
 
   @CommandLine.Option(names = {
-    "-c",
-    "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
-  private String command;
-  @CommandLine.Unmatched
-  private final String[] remainder = new String[0];
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+    "-o", "--output-file" }, description = "Outfile file path and name")
+  private File outputFile;
+  @CommandLine.Option(names = {
+    "--output-format" }, description = "Outfile format")
+  private String outputFormatValue;
+  @CommandLine.Option(names = {
+    "-m", "--title" }, description = "Title for output")
+  private String title;
 
-  public String[] getRemainder()
+  public Optional<String> getTitle()
   {
-    return remainder;
+    if (isBlank(title))
+    {
+      return Optional.empty();
+    }
+    else
+    {
+      return Optional.of(title);
+    }
   }
 
-  public String getCommand()
+  public Optional<Path> getOutputFile()
   {
-    if (isBlank(command))
+    if (outputFile != null)
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No command provided");
+      return Optional.of(outputFile.toPath().toAbsolutePath());
     }
+    else
+    {
+      return Optional.empty();
+    }
+  }
 
-    return command;
+  public Optional<String> getOutputFormatValue()
+  {
+    if (isBlank(outputFormatValue))
+    {
+      return Optional.empty();
+    }
+    else
+    {
+      return Optional.of(outputFormatValue);
+    }
   }
 
 }
