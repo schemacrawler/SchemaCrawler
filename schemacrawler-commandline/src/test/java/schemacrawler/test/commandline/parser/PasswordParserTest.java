@@ -105,6 +105,19 @@ public class PasswordParserTest
   }
 
   @Test
+  public void passwordEmptyEnv()
+  {
+    final String[] args = { "--password:env", "NO_ENV" };
+
+    final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
+    parseCommand(optionsParser, args);
+    final UserCredentials options = optionsParser.getUserCredentials();
+
+    assertThat(options.getUser(), is(nullValue()));
+    assertThat(options.getPassword(), is(nullValue()));
+  }
+
+  @Test
   public void passwordFile()
     throws Exception
   {

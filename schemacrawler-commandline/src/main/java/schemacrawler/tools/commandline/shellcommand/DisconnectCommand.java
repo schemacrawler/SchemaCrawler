@@ -26,23 +26,36 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.commandline.shellcommand;
 
+
+import static java.util.Objects.requireNonNull;
+
+import java.util.logging.Level;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "commands", description = "List available SchemaCrawler commands")
-public class AvailableCommandsCommand
+@CommandLine.Command(name = "disconnect", description = "Disconnect from a database")
+public class DisconnectCommand
   implements Runnable
 {
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(DisconnectCommand.class.getName());
+
+  private final SchemaCrawlerShellState state;
+
+  public DisconnectCommand(final SchemaCrawlerShellState state)
+  {
+    this.state = requireNonNull(state, "No state provided");
+  }
 
   public void run()
   {
-    for (String command : new AvailableCommands())
-    {
-      System.out.println(command);
-    }
+    LOGGER.log(Level.INFO, "disconnect");
+
+    state.disconnect();
   }
 
 }

@@ -26,65 +26,33 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.commandline.shellcommand;
 
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.logging.Level;
-
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableServers;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
 
-public class ConnectCommands
+@CommandLine.Command(name = "is-connected", description = "Connect to a database, using a connection URL specification")
+public class IsConnectedCommand
+  implements Runnable
 {
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConnectCommands.class.getName());
-
-  @CommandLine.Command(description = "List available SchemaCrawler database plugins")
-  public static void servers()
-  {
-    LOGGER.log(Level.INFO, "servers");
-
-    for (String server : new AvailableServers())
-    {
-      System.out.println(server);
-    }
-  }
+    .getLogger(IsConnectedCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
-  public ConnectCommands(final SchemaCrawlerShellState state)
+  public IsConnectedCommand(final SchemaCrawlerShellState state)
   {
     this.state = requireNonNull(state, "No state provided");
   }
 
-
-  @CommandLine.Command(description = "Disconnect from a database")
-  public void disconnect()
-  {
-    LOGGER.log(Level.INFO, "disconnect");
-
-    state.disconnect();
-  }
-
-  @CommandLine.Command(description = "Connect to a database, using a connection URL specification")
-  public boolean isConnected()
+  public void run()
   {
     final boolean isConnected = state.isConnected();
-    LOGGER.log(Level.INFO, new StringFormat("isConnected=%b", isConnected));
-    return isConnected;
-  }
-
-  @CommandLine.Command(description = "Disconnect from a database, and clear loaded catalog")
-  public void sweep()
-  {
-    LOGGER.log(Level.INFO, "sweep");
-
-    state.sweep();
+    System.out.println(String.format("%sconnected", isConnected? "": "not "));
   }
 
 }
