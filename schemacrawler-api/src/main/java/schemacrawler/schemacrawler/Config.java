@@ -33,12 +33,7 @@ import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
 import static sf.util.Utility.isBlank;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
@@ -61,8 +56,7 @@ public final class Config
   /**
    * Copies properties into a map.
    *
-   * @param properties
-   *        Properties to copy
+   * @param properties Properties to copy
    * @return Map of properties and values
    */
   private static Map<String, String> propertiesMap(final Properties properties)
@@ -71,7 +65,7 @@ public final class Config
     if (properties != null)
     {
       final Set<Map.Entry<Object, Object>> entries = properties.entrySet();
-      for (final Map.Entry<Object, Object> entry: entries)
+      for (final Map.Entry<Object, Object> entry : entries)
       {
         propertiesMap.put((String) entry.getKey(), (String) entry.getValue());
       }
@@ -92,8 +86,7 @@ public final class Config
   /**
    * Copies config into a map.
    *
-   * @param config
-   *        Config to copy
+   * @param config Config to copy
    */
   public Config(final Map<String, String> config)
   {
@@ -107,8 +100,7 @@ public final class Config
   /**
    * Copies properties into a map.
    *
-   * @param properties
-   *        Properties to copy
+   * @param properties Properties to copy
    */
   public Config(final Properties properties)
   {
@@ -148,8 +140,7 @@ public final class Config
   /**
    * Gets the value of a property as a boolean.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return Boolean value
    */
   public boolean getBooleanValue(final String propertyName)
@@ -167,8 +158,7 @@ public final class Config
   /**
    * Gets the value of a property as an double.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return Double value
    */
   public double getDoubleValue(final String propertyName,
@@ -181,11 +171,11 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER
-        .log(Level.FINEST,
-             new StringFormat("Could not parse double value for property <%s>",
-                              propertyName),
-             e);
+      LOGGER.log(Level.FINEST,
+                 new StringFormat(
+                   "Could not parse double value for property <%s>",
+                   propertyName),
+                 e);
       return defaultValue;
     }
   }
@@ -193,8 +183,7 @@ public final class Config
   /**
    * Gets the value of a property as an enum.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return Enum value
    */
   public <E extends Enum<E>> E getEnumValue(final String propertyName,
@@ -210,8 +199,7 @@ public final class Config
    * excludes a pattern. If no pattern is provided, include everything,
    * since there are no excludes specified.
    *
-   * @param optionName
-   *        Option to look up.
+   * @param optionName Option to look up.
    * @return Inclusion rule.
    */
   public InclusionRule getExclusionRule(final String optionName)
@@ -226,8 +214,7 @@ public final class Config
    * excludes. If no pattern is provided, exclude everything, since
    * there are no includes specified.
    *
-   * @param optionName
-   *        Option to look up.
+   * @param optionName Option to look up.
    * @return Inclusion rule.
    */
   public InclusionRule getInclusionRule(final String optionName)
@@ -242,16 +229,16 @@ public final class Config
                                                    final Supplier<InclusionRule> supplier)
   {
     requireNonNull(supplier);
-    final Optional<InclusionRule> optionalInclusionRule = getOptionalInclusionRule(includePatternProperty,
-                                                                                   excludePatternProperty);
+    final Optional<InclusionRule> optionalInclusionRule = getOptionalInclusionRule(
+      includePatternProperty,
+      excludePatternProperty);
     return optionalInclusionRule.orElse(supplier.get());
   }
 
   /**
    * Gets the value of a property as an integer.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return Integer value
    */
   public int getIntegerValue(final String propertyName, final int defaultValue)
@@ -263,11 +250,11 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER
-        .log(Level.FINEST,
-             new StringFormat("Could not parse integer value for property <%s>",
-                              propertyName),
-             e);
+      LOGGER.log(Level.FINEST,
+                 new StringFormat(
+                   "Could not parse integer value for property <%s>",
+                   propertyName),
+                 e);
       return defaultValue;
     }
   }
@@ -275,8 +262,7 @@ public final class Config
   /**
    * Gets the value of a property as an long.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return Long value
    */
   public long getLongValue(final String propertyName, final long defaultValue)
@@ -288,11 +274,10 @@ public final class Config
     }
     catch (final NumberFormatException e)
     {
-      LOGGER
-        .log(Level.FINEST,
-             new StringFormat("Could not parse long value for property <%s>",
-                              propertyName),
-             e);
+      LOGGER.log(Level.FINEST,
+                 new StringFormat("Could not parse long value for property <%s>",
+                                  propertyName),
+                 e);
       return defaultValue;
     }
   }
@@ -316,10 +301,8 @@ public final class Config
   /**
    * Gets the value of a property as a string.
    *
-   * @param propertyName
-   *        Property name
-   * @param defaultValue
-   *        Default value
+   * @param propertyName Property name
+   * @param defaultValue Default value
    * @return String value
    */
   public String getStringValue(final String propertyName,
@@ -336,8 +319,7 @@ public final class Config
   /**
    * Checks if a value is available.
    *
-   * @param propertyName
-   *        Property name
+   * @param propertyName Property name
    * @return True if a value ia available.
    */
   public boolean hasValue(final String propertyName)
@@ -366,6 +348,10 @@ public final class Config
   @Override
   public void putAll(final Map<? extends String, ? extends String> m)
   {
+    if (m == null)
+    {
+      return;
+    }
     config.putAll(m);
   }
 
@@ -424,7 +410,7 @@ public final class Config
   public Properties toProperties()
   {
     final Properties properties = new Properties();
-    for (final Entry<String, String> entry: config.entrySet())
+    for (final Entry<String, String> entry : config.entrySet())
     {
       properties.put(entry.getKey(), entry.getValue());
     }

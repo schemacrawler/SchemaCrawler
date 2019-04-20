@@ -62,6 +62,9 @@ public final class SchemaCrawlerCommandLine
 
     state = new SchemaCrawlerShellState();
 
+    final Config argsMap = CommandLineUtility.parseArgs(args);
+    state.setAdditionalConfiguration(argsMap);
+
     runCommand(new ConfigFileCommand(state), args);
     runCommand(new ConnectCommand(state), args);
 
@@ -71,10 +74,6 @@ public final class SchemaCrawlerCommandLine
 
     runCommand(new ShowCommand(state), args);
     runCommand(new SortCommand(state), args);
-
-    final Config config = state.getAdditionalConfiguration();
-    final Config argsMap = CommandLineUtility.parseArgs(args);
-    config.putAll(argsMap);
 
     runCommand(new LoadCommand(state), args);
     runCommand(new ExecuteCommand(state), args);

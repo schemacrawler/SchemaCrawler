@@ -91,6 +91,7 @@ public class ConnectCommand
                                   databaseConnector.getDatabaseServerType()));
 
       final Config config = new Config();
+      config.putAll(state.getAdditionalConfiguration());
       config.putAll(databaseConnector.getConfig());
       config.putAll(state.getBaseConfiguration());
 
