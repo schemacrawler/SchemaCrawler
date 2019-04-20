@@ -31,7 +31,6 @@ package schemacrawler.tools.commandline.command;
 
 import static sf.util.Utility.isBlank;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -47,7 +46,7 @@ public final class CommandOutputOptions
 
   @CommandLine.Option(names = {
     "-o", "--output-file" }, description = "Outfile file path and name")
-  private File outputFile;
+  private Path outputFile;
   @CommandLine.Option(names = {
     "--output-format" }, description = "Outfile format")
   private String outputFormatValue;
@@ -69,13 +68,13 @@ public final class CommandOutputOptions
 
   public Optional<Path> getOutputFile()
   {
-    if (outputFile != null)
+    if (outputFile == null)
     {
-      return Optional.of(outputFile.toPath().toAbsolutePath());
+      return Optional.empty();
     }
     else
     {
-      return Optional.empty();
+      return Optional.of(outputFile.normalize().toAbsolutePath());
     }
   }
 

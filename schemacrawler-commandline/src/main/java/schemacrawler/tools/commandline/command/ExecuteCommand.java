@@ -105,10 +105,8 @@ public class ExecuteCommand
         outputOptionsBuilder.withConsoleOutput();
       }
       commandOutputOptions.getOutputFormatValue()
-        .ifPresent(outputFormat -> outputOptionsBuilder
-          .withOutputFormatValue(outputFormat));
-      commandOutputOptions.getTitle()
-        .ifPresent(title -> outputOptionsBuilder.title(title));
+        .ifPresent(outputOptionsBuilder::withOutputFormatValue);
+      commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
 
       final SchemaCrawlerOptions schemaCrawlerOptions = state
         .getSchemaCrawlerOptionsBuilder().toOptions();
@@ -158,7 +156,9 @@ public class ExecuteCommand
         }
         catch (final SQLException e)
         {
-          throw new RuntimeException("Cannot execute SchemaCrawler command", e);
+          LOGGER.log(Level.WARNING,
+                     "Could not close connection after executing SchemaCrawler command",
+                     e);
         }
       }
     }

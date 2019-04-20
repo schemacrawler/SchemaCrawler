@@ -31,7 +31,6 @@ package schemacrawler.tools.commandline.command;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,7 +62,7 @@ public class ConfigFileCommand
   @CommandLine.Option(names = {
     "-g",
     "--state-file" }, description = "SchemaCrawler configuration properties file")
-  private File configFile;
+  private Path configFile;
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)
   {
@@ -99,21 +98,16 @@ public class ConfigFileCommand
 
   private Config loadConfig()
   {
-    final Path configFilePath;
     if (configFile == null)
     {
-      configFilePath = Paths.get("schemacrawler.config.properties");
+      configFile = Paths.get("schemacrawler.config.properties");
     }
-    else
-    {
-      configFilePath = configFile.toPath();
-    }
-    final Path configFileFullPath = configFilePath.normalize().toAbsolutePath();
+    configFile = configFile.normalize().toAbsolutePath();
 
     try
     {
       final Config config = PropertiesUtility
-        .loadConfig(new FileInputResource(configFileFullPath));
+        .loadConfig(new FileInputResource(configFile));
       return config;
     }
     catch (final IOException e)
@@ -121,7 +115,7 @@ public class ConfigFileCommand
       LOGGER.log(Level.CONFIG,
                  new StringFormat(
                    "SchemaCrawler configuration properties file not found, %s",
-                   configFileFullPath));
+                   configFile));
 
       return new Config();
     }

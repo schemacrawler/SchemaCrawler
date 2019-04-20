@@ -104,6 +104,7 @@ public class DatabaseConfigConnectionOptions
 
     return connectionUrl;
   }
+
   @CommandLine.Option(names = {
     "--database" }, description = "Database name")
   private String database;
