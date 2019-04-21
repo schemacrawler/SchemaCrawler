@@ -50,6 +50,7 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
+@CommandLine.Command(name = "config-file", description = "Load SchemaCrawler configuration from the classpath and file")
 public class ConfigFileCommand
   implements Runnable
 {

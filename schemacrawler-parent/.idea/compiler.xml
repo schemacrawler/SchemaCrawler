@@ -15,14 +15,13 @@
         <module name="schemacrawler-distrib" />
         <module name="schemacrawler-diff" />
         <module name="schemacrawler-scripting" />
-        <module name="schemacrawler" />
+        <module name="schemacrawler-testdb" />
         <module name="schemacrawler-sapiq" />
-        <module name="schemacrawler-offline" />
+        <module name="schemacrawler-lint" />
+        <module name="schemacrawler-api" />
         <module name="schemacrawler-archetype-plugin-dbconnector" />
         <module name="schemacrawler-tools" />
-        <module name="schemacrawler-oracle" />
-        <module name="schemacrawler-shell" />
-        <module name="schemacrawler-maven-plugin" />
+        <module name="schemacrawler-timesten" />
         <module name="schemacrawler-archetype-plugin-lint" />
         <module name="schemacrawler-archetype-plugin-command" />
         <module name="schemacrawler-postgresql" />
@@ -30,21 +29,22 @@
         <module name="schemacrawler-sqlite" />
         <module name="schemacrawler-maven-plugin-test" />
         <module name="schemacrawler-db2" />
-        <module name="schemacrawler-lint" />
+        <module name="schemacrawler" />
         <module name="schemacrawler-commandline" />
         <module name="schemacrawler-sqlserver" />
-        <module name="schemacrawler-dbtest" />
-        <module name="schemacrawler-api" />
+        <module name="schemacrawler-maven-plugin" />
+        <module name="schemacrawler-oracle" />
         <module name="schemacrawler-examplecode" />
         <module name="schemacrawler-integrations" />
         <module name="schemacrawler-hsqldb" />
-        <module name="schemacrawler-timesten" />
-        <module name="schemacrawler-testdb" />
+        <module name="schemacrawler-dbtest" />
+        <module name="schemacrawler-offline" />
         <module name="schemacrawler-mysql" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="schemacrawler-neo4j" target="8" />
+      <module name="schemacrawler-shell" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

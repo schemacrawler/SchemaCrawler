@@ -144,6 +144,10 @@ public class SchemaCrawlerShellState
 
   public boolean isConnected()
   {
+    if (dataSource == null)
+    {
+      return false;
+    }
     try (final Connection connection = dataSource.getConnection())
     {
       if (!connection.isValid(0))

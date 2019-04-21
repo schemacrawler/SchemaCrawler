@@ -48,7 +48,7 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "load", description = "Load database metadata")
+@CommandLine.Command(name = "execute", description = "Execute SchemaCrawler command")
 public class ExecuteCommand
   implements Runnable
 {
@@ -70,6 +70,7 @@ public class ExecuteCommand
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
     if (!state.isLoaded())
