@@ -29,7 +29,7 @@ package schemacrawler.test.commandline.parser;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
+import static org.hamcrest.Matchers.*;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
 
@@ -43,11 +43,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shellcommand.DisconnectCommand;
 import schemacrawler.tools.commandline.shellcommand.IsConnectedCommand;
+import schemacrawler.tools.commandline.shellcommand.SweepCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -120,7 +122,6 @@ public class ConnectionShellCommandsTest
 
   @Test
   public void disconnect(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
   {
     final BasicDataSource dataSource = createDataSource(connectionInfo);
 
@@ -129,27 +130,12 @@ public class ConnectionShellCommandsTest
 
     final String[] args = new String[0];
 
-    setUpStreams();
-    final IsConnectedCommand isConnectedCommand = new IsConnectedCommand(state);
-    CommandLine.run(isConnectedCommand, args);
+    assertThat(state.getDataSource(), is(not(nullValue())));
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("connected"));
-
-    setUpStreams();
     final DisconnectCommand disconnectCommand = new DisconnectCommand(state);
     CommandLine.run(disconnectCommand, args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
-
-    setUpStreams();
-    final IsConnectedCommand isNotConnectedCommand = new IsConnectedCommand(
-      state);
-    CommandLine.run(isNotConnectedCommand, args);
-
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("not connected"));
+    assertThat(state.getDataSource(), is(nullValue()));
   }
 
   @Test
@@ -161,27 +147,45 @@ public class ConnectionShellCommandsTest
 
     final String[] args = new String[0];
 
-    setUpStreams();
-    final IsConnectedCommand isConnectedCommand = new IsConnectedCommand(state);
-    CommandLine.run(isConnectedCommand, args);
+    assertThat(state.getDataSource(), is(nullValue()));
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("not connected"));
-
-    setUpStreams();
     final DisconnectCommand disconnectCommand = new DisconnectCommand(state);
     CommandLine.run(disconnectCommand, args);
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(outputOf(out), hasNoContent());
+    assertThat(state.getDataSource(), is(nullValue()));
+  }
 
-    setUpStreams();
-    final IsConnectedCommand isNotConnectedCommand = new IsConnectedCommand(
-      state);
-    CommandLine.run(isNotConnectedCommand, args);
+  @Test
+  public void sweep()
+  {
 
-    assertThat(outputOf(err), hasNoContent());
-    assertThat(out.getFileContents(), startsWith("not connected"));
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setAdditionalConfiguration(new Config());
+
+    final String[] args = new String[0];
+
+    assertThat(state.getAdditionalConfiguration(), is(not(nullValue())));
+
+    final SweepCommand sweepCommand = new SweepCommand(state);
+    CommandLine.run(sweepCommand, args);
+
+    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
+  }
+
+  @Test
+  public void sweepWithNoState()
+  {
+
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+
+    final String[] args = new String[0];
+
+    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
+
+    final SweepCommand sweepCommand = new SweepCommand(state);
+    CommandLine.run(sweepCommand, args);
+
+    assertThat(state.getAdditionalConfiguration(), is(nullValue()));
   }
 
 }
