@@ -28,6 +28,8 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
+import static us.fatehi.commandlineparser.CommandLineUtility.*;
+
 import java.util.logging.Level;
 
 import org.jline.reader.*;
@@ -40,7 +42,7 @@ import schemacrawler.tools.commandline.shellcommand.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shellcommand.StateFactory;
 import sf.util.SchemaCrawlerLogger;
 
-public class SchemaCrawlerShell
+public final class SchemaCrawlerShell
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
@@ -49,6 +51,12 @@ public class SchemaCrawlerShell
   public static void main(final String[] args)
     throws Exception
   {
+    applyApplicationLogLevel(Level.OFF);
+
+    logSafeArguments(args);
+    logSystemClasspath();
+    logSystemProperties();
+
     final StateFactory stateFactory = new StateFactory();
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine cmd = new CommandLine(commands, stateFactory);
