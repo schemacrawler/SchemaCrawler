@@ -59,12 +59,12 @@ public class SchemaCrawlerShell
     commands.setReader(reader);
     final String prompt = "schemacrawler> ";
 
-    String line;
     while (true)
     {
       try
       {
-        line = reader.readLine(prompt, null, (MaskingCallback) null, null);
+        final String line = reader
+          .readLine(prompt, null, (MaskingCallback) null, null);
         final ParsedLine pl = reader.getParser().parse(line, 0);
         final String[] arguments = pl.words().toArray(new String[0]);
         cmd.parseWithHandlers(new CommandLine.RunLast(),
