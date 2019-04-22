@@ -52,6 +52,7 @@ public class SchemaCrawlerShell
     final StateFactory stateFactory = new StateFactory();
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
     final CommandLine cmd = new CommandLine(commands, stateFactory);
+
     final Terminal terminal = TerminalBuilder.builder().build();
     final LineReader reader = LineReaderBuilder.builder().terminal(terminal)
       .completer(new PicocliJLineCompleter(cmd.getCommandSpec()))
