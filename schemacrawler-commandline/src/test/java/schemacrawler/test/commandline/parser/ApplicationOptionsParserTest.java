@@ -33,8 +33,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsArrayWithSize.emptyArray;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.logging.Level;
-
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.ApplicationOptions;
@@ -52,7 +50,6 @@ public class ApplicationOptionsParserTest
     optionsParser.parse(args);
     final ApplicationOptions options = optionsParser.getApplicationOptions();
 
-    assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
@@ -69,7 +66,6 @@ public class ApplicationOptionsParserTest
     optionsParser.parse(args);
     final ApplicationOptions options = optionsParser.getApplicationOptions();
 
-    assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(false));
     assertThat(options.isShowVersionOnly(), is(false));
 
@@ -86,7 +82,6 @@ public class ApplicationOptionsParserTest
     optionsParser.parse(args);
     final ApplicationOptions options = optionsParser.getApplicationOptions();
 
-    assertThat(options.getApplicationLogLevel(), is(Level.OFF));
     assertThat(options.isShowHelp(), is(true));
     assertThat(options.isShowVersionOnly(), is(false));
 
@@ -105,70 +100,15 @@ public class ApplicationOptionsParserTest
   }
 
   @Test
-  public void loglevelNoValue()
-  {
-    final String[] args = { "--log-level" };
-
-    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    assertThrows(CommandLine.MissingParameterException.class,
-                 () -> optionsParser.parse(args));
-  }
-
-  @Test
-  public void loglevelBadValue()
-  {
-    final String[] args = { "--log-level", "BAD" };
-
-    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.parse(args));
-  }
-
-  @Test
-  public void loglevel()
-  {
-    final String[] args = { "--log-level", "FINE" };
-
-    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    optionsParser.parse(args);
-    final ApplicationOptions options = optionsParser.getApplicationOptions();
-
-    assertThat(options.getApplicationLogLevel(), is(Level.FINE));
-    assertThat(options.isShowHelp(), is(false));
-    assertThat(options.isShowVersionOnly(), is(false));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
-  }
-
-  @Test
-  public void loglevelMixedCase()
-  {
-    final String[] args = { "--log-level", "FinE" };
-
-    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    optionsParser.parse(args);
-    final ApplicationOptions options = optionsParser.getApplicationOptions();
-
-    assertThat(options.getApplicationLogLevel(), is(Level.FINE));
-    assertThat(options.isShowHelp(), is(false));
-    assertThat(options.isShowVersionOnly(), is(false));
-
-    final String[] remainder = optionsParser.getRemainder();
-    assertThat(remainder, is(emptyArray()));
-  }
-
-  @Test
   public void allArgs()
   {
     final String[] args = {
-      "--log-level", "ALL", "-h", "--version", "additional", "-extra" };
+      "-h", "--version", "additional", "-extra" };
 
     final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
     optionsParser.parse(args);
     final ApplicationOptions options = optionsParser.getApplicationOptions();
 
-    assertThat(options.getApplicationLogLevel(), is(Level.ALL));
     assertThat(options.isShowHelp(), is(true));
     assertThat(options.isShowVersionOnly(), is(true));
 

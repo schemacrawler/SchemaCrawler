@@ -65,7 +65,7 @@ public final class Main
       final Config argsMap = CommandLineUtility
         .parseArgs(optionsParser.getRemainder());
 
-      applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
+      //  applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
 
       logSafeArguments(args);
       logSystemClasspath();

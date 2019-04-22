@@ -284,6 +284,20 @@
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
                 </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.commons</groupId>
+                  <artifactId>commons-dbcp2</artifactId>
+                  <version>2.6.0</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.apache.commons</groupId>
+                  <artifactId>commons-pool2</artifactId>
+                  <version>2.6.1</version>
+                  <overWrite>true</overWrite>
+                  <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
+                </artifactItem>
               </artifactItems>
               <outputDirectory>${project.build.directory}/_base-distribution/lib</outputDirectory>
               <overWriteReleases>false</overWriteReleases>

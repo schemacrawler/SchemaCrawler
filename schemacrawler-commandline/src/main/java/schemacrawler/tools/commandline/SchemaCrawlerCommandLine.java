@@ -65,6 +65,7 @@ public final class SchemaCrawlerCommandLine
     final Config argsMap = CommandLineUtility.parseArgs(args);
     state.setAdditionalConfiguration(argsMap);
 
+    runCommand(new LogCommand(), args);
     runCommand(new ConfigFileCommand(state), args);
     runCommand(new ConnectCommand(state), args);
 

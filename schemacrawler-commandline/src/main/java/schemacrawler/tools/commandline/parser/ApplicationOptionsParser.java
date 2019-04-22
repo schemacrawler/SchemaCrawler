@@ -31,19 +31,13 @@ package schemacrawler.tools.commandline.parser;
 
 import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
-import java.util.logging.Level;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.ApplicationOptions;
-import schemacrawler.tools.commandline.LogLevel;
 
 public final class ApplicationOptionsParser
 {
 
   private final CommandLine commandLine;
-  @CommandLine.Option(names = {
-    "--log-level" }, description = "Set logging level")
-  private LogLevel loglevel;
   @CommandLine.Unmatched
   private final String[] remainder = new String[0];
   @CommandLine.Option(names = {
@@ -70,13 +64,7 @@ public final class ApplicationOptionsParser
 
   public ApplicationOptions getApplicationOptions()
   {
-    if (loglevel == null)
-    {
-      loglevel = LogLevel.OFF;
-    }
-    final Level level = loglevel.getLevel();
-    final ApplicationOptions options = new ApplicationOptions(level,
-                                                              showHelp,
+    final ApplicationOptions options = new ApplicationOptions(showHelp,
                                                               showVersionOnly);
     return options;
   }

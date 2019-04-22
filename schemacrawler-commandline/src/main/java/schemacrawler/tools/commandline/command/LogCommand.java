@@ -26,33 +26,39 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.command;
 
 
-import schemacrawler.schemacrawler.Options;
+import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
 
-public class ApplicationOptions
-  implements Options
+import java.util.logging.Level;
+
+import picocli.CommandLine;
+import schemacrawler.tools.commandline.LogLevel;
+
+@CommandLine.Command(name = "log", description = "Turns logging on or off, and sets log level")
+public final class LogCommand
+  implements Runnable
 {
 
-  private final boolean showHelp;
-  private final boolean showVersionOnly;
+  @CommandLine.Option(names = {
+    "--log-level" }, description = "Set logging level")
+  private LogLevel loglevel;
 
-  public ApplicationOptions(final boolean showHelp,
-                            final boolean showVersionOnly)
+  @Override
+  public void run()
   {
-    this.showHelp = showHelp;
-    this.showVersionOnly = showVersionOnly;
+    final Level level = getLogLevel().getLevel();
+    applyApplicationLogLevel(level);
   }
 
-  public boolean isShowHelp()
+  public LogLevel getLogLevel()
   {
-    return showHelp;
-  }
-
-  public boolean isShowVersionOnly()
-  {
-    return showVersionOnly;
+    if (loglevel == null)
+    {
+      loglevel = LogLevel.OFF;
+    }
+    return loglevel;
   }
 
 }
