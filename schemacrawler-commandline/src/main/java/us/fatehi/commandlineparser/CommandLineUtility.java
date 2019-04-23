@@ -175,13 +175,6 @@ public final class CommandLineUtility
     return commandLine;
   }
 
-  public static void runCommand(final Object object, String[] args) {
-    newCommandLine(object)
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
-                         args);
-  }
-
   /**
    * Loads configuration from a number of command-line.
    *

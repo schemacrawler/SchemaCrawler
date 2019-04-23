@@ -32,9 +32,11 @@ import static us.fatehi.commandlineparser.CommandLineUtility.*;
 
 import java.util.logging.Level;
 
+import picocli.CommandLine;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.command.*;
+import schemacrawler.tools.commandline.command.SchemaCrawlerCommands;
+import schemacrawler.tools.commandline.shellcommand.StateFactory;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import us.fatehi.commandlineparser.CommandLineUtility;
@@ -60,19 +62,19 @@ public final class SchemaCrawlerCommandLine
       final Config argsMap = CommandLineUtility.parseArgs(args);
       state.setAdditionalConfiguration(argsMap);
 
-      runCommand(new LogCommand(), args);
-      runCommand(new ConfigFileCommand(state), args);
-      runCommand(new ConnectCommand(state), args);
+      final StateFactory stateFactory = new StateFactory(state);
+      final SchemaCrawlerCommands commands = new SchemaCrawlerCommands();
 
-      runCommand(new FilterCommand(state), args);
-      runCommand(new GrepCommand(state), args);
-      runCommand(new LimitCommand(state), args);
+      final picocli.CommandLine cmd = new CommandLine(commands, stateFactory);
+      cmd.setUnmatchedArgumentsAllowed(true);
+      cmd.setCaseInsensitiveEnumValuesAllowed(true);
+      cmd.setTrimQuotes(true);
+      cmd.setToggleBooleanFlags(false);
 
-      runCommand(new ShowCommand(state), args);
-      runCommand(new SortCommand(state), args);
+      cmd.parseWithHandlers(new picocli.CommandLine.RunLast(),
+                            new picocli.CommandLine.DefaultExceptionHandler<>(),
+                            args);
 
-      runCommand(new LoadCommand(state), args);
-      runCommand(new ExecuteCommand(state), args);
     }
     catch (final Throwable e)
     {

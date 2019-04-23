@@ -59,7 +59,12 @@ public final class SchemaCrawlerShell
 
     final StateFactory stateFactory = new StateFactory();
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+
     final CommandLine cmd = new CommandLine(commands, stateFactory);
+    cmd.setUnmatchedArgumentsAllowed(true);
+    cmd.setCaseInsensitiveEnumValuesAllowed(true);
+    cmd.setTrimQuotes(true);
+    cmd.setToggleBooleanFlags(false);
 
     final Terminal terminal = TerminalBuilder.builder().build();
     final LineReader reader = LineReaderBuilder.builder().terminal(terminal)

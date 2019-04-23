@@ -52,6 +52,34 @@ public class CommandLineTest
 
   private static final String COMMAND_LINE_OUTPUT = "command_line_output/";
 
+  private static void run(final TestContext testContext,
+                          final DatabaseConnectionInfo connectionInfo,
+                          final Map<String, String> argsMap,
+                          final Map<String, String> config,
+                          final String command)
+    throws Exception
+  {
+    argsMap.put("-no-info", Boolean.TRUE.toString());
+    argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
+    argsMap.put("-info-level", "maximum");
+
+    final Config runConfig = new Config();
+    final Config informationSchema = loadHsqldbConfig();
+    runConfig.putAll(informationSchema);
+    if (config != null)
+    {
+      runConfig.putAll(config);
+    }
+
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             command,
+                                             argsMap,
+                                             runConfig,
+                                             TextOutputFormat.text)),
+               hasSameContentAs(classpathResource(
+                 COMMAND_LINE_OUTPUT + testContext.testMethodName() + ".txt")));
+  }
+
   @Test
   public void commandLineOverridesWithConfig(final TestContext testContext,
                                              final DatabaseConnectionInfo connectionInfo)
@@ -287,34 +315,6 @@ public class CommandLineTest
     config.put(command, "SELECT ${columns} FROM ${table} ORDER BY ${columns}");
 
     run(testContext, connectionInfo, args, config, command);
-  }
-
-  private void run(final TestContext testContext,
-                   final DatabaseConnectionInfo connectionInfo,
-                   final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final String command)
-    throws Exception
-  {
-    argsMap.put("-no-info", Boolean.TRUE.toString());
-    argsMap.put("-schemas", ".*\\.(?!FOR_LINT).*");
-    argsMap.put("-info-level", "maximum");
-
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
-    runConfig.putAll(informationSchema);
-    if (config != null)
-    {
-      runConfig.putAll(config);
-    }
-
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             command,
-                                             argsMap,
-                                             runConfig,
-                                             TextOutputFormat.text)),
-               hasSameContentAs(classpathResource(
-                 COMMAND_LINE_OUTPUT + testContext.testMethodName() + ".txt")));
   }
 
 }
