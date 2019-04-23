@@ -29,9 +29,7 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 
 import java.io.FileDescriptor;
@@ -42,9 +40,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.Main;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
@@ -56,9 +54,8 @@ public class CommandLineHelpTest
 {
 
   private static final String COMMAND_LINE_HELP_OUTPUT = "command_line_help_output/";
-
-  private TestOutputStream out;
   private TestOutputStream err;
+  private TestOutputStream out;
 
   @AfterEach
   public void cleanUpStreams()
@@ -68,6 +65,7 @@ public class CommandLineHelpTest
   }
 
   @Test
+  @Disabled
   public void commandLineHelpDefaults(final TestContext testContext)
     throws Exception
   {
@@ -95,15 +93,15 @@ public class CommandLineHelpTest
   {
 
     final TestWriter testout = new TestWriter();
-    try (final TestWriter out = testout;)
+    try (final TestWriter out = testout)
     {
       Main.main(flattenCommandlineArgs(argsMap));
       out.write(this.out.getFileContents());
     }
     assertThat(outputOf(testout),
-               hasSameContentAs(classpathResource(COMMAND_LINE_HELP_OUTPUT
-                                                  + testContext.testMethodName()
-                                                  + ".txt")));
+               hasSameContentAs(classpathResource(
+                 COMMAND_LINE_HELP_OUTPUT + testContext.testMethodName()
+                 + ".txt")));
   }
 
 }
