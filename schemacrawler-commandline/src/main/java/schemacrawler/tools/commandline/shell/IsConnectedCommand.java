@@ -26,33 +26,34 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.shell;
 
 
-import schemacrawler.schemacrawler.Options;
+import static java.util.Objects.requireNonNull;
 
-public class ApplicationOptions
-  implements Options
+import picocli.CommandLine;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import sf.util.SchemaCrawlerLogger;
+
+@CommandLine.Command(name = "is-connected", description = "Connect to a database, using a connection URL specification")
+public class IsConnectedCommand
+  implements Runnable
 {
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(IsConnectedCommand.class.getName());
 
-  private final boolean showHelp;
-  private final boolean showVersionOnly;
+  private final SchemaCrawlerShellState state;
 
-  public ApplicationOptions(final boolean showHelp,
-                            final boolean showVersionOnly)
+  public IsConnectedCommand(final SchemaCrawlerShellState state)
   {
-    this.showHelp = showHelp;
-    this.showVersionOnly = showVersionOnly;
+    this.state = requireNonNull(state, "No state provided");
   }
 
-  public boolean isShowHelp()
+  @Override
+  public void run()
   {
-    return showHelp;
-  }
-
-  public boolean isShowVersionOnly()
-  {
-    return showVersionOnly;
+    final boolean isConnected = state.isConnected();
+    System.out.println(String.format("%sconnected", isConnected? "": "not "));
   }
 
 }

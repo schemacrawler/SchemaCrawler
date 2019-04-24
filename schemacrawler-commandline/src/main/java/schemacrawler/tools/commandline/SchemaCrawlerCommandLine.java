@@ -28,7 +28,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.*;
+import static java.util.Objects.requireNonNull;
+import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
+import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 
 import java.util.logging.Level;
 
@@ -36,7 +38,7 @@ import picocli.CommandLine;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.command.SchemaCrawlerCommands;
-import schemacrawler.tools.commandline.shellcommand.StateFactory;
+import schemacrawler.tools.commandline.shell.StateFactory;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import us.fatehi.commandlineparser.CommandLineUtility;
@@ -47,15 +49,11 @@ public final class SchemaCrawlerCommandLine
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerCommandLine.class.getName());
 
-  public static void main(final String[] args)
+  public static void execute(final String[] args)
   {
     try
     {
-      applyApplicationLogLevel(Level.OFF);
-
-      logSafeArguments(args);
-      logSystemClasspath();
-      logSystemProperties();
+      requireNonNull(args, "No arguments provided");
 
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
 
@@ -94,6 +92,11 @@ public final class SchemaCrawlerCommandLine
       logFullStackTrace(Level.SEVERE, e);
     }
 
+  }
+
+  private SchemaCrawlerCommandLine()
+  {
+    // Prevent instantiation
   }
 
 }

@@ -25,47 +25,30 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline.shellcommand;
 
+package schemacrawler.tools.commandline.shell;
 
-import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-public class StateFactory
-  implements CommandLine.IFactory
+/**
+ * Parses the command-line.
+ *
+ * @author Sualeh Fatehi
+ */
+public final class InteractiveShellOptions
 {
 
-  private final SchemaCrawlerShellState state;
+  @CommandLine.Option(names = {
+    "--interactive" }, description = "Start SchemaCrawler interactive shell")
+  private boolean interactive;
 
-  public StateFactory()
-  {
-    state = new SchemaCrawlerShellState();
-  }
+  @CommandLine.Unmatched
+  private String[] otherOptions;
 
-  public StateFactory(final SchemaCrawlerShellState state)
+  public boolean isInteractive()
   {
-    this.state = requireNonNull(state, "No state provided");
-  }
-
-  @Override
-  public <K> K create(final Class<K> cls)
-    throws Exception
-  {
-    if (cls == null)
-    {
-      return null;
-    }
-    try
-    {
-      return cls.getConstructor(SchemaCrawlerShellState.class)
-        .newInstance(state);
-    }
-    catch (final Exception e)
-    {
-      return cls.getConstructor().newInstance();
-    }
+    return interactive;
   }
 
 }

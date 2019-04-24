@@ -1,4 +1,4 @@
-package schemacrawler.tools.commandline.shellcommand;
+package schemacrawler.tools.commandline.shell;
 
 
 import java.io.PrintWriter;

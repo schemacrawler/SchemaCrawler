@@ -25,23 +25,46 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
+package schemacrawler.tools.commandline.shell;
 
-package schemacrawler.tools.commandline.shellcommand;
 
+import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
-@CommandLine.Command(name = "commands", description = "List available SchemaCrawler commands")
-public class AvailableCommandsCommand
-  implements Runnable
+public class StateFactory
+  implements CommandLine.IFactory
 {
 
-  public void run()
+  private final SchemaCrawlerShellState state;
+
+  public StateFactory()
   {
-    for (String command : new AvailableCommands())
+    state = new SchemaCrawlerShellState();
+  }
+
+  public StateFactory(final SchemaCrawlerShellState state)
+  {
+    this.state = requireNonNull(state, "No state provided");
+  }
+
+  @Override
+  public <K> K create(final Class<K> cls)
+    throws Exception
+  {
+    if (cls == null)
     {
-      System.out.println(command);
+      return null;
+    }
+    try
+    {
+      return cls.getConstructor(SchemaCrawlerShellState.class)
+        .newInstance(state);
+    }
+    catch (final Exception e)
+    {
+      return cls.getConstructor().newInstance();
     }
   }
 

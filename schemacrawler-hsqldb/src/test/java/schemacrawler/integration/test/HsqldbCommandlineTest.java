@@ -110,7 +110,7 @@ public class HsqldbCommandlineTest
     }
     assertThat(outputOf(testout),
                hasSameContentAndTypeAs(classpathResource(
-                 "hsqldb.main" + "." + outputFormat.getFormat()),
+                 "hsqldb.execute" + "." + outputFormat.getFormat()),
                                        outputFormat.getFormat()));
   }
 

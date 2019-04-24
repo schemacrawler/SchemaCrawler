@@ -28,7 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.*;
+import static java.util.Objects.requireNonNull;
 
 import java.util.logging.Level;
 
@@ -38,8 +38,8 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
-import schemacrawler.tools.commandline.shellcommand.SchemaCrawlerShellCommands;
-import schemacrawler.tools.commandline.shellcommand.StateFactory;
+import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.shell.StateFactory;
 import sf.util.SchemaCrawlerLogger;
 
 public final class SchemaCrawlerShell
@@ -48,14 +48,10 @@ public final class SchemaCrawlerShell
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
     .getLogger(SchemaCrawlerShell.class.getName());
 
-  public static void main(final String[] args)
+  public static void execute(final String[] args)
     throws Exception
   {
-    applyApplicationLogLevel(Level.OFF);
-
-    logSafeArguments(args);
-    logSystemClasspath();
-    logSystemProperties();
+    requireNonNull(args, "No arguments provided");
 
     final StateFactory stateFactory = new StateFactory();
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
@@ -99,6 +95,11 @@ public final class SchemaCrawlerShell
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }
+  }
+
+  private SchemaCrawlerShell()
+  {
+    // Prevent instantiation
   }
 
 }

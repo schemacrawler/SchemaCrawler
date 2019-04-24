@@ -26,33 +26,36 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.shellcommand;
+package schemacrawler.tools.commandline.shell;
 
 
 import static java.util.Objects.requireNonNull;
+
+import java.util.logging.Level;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "is-connected", description = "Connect to a database, using a connection URL specification")
-public class IsConnectedCommand
+@CommandLine.Command(name = "sweep", description = "Disconnect from a database, and clear loaded catalog")
+public class SweepCommand
   implements Runnable
 {
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(IsConnectedCommand.class.getName());
+    .getLogger(SweepCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
-  public IsConnectedCommand(final SchemaCrawlerShellState state)
+  public SweepCommand(final SchemaCrawlerShellState state)
   {
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
-    final boolean isConnected = state.isConnected();
-    System.out.println(String.format("%sconnected", isConnected? "": "not "));
+    LOGGER.log(Level.INFO, "sweep");
+    state.sweep();
   }
 
 }

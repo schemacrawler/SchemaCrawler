@@ -32,8 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.shellcommand.SchemaCrawlerShellCommands;
-import schemacrawler.tools.commandline.shellcommand.StateFactory;
+import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.shell.StateFactory;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 public class SchemaCrawlerShellCommandsTest

@@ -43,18 +43,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
-import schemacrawler.tools.commandline.shellcommand.AvailableCommandsCommand;
-import schemacrawler.tools.commandline.shellcommand.AvailableServersCommand;
-import schemacrawler.tools.commandline.shellcommand.SystemCommand;
+import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
+import schemacrawler.tools.commandline.shell.AvailableServersCommand;
+import schemacrawler.tools.commandline.shell.SystemCommand;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class ShellCommandsTest
 {
 
   private static final String SHELL_COMMANDS_OUTPUT = "shell_commands_output/";
-
-  private TestOutputStream out;
   private TestOutputStream err;
+  private TestOutputStream out;
 
   @AfterEach
   public void cleanUpStreams()

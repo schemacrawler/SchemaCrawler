@@ -26,22 +26,23 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.shellcommand;
+package schemacrawler.tools.commandline.shell;
 
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableServers;
+import schemacrawler.tools.commandline.AvailableCommands;
 
-@CommandLine.Command(name = "servers", description = "List available SchemaCrawler database plugins")
-public class AvailableServersCommand
+@CommandLine.Command(name = "commands", description = "List available SchemaCrawler commands")
+public class AvailableCommandsCommand
   implements Runnable
 {
 
+  @Override
   public void run()
   {
-    for (String server : new AvailableServers())
+    for (final String command : new AvailableCommands())
     {
-      System.out.println(server);
+      System.out.println(command);
     }
   }
 

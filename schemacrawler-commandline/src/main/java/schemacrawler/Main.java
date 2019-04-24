@@ -34,13 +34,9 @@ import static us.fatehi.commandlineparser.CommandLineUtility.*;
 
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.ApplicationOptions;
-import schemacrawler.tools.commandline.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerHelpCommandLine;
-import schemacrawler.tools.commandline.parser.ApplicationOptionsParser;
-import us.fatehi.commandlineparser.CommandLineUtility;
+import schemacrawler.tools.commandline.SchemaCrawlerShell;
+import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
@@ -55,33 +51,21 @@ public final class Main
 
     applyApplicationLogLevel(Level.OFF);
 
-    final ApplicationOptionsParser optionsParser = new ApplicationOptionsParser();
-    optionsParser.parse(args);
-    final ApplicationOptions applicationOptions = optionsParser
-      .getApplicationOptions();
-
-    final Config argsMap = CommandLineUtility
-      .parseArgs(optionsParser.getRemainder());
-
-    //  applyApplicationLogLevel(applicationOptions.getApplicationLogLevel());
-
     logSafeArguments(args);
     logSystemClasspath();
     logSystemProperties();
 
-    final boolean showHelp =
-      args.length == 0 || args.length == 1 && Main.class.getCanonicalName()
-        .equals(args[0]) || applicationOptions.isShowHelp();
+    final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
+    picocli.CommandLine.populateCommand(interactiveShellOptions, args);
 
-    final CommandLine commandLine;
-    if (showHelp)
+    final boolean isInteractive = interactiveShellOptions.isInteractive();
+    if (isInteractive)
     {
-      final boolean showVersionOnly = applicationOptions.isShowVersionOnly();
-      commandLine = new SchemaCrawlerHelpCommandLine(argsMap, showVersionOnly);
+      SchemaCrawlerShell.execute(args);
     }
     else
     {
-      SchemaCrawlerCommandLine.main(args);
+      SchemaCrawlerCommandLine.execute(args);
     }
 
   }

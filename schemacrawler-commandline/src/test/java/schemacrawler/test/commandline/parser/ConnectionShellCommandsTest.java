@@ -47,9 +47,9 @@ import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.DatabaseConnectionInfo;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
-import schemacrawler.tools.commandline.shellcommand.DisconnectCommand;
-import schemacrawler.tools.commandline.shellcommand.IsConnectedCommand;
-import schemacrawler.tools.commandline.shellcommand.SweepCommand;
+import schemacrawler.tools.commandline.shell.DisconnectCommand;
+import schemacrawler.tools.commandline.shell.IsConnectedCommand;
+import schemacrawler.tools.commandline.shell.SweepCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
