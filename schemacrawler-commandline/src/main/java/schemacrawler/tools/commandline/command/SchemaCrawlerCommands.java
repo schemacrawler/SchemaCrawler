@@ -1,12 +1,18 @@
 package schemacrawler.tools.commandline.command;
 
 
+import java.util.logging.Level;
+
 import picocli.CommandLine;
+import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "", description = "SchemaCrawler command-line")
 public class SchemaCrawlerCommands
   implements Runnable
 {
+
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
+    .getLogger(SchemaCrawlerCommands.class.getName());
 
   @CommandLine.Mixin
   private ConfigFileCommand configFileCommand;
@@ -47,6 +53,8 @@ public class SchemaCrawlerCommands
     {
       if (command != null)
       {
+        LOGGER.log(Level.INFO,
+                   "Running command " + command.getClass().getSimpleName());
         command.run();
       }
     }

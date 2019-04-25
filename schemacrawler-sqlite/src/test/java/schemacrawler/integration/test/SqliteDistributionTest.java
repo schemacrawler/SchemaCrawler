@@ -104,7 +104,7 @@ public class SqliteDistributionTest
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(
-                 "sqlite.execute" + "." + outputFormat.getFormat())));
+                 "sqlite.main" + "." + outputFormat.getFormat())));
   }
 
 }

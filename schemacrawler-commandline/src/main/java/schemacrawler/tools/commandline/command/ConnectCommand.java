@@ -35,13 +35,13 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.SimpleDataSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -67,9 +67,11 @@ public class ConnectCommand
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
-    if (connectionOptions==null) {
+    if (connectionOptions == null)
+    {
       throw new CommandLine.ParameterException(spec.commandLine(),
                                                "Please provide connection options");
     }
@@ -131,13 +133,8 @@ public class ConnectCommand
       .newDatabaseConnectionSource(databaseConnectable);
     databaseConnectionSource.setUserCredentials(userCredentials);
 
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUsername(userCredentials.getUser());
-    dataSource.setPassword(userCredentials.getPassword());
-    dataSource.setUrl(databaseConnectionSource.getConnectionUrl());
-    dataSource.setDefaultAutoCommit(false);
-    dataSource.setInitialSize(1);
-    dataSource.setMaxTotal(1);
+    final SimpleDataSource dataSource = new SimpleDataSource(
+      databaseConnectionSource);
 
     state.setDataSource(dataSource);
   }

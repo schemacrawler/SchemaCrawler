@@ -84,7 +84,6 @@ public final class DatabaseConnectionSource
 
   private final Map<String, String> connectionProperties;
   private final String connectionUrl;
-  private Connection connection;
   private UserCredentials userCredentials;
 
   public DatabaseConnectionSource(final String connectionUrl)
@@ -107,6 +106,11 @@ public final class DatabaseConnectionSource
     userCredentials = new SingleUseUserCredentials();
   }
 
+  public UserCredentials getUserCredentials()
+  {
+    return userCredentials;
+  }
+
   public void setUserCredentials(final UserCredentials userCredentials)
   {
     this.userCredentials = requireNonNull(userCredentials,
@@ -116,13 +120,9 @@ public final class DatabaseConnectionSource
   @Override
   public final Connection get()
   {
-    if (connection == null)
-    {
-      final String user = userCredentials.getUser();
-      final String password = userCredentials.getPassword();
-      connection = getConnection(user, password);
-    }
-    return connection;
+    final String user = userCredentials.getUser();
+    final String password = userCredentials.getPassword();
+    return getConnection(user, password);
   }
 
   public final Driver getJdbcDriver()
