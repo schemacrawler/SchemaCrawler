@@ -42,7 +42,8 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "grep", description = "Grep database object metadata")
+@CommandLine.Command(name = "grep",
+                     description = "Grep database object metadata")
 public final class GrepCommand
   implements Runnable
 {
@@ -50,19 +51,29 @@ public final class GrepCommand
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
-    "--grep-columns" }, description = "grep for tables with column names matching pattern")
+    "--grep-columns"
+  },
+                      description = "grep for tables with column names matching pattern")
   private Pattern grepcolumns;
   @CommandLine.Option(names = {
-    "--grep-def" }, description = "grep for tables definitions containing pattern")
+    "--grep-def"
+  },
+                      description = "grep for tables definitions containing pattern")
   private Pattern grepdef;
   @CommandLine.Option(names = {
-    "--grep-in-out" }, description = "grep for routines with parameter names matching pattern")
+    "--grep-in-out"
+  },
+                      description = "grep for routines with parameter names matching pattern")
   private Pattern grepinout;
   @CommandLine.Option(names = {
-    "--invert-match" }, description = "Invert the grep match")
+    "--invert-match"
+  },
+                      description = "Invert the grep match")
   private Boolean invertMatch;
   @CommandLine.Option(names = {
-    "--only-matching" }, description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
+    "--only-matching"
+  },
+                      description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
   private Boolean onlyMatching;
 
   public GrepCommand(final SchemaCrawlerShellState state)
@@ -70,10 +81,10 @@ public final class GrepCommand
     this.state = requireNonNull(state);
   }
 
+  @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state
-      .getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
 
     if (grepcolumns != null)
     {

@@ -50,19 +50,21 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "config-file", description = "Load SchemaCrawler configuration from the classpath and file")
+@CommandLine.Command(name = "config-file",
+                     description = "Load SchemaCrawler configuration from the classpath and file")
 public class ConfigFileCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConfigFileCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    ConfigFileCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
-    "-g",
-    "--state-file" }, description = "SchemaCrawler configuration properties file")
+    "-g", "--state-file"
+  },
+                      description = "SchemaCrawler configuration properties file")
   private Path configFile;
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)
@@ -79,9 +81,8 @@ public class ConfigFileCommand
     // 1. Load state from CLASSPATH, in place
     try
     {
-      final Config classpathConfig = PropertiesUtility
-        .loadConfig(new ClasspathInputResource(
-          "/schemacrawler.config.properties"));
+      final Config classpathConfig = PropertiesUtility.loadConfig(new ClasspathInputResource(
+        "/schemacrawler.config.properties"));
       config.putAll(classpathConfig);
     }
     catch (final IOException e)
@@ -107,8 +108,8 @@ public class ConfigFileCommand
 
     try
     {
-      final Config config = PropertiesUtility
-        .loadConfig(new FileInputResource(configFile));
+      final Config config = PropertiesUtility.loadConfig(new FileInputResource(
+        configFile));
       return config;
     }
     catch (final IOException e)

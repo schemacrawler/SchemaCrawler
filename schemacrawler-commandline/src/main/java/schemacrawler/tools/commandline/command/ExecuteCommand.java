@@ -48,13 +48,14 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "execute", description = "Execute SchemaCrawler command")
+@CommandLine.Command(name = "execute",
+                     description = "Execute SchemaCrawler command")
 public class ExecuteCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(AvailableCommandsCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    AvailableCommandsCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
@@ -95,33 +96,35 @@ public class ExecuteCommand
 
     try
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder().fromConfig(state.getAdditionalConfiguration());
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder.builder()
+                                                                            .fromConfig(
+                                                                              state
+                                                                                .getAdditionalConfiguration());
       if (commandOutputOptions.getOutputFile().isPresent())
       {
-        outputOptionsBuilder
-          .withOutputFile(commandOutputOptions.getOutputFile().get());
+        outputOptionsBuilder.withOutputFile(commandOutputOptions.getOutputFile()
+                                                                .get());
       }
       else
       {
         outputOptionsBuilder.withConsoleOutput();
       }
       commandOutputOptions.getOutputFormatValue()
-        .ifPresent(outputOptionsBuilder::withOutputFormatValue);
+                          .ifPresent(outputOptionsBuilder::withOutputFormatValue);
       commandOutputOptions.getTitle().ifPresent(outputOptionsBuilder::title);
 
-      final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder().toOptions();
-      final SchemaRetrievalOptions schemaRetrievalOptions = state
-        .getSchemaRetrievalOptionsBuilder().toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
+                                                             .toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptionsBuilder()
+                                                                 .toOptions();
       final OutputOptions outputOptions = outputOptionsBuilder.toOptions();
       final Config additionalConfiguration = state.getAdditionalConfiguration();
 
       // Output file name has to be specified for diagrams
       // (Check after output options have been built)
-      if (GraphOutputFormat
-            .isSupportedFormat(outputOptions.getOutputFormatValue())
-          && !commandOutputOptions.getOutputFile().isPresent())
+      if (
+        GraphOutputFormat.isSupportedFormat(outputOptions.getOutputFormatValue())
+        && !commandOutputOptions.getOutputFile().isPresent())
       {
         throw new RuntimeException(
           "Output file has to be specified for schema diagrams");

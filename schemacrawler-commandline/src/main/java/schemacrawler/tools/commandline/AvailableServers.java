@@ -47,9 +47,8 @@ public class AvailableServers
     availableServers = new ArrayList<>();
     try
     {
-      new DatabaseConnectorRegistry()
-        .forEach(databaseServerType -> availableServers
-          .add(databaseServerType.getDatabaseSystemIdentifier()));
+      new DatabaseConnectorRegistry().forEach(databaseServerType -> availableServers
+        .add(databaseServerType.getDatabaseSystemIdentifier()));
     }
     catch (final SchemaCrawlerException e)
     {

@@ -42,7 +42,10 @@ public class DatabaseUrlConnectionOptions
 {
 
   @CommandLine.Option(names = {
-    "--url" }, required = true, description = "Database connection string")
+    "--url"
+  },
+                      required = true,
+                      description = "Database connection string")
   private String connectionUrl;
 
   @Override
@@ -50,8 +53,8 @@ public class DatabaseUrlConnectionOptions
   {
     try
     {
-      return new DatabaseConnectorRegistry()
-        .lookupDatabaseConnectorFromUrl(connectionUrl);
+      return new DatabaseConnectorRegistry().lookupDatabaseConnectorFromUrl(
+        connectionUrl);
     }
     catch (final SchemaCrawlerException e)
     {

@@ -48,13 +48,14 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@CommandLine.Command(name = "connect", description = "Connect to a database")
+@CommandLine.Command(name = "connect",
+                     description = "Connect to a database")
 public class ConnectCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ConnectCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    ConnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
   @CommandLine.Mixin
@@ -80,12 +81,10 @@ public class ConnectCommand
     {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectable databaseConnectable = connectionOptions
-        .getDatabaseConnectable();
+      final DatabaseConnectable databaseConnectable = connectionOptions.getDatabaseConnectable();
       requireNonNull(databaseConnectable,
                      "No database connection options provided");
-      final DatabaseConnector databaseConnector = databaseConnectable
-        .getDatabaseConnector();
+      final DatabaseConnector databaseConnector = databaseConnectable.getDatabaseConnector();
       requireNonNull(databaseConnector,
                      "No database connection options provided");
       LOGGER.log(Level.INFO,
@@ -129,8 +128,8 @@ public class ConnectCommand
 
     // Connect using connection options provided from the command-line,
     // provided configuration, and bundled configuration
-    final DatabaseConnectionSource databaseConnectionSource = databaseConnector
-      .newDatabaseConnectionSource(databaseConnectable);
+    final DatabaseConnectionSource databaseConnectionSource = databaseConnector.newDatabaseConnectionSource(
+      databaseConnectable);
     databaseConnectionSource.setUserCredentials(userCredentials);
 
     final SimpleDataSource dataSource = new SimpleDataSource(
@@ -145,7 +144,8 @@ public class ConnectCommand
 
     final Config config = state.getAdditionalConfiguration();
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().fromConfig(config);
+      .builder()
+      .fromConfig(config);
     state.setSchemaCrawlerOptionsBuilder(schemaCrawlerOptionsBuilder);
   }
 

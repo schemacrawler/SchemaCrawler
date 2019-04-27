@@ -34,13 +34,16 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "exit", aliases = {
-  "quit", "terminate" }, description = "Disconnect from a database")
+@CommandLine.Command(name = "exit",
+                     aliases = {
+                       "quit", "terminate"
+                     },
+                     description = "Disconnect from a database")
 public class ExitCommand
   implements Runnable
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ExitCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    ExitCommand.class.getName());
 
   @Override
   public void run()

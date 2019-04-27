@@ -37,12 +37,13 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "disconnect", description = "Disconnect from a database")
+@CommandLine.Command(name = "disconnect",
+                     description = "Disconnect from a database")
 public class DisconnectCommand
   implements Runnable
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DisconnectCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    DisconnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 

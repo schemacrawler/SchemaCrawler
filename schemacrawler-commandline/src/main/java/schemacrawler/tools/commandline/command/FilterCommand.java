@@ -40,7 +40,8 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "filter", description = "Filter database object metadata")
+@CommandLine.Command(name = "filter",
+                     description = "Filter database object metadata")
 public final class FilterCommand
   implements Runnable
 {
@@ -48,13 +49,19 @@ public final class FilterCommand
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
-    "--children" }, description = "Number of generations of descendents for the tables selected by grep")
+    "--children"
+  },
+                      description = "Number of generations of descendents for the tables selected by grep")
   private Integer children;
   @CommandLine.Option(names = {
-    "--no-empty-tables" }, description = "Include only tables that have rows of data")
+    "--no-empty-tables"
+  },
+                      description = "Include only tables that have rows of data")
   private Boolean noemptytables;
   @CommandLine.Option(names = {
-    "--parents" }, description = "Number of generations of ancestors for the tables selected by grep")
+    "--parents"
+  },
+                      description = "Number of generations of ancestors for the tables selected by grep")
   private Integer parents;
 
   @CommandLine.Spec
@@ -69,8 +76,7 @@ public final class FilterCommand
   public void run()
   {
 
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state
-      .getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
 
     if (parents != null)
     {

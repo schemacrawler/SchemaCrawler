@@ -37,12 +37,14 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "sweep", aliases = { "clean" }, description = "Disconnect from a database, and clear loaded catalog")
+@CommandLine.Command(name = "sweep",
+                     aliases = { "clean" },
+                     description = "Disconnect from a database, and clear loaded catalog")
 public class SweepCommand
   implements Runnable
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SweepCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    SweepCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 

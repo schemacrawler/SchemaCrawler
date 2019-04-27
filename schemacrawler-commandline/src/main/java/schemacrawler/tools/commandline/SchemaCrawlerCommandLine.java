@@ -46,8 +46,8 @@ import us.fatehi.commandlineparser.CommandLineUtility;
 public final class SchemaCrawlerCommandLine
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerCommandLine.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    SchemaCrawlerCommandLine.class.getName());
 
   public static void execute(final String[] args)
   {
@@ -76,15 +76,16 @@ public final class SchemaCrawlerCommandLine
     }
     catch (final Throwable e)
     {
-      System.err
-        .printf("%s %s%n%n", Version.getProductName(), Version.getVersion());
+      System.err.printf("%s %s%n%n",
+                        Version.getProductName(),
+                        Version.getVersion());
       final String errorMessage = e.getMessage();
       if (errorMessage != null)
       {
         System.err.printf("Error: %s%n%n", errorMessage);
       }
-      System.err
-        .println("Re-run SchemaCrawler with just the\n-?\noption for help");
+      System.err.println(
+        "Re-run SchemaCrawler with just the\n-?\noption for help");
       System.err.println();
       System.err.println(
         "Or, re-run SchemaCrawler with an additional\n--log-level=CONFIG\noption for details on the error");

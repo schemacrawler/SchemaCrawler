@@ -36,13 +36,16 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.LogLevel;
 
-@CommandLine.Command(name = "log", description = "Turns logging on or off, and sets log level")
+@CommandLine.Command(name = "log",
+                     description = "Turns logging on or off, and sets log level")
 public final class LogCommand
   implements Runnable
 {
 
   @CommandLine.Option(names = {
-    "--log-level" }, description = "Set logging level")
+    "--log-level"
+  },
+                      description = "Set logging level")
   private LogLevel loglevel;
 
   @Override

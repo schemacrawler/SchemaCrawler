@@ -82,8 +82,9 @@ public class SimpleDataSource
   public Connection getConnection(final String username, final String password)
     throws SQLException
   {
-    databaseConnectionSource
-      .setUserCredentials(new MultiUseUserCredentials(username, password));
+    databaseConnectionSource.setUserCredentials(new MultiUseUserCredentials(
+      username,
+      password));
     return getConnection();
   }
 
@@ -117,12 +118,11 @@ public class SimpleDataSource
 
   private void resetUserCredentials()
   {
-    final UserCredentials userCredentials = databaseConnectionSource
-      .getUserCredentials();
+    final UserCredentials userCredentials = databaseConnectionSource.getUserCredentials();
     final String user = userCredentials.getUser();
     final String password = userCredentials.getPassword();
-    databaseConnectionSource
-      .setUserCredentials(new MultiUseUserCredentials(user, password));
+    databaseConnectionSource.setUserCredentials(new MultiUseUserCredentials(user,
+                                                                            password));
   }
 
   @Override

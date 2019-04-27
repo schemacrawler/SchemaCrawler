@@ -43,8 +43,11 @@ public final class CommandOptions
 {
 
   @CommandLine.Option(names = {
-    "-c",
-    "--command" }, required = true, description = "SchemaCrawler command", completionCandidates = AvailableCommands.class)
+    "-c", "--command"
+  },
+                      required = true,
+                      description = "SchemaCrawler command",
+                      completionCandidates = AvailableCommands.class)
   private String command;
 
   @CommandLine.Spec

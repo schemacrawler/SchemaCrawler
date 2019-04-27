@@ -90,8 +90,8 @@ public class DatabaseConfigConnectionOptions
     final String connectionUrl = connectionProperties.get(URL);
 
     // Check that all required parameters have been substituted
-    final Set<String> unmatchedVariables = TemplatingUtility
-      .extractTemplateVariables(connectionUrl);
+    final Set<String> unmatchedVariables = TemplatingUtility.extractTemplateVariables(
+      connectionUrl);
     if (!unmatchedVariables.isEmpty())
     {
       throw new IllegalArgumentException(String.format(
@@ -106,19 +106,31 @@ public class DatabaseConfigConnectionOptions
   }
 
   @CommandLine.Option(names = {
-    "--database" }, description = "Database name")
+    "--database"
+  },
+                      description = "Database name")
   private String database;
   @CommandLine.Option(names = {
-    "--server" }, required = true, description = "Database server type", completionCandidates = AvailableServers.class)
+    "--server"
+  },
+                      required = true,
+                      description = "Database server type",
+                      completionCandidates = AvailableServers.class)
   private String databaseSystemIdentifier;
   @CommandLine.Option(names = {
-    "--host" }, description = "Database server host")
+    "--host"
+  },
+                      description = "Database server host")
   private String host;
   @CommandLine.Option(names = {
-    "--port" }, description = "Database server port")
+    "--port"
+  },
+                      description = "Database server port")
   private Integer port;
   @CommandLine.Option(names = {
-    "--urlx" }, description = "JDBC URL additional properties")
+    "--urlx"
+  },
+                      description = "JDBC URL additional properties")
   private Map<String, String> urlx;
 
   @Override
@@ -126,8 +138,8 @@ public class DatabaseConfigConnectionOptions
   {
     try
     {
-      return new DatabaseConnectorRegistry()
-        .lookupDatabaseConnector(databaseSystemIdentifier);
+      return new DatabaseConnectorRegistry().lookupDatabaseConnector(
+        databaseSystemIdentifier);
     }
     catch (final SchemaCrawlerException e)
     {
@@ -183,8 +195,10 @@ public class DatabaseConfigConnectionOptions
 
     if (urlx != null && !urlx.isEmpty())
     {
-      final String urlxValue = urlx.entrySet().stream().map(Object::toString)
-        .collect(joining("&"));
+      final String urlxValue = urlx.entrySet()
+                                   .stream()
+                                   .map(Object::toString)
+                                   .collect(joining("&"));
       config.put("urlx", urlxValue);
     }
 

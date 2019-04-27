@@ -54,7 +54,7 @@ public class StateFactory
     try
     {
       return cls.getConstructor(SchemaCrawlerShellState.class)
-        .newInstance(state);
+                .newInstance(state);
     }
     catch (final Exception e)
     {

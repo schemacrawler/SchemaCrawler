@@ -32,7 +32,10 @@ package schemacrawler.tools.commandline.command;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.enumValue;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import picocli.CommandLine;
@@ -46,30 +49,42 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "limit", description = "Limit database object metadata")
+@CommandLine.Command(name = "limit",
+                     description = "Limit database object metadata")
 public final class LimitCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = { "--exclude-columns" }, description = "Regular expression to match fully qualified names of columns to exclude")
+  @CommandLine.Option(names = { "--exclude-columns" },
+                      description = "Regular expression to match fully qualified names of columns to exclude")
   private Pattern excludecolumns;
-  @CommandLine.Option(names = { "--exclude-in-out" }, description = "Regular expression to match fully qualified names of parameters to exclude")
+  @CommandLine.Option(names = { "--exclude-in-out" },
+                      description = "Regular expression to match fully qualified names of parameters to exclude")
   private Pattern excludeinout;
-  @CommandLine.Option(names = { "--routines" }, description = "Regular expression to match fully qualified names of routines to include")
+  @CommandLine.Option(names = { "--routines" },
+                      description = "Regular expression to match fully qualified names of routines to include")
   private Pattern routines;
-  @CommandLine.Option(names = { "--routine-types" }, split = ",", description = "Comma-separated list of routine types")
+  @CommandLine.Option(names = { "--routine-types" },
+                      split = ",",
+                      description = "Comma-separated list of routine types")
   private String[] routinetypes;
-  @CommandLine.Option(names = { "--schemas" }, description = "Regular expression to match fully qualified names of schemas to include")
+  @CommandLine.Option(names = { "--schemas" },
+                      description = "Regular expression to match fully qualified names of schemas to include")
   private Pattern schemas;
-  @CommandLine.Option(names = { "--sequences" }, description = "Regular expression to match fully qualified names of sequences to include")
+  @CommandLine.Option(names = { "--sequences" },
+                      description = "Regular expression to match fully qualified names of sequences to include")
   private Pattern sequences;
-  @CommandLine.Option(names = { "--synonyms" }, description = "Regular expression to match fully qualified names of synonyms to include")
+  @CommandLine.Option(names = { "--synonyms" },
+                      description = "Regular expression to match fully qualified names of synonyms to include")
   private Pattern synonyms;
-  @CommandLine.Option(names = { "--tables" }, description = "Regular expression to match fully qualified names of tables to include")
+  @CommandLine.Option(names = { "--tables" },
+                      description = "Regular expression to match fully qualified names of tables to include")
   private Pattern tables;
-  @CommandLine.Option(names = { "--table-types" }, split = ",", description = "Comma-separated list of table types")
+  @CommandLine.Option(names = { "--table-types" },
+                      split = ",",
+                      description = "Comma-separated list of table types")
   private String[] tabletypes;
 
   public LimitCommand(final SchemaCrawlerShellState state)
@@ -77,10 +92,10 @@ public final class LimitCommand
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
-    final SchemaCrawlerOptionsBuilder optionsBuilder = state
-      .getSchemaCrawlerOptionsBuilder();
+    final SchemaCrawlerOptionsBuilder optionsBuilder = state.getSchemaCrawlerOptionsBuilder();
 
     if (schemas != null)
     {
@@ -92,8 +107,8 @@ public final class LimitCommand
     }
     if (excludecolumns != null)
     {
-      optionsBuilder
-        .includeColumns(new RegularExpressionExclusionRule(excludecolumns));
+      optionsBuilder.includeColumns(new RegularExpressionExclusionRule(
+        excludecolumns));
     }
     if (routines != null)
     {
@@ -101,8 +116,8 @@ public final class LimitCommand
     }
     if (excludeinout != null)
     {
-      optionsBuilder
-        .includeRoutineColumns(new RegularExpressionExclusionRule(excludeinout));
+      optionsBuilder.includeRoutineColumns(new RegularExpressionExclusionRule(
+        excludeinout));
     }
 
     if (synonyms != null)
@@ -137,9 +152,8 @@ public final class LimitCommand
     final Collection<RoutineType> routineTypesCollection = new HashSet<>();
     for (final String routineTypeString : routinetypes)
     {
-      final RoutineType routineType = enumValue(routineTypeString
-                                                  .toLowerCase(Locale.ENGLISH),
-                                                RoutineType.unknown);
+      final RoutineType routineType = enumValue(routineTypeString.toLowerCase(
+        Locale.ENGLISH), RoutineType.unknown);
       routineTypesCollection.add(routineType);
     }
     return routineTypesCollection;

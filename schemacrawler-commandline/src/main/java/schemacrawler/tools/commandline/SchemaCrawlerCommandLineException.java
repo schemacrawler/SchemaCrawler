@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 
 package schemacrawler.tools.commandline;
 
+
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 
 /**

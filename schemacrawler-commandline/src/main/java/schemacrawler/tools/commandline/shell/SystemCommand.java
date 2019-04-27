@@ -36,9 +36,11 @@ import schemacrawler.SchemaCrawlerInfo;
 import schemacrawler.tools.commandline.AvailableCommands;
 import schemacrawler.tools.commandline.AvailableServers;
 
-@CommandLine.Command(name = "version", aliases = {
-  "sys-info",
-  "system-info" }, description = "Print version and system information")
+@CommandLine.Command(name = "version",
+                     aliases = {
+                       "sys-info", "system-info"
+                     },
+                     description = "Print version and system information")
 public class SystemCommand
   implements Runnable
 {

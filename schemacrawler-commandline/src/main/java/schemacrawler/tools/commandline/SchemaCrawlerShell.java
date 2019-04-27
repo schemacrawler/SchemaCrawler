@@ -46,8 +46,8 @@ import sf.util.SchemaCrawlerLogger;
 public final class SchemaCrawlerShell
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerShell.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    SchemaCrawlerShell.class.getName());
 
   public static void execute(final String[] args)
     throws Exception
@@ -65,9 +65,12 @@ public final class SchemaCrawlerShell
     cmd.setToggleBooleanFlags(false);
 
     final Terminal terminal = TerminalBuilder.builder().build();
-    final LineReader reader = LineReaderBuilder.builder().terminal(terminal)
-      .completer(new PicocliJLineCompleter(cmd.getCommandSpec()))
-      .parser(new DefaultParser()).build();
+    final LineReader reader = LineReaderBuilder.builder()
+                                               .terminal(terminal)
+                                               .completer(new PicocliJLineCompleter(
+                                                 cmd.getCommandSpec()))
+                                               .parser(new DefaultParser())
+                                               .build();
     commands.setReader(reader);
     final String prompt = "schemacrawler> ";
 
@@ -75,8 +78,10 @@ public final class SchemaCrawlerShell
     {
       try
       {
-        final String line = reader
-          .readLine(prompt, null, (MaskingCallback) null, null);
+        final String line = reader.readLine(prompt,
+                                            null,
+                                            (MaskingCallback) null,
+                                            null);
         final ParsedLine pl = reader.getParser().parse(line, 0);
         final String[] arguments = pl.words().toArray(new String[0]);
         cmd.parseWithHandlers(new CommandLine.RunLast(),

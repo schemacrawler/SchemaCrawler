@@ -46,19 +46,22 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@CommandLine.Command(name = "load", description = "Load database metadata")
+@CommandLine.Command(name = "load",
+                     description = "Load database metadata")
 public class LoadCommand
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LoadCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    LoadCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
-    "-i",
-    "--info-level" }, required = true, description = "Determine the amount of database metadata retrieved")
+    "-i", "--info-level"
+  },
+                      required = true,
+                      description = "Determine the amount of database metadata retrieved")
   private InfoLevel infoLevel;
 
   @CommandLine.Spec
@@ -74,6 +77,7 @@ public class LoadCommand
     return infoLevel;
   }
 
+  @Override
   public void run()
   {
     if (!state.isConnected())
@@ -85,7 +89,7 @@ public class LoadCommand
     if (infoLevel != null)
     {
       state.getSchemaCrawlerOptionsBuilder()
-        .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+           .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
     }
 
     try (final Connection connection = state.getDataSource().getConnection())
@@ -93,15 +97,15 @@ public class LoadCommand
       LOGGER.log(Level.INFO, new StringFormat("infoLevel=%s", infoLevel));
 
       final Config additionalConfiguration = state.getAdditionalConfiguration();
-      final SchemaRetrievalOptions schemaRetrievalOptions = state
-        .getSchemaRetrievalOptionsBuilder().toOptions();
-      final SchemaCrawlerOptions schemaCrawlerOptions = state
-        .getSchemaCrawlerOptionsBuilder().toOptions();
+      final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptionsBuilder()
+                                                                 .toOptions();
+      final SchemaCrawlerOptions schemaCrawlerOptions = state.getSchemaCrawlerOptionsBuilder()
+                                                             .toOptions();
 
       final CatalogLoaderRegistry catalogLoaderRegistry = new CatalogLoaderRegistry();
-      final CatalogLoader catalogLoader = catalogLoaderRegistry
-        .lookupCatalogLoader(schemaRetrievalOptions.getDatabaseServerType()
-                               .getDatabaseSystemIdentifier());
+      final CatalogLoader catalogLoader = catalogLoaderRegistry.lookupCatalogLoader(
+        schemaRetrievalOptions.getDatabaseServerType()
+                              .getDatabaseSystemIdentifier());
       LOGGER.log(Level.CONFIG,
                  new StringFormat("Catalog loader: %s", getClass().getName()));
 

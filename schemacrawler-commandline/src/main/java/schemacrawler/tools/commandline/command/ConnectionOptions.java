@@ -55,8 +55,7 @@ public final class ConnectionOptions
                                                "No database connection options provided");
     }
 
-    final DatabaseConnectable databaseConnectable = databaseConnectionOptions
-      .getDatabaseConnectable();
+    final DatabaseConnectable databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
     if (databaseConnectable == null)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
@@ -66,7 +65,7 @@ public final class ConnectionOptions
     return databaseConnectable;
   }
 
-  public UserCredentials getUserCredentials()
+  UserCredentials getUserCredentials()
   {
 
     if (userCredentialsOptions == null)
@@ -74,8 +73,7 @@ public final class ConnectionOptions
       throw new CommandLine.ParameterException(spec.commandLine(),
                                                "No database connection credentials provided");
     }
-    final UserCredentials userCredentials = userCredentialsOptions
-      .getUserCredentials();
+    final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
     return userCredentials;
   }
 

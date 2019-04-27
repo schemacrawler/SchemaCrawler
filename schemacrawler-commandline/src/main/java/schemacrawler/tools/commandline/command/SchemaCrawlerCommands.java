@@ -6,13 +6,15 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "", mixinStandardHelpOptions = true, description = "SchemaCrawler command-line")
+@CommandLine.Command(name = "",
+                     mixinStandardHelpOptions = true,
+                     description = "SchemaCrawler command-line")
 public class SchemaCrawlerCommands
   implements Runnable
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SchemaCrawlerCommands.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    SchemaCrawlerCommands.class.getName());
 
   @CommandLine.Mixin
   private ConfigFileCommand configFileCommand;
@@ -49,7 +51,8 @@ public class SchemaCrawlerCommands
       showCommand,
       sortCommand,
       loadCommand,
-      executeCommand })
+      executeCommand
+    })
     {
       if (command != null)
       {

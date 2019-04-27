@@ -49,17 +49,25 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 public final class UserCredentialsOptions
 {
 
-  @CommandLine.Option(names = "--password:env", description = "Database password, from an environmental variable value")
+  @CommandLine.Option(names = "--password:env",
+                      description = "Database password, from an environmental variable value")
   private String passwordEnvironmentVariable;
-  @CommandLine.Option(names = "--password:file", description = "Database password, read from a file")
+  @CommandLine.Option(names = "--password:file",
+                      description = "Database password, read from a file")
   private File passwordFile;
-  @CommandLine.Option(names = "--password:prompt", interactive = true, description = "Database password, prompted from the console")
+  @CommandLine.Option(names = "--password:prompt",
+                      interactive = true,
+                      description = "Database password, prompted from the console")
   private String passwordPrompted;
   @CommandLine.Option(names = {
-    "--password" }, description = "Database password")
+    "--password"
+  },
+                      description = "Database password")
   private String passwordProvided;
   @CommandLine.Option(names = {
-    "--user" }, description = "Database user name")
+    "--user"
+  },
+                      description = "Database user name")
   private String user;
 
   public UserCredentials getUserCredentials()

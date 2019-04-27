@@ -47,8 +47,7 @@ public class AvailableCommands
     availableCommands = new ArrayList<>();
     try
     {
-      new CommandRegistry()
-        .forEach(command -> availableCommands.add(command.getName()));
+      new CommandRegistry().forEach(command -> availableCommands.add(command.getName()));
     }
     catch (final SchemaCrawlerException e)
     {

@@ -41,20 +41,25 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "show", description = "Show output")
+@CommandLine.Command(name = "show",
+                     description = "Show output")
 public final class ShowCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = { "--no-info" }, description = "Whether to show database information")
+  @CommandLine.Option(names = { "--no-info" },
+                      description = "Whether to show database information")
   private Boolean noinfo;
-  @CommandLine.Option(names = { "--no-remarks" }, description = "Whether to sort remarks")
+  @CommandLine.Option(names = { "--no-remarks" },
+                      description = "Whether to sort remarks")
   private Boolean noremarks;
-  @CommandLine.Option(names = { "--portable-names" }, description = "Whether to use portable names")
+  @CommandLine.Option(names = { "--portable-names" },
+                      description = "Whether to use portable names")
   private Boolean portablenames;
-  @CommandLine.Option(names = { "--weak-associations" }, description = "Whether to weak associations")
+  @CommandLine.Option(names = { "--weak-associations" },
+                      description = "Whether to weak associations")
   private Boolean weakassociations;
 
   public ShowCommand(final SchemaCrawlerShellState state)
@@ -62,10 +67,13 @@ public final class ShowCommand
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
-    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
-      .builder().fromConfig(state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder.builder()
+                                                                            .fromConfig(
+                                                                              state
+                                                                                .getAdditionalConfiguration());
 
     if (noinfo != null)
     {

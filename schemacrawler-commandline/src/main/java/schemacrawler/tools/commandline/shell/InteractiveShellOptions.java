@@ -40,7 +40,9 @@ public final class InteractiveShellOptions
 {
 
   @CommandLine.Option(names = {
-    "--interactive" }, description = "Start SchemaCrawler interactive shell")
+    "--interactive"
+  },
+                      description = "Start SchemaCrawler interactive shell")
   private boolean interactive;
 
   @CommandLine.Unmatched

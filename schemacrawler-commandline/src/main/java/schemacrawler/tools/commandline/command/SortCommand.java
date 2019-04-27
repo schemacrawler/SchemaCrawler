@@ -41,20 +41,25 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "sort", description = "Sort output")
+@CommandLine.Command(name = "sort",
+                     description = "Sort output")
 public final class SortCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = { "--sort-columns" }, description = "Whether to sort table columns")
+  @CommandLine.Option(names = { "--sort-columns" },
+                      description = "Whether to sort table columns")
   private Boolean sortcolumns;
-  @CommandLine.Option(names = { "--sort-in-out" }, description = "Whether to routine parameters")
+  @CommandLine.Option(names = { "--sort-in-out" },
+                      description = "Whether to routine parameters")
   private Boolean sortinout;
-  @CommandLine.Option(names = { "--sort-routines" }, description = "Whether to sort routines")
+  @CommandLine.Option(names = { "--sort-routines" },
+                      description = "Whether to sort routines")
   private Boolean sortroutines;
-  @CommandLine.Option(names = { "--sort-tables" }, description = "Whether to sort tables")
+  @CommandLine.Option(names = { "--sort-tables" },
+                      description = "Whether to sort tables")
   private Boolean sorttables;
 
   public SortCommand(final SchemaCrawlerShellState state)
@@ -62,10 +67,13 @@ public final class SortCommand
     this.state = requireNonNull(state, "No state provided");
   }
 
+  @Override
   public void run()
   {
-    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder
-      .builder().fromConfig(state.getAdditionalConfiguration());
+    final SchemaTextOptionsBuilder optionsBuilder = SchemaTextOptionsBuilder.builder()
+                                                                            .fromConfig(
+                                                                              state
+                                                                                .getAdditionalConfiguration());
 
     if (sorttables != null)
     {

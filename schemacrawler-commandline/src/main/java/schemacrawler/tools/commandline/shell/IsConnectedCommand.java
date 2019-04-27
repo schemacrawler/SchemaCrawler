@@ -35,12 +35,13 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "is-connected", description = "Connect to a database, using a connection URL specification")
+@CommandLine.Command(name = "is-connected",
+                     description = "Connect to a database, using a connection URL specification")
 public class IsConnectedCommand
   implements Runnable
 {
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(IsConnectedCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    IsConnectedCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
 

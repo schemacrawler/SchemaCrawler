@@ -45,13 +45,19 @@ public final class CommandOutputOptions
 {
 
   @CommandLine.Option(names = {
-    "-o", "--output-file" }, description = "Outfile file path and name")
+    "-o", "--output-file"
+  },
+                      description = "Outfile file path and name")
   private Path outputFile;
   @CommandLine.Option(names = {
-    "--output-format" }, description = "Outfile format")
+    "--output-format"
+  },
+                      description = "Outfile format")
   private String outputFormatValue;
   @CommandLine.Option(names = {
-    "-m", "--title" }, description = "Title for output")
+    "-m", "--title"
+  },
+                      description = "Title for output")
   private String title;
 
   public Optional<String> getTitle()
