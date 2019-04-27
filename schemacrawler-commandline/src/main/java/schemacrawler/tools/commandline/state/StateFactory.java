@@ -25,13 +25,12 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline.shell;
+package schemacrawler.tools.commandline.state;
 
 
 import static java.util.Objects.requireNonNull;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
 public class StateFactory
   implements CommandLine.IFactory
