@@ -10,6 +10,7 @@ import schemacrawler.tools.commandline.command.*;
 
 @CommandLine.Command(name = "", description = "SchemaCrawler interactive shell with command completion", footer = {
   "", "Press Ctl-D to exit." }, subcommands = {
+  CommandLine.HelpCommand.class,
   LogCommand.class,
   ConfigFileCommand.class,
   ConnectCommand.class,

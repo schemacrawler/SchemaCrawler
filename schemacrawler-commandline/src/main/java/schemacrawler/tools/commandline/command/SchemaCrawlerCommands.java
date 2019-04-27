@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "", description = "SchemaCrawler command-line")
+@CommandLine.Command(name = "", mixinStandardHelpOptions = true, description = "SchemaCrawler command-line")
 public class SchemaCrawlerCommands
   implements Runnable
 {
