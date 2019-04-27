@@ -49,7 +49,14 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @CommandLine.Command(name = "connect",
-                     description = "Connect to a database")
+                     headerHeading = "Command:%n",
+                     header = "Connect to a database%n",
+                     synopsisHeading = "Usage:%n",
+                     descriptionHeading = "%nDescription:%n",
+                     description = "Connect to a database, using a JDBC URL, "
+                                   + "or for databases with SchemaCrawler plugins, "
+                                   + "with a server type, host, port and database%n",
+                     optionListHeading = "Options:%n")
 public class ConnectCommand
   implements Runnable
 {
