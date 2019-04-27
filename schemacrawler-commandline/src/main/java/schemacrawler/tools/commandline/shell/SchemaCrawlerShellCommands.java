@@ -25,7 +25,8 @@ import schemacrawler.tools.commandline.command.*;
   DisconnectCommand.class,
   IsConnectedCommand.class,
   SweepCommand.class,
-  SystemCommand.class })
+  SystemCommand.class,
+  ExitCommand.class })
 public class SchemaCrawlerShellCommands
   implements Runnable
 {
