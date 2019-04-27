@@ -39,11 +39,6 @@ public class StateFactory
 
   private final SchemaCrawlerShellState state;
 
-  public StateFactory()
-  {
-    state = new SchemaCrawlerShellState();
-  }
-
   public StateFactory(final SchemaCrawlerShellState state)
   {
     this.state = requireNonNull(state, "No state provided");
