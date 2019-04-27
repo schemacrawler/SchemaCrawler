@@ -39,6 +39,7 @@ import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
 import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import sf.util.SchemaCrawlerLogger;
 
@@ -53,7 +54,8 @@ public final class SchemaCrawlerShell
   {
     requireNonNull(args, "No arguments provided");
 
-    final StateFactory stateFactory = new StateFactory();
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    final StateFactory stateFactory = new StateFactory(state);
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
 
     final CommandLine cmd = new CommandLine(commands, stateFactory);
