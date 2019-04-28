@@ -69,9 +69,9 @@ public class AvailableCommands
     return availableCommands;
   }
 
-  public static Iterable<String> descriptive()
+  public static List<String> descriptive()
   {
-    return new AvailableCommands(true);
+    return new AvailableCommands(true).availableCommands;
   }
 
   private final List<String> availableCommands;

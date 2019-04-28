@@ -38,6 +38,7 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
+import schemacrawler.tools.commandline.command.SystemCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 
 /**
@@ -71,6 +72,10 @@ public final class Main
       {
         return;
       }
+      if (showVersionIfRequested(args))
+      {
+        return;
+      }
       SchemaCrawlerCommandLine.execute(args);
     }
 
@@ -79,12 +84,26 @@ public final class Main
   private static boolean showHelpIfRequested(final String[] args)
   {
     final CommandLineHelpCommand commandLineHelpCommand = new CommandLineHelpCommand();
-    final CommandLine helpCommandLine = new CommandLine(commandLineHelpCommand);
-    helpCommandLine.setUnmatchedArgumentsAllowed(true);
-    helpCommandLine.parse(args);
+    final CommandLine commandLine = new CommandLine(commandLineHelpCommand);
+    commandLine.setUnmatchedArgumentsAllowed(true);
+    commandLine.parse(args);
     if (commandLineHelpCommand.isHelpRequested())
     {
       commandLineHelpCommand.run();
+      return true;
+    }
+    return false;
+  }
+
+  private static boolean showVersionIfRequested(final String[] args)
+  {
+    final SystemCommand systemCommand = new SystemCommand();
+    final CommandLine commandLine = new CommandLine(systemCommand);
+    commandLine.setUnmatchedArgumentsAllowed(true);
+    commandLine.parse(args);
+    if (systemCommand.isVersionRequested())
+    {
+      systemCommand.run();
       return true;
     }
     return false;

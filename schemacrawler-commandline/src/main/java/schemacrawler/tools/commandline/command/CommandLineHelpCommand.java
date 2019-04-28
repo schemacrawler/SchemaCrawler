@@ -41,7 +41,6 @@ import schemacrawler.tools.commandline.state.StateFactory;
 
 @CommandLine.Command(name = "help",
                      header = "Displays SchemaCrawler command-line help",
-                     synopsisHeading = "%nUsage: ",
                      helpCommand = true)
 public final class CommandLineHelpCommand
   implements Runnable

@@ -70,9 +70,9 @@ public class AvailableServers
     return availableServers;
   }
 
-  public static Iterable<String> descriptive()
+  public static List<String> descriptive()
   {
-    return new AvailableServers(true);
+    return new AvailableServers(true).availableServers;
   }
 
   private final List<String> availableServers;

@@ -26,24 +26,33 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.shell;
+package schemacrawler.tools.commandline.command;
 
+
+import java.util.List;
 
 import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.tools.commandline.command.AvailableCommands;
-import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "version",
                      aliases = {
                        "sys-info", "system-info"
                      },
-                     description = "Print version and system information")
+                     description = "Display SchemaCrawler version and system information")
 public class SystemCommand
   implements Runnable
 {
+  @CommandLine.Option(names = { "-V", "--version" },
+                      versionHelp = true,
+                      description = "Display SchemaCrawler version and system information")
+  private boolean versionRequested;
+
+  public boolean isVersionRequested()
+  {
+    return versionRequested;
+  }
 
   @Override
   public void run()
@@ -55,19 +64,28 @@ public class SystemCommand
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
     System.out.println(jvmInfo);
 
-    System.out.println();
-    System.out.println("Available SchemaCrawler commands:");
-    for (final String command : new AvailableCommands())
+    final List<String> availableCommands = AvailableCommands.descriptive();
+    if (!availableCommands.isEmpty())
     {
-      System.out.println(command);
+      System.out.println();
+      System.out.println("Available SchemaCrawler commands:");
+      for (final String command : availableCommands)
+      {
+        System.out.println(command);
+      }
     }
 
-    System.out.println();
-    System.out.println("Available database server types:");
-    for (final String server : new AvailableServers())
+    final List<String> availableServers = AvailableServers.descriptive();
+    if (!availableServers.isEmpty())
     {
-      System.out.println(server);
+      System.out.println();
+      System.out.println("Available database server types:");
+      for (final String server : availableServers)
+      {
+        System.out.println(server);
+      }
     }
+
   }
 
 }
