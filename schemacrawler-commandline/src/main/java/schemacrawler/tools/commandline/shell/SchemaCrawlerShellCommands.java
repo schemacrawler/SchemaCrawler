@@ -14,7 +14,7 @@ import schemacrawler.tools.commandline.command.*;
                        "", "Press Ctl-D to exit."
                      },
                      subcommands = {
-                       CommandLine.HelpCommand.class,
+                       HelpCommand.class,
                        LogCommand.class,
                        ConfigFileCommand.class,
                        ConnectCommand.class,

@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.tools.commandline.command.SchemaCrawlerCommands;
+import schemacrawler.tools.commandline.command.SchemaCrawlerCommandLineCommands;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import sf.util.SchemaCrawlerLogger;
@@ -61,7 +61,7 @@ public final class SchemaCrawlerCommandLine
       state.setAdditionalConfiguration(argsMap);
 
       final StateFactory stateFactory = new StateFactory(state);
-      final SchemaCrawlerCommands commands = new SchemaCrawlerCommands();
+      final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
 
       final picocli.CommandLine cmd = new CommandLine(commands, stateFactory);
       cmd.setUnmatchedArgumentsAllowed(true);

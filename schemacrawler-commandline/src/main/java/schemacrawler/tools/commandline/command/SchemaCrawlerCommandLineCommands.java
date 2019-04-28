@@ -7,15 +7,13 @@ import picocli.CommandLine;
 import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "",
-                     mixinStandardHelpOptions = true,
                      description = "SchemaCrawler command-line")
-public class SchemaCrawlerCommands
+public class SchemaCrawlerCommandLineCommands
   implements Runnable
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    SchemaCrawlerCommands.class.getName());
-
+    SchemaCrawlerCommandLineCommands.class.getName());
   @CommandLine.Mixin
   private ConfigFileCommand configFileCommand;
   @CommandLine.Mixin
@@ -26,6 +24,8 @@ public class SchemaCrawlerCommands
   private FilterCommand filterCommand;
   @CommandLine.Mixin
   private GrepCommand grepCommand;
+  @CommandLine.Mixin
+  private HelpCommand helpCommand;
   @CommandLine.Mixin
   private LimitCommand limitCommand;
   @CommandLine.Mixin
@@ -42,6 +42,7 @@ public class SchemaCrawlerCommands
   {
 
     for (final Runnable command : new Runnable[] {
+      helpCommand,
       logCommand,
       configFileCommand,
       connectCommand,
