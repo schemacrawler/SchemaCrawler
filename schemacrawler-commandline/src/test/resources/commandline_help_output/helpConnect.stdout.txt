@@ -1,0 +1,33 @@
+Command:
+Connect to a database
+
+Usage:
+ connect [--password:prompt] [--database=<database>] [--host=<host>]
+         [--password=<passwordProvided>] [--password:
+         env=<passwordEnvironmentVariable>] [--password:file=<passwordFile>]
+         [--port=<port>] --server=<databaseSystemIdentifier>
+         --url=<connectionUrl> [--user=<user>] [--urlx=<String=String>]...
+
+Description:
+Connect to a database, using a JDBC URL, or for databases with SchemaCrawler
+plugins, with a server type, host, port and database
+
+Options:
+      --database=<database>
+                          Database name
+      --host=<host>       Database server host
+      --password=<passwordProvided>
+                          Database password
+      --password:env=<passwordEnvironmentVariable>
+                          Database password, from an environmental variable value
+      --password:file=<passwordFile>
+                          Database password, read from a file
+      --password:prompt   Database password, prompted from the console
+      --port=<port>       Database server port
+      --server=<databaseSystemIdentifier>
+                          Database server type
+      --url=<connectionUrl>
+                          Database connection string
+      --urlx=<String=String>
+                          JDBC URL additional properties
+      --user=<user>       Database user name

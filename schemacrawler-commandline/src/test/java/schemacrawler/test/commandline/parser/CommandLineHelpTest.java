@@ -39,6 +39,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import picocli.CommandLine;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
@@ -64,6 +65,24 @@ public class CommandLineHelpTest
   public void help(final TestContext testContext)
   {
     new CommandLineHelpCommand().run();
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(out),
+               hasSameContentAs(classpathResource(
+                 COMMANDLINE_HELP_OUTPUT + testContext.testMethodName()
+                 + ".stdout.txt")));
+  }
+
+  @Test
+  public void helpConnect(final TestContext testContext)
+  {
+    final String[] args = {
+      "--help", "connect"
+    };
+
+    final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
+    new CommandLine(optionsParser).parse(args);
+    optionsParser.run();
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(outputOf(out),
