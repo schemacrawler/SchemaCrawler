@@ -34,6 +34,7 @@ import static us.fatehi.commandlineparser.CommandLineUtility.*;
 
 import java.util.logging.Level;
 
+import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.HelpCommand;
@@ -66,16 +67,27 @@ public final class Main
     }
     else
     {
-      final HelpCommand helpCommand = new HelpCommand();
-      picocli.CommandLine.populateCommand(helpCommand, args);
-      if (helpCommand.isHelpRequested())
+      if (showHelpIfRequested(args))
       {
-        helpCommand.run();
         return;
       }
       SchemaCrawlerCommandLine.execute(args);
     }
 
+  }
+
+  private static boolean showHelpIfRequested(final String[] args)
+  {
+    final HelpCommand helpCommand = new HelpCommand();
+    final CommandLine helpCommandLine = new CommandLine(helpCommand);
+    helpCommandLine.setUnmatchedArgumentsAllowed(true);
+    helpCommandLine.parse(args);
+    if (helpCommand.isHelpRequested())
+    {
+      helpCommand.run();
+      return true;
+    }
+    return false;
   }
 
   private Main()
