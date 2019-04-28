@@ -29,9 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static java.util.Objects.requireNonNull;
+import static picocli.CommandLine.Model.UsageMessageSpec.*;
 
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
@@ -42,8 +43,8 @@ import schemacrawler.tools.commandline.state.StateFactory;
                      header = "Displays SchemaCrawler command-line help",
                      synopsisHeading = "%nUsage: ",
                      helpCommand = true)
-public final class HelpCommand
-  implements CommandLine.IHelpCommandInitializable, Runnable
+public final class CommandLineHelpCommand
+  implements Runnable
 {
 
   private CommandLine.Help.Ansi ansi;
@@ -54,9 +55,7 @@ public final class HelpCommand
                       usageHelp = true,
                       description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
-  private boolean initialized;
   private PrintStream out;
-  private CommandLine self;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
 
@@ -68,32 +67,24 @@ public final class HelpCommand
   @Override
   public void run()
   {
-    if (!initialized)
-    {
-      if (spec == null)
-      {
-        return;
-      }
-      init(spec.commandLine(),
-           CommandLine.Help.Ansi.AUTO,
-           System.out,
-           System.err);
-    }
+    ansi = CommandLine.Help.Ansi.AUTO;
+    out = System.out;
+    err = System.err;
 
     final CommandLine parent = new CommandLine(new SchemaCrawlerShellCommands(),
                                                new StateFactory(new SchemaCrawlerShellState()));
 
     if (commands != null && commands.length > 0)
     {
-      final CommandLine subcommand = parent.getSubcommands().get(commands[0]);
-      if (subcommand != null)
+      final CommandLine subCommand = parent.getSubcommands().get(commands[0]);
+      if (subCommand != null)
       {
-        subcommand.usage(out, ansi);
+        subCommand.usage(out, ansi);
       }
       else
       {
         throw new CommandLine.ParameterException(parent,
-                                                 "Unknown subcommand '"
+                                                 "Unknown sub-command '"
                                                  + commands[0] + "'.",
                                                  null,
                                                  commands[0]);
@@ -101,6 +92,21 @@ public final class HelpCommand
     }
     else
     {
+      parent.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
+                                              SECTION_KEY_HEADER,
+                                              // SECTION_KEY_SYNOPSIS_HEADING,
+                                              // SECTION_KEY_SYNOPSIS,
+                                              SECTION_KEY_DESCRIPTION_HEADING,
+                                              SECTION_KEY_DESCRIPTION,
+                                              SECTION_KEY_PARAMETER_LIST_HEADING,
+                                              SECTION_KEY_PARAMETER_LIST,
+                                              SECTION_KEY_OPTION_LIST_HEADING,
+                                              SECTION_KEY_OPTION_LIST,
+                                              SECTION_KEY_COMMAND_LIST_HEADING,
+                                              SECTION_KEY_COMMAND_LIST,
+                                              SECTION_KEY_FOOTER_HEADING,
+                                              SECTION_KEY_FOOTER));
+
       for (final String command : new String[] {
         "log",
         "config-file",
@@ -114,17 +120,17 @@ public final class HelpCommand
         "execute"
       })
       {
-        final CommandLine subcommand = parent.getSubcommands().get(command);
-        if (subcommand != null)
+        final CommandLine subCommand = parent.getSubcommands().get(command);
+        if (subCommand != null)
         {
-          subcommand.usage(out, ansi);
+          subCommand.usage(out, ansi);
           out.println();
           out.println();
         }
         else
         {
           throw new CommandLine.ParameterException(parent,
-                                                   "Unknown subcommand '"
+                                                   "Unknown sub-command '"
                                                    + command + "'.",
                                                    null,
                                                    command);
@@ -132,23 +138,6 @@ public final class HelpCommand
       }
 
     }
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void init(final CommandLine helpCommandLine,
-                   final CommandLine.Help.Ansi ansi,
-                   final PrintStream out,
-                   final PrintStream err)
-  {
-    self = requireNonNull(helpCommandLine, "No help command-line provided");
-    this.ansi = requireNonNull(ansi, "No ANSI settings provided");
-    this.out = requireNonNull(out, "No output stream provided");
-    this.err = requireNonNull(err, "No output stream provided");
-
-    initialized = true;
   }
 
 }

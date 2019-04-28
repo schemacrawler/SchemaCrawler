@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
-import schemacrawler.tools.commandline.command.HelpCommand;
+import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 
 /**
@@ -78,13 +78,13 @@ public final class Main
 
   private static boolean showHelpIfRequested(final String[] args)
   {
-    final HelpCommand helpCommand = new HelpCommand();
-    final CommandLine helpCommandLine = new CommandLine(helpCommand);
+    final CommandLineHelpCommand commandLineHelpCommand = new CommandLineHelpCommand();
+    final CommandLine helpCommandLine = new CommandLine(commandLineHelpCommand);
     helpCommandLine.setUnmatchedArgumentsAllowed(true);
     helpCommandLine.parse(args);
-    if (helpCommand.isHelpRequested())
+    if (commandLineHelpCommand.isHelpRequested())
     {
-      helpCommand.run();
+      commandLineHelpCommand.run();
       return true;
     }
     return false;
