@@ -6,7 +6,3 @@ list - Display schema information at different levels of detail
 quickdump - Display results of table queries
 schema - Display schema information at different levels of detail
 serialize - Create an offline catalog snapshot
->> expected followed by actual:
-brief
-brief - Display schema information at different levels of detail
-

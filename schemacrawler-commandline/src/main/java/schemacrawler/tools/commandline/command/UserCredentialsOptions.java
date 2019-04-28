@@ -37,7 +37,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
@@ -110,7 +110,7 @@ public final class UserCredentialsOptions
 
     if (passwordProvided != null && passwordInOtherWays)
     {
-      throw new SchemaCrawlerCommandLineException(
+      throw new SchemaCrawlerRuntimeException(
         "Database password provided in too many ways");
     }
 
@@ -126,7 +126,7 @@ public final class UserCredentialsOptions
 
     if (passwordPrompted != null && passwordInOtherWays)
     {
-      throw new SchemaCrawlerCommandLineException(
+      throw new SchemaCrawlerRuntimeException(
         "Database password provided in too many ways");
     }
 
@@ -147,15 +147,14 @@ public final class UserCredentialsOptions
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerCommandLineException("Cannot read password file",
-                                                  e);
+      throw new SchemaCrawlerRuntimeException("Cannot read password file", e);
     }
 
     // Check that password was not provided in any other way
     if (passwordFile != null || !isBlank(passwordPrompted) || !isBlank(
       passwordProvided))
     {
-      throw new SchemaCrawlerCommandLineException(
+      throw new SchemaCrawlerRuntimeException(
         "Database password provided in too many ways");
     }
 
@@ -177,7 +176,7 @@ public final class UserCredentialsOptions
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerCommandLineException(
+      throw new SchemaCrawlerRuntimeException(
         "Cannot read database password file",
         e);
     }
@@ -186,7 +185,7 @@ public final class UserCredentialsOptions
     if (!isBlank(passwordEnvironmentVariable) || !isBlank(passwordPrompted)
         || !isBlank(passwordProvided))
     {
-      throw new SchemaCrawlerCommandLineException(
+      throw new SchemaCrawlerRuntimeException(
         "Database password provided in too many ways");
     }
 
