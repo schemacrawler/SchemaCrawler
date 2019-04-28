@@ -98,7 +98,7 @@ public final class SchemaCrawlerShell
       }
       catch (final Exception e)
       {
-        System.err.println(e.getMessage());
+        System.err.println("Unknown command");
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }

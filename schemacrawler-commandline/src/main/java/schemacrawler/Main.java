@@ -36,6 +36,7 @@ import java.util.logging.Level;
 
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
+import schemacrawler.tools.commandline.command.HelpCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 
 /**
@@ -65,6 +66,13 @@ public final class Main
     }
     else
     {
+      final HelpCommand helpCommand = new HelpCommand();
+      picocli.CommandLine.populateCommand(helpCommand, args);
+      if (helpCommand.isHelpRequested())
+      {
+        helpCommand.run();
+        return;
+      }
       SchemaCrawlerCommandLine.execute(args);
     }
 

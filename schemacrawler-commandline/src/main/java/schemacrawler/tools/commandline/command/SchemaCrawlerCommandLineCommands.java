@@ -25,8 +25,6 @@ public class SchemaCrawlerCommandLineCommands
   @CommandLine.Mixin
   private GrepCommand grepCommand;
   @CommandLine.Mixin
-  private HelpCommand helpCommand;
-  @CommandLine.Mixin
   private LimitCommand limitCommand;
   @CommandLine.Mixin
   private LoadCommand loadCommand;
@@ -42,7 +40,6 @@ public class SchemaCrawlerCommandLineCommands
   {
 
     for (final Runnable command : new Runnable[] {
-      helpCommand,
       logCommand,
       configFileCommand,
       connectCommand,

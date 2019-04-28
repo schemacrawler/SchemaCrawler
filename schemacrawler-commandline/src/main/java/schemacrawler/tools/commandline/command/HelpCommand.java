@@ -34,6 +34,9 @@ import static java.util.Objects.requireNonNull;
 import java.io.PrintStream;
 
 import picocli.CommandLine;
+import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 @CommandLine.Command(name = "help",
                      header = "Displays SchemaCrawler command-line help",
@@ -43,23 +46,44 @@ public final class HelpCommand
   implements CommandLine.IHelpCommandInitializable, Runnable
 {
 
-  @CommandLine.Parameters
-  private final String[] commands = new String[0];
   private CommandLine.Help.Ansi ansi;
+  @CommandLine.Parameters
+  private String[] commands;
   private PrintStream err;
   @CommandLine.Option(names = { "-h", "--help" },
                       usageHelp = true,
                       description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
+  private boolean initialized;
   private PrintStream out;
   private CommandLine self;
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
+
+  public boolean isHelpRequested()
+  {
+    return helpRequested;
+  }
 
   @Override
   public void run()
   {
-    final CommandLine parent = self == null? null: self.getParent();
-    if (parent == null) { return; }
-    if (commands.length > 0)
+    if (!initialized)
+    {
+      if (spec == null)
+      {
+        return;
+      }
+      init(spec.commandLine(),
+           CommandLine.Help.Ansi.AUTO,
+           System.out,
+           System.err);
+    }
+
+    final CommandLine parent = new CommandLine(new SchemaCrawlerShellCommands(),
+                                               new StateFactory(new SchemaCrawlerShellState()));
+
+    if (commands != null && commands.length > 0)
     {
       final CommandLine subcommand = parent.getSubcommands().get(commands[0]);
       if (subcommand != null)
@@ -94,6 +118,8 @@ public final class HelpCommand
         if (subcommand != null)
         {
           subcommand.usage(out, ansi);
+          out.println();
+          out.println();
         }
         else
         {
@@ -121,6 +147,8 @@ public final class HelpCommand
     this.ansi = requireNonNull(ansi, "No ANSI settings provided");
     this.out = requireNonNull(out, "No output stream provided");
     this.err = requireNonNull(err, "No output stream provided");
+
+    initialized = true;
   }
 
 }
