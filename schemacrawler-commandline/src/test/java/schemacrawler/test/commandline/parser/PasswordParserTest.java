@@ -40,7 +40,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.UserCredentialsOptions;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
@@ -144,7 +144,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     parseCommand(optionsParser, args);
-    assertThrows(SchemaCrawlerRuntimeException.class,
+    assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getUserCredentials());
   }
 
@@ -163,7 +163,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     parseCommand(optionsParser, args);
-    assertThrows(SchemaCrawlerRuntimeException.class,
+    assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getUserCredentials());
   }
 

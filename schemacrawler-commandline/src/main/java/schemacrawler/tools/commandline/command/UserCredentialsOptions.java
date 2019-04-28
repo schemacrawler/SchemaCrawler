@@ -37,7 +37,6 @@ import java.nio.file.Files;
 import java.util.List;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 
@@ -64,6 +63,8 @@ public final class UserCredentialsOptions
   },
                       description = "Database password")
   private String passwordProvided;
+  @CommandLine.Spec
+  private CommandLine.Model.CommandSpec spec;
   @CommandLine.Option(names = {
     "--user"
   },
@@ -110,8 +111,8 @@ public final class UserCredentialsOptions
 
     if (passwordProvided != null && passwordInOtherWays)
     {
-      throw new SchemaCrawlerRuntimeException(
-        "Database password provided in too many ways");
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Database password provided in too many ways");
     }
 
     return passwordProvided;
@@ -126,8 +127,8 @@ public final class UserCredentialsOptions
 
     if (passwordPrompted != null && passwordInOtherWays)
     {
-      throw new SchemaCrawlerRuntimeException(
-        "Database password provided in too many ways");
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Database password provided in too many ways");
     }
 
     return passwordPrompted;
@@ -147,15 +148,17 @@ public final class UserCredentialsOptions
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerRuntimeException("Cannot read password file", e);
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Cannot read password file",
+                                               e);
     }
 
     // Check that password was not provided in any other way
     if (passwordFile != null || !isBlank(passwordPrompted) || !isBlank(
       passwordProvided))
     {
-      throw new SchemaCrawlerRuntimeException(
-        "Database password provided in too many ways");
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Database password provided in too many ways");
     }
 
     return password;
@@ -176,17 +179,17 @@ public final class UserCredentialsOptions
     }
     catch (final IOException e)
     {
-      throw new SchemaCrawlerRuntimeException(
-        "Cannot read database password file",
-        e);
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Cannot read database password file",
+                                               e);
     }
 
     // Check that password was not provided in any other way
     if (!isBlank(passwordEnvironmentVariable) || !isBlank(passwordPrompted)
         || !isBlank(passwordProvided))
     {
-      throw new SchemaCrawlerRuntimeException(
-        "Database password provided in too many ways");
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "Database password provided in too many ways");
     }
 
     return password;
