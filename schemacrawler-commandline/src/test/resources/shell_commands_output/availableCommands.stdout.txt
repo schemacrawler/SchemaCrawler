@@ -1,8 +1,12 @@
+brief - Display schema information at different levels of detail
+count - Display results of table queries
+details - Display schema information at different levels of detail
+dump - Display results of table queries
+list - Display schema information at different levels of detail
+quickdump - Display results of table queries
+schema - Display schema information at different levels of detail
+serialize - Create an offline catalog snapshot
+>> expected followed by actual:
 brief
-count
-details
-dump
-list
-quickdump
-schema
-serialize
+brief - Display schema information at different levels of detail
+

@@ -39,7 +39,6 @@ import java.util.Set;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.tools.commandline.AvailableServers;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLineException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;

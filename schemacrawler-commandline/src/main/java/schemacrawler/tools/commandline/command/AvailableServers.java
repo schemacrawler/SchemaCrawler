@@ -25,29 +25,40 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.command;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-public class AvailableCommands
+public class AvailableServers
   implements Iterable<String>
 {
 
-  private final List<String> availableCommands;
-
-  public AvailableCommands()
+  private static List<String> availableServers(final boolean isDescriptive)
   {
-    availableCommands = new ArrayList<>();
+    final List<String> availableServers = new ArrayList<>();
     try
     {
-      new CommandRegistry().forEach(command -> availableCommands.add(command.getName()));
+      for (final DatabaseServerType command : new DatabaseConnectorRegistry())
+      {
+        final String description;
+        if (isDescriptive)
+        {
+          description = command.toString();
+        }
+        else
+        {
+          description = command.getDatabaseSystemIdentifier();
+        }
+        availableServers.add(description);
+      }
     }
     catch (final SchemaCrawlerException e)
     {
@@ -55,12 +66,36 @@ public class AvailableCommands
         "Could not initialize command registry",
         e);
     }
+
+    return availableServers;
+  }
+
+  public static Iterable<String> descriptive()
+  {
+    return new AvailableServers(true);
+  }
+
+  private final List<String> availableServers;
+
+  public AvailableServers()
+  {
+    this(false);
+  }
+
+  private AvailableServers(final boolean isDescriptive)
+  {
+    availableServers = availableServers(isDescriptive);
   }
 
   @Override
   public Iterator<String> iterator()
   {
-    return availableCommands.iterator();
+    return availableServers.iterator();
+  }
+
+  public int size()
+  {
+    return availableServers.size();
   }
 
 }

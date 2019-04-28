@@ -1,0 +1,111 @@
+Turns logging on or off, and sets log level
+      --log-level=<loglevel>
+         Set logging level
+
+
+Load SchemaCrawler configuration from the classpath and file
+
+  -g, --state-file=<configFile>
+         SchemaCrawler configuration properties file
+
+
+Command:
+Connect to a database
+
+
+Description:
+Connect to a database, using a JDBC URL, or for databases with SchemaCrawler
+plugins, with a server type, host, port and database
+
+Options:
+      --database=<database>
+                          Database name
+      --host=<host>       Database server host
+      --password=<passwordProvided>
+                          Database password
+      --password:env=<passwordEnvironmentVariable>
+                          Database password, from an environmental variable value
+      --password:file=<passwordFile>
+                          Database password, read from a file
+      --password:prompt   Database password, prompted from the console
+      --port=<port>       Database server port
+      --server=<databaseSystemIdentifier>
+                          Database server type
+      --url=<connectionUrl>
+                          Database connection string
+      --urlx=<String=String>
+                          JDBC URL additional properties
+      --user=<user>       Database user name
+
+
+Filter database object metadata
+      --children=<children> Number of generations of descendents for the tables
+                              selected by grep
+      --no-empty-tables     Include only tables that have rows of data
+      --parents=<parents>   Number of generations of ancestors for the tables
+                              selected by grep
+
+
+Limit database object metadata
+      --exclude-columns=<excludecolumns>
+                            Regular expression to match fully qualified names of
+                              columns to exclude
+      --exclude-in-out=<excludeinout>
+                            Regular expression to match fully qualified names of
+                              parameters to exclude
+      --routine-types=<routinetypes>[,<routinetypes>...]
+                            Comma-separated list of routine types
+      --routines=<routines> Regular expression to match fully qualified names of
+                              routines to include
+      --schemas=<schemas>   Regular expression to match fully qualified names of
+                              schemas to include
+      --sequences=<sequences>
+                            Regular expression to match fully qualified names of
+                              sequences to include
+      --synonyms=<synonyms> Regular expression to match fully qualified names of
+                              synonyms to include
+      --table-types=<tabletypes>[,<tabletypes>...]
+                            Comma-separated list of table types
+      --tables=<tables>     Regular expression to match fully qualified names of
+                              tables to include
+
+
+Grep database object metadata
+      --grep-columns=<grepcolumns>
+                             grep for tables with column names matching pattern
+      --grep-def=<grepdef>   grep for tables definitions containing pattern
+      --grep-in-out=<grepinout>
+                             grep for routines with parameter names matching pattern
+      --invert-match         Invert the grep match
+      --only-matching        Show only matching tables, and not foreign keys that
+                               reference other non-matching tables
+
+
+Show output
+      --no-info             Whether to show database information
+      --no-remarks          Whether to sort remarks
+      --portable-names      Whether to use portable names
+      --weak-associations   Whether to weak associations
+
+
+Sort output
+      --sort-columns    Whether to sort table columns
+      --sort-in-out     Whether to routine parameters
+      --sort-routines   Whether to sort routines
+      --sort-tables     Whether to sort tables
+
+
+Load database metadata
+  -i, --info-level=<infoLevel>
+         Determine the amount of database metadata retrieved
+
+
+Execute SchemaCrawler command
+      --output-format=<outputFormatValue>
+                            Outfile format
+  -c, --command=<command>   SchemaCrawler command
+  -m, --title=<title>       Title for output
+  -o, --output-file=<outputFile>
+                            Outfile file path and name
+
+

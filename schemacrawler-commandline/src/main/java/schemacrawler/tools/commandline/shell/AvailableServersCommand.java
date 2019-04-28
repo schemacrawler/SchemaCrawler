@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.shell;
 
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableServers;
+import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "servers",
                      description = "List available SchemaCrawler database plugins")
@@ -41,7 +41,7 @@ public class AvailableServersCommand
   @Override
   public void run()
   {
-    for (final String server : new AvailableServers())
+    for (final String server : AvailableServers.descriptive())
     {
       System.out.println(server);
     }

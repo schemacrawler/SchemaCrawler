@@ -34,7 +34,6 @@ import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLog
 import java.util.logging.Level;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.LogLevel;
 
 @CommandLine.Command(name = "log",
                      description = "Turns logging on or off, and sets log level")

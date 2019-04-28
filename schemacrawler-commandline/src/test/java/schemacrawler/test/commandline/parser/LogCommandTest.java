@@ -35,8 +35,8 @@ import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.LogLevel;
 import schemacrawler.tools.commandline.command.LogCommand;
+import schemacrawler.tools.commandline.command.LogLevel;
 
 public class LogCommandTest
 {

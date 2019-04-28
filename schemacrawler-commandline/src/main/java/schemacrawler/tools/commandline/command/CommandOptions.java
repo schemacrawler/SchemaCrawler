@@ -32,7 +32,6 @@ package schemacrawler.tools.commandline.command;
 import static sf.util.Utility.isBlank;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
 
 /**
  * Parses the command-line.

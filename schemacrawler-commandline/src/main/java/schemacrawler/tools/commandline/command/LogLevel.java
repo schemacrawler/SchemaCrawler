@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.command;
 
 
 import java.util.logging.Level;

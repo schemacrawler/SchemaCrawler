@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.commandline;
+package schemacrawler.tools.commandline.command;
 
 
 import java.util.ArrayList;
@@ -34,21 +34,31 @@ import java.util.List;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.CommandRegistry;
 
-public class AvailableServers
+public class AvailableCommands
   implements Iterable<String>
 {
 
-  private final List<String> availableServers;
-
-  public AvailableServers()
+  private static List<String> availableCommands(final boolean isDescriptive)
   {
-    availableServers = new ArrayList<>();
+    final List<String> availableCommands = new ArrayList<>();
     try
     {
-      new DatabaseConnectorRegistry().forEach(databaseServerType -> availableServers
-        .add(databaseServerType.getDatabaseSystemIdentifier()));
+      for (final CommandDescription command : new CommandRegistry())
+      {
+        final String description;
+        if (isDescriptive)
+        {
+          description = command.toString();
+        }
+        else
+        {
+          description = command.getName();
+        }
+        availableCommands.add(description);
+      }
     }
     catch (final SchemaCrawlerException e)
     {
@@ -56,12 +66,35 @@ public class AvailableServers
         "Could not initialize command registry",
         e);
     }
+    return availableCommands;
+  }
+
+  public static Iterable<String> descriptive()
+  {
+    return new AvailableCommands(true);
+  }
+
+  private final List<String> availableCommands;
+
+  public AvailableCommands()
+  {
+    this(false);
+  }
+
+  private AvailableCommands(final boolean isDescriptive)
+  {
+    availableCommands = availableCommands(isDescriptive);
   }
 
   @Override
   public Iterator<String> iterator()
   {
-    return availableServers.iterator();
+    return availableCommands.iterator();
+  }
+
+  public int size()
+  {
+    return availableCommands.size();
   }
 
 }

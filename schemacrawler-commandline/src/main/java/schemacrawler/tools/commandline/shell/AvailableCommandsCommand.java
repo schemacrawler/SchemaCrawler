@@ -30,7 +30,7 @@ package schemacrawler.tools.commandline.shell;
 
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableCommands;
 
 @CommandLine.Command(name = "commands",
                      description = "List available SchemaCrawler commands")
@@ -41,7 +41,7 @@ public class AvailableCommandsCommand
   @Override
   public void run()
   {
-    for (final String command : new AvailableCommands())
+    for (final String command : AvailableCommands.descriptive())
     {
       System.out.println(command);
     }

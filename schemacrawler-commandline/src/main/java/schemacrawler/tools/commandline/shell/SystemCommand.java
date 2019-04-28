@@ -33,8 +33,8 @@ import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.tools.commandline.AvailableCommands;
-import schemacrawler.tools.commandline.AvailableServers;
+import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "version",
                      aliases = {
