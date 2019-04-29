@@ -36,7 +36,7 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "log",
-                     description = "Turn logging on or off, and set log level")
+                     description = "Turn logging on or off")
 public final class LogCommand
   implements Runnable
 {
@@ -44,7 +44,7 @@ public final class LogCommand
   @CommandLine.Option(names = {
     "--log-level"
   },
-                      description = "Set logging level")
+                      description = "Set log level using one of ${COMPLETION-CANDIDATES}")
   private LogLevel loglevel;
 
   @Override
