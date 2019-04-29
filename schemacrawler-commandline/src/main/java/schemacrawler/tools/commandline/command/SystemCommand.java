@@ -58,7 +58,9 @@ public class SystemCommand
   public void run()
   {
     final SchemaCrawlerInfo scInfo = new SchemaCrawlerInfo();
-    System.out.println(scInfo);
+    System.out.println(scInfo.getSchemaCrawlerAbout());
+
+    System.out.println("System Information:");
     final OperatingSystemInfo osInfo = new OperatingSystemInfo();
     System.out.println(osInfo);
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
@@ -68,7 +70,7 @@ public class SystemCommand
     if (!availableCommands.isEmpty())
     {
       System.out.println();
-      System.out.println("Available SchemaCrawler commands:");
+      System.out.println("Available SchemaCrawler Commands:");
       for (final String command : availableCommands)
       {
         System.out.println(command);
@@ -79,7 +81,7 @@ public class SystemCommand
     if (!availableServers.isEmpty())
     {
       System.out.println();
-      System.out.println("Available database server types:");
+      System.out.println("Available Database Server Types:");
       for (final String server : availableServers)
       {
         System.out.println(server);
