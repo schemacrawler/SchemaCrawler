@@ -72,6 +72,20 @@ public final class CommandLineHelpCommand
 
     final CommandLine parent = new CommandLine(new SchemaCrawlerShellCommands(),
                                                new StateFactory(new SchemaCrawlerShellState()));
+    parent.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
+                                            SECTION_KEY_HEADER,
+                                            // SECTION_KEY_SYNOPSIS_HEADING,
+                                            // SECTION_KEY_SYNOPSIS,
+                                            SECTION_KEY_DESCRIPTION_HEADING,
+                                            SECTION_KEY_DESCRIPTION,
+                                            SECTION_KEY_PARAMETER_LIST_HEADING,
+                                            SECTION_KEY_PARAMETER_LIST,
+                                            SECTION_KEY_OPTION_LIST_HEADING,
+                                            SECTION_KEY_OPTION_LIST,
+                                            SECTION_KEY_COMMAND_LIST_HEADING,
+                                            SECTION_KEY_COMMAND_LIST,
+                                            SECTION_KEY_FOOTER_HEADING,
+                                            SECTION_KEY_FOOTER));
 
     if (commands != null && commands.length > 0)
     {
@@ -91,21 +105,6 @@ public final class CommandLineHelpCommand
     }
     else
     {
-      parent.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
-                                              SECTION_KEY_HEADER,
-                                              // SECTION_KEY_SYNOPSIS_HEADING,
-                                              // SECTION_KEY_SYNOPSIS,
-                                              SECTION_KEY_DESCRIPTION_HEADING,
-                                              SECTION_KEY_DESCRIPTION,
-                                              SECTION_KEY_PARAMETER_LIST_HEADING,
-                                              SECTION_KEY_PARAMETER_LIST,
-                                              SECTION_KEY_OPTION_LIST_HEADING,
-                                              SECTION_KEY_OPTION_LIST,
-                                              SECTION_KEY_COMMAND_LIST_HEADING,
-                                              SECTION_KEY_COMMAND_LIST,
-                                              SECTION_KEY_FOOTER_HEADING,
-                                              SECTION_KEY_FOOTER));
-
       for (final String command : new String[] {
         "log",
         "config-file",
