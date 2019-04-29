@@ -1,23 +1,47 @@
-Turns logging on or off, and sets log level
+SchemaCrawler 15.06.01
+Database schema discovery and comprehension tool
+Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
+
+You can search for database schema objects using regular expressions, 
+and output the schema and data in a readable text format. You can find 
+potential schema design issues with lint. The output serves for 
+database documentation is designed to be diff-ed against other database 
+schemas. SchemaCrawler also generates schema diagrams.
+
+System Information:
+Windows 10 10.0
+Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_191-b12
+
+Available SchemaCrawler Commands:
+brief - Display schema information at different levels of detail
+count - Display results of table queries
+details - Display schema information at different levels of detail
+dump - Display results of table queries
+list - Display schema information at different levels of detail
+quickdump - Display results of table queries
+schema - Display schema information at different levels of detail
+serialize - Create an offline catalog snapshot
+
+
+Turn logging on or off
       --log-level=<loglevel>
-         Set logging level
+         Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER,
+           FINEST, ALL
+         Default is OFF
 
 
 Load SchemaCrawler configuration from the classpath and file
 
-  -g, --state-file=<configFile>
-         SchemaCrawler configuration properties file
+  -g, --config-file=<configfile>
+         Read SchemaCrawler configuration properties from <configfile>
+         <configfile> is the full path to the configuration file
+         Optional, uses the default schemacrawler.config.properties file in the
+           current directory, or in-built default options
 
 
-Command:
-Connect to a database
-
-
-Description:
 Connect to a database, using a JDBC URL, or for databases with SchemaCrawler
 plugins, with a server type, host, port and database
 
-Options:
       --database=<database>
                           Database name
       --host=<host>       Database server host
