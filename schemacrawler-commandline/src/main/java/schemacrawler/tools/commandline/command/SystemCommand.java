@@ -44,6 +44,7 @@ import schemacrawler.SchemaCrawlerInfo;
 public class SystemCommand
   implements Runnable
 {
+
   @CommandLine.Option(names = { "-V", "--version" },
                       versionHelp = true,
                       description = "Display SchemaCrawler version and system information")
