@@ -70,6 +70,10 @@ public final class CommandLineHelpCommand
     out = System.out;
     err = System.err;
 
+    new SystemCommand().run();
+    out.println();
+    out.println();
+
     final CommandLine parent = new CommandLine(new SchemaCrawlerShellCommands(),
                                                new StateFactory(new SchemaCrawlerShellState()));
     parent.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
