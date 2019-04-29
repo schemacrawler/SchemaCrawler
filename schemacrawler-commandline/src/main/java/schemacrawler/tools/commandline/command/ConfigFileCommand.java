@@ -62,10 +62,13 @@ public class ConfigFileCommand
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = {
-    "-g", "--state-file"
+    "-g", "--config-file"
   },
-                      description = "SchemaCrawler configuration properties file")
-  private Path configFile;
+                      description =
+                        "Read SchemaCrawler configuration properties from <configfile>%n"
+                        + "<configfile> is the full path to the configuration file%n"
+                        + "Optional, uses the default schemacrawler.config.properties file in the current directory, or in-built default options")
+  private Path configfile;
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)
   {
@@ -100,16 +103,16 @@ public class ConfigFileCommand
 
   private Config loadConfig()
   {
-    if (configFile == null)
+    if (configfile == null)
     {
-      configFile = Paths.get("schemacrawler.config.properties");
+      configfile = Paths.get("schemacrawler.config.properties");
     }
-    configFile = configFile.normalize().toAbsolutePath();
+    configfile = configfile.normalize().toAbsolutePath();
 
     try
     {
       final Config config = PropertiesUtility.loadConfig(new FileInputResource(
-        configFile));
+        configfile));
       return config;
     }
     catch (final IOException e)
@@ -117,7 +120,7 @@ public class ConfigFileCommand
       LOGGER.log(Level.CONFIG,
                  new StringFormat(
                    "SchemaCrawler configuration properties file not found, %s",
-                   configFile));
+                   configfile));
 
       return new Config();
     }

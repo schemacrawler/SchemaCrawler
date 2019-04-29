@@ -44,7 +44,7 @@ public final class LogCommand
   @CommandLine.Option(names = {
     "--log-level"
   },
-                      description = "Set log level using one of ${COMPLETION-CANDIDATES}")
+                      description = "Set log level using one of ${COMPLETION-CANDIDATES}%nDefault is OFF")
   private LogLevel loglevel;
 
   @Override
