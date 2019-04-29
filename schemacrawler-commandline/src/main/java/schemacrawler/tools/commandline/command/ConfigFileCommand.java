@@ -51,7 +51,23 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "config-file",
-                     description = "Load SchemaCrawler configuration from the classpath and file%n")
+                     header = {
+                       "----- Configuration Options ---------------------------------------------------",
+                       "Load SchemaCrawler configuration from the classpath and file",
+                       "-------------------------------------------------------------------------------"
+                     },
+                     description = {
+                       "Command-line options will override configuration file options.%n",
+                       "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
+                       + "from the CLASSPATH, which includes the lib/ folder. "
+                       + "You can modify the default settings in this file.%n",
+                       "The order of loading configuration settings is:",
+                       "1. From a CLASSPATH resource called schemacrawler.config.properties",
+                       "2. Which can be overridden by settings in a configuration file (see below)",
+                       "3. Which can be overridden by other command-line options",
+                       ""
+                       // Extra line at the end
+                     })
 public class ConfigFileCommand
   implements Runnable
 {

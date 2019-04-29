@@ -36,7 +36,12 @@ import java.util.logging.Level;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "log",
-                     description = "Turn logging on or off")
+                     header = {
+                       "----- Logging Options ---------------------------------------------------------",
+                       "Turn logging on or off",
+                       "-------------------------------------------------------------------------------"
+                     },
+                     description = "")
 public final class LogCommand
   implements Runnable
 {
