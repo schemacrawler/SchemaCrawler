@@ -49,6 +49,7 @@ public final class LogCommand
     "--log-level"
   },
                       description = {
+                        "",
                         "Set log level using one of ${COMPLETION-CANDIDATES}",
                         "Optional, defaults to OFF"
                       })
