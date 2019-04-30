@@ -50,7 +50,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "limit",
-                     description = "Limit database object metadata")
+                     header = {
+                       "----- Limit Options -----------------------------------------------------------",
+                       "Limit database object metadata",
+                     },
+                     description = {
+                       "",
+                     })
 public final class LimitCommand
   implements Runnable
 {
@@ -58,33 +64,97 @@ public final class LimitCommand
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = { "--exclude-columns" },
-                      description = "Regular expression to match fully qualified names of columns to exclude")
+                      description = {
+                        "<excludecolumns> is a regular expression to match fully qualified column names, "
+                        + "in the form \"CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME\" - "
+                        + "for example, --exclude-columns=.*\\.STREET|.*\\.PRICE matches columns named "
+                        + "STREET or PRICE in any table",
+                        "Columns that match the pattern are not displayed",
+                        "Optional, default is to show all columns"
+                      })
   private Pattern excludecolumns;
   @CommandLine.Option(names = { "--exclude-in-out" },
-                      description = "Regular expression to match fully qualified names of parameters to exclude")
+                      description = {
+                        "<excludeinout> is a regular expression to match fully qualified parameter names "
+                        + "- for example, --exclude-in-out=@p1|@p2 matches parameters named @p1 or @p2 "
+                        + "in any procedure",
+                        "Parameters that match the pattern are not displayed",
+                        "Optional, default is to show all parameters"
+                      })
   private Pattern excludeinout;
   @CommandLine.Option(names = { "--routines" },
-                      description = "Regular expression to match fully qualified names of routines to include")
+                      description = {
+                        "<routines> is a regular expression to match fully qualified stored procedure "
+                        + "or function names, in the form \"CATALOGNAME.SCHEMANAME.ROUTINENAME\" "
+                        + "- for example, --routines=.*\\.C.*|.*\\.P.* matches any routines "
+                        + "whose names start with C or P",
+                        "Routines that do not match the pattern are not displayed",
+                        "Use --routines= to omit routines",
+                        "Optional, defaults to showing no routines"
+                      })
   private Pattern routines;
   @CommandLine.Option(names = { "--routine-types" },
                       split = ",",
-                      description = "Comma-separated list of routine types")
+                      description = {
+                        "<routinetypes> is a comma-separated list of routine types "
+                        + "of PROCEDURE,FUNCTION",
+                        "Optional, defaults to PROCEDURE,FUNCTION"
+                      })
   private String[] routinetypes;
   @CommandLine.Option(names = { "--schemas" },
-                      description = "Regular expression to match fully qualified names of schemas to include")
+                      description = {
+                        "<schemas> is a regular expression to match fully qualified schema names, "
+                        + "in the form \"CATALOGNAME.SCHEMANAME\" - for example, "
+                        + "--schemas=.*\\.C.*|.*\\.P.* matches any schemas whose names start "
+                        + "with C or P",
+                        "Schemas that do not match the pattern are not displayed",
+                        "Optional, defaults to showing all schemas"
+                      })
   private Pattern schemas;
   @CommandLine.Option(names = { "--sequences" },
-                      description = "Regular expression to match fully qualified names of sequences to include")
+                      description = {
+                        "<sequences> is a regular expression to match fully qualified "
+                        + "sequence names, in the form \"CATALOGNAME.SCHEMANAME.SEQUENCENAME\" "
+                        + "- for example, --sequences=.*\\.C.*|.*\\.P.* matches any sequences "
+                        + "whose names start with C or P",
+                        "Sequences that do not match the pattern are not displayed",
+                        "Use --sequences= to omit sequences",
+                        "Sequences will only be shown when -infolevel=maximum",
+                        "Optional, defaults to showing no sequences"
+                      })
   private Pattern sequences;
   @CommandLine.Option(names = { "--synonyms" },
-                      description = "Regular expression to match fully qualified names of synonyms to include")
+                      description = {
+                        "<synonyms> is a regular expression to match fully "
+                        + "qualified synonym names, in the form \"CATALOGNAME.SCHEMANAME.SYNONYMNAME\" "
+                        + "- for example, --synonyms=.*\\.C.*|.*\\.P.* matches any synonyms "
+                        + "whose names start with C or P",
+                        "Synonyms that do not match the pattern are not displayed",
+                        "Synonyms will only be shown when -infolevel=maximum",
+                        "Use --synonyms= to omit synonyms",
+                        "Optional, defaults to showing no synonyms"
+                      })
   private Pattern synonyms;
   @CommandLine.Option(names = { "--tables" },
-                      description = "Regular expression to match fully qualified names of tables to include")
+                      description = {
+                        "<regular-expression> is a regular expression to match fully qualified "
+                        + "table names, in the form \"CATALOGNAME.SCHEMANAME.TABLENAME\" "
+                        + "- for example, --tables=.*\\.C.*|.*\\.P.* matches any tables "
+                        + "whose names start with C or P",
+                        "Tables that do not match the pattern are not displayed",
+                        "Use with care, since --tables= actually takes tables out of consideration "
+                        + "from the perspective of SchemaCrawler - to filter tables, look into the "
+                        + "grep options",
+                        "Optional, defaults to showing all tables"
+                      })
   private Pattern tables;
   @CommandLine.Option(names = { "--table-types" },
                       split = ",",
-                      description = "Comma-separated list of table types")
+                      description = {
+                        "<tabletypes> is a comma-separated list of table types supported by the database",
+                        "If no value is specified, all types of tables are shown",
+                        "Optional, defaults to TABLE,VIEW"
+                      })
   private String[] tabletypes;
 
   public LimitCommand(final SchemaCrawlerShellState state)

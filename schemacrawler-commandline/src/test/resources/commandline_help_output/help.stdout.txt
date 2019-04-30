@@ -25,18 +25,15 @@ serialize - Create an offline catalog snapshot
 
 ----- Logging Options ---------------------------------------------------------
 Turn logging on or off
--------------------------------------------------------------------------------
 
       --log-level=<loglevel>
          Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER,
            FINEST, ALL
-         Default is OFF
+         Optional, defaults to OFF
 
 
 ----- Configuration Options ---------------------------------------------------
 Load SchemaCrawler configuration from the classpath and file
--------------------------------------------------------------------------------
-Command-line options will override configuration file options.
 
 SchemaCrawler configuration reads a resource called schemacrawler.config.
 properties from the CLASSPATH, which includes the lib/ folder. You can modify
@@ -47,6 +44,7 @@ The order of loading configuration settings is:
 2. Which can be overridden by settings in a configuration file (see below)
 3. Which can be overridden by other command-line options
 
+Command-line options will override configuration file options.
   -g, --config-file=<configfile>
          Read SchemaCrawler configuration properties from <configfile>
          <configfile> is the full path to the configuration file
@@ -54,9 +52,11 @@ The order of loading configuration settings is:
            current directory, or in-built default options
 
 
+----- Connection Options ------------------------------------------------------
+Database connection options
+
 Connect to a database, using a JDBC URL, or for databases with SchemaCrawler
 plugins, with a server type, host, port and database
-
       --database=<database>
                           Database name
       --host=<host>       Database server host
@@ -77,7 +77,9 @@ plugins, with a server type, host, port and database
       --user=<user>       Database user name
 
 
+----- Filter Options ----------------------------------------------------------
 Filter database object metadata
+
       --children=<children> Number of generations of descendents for the tables
                               selected by grep
       --no-empty-tables     Include only tables that have rows of data
@@ -85,31 +87,80 @@ Filter database object metadata
                               selected by grep
 
 
+----- Limit Options -----------------------------------------------------------
 Limit database object metadata
+
       --exclude-columns=<excludecolumns>
-                            Regular expression to match fully qualified names of
-                              columns to exclude
+                            <excludecolumns> is a regular expression to match fully
+                              qualified column names, in the form "CATALOGNAME.
+                              SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+                              --exclude-columns=.*\.STREET|.*\.PRICE matches columns
+                              named STREET or PRICE in any table
+                            Columns that match the pattern are not displayed
+                            Optional, default is to show all columns
       --exclude-in-out=<excludeinout>
-                            Regular expression to match fully qualified names of
-                              parameters to exclude
+                            <excludeinout> is a regular expression to match fully
+                              qualified parameter names - for example,
+                              --exclude-in-out=@p1|@p2 matches parameters named @p1
+                              or @p2 in any procedure
+                            Parameters that match the pattern are not displayed
+                            Optional, default is to show all parameters
       --routine-types=<routinetypes>[,<routinetypes>...]
-                            Comma-separated list of routine types
-      --routines=<routines> Regular expression to match fully qualified names of
-                              routines to include
-      --schemas=<schemas>   Regular expression to match fully qualified names of
-                              schemas to include
+                            <routinetypes> is a comma-separated list of routine
+                              types of PROCEDURE,FUNCTION
+                            Optional, defaults to PROCEDURE,FUNCTION
+      --routines=<routines> <routines> is a regular expression to match fully
+                              qualified stored procedure or function names, in the
+                              form "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for
+                              example, --routines=.*\.C.*|.*\.P.* matches any
+                              routines whose names start with C or P
+                            Routines that do not match the pattern are not displayed
+                            Use --routines= to omit routines
+                            Optional, defaults to showing no routines
+      --schemas=<schemas>   <schemas> is a regular expression to match fully
+                              qualified schema names, in the form "CATALOGNAME.
+                              SCHEMANAME" - for example, --schemas=.*\.C.*|.*\.P.*
+                              matches any schemas whose names start with C or P
+                            Schemas that do not match the pattern are not displayed
+                            Optional, defaults to showing all schemas
       --sequences=<sequences>
-                            Regular expression to match fully qualified names of
-                              sequences to include
-      --synonyms=<synonyms> Regular expression to match fully qualified names of
-                              synonyms to include
+                            <sequences> is a regular expression to match fully
+                              qualified sequence names, in the form "CATALOGNAME.
+                              SCHEMANAME.SEQUENCENAME" - for example, --sequences=.
+                              *\.C.*|.*\.P.* matches any sequences whose names start
+                              with C or P
+                            Sequences that do not match the pattern are not displayed
+                            Use --sequences= to omit sequences
+                            Sequences will only be shown when -infolevel=maximum
+                            Optional, defaults to showing no sequences
+      --synonyms=<synonyms> <synonyms> is a regular expression to match fully
+                              qualified synonym names, in the form "CATALOGNAME.
+                              SCHEMANAME.SYNONYMNAME" - for example, --synonyms=.*\.
+                              C.*|.*\.P.* matches any synonyms whose names start
+                              with C or P
+                            Synonyms that do not match the pattern are not displayed
+                            Synonyms will only be shown when -infolevel=maximum
+                            Use --synonyms= to omit synonyms
+                            Optional, defaults to showing no synonyms
       --table-types=<tabletypes>[,<tabletypes>...]
-                            Comma-separated list of table types
-      --tables=<tables>     Regular expression to match fully qualified names of
-                              tables to include
+                            <tabletypes> is a comma-separated list of table types
+                              supported by the database
+                            If no value is specified, all types of tables are shown
+                            Optional, defaults to TABLE,VIEW
+      --tables=<tables>     <regular-expression> is a regular expression to match
+                              fully qualified table names, in the form "CATALOGNAME.
+                              SCHEMANAME.TABLENAME" - for example, --tables=.*\.C.*|.
+                              *\.P.* matches any tables whose names start with C or P
+                            Tables that do not match the pattern are not displayed
+                            Use with care, since --tables= actually takes tables out
+                              of consideration from the perspective of SchemaCrawler
+                              - to filter tables, look into the grep options
+                            Optional, defaults to showing all tables
 
 
-Grep database object metadata
+----- Grep Options ------------------------------------------------------------
+Grep for database object metadata
+
       --grep-columns=<grepcolumns>
                              grep for tables with column names matching pattern
       --grep-def=<grepdef>   grep for tables definitions containing pattern

@@ -43,7 +43,13 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "grep",
-                     description = "Grep database object metadata")
+                     header = {
+                       "----- Grep Options ------------------------------------------------------------",
+                       "Grep for database object metadata",
+                     },
+                     description = {
+                       "",
+                     })
 public final class GrepCommand
   implements Runnable
 {

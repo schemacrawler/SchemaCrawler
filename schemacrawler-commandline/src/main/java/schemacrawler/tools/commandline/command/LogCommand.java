@@ -39,7 +39,6 @@ import picocli.CommandLine;
                      header = {
                        "----- Logging Options ---------------------------------------------------------",
                        "Turn logging on or off",
-                       "-------------------------------------------------------------------------------"
                      },
                      description = "")
 public final class LogCommand
@@ -49,7 +48,10 @@ public final class LogCommand
   @CommandLine.Option(names = {
     "--log-level"
   },
-                      description = "Set log level using one of ${COMPLETION-CANDIDATES}%nDefault is OFF")
+                      description = {
+                        "Set log level using one of ${COMPLETION-CANDIDATES}",
+                        "Optional, defaults to OFF"
+                      })
   private LogLevel loglevel;
 
   @Override
