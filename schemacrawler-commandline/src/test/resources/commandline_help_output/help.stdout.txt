@@ -77,16 +77,6 @@ plugins, with a server type, host, port and database
       --user=<user>       Database user name
 
 
------ Filter Options ----------------------------------------------------------
-Filter database object metadata
-
-      --children=<children> Number of generations of descendents for the tables
-                              selected by grep
-      --no-empty-tables     Include only tables that have rows of data
-      --parents=<parents>   Number of generations of ancestors for the tables
-                              selected by grep
-
-
 ----- Limit Options -----------------------------------------------------------
 Limit database object metadata
 
@@ -185,6 +175,21 @@ Grep for database object metadata
       --only-matching        Shows only matching tables, and does not show foreign
                                keys that reference other non-matching tables
                              Optional, default is false
+
+
+----- Filter Options ----------------------------------------------------------
+Filter database object metadata
+
+      --children=<children> <children> is the number of generations of descendants
+                              for the tables selected by grep, and shown in the
+                              results
+                            Optional, default is 0
+      --no-empty-tables     Includes only tables that have rows of data
+                            Will work only if infolevel is maximum
+                            Optional, default is false
+      --parents=<parents>   <parents> is the number of generations of ancestors for
+                              the tables selected by grep, and shown in the results
+                            Optional, default is 0
 
 
 Show output

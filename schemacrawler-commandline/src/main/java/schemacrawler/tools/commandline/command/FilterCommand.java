@@ -57,17 +57,29 @@ public final class FilterCommand
   @CommandLine.Option(names = {
     "--children"
   },
-                      description = "Number of generations of descendents for the tables selected by grep")
+                      description = {
+                        "<children> is the number of generations of descendants for the tables "
+                        + "selected by grep, and shown in the results",
+                        "Optional, default is 0"
+                      })
   private Integer children;
   @CommandLine.Option(names = {
     "--no-empty-tables"
   },
-                      description = "Include only tables that have rows of data")
+                      description = {
+                        "Includes only tables that have rows of data",
+                        "Will work only if infolevel is maximum",
+                        "Optional, default is false"
+                      })
   private Boolean noemptytables;
   @CommandLine.Option(names = {
     "--parents"
   },
-                      description = "Number of generations of ancestors for the tables selected by grep")
+                      description = {
+                        "<parents> is the number of generations of ancestors for the tables "
+                        + "selected by grep, and shown in the results",
+                        "Optional, default is 0"
+                      })
   private Integer parents;
 
   @CommandLine.Spec
