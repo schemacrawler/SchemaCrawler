@@ -59,27 +59,50 @@ public final class GrepCommand
   @CommandLine.Option(names = {
     "--grep-columns"
   },
-                      description = "grep for tables with column names matching pattern")
+                      description = {
+                        "<grepcolumns> is a regular expression to match fully qualified column names, "
+                        + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
+                        + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
+                        + "matches columns named STREET or PRICE in any table",
+                        "Optional, default is no grep"
+                      })
   private Pattern grepcolumns;
   @CommandLine.Option(names = {
     "--grep-def"
   },
-                      description = "grep for tables definitions containing pattern")
+                      description = {
+                        "<grepdef> is a regular expression to match text within remarks and definitions "
+                        + "of views, stored proedures and triggers, if available",
+                        "Optional, default is no grep"
+                      })
   private Pattern grepdef;
   @CommandLine.Option(names = {
     "--grep-in-out"
   },
-                      description = "grep for routines with parameter names matching pattern")
+                      description = {
+                        "<grepinout> is a regular expression to match fully qualified inout names, "
+                        + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
+                        + "- for example, --grep-in-out=.*\\.STREET|.*\\.PRICE "
+                        + "matches inouts named STREET or PRICE in any routine",
+                        "Optional, default is no grep"
+                      })
   private Pattern grepinout;
   @CommandLine.Option(names = {
     "--invert-match"
   },
-                      description = "Invert the grep match")
+                      description = {
+                        "Inverts the sense of matching, and shows non-matching tables and columns",
+                        "Optional, default is false"
+                      })
   private Boolean invertMatch;
   @CommandLine.Option(names = {
     "--only-matching"
   },
-                      description = "Show only matching tables, and not foreign keys that reference other non-matching tables")
+                      description = {
+                        "Shows only matching tables, and does not show foreign keys "
+                        + "that reference other non-matching tables",
+                        "Optional, default is false"
+                      })
   private Boolean onlyMatching;
 
   public GrepCommand(final SchemaCrawlerShellState state)

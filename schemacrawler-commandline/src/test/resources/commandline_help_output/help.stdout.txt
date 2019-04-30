@@ -162,13 +162,29 @@ Limit database object metadata
 Grep for database object metadata
 
       --grep-columns=<grepcolumns>
-                             grep for tables with column names matching pattern
-      --grep-def=<grepdef>   grep for tables definitions containing pattern
+                             <grepcolumns> is a regular expression to match fully
+                               qualified column names, in the form "SCHEMANAME.
+                               TABLENAME.COLUMNNAME" - for example, --grep-columns=.
+                               *\.STREET|.*\.PRICE matches columns named STREET or
+                               PRICE in any table
+                             Optional, default is no grep
+      --grep-def=<grepdef>   <grepdef> is a regular expression to match text within
+                               remarks and definitions of views, stored proedures
+                               and triggers, if available
+                             Optional, default is no grep
       --grep-in-out=<grepinout>
-                             grep for routines with parameter names matching pattern
-      --invert-match         Invert the grep match
-      --only-matching        Show only matching tables, and not foreign keys that
-                               reference other non-matching tables
+                             <grepinout> is a regular expression to match fully
+                               qualified inout names, in the form "SCHEMANAME.
+                               ROUTINENAME.INOUTNAME" - for example, --grep-in-out=.
+                               *\.STREET|.*\.PRICE matches inouts named STREET or
+                               PRICE in any routine
+                             Optional, default is no grep
+      --invert-match         Inverts the sense of matching, and shows non-matching
+                               tables and columns
+                             Optional, default is false
+      --only-matching        Shows only matching tables, and does not show foreign
+                               keys that reference other non-matching tables
+                             Optional, default is false
 
 
 Show output
