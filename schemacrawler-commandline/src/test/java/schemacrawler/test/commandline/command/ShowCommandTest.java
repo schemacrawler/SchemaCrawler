@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +24,8 @@ public class ShowCommandTest
     runCommandInTest(new ShowCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -40,7 +41,8 @@ public class ShowCommandTest
     runCommandInTest(new ShowCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -51,13 +53,15 @@ public class ShowCommandTest
   public void noInfoFalse()
   {
     final String[] args = {
-      "--no-info=false" };
+      "--no-info=false"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -68,13 +72,15 @@ public class ShowCommandTest
   public void noInfoTrue()
   {
     final String[] args = {
-      "--no-info=true" };
+      "--no-info=true"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat(builder.toOptions().isNoInfo(), is(true));
     assertThat(builder.toOptions().isHideRemarks(), is(false));
@@ -100,13 +106,15 @@ public class ShowCommandTest
       "--weak-associations",
       "--portable-names",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new ShowCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     final SchemaTextOptions options = builder.toOptions();
 

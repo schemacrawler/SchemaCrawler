@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +23,8 @@ public class SortCommandTest
     runCommandInTest(new SortCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -39,7 +40,8 @@ public class SortCommandTest
     runCommandInTest(new SortCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -50,13 +52,15 @@ public class SortCommandTest
   public void sortTablesFalse()
   {
     final String[] args = {
-      "--sort-tables=false" };
+      "--sort-tables=false"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat("No options are set",
                builder.toOptions(),
@@ -67,13 +71,15 @@ public class SortCommandTest
   public void sortTablesTrue()
   {
     final String[] args = {
-      "--sort-tables=true" };
+      "--sort-tables=true"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
     assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),
                is(false));
@@ -92,13 +98,15 @@ public class SortCommandTest
       "--sort-routines",
       "--sort-in-out",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     runCommandInTest(new SortCommand(state), args);
 
     final SchemaTextOptionsBuilder builder = SchemaTextOptionsBuilder.builder()
-      .fromConfig(state.getAdditionalConfiguration());
+                                                                     .fromConfig(
+                                                                       state.getAdditionalConfiguration());
 
     assertThat(builder.toOptions().isAlphabeticalSortForTables(), is(true));
     assertThat(builder.toOptions().isAlphabeticalSortForTableColumns(),

@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,14 +22,12 @@ public class FilterCommandTest
   {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
-                         args);
+    newCommandLine(new FilterCommand(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                                               new picocli.CommandLine.DefaultExceptionHandler<>(),
+                                                               args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
@@ -42,8 +40,7 @@ public class FilterCommandTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new FilterCommand(state), args);
@@ -59,8 +56,7 @@ public class FilterCommandTest
   {
     final String[] args = { "--parents", "-1" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -72,8 +68,7 @@ public class FilterCommandTest
   {
     final String[] args = { "--children", "-1" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -85,8 +80,7 @@ public class FilterCommandTest
   {
     final String[] args = { "--parents" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -98,8 +92,7 @@ public class FilterCommandTest
   {
     final String[] args = { "--children" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -116,16 +109,15 @@ public class FilterCommandTest
       "2",
       "--no-empty-tables=true",
       "additional",
-      "-extra" };
+      "-extra"
+    };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state))
-      .parseWithHandlers(new picocli.CommandLine.RunLast(),
-                         new picocli.CommandLine.DefaultExceptionHandler<>(),
-                         args);
+    newCommandLine(new FilterCommand(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                                               new picocli.CommandLine.DefaultExceptionHandler<>(),
+                                                               args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));

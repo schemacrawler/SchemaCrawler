@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +53,8 @@ public class ConfigFileCommandTest
   public void allArgs()
   {
     final String[] args = {
-      "-g", "a_file", "additional", "--extra" };
+      "-g", "a_file", "additional", "--extra"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     picocli.CommandLine.run(new ConfigFileCommand(state), args);

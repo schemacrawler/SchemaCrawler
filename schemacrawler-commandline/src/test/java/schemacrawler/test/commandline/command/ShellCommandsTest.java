@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +37,6 @@ import java.io.PrintStream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestContext;
@@ -84,7 +83,6 @@ public class ShellCommandsTest
   }
 
   @Test
-  @Disabled
   public void system(final TestContext testContext)
   {
     new SystemCommand().run();

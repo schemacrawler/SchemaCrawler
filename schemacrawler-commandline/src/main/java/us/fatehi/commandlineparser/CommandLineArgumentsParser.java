@@ -31,16 +31,12 @@ package us.fatehi.commandlineparser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 import schemacrawler.schemacrawler.Config;
 
 /**
- * Command-line options parser. Not POSIX compliant. Follows these POSIX
+ * Command-line options command. Not POSIX compliant. Follows these POSIX
  * rules:
  * <ul>
  * <li>Arguments are options if they begin with a hyphen delimiter
@@ -77,8 +73,8 @@ public class CommandLineArgumentsParser
   private static final String DASH = "-";
 
   private final String[] args;
-  private final Config optionsMap;
   private final List<String> nonOptionArguments;
+  private final Config optionsMap;
 
   public CommandLineArgumentsParser(final String[] args)
   {

@@ -45,13 +45,12 @@ abstract class BaseCommandChain
   extends BaseSchemaCrawlerCommand
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(BaseCommandChain.class.getName());
-
-  private final List<SchemaCrawlerCommand> scCommands;
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    BaseCommandChain.class.getName());
   private final CommandRegistry commandRegistry;
+  private final List<SchemaCrawlerCommand> scCommands;
 
-  protected BaseCommandChain(final String command)
+  BaseCommandChain(final String command)
     throws SchemaCrawlerException
   {
     super(command);
@@ -65,18 +64,20 @@ abstract class BaseCommandChain
     throws Exception
   {
     // Check the availability of the chain, even though there may be no
-    // commands in the chain until the actual point of execution
+    // command in the chain until the actual point of execution
     checkAvailibilityChain();
   }
 
-  protected final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
-                                                                       final OutputOptions outputOptions)
+  final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
+                                                             final OutputOptions outputOptions)
     throws SchemaCrawlerException
   {
     try
     {
-      final SchemaCrawlerCommand scCommand = commandRegistry
-        .configureNewCommand(command, schemaCrawlerOptions, outputOptions);
+      final SchemaCrawlerCommand scCommand = commandRegistry.configureNewCommand(
+        command,
+        schemaCrawlerOptions,
+        outputOptions);
       if (scCommand == null)
       {
         return null;
@@ -93,51 +94,52 @@ abstract class BaseCommandChain
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(String
-        .format("Cannot chain commands, unknown command <%s>", command));
+      throw new SchemaCrawlerException(String.format(
+        "Cannot chain command, unknown command <%s>",
+        command));
     }
   }
 
-  protected final void checkAvailibilityChain()
+  final void checkAvailibilityChain()
     throws Exception
   {
     if (scCommands.isEmpty())
     {
-      LOGGER.log(Level.INFO, "No commands to execute");
+      LOGGER.log(Level.INFO, "No command to execute");
       return;
     }
 
-    for (final SchemaCrawlerCommand scCommand: scCommands)
+    for (final SchemaCrawlerCommand scCommand : scCommands)
     {
       scCommand.checkAvailibility();
     }
   }
 
-  protected final void executeChain()
+  final void executeChain()
     throws Exception
   {
     if (scCommands.isEmpty())
     {
-      LOGGER.log(Level.INFO, "No commands to execute");
+      LOGGER.log(Level.INFO, "No command to execute");
       return;
     }
 
-    for (final SchemaCrawlerCommand scCommand: scCommands)
+    for (final SchemaCrawlerCommand scCommand : scCommands)
     {
       scCommand.execute();
     }
   }
 
-  protected final void initializeChain()
+  final void initializeChain()
     throws Exception
   {
     if (scCommands.isEmpty())
     {
-      LOGGER.log(Level.INFO, "No commands to initialize");
+      LOGGER.log(Level.INFO, "No command to initialize");
       return;
     }
 
-    for (final SchemaCrawlerCommand scCommand: scCommands)
+    for (final SchemaCrawlerCommand scCommand : scCommands)
     {
       scCommand.initialize();
     }

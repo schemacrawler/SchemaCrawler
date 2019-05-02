@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,7 +75,8 @@ public class CommandOptionsTest
   public void blankCommand()
   {
     final String[] args = {
-      "--command", " " };
+      "--command", " "
+    };
 
     final CommandOptions optionsParser = new CommandOptions();
     new CommandLine(optionsParser).parse(args);
@@ -87,7 +88,8 @@ public class CommandOptionsTest
   public void allArgs()
   {
     final String[] args = {
-      "--command", "a_command", "additional", "--extra" };
+      "--command", "a_command", "additional", "--extra"
+    };
 
     final CommandOptions optionsParser = new CommandOptions();
     parseCommand(optionsParser, args);

@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

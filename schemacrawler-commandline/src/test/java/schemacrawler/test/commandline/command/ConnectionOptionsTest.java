@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -79,26 +79,27 @@ public class ConnectionOptionsTest
   public void blankConnectionOptions()
   {
     final String[] args = {
-      "--url", " " };
+      "--url", " "
+    };
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
     new CommandLine(optionsParser).parse(args);
     assertThrows(IllegalArgumentException.class,
                  () -> optionsParser.getDatabaseConnectable()
-                   .toDatabaseConnectionSource(new Config()));
+                                    .toDatabaseConnectionSource(new Config()));
   }
 
   @Test
   public void url()
   {
     final String[] args = {
-      "--url", "jdbc:database_url", "additional", "--extra" };
+      "--url", "jdbc:database_url", "additional", "--extra"
+    };
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
     parseCommand(optionsParser, args);
 
-    final DatabaseConnectable databaseConnectable = optionsParser
-      .getDatabaseConnectable();
+    final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
       .toDatabaseConnectionSource(new Config());
 
@@ -119,7 +120,8 @@ public class ConnectionOptionsTest
       "--database",
       "adatabase",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final Config config = new Config();
     config.put("url", "jdbc:newdb://${host}:${port}/${database}");
@@ -127,8 +129,7 @@ public class ConnectionOptionsTest
     final ConnectionOptions optionsParser = new ConnectionOptions();
     parseCommand(optionsParser, args);
 
-    final DatabaseConnectable databaseConnectable = optionsParser
-      .getDatabaseConnectable();
+    final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
       .toDatabaseConnectionSource(config);
 
@@ -151,7 +152,8 @@ public class ConnectionOptionsTest
       "--database",
       "adatabase",
       "additional",
-      "--extra" };
+      "--extra"
+    };
 
     final ConnectionOptions optionsParser = new ConnectionOptions();
 

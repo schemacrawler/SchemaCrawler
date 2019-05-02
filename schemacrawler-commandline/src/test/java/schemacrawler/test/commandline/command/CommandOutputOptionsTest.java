@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,14 +67,16 @@ public class CommandOutputOptionsTest
       "--output-format",
       "tables.js",
       "additional",
-      "-extra" };
+      "-extra"
+    };
 
     final CommandOutputOptions options = new CommandOutputOptions();
     parseCommand(options, args);
 
     assertThat(options.getOutputFile()
-                 .orElseThrow(() -> new IllegalArgumentException("No file found"))
-                 .getFileName(), is(Paths.get("file.txt")));
+                      .orElseThrow(() -> new IllegalArgumentException(
+                        "No file found"))
+                      .getFileName(), is(Paths.get("file.txt")));
     assertThat(options.getOutputFormatValue(), is(Optional.of("tables.js")));
   }
 

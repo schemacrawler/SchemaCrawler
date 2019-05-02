@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,7 +67,8 @@ public class InfoLevelOptionsTest
   public void infoLevelWithValue()
   {
     final String[] args = {
-      "--info-level", "detailed", "additional", "-extra" };
+      "--info-level", "detailed", "additional", "-extra"
+    };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final LoadCommand optionsParser = new LoadCommand(state);

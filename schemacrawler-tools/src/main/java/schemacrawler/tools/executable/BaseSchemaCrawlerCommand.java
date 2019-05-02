@@ -53,13 +53,12 @@ public abstract class BaseSchemaCrawlerCommand
 {
 
   protected final String command;
-
-  protected SchemaCrawlerOptions schemaCrawlerOptions;
-  protected OutputOptions outputOptions;
   protected Config additionalConfiguration;
-  protected Identifiers identifiers;
-  protected Connection connection;
   protected Catalog catalog;
+  protected Connection connection;
+  protected Identifiers identifiers;
+  protected OutputOptions outputOptions;
+  protected SchemaCrawlerOptions schemaCrawlerOptions;
 
   protected BaseSchemaCrawlerCommand(final String command)
   {
@@ -69,8 +68,7 @@ public abstract class BaseSchemaCrawlerCommand
     }
     this.command = command;
 
-    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-      .newSchemaCrawlerOptions();
+    schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
     outputOptions = OutputOptionsBuilder.newOutputOptions();
     additionalConfiguration = new Config();
   }
@@ -80,7 +78,7 @@ public abstract class BaseSchemaCrawlerCommand
     throws Exception
   {
     // Nothing additional to check at this point.
-    // Most commands should be available after their class is loaded,
+    // Most command should be available after their class is loaded,
     // and imports are resolved.
   }
 
@@ -142,29 +140,20 @@ public abstract class BaseSchemaCrawlerCommand
     checkOptions();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
   {
-    this.additionalConfiguration = requireNonNull(additionalConfiguration,
-                                                  "No additional configuration provided");
-  }
-
-  @Override
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = catalog;
-  }
-
-  @Override
-  public void setConnection(final Connection connection)
-  {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setIdentifiers(final Identifiers identifiers)
-  {
-    this.identifiers = identifiers;
+    if (schemaCrawlerOptions != null)
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+    else
+    {
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    }
   }
 
   /**
@@ -183,21 +172,29 @@ public abstract class BaseSchemaCrawlerCommand
     }
   }
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  public void setIdentifiers(final Identifiers identifiers)
   {
-    if (schemaCrawlerOptions != null)
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-    else
-    {
-      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
-        .newSchemaCrawlerOptions();
-    }
+    this.identifiers = identifiers;
+  }
+
+  @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
+  }
+
+  @Override
+  public void setCatalog(final Catalog catalog)
+  {
+    this.catalog = catalog;
+  }
+
+  @Override
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    this.additionalConfiguration = requireNonNull(additionalConfiguration,
+                                                  "No additional configuration provided");
   }
 
   /**

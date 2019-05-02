@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.CoreMatchers.hasItems;
@@ -18,19 +18,26 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 public class LimitCommandTest
 {
 
+  private static void runBadCommand(final String[] args)
+  {
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
+    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
+    state.setSchemaCrawlerOptionsBuilder(builder);
+    assertThrows(CommandLine.ParameterException.class,
+                 () -> runCommandInTest(new LimitCommand(state), args));
+  }
+
   @Test
   public void noArgs()
   {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new LimitCommand(state))
-      .parseWithHandlers(new CommandLine.RunLast(),
-                         new CommandLine.DefaultExceptionHandler<>(),
-                         args);
+    newCommandLine(new LimitCommand(state)).parseWithHandlers(new CommandLine.RunLast(),
+                                                              new CommandLine.DefaultExceptionHandler<>(),
+                                                              args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
@@ -60,8 +67,7 @@ public class LimitCommandTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new LimitCommand(state), args);
@@ -179,16 +185,15 @@ public class LimitCommandTest
       "--routine-types",
       "FUNCtion",
       "additional",
-      "-extra" };
+      "-extra"
+    };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new LimitCommand(state))
-      .parseWithHandlers(new CommandLine.RunLast(),
-                         new CommandLine.DefaultExceptionHandler<>(),
-                         args);
+    newCommandLine(new LimitCommand(state)).parseWithHandlers(new CommandLine.RunLast(),
+                                                              new CommandLine.DefaultExceptionHandler<>(),
+                                                              args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
@@ -210,16 +215,6 @@ public class LimitCommandTest
                is(new RegularExpressionExclusionRule(".*regexp.*")));
     assertThat(schemaCrawlerOptions.getRoutineTypes(),
                hasItems(RoutineType.function));
-  }
-
-  private void runBadCommand(final String[] args)
-  {
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
-    final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setSchemaCrawlerOptionsBuilder(builder);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> runCommandInTest(new LimitCommand(state), args));
   }
 
 }

@@ -1,4 +1,4 @@
-package schemacrawler.test.commandline.parser;
+package schemacrawler.test.commandline.command;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,8 +24,7 @@ public class GrepCommandTest
   {
     final String[] args = new String[0];
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);
@@ -43,8 +42,7 @@ public class GrepCommandTest
   {
     final String[] args = { "--some-option" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);
@@ -62,8 +60,7 @@ public class GrepCommandTest
   {
     final String[] args = { "--grep-columns", "[[" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     assertThrows(CommandLine.ParameterException.class,
@@ -75,8 +72,7 @@ public class GrepCommandTest
   {
     final String[] args = { "--grep-columns" };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
 
@@ -97,10 +93,10 @@ public class GrepCommandTest
       "--invert-match=true",
       "--only-matching=true",
       "additional",
-      "-extra" };
+      "-extra"
+    };
 
-    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder
-      .builder();
+    final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     runCommandInTest(new GrepCommand(state), args);

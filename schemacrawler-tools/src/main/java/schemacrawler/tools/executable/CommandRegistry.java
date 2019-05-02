@@ -31,12 +31,7 @@ package schemacrawler.tools.executable;
 
 import static java.util.Comparator.naturalOrder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.util.*;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -49,7 +44,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Command registry for mapping commands to executable.
+ * Command registry for mapping command to executable.
  *
  * @author Sualeh Fatehi
  */
@@ -57,8 +52,8 @@ public final class CommandRegistry
   implements Iterable<CommandDescription>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(CommandRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    CommandRegistry.class.getName());
 
   private static List<CommandProvider> loadCommandRegistry()
     throws SchemaCrawlerException
@@ -71,12 +66,12 @@ public final class CommandRegistry
 
     try
     {
-      final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader
-        .load(CommandProvider.class);
-      for (final CommandProvider commandProvider: serviceLoader)
+      final ServiceLoader<CommandProvider> serviceLoader = ServiceLoader.load(
+        CommandProvider.class);
+      for (final CommandProvider commandProvider : serviceLoader)
       {
         LOGGER.log(Level.CONFIG,
-                   new StringFormat("Loading commands %s, provided by %s",
+                   new StringFormat("Loading command %s, provided by %s",
                                     commandProvider.getSupportedCommands(),
                                     commandProvider.getClass().getName()));
         commandProviders.add(commandProvider);
@@ -84,8 +79,9 @@ public final class CommandRegistry
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException("Could not load extended command registry",
-                                       e);
+      throw new SchemaCrawlerException(
+        "Could not load extended command registry",
+        e);
     }
 
     return commandProviders;
@@ -101,7 +97,7 @@ public final class CommandRegistry
 
   public InputResource getHelp(final String command)
   {
-    for (final CommandProvider commandProvider: commandRegistry)
+    for (final CommandProvider commandProvider : commandRegistry)
     {
       if (commandProvider.getSupportedCommands().contains(command))
       {
@@ -113,10 +109,9 @@ public final class CommandRegistry
 
   public boolean isCommandSupported(final String command)
   {
-    for (final CommandProvider commandProvider: commandRegistry)
+    for (final CommandProvider commandProvider : commandRegistry)
     {
-      for (final String supportedCommand: commandProvider
-        .getSupportedCommands())
+      for (final String supportedCommand : commandProvider.getSupportedCommands())
       {
         if (supportedCommand.equalsIgnoreCase(command))
         {
@@ -139,7 +134,7 @@ public final class CommandRegistry
     throws SchemaCrawlerException
   {
     CommandProvider executableCommandProvider = null;
-    for (final CommandProvider commandProvider: commandRegistry)
+    for (final CommandProvider commandProvider : commandRegistry)
     {
       if (commandProvider.supportsSchemaCrawlerCommand(command,
                                                        schemaCrawlerOptions,
@@ -166,8 +161,9 @@ public final class CommandRegistry
       // Mainly catch NoClassDefFoundError, which is a Throwable, for
       // missing third-party jars
       LOGGER.log(Level.CONFIG, e.getMessage(), e);
-      throw new SchemaCrawlerRuntimeException(String
-        .format("Cannot run command <%s>", command));
+      throw new SchemaCrawlerRuntimeException(String.format(
+        "Cannot run command <%s>",
+        command));
     }
 
     return scCommand;
@@ -176,17 +172,18 @@ public final class CommandRegistry
   private Collection<CommandDescription> getSupportedCommands()
   {
     final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
-    for (final CommandProvider commandProvider: commandRegistry)
+    for (final CommandProvider commandProvider : commandRegistry)
     {
       final String description = commandProvider.getDescription();
-      for (final String command: commandProvider.getSupportedCommands())
+      for (final String command : commandProvider.getSupportedCommands())
       {
-        supportedCommandDescriptions
-          .add(new CommandDescription(command, description));
+        supportedCommandDescriptions.add(new CommandDescription(command,
+                                                                description));
       }
     }
 
-    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(supportedCommandDescriptions);
+    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(
+      supportedCommandDescriptions);
     supportedCommandsOrdered.sort(naturalOrder());
     return supportedCommandsOrdered;
   }
