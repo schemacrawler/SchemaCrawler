@@ -36,35 +36,29 @@ final class NeuteredLinesFilter
 {
 
   private final Pattern[] neuters = {
-                                      //
-                                      Pattern.compile(".*jdbc:.*"),
-                                      Pattern
-                                        .compile("database product version.*"),
-                                      Pattern.compile("driver version.*"),
-                                      Pattern.compile("-- operating system:.*"),
-                                      Pattern.compile("-- JVM system:.*"),
-                                      Pattern
-                                        .compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
-                                      Pattern.compile("\\s+\"runId\": .*"),
-                                      Pattern
-                                        .compile("\\s+<product(Name|Version)>.*"),
-                                      Pattern
-                                        .compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
-                                      Pattern
-                                        .compile(".*201[89]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
-                                      Pattern
-                                        .compile(".*201[89]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
-                                      // Apache Derby unnamed objects
-                                      Pattern
-                                        .compile("SQL\\d+\\s+\\[primary key\\]"),
-                                      Pattern
-                                        .compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
-                                      // MySQL
-                                      Pattern.compile("server_uuid\\s+.*"),
-                                      Pattern.compile("hostname\\s+.*"),
-                                      Pattern.compile("  value\\s+\\d+\\s+"),
-                                      // Operating systems
-                                      Pattern.compile(".*(Windows|Linux).*"),};
+    //
+    Pattern.compile(".*jdbc:.*"),
+    Pattern.compile("database product version.*"),
+    Pattern.compile("driver version.*"),
+    Pattern.compile("-- operating system:.*"),
+    Pattern.compile("-- JVM system:.*"),
+    Pattern.compile("\\s+<schemaCrawler(Version|About|Info)>.*"),
+    Pattern.compile("\\s+\"runId\": .*"),
+    Pattern.compile("\\s+<product(Name|Version)>.*"),
+    Pattern.compile(".*[A-Za-z]+ \\d+\\, 201[456] \\d+:\\d+ [AP]M.*"),
+    Pattern.compile(".*201[89]-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.*"),
+    Pattern.compile(".*201[89]-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d\\.\\d\\d\\d.*"),
+    // Apache Derby unnamed objects
+    Pattern.compile("SQL\\d+\\s+\\[primary key\\]"),
+    Pattern.compile("SQL\\d+\\s+\\[foreign key, with no action\\]"),
+    // MySQL
+    Pattern.compile("server_uuid\\s+.*"),
+    Pattern.compile("hostname\\s+.*"),
+    Pattern.compile("  value\\s+\\d+\\s+"),
+    // Operating systems and environment
+    Pattern.compile(".*(Windows|Linux).*"),
+    Pattern.compile(".*Oracle Corporation Java HotSpot.*"),
+    };
 
   /**
    * Should we keep the line - that is, not ignore it?
@@ -72,7 +66,7 @@ final class NeuteredLinesFilter
   @Override
   public boolean test(final String line)
   {
-    for (final Pattern neuter: neuters)
+    for (final Pattern neuter : neuters)
     {
       if (neuter.matcher(line).matches())
       {
