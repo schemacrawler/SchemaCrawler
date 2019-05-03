@@ -40,14 +40,13 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.Version;
 import schemacrawler.test.utility.TestOutputStream;
 
 public class TestVersion
 {
-  private TestOutputStream out;
   private TestOutputStream err;
+  private TestOutputStream out;
 
   @AfterEach
   public void cleanUpStreams()
@@ -72,7 +71,7 @@ public class TestVersion
     throws Exception
   {
     Version.main(new String[0]);
-    assertThat(out.getFileContents(), startsWith("SchemaCrawler 15.06.01"));
+    assertThat(out.getFileContents(), startsWith("SchemaCrawler 15.07.01"));
     assertThat(outputOf(err), hasNoContent());
   }
 

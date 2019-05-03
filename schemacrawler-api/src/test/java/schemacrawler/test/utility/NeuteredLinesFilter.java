@@ -56,6 +56,7 @@ final class NeuteredLinesFilter
     Pattern.compile("hostname\\s+.*"),
     Pattern.compile("  value\\s+\\d+\\s+"),
     // Operating systems and environment
+    Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*(Windows|Linux).*"),
     Pattern.compile(".*Oracle Corporation Java HotSpot.*"),
     };

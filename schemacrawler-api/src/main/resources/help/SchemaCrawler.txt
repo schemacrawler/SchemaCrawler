@@ -1,9 +1,9 @@
-SchemaCrawler 15.06.01
+SchemaCrawler 15.07.01
 Database schema discovery and comprehension tool
 Copyright (c) 2000-2019, Sualeh Fatehi <sualeh@hotmail.com>.
 
-You can search for database schema objects using regular expressions, 
-and output the schema and data in a readable text format. You can find 
-potential schema design issues with lint. The output serves for 
-database documentation is designed to be diff-ed against other database 
+You can search for database schema objects using regular expressions,
+and output the schema and data in a readable text format. You can find
+potential schema design issues with lint. The output serves for
+database documentation is designed to be diff-ed against other database
 schemas. SchemaCrawler also generates schema diagrams.
