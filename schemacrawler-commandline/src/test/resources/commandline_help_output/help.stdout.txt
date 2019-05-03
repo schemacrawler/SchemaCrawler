@@ -192,31 +192,96 @@ Filter database object metadata
                             Optional, default is 0
 
 
-Show output
-      --no-info             Whether to show database information
-      --no-remarks          Whether to sort remarks
-      --portable-names      Whether to use portable names
-      --weak-associations   Whether to weak associations
+----- Show Options ------------------------------------------------------------
+Show information in output
+
+      --no-info             Hide database information
+                            --no-info=<boolean>
+                            <boolean> can be true or false
+                            Optional, defaults to false
+      --no-remarks          Hide table and column remarks
+                            --no-remarks=<boolean>
+                            <boolean> can be true or false
+                            Optional, defaults to false
+      --portable-names      Allow for easy comparison between databases, by hiding
+                              foreign key names, constraint names, trigger names,
+                              specific names for routines, or index and primary key
+                              names, and not showing the fully-qualified table name
+                            --portable-names=<boolean>
+                            <boolean> can be true or false
+                            Optional, defaults to false
+      --weak-associations   Show inferred relationships between tables, based on
+                              common table and column naming conventions
+                            --weak-associations=<boolean>
+                            <boolean> can be true or false
+                            Optional, defaults to false
 
 
-Sort output
-      --sort-columns    Whether to sort table columns
-      --sort-in-out     Whether to routine parameters
-      --sort-routines   Whether to sort routines
-      --sort-tables     Whether to sort tables
+----- Sort Options ------------------------------------------------------------
+Sort database object in output
+
+      --sort-columns    Sort columns in a table alphabetically
+                        --sort-columns=<sortcolumns>
+                        <sortcolumns> can be true or false
+                        Optional, defaults to false
+      --sort-in-out     Sort parameters in a routine alphabetically
+                        --sort-in-out=<sortinout>
+                        <sortinout> can be true or false
+                        Optional, defaults to false
+      --sort-routines   Sort routines alphabetically
+                        --sort-routines=<sortroutines>
+                        <sortroutines> can be true or false
+                        Optional, defaults to true
+      --sort-tables     Sort tables alphabetically
+                        --sort-tables=<sorttables>
+                        <sorttables> can be true or false
+                        Optional, defaults to true
 
 
-Load database metadata
-  -i, --info-level=<infoLevel>
-         Determine the amount of database metadata retrieved
+----- Load Options ------------------------------------------------------------
+Load database metadata into memory
+
+  -i, --info-level=<infolevel>
+         <infolevel> is one of unknown, minimum, standard, detailed, maximum
+         The info level determines the amount of database metadata retrieved, and
+           also determines the time taken to crawl the schema
+         Optional, defaults to standard
 
 
+
+----- Execute Options ---------------------------------------------------------
 Execute SchemaCrawler command
+
       --output-format=<outputFormatValue>
-                            Outfile format
+                            Format of the SchemaCrawler output, where <outputformat>
+                              is one of:
+                              text - For text output (default)
+                              html - For HTML5 output
+                              json - For JavaScript Object Notation output
+                              scdot - For Graphviz DOT output, for schema only
+
+                            You can generate a database diagram using Graphviz
+                            For a diagram <outputformat> is one of dot, eps, gif,
+                              jpg, or png
+                            For a complete list Graphviz output formats, see http:
+                              //www.graphviz.org/
+                            You can generate HTML output format with an embedded SVG
+                              diagram with an <outputformat> of htmlx
+                            IMPORTANT: Graphviz needs to be installed, and available
+                              on the system PATH
+                            http://www.graphviz.org/
+                            If Graphviz is not installed, a DOT file is produced.
+
+                            Optional, defaults to the format specified by the output
+                              file, otherwise, text
   -c, --command=<command>   SchemaCrawler command
-  -m, --title=<title>       Title for output
+  -m, --title=<title>       Shows the title on the output
+                            Optional, defaults to no title being shown
   -o, --output-file=<outputFile>
-                            Outfile file path and name
+                            Generate output in a named file
+                            <outputfile> is the path to the output file
+                            Optional, defaults to the console (stdout) for text
+                              output, and a random file in the current directory for
+                              binary output
 
 

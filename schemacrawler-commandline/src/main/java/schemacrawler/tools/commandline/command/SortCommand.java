@@ -42,7 +42,13 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "sort",
-                     description = "Sort output")
+                     header = {
+                       "----- Sort Options ------------------------------------------------------------",
+                       "Sort database object in output",
+                     },
+                     description = {
+                       "",
+                     })
 public final class SortCommand
   implements Runnable
 {
@@ -50,16 +56,36 @@ public final class SortCommand
   private final SchemaCrawlerShellState state;
 
   @CommandLine.Option(names = { "--sort-columns" },
-                      description = "Whether to sort table columns")
+                      description = {
+                        "Sort columns in a table alphabetically",
+                        "--sort-columns=<sortcolumns>",
+                        "<sortcolumns> can be true or false",
+                        "Optional, defaults to false"
+                      })
   private Boolean sortcolumns;
   @CommandLine.Option(names = { "--sort-in-out" },
-                      description = "Whether to routine parameters")
+                      description = {
+                        "Sort parameters in a routine alphabetically",
+                        "--sort-in-out=<sortinout>",
+                        "<sortinout> can be true or false",
+                        "Optional, defaults to false"
+                      })
   private Boolean sortinout;
   @CommandLine.Option(names = { "--sort-routines" },
-                      description = "Whether to sort routines")
+                      description = {
+                        "Sort routines alphabetically",
+                        "--sort-routines=<sortroutines>",
+                        "<sortroutines> can be true or false",
+                        "Optional, defaults to true"
+                      })
   private Boolean sortroutines;
   @CommandLine.Option(names = { "--sort-tables" },
-                      description = "Whether to sort tables")
+                      description = {
+                        "Sort tables alphabetically",
+                        "--sort-tables=<sorttables>",
+                        "<sorttables> can be true or false",
+                        "Optional, defaults to true"
+                      })
   private Boolean sorttables;
 
   public SortCommand(final SchemaCrawlerShellState state)

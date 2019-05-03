@@ -49,7 +49,11 @@ import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "execute",
-                     description = "Execute SchemaCrawler command")
+                     header = {
+                       "----- Execute Options ---------------------------------------------------------",
+                       "Execute SchemaCrawler command",
+                     },
+                     description = "")
 public class ExecuteCommand
   implements Runnable
 {

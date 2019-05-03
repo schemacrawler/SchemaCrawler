@@ -47,17 +47,43 @@ public final class CommandOutputOptions
   @CommandLine.Option(names = {
     "-o", "--output-file"
   },
-                      description = "Outfile file path and name")
+                      description = {
+                        "Generate output in a named file",
+                        "<outputfile> is the path to the output file",
+                        "Optional, defaults to the console (stdout) for text output, "
+                        + "and a random file in the current directory for binary output"
+                      })
   private Path outputFile;
   @CommandLine.Option(names = {
     "--output-format"
   },
-                      description = "Outfile format")
+                      description = {
+                        "Format of the SchemaCrawler output, where <outputformat> is one of:",
+                        "  text - For text output (default)",
+                        "  html - For HTML5 output",
+                        "  json - For JavaScript Object Notation output",
+                        "  scdot - For Graphviz DOT output, for schema only",
+                        "",
+                        "You can generate a database diagram using Graphviz",
+                        "For a diagram <outputformat> is one of dot, eps, gif, jpg, or png",
+                        "For a complete list Graphviz output formats, see http://www.graphviz.org/",
+                        "You can generate HTML output format with an embedded SVG diagram "
+                        + "with an <outputformat> of htmlx",
+                        "IMPORTANT: Graphviz needs to be installed, and available on the system PATH",
+                        "http://www.graphviz.org/",
+                        "If Graphviz is not installed, a DOT file is produced.",
+                        "",
+                        "Optional, defaults to the format specified by the output file, "
+                        + "otherwise, text"
+                      })
   private String outputFormatValue;
   @CommandLine.Option(names = {
     "-m", "--title"
   },
-                      description = "Title for output")
+                      description = {
+                        "Shows the title on the output",
+                        "Optional, defaults to no title being shown"
+                      })
   private String title;
 
   public Optional<String> getTitle()

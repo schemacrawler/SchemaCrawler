@@ -47,7 +47,11 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @CommandLine.Command(name = "load",
-                     description = "Load database metadata")
+                     header = {
+                       "----- Load Options ------------------------------------------------------------",
+                       "Load database metadata into memory",
+                     },
+                     description = "")
 public class LoadCommand
   implements Runnable
 {
@@ -61,8 +65,13 @@ public class LoadCommand
     "-i", "--info-level"
   },
                       required = true,
-                      description = "Determine the amount of database metadata retrieved")
-  private InfoLevel infoLevel;
+                      description = {
+                        "<infolevel> is one of ${COMPLETION-CANDIDATES}",
+                        "The info level determines the amount of database metadata retrieved, "
+                        + "and also determines the time taken to crawl the schema",
+                        "Optional, defaults to standard\n"
+                      })
+  private InfoLevel infolevel;
 
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
@@ -74,7 +83,7 @@ public class LoadCommand
 
   public InfoLevel getInfoLevel()
   {
-    return infoLevel;
+    return infolevel;
   }
 
   @Override
@@ -86,15 +95,15 @@ public class LoadCommand
                                                "Not connected to the database");
     }
 
-    if (infoLevel != null)
+    if (infolevel != null)
     {
       state.getSchemaCrawlerOptionsBuilder()
-           .withSchemaInfoLevel(infoLevel.toSchemaInfoLevel());
+           .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
     try (final Connection connection = state.getDataSource().getConnection())
     {
-      LOGGER.log(Level.INFO, new StringFormat("infoLevel=%s", infoLevel));
+      LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 
       final Config additionalConfiguration = state.getAdditionalConfiguration();
       final SchemaRetrievalOptions schemaRetrievalOptions = state.getSchemaRetrievalOptionsBuilder()
