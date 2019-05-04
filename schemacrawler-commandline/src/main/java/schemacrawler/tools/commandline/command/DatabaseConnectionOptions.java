@@ -31,7 +31,7 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine;
 
-class DatabaseConnectionOptions
+public class DatabaseConnectionOptions
 {
 
   @CommandLine.ArgGroup(exclusive = false,

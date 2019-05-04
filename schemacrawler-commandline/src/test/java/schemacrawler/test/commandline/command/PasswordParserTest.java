@@ -162,9 +162,9 @@ public class PasswordParserTest
     };
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
-    parseCommand(optionsParser, args);
-    assertThrows(CommandLine.ParameterException.class,
-                 () -> optionsParser.getUserCredentials());
+
+    assertThrows(CommandLine.MutuallyExclusiveArgsException.class,
+                 () -> parseCommand(optionsParser, args));
   }
 
 }

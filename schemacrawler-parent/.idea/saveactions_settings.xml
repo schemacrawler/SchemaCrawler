@@ -3,7 +3,6 @@
   <component name="SaveActionSettings">
     <option name="actions">
       <set>
-        <option value="activate" />
         <option value="activateOnShortcut" />
         <option value="noActionIfCompileErrors" />
         <option value="organizeImports" />

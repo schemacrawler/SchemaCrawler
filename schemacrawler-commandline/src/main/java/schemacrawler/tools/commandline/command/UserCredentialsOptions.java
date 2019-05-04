@@ -31,14 +31,15 @@ package schemacrawler.tools.commandline.command;
 
 import static sf.util.Utility.isBlank;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import picocli.CommandLine;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
+import sf.util.SchemaCrawlerLogger;
 
 /**
  * Options for the command-line.
@@ -48,24 +49,117 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 public final class UserCredentialsOptions
 {
 
-  @CommandLine.Option(names = "--password:env",
-                      description = "Database password, from an environmental variable value",
-                      paramLabel = "<environment variable name>")
-  private String passwordEnvironmentVariable;
-  @CommandLine.Option(names = "--password:file",
-                      description = "Database password, read from a file",
-                      paramLabel = "<path to password file>")
-  private File passwordFile;
-  @CommandLine.Option(names = "--password:prompt",
-                      interactive = true,
-                      description = "Database password, prompted from the console")
-  private String passwordPrompted;
-  @CommandLine.Option(names = {
-    "--password"
-  },
-                      description = "Database password",
-                      paramLabel = "<password>")
-  private String passwordProvided;
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    UserCredentialsOptions.class.getName());
+
+
+  public static class PasswordOptions
+  {
+    @CommandLine.Option(names = "--password:env",
+                        description = "Database password, from an environmental variable value",
+                        paramLabel = "<environment variable name>")
+    private String passwordEnvironmentVariable;
+    @CommandLine.Option(names = "--password:file",
+                        description = "Database password, read from a file",
+                        paramLabel = "<path to password file>")
+    private Path passwordFile;
+    @CommandLine.Option(names = "--password:prompt",
+                        interactive = true,
+                        description = "Database password, prompted from the console")
+    private String passwordPrompted;
+    @CommandLine.Option(names = {
+      "--password"
+    },
+                        description = "Database password",
+                        paramLabel = "<password>")
+    private String passwordProvided;
+
+    /**
+     * Get password from various sources, in order of precedence.
+     * The password cannot be specified in more than one way.
+     *
+     * @return Password, can be null
+     */
+    String getPassword()
+    {
+      String password = getPasswordProvided();
+
+      if (password == null)
+      {
+        password = getPasswordPrompted();
+      }
+      if (password == null)
+      {
+        password = getPasswordFromFile();
+      }
+      if (password == null)
+      {
+        password = getPasswordFromEnvironment();
+      }
+
+      return password;
+    }
+
+    private String getPasswordProvided()
+    {
+      return passwordProvided;
+    }
+
+    private String getPasswordPrompted()
+    {
+      return passwordPrompted;
+    }
+
+    private String getPasswordFromEnvironment()
+    {
+      if (isBlank(passwordEnvironmentVariable))
+      {
+        return null;
+      }
+
+      String passwordEnvironment = null;
+      try
+      {
+        passwordEnvironment = System.getenv(passwordEnvironmentVariable);
+      }
+      catch (final Exception e)
+      {
+        throw new IllegalArgumentException(String.format(
+          "Password could not be read from environmental variable <%s>",
+          passwordEnvironmentVariable), e);
+      }
+
+      return passwordEnvironment;
+    }
+
+    private String getPasswordFromFile()
+    {
+      if (passwordFile == null)
+      {
+        return null;
+      }
+
+      String password = null;
+      try
+      {
+        final List<String> lines = Files.readAllLines(passwordFile);
+        if (!lines.isEmpty()) {password = lines.get(0);}
+      }
+      catch (final IOException e)
+      {
+        throw new IllegalArgumentException(String.format(
+          "Password could not be read from file <%s>",
+          passwordFile), e);
+      }
+
+      return password;
+    }
+
+  }
+
+
+  @CommandLine.ArgGroup
+  private PasswordOptions passwordOptions;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
   @CommandLine.Option(names = {
@@ -79,123 +173,22 @@ public final class UserCredentialsOptions
     return new SingleUseUserCredentials(user, getPassword());
   }
 
-  /**
-   * Get password from various sources, in order of precedence.
-   * The password cannot be specified in more than one way.
-   *
-   * @return Password, can be null
-   */
   private String getPassword()
   {
-    String password = getPasswordProvided();
-
-    if (password == null)
-    {
-      password = getPasswordPrompted();
-    }
-    if (password == null)
-    {
-      password = getPasswordFromFile();
-    }
-    if (password == null)
-    {
-      password = getPasswordFromEnvironment();
-    }
-
-    return password;
-  }
-
-  private String getPasswordProvided()
-  {
-    // Check that password was not provided in any other way
-    final boolean passwordInOtherWays =
-      passwordFile != null || passwordPrompted != null || !isBlank(
-        passwordEnvironmentVariable);
-
-    if (passwordProvided != null && passwordInOtherWays)
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Database password provided in too many ways");
-    }
-
-    return passwordProvided;
-  }
-
-  private String getPasswordPrompted()
-  {
-    // Check that password was not provided in any other way
-    final boolean passwordInOtherWays =
-      passwordFile != null || passwordProvided != null || !isBlank(
-        passwordEnvironmentVariable);
-
-    if (passwordPrompted != null && passwordInOtherWays)
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Database password provided in too many ways");
-    }
-
-    return passwordPrompted;
-  }
-
-  private String getPasswordFromEnvironment()
-  {
-    if (isBlank(passwordEnvironmentVariable))
+    if (passwordOptions == null)
     {
       return null;
     }
 
-    String password = null;
     try
     {
-      password = System.getenv(passwordEnvironmentVariable);
+      return passwordOptions.getPassword();
     }
-    catch (final Exception e)
+    catch (Exception e)
     {
       throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Cannot read password file",
-                                               e);
+                                               "No password provided");
     }
-
-    // Check that password was not provided in any other way
-    if (passwordFile != null || !isBlank(passwordPrompted) || !isBlank(
-      passwordProvided))
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Database password provided in too many ways");
-    }
-
-    return password;
-  }
-
-  private String getPasswordFromFile()
-  {
-    if (passwordFile == null)
-    {
-      return null;
-    }
-
-    String password = null;
-    try
-    {
-      final List<String> lines = Files.readAllLines(passwordFile.toPath());
-      if (!lines.isEmpty()) {password = lines.get(0);}
-    }
-    catch (final IOException e)
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Cannot read database password file",
-                                               e);
-    }
-
-    // Check that password was not provided in any other way
-    if (!isBlank(passwordEnvironmentVariable) || !isBlank(passwordPrompted)
-        || !isBlank(passwordProvided))
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Database password provided in too many ways");
-    }
-
-    return password;
   }
 
 }
