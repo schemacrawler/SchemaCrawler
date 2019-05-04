@@ -28,16 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -57,24 +53,6 @@ public abstract class ExecutableCommandProvider
   {
     this.supportedCommands = supportedCommands;
     this.executableClassName = executableClassName;
-  }
-
-  @Override
-  public InputResource getHelp()
-  {
-    final String helpResource = "/help/DefaultExecutable.txt";
-    try
-    {
-      return new ClasspathInputResource(helpResource);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 String.format("Could not load help resource <%s>",
-                               helpResource),
-                 e);
-      return new EmptyInputResource();
-    }
   }
 
   @Override

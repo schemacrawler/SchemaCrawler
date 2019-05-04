@@ -28,17 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.mustache;
 
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.EmptyInputResource;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 
@@ -53,24 +48,6 @@ public class MustacheCommandProvider
   public String getDescription()
   {
     return "Render a Mustache template against a schema";
-  }
-
-  @Override
-  public InputResource getHelp()
-  {
-    final String helpResource = "/help/MustacheRenderer.txt";
-    try
-    {
-      return new ClasspathInputResource(helpResource);
-    }
-    catch (final IOException e)
-    {
-      LOGGER.log(Level.WARNING,
-                 String.format("Could not load help resource <%s>",
-                               helpResource),
-                 e);
-      return new EmptyInputResource();
-    }
   }
 
   @Override

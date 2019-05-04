@@ -32,7 +32,6 @@ import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.tools.options.OutputOptions;
 
 public interface CommandProvider
@@ -42,8 +41,6 @@ public interface CommandProvider
   {
     return "";
   }
-
-  InputResource getHelp();
 
   Collection<String> getSupportedCommands();
 
