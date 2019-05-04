@@ -19,11 +19,13 @@ For connecting to specific databases, use
                           Database name
       --host=<host>       Database server host
       --port=<port>       Database server port
-      --server=<databaseSystemIdentifier>
-                          Database server type
+      --server=<database system identifier>
+                          Where <database system identifier> is a database for which
+                            a SchemaCrawler plug-in is available
+                          Use one of
       --urlx=<String=String>
                           JDBC URL additional properties
 
 If your database does not have a SchemaCrawler plug-in, use
       --url=<connectionUrl>
-                          Database connection string
+                          JDBC connection URL to the database

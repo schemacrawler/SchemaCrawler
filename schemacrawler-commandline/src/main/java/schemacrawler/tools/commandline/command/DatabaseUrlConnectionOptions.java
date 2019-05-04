@@ -45,7 +45,7 @@ public class DatabaseUrlConnectionOptions
     "--url"
   },
                       required = true,
-                      description = "Database connection string")
+                      description = "JDBC connection URL to the database")
   private String connectionUrl;
 
   @Override

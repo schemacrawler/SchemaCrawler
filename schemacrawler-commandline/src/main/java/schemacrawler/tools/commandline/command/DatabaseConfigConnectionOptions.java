@@ -113,8 +113,13 @@ public class DatabaseConfigConnectionOptions
     "--server"
   },
                       required = true,
-                      description = "Database server type",
-                      completionCandidates = AvailableServers.class)
+                      description = {
+                        "Where <database system identifier> is a database for "
+                        + "which a SchemaCrawler plug-in is available",
+                        "Use one of ${COMPLETION-CANDIDATES}"
+                      },
+                      completionCandidates = AvailableServers.class,
+                      paramLabel = "<database system identifier>")
   private String databaseSystemIdentifier;
   @CommandLine.Option(names = {
     "--host"
