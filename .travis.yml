@@ -1,8 +1,12 @@
 language: java
 jdk:
   - oraclejdk8
+  - openjdk12  
 os:
   - linux
+matrix:
+  allow_failures:
+    - jdk: openjdk12  
 sudo: required
 notifications:
   on_success:
