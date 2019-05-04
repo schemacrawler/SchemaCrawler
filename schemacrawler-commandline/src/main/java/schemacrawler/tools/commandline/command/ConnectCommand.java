@@ -67,8 +67,8 @@ public class ConnectCommand
     ConnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
-  @CommandLine.Mixin
-  private ConnectionOptions connectionOptions;
+  @CommandLine.ArgGroup(exclusive = true)
+  private DatabaseConnectionOptions databaseConnectionOptions;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
   @CommandLine.Mixin
@@ -82,17 +82,12 @@ public class ConnectCommand
   @Override
   public void run()
   {
-    if (connectionOptions == null)
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "Please provide connection options");
-    }
 
     try
     {
       // Match the database connector in the best possible way, using the
       // server argument, or the JDBC connection URL
-      final DatabaseConnectable databaseConnectable = connectionOptions.getDatabaseConnectable();
+      final DatabaseConnectable databaseConnectable = getDatabaseConnectable();
       requireNonNull(databaseConnectable,
                      "No database connection options provided");
       final DatabaseConnector databaseConnector = databaseConnectable.getDatabaseConnector();
@@ -121,6 +116,24 @@ public class ConnectCommand
     {
       throw new RuntimeException("Cannot connect to database", e);
     }
+  }
+
+  public DatabaseConnectable getDatabaseConnectable()
+  {
+    if (databaseConnectionOptions == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection options provided");
+    }
+
+    final DatabaseConnectable databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
+    if (databaseConnectable == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection options provided");
+    }
+
+    return databaseConnectable;
   }
 
   private UserCredentials getUserCredentials()
