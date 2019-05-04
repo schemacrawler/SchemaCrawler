@@ -71,6 +71,8 @@ public class ConnectCommand
   private ConnectionOptions connectionOptions;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
+  @CommandLine.Mixin
+  private UserCredentialsOptions userCredentialsOptions;
 
   public ConnectCommand(final SchemaCrawlerShellState state)
   {
@@ -111,7 +113,7 @@ public class ConnectCommand
       loadSchemaCrawlerOptionsBuilder();
       createDataSource(databaseConnector,
                        databaseConnectable,
-                       connectionOptions.getUserCredentials());
+                       getUserCredentials());
       loadSchemaRetrievalOptionsBuilder(databaseConnector);
 
     }
@@ -119,6 +121,18 @@ public class ConnectCommand
     {
       throw new RuntimeException("Cannot connect to database", e);
     }
+  }
+
+  private UserCredentials getUserCredentials()
+  {
+
+    if (userCredentialsOptions == null)
+    {
+      throw new CommandLine.ParameterException(spec.commandLine(),
+                                               "No database connection credentials provided");
+    }
+    final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
+    return userCredentials;
   }
 
   private void createDataSource(final DatabaseConnector databaseConnector,

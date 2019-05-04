@@ -30,7 +30,6 @@ package schemacrawler.tools.commandline.command;
 
 
 import picocli.CommandLine;
-import schemacrawler.tools.databaseconnector.UserCredentials;
 
 /**
  * Parses the command-line.
@@ -44,8 +43,6 @@ public final class ConnectionOptions
   private DatabaseConnectionOptions databaseConnectionOptions;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
-  @CommandLine.Mixin
-  private UserCredentialsOptions userCredentialsOptions;
 
   public DatabaseConnectable getDatabaseConnectable()
   {
@@ -63,18 +60,6 @@ public final class ConnectionOptions
     }
 
     return databaseConnectable;
-  }
-
-  UserCredentials getUserCredentials()
-  {
-
-    if (userCredentialsOptions == null)
-    {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No database connection credentials provided");
-    }
-    final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
-    return userCredentials;
   }
 
 }
