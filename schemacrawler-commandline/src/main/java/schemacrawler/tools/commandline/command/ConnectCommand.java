@@ -55,9 +55,10 @@ import sf.util.StringFormat;
                      },
                      description = {
                        "",
-                       "Connect to a database, using a JDBC URL, "
-                       + "or for databases with SchemaCrawler plugins, "
-                       + "with a server type, host, port and database"
+                       "For database connections, please read",
+                       "https://www.schemacrawler.com/database-support.html",
+                       "first, before running SchemaCrawler",
+                       ""
                      })
 public class ConnectCommand
   implements Runnable

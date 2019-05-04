@@ -49,10 +49,12 @@ public final class UserCredentialsOptions
 {
 
   @CommandLine.Option(names = "--password:env",
-                      description = "Database password, from an environmental variable value")
+                      description = "Database password, from an environmental variable value",
+                      paramLabel = "<environment variable name>")
   private String passwordEnvironmentVariable;
   @CommandLine.Option(names = "--password:file",
-                      description = "Database password, read from a file")
+                      description = "Database password, read from a file",
+                      paramLabel = "<path to password file>")
   private File passwordFile;
   @CommandLine.Option(names = "--password:prompt",
                       interactive = true,
@@ -61,7 +63,8 @@ public final class UserCredentialsOptions
   @CommandLine.Option(names = {
     "--password"
   },
-                      description = "Database password")
+                      description = "Database password",
+                      paramLabel = "<password>")
   private String passwordProvided;
   @CommandLine.Spec
   private CommandLine.Model.CommandSpec spec;
