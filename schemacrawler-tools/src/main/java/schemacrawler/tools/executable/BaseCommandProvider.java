@@ -31,24 +31,32 @@ package schemacrawler.tools.executable;
 import static java.util.Objects.requireNonNull;
 import static sf.util.Utility.isBlank;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
-public abstract class ExecutableCommandProvider
+public abstract class BaseCommandProvider
   implements CommandProvider
 {
 
   private final Collection<CommandDescription> supportedCommands;
 
-  public ExecutableCommandProvider(final Collection<CommandDescription> supportedCommands)
+  public BaseCommandProvider(final Collection<CommandDescription> supportedCommands)
   {
     this.supportedCommands = requireNonNull(supportedCommands,
                                             "No supported commands provided");
   }
 
+  public BaseCommandProvider(final CommandDescription supportedCommand)
+  {
+    this(Arrays.asList(requireNonNull(supportedCommand,
+                                      "No command provided")));
+  }
+
   @Override
   public final Collection<CommandDescription> getSupportedCommands()
   {
-    return supportedCommands;
+    return new ArrayList<>(supportedCommands);
   }
 
   protected final boolean supportsCommand(final String command)
@@ -63,7 +71,7 @@ public abstract class ExecutableCommandProvider
       {
         continue;
       }
-      if (commandDescription.getName().equalsIgnoreCase(command))
+      if (command.equalsIgnoreCase(commandDescription.getName()))
       {
         return true;
       }

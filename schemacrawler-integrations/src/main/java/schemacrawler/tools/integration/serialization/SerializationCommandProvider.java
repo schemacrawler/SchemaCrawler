@@ -28,31 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.serialization;
 
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class SerializationCommandProvider
-  implements CommandProvider
+  extends BaseCommandProvider
 {
 
-  @Override
-  public Collection<CommandDescription> getSupportedCommands()
+  public SerializationCommandProvider()
   {
-    return Arrays.asList(new CommandDescription(SerializationCommand.COMMAND,
-                                                "Create an offline catalog snapshot"));
+    super(new CommandDescription(SerializationCommand.COMMAND,
+                                 "Create an offline catalog snapshot"));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final SerializationCommand scCommand = new SerializationCommand();
-    return scCommand;
+    return new SerializationCommand();
   }
 
   @Override
@@ -60,7 +55,7 @@ public class SerializationCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return SerializationCommand.COMMAND.equals(command);
+    return supportsCommand(command);
   }
 
 }

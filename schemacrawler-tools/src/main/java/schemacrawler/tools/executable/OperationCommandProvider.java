@@ -30,39 +30,24 @@ package schemacrawler.tools.executable;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
-import schemacrawler.tools.text.schema.SchemaTextRenderer;
+import schemacrawler.tools.text.operation.OperationCommand;
 
-public final class SchemaExecutableCommandProvider
-  extends ExecutableCommandProvider
+final class OperationCommandProvider
+  extends BaseCommandProvider
 {
 
-  private static Collection<CommandDescription> supportedCommands()
+  OperationCommandProvider()
   {
-    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
-    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
-    {
-      supportedCommands.add(new CommandDescription(schemaTextDetailType.name(),
-                                                   schemaTextDetailType.getDescription()));
-    }
-    return supportedCommands;
-  }
-
-  SchemaExecutableCommandProvider()
-  {
-    super(supportedCommands());
+    super(CommandProviderUtility.operationCommands());
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new SchemaTextRenderer(command);
+    return new OperationCommand(command);
   }
 
   @Override

@@ -30,34 +30,19 @@ package schemacrawler.tools.integration.graph;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.ExecutableCommandProvider;
+import schemacrawler.tools.executable.BaseCommandProvider;
+import schemacrawler.tools.executable.CommandProviderUtility;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
-import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 public final class GraphCommandProvider
-  extends ExecutableCommandProvider
+  extends BaseCommandProvider
 {
-
-  private static Collection<CommandDescription> supportedCommands()
-  {
-    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
-    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
-    {
-      supportedCommands.add(new CommandDescription(schemaTextDetailType.name(),
-                                                   schemaTextDetailType.getDescription()));
-    }
-    return supportedCommands;
-  }
 
   public GraphCommandProvider()
   {
-    super(supportedCommands());
+    super(CommandProviderUtility.schemaTextCommands());
   }
 
   @Override

@@ -25,29 +25,29 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.lint.executable;
+package schemacrawler.tools.executable;
 
+
+import static sf.util.Utility.isBlank;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
+import schemacrawler.tools.text.schema.SchemaTextRenderer;
 
-public class LintCommandProvider
+public final class SchemaTextCommandProvider
   extends BaseCommandProvider
 {
 
-  public LintCommandProvider()
+  SchemaTextCommandProvider()
   {
-    super(new CommandDescription(LintCommand.COMMAND,
-                                 "Display database lints"));
+    super(CommandProviderUtility.schemaTextCommands());
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new LintCommand();
+    return new SchemaTextRenderer(command);
   }
 
   @Override
@@ -55,7 +55,18 @@ public class LintCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return supportsCommand(command);
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
+    return supportsSchemaCrawlerCommand;
   }
 
 }

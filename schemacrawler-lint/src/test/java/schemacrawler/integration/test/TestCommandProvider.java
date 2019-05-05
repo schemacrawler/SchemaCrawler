@@ -32,7 +32,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.lint.executable.LintCommandProvider;
@@ -50,10 +49,9 @@ public class TestCommandProvider
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .newSchemaCrawlerOptions();
     final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions();
-    assertThat(lintCommandProvider
-      .supportsSchemaCrawlerCommand("lint",
-                                    schemaCrawlerOptions,
-                                    outputOptions),
+    assertThat(lintCommandProvider.supportsSchemaCrawlerCommand("lint",
+                                                                schemaCrawlerOptions,
+                                                                outputOptions),
                is(true));
   }
 

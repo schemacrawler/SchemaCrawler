@@ -59,8 +59,8 @@ public final class CommandRegistry
 
     final List<CommandProvider> commandProviders = new ArrayList<>();
 
-    commandProviders.add(new SchemaExecutableCommandProvider());
-    commandProviders.add(new OperationExecutableCommandProvider());
+    commandProviders.add(new SchemaTextCommandProvider());
+    commandProviders.add(new OperationCommandProvider());
 
     try
     {
@@ -117,7 +117,7 @@ public final class CommandRegistry
     }
     if (executableCommandProvider == null)
     {
-      executableCommandProvider = new OperationExecutableCommandProvider();
+      executableCommandProvider = new OperationCommandProvider();
     }
 
     final SchemaCrawlerCommand scCommand;

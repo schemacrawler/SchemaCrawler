@@ -28,31 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.velocity;
 
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class VelocityCommandProvider
-  implements CommandProvider
+  extends BaseCommandProvider
 {
 
-  @Override
-  public Collection<CommandDescription> getSupportedCommands()
+  public VelocityCommandProvider()
   {
-    return Arrays.asList(new CommandDescription(VelocityRenderer.COMMAND,
-                                                "Render an Apache Velocity template against a schema"));
+    super(new CommandDescription(VelocityRenderer.COMMAND,
+                                 "Render an Apache Velocity template against a schema"));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final VelocityRenderer scCommand = new VelocityRenderer();
-    return scCommand;
+    return new VelocityRenderer();
   }
 
   @Override
@@ -60,6 +55,7 @@ public class VelocityCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return VelocityRenderer.COMMAND.equals(command);
+    return supportsCommand(command);
   }
+
 }

@@ -28,24 +28,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class ScriptCommandProvider
-  implements CommandProvider
+  extends BaseCommandProvider
 {
 
-  @Override
-  public Collection<CommandDescription> getSupportedCommands()
+  public ScriptCommandProvider()
   {
-    return Arrays.asList(new CommandDescription(ScriptCommand.COMMAND,
-                                                "Execute a script against a schema"));
+    super(new CommandDescription(ScriptCommand.COMMAND,
+                                 "Execute a script against a schema"));
   }
 
   @Override
@@ -59,7 +55,7 @@ public class ScriptCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return ScriptCommand.COMMAND.equals(command);
+    return supportsCommand(command);
   }
 
 }

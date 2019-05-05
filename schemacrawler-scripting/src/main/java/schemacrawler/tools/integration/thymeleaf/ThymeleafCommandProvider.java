@@ -28,31 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.thymeleaf;
 
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class ThymeleafCommandProvider
-  implements CommandProvider
+  extends BaseCommandProvider
 {
 
-  @Override
-  public Collection<CommandDescription> getSupportedCommands()
+  public ThymeleafCommandProvider()
   {
-    return Arrays.asList(new CommandDescription(ThymeleafRenderer.COMMAND,
-                                                "Render a Thymeleaf template against a schema"));
+    super(new CommandDescription(ThymeleafRenderer.COMMAND,
+                                 "Render a Thymeleaf template against a schema"));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final ThymeleafRenderer scCommand = new ThymeleafRenderer();
-    return scCommand;
+    return new ThymeleafRenderer();
   }
 
   @Override
@@ -60,7 +55,7 @@ public class ThymeleafCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    return ThymeleafRenderer.COMMAND.equals(command);
+    return supportsCommand(command);
   }
 
 }
