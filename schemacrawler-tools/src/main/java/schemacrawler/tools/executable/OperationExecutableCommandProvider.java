@@ -28,43 +28,60 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
+import static sf.util.Utility.isBlank;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
+import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.TextOutputFormat;
 import schemacrawler.tools.text.operation.Operation;
+import schemacrawler.tools.text.operation.OperationCommand;
 
 final class OperationExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static final String OPERATION_EXECUTABLE = "schemacrawler.tools.text.operation"
-                                                     + ".OperationCommand";
-
-  private static Collection<String> supportedCommands()
+  private static Collection<CommandDescription> supportedCommands()
   {
-    final Collection<String> supportedCommands = new ArrayList<>();
-    for (final Operation operation: Operation.values())
+    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
+    for (final Operation operation : Operation.values())
     {
-      supportedCommands.add(operation.name());
+      supportedCommands.add(new CommandDescription(operation.name(),
+                                                   operation.getDescription()));
     }
     return supportedCommands;
   }
 
   OperationExecutableCommandProvider()
   {
-    super(supportedCommands(), OPERATION_EXECUTABLE);
+    super(supportedCommands());
   }
 
   @Override
-  public String getDescription()
+  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return "Display results of table queries";
+    return new OperationCommand(command);
   }
 
   @Override
-  public Collection<String> getSupportedCommands()
+  public boolean supportsSchemaCrawlerCommand(final String command,
+                                              final SchemaCrawlerOptions schemaCrawlerOptions,
+                                              final OutputOptions outputOptions)
   {
-    return supportedCommands();
+    if (outputOptions == null)
+    {
+      return false;
+    }
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
+    return supportsSchemaCrawlerCommand;
   }
 
 }

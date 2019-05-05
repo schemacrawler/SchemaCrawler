@@ -33,7 +33,6 @@ import static sf.util.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.TextOutputFormat;
@@ -44,43 +43,26 @@ public final class SchemaExecutableCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static final Collection<String> supportedCommands = supportedCommands();
-
-  private static Collection<String> supportedCommands()
+  private static Collection<CommandDescription> supportedCommands()
   {
-    final Collection<String> supportedCommands = new ArrayList<>();
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-      .values())
+    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
+    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
     {
-      supportedCommands.add(schemaTextDetailType.name());
+      supportedCommands.add(new CommandDescription(schemaTextDetailType.name(),
+                                                   schemaTextDetailType.getDescription()));
     }
     return supportedCommands;
   }
 
-  public SchemaExecutableCommandProvider()
+  SchemaExecutableCommandProvider()
   {
-    super(supportedCommands, "");
-  }
-
-  @Override
-  public String getDescription()
-  {
-    return "Display schema information at different levels of detail";
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return supportedCommands();
+    super(supportedCommands());
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-    throws SchemaCrawlerException
   {
-    final SchemaCrawlerCommand scCommand = new SchemaTextRenderer(command);
-    return scCommand;
-
+    return new SchemaTextRenderer(command);
   }
 
   @Override
@@ -88,14 +70,18 @@ public final class SchemaExecutableCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    if (isBlank(command) || outputOptions == null)
+    if (outputOptions == null)
     {
       return false;
     }
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
-    return supportedCommands.contains(command)
-           && (isBlank(outputFormatValue)
-               || TextOutputFormat.isSupportedFormat(outputFormatValue));
+    final String format = outputOptions.getOutputFormatValue();
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && TextOutputFormat.isSupportedFormat(format);
+    return supportsSchemaCrawlerCommand;
   }
 
 }

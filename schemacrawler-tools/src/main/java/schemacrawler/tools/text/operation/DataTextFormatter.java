@@ -55,20 +55,30 @@ final class DataTextFormatter
   implements DataTraversalHandler
 {
 
-  private int dataBlockCount;
+  private static String getMessage(final double aggregate)
+  {
+    final Number number;
+    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
+    {
+      number = Integer.valueOf((int) aggregate);
+    }
+    else
+    {
+      number = Double.valueOf(aggregate);
+    }
+    final String message = getRowCountMessage(number);
+    return message;
+  }
   private final Operation operation;
+  private int dataBlockCount;
 
   /**
    * Text formatting of data.
    *
-   * @param operation
-   *        Options for text formatting of data
-   * @param options
-   *        Options for text formatting of data
-   * @param outputOptions
-   *        Options for text formatting of data
-   * @param identifierQuoteString
-   *        Quote character for identifier
+   * @param operation             Options for text formatting of data
+   * @param options               Options for text formatting of data
+   * @param outputOptions         Options for text formatting of data
+   * @param identifierQuoteString Quote character for identifier
    */
   DataTextFormatter(final Operation operation,
                     final OperationOptions options,
@@ -77,9 +87,8 @@ final class DataTextFormatter
     throws SchemaCrawlerException
   {
     super(options,
-          /* printVerboseDatabaseInfo */false,
-          outputOptions,
-          identifierQuoteString);
+      /* printVerboseDatabaseInfo */
+          false, outputOptions, identifierQuoteString);
     this.operation = operation;
   }
 
@@ -105,7 +114,7 @@ final class DataTextFormatter
   public void handleData(final Query query, final ResultSet rows)
     throws SchemaCrawlerException
   {
-    String title;
+    final String title;
     if (query != null)
     {
       title = query.getName();
@@ -145,28 +154,11 @@ final class DataTextFormatter
     handleData(tableName, rows);
   }
 
-  private String getMessage(final double aggregate)
-  {
-    final Number number;
-    if (Math.abs(aggregate - (int) aggregate) < 1E-10D)
-    {
-      number = Integer.valueOf((int) aggregate);
-    }
-    else
-    {
-      number = Double.valueOf(aggregate);
-    }
-    final String message = getRowCountMessage(number);
-    return message;
-  }
-
   /**
    * Handles an aggregate operation, such as a count, for a given table.
    *
-   * @param title
-   *        Title
-   * @param results
-   *        Results
+   * @param title   Title
+   * @param results Results
    */
   private void handleAggregateOperationForTable(final String title,
                                                 final ResultSet results)
@@ -237,8 +229,7 @@ final class DataTextFormatter
     while (dataRows.next())
     {
       final List<Object> currentRow = dataRows.row();
-      final Object[] columnData = currentRow
-        .toArray(new Object[currentRow.size()]);
+      final Object[] columnData = currentRow.toArray(new Object[currentRow.size()]);
       formattingHelper.writeRow(columnData);
     }
   }
@@ -253,13 +244,15 @@ final class DataTextFormatter
     }
 
     formattingHelper.writeHeader(DocumentHeaderType.subTitle,
-                                 operation.getDescription());
+                                 operation.getTitle());
 
     if (operation == Operation.count)
     {
       formattingHelper.writeObjectStart();
-      formattingHelper
-        .writeObjectNameRow("", operation.getDescription(), "", Color.white);
+      formattingHelper.writeObjectNameRow("",
+                                          operation.getTitle(),
+                                          "",
+                                          Color.white);
     }
   }
 }

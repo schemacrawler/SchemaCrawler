@@ -93,21 +93,6 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
-  public boolean isCommandSupported(final String command)
-  {
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
-      for (final String supportedCommand : commandProvider.getSupportedCommands())
-      {
-        if (supportedCommand.equalsIgnoreCase(command))
-        {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   @Override
   public Iterator<CommandDescription> iterator()
   {
@@ -160,12 +145,7 @@ public final class CommandRegistry
     final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
     for (final CommandProvider commandProvider : commandRegistry)
     {
-      final String description = commandProvider.getDescription();
-      for (final String command : commandProvider.getSupportedCommands())
-      {
-        supportedCommandDescriptions.add(new CommandDescription(command,
-                                                                description));
-      }
+      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
     }
 
     final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(

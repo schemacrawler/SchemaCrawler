@@ -37,38 +37,54 @@ import schemacrawler.utility.Query;
 public enum Operation
 {
 
- /**
-  * Count operation
-  */
- count("Row Count", "SELECT COUNT(*) FROM ${table}"),
- /**
-  * Dump operation
-  */
- dump("Dump", "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
- /**
-  * Quick dump operation, where columns do not need to be retrieved
-  * (minimum infolevel), but the order of rows may not be preserved from
-  * run to run.
-  */
- quickdump("Dump", "SELECT * FROM ${table}"),;
+  /**
+   * Count operation
+   */
+  count("Row Count",
+        "Gets the count of data rows in each table",
+        "SELECT COUNT(*) FROM ${table}"),
+  /**
+   * Dump operation
+   */
+  dump("Dump",
+       "Gets a dump of data from each table",
+       "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
+  /**
+   * Quick dump operation, where columns do not need to be retrieved
+   * (minimum infolevel), but the order of rows may not be preserved from
+   * run to run.
+   */
+  quickdump("Dump",
+            "Gets a dump of data from each table",
+            "SELECT * FROM ${table}"),
+  ;
 
   private final String description;
   private final String queryString;
+  private final String title;
 
-  private Operation(final String description, final String queryString)
+  Operation(final String title,
+            final String description,
+            final String queryString)
   {
+    this.title = title;
     this.description = description;
     this.queryString = queryString;
   }
 
-  /**
-   * Operation description.
-   *
-   * @return Operation description
-   */
   public String getDescription()
   {
     return description;
+  }
+
+  /**
+   * Operation title.
+   *
+   * @return Operation title
+   */
+  public String getTitle()
+  {
+    return title;
   }
 
   /**

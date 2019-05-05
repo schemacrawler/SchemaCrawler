@@ -32,28 +32,20 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
 
 public class VelocityCommandProvider
   implements CommandProvider
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(VelocityCommandProvider.class.getName());
-
   @Override
-  public String getDescription()
+  public Collection<CommandDescription> getSupportedCommands()
   {
-    return "Render an Apache Velocity template against a schema";
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return Arrays.asList(VelocityRenderer.COMMAND);
+    return Arrays.asList(new CommandDescription(VelocityRenderer.COMMAND,
+                                                "Render an Apache Velocity template against a schema"));
   }
 
   @Override

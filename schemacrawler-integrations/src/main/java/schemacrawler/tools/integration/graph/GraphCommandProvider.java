@@ -33,8 +33,8 @@ import static sf.util.Utility.isBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.ExecutableCommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
@@ -44,43 +44,26 @@ public final class GraphCommandProvider
   extends ExecutableCommandProvider
 {
 
-  private static Collection<String> supportedCommands = supportedCommands();
-
-  private static Collection<String> supportedCommands()
+  private static Collection<CommandDescription> supportedCommands()
   {
-    final Collection<String> supportedCommands = new ArrayList<>();
-    for (final SchemaTextDetailType schemaTextDetailType: SchemaTextDetailType
-      .values())
+    final Collection<CommandDescription> supportedCommands = new ArrayList<>();
+    for (final SchemaTextDetailType schemaTextDetailType : SchemaTextDetailType.values())
     {
-      supportedCommands.add(schemaTextDetailType.name());
+      supportedCommands.add(new CommandDescription(schemaTextDetailType.name(),
+                                                   schemaTextDetailType.getDescription()));
     }
     return supportedCommands;
   }
 
   public GraphCommandProvider()
   {
-    super(supportedCommands, "");
-  }
-
-  @Override
-  public String getDescription()
-  {
-    return "Render a database diagram";
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return supportedCommands();
+    super(supportedCommands());
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-    throws SchemaCrawlerException
   {
-    final SchemaCrawlerCommand scCommand = new GraphRenderer(command);
-    return scCommand;
-
+    return new GraphRenderer(command);
   }
 
   @Override
@@ -88,15 +71,20 @@ public final class GraphCommandProvider
                                               final SchemaCrawlerOptions schemaCrawlerOptions,
                                               final OutputOptions outputOptions)
   {
-    if (isBlank(command) || outputOptions == null)
+    if (outputOptions == null)
     {
       return false;
     }
     final String format = outputOptions.getOutputFormatValue();
-    final GraphOutputFormat graphOutputFormat = GraphOutputFormat
-      .fromFormat(format);
-    final boolean supportsSchemaCrawlerCommand = supportedCommands
-      .contains(command) && (isBlank(format) || GraphOutputFormat.isSupportedFormat(format) && graphOutputFormat != GraphOutputFormat.htmlx);
+    if (isBlank(format))
+    {
+      return false;
+    }
+    final GraphOutputFormat graphOutputFormat = GraphOutputFormat.fromFormat(
+      format);
+    final boolean supportsSchemaCrawlerCommand =
+      supportsCommand(command) && GraphOutputFormat.isSupportedFormat(format)
+      && graphOutputFormat != GraphOutputFormat.htmlx;
     return supportsSchemaCrawlerCommand;
   }
 

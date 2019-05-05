@@ -28,91 +28,47 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.executable;
 
 
-import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.logging.Level;
+import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import java.util.Collection;
 
 public abstract class ExecutableCommandProvider
   implements CommandProvider
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ExecutableCommandProvider.class.getName());
+  private final Collection<CommandDescription> supportedCommands;
 
-  private final Collection<String> supportedCommands;
-  private final String executableClassName;
-
-  public ExecutableCommandProvider(final Collection<String> supportedCommands,
-                                   final String executableClassName)
+  public ExecutableCommandProvider(final Collection<CommandDescription> supportedCommands)
   {
-    this.supportedCommands = supportedCommands;
-    this.executableClassName = executableClassName;
+    this.supportedCommands = requireNonNull(supportedCommands,
+                                            "No supported commands provided");
   }
 
   @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-    throws SchemaCrawlerException
+  public final Collection<CommandDescription> getSupportedCommands()
   {
+    return supportedCommands;
+  }
 
-    Class<? extends SchemaCrawlerCommand> commandExecutableClass;
-    try
+  protected final boolean supportsCommand(final String command)
+  {
+    if (isBlank(command))
     {
-      commandExecutableClass = (Class<? extends SchemaCrawlerCommand>) Class
-        .forName(executableClassName);
+      return false;
     }
-    catch (final ClassNotFoundException e)
+    for (final CommandDescription commandDescription : supportedCommands)
     {
-      throw new SchemaCrawlerException("Could not load class "
-                                       + executableClassName,
-                                       e);
-    }
-
-    SchemaCrawlerCommand scCommand;
-    try
-    {
-      scCommand = commandExecutableClass.newInstance();
-    }
-    catch (final Exception e)
-    {
-      LOGGER
-        .log(Level.FINE,
-             new StringFormat("Could not instantiate using default constructor for class <%s>",
-                              executableClassName));
-      try
+      if (commandDescription == null)
       {
-        final Constructor<? extends SchemaCrawlerCommand> constructor = commandExecutableClass
-          .getConstructor(String.class);
-        scCommand = constructor.newInstance(command);
+        continue;
       }
-      catch (final Exception e1)
+      if (commandDescription.getName().equalsIgnoreCase(command))
       {
-        throw new SchemaCrawlerException("Could not instantiate executable for command '"
-                                         + command + "'",
-                                         e1);
+        return true;
       }
     }
-
-    return scCommand;
-  }
-
-  @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final OutputOptions outputOptions)
-  {
-    return supportedCommands.contains(command);
-  }
-
-  @Override
-  public String toString()
-  {
-    return executableClassName;
+    return false;
   }
 
 }

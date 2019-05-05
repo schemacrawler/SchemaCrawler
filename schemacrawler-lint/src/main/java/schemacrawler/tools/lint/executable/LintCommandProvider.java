@@ -32,28 +32,20 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
 
 public class LintCommandProvider
   implements CommandProvider
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(LintCommandProvider.class.getName());
-
   @Override
-  public String getDescription()
+  public Collection<CommandDescription> getSupportedCommands()
   {
-    return "Display database lints";
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return Arrays.asList(LintCommand.COMMAND);
+    return Arrays.asList(new CommandDescription(LintCommand.COMMAND,
+                                                "Display database lints"));
   }
 
   @Override

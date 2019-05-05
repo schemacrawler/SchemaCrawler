@@ -37,12 +37,7 @@ import schemacrawler.tools.options.OutputOptions;
 public interface CommandProvider
 {
 
-  default String getDescription()
-  {
-    return "";
-  }
-
-  Collection<String> getSupportedCommands();
+  Collection<CommandDescription> getSupportedCommands();
 
   SchemaCrawlerCommand newSchemaCrawlerCommand(String command)
     throws SchemaCrawlerException;

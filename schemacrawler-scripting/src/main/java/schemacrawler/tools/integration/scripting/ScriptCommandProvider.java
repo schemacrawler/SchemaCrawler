@@ -32,35 +32,26 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
+import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandProvider;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
 import schemacrawler.tools.options.OutputOptions;
-import sf.util.SchemaCrawlerLogger;
 
 public class ScriptCommandProvider
   implements CommandProvider
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    ScriptCommandProvider.class.getName());
-
   @Override
-  public String getDescription()
+  public Collection<CommandDescription> getSupportedCommands()
   {
-    return "Execute a script against a schema";
-  }
-
-  @Override
-  public Collection<String> getSupportedCommands()
-  {
-    return Arrays.asList(ScriptCommand.COMMAND);
+    return Arrays.asList(new CommandDescription(ScriptCommand.COMMAND,
+                                                "Execute a script against a schema"));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    final ScriptCommand scCommand = new ScriptCommand();
-    return scCommand;
+    return new ScriptCommand();
   }
 
   @Override

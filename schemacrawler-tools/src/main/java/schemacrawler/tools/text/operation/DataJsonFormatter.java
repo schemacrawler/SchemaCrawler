@@ -56,20 +56,81 @@ final class DataJsonFormatter
   implements DataTraversalHandler
 {
 
-  private final Operation operation;
+  /**
+   * Handles an aggregate operation, such as a count, for a given table.
+   *
+   * @param results Results
+   */
+  private static long handleAggregateOperationForTable(final ResultSet results)
+    throws SchemaCrawlerException
+  {
+    try
+    {
+      long aggregate = 0;
+      if (results.next())
+      {
+        aggregate = results.getLong(1);
+      }
+      return aggregate;
+    }
+    catch (final SQLException e)
+    {
+      throw new SchemaCrawlerException("Could not obtain aggregate data", e);
+    }
+  }
+
+  private static JSONArray iterateRows(final DataResultSet dataRows)
+    throws SQLException
+  {
+    final JSONArray jsonRows = new JSONArray();
+    while (dataRows.next())
+    {
+      final List<Object> currentRowRaw = dataRows.row();
+      final List<Object> currentRow = new ArrayList<>();
+      for (final Object columnData : currentRowRaw)
+      {
+        if (columnData == null || columnData instanceof Number
+            || columnData instanceof CharSequence
+            || columnData instanceof Boolean || columnData instanceof Date
+            || columnData instanceof Calendar)
+        {
+          currentRow.add(columnData);
+        }
+        else
+        {
+          final Class<? extends Object> columnDataClass = columnData.getClass();
+          try
+          {
+            if (columnDataClass.getMethod("toString").getDeclaringClass()
+                != Object.class)
+            {
+              currentRow.add(columnData.toString());
+            }
+            else
+            {
+              currentRow.add(columnDataClass.getSimpleName());
+            }
+          }
+          catch (final NoSuchMethodException | SecurityException e)
+          {
+            currentRow.add(columnDataClass.getSimpleName());
+          }
+        }
+      }
+      jsonRows.put(new JSONArray(currentRow));
+    }
+    return jsonRows;
+  }
   private final JSONArray jsonDataArray;
+  private final Operation operation;
 
   /**
    * Text formatting of data.
    *
-   * @param operation
-   *        Options for text formatting of data
-   * @param options
-   *        Options for text formatting of data
-   * @param outputOptions
-   *        Options for text formatting of data
-   * @param identifierQuoteString
-   *        Quote character for identifier
+   * @param operation             Options for text formatting of data
+   * @param options               Options for text formatting of data
+   * @param outputOptions         Options for text formatting of data
+   * @param identifierQuoteString Quote character for identifier
    */
   DataJsonFormatter(final Operation operation,
                     final OperationOptions options,
@@ -78,9 +139,8 @@ final class DataJsonFormatter
     throws SchemaCrawlerException
   {
     super(options,
-          /* printVerboseDatabaseInfo */false,
-          outputOptions,
-          identifierQuoteString);
+      /* printVerboseDatabaseInfo */
+          false, outputOptions, identifierQuoteString);
     this.operation = operation;
 
     jsonDataArray = new JSONArray();
@@ -88,7 +148,7 @@ final class DataJsonFormatter
     {
       if (operation != null)
       {
-        jsonRoot.put("description", operation.getDescription());
+        jsonRoot.put("description", operation.getTitle());
       }
       jsonRoot.put("data", jsonDataArray);
     }
@@ -105,7 +165,7 @@ final class DataJsonFormatter
   public void handleData(final Query query, final ResultSet rows)
     throws SchemaCrawlerException
   {
-    String title;
+    final String title;
     if (query != null)
     {
       title = query.getName();
@@ -145,30 +205,6 @@ final class DataJsonFormatter
     handleData(tableName, rows);
   }
 
-  /**
-   * Handles an aggregate operation, such as a count, for a given table.
-   *
-   * @param results
-   *        Results
-   */
-  private long handleAggregateOperationForTable(final ResultSet results)
-    throws SchemaCrawlerException
-  {
-    try
-    {
-      long aggregate = 0;
-      if (results.next())
-      {
-        aggregate = results.getLong(1);
-      }
-      return aggregate;
-    }
-    catch (final SQLException e)
-    {
-      throw new SchemaCrawlerException("Could not obtain aggregate data", e);
-    }
-  }
-
   private void handleData(final String title, final ResultSet rows)
     throws SchemaCrawlerException
   {
@@ -192,8 +228,7 @@ final class DataJsonFormatter
         try
         {
           final DataResultSet dataRows = new DataResultSet(rows,
-                                                           options
-                                                             .isShowLobs());
+                                                           options.isShowLobs());
 
           jsonData.put("columnNames", new JSONArray(dataRows.getColumnNames()));
 
@@ -213,48 +248,5 @@ final class DataJsonFormatter
       throw new SchemaCrawlerException("Could not convert data to JSON", e);
     }
 
-  }
-
-  private JSONArray iterateRows(final DataResultSet dataRows)
-    throws SQLException
-  {
-    final JSONArray jsonRows = new JSONArray();
-    while (dataRows.next())
-    {
-      final List<Object> currentRowRaw = dataRows.row();
-      final List<Object> currentRow = new ArrayList<>();
-      for (final Object columnData: currentRowRaw)
-      {
-        if (columnData == null || columnData instanceof Number
-            || columnData instanceof CharSequence
-            || columnData instanceof Boolean || columnData instanceof Date
-            || columnData instanceof Calendar)
-        {
-          currentRow.add(columnData);
-        }
-        else
-        {
-          final Class<? extends Object> columnDataClass = columnData.getClass();
-          try
-          {
-            if (columnDataClass.getMethod("toString")
-              .getDeclaringClass() != Object.class)
-            {
-              currentRow.add(columnData.toString());
-            }
-            else
-            {
-              currentRow.add(columnDataClass.getSimpleName());
-            }
-          }
-          catch (final NoSuchMethodException | SecurityException e)
-          {
-            currentRow.add(columnDataClass.getSimpleName());
-          }
-        }
-      }
-      jsonRows.put(new JSONArray(currentRow));
-    }
-    return jsonRows;
   }
 }

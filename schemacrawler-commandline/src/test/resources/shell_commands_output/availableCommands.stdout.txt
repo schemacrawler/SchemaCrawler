@@ -1,8 +1,8 @@
-brief - Display schema information at different levels of detail
-count - Display results of table queries
-details - Display schema information at different levels of detail
-dump - Display results of table queries
-list - Display schema information at different levels of detail
-quickdump - Display results of table queries
-schema - Display schema information at different levels of detail
+brief - Shows basic schema information, for tables, views and routines, columns, primary keys, and foreign keys
+count - Gets the count of data rows in each table
+details - Shows maximum possible detail of the schema, including privileges, and details of privileges, triggers, and check constraints
+dump - Gets a dump of data from each table
+list - Shows a list of schema objects
+quickdump - Gets a dump of data from each table
+schema - Shows the commonly needed detail of the schema, including details of tables, views and routines, columns, primary keys, indexes, foreign keys, and triggers
 serialize - Create an offline catalog snapshot
