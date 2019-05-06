@@ -36,7 +36,7 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "is-connected",
-                     description = "Connect to a database, using a connection URL specification")
+                     header = "** Connectivity Options - Check connectivity to the database")
 public class IsConnectedCommand
   implements Runnable
 {

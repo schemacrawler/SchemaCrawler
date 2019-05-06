@@ -1,8 +1,9 @@
-package schemacrawler.tools.commandline.shell;
+package schemacrawler.tools.commandline;
 
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.*;
+import schemacrawler.tools.commandline.shell.*;
 
 @CommandLine.Command(subcommands = {
   CommandLine.HelpCommand.class,

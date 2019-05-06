@@ -1,10 +1,11 @@
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.commandline;
 
 
 import picocli.CommandLine;
+import schemacrawler.tools.commandline.command.*;
 
 @CommandLine.Command
-public class SchemaCrawlerCommandLineCommands
+class SchemaCrawlerCommandLineCommands
 {
 
   @CommandLine.Mixin

@@ -35,7 +35,8 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.shell.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
+import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 

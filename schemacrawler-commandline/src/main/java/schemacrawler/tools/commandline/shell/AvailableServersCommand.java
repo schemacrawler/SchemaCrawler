@@ -33,7 +33,7 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "servers",
-                     description = "List available SchemaCrawler database plugins")
+                     header = "** Servers Options - List available SchemaCrawler database plugins")
 public class AvailableServersCommand
   implements Runnable
 {

@@ -50,10 +50,7 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "limit",
-                     header = {
-                       "----- Limit Options -----------------------------------------------------------",
-                       "Limit database object metadata",
-                     },
+                     header = "** Limit Options - Limit database object metadata",
                      description = {
                        "",
                      })

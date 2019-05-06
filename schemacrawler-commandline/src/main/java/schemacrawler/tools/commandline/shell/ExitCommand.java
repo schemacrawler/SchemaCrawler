@@ -38,7 +38,7 @@ import sf.util.SchemaCrawlerLogger;
                      aliases = {
                        "quit", "terminate"
                      },
-                     description = "Disconnect from a database")
+                     header = "** Exit Options - Terminate the interactive shell")
 public class ExitCommand
   implements Runnable
 {

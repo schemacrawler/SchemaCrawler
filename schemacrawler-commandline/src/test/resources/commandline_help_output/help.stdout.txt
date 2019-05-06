@@ -23,8 +23,7 @@ schema - Shows the commonly needed detail of the schema, including details of ta
 serialize - Create an offline catalog snapshot
 
 
------ Logging Options ---------------------------------------------------------
-Turn logging on or off
+** Logging Options - Turn logging on or off
 
       --log-level=<loglevel>
          Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER,
@@ -32,8 +31,8 @@ Turn logging on or off
          Optional, defaults to OFF
 
 
------ Configuration Options ---------------------------------------------------
-Load SchemaCrawler configuration from the classpath and file
+** Configuration Options - Load SchemaCrawler configuration from the classpath
+and file
 
 SchemaCrawler configuration reads a resource called schemacrawler.config.
 properties from the CLASSPATH, which includes the lib/ folder. You can modify
@@ -52,8 +51,7 @@ Command-line options will override configuration file options.
            current directory, or in-built default options
 
 
------ Connection Options ------------------------------------------------------
-Database connection options
+** Connection Options - Database connection options
 
 For database connections, please read
 https://www.schemacrawler.com/database-support.html
@@ -85,8 +83,7 @@ If your database does not have a SchemaCrawler plug-in, use
                           JDBC connection URL to the database
 
 
------ Limit Options -----------------------------------------------------------
-Limit database object metadata
+** Limit Options - Limit database object metadata
 
       --exclude-columns=<excludecolumns>
                             <excludecolumns> is a regular expression to match fully
@@ -156,8 +153,7 @@ Limit database object metadata
                             Optional, defaults to showing all tables
 
 
------ Grep Options ------------------------------------------------------------
-Grep for database object metadata
+** Grep Options - Grep for database object metadata
 
       --grep-columns=<grepcolumns>
                              <grepcolumns> is a regular expression to match fully
@@ -185,8 +181,7 @@ Grep for database object metadata
                              Optional, default is false
 
 
------ Filter Options ----------------------------------------------------------
-Filter database object metadata
+** Filter Options - Filter database object metadata
 
       --children=<children> <children> is the number of generations of descendants
                               for the tables selected by grep, and shown in the
@@ -200,8 +195,7 @@ Filter database object metadata
                             Optional, default is 0
 
 
------ Show Options ------------------------------------------------------------
-Show information in output
+** Show Options - Show information in output
 
       --no-info             Hide database information
                             --no-info=<boolean>
@@ -225,9 +219,7 @@ Show information in output
                             Optional, defaults to false
 
 
------ Sort Options ------------------------------------------------------------
-Sort database object in output
-
+** Sort Options - Sort database objects in output
       --sort-columns    Sort columns in a table alphabetically
                         --sort-columns=<sortcolumns>
                         <sortcolumns> can be true or false
@@ -246,8 +238,7 @@ Sort database object in output
                         Optional, defaults to true
 
 
------ Load Options ------------------------------------------------------------
-Load database metadata into memory
+** Load Options - Load database metadata into memory
 
   -i, --info-level=<infolevel>
          <infolevel> is one of unknown, minimum, standard, detailed, maximum
@@ -257,8 +248,7 @@ Load database metadata into memory
 
 
 
------ Execute Options ---------------------------------------------------------
-Execute SchemaCrawler command
+** Execute Options - Execute SchemaCrawler command
 
       --output-format=<outputFormatValue>
                             Format of the SchemaCrawler output, where <outputformat>

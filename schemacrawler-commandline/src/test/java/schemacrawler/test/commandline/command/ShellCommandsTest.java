@@ -42,9 +42,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
-import schemacrawler.tools.commandline.command.SystemCommand;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
+import schemacrawler.tools.commandline.shell.SystemCommand;
 
 @ExtendWith(TestContextParameterResolver.class)
 public class ShellCommandsTest

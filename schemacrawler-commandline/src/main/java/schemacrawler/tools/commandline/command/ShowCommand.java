@@ -42,10 +42,7 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "show",
-                     header = {
-                       "----- Show Options ------------------------------------------------------------",
-                       "Show information in output",
-                     },
+                     header = "** Show Options - Show information in output",
                      description = {
                        "",
                      })

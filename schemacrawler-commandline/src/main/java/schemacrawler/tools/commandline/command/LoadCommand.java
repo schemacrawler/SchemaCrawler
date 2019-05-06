@@ -47,10 +47,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @CommandLine.Command(name = "load",
-                     header = {
-                       "----- Load Options ------------------------------------------------------------",
-                       "Load database metadata into memory",
-                     },
+                     header = "** Load Options - Load database metadata into memory",
                      description = "")
 public class LoadCommand
   implements Runnable

@@ -51,10 +51,7 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "config-file",
-                     header = {
-                       "----- Configuration Options ---------------------------------------------------",
-                       "Load SchemaCrawler configuration from the classpath and file",
-                     },
+                     header = "** Configuration Options - Load SchemaCrawler configuration from the classpath and file",
                      description = {
                        "",
                        "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "

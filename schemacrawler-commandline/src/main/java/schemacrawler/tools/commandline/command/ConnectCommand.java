@@ -49,10 +49,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 @CommandLine.Command(name = "connect",
-                     header = {
-                       "----- Connection Options ------------------------------------------------------",
-                       "Database connection options",
-                     },
+                     header = "** Connection Options - Database connection options",
                      description = {
                        "",
                        "For database connections, please read",

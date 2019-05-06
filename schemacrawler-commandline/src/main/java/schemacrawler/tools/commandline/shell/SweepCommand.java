@@ -39,7 +39,7 @@ import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "sweep",
                      aliases = { "clean" },
-                     description = "Disconnect from a database, and clear loaded catalog")
+                     header = "** Sweep Options - Disconnect from a database, and clear loaded catalog")
 public class SweepCommand
   implements Runnable
 {

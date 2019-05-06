@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.commandline.command;
+package schemacrawler.tools.commandline.shell;
 
 
 import java.util.List;
@@ -35,12 +35,14 @@ import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
+import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "version",
                      aliases = {
                        "sys-info", "system-info"
                      },
-                     description = "Display SchemaCrawler version and system information")
+                     header = "** System Information Options - Display SchemaCrawler version and system information")
 public class SystemCommand
   implements Runnable
 {

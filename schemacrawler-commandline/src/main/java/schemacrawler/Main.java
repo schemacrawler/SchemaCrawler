@@ -38,8 +38,8 @@ import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
-import schemacrawler.tools.commandline.command.SystemCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
+import schemacrawler.tools.commandline.shell.SystemCommand;
 
 /**
  * Main class that takes arguments for a database for crawling a schema.
