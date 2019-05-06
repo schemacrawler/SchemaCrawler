@@ -3,8 +3,7 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "",
-                     description = "SchemaCrawler command-line")
+@CommandLine.Command
 public class SchemaCrawlerCommandLineCommands
 {
 
