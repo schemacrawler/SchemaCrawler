@@ -1,10 +1,6 @@
 package schemacrawler.tools.commandline.shell;
 
 
-import java.io.PrintWriter;
-
-import org.jline.reader.LineReader;
-import org.jline.reader.impl.LineReaderImpl;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.*;
 
@@ -34,22 +30,6 @@ import schemacrawler.tools.commandline.command.*;
                        ExitCommand.class
                      })
 public class SchemaCrawlerShellCommands
-  implements Runnable
 {
-
-  private PrintWriter out;
-  private LineReaderImpl reader;
-
-  public void setReader(final LineReader reader)
-  {
-    this.reader = (LineReaderImpl) reader;
-    out = reader.getTerminal().writer();
-  }
-
-  @Override
-  public void run()
-  {
-    out.println(new CommandLine(this).getUsageMessage());
-  }
 
 }

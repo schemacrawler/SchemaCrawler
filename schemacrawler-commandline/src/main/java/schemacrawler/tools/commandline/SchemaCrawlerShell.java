@@ -71,14 +71,12 @@ public final class SchemaCrawlerShell
                                                  cmd.getCommandSpec()))
                                                .parser(new DefaultParser())
                                                .build();
-    commands.setReader(reader);
-    final String prompt = "schemacrawler> ";
 
     while (true)
     {
       try
       {
-        final String line = reader.readLine(prompt,
+        final String line = reader.readLine("schemacrawler> ",
                                             null,
                                             (MaskingCallback) null,
                                             null);
