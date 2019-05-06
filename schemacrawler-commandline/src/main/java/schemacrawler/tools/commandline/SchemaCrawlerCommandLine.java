@@ -32,6 +32,7 @@ import static java.util.Objects.requireNonNull;
 import static us.fatehi.commandlineparser.CommandLineUtility.logFullStackTrace;
 import static us.fatehi.commandlineparser.CommandLineUtility.logSafeArguments;
 
+import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
@@ -69,10 +70,31 @@ public final class SchemaCrawlerCommandLine
       cmd.setTrimQuotes(true);
       cmd.setToggleBooleanFlags(false);
 
-      cmd.parseWithHandlers(new picocli.CommandLine.RunLast(),
-                            new picocli.CommandLine.DefaultExceptionHandler<>(),
-                            args);
+      cmd.parse(args);
 
+      final Map<String, Object> subcommands = cmd.getMixins();
+
+      for (final String commandName : new String[] {
+        "logCommand",
+        "configFileCommand",
+        "connectCommand",
+        "filterCommand",
+        "limitCommand",
+        "grepCommand",
+        "showCommand",
+        "sortCommand",
+        "loadCommand",
+        "executeCommand"
+      })
+      {
+        final Runnable command = (Runnable) subcommands.get(commandName);
+        if (command != null)
+        {
+          LOGGER.log(Level.INFO,
+                     "Running command " + command.getClass().getSimpleName());
+          command.run();
+        }
+      }
     }
     catch (final Throwable e)
     {
