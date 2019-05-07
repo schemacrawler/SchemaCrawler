@@ -28,10 +28,14 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.lint.executable;
 
 
+import java.nio.file.Path;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.options.OutputOptions;
 
 public class LintCommandProvider
@@ -56,6 +60,19 @@ public class LintCommandProvider
                                               final OutputOptions outputOptions)
   {
     return supportsCommand(command);
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    final PluginCommand pluginCommand = new PluginCommand("lint");
+    pluginCommand.addOption("linter-config",
+                            "Path to the linter configuration file",
+                            Path.class);
+    pluginCommand.addOption("linter-dispatch",
+                            "Method to dispatch lint failures",
+                            LintDispatch.class);
+    return pluginCommand;
   }
 
 }

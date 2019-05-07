@@ -35,10 +35,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import schemacrawler.tools.executable.commandline.PluginCommand;
+
 public abstract class BaseCommandProvider
   implements CommandProvider
 {
-
   private final Collection<CommandDescription> supportedCommands;
 
   public BaseCommandProvider(final Collection<CommandDescription> supportedCommands)
@@ -57,6 +58,12 @@ public abstract class BaseCommandProvider
   public final Collection<CommandDescription> getSupportedCommands()
   {
     return new ArrayList<>(supportedCommands);
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    return new PluginCommand("");
   }
 
   protected final boolean supportsCommand(final String command)
