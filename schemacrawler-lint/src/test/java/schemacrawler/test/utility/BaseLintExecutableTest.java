@@ -53,10 +53,10 @@ import schemacrawler.tools.options.OutputFormat;
 public abstract class BaseLintExecutableTest
 {
 
-  protected void executableLint(final Connection connection,
-                                final String linterConfigsResource,
-                                final Config additionalConfig,
-                                final String referenceFileName)
+  protected static void executableLint(final Connection connection,
+                                       final String linterConfigsResource,
+                                       final Config additionalConfig,
+                                       final String referenceFileName)
     throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable(
@@ -80,11 +80,11 @@ public abstract class BaseLintExecutableTest
                hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
-  protected void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
-                                        final OutputFormat outputFormat,
-                                        final String linterConfigsResource,
-                                        final Config additionalConfig,
-                                        final String referenceFileName)
+  protected static void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
+                                               final OutputFormat outputFormat,
+                                               final String linterConfigsResource,
+                                               final Config additionalConfig,
+                                               final String referenceFileName)
     throws Exception
   {
     final Map<String, String> argsMap = new HashMap<>();
@@ -96,7 +96,7 @@ public abstract class BaseLintExecutableTest
     {
       final Path linterConfigsFile = copyResourceToTempFile(
         linterConfigsResource);
-      argsMap.put("linterconfigs", linterConfigsFile.toString());
+      argsMap.put("-linter-configs", linterConfigsFile.toString());
     }
 
     if (additionalConfig != null)

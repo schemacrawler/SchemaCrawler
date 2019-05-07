@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package us.fatehi.commandlineparser;
+package schemacrawler.tools.commandline.utility;
 
 
 import static sf.util.Utility.join;
@@ -39,7 +39,6 @@ import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.Version;
-import schemacrawler.schemacrawler.Config;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 import sf.util.Utility;
@@ -49,8 +48,8 @@ import sf.util.UtilityMarker;
 public final class CommandLineUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(CommandLineUtility.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    CommandLineUtility.class.getName());
 
   /**
    * Sets the application-wide log level.
@@ -95,7 +94,7 @@ public final class CommandLineUtility
 
     final StringJoiner argsList = new StringJoiner(System.lineSeparator());
     for (final Iterator<String> iterator = Arrays.asList(args)
-      .iterator(); iterator.hasNext(); )
+                                                 .iterator(); iterator.hasNext(); )
     {
       final String arg = iterator.next();
       if (arg == null)
@@ -150,11 +149,11 @@ public final class CommandLineUtility
 
     final SortedMap<String, String> systemProperties = new TreeMap<>();
     for (final Entry<Object, Object> propertyValue : System.getProperties()
-      .entrySet())
+                                                           .entrySet())
     {
       final String name = (String) propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os.")) && !name
-        .endsWith(".path"))
+      if ((name.startsWith("java.") || name.startsWith("os."))
+          && !name.endsWith(".path"))
       {
         systemProperties.put(name, (String) propertyValue.getValue());
       }
@@ -173,21 +172,6 @@ public final class CommandLineUtility
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);
     return commandLine;
-  }
-
-  /**
-   * Loads configuration from a number of command-line.
-   *
-   * @param args Command-line arguments
-   * @return Parsed command-line arguments
-   */
-  public static Config parseArgs(final String[] args)
-  {
-    final CommandLineArgumentsParser argsParser = new CommandLineArgumentsParser(
-      args);
-    argsParser.parse();
-    final Config optionsMap = argsParser.getOptionsMap();
-    return optionsMap;
   }
 
   private static String printPath(final String path)

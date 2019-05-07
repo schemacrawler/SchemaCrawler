@@ -33,7 +33,7 @@ import static java.nio.file.Files.newBufferedWriter;
 import static java.nio.file.StandardOpenOption.*;
 import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
 import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
-import static us.fatehi.commandlineparser.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -141,43 +141,22 @@ public final class CommandlineTestUtility
     return testout.getFilePath();
   }
 
-  private static Path writeConfigToTempFile(final Config config)
-    throws IOException
-  {
-    if (config == null)
-    {
-      return null;
-    }
-
-    final Path tempFile = IOUtility.createTempFilePath("test", ".properties")
-      .normalize().toAbsolutePath();
-
-    final Writer tempFileWriter = newBufferedWriter(tempFile,
-                                                    WRITE,
-                                                    TRUNCATE_EXISTING,
-                                                    CREATE);
-    config.toProperties()
-      .store(tempFileWriter, "Store config to temporary file for testing");
-
-    return tempFile;
-  }
-
-  public static void parseCommand(final Object object, String[] args)
+  public static void parseCommand(final Object object, final String[] args)
   {
     newCommandLine(object).parse(args);
   }
 
-  public static void runCommandInTest(final Object object, String[] args)
+  public static void runCommandInTest(final Object object, final String[] args)
   {
 
     class ThrowExceptionHandler<R>
       extends CommandLine.AbstractHandler<R, ThrowExceptionHandler<R>>
       implements CommandLine.IExceptionHandler2<R>
     {
-      public List<Object> handleException(CommandLine.ParameterException ex,
-                                          PrintStream out,
-                                          CommandLine.Help.Ansi ansi,
-                                          String... args)
+      public List<Object> handleException(final CommandLine.ParameterException ex,
+                                          final PrintStream out,
+                                          final CommandLine.Help.Ansi ansi,
+                                          final String... args)
       {
         internalHandleParseException(ex, out, ansi, args);
         return Collections.<Object>emptyList();
@@ -193,19 +172,12 @@ public final class CommandlineTestUtility
        * @return the empty list
        * @since 3.0
        */
-      public R handleParseException(CommandLine.ParameterException ex,
-                                    String[] args)
+      @Override
+      public R handleParseException(final CommandLine.ParameterException ex,
+                                    final String[] args)
       {
         internalHandleParseException(ex, err(), ansi(), args);
         return returnResultOrExit(null);
-      }
-
-      private void internalHandleParseException(CommandLine.ParameterException ex,
-                                                PrintStream out,
-                                                CommandLine.Help.Ansi ansi,
-                                                String[] args)
-      {
-        throw ex;
       }
 
       /**
@@ -217,8 +189,9 @@ public final class CommandlineTestUtility
        * @throws CommandLine.ExecutionException always rethrows the specified exception
        * @since 3.0
        */
-      public R handleExecutionException(CommandLine.ExecutionException ex,
-                                        CommandLine.ParseResult parseResult)
+      @Override
+      public R handleExecutionException(final CommandLine.ExecutionException ex,
+                                        final CommandLine.ParseResult parseResult)
       {
         return throwOrExit(ex);
       }
@@ -228,11 +201,41 @@ public final class CommandlineTestUtility
       {
         return this;
       }
+
+      private void internalHandleParseException(final CommandLine.ParameterException ex,
+                                                final PrintStream out,
+                                                final CommandLine.Help.Ansi ansi,
+                                                final String[] args)
+      {
+        throw ex;
+      }
     }
 
     newCommandLine(object).parseWithHandlers(new picocli.CommandLine.RunLast(),
                                              new ThrowExceptionHandler(),
                                              args);
+  }
+
+  private static Path writeConfigToTempFile(final Config config)
+    throws IOException
+  {
+    if (config == null)
+    {
+      return null;
+    }
+
+    final Path tempFile = IOUtility.createTempFilePath("test", ".properties")
+                                   .normalize()
+                                   .toAbsolutePath();
+
+    final Writer tempFileWriter = newBufferedWriter(tempFile,
+                                                    WRITE,
+                                                    TRUNCATE_EXISTING,
+                                                    CREATE);
+    config.toProperties()
+          .store(tempFileWriter, "Store config to temporary file for testing");
+
+    return tempFile;
   }
 
   private CommandlineTestUtility()

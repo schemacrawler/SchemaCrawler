@@ -32,34 +32,20 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasNoContent;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
-import java.io.FileDescriptor;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.Reader;
+import java.io.*;
 import java.sql.Connection;
 
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
-
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.test.utility.BaseLintExecutableTest;
-import schemacrawler.test.utility.DatabaseConnectionInfo;
-import schemacrawler.test.utility.TestContext;
-import schemacrawler.test.utility.TestContextParameterResolver;
-import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestOutputStream;
+import schemacrawler.test.utility.*;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
@@ -71,8 +57,8 @@ public class LinterConfigsDispatchTest
   extends BaseLintExecutableTest
 {
 
-  private TestOutputStream out;
   private TestOutputStream err;
+  private TestOutputStream out;
 
   @AfterEach
   public void cleanUpStreams()
@@ -99,22 +85,24 @@ public class LinterConfigsDispatchTest
     LinterConfigs linterConfigs = null;
     try
     {
-      final Reader reader = readerForResource("schemacrawler-linter-configs-with-dispatch.xml",
-                                              UTF_8);
+      final Reader reader = readerForResource(
+        "schemacrawler-linter-configs-with-dispatch.xml",
+        UTF_8);
       linterConfigs = new LinterConfigs(new Config());
       linterConfigs.parse(reader);
     }
-    catch (IOException | SchemaCrawlerException e)
+    catch (final IOException | SchemaCrawlerException e)
     {
       fail(e.getMessage());
     }
 
     assertThat(linterConfigs.size(), is(1));
     boolean asserted = false;
-    for (final LinterConfig linterConfig: linterConfigs)
+    for (final LinterConfig linterConfig : linterConfigs)
     {
       if (linterConfig.getLinterId()
-        .equals("schemacrawler.tools.linter.LinterTableWithNoIndexes"))
+                      .equals(
+                        "schemacrawler.tools.linter.LinterTableWithNoIndexes"))
       {
         assertThat(linterConfig.getSeverity(), is(LintSeverity.critical));
         assertThat(linterConfig.getThreshold(), is(1));
@@ -136,7 +124,7 @@ public class LinterConfigsDispatchTest
   {
 
     final Config additionalConfig = new Config();
-    additionalConfig.put("lintdispatch", "terminate_system");
+    additionalConfig.put("lint-dispatch", "terminate_system");
 
     executeLintCommandLine(connectionInfo,
                            TextOutputFormat.text,
@@ -155,7 +143,7 @@ public class LinterConfigsDispatchTest
   {
 
     final Config additionalConfig = new Config();
-    additionalConfig.put("lintdispatch", "terminate_system");
+    additionalConfig.put("lint-dispatch", "terminate_system");
 
     executableLint(connection,
                    "/schemacrawler-linter-configs-with-dispatch.xml",
@@ -170,8 +158,8 @@ public class LinterConfigsDispatchTest
   {
     assertThat(outputOf(out), hasNoContent());
     assertThat(outputOf(err),
-               hasSameContentAs(classpathResource(testContext.testMethodName()
-                                                  + ".log")));
+               hasSameContentAs(classpathResource(
+                 testContext.testMethodName() + ".log")));
   }
 
 }

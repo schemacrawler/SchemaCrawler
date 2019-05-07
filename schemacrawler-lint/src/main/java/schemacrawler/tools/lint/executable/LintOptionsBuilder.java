@@ -38,17 +38,14 @@ public final class LintOptionsBuilder
   extends BaseTextOptionsBuilder<LintOptionsBuilder, LintOptions>
 {
 
+  private static final String CLI_LINTER_CONFIGS = "linter-configs";
+  private static final String CLI_LINT_DISPATCH = "lint-dispatch";
+  private static final String CLI_RUN_ALL_LINTERS = "run-all-linters";
   private static final String SCHEMACRAWLER_LINT_PREFIX = "schemacrawler.lint.";
-
-  private static final String CLI_LINTER_CONFIGS = "linterconfigs";
   private static final String LINTER_CONFIGS =
     SCHEMACRAWLER_LINT_PREFIX + CLI_LINTER_CONFIGS;
-
-  private static final String CLI_LINT_DISPATCH = "lintdispatch";
   private static final String LINT_DISPATCH =
     SCHEMACRAWLER_LINT_PREFIX + CLI_LINT_DISPATCH;
-
-  private static final String CLI_RUN_ALL_LINTERS = "runalllinters";
   private static final String RUN_ALL_LINTERS =
     SCHEMACRAWLER_LINT_PREFIX + CLI_RUN_ALL_LINTERS;
 
@@ -72,9 +69,9 @@ public final class LintOptionsBuilder
     return new LintOptionsBuilder().fromConfig(config).toOptions();
   }
 
-  protected String linterConfigs;
-  protected LintDispatch lintDispatch;
-  protected boolean runAllLinters;
+  LintDispatch lintDispatch;
+  String linterConfigs;
+  boolean runAllLinters;
 
   private LintOptionsBuilder()
   {

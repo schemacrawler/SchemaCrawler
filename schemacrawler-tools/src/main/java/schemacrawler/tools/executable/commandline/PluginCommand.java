@@ -39,17 +39,12 @@ public class PluginCommand
   implements Iterable<PluginCommandOption>
 {
 
-  private final String commandName;
+  private final String name;
   private final Collection<PluginCommandOption> options;
 
-  private PluginCommand(final String commandName,
+  private PluginCommand(final String name,
                         final Collection<PluginCommandOption> options)
   {
-    if (isBlank(commandName))
-    {
-      throw new IllegalArgumentException("No command name provided");
-    }
-    this.commandName = commandName;
     if (options == null)
     {
       this.options = new ArrayList<>();
@@ -58,11 +53,17 @@ public class PluginCommand
     {
       this.options = new HashSet<>(options);
     }
+
+    if (isBlank(name) && !this.options.isEmpty())
+    {
+      throw new IllegalArgumentException("No command name provided");
+    }
+    this.name = name;
   }
 
-  public PluginCommand(final String commandName)
+  public PluginCommand(final String name)
   {
-    this(commandName, null);
+    this(name, null);
   }
 
   @Override
@@ -88,6 +89,11 @@ public class PluginCommand
       options.add(option);
     }
     return this;
+  }
+
+  public String getName()
+  {
+    return name;
   }
 
 }

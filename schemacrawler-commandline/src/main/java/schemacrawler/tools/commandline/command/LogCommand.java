@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static us.fatehi.commandlineparser.CommandLineUtility.applyApplicationLogLevel;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.applyApplicationLogLevel;
 
 import java.util.logging.Level;
 

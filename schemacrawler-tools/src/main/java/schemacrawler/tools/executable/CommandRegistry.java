@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
@@ -97,6 +98,16 @@ public final class CommandRegistry
   public Iterator<CommandDescription> iterator()
   {
     return getSupportedCommands().iterator();
+  }
+
+  public Collection<PluginCommand> getCommandLineCommands()
+  {
+    final Collection<PluginCommand> commandLineCommands = new HashSet<>();
+    for (final CommandProvider commandProvider : commandRegistry)
+    {
+      commandLineCommands.add(commandProvider.getCommandLineCommand());
+    }
+    return commandLineCommands;
   }
 
   SchemaCrawlerCommand configureNewCommand(final String command,

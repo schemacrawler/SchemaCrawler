@@ -34,7 +34,7 @@ import static sf.util.Utility.isBlank;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-class PluginCommandOption
+public class PluginCommandOption
 {
 
   private final String helpText;

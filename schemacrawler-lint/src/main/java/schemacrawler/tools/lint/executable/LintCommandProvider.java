@@ -66,12 +66,16 @@ public class LintCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand = new PluginCommand("lint");
-    pluginCommand.addOption("linter-config",
+    pluginCommand.addOption("linter-configs",
                             "Path to the linter configuration file",
-                            Path.class);
-    pluginCommand.addOption("linter-dispatch",
+                            Path.class)
+                 .addOption("lint-dispatch",
                             "Method to dispatch lint failures",
-                            LintDispatch.class);
+                            LintDispatch.class)
+                 .addOption("run-all-linters",
+                            "Whether to run all linters, "
+                            + "including the ones that are not explicitly configured",
+                            boolean.class);
     return pluginCommand;
   }
 
