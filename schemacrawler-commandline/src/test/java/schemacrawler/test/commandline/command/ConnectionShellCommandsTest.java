@@ -160,7 +160,7 @@ public class ConnectionShellCommandsTest
   {
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    state.setAdditionalConfiguration(new Config());
+    state.addAdditionalConfiguration(new Config());
 
     final String[] args = new String[0];
 

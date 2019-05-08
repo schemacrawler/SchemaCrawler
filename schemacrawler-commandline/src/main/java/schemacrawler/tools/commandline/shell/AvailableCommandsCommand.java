@@ -32,7 +32,7 @@ package schemacrawler.tools.commandline.shell;
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.command.AvailableCommands;
 
-@CommandLine.Command(name = "command",
+@CommandLine.Command(name = "commands",
                      header = "** Commands Options - List available SchemaCrawler commands")
 public class AvailableCommandsCommand
   implements Runnable

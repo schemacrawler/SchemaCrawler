@@ -97,9 +97,17 @@ public class SchemaCrawlerShellState
     return additionalConfiguration;
   }
 
-  public void setAdditionalConfiguration(final Config additionalConfiguration)
+  public void addAdditionalConfiguration(final Config additionalConfiguration)
   {
-    this.additionalConfiguration = additionalConfiguration;
+    if (additionalConfiguration == null)
+    {
+      return;
+    }
+    if (this.additionalConfiguration == null)
+    {
+      this.additionalConfiguration = new Config();
+    }
+    this.additionalConfiguration.putAll(additionalConfiguration);
   }
 
   public Catalog getCatalog()

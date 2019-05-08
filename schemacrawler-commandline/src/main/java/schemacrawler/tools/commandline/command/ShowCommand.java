@@ -131,7 +131,7 @@ public final class ShowCommand
       config = new Config();
     }
     config.putAll(optionsBuilder.toConfig());
-    state.setAdditionalConfiguration(config);
+    state.addAdditionalConfiguration(config);
 
   }
 

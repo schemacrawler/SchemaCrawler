@@ -60,13 +60,13 @@ public final class SchemaCrawlerCommandLine
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-      final CommandLine cmd = new CommandLine(commands, stateFactory);
-      addPluginCommands(cmd);
-      final CommandLine.ParseResult parseResult = cmd.parseArgs(args);
+      final CommandLine commandLine = new CommandLine(commands, stateFactory);
+      addPluginCommands(commandLine);
+      final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
-      state.setAdditionalConfiguration(additionalConfig);
+      state.addAdditionalConfiguration(additionalConfig);
 
-      executeCommandLine(cmd);
+      executeCommandLine(commandLine);
     }
     catch (final Throwable e)
     {
@@ -89,21 +89,21 @@ public final class SchemaCrawlerCommandLine
 
   }
 
-  private static void executeCommandLine(final CommandLine cmd)
+  private static void executeCommandLine(final CommandLine commandLine)
   {
-    final Map<String, Object> subcommands = cmd.getMixins();
+    final Map<String, Object> subcommands = commandLine.getMixins();
 
     for (final String commandName : new String[] {
-      "logCommand",
-      "configFileCommand",
-      "connectCommand",
-      "filterCommand",
-      "limitCommand",
-      "grepCommand",
-      "showCommand",
-      "sortCommand",
-      "loadCommand",
-      "executeCommand"
+      "log",
+      "configfile",
+      "connect",
+      "filter",
+      "limit",
+      "grep",
+      "show",
+      "sort",
+      "load",
+      "execute"
     })
     {
       final Runnable command = (Runnable) subcommands.get(commandName);

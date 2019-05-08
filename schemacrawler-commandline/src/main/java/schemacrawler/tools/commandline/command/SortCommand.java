@@ -124,7 +124,7 @@ public final class SortCommand
       config = new Config();
     }
     config.putAll(optionsBuilder.toConfig());
-    state.setAdditionalConfiguration(config);
+    state.addAdditionalConfiguration(config);
 
   }
 

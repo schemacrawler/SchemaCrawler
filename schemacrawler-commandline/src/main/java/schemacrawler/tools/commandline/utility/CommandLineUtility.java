@@ -38,7 +38,7 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 public class CommandLineUtility
 {
 
-  public static void addPluginCommands(final CommandLine cmd)
+  public static void addPluginCommands(final CommandLine commandLine)
     throws SchemaCrawlerException
   {
     // Add commands for plugins
@@ -63,7 +63,7 @@ public class CommandLineUtility
                                                                 .type(option.getValueClass())
                                                                 .build());
       }
-      cmd.addMixin(pluginCommandName, pluginCommandSpec);
+      commandLine.addMixin(pluginCommandName, pluginCommandSpec);
     }
   }
 

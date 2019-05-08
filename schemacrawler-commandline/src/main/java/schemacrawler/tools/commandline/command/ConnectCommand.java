@@ -102,7 +102,7 @@ public class ConnectCommand
 
       state.sweep();
 
-      state.setAdditionalConfiguration(config);
+      state.addAdditionalConfiguration(config);
       loadSchemaCrawlerOptionsBuilder();
       createDataSource(databaseConnector,
                        databaseConnectable,

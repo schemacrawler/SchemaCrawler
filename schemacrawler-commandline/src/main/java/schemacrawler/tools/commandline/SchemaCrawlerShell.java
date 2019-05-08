@@ -29,6 +29,8 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.Objects.requireNonNull;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.util.logging.Level;
 
@@ -38,6 +40,8 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
 import sf.util.SchemaCrawlerLogger;
@@ -55,19 +59,16 @@ public final class SchemaCrawlerShell
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final StateFactory stateFactory = new StateFactory(state);
-    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
 
-    final CommandLine cmd = new CommandLine(commands, stateFactory);
-    cmd.setUnmatchedArgumentsAllowed(true);
-    cmd.setCaseInsensitiveEnumValuesAllowed(true);
-    cmd.setTrimQuotes(true);
-    cmd.setToggleBooleanFlags(false);
+    final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
+    final CommandLine commandLine = new CommandLine(commands, stateFactory);
+    addPluginCommands(commandLine);
 
     final Terminal terminal = TerminalBuilder.builder().build();
     final LineReader reader = LineReaderBuilder.builder()
                                                .terminal(terminal)
                                                .completer(new PicocliJLineCompleter(
-                                                 cmd.getCommandSpec()))
+                                                 commandLine.getCommandSpec()))
                                                .parser(new DefaultParser())
                                                .build();
 
@@ -81,9 +82,8 @@ public final class SchemaCrawlerShell
                                             null);
         final ParsedLine pl = reader.getParser().parse(line, 0);
         final String[] arguments = pl.words().toArray(new String[0]);
-        cmd.parseWithHandlers(new CommandLine.RunLast(),
-                              new CommandLine.DefaultExceptionHandler(),
-                              arguments);
+
+        parseAndRun(state, commandLine, arguments);
       }
       catch (final UserInterruptException e)
       {
@@ -96,7 +96,45 @@ public final class SchemaCrawlerShell
       catch (final Exception e)
       {
         System.err.println("Unknown command");
+        e.printStackTrace();
         LOGGER.log(Level.WARNING, e.getMessage(), e);
+      }
+    }
+  }
+
+  private static void parseAndRun(final SchemaCrawlerShellState state,
+                                  final CommandLine commandLine,
+                                  final String[] arguments)
+    throws SchemaCrawlerException
+  {
+    final CommandLine.ParseResult parseResult = commandLine.parseArgs(arguments);
+    if (CommandLine.printHelpIfRequested(parseResult))
+    {
+      return;
+    }
+
+    final Config additionalConfig = retrievePluginOptions(parseResult);
+    state.addAdditionalConfiguration(additionalConfig);
+
+    if (parseResult.hasSubcommand())
+    {
+      for (final CommandLine subcommandLine : parseResult.subcommand()
+                                                         .asCommandLineList())
+      {
+        try
+        {
+          final Runnable command = subcommandLine.getCommand();
+          if (command != null)
+          {
+            LOGGER.log(Level.INFO,
+                       "Running command " + command.getClass().getSimpleName());
+            command.run();
+          }
+        }
+        catch (final CommandLine.PicocliException e)
+        {
+          subcommandLine.usage(System.out, CommandLine.Help.Ansi.AUTO);
+        }
       }
     }
   }

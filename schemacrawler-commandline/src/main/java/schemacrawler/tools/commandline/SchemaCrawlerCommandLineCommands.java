@@ -9,24 +9,24 @@ class SchemaCrawlerCommandLineCommands
 {
 
   @CommandLine.Mixin
-  private ConfigFileCommand configFileCommand;
+  private ConfigFileCommand configfile;
   @CommandLine.Mixin
-  private ConnectCommand connectCommand;
+  private ConnectCommand connect;
   @CommandLine.Mixin
-  private ExecuteCommand executeCommand;
+  private ExecuteCommand execute;
   @CommandLine.Mixin
-  private FilterCommand filterCommand;
+  private FilterCommand filter;
   @CommandLine.Mixin
-  private GrepCommand grepCommand;
+  private GrepCommand grep;
   @CommandLine.Mixin
-  private LimitCommand limitCommand;
+  private LimitCommand limit;
   @CommandLine.Mixin
-  private LoadCommand loadCommand;
+  private LoadCommand load;
   @CommandLine.Mixin
-  private LogCommand logCommand;
+  private LogCommand log;
   @CommandLine.Mixin
-  private ShowCommand showCommand;
+  private ShowCommand show;
   @CommandLine.Mixin
-  private SortCommand sortCommand;
+  private SortCommand sort;
 
 }
