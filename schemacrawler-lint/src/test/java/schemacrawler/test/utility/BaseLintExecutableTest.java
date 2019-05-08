@@ -83,7 +83,7 @@ public abstract class BaseLintExecutableTest
   protected static void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
                                                final OutputFormat outputFormat,
                                                final String linterConfigsResource,
-                                               final Config additionalConfig,
+                                               final Map<String, String> additionalArgs,
                                                final String referenceFileName)
     throws Exception
   {
@@ -99,15 +99,15 @@ public abstract class BaseLintExecutableTest
       argsMap.put("-linter-configs", linterConfigsFile.toString());
     }
 
-    if (additionalConfig != null)
+    if (additionalArgs != null)
     {
-      argsMap.putAll(additionalConfig);
+      argsMap.putAll(additionalArgs);
     }
 
     assertThat(outputOf(commandlineExecution(connectionInfo,
                                              "lint",
                                              argsMap,
-                                             additionalConfig,
+                                             new Config(),
                                              outputFormat)),
                hasSameContentAndTypeAs(classpathResource(
                  referenceFileName + ".txt"), outputFormat));

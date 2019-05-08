@@ -37,6 +37,8 @@ import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.*;
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.AfterEach;
@@ -46,6 +48,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.test.utility.*;
+import schemacrawler.tools.lint.LintDispatch;
 import schemacrawler.tools.lint.LintSeverity;
 import schemacrawler.tools.lint.LinterConfig;
 import schemacrawler.tools.lint.LinterConfigs;
@@ -123,13 +126,13 @@ public class LinterConfigsDispatchTest
     throws Exception
   {
 
-    final Config additionalConfig = new Config();
-    additionalConfig.put("lint-dispatch", "terminate_system");
+    final Map<String, String> additionalArgs = new HashMap<>();
+    additionalArgs.put("-lint-dispatch", LintDispatch.terminate_system.name());
 
     executeLintCommandLine(connectionInfo,
                            TextOutputFormat.text,
                            "/schemacrawler-linter-configs-with-dispatch.xml",
-                           additionalConfig,
+                           additionalArgs,
                            "schemacrawler-linter-configs-with-dispatch");
 
     checkSystemErrLog(testContext);
