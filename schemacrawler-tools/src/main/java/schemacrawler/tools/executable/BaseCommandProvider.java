@@ -63,7 +63,7 @@ public abstract class BaseCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    return new PluginCommand("");
+    return PluginCommand.empty();
   }
 
   protected final boolean supportsCommand(final String command)

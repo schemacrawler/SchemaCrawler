@@ -61,7 +61,7 @@ public final class SchemaCrawlerCommandLine
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
       final CommandLine commandLine = new CommandLine(commands, stateFactory);
-      addPluginCommands(commandLine);
+      addPluginCommands(commandLine, true);
       final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.addAdditionalConfiguration(additionalConfig);

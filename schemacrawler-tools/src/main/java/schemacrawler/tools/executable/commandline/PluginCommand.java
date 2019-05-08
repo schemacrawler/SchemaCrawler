@@ -30,19 +30,23 @@ package schemacrawler.tools.executable.commandline;
 
 import static sf.util.Utility.isBlank;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 
 public class PluginCommand
   implements Iterable<PluginCommandOption>
 {
 
+  public static PluginCommand empty()
+  {
+    return new PluginCommand(null, null);
+  }
+
+  private final String helpText;
   private final String name;
   private final Collection<PluginCommandOption> options;
 
   private PluginCommand(final String name,
+                        final String helpText,
                         final Collection<PluginCommandOption> options)
   {
     if (options == null)
@@ -59,11 +63,46 @@ public class PluginCommand
       throw new IllegalArgumentException("No command name provided");
     }
     this.name = name;
+
+    if (isBlank(helpText))
+    {
+      this.helpText = null;
+    }
+    else
+    {
+      this.helpText = helpText;
+    }
   }
 
-  public PluginCommand(final String name)
+  public PluginCommand(final String name, final String helpText)
   {
-    this(name, null);
+    this(name, helpText, null);
+  }
+
+  public String getHelpText()
+  {
+    return helpText;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(name);
+  }
+
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (!(o instanceof PluginCommand))
+    {
+      return false;
+    }
+    final PluginCommand that = (PluginCommand) o;
+    return Objects.equals(name, that.name);
   }
 
   @Override

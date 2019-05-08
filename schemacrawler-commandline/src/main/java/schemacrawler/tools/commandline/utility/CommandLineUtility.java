@@ -38,7 +38,8 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 public class CommandLineUtility
 {
 
-  public static void addPluginCommands(final CommandLine commandLine)
+  public static void addPluginCommands(final CommandLine commandLine,
+                                       final boolean addAsMixins)
     throws SchemaCrawlerException
   {
     // Add commands for plugins
@@ -55,15 +56,23 @@ public class CommandLineUtility
         .name(pluginCommandName);
       for (final PluginCommandOption option : pluginCommand)
       {
+        final String name = option.getName();
         pluginCommandSpec.addOption(CommandLine.Model.OptionSpec.builder(
-          "--" + option.getName())
-                                                                .usageHelp(true)
+          "--" + name)
                                                                 .description(
                                                                   option.getHelpText())
+                                                                .paramLabel(name)
                                                                 .type(option.getValueClass())
                                                                 .build());
       }
-      commandLine.addMixin(pluginCommandName, pluginCommandSpec);
+      if (addAsMixins)
+      {
+        commandLine.addMixin(pluginCommandName, pluginCommandSpec);
+      }
+      else
+      {
+        commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+      }
     }
   }
 

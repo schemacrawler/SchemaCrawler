@@ -65,7 +65,8 @@ public class LintCommandProvider
   @Override
   public PluginCommand getCommandLineCommand()
   {
-    final PluginCommand pluginCommand = new PluginCommand("lint");
+    final PluginCommand pluginCommand = new PluginCommand("lint",
+                                                          "** Find lints in database schema");
     pluginCommand.addOption("linter-configs",
                             "Path to the linter configuration file",
                             Path.class)
