@@ -29,23 +29,19 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.logFullStackTrace;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
-import picocli.CommandLine.Model.CommandSpec;
-import picocli.CommandLine.Model.OptionSpec;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
-import schemacrawler.tools.executable.CommandRegistry;
-import schemacrawler.tools.executable.commandline.PluginCommand;
-import schemacrawler.tools.executable.commandline.PluginCommandOption;
 import sf.util.SchemaCrawlerLogger;
 
 public final class SchemaCrawlerCommandLine
@@ -54,32 +50,6 @@ public final class SchemaCrawlerCommandLine
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
     SchemaCrawlerCommandLine.class.getName());
 
-  private static void addPluginCommands(final CommandLine cmd)
-    throws SchemaCrawlerException
-  {
-    // Add commands for plugins
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
-    {
-      if (pluginCommand == null || pluginCommand.isEmpty())
-      {
-        continue;
-      }
-      final String pluginCommandName = pluginCommand.getName();
-      final CommandSpec pluginCommandSpec = CommandSpec.create()
-                                                       .name(pluginCommandName);
-      for (final PluginCommandOption option : pluginCommand)
-      {
-        pluginCommandSpec.addOption(OptionSpec.builder("--" + option.getName())
-                                              .usageHelp(true)
-                                              .description(option.getHelpText())
-                                              .type(option.getValueClass())
-                                              .build());
-      }
-      cmd.addMixin(pluginCommandName, pluginCommandSpec);
-    }
-  }
-
   public static void execute(final String[] args)
   {
     try
@@ -87,20 +57,12 @@ public final class SchemaCrawlerCommandLine
       requireNonNull(args, "No arguments provided");
 
       final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-
       final StateFactory stateFactory = new StateFactory(state);
+
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-
       final CommandLine cmd = new CommandLine(commands, stateFactory);
-      cmd.setUnmatchedArgumentsAllowed(true);
-      cmd.setCaseInsensitiveEnumValuesAllowed(true);
-      cmd.setTrimQuotes(true);
-      cmd.setToggleBooleanFlags(false);
-
       addPluginCommands(cmd);
-
       final CommandLine.ParseResult parseResult = cmd.parseArgs(args);
-
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.setAdditionalConfiguration(additionalConfig);
 
@@ -152,32 +114,6 @@ public final class SchemaCrawlerCommandLine
         command.run();
       }
     }
-  }
-
-  private static Config retrievePluginOptions(final CommandLine.ParseResult parseResult)
-    throws SchemaCrawlerException
-  {
-    // Retrieve options, and save them to the state
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    final Config additionalConfig = new Config();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
-    {
-      if (pluginCommand == null || pluginCommand.isEmpty())
-      {
-        continue;
-      }
-      for (final PluginCommandOption option : pluginCommand)
-      {
-        final String optionName = option.getName();
-        if (parseResult.hasMatchedOption(optionName))
-        {
-          final Object value = parseResult.matchedOptionValue(optionName, null);
-          additionalConfig.put(optionName,
-                               value == null? null: String.valueOf(value));
-        }
-      }
-    }
-    return additionalConfig;
   }
 
   private SchemaCrawlerCommandLine()

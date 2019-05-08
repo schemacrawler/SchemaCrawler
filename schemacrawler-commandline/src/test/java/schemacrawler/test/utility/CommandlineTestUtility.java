@@ -143,7 +143,7 @@ public final class CommandlineTestUtility
 
   public static void parseCommand(final Object object, final String[] args)
   {
-    newCommandLine(object).parse(args);
+    newCommandLine(object, null).parse(args);
   }
 
   public static void runCommandInTest(final Object object, final String[] args)
@@ -211,9 +211,10 @@ public final class CommandlineTestUtility
       }
     }
 
-    newCommandLine(object).parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                             new ThrowExceptionHandler(),
-                                             args);
+    newCommandLine(object,
+                   null).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                           new ThrowExceptionHandler(),
+                                           args);
   }
 
   private static Path writeConfigToTempFile(final Config config)

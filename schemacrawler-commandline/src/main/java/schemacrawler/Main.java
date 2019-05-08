@@ -30,7 +30,7 @@ package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
+import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.*;
 
 import java.util.logging.Level;
 

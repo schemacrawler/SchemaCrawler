@@ -28,159 +28,90 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 
-import static sf.util.Utility.join;
-
-import java.io.File;
-import java.util.*;
-import java.util.Map.Entry;
-import java.util.logging.Level;
-
 import picocli.CommandLine;
-import schemacrawler.JvmSystemInfo;
-import schemacrawler.OperatingSystemInfo;
-import schemacrawler.Version;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
-import sf.util.Utility;
-import sf.util.UtilityMarker;
+import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.tools.executable.CommandRegistry;
+import schemacrawler.tools.executable.commandline.PluginCommand;
+import schemacrawler.tools.executable.commandline.PluginCommandOption;
 
-@UtilityMarker
-public final class CommandLineUtility
+public class CommandLineUtility
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
-    CommandLineUtility.class.getName());
-
-  /**
-   * Sets the application-wide log level.
-   */
-  public static void applyApplicationLogLevel(final Level applicationLogLevel)
+  public static void addPluginCommands(final CommandLine cmd)
+    throws SchemaCrawlerException
   {
-    Utility.applyApplicationLogLevel(applicationLogLevel);
-  }
-
-  public static void logFullStackTrace(final Level level, final Throwable t)
-  {
-    if (level == null || !LOGGER.isLoggable(level))
+    // Add commands for plugins
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {
-      return;
-    }
-    if (t == null)
-    {
-      return;
-    }
-
-    LOGGER.log(level, t.getMessage(), t);
-  }
-
-  public static void logSafeArguments(final String[] args)
-  {
-    if (!LOGGER.isLoggable(Level.INFO))
-    {
-      return;
-    }
-
-    LOGGER.log(Level.INFO,
-               String.format("Environment:%n%s %s%n%s%n%s%n",
-                             Version.getProductName(),
-                             Version.getVersion(),
-                             new OperatingSystemInfo(),
-                             new JvmSystemInfo()));
-
-    if (args == null)
-    {
-      return;
-    }
-
-    final StringJoiner argsList = new StringJoiner(System.lineSeparator());
-    for (final Iterator<String> iterator = Arrays.asList(args)
-                                                 .iterator(); iterator.hasNext(); )
-    {
-      final String arg = iterator.next();
-      if (arg == null)
+      if (pluginCommand == null || pluginCommand.isEmpty())
       {
         continue;
       }
-      else if (arg.startsWith("-password="))
+      final String pluginCommandName = pluginCommand.getName();
+      final CommandLine.Model.CommandSpec pluginCommandSpec = CommandLine.Model.CommandSpec
+        .create()
+        .name(pluginCommandName);
+      for (final PluginCommandOption option : pluginCommand)
       {
-        argsList.add("-password=*****");
+        pluginCommandSpec.addOption(CommandLine.Model.OptionSpec.builder(
+          "--" + option.getName())
+                                                                .usageHelp(true)
+                                                                .description(
+                                                                  option.getHelpText())
+                                                                .type(option.getValueClass())
+                                                                .build());
       }
-      else if (arg.startsWith("-password"))
-      {
-        argsList.add("-password");
-        if (iterator.hasNext())
-        {
-          // Skip over the password
-          iterator.next();
-          argsList.add("*****");
-        }
-      }
-      else
-      {
-        argsList.add(arg);
-      }
+      cmd.addMixin(pluginCommandName, pluginCommandSpec);
     }
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Command line: %n%s", argsList.toString()));
   }
 
-  public static void logSystemClasspath()
+  public static CommandLine newCommandLine(final Object object,
+                                           final CommandLine.IFactory factory)
   {
-    if (!LOGGER.isLoggable(Level.CONFIG))
+    final CommandLine commandLine;
+    if (factory == null)
     {
-      return;
+      commandLine = new CommandLine(object);
+    }
+    else
+    {
+      commandLine = new CommandLine(object, factory);
     }
 
-    LOGGER.log(Level.CONFIG,
-               String.format("Classpath: %n%s",
-                             printPath(System.getProperty("java.class.path"))));
-    LOGGER.log(Level.CONFIG,
-               String.format("LD_LIBRARY_PATH: %n%s",
-                             printPath(System.getenv("LD_LIBRARY_PATH"))));
-  }
-
-  public static void logSystemProperties()
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
-      return;
-    }
-
-    final SortedMap<String, String> systemProperties = new TreeMap<>();
-    for (final Entry<Object, Object> propertyValue : System.getProperties()
-                                                           .entrySet())
-    {
-      final String name = (String) propertyValue.getKey();
-      if ((name.startsWith("java.") || name.startsWith("os."))
-          && !name.endsWith(".path"))
-      {
-        systemProperties.put(name, (String) propertyValue.getValue());
-      }
-    }
-
-    LOGGER.log(Level.CONFIG,
-               String.format("System properties: %n%s",
-                             join(systemProperties, System.lineSeparator())));
-  }
-
-  public static CommandLine newCommandLine(final Object object)
-  {
-    final CommandLine commandLine = new CommandLine(object);
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);
+
     return commandLine;
   }
 
-  private static String printPath(final String path)
+  public static Config retrievePluginOptions(final CommandLine.ParseResult parseResult)
+    throws SchemaCrawlerException
   {
-    if (path == null)
+    // Retrieve options, and save them to the state
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    final Config additionalConfig = new Config();
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
     {
-      return "";
+      if (pluginCommand == null || pluginCommand.isEmpty())
+      {
+        continue;
+      }
+      for (final PluginCommandOption option : pluginCommand)
+      {
+        final String optionName = option.getName();
+        if (parseResult.hasMatchedOption(optionName))
+        {
+          final Object value = parseResult.matchedOptionValue(optionName, null);
+          additionalConfig.put(optionName,
+                               value == null? null: String.valueOf(value));
+        }
+      }
     }
-    return String.join(System.lineSeparator(), path.split(File.pathSeparator));
+    return additionalConfig;
   }
 
   private CommandLineUtility()

@@ -14,6 +14,7 @@ import schemacrawler.schema.RoutineType;
 import schemacrawler.schemacrawler.*;
 import schemacrawler.tools.commandline.command.LimitCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 public class LimitCommandTest
 {
@@ -35,7 +36,8 @@ public class LimitCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new LimitCommand(state)).parseWithHandlers(new CommandLine.RunLast(),
+    newCommandLine(LimitCommand.class,
+                   new StateFactory(state)).parseWithHandlers(new CommandLine.RunLast(),
                                                               new CommandLine.DefaultExceptionHandler<>(),
                                                               args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
@@ -191,7 +193,8 @@ public class LimitCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new LimitCommand(state)).parseWithHandlers(new CommandLine.RunLast(),
+    newCommandLine(LimitCommand.class,
+                   new StateFactory(state)).parseWithHandlers(new CommandLine.RunLast(),
                                                               new CommandLine.DefaultExceptionHandler<>(),
                                                               args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();

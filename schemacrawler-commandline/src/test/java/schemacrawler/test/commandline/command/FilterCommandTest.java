@@ -13,6 +13,7 @@ import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.command.FilterCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
+import schemacrawler.tools.commandline.state.StateFactory;
 
 public class FilterCommandTest
 {
@@ -25,9 +26,10 @@ public class FilterCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                                               new picocli.CommandLine.DefaultExceptionHandler<>(),
-                                                               args);
+    newCommandLine(FilterCommand.class,
+                   new StateFactory(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                                              new picocli.CommandLine.DefaultExceptionHandler<>(),
+                                                              args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
@@ -115,9 +117,10 @@ public class FilterCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(new FilterCommand(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                                               new picocli.CommandLine.DefaultExceptionHandler<>(),
-                                                               args);
+    newCommandLine(FilterCommand.class,
+                   new StateFactory(state)).parseWithHandlers(new picocli.CommandLine.RunLast(),
+                                                              new picocli.CommandLine.DefaultExceptionHandler<>(),
+                                                              args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));

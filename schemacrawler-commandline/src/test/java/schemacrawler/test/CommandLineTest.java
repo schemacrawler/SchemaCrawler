@@ -142,7 +142,7 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<>();
     args.put("-tables", "");
     args.put("-routines", ".*");
-    args.put("sortroutines", Boolean.FALSE.toString());
+    args.put("-sort-routines", Boolean.FALSE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
@@ -157,7 +157,7 @@ public class CommandLineTest
     final Map<String, String> args = new HashMap<>();
     args.put("-tables", "");
     args.put("-routines", ".*");
-    args.put("sortroutines", Boolean.TRUE.toString());
+    args.put("-sort-routines", Boolean.TRUE.toString());
     // Testing no tables, all routines
     // Testing no sequences, synonyms
 
