@@ -96,7 +96,6 @@ public final class SchemaCrawlerShell
       catch (final Exception e)
       {
         System.err.println("Unknown command");
-        e.printStackTrace();
         LOGGER.log(Level.WARNING, e.getMessage(), e);
       }
     }
