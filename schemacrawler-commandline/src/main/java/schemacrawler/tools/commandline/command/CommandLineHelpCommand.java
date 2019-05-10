@@ -29,7 +29,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.PrintStream;
@@ -38,8 +37,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import picocli.CommandLine;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -77,15 +74,8 @@ public final class CommandLineHelpCommand
     err = System.err;
 
     final CommandLine parent = newCommandLine(new SchemaCrawlerShellCommands(),
-                                              new StateFactory(new SchemaCrawlerShellState()));
-    try
-    {
-      addPluginCommands(parent, true);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
-    }
+                                              new StateFactory(new SchemaCrawlerShellState()),
+                                              false);
 
     if (commands != null && commands.length > 0)
     {

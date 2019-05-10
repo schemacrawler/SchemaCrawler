@@ -37,9 +37,10 @@ public class LimitCommandTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
     newCommandLine(LimitCommand.class,
-                   new StateFactory(state)).parseWithHandlers(new CommandLine.RunLast(),
-                                                              new CommandLine.DefaultExceptionHandler<>(),
-                                                              args);
+                   new StateFactory(state),
+                   true).parseWithHandlers(new CommandLine.RunLast(),
+                                           new CommandLine.DefaultExceptionHandler<>(),
+                                           args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),
@@ -193,10 +194,12 @@ public class LimitCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(LimitCommand.class,
-                   new StateFactory(state)).parseWithHandlers(new CommandLine.RunLast(),
-                                                              new CommandLine.DefaultExceptionHandler<>(),
-                                                              args);
+    final CommandLine commandLine = newCommandLine(LimitCommand.class,
+                                                   new StateFactory(state),
+                                                   true);
+    commandLine.parseWithHandlers(new CommandLine.RunLast(),
+                                  new CommandLine.DefaultExceptionHandler<>(),
+                                  args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),

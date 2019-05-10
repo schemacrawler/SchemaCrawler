@@ -35,6 +35,7 @@ import java.util.Arrays;
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
@@ -42,8 +43,8 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 public class CommandLineUtility
 {
 
-  public static void addPluginCommands(final CommandLine commandLine,
-                                       final boolean addAsMixins)
+  private static void addPluginCommands(final CommandLine commandLine,
+                                        final boolean addAsMixins)
     throws SchemaCrawlerException
   {
     // Add commands for plugins
@@ -80,19 +81,8 @@ public class CommandLineUtility
     }
   }
 
-  public static CommandLine newCommandLine(final Object object,
-                                           final CommandLine.IFactory factory)
+  private static CommandLine configureCommandLine(final CommandLine commandLine)
   {
-    final CommandLine commandLine;
-    if (factory == null)
-    {
-      commandLine = new CommandLine(object);
-    }
-    else
-    {
-      commandLine = new CommandLine(object, factory);
-    }
-
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
@@ -112,6 +102,41 @@ public class CommandLineUtility
                                                  SECTION_KEY_COMMAND_LIST,
                                                  SECTION_KEY_FOOTER_HEADING,
                                                  SECTION_KEY_FOOTER));
+
+    return commandLine;
+  }
+
+  public static CommandLine newCommandLine(final Object object,
+                                           final CommandLine.IFactory factory,
+                                           final boolean addPluginsAsMixins)
+  {
+    final CommandLine commandLine = newCommandLine(object, factory);
+    try
+    {
+      addPluginCommands(commandLine, addPluginsAsMixins);
+      configureCommandLine(commandLine);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerRuntimeException(
+        "Could not initialize command-line",
+        e);
+    }
+    return commandLine;
+  }
+
+  private static CommandLine newCommandLine(final Object object,
+                                            final CommandLine.IFactory factory)
+  {
+    final CommandLine commandLine;
+    if (factory == null)
+    {
+      commandLine = new CommandLine(object);
+    }
+    else
+    {
+      commandLine = new CommandLine(object, factory);
+    }
 
     return commandLine;
   }

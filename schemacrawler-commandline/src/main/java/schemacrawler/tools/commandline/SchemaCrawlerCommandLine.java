@@ -31,7 +31,8 @@ package schemacrawler.tools.commandline;
 import static java.util.Objects.requireNonNull;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logFullStackTrace;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.logSafeArguments;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -59,8 +60,9 @@ public final class SchemaCrawlerCommandLine
       final StateFactory stateFactory = new StateFactory(state);
 
       final SchemaCrawlerCommandLineCommands commands = new SchemaCrawlerCommandLineCommands();
-      final CommandLine commandLine = newCommandLine(commands, stateFactory);
-      addPluginCommands(commandLine, true);
+      final CommandLine commandLine = newCommandLine(commands,
+                                                     stateFactory,
+                                                     true);
       final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.addAdditionalConfiguration(additionalConfig);
