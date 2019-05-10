@@ -33,6 +33,8 @@ import static picocli.CommandLine.Model.UsageMessageSpec.*;
 import java.util.Arrays;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Model.CommandSpec;
+import picocli.CommandLine.Model.OptionSpec;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -56,19 +58,27 @@ public class CommandLineUtility
         continue;
       }
       final String pluginCommandName = pluginCommand.getName();
-      final CommandLine.Model.CommandSpec pluginCommandSpec = CommandLine.Model.CommandSpec
-        .create()
-        .name(pluginCommandName);
+      final CommandSpec pluginCommandSpec = CommandSpec.create()
+                                                       .name(pluginCommandName);
       for (final PluginCommandOption option : pluginCommand)
       {
-        final String name = option.getName();
-        pluginCommandSpec.addOption(CommandLine.Model.OptionSpec.builder(
-          "--" + name)
-                                                                .description(
-                                                                  option.getHelpText())
-                                                                .paramLabel(name)
-                                                                .type(option.getValueClass())
-                                                                .build());
+        final String optionName = option.getName();
+        final String paramName = String.format("<%s>", optionName);
+        final String helpText;
+        if (option.getValueClass().isEnum())
+        {
+          helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
+                                   option.getHelpText());
+        }
+        else
+        {
+          helpText = option.getHelpText();
+        }
+        pluginCommandSpec.addOption(OptionSpec.builder("--" + optionName)
+                                              .description(helpText)
+                                              .paramLabel(paramName)
+                                              .type(option.getValueClass())
+                                              .build());
       }
       if (addAsMixins)
       {
