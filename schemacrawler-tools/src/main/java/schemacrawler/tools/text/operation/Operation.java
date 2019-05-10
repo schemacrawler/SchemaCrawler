@@ -41,13 +41,13 @@ public enum Operation
    * Count operation
    */
   count("Row Count",
-        "Gets the count of data rows in each table",
+        "Shows counts of rows in the tables",
         "SELECT COUNT(*) FROM ${table}"),
   /**
    * Dump operation
    */
   dump("Dump",
-       "Gets a dump of data from each table",
+       "Shows data from all rows in the tables",
        "SELECT ${columns} FROM ${table} ORDER BY ${orderbycolumns}"),
   /**
    * Quick dump operation, where columns do not need to be retrieved
@@ -55,7 +55,9 @@ public enum Operation
    * run to run.
    */
   quickdump("Dump",
-            "Gets a dump of data from each table",
+            "Shows data from all rows in the tables, "
+            + "but row order is not guaranteed - "
+            + "this can be used with a minimum info-level for speed",
             "SELECT * FROM ${table}"),
   ;
 
