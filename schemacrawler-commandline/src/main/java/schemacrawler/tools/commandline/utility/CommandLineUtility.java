@@ -35,6 +35,7 @@ import java.util.Arrays;
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
+import picocli.CommandLine.Model.UsageMessageSpec;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -58,8 +59,13 @@ public class CommandLineUtility
         continue;
       }
       final String pluginCommandName = pluginCommand.getName();
+      final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
+      usageMessageSpec.header(pluginCommand.getHelpText());
+      usageMessageSpec.description("");
       final CommandSpec pluginCommandSpec = CommandSpec.create()
-                                                       .name(pluginCommandName);
+                                                       .name(pluginCommandName)
+                                                       .usageMessage(
+                                                         usageMessageSpec);
       for (final PluginCommandOption option : pluginCommand)
       {
         final String optionName = option.getName();

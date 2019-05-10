@@ -93,11 +93,9 @@ public final class CommandLineHelpCommand
                                                                       "limit",
                                                                       "grep",
                                                                       "filter",
-                                                                      "show",
-                                                                      "sort",
                                                                       "load"));
       new AvailableCommands().iterator().forEachRemaining(commandNames::add);
-      commandNames.add("execute");
+      commandNames.addAll(Arrays.asList("show", "sort", "execute"));
 
       for (final String commandName : commandNames)
       {

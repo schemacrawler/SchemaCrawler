@@ -195,6 +195,16 @@ If your database does not have a SchemaCrawler plug-in, use
                             Optional, default is 0
 
 
+** Load Options - Load database metadata into memory
+
+  -i, --info-level=<infolevel>
+         <infolevel> is one of unknown, minimum, standard, detailed, maximum
+         The info level determines the amount of database metadata retrieved, and
+           also determines the time taken to crawl the schema
+         Optional, defaults to standard
+
+
+
 ** Show Options - Show information in output
 
       --no-info             Hide database information
@@ -237,16 +247,6 @@ If your database does not have a SchemaCrawler plug-in, use
                         --sort-tables=<sorttables>
                         <sorttables> can be true or false
                         Optional, defaults to true
-
-
-** Load Options - Load database metadata into memory
-
-  -i, --info-level=<infolevel>
-         <infolevel> is one of unknown, minimum, standard, detailed, maximum
-         The info level determines the amount of database metadata retrieved, and
-           also determines the time taken to crawl the schema
-         Optional, defaults to standard
-
 
 
 ** Execute Options - Execute SchemaCrawler command
