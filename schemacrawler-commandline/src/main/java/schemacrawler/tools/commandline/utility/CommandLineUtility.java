@@ -28,6 +28,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.utility;
 
 
+import static picocli.CommandLine.Model.UsageMessageSpec.*;
+
+import java.util.Arrays;
+
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -93,6 +97,21 @@ public class CommandLineUtility
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
     commandLine.setTrimQuotes(true);
     commandLine.setToggleBooleanFlags(false);
+
+    commandLine.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
+                                                 SECTION_KEY_HEADER,
+                                                 // SECTION_KEY_SYNOPSIS_HEADING,
+                                                 // SECTION_KEY_SYNOPSIS,
+                                                 SECTION_KEY_DESCRIPTION_HEADING,
+                                                 SECTION_KEY_DESCRIPTION,
+                                                 SECTION_KEY_PARAMETER_LIST_HEADING,
+                                                 SECTION_KEY_PARAMETER_LIST,
+                                                 SECTION_KEY_OPTION_LIST_HEADING,
+                                                 SECTION_KEY_OPTION_LIST,
+                                                 SECTION_KEY_COMMAND_LIST_HEADING,
+                                                 SECTION_KEY_COMMAND_LIST,
+                                                 SECTION_KEY_FOOTER_HEADING,
+                                                 SECTION_KEY_FOOTER));
 
     return commandLine;
   }

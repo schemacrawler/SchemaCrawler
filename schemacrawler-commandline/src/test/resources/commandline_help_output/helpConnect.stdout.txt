@@ -28,3 +28,5 @@ For connecting to specific databases, use
 If your database does not have a SchemaCrawler plug-in, use
       --url=<connectionUrl>
                           JDBC connection URL to the database
+
+

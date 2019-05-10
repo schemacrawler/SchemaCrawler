@@ -220,6 +220,7 @@ If your database does not have a SchemaCrawler plug-in, use
 
 
 ** Sort Options - Sort database objects in output
+
       --sort-columns    Sort columns in a table alphabetically
                         --sort-columns=<sortcolumns>
                         <sortcolumns> can be true or false

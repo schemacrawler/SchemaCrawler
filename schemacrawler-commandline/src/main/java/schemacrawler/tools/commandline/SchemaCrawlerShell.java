@@ -29,8 +29,7 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.Objects.requireNonNull;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
 
 import java.util.logging.Level;
 
@@ -61,7 +60,7 @@ public final class SchemaCrawlerShell
     final StateFactory stateFactory = new StateFactory(state);
 
     final SchemaCrawlerShellCommands commands = new SchemaCrawlerShellCommands();
-    final CommandLine commandLine = new CommandLine(commands, stateFactory);
+    final CommandLine commandLine = newCommandLine(commands, stateFactory);
     addPluginCommands(commandLine, false);
 
     final Terminal terminal = TerminalBuilder.builder().build();

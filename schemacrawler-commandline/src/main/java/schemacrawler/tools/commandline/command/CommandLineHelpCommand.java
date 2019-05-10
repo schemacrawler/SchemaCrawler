@@ -29,12 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static picocli.CommandLine.Model.UsageMessageSpec.*;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.addPluginCommands;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import picocli.CommandLine;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -71,38 +76,20 @@ public final class CommandLineHelpCommand
     out = System.out;
     err = System.err;
 
-    final CommandLine parent = new CommandLine(new SchemaCrawlerShellCommands(),
-                                               new StateFactory(new SchemaCrawlerShellState()));
-    parent.setHelpSectionKeys(Arrays.asList(SECTION_KEY_HEADER_HEADING,
-                                            SECTION_KEY_HEADER,
-                                            // SECTION_KEY_SYNOPSIS_HEADING,
-                                            // SECTION_KEY_SYNOPSIS,
-                                            SECTION_KEY_DESCRIPTION_HEADING,
-                                            SECTION_KEY_DESCRIPTION,
-                                            SECTION_KEY_PARAMETER_LIST_HEADING,
-                                            SECTION_KEY_PARAMETER_LIST,
-                                            SECTION_KEY_OPTION_LIST_HEADING,
-                                            SECTION_KEY_OPTION_LIST,
-                                            SECTION_KEY_COMMAND_LIST_HEADING,
-                                            SECTION_KEY_COMMAND_LIST,
-                                            SECTION_KEY_FOOTER_HEADING,
-                                            SECTION_KEY_FOOTER));
+    final CommandLine parent = newCommandLine(new SchemaCrawlerShellCommands(),
+                                              new StateFactory(new SchemaCrawlerShellState()));
+    try
+    {
+      addPluginCommands(parent, true);
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerRuntimeException(e.getMessage(), e);
+    }
 
     if (commands != null && commands.length > 0)
     {
-      final CommandLine subCommand = parent.getSubcommands().get(commands[0]);
-      if (subCommand != null)
-      {
-        subCommand.usage(out, ansi);
-      }
-      else
-      {
-        throw new CommandLine.ParameterException(parent,
-                                                 "Unknown sub-command '"
-                                                 + commands[0] + "'.",
-                                                 null,
-                                                 commands[0]);
-      }
+      showHelpForSubcommand(parent, commands[0]);
     }
     else
     {
@@ -110,36 +97,35 @@ public final class CommandLineHelpCommand
       out.println();
       out.println();
 
-      for (final String command : new String[] {
-        "log",
-        "config-file",
-        "connect",
-        "limit",
-        "grep",
-        "filter",
-        "show",
-        "sort",
-        "load",
-        "execute"
-      })
+      final List<String> commandNames = new ArrayList<>(Arrays.asList("log",
+                                                                      "config-file",
+                                                                      "connect",
+                                                                      "limit",
+                                                                      "grep",
+                                                                      "filter",
+                                                                      "show",
+                                                                      "sort",
+                                                                      "load"));
+      new AvailableCommands().iterator().forEachRemaining(commandNames::add);
+      commandNames.add("execute");
+
+      for (final String commandName : commandNames)
       {
-        final CommandLine subCommand = parent.getSubcommands().get(command);
-        if (subCommand != null)
-        {
-          subCommand.usage(out, ansi);
-          out.println();
-          out.println();
-        }
-        else
-        {
-          throw new CommandLine.ParameterException(parent,
-                                                   "Unknown sub-command '"
-                                                   + command + "'.",
-                                                   null,
-                                                   command);
-        }
+        showHelpForSubcommand(parent, commandName);
       }
 
+    }
+  }
+
+  private void showHelpForSubcommand(final CommandLine parent,
+                                     final String commandName)
+  {
+    final CommandLine subCommand = parent.getSubcommands().get(commandName);
+    if (subCommand != null)
+    {
+      subCommand.usage(out, ansi);
+      System.out.println();
+      System.out.println();
     }
   }
 
