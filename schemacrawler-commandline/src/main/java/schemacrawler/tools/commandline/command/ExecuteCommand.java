@@ -50,7 +50,9 @@ import sf.util.SchemaCrawlerLogger;
 
 @CommandLine.Command(name = "execute",
                      header = "** Execute Options - Execute SchemaCrawler command",
-                     description = "")
+                     description = {
+                       ""
+                     })
 public class ExecuteCommand
   implements Runnable
 {

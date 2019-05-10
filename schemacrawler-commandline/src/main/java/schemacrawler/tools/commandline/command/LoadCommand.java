@@ -48,7 +48,9 @@ import sf.util.StringFormat;
 
 @CommandLine.Command(name = "load",
                      header = "** Load Options - Load database metadata into memory",
-                     description = "")
+                     description = {
+                       ""
+                     })
 public class LoadCommand
   implements Runnable
 {

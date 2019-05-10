@@ -42,7 +42,10 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  * @author Sualeh Fatehi
  */
 @CommandLine.Command(name = "sort",
-                     header = "** Sort Options - Sort database objects in output")
+                     header = "** Sort Options - Sort database objects in output",
+                     description = {
+                       ""
+                     })
 public final class SortCommand
   implements Runnable
 {

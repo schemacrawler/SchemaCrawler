@@ -37,7 +37,9 @@ import picocli.CommandLine;
 
 @CommandLine.Command(name = "log",
                      header = "** Logging Options - Turn logging on or off",
-                     description = "")
+                     description = {
+                       ""
+                     })
 public final class LogCommand
   implements Runnable
 {
