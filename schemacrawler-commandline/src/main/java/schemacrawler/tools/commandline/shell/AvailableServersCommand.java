@@ -35,6 +35,9 @@ import static picocli.CommandLine.Help.TextTable.forColumns;
 import static sf.util.Utility.isBlank;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Help.Ansi;
+import picocli.CommandLine.Help.Column;
+import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
@@ -47,15 +50,9 @@ public class AvailableServersCommand
 {
   private static String availableServersDescriptive()
   {
-    final CommandLine.Help.TextTable textTable = forColumns(CommandLine.Help.Ansi.OFF,
-                                                            new CommandLine.Help.Column(
-                                                              15,
-                                                              1,
-                                                              SPAN),
-                                                            new CommandLine.Help.Column(
-                                                              65,
-                                                              1,
-                                                              WRAP));
+    final TextTable textTable = forColumns(Ansi.OFF,
+                                           new Column(15, 1, SPAN),
+                                           new Column(65, 1, WRAP));
     try
     {
       for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
