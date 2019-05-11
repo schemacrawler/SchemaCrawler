@@ -37,6 +37,9 @@ import static sf.util.Utility.isBlank;
 import java.util.Collection;
 
 import picocli.CommandLine;
+import picocli.CommandLine.Help.Ansi;
+import picocli.CommandLine.Help.Column;
+import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
@@ -50,15 +53,9 @@ public class AvailableCommandsCommand
 
   private static String availableCommandsDescriptive()
   {
-    final CommandLine.Help.TextTable textTable = forColumns(CommandLine.Help.Ansi.OFF,
-                                                            new CommandLine.Help.Column(
-                                                              15,
-                                                              1,
-                                                              SPAN),
-                                                            new CommandLine.Help.Column(
-                                                              65,
-                                                              1,
-                                                              WRAP));
+    final TextTable textTable = forColumns(Ansi.OFF,
+                                           new Column(15, 1, SPAN),
+                                           new Column(65, 1, WRAP));
     try
     {
       final Collection<CommandDescription> commandDescriptions = new CommandRegistry()
