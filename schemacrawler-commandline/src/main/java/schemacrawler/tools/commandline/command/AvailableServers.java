@@ -41,22 +41,14 @@ public class AvailableServers
   implements Iterable<String>
 {
 
-  private static List<String> availableServers(final boolean isDescriptive)
+  private static List<String> availableServers()
   {
     final List<String> availableServers = new ArrayList<>();
     try
     {
-      for (final DatabaseServerType command : new DatabaseConnectorRegistry())
+      for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
       {
-        final String description;
-        if (isDescriptive)
-        {
-          description = command.toString();
-        }
-        else
-        {
-          description = command.getDatabaseSystemIdentifier();
-        }
+        final String description = serverType.getDatabaseSystemIdentifier();
         availableServers.add(description);
       }
     }
@@ -70,21 +62,11 @@ public class AvailableServers
     return availableServers;
   }
 
-  public static List<String> descriptive()
-  {
-    return new AvailableServers(true).availableServers;
-  }
-
   private final List<String> availableServers;
 
   public AvailableServers()
   {
-    this(false);
-  }
-
-  private AvailableServers(final boolean isDescriptive)
-  {
-    availableServers = availableServers(isDescriptive);
+    availableServers = availableServers();
   }
 
   @Override

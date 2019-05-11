@@ -29,14 +29,10 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 
-import java.util.List;
-
 import picocli.CommandLine;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
-import schemacrawler.tools.commandline.command.AvailableCommands;
-import schemacrawler.tools.commandline.command.AvailableServers;
 
 @CommandLine.Command(name = "version",
                      aliases = {
@@ -69,27 +65,9 @@ public class SystemCommand
     final JvmSystemInfo jvmInfo = new JvmSystemInfo();
     System.out.println(jvmInfo);
 
-    final List<String> availableCommands = AvailableCommands.descriptive();
-    if (!availableCommands.isEmpty())
-    {
-      System.out.println();
-      System.out.println("Available SchemaCrawler Commands:");
-      for (final String command : availableCommands)
-      {
-        System.out.println(command);
-      }
-    }
+    new AvailableCommandsCommand().run();
 
-    final List<String> availableServers = AvailableServers.descriptive();
-    if (!availableServers.isEmpty())
-    {
-      System.out.println();
-      System.out.println("Available Database Server Types:");
-      for (final String server : availableServers)
-      {
-        System.out.println(server);
-      }
-    }
+    new AvailableServersCommand().run();
 
   }
 

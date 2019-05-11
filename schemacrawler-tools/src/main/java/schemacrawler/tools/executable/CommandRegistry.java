@@ -48,7 +48,6 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class CommandRegistry
-  implements Iterable<CommandDescription>
 {
 
   private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
@@ -94,12 +93,6 @@ public final class CommandRegistry
     commandRegistry = loadCommandRegistry();
   }
 
-  @Override
-  public Iterator<CommandDescription> iterator()
-  {
-    return getSupportedCommands().iterator();
-  }
-
   public Collection<PluginCommand> getCommandLineCommands()
   {
     final Collection<PluginCommand> commandLineCommands = new HashSet<>();
@@ -108,6 +101,20 @@ public final class CommandRegistry
       commandLineCommands.add(commandProvider.getCommandLineCommand());
     }
     return commandLineCommands;
+  }
+
+  public Collection<CommandDescription> getSupportedCommands()
+  {
+    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
+    for (final CommandProvider commandProvider : commandRegistry)
+    {
+      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
+    }
+
+    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(
+      supportedCommandDescriptions);
+    supportedCommandsOrdered.sort(naturalOrder());
+    return supportedCommandsOrdered;
   }
 
   SchemaCrawlerCommand configureNewCommand(final String command,
@@ -149,20 +156,6 @@ public final class CommandRegistry
     }
 
     return scCommand;
-  }
-
-  private Collection<CommandDescription> getSupportedCommands()
-  {
-    final Collection<CommandDescription> supportedCommandDescriptions = new HashSet<>();
-    for (final CommandProvider commandProvider : commandRegistry)
-    {
-      supportedCommandDescriptions.addAll(commandProvider.getSupportedCommands());
-    }
-
-    final List<CommandDescription> supportedCommandsOrdered = new ArrayList<>(
-      supportedCommandDescriptions);
-    supportedCommandsOrdered.sort(naturalOrder());
-    return supportedCommandsOrdered;
   }
 
 }

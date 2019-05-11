@@ -29,6 +29,7 @@ package schemacrawler.tools.commandline.command;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,22 +42,17 @@ public class AvailableCommands
   implements Iterable<String>
 {
 
-  private static List<String> availableCommands(final boolean isDescriptive)
+  private static List<String> availableCommands()
   {
     final List<String> availableCommands = new ArrayList<>();
     try
     {
-      for (final CommandDescription command : new CommandRegistry())
+      final Collection<CommandDescription> commandDescriptions = new CommandRegistry()
+        .getSupportedCommands();
+
+      for (final CommandDescription commandDescription : commandDescriptions)
       {
-        final String description;
-        if (isDescriptive)
-        {
-          description = command.toString();
-        }
-        else
-        {
-          description = command.getName();
-        }
+        final String description = commandDescription.getName();
         availableCommands.add(description);
       }
     }
@@ -69,21 +65,11 @@ public class AvailableCommands
     return availableCommands;
   }
 
-  public static List<String> descriptive()
-  {
-    return new AvailableCommands(true).availableCommands;
-  }
-
   private final List<String> availableCommands;
 
   public AvailableCommands()
   {
-    this(false);
-  }
-
-  private AvailableCommands(final boolean isDescriptive)
-  {
-    availableCommands = availableCommands(isDescriptive);
+    availableCommands = availableCommands();
   }
 
   @Override

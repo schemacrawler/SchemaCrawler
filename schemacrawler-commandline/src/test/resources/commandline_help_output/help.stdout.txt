@@ -13,14 +13,33 @@ Windows 10 10.0
 Oracle Corporation Java HotSpot(TM) 64-Bit Server VM 1.8.0_191-b12
 
 Available SchemaCrawler Commands:
-brief - Shows basic schema information, for tables, views and routines, columns, primary keys, and foreign keys
-count - Gets the count of data rows in each table
-details - Shows maximum possible detail of the schema, including privileges, and details of privileges, triggers, and check constraints
-dump - Gets a dump of data from each table
-list - Shows a list of schema objects
-quickdump - Gets a dump of data from each table
-schema - Shows the commonly needed detail of the schema, including details of tables, views and routines, columns, primary keys, indexes, foreign keys, and triggers
-serialize - Create an offline catalog snapshot
+ brief          Shows basic schema information, for tables, views and routines,
+                  columns, primary keys, and foreign keys
+ count          Shows counts of rows in the tables
+ details        Shows maximum possible detail of the schema, including
+                  privileges, and details of privileges, triggers, and check
+                  constraints
+ dump           Shows data from all rows in the tables
+ list           Shows a list of schema objects
+ quickdump      Shows data from all rows in the tables, but row order is not
+                  guaranteed - this can be used with a minimum info-level for
+                  speed
+ schema         Shows the commonly needed detail of the schema, including
+                  details of tables, views and routines, columns, primary keys,
+                  indexes, foreign keys, and triggers
+ serialize      Create an offline catalog snapshot
+ <query_name>   Shows results of query <query_name>, as specified in the
+                  configuration properties file
+ <query>        Shows results of SQL <query>
+The query itself can contain the
+                  variables ${table}, ${columns} and ${tabletype}, or system
+                  properties referenced as ${<system-property-name>}
+Queries
+                  without any variables are executed exactly once
+Queries with
+                  variables are executed once for each table, with the
+                  variables substituted
+
 
 
 ** Logging Options - Turn logging on or off

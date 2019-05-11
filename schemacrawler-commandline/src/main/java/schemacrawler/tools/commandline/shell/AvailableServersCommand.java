@@ -29,21 +29,59 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 
+import static picocli.CommandLine.Help.Column.Overflow.SPAN;
+import static picocli.CommandLine.Help.Column.Overflow.WRAP;
+import static picocli.CommandLine.Help.TextTable.forColumns;
+import static sf.util.Utility.isBlank;
+
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.command.AvailableServers;
+import schemacrawler.schemacrawler.DatabaseServerType;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 @CommandLine.Command(name = "servers",
                      header = "** Servers Options - List available SchemaCrawler database plugins")
 public class AvailableServersCommand
   implements Runnable
 {
+  private static String availableServersDescriptive()
+  {
+    final CommandLine.Help.TextTable textTable = forColumns(CommandLine.Help.Ansi.OFF,
+                                                            new CommandLine.Help.Column(
+                                                              15,
+                                                              1,
+                                                              SPAN),
+                                                            new CommandLine.Help.Column(
+                                                              65,
+                                                              1,
+                                                              WRAP));
+    try
+    {
+      for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
+      {
+        textTable.addRowValues(serverType.getDatabaseSystemIdentifier(),
+                               serverType.getDatabaseSystemName());
+      }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerRuntimeException(
+        "Could not initialize server registry",
+        e);
+    }
+    return textTable.toString();
+  }
 
   @Override
   public void run()
   {
-    for (final String server : AvailableServers.descriptive())
+    final String availableServers = availableServersDescriptive();
+    if (!isBlank(availableServers))
     {
-      System.out.println(server);
+      System.out.println();
+      System.out.println("Available Database Server Types:");
+      System.out.println(availableServers);
     }
   }
 

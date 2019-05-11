@@ -29,8 +29,18 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 
+import static picocli.CommandLine.Help.Column.Overflow.SPAN;
+import static picocli.CommandLine.Help.Column.Overflow.WRAP;
+import static picocli.CommandLine.Help.TextTable.forColumns;
+import static sf.util.Utility.isBlank;
+
+import java.util.Collection;
+
 import picocli.CommandLine;
-import schemacrawler.tools.commandline.command.AvailableCommands;
+import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.executable.CommandDescription;
+import schemacrawler.tools.executable.CommandRegistry;
 
 @CommandLine.Command(name = "commands",
                      header = "** Commands Options - List available SchemaCrawler commands")
@@ -38,12 +48,57 @@ public class AvailableCommandsCommand
   implements Runnable
 {
 
+  private static String availableCommandsDescriptive()
+  {
+    final CommandLine.Help.TextTable textTable = forColumns(CommandLine.Help.Ansi.OFF,
+                                                            new CommandLine.Help.Column(
+                                                              15,
+                                                              1,
+                                                              SPAN),
+                                                            new CommandLine.Help.Column(
+                                                              65,
+                                                              1,
+                                                              WRAP));
+    try
+    {
+      final Collection<CommandDescription> commandDescriptions = new CommandRegistry()
+        .getSupportedCommands();
+      commandDescriptions.add(new CommandDescription("<query_name>",
+                                                     "Shows results of query <query_name>, "
+                                                     + "as specified in the configuration properties file"));
+      commandDescriptions.add(new CommandDescription("<query>",
+                                                     String.join("\n",
+                                                                 "Shows results of SQL <query>",
+                                                                 "The query itself can contain the variables ${table}, ${columns} "
+                                                                 + "and ${tabletype}, or system properties referenced as ${<system-property-name>}",
+                                                                 "Queries without any variables are executed exactly once",
+                                                                 "Queries with variables are executed once for each table, "
+                                                                 + "with the variables substituted")));
+
+      for (final CommandDescription commandDescription : commandDescriptions)
+      {
+        textTable.addRowValues(commandDescription.getName(),
+                               commandDescription.getDescription());
+      }
+    }
+    catch (final SchemaCrawlerException e)
+    {
+      throw new SchemaCrawlerRuntimeException(
+        "Could not initialize command registry",
+        e);
+    }
+    return textTable.toString();
+  }
+
   @Override
   public void run()
   {
-    for (final String command : AvailableCommands.descriptive())
+    final String availableCommands = availableCommandsDescriptive();
+    if (!isBlank(availableCommands))
     {
-      System.out.println(command);
+      System.out.println();
+      System.out.println("Available SchemaCrawler Commands:");
+      System.out.println(availableCommands);
     }
   }
 
