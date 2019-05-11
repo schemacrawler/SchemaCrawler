@@ -6,7 +6,7 @@ import schemacrawler.tools.commandline.command.*;
 import schemacrawler.tools.commandline.shell.*;
 
 @CommandLine.Command(subcommands = {
-  CommandLine.HelpCommand.class,
+  CommandLineHelpCommand.class,
   LogCommand.class,
   ConfigFileCommand.class,
   ConnectCommand.class,
