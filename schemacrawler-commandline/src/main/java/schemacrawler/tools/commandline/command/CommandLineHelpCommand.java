@@ -115,10 +115,6 @@ public final class CommandLineHelpCommand
       System.out.println();
       System.out.println();
     }
-    else
-    {
-      System.out.println("Unknown command, " + commandName);
-    }
   }
 
 }

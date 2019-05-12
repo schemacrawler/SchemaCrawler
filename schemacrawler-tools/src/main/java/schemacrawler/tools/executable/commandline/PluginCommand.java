@@ -40,13 +40,13 @@ public class PluginCommand
   {
     return new PluginCommand(null, null);
   }
-
-  private final String helpText;
+  private final String helpDescription;
+  private final String helpHeader;
   private final String name;
   private final Collection<PluginCommandOption> options;
-
   private PluginCommand(final String name,
-                        final String helpText,
+                        final String helpHeader,
+                        final String helpDescription,
                         final Collection<PluginCommandOption> options)
   {
     if (options == null)
@@ -64,24 +64,45 @@ public class PluginCommand
     }
     this.name = name;
 
-    if (isBlank(helpText))
+    if (isBlank(helpHeader))
     {
-      this.helpText = null;
+      this.helpHeader = null;
     }
     else
     {
-      this.helpText = helpText;
+      this.helpHeader = helpHeader;
+    }
+
+    if (isBlank(helpDescription))
+    {
+      this.helpDescription = null;
+    }
+    else
+    {
+      this.helpDescription = helpDescription;
     }
   }
 
-  public PluginCommand(final String name, final String helpText)
+  public PluginCommand(final String name, final String helpHeader)
   {
-    this(name, helpText, null);
+    this(name, helpHeader, null, null);
   }
 
-  public String getHelpText()
+  public PluginCommand(final String name,
+                       final String helpHeader,
+                       final String helpDescription)
   {
-    return helpText;
+    this(name, helpHeader, helpDescription, null);
+  }
+
+  public String getHelpDescription()
+  {
+    return helpDescription;
+  }
+
+  public String getHelpHeader()
+  {
+    return helpHeader;
   }
 
   @Override
