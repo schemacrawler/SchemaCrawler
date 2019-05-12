@@ -29,22 +29,29 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import static schemacrawler.tools.iosource.InputResourceUtility.createInputResource;
 import static sf.util.IOUtility.getFileExtension;
 import static sf.util.Utility.isBlank;
 
 import javax.script.*;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
+import schemacrawler.tools.iosource.ClasspathInputResource;
+import schemacrawler.tools.iosource.FileInputResource;
+import schemacrawler.tools.iosource.InputResource;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
+import sf.util.StringFormat;
 
 /**
  * Main executor for the scripting engine integration.
@@ -56,8 +63,27 @@ public final class ScriptCommand
 {
 
   static final String COMMAND = "script";
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(ScriptCommand.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    ScriptCommand.class.getName());
+
+  private static void logScriptEngineDetails(final Level level,
+                                             final ScriptEngineFactory scriptEngineFactory)
+  {
+    if (!LOGGER.isLoggable(level))
+    {
+      return;
+    }
+
+    LOGGER.log(level,
+               String.format(
+                 "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
+                 scriptEngineFactory.getEngineName(),
+                 scriptEngineFactory.getEngineVersion(),
+                 scriptEngineFactory.getLanguageName(),
+                 scriptEngineFactory.getLanguageVersion(),
+                 ObjectToString.toString(scriptEngineFactory.getNames()),
+                 ObjectToString.toString(scriptEngineFactory.getExtensions())));
+  }
 
   public ScriptCommand()
   {
@@ -85,8 +111,7 @@ public final class ScriptCommand
     final String outputFormatValue = outputOptions.getOutputFormatValue();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    try (final Reader reader = createInputResource(outputFormatValue)
-      .openNewInputReader(inputCharset);
+    try (final Reader reader = scriptResource().openNewInputReader(inputCharset);
       final Writer writer = outputOptions.openNewOutputWriter())
     {
       final CommandChain chain = new CommandChain(this);
@@ -100,8 +125,7 @@ public final class ScriptCommand
       // Evaluate the script
       if (scriptEngine instanceof Compilable)
       {
-        final CompiledScript script = ((Compilable) scriptEngine)
-          .compile(reader);
+        final CompiledScript script = ((Compilable) scriptEngine).compile(reader);
         script.eval();
       }
       else
@@ -121,24 +145,26 @@ public final class ScriptCommand
   private ScriptEngine getScriptEngine()
     throws SchemaCrawlerException
   {
-    final String scriptFileName = outputOptions.getOutputFormatValue();
-    if (isBlank(scriptFileName))
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Please specify a script to execute");
-    }
-    final String scriptExtension = getFileExtension(scriptFileName);
-
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-    final ScriptEngine scriptEngine;
-    if (isBlank(scriptExtension))
+    ScriptEngine scriptEngine = null;
+    final String scriptingLanguage = getScriptingLanguage();
+    LOGGER.log(Level.CONFIG,
+               new StringFormat("Using scripting language <%s>",
+                                scriptingLanguage));
+    try
     {
-      scriptEngine = scriptEngineManager.getEngineByName("nashorn");
+      scriptEngine = scriptEngineManager.getEngineByName(scriptingLanguage);
     }
-    else
+    catch (final Exception e)
     {
-      scriptEngine = scriptEngineManager.getEngineByExtension(scriptExtension);
+      // Ignore exception
     }
+
+    if (scriptEngine == null)
+    {
+      scriptEngine = scriptEngineManager.getEngineByExtension(scriptingLanguage);
+    }
+
     if (scriptEngine == null)
     {
       throw new SchemaCrawlerException("Script engine not found");
@@ -149,23 +175,73 @@ public final class ScriptCommand
     return scriptEngine;
   }
 
-  private void logScriptEngineDetails(final Level level,
-                                      final ScriptEngineFactory scriptEngineFactory)
+  private String getScriptingLanguage()
   {
-    if (!LOGGER.isLoggable(level))
+    final Config config = getAdditionalConfiguration();
+
+    // Check if the scripting language is specified
+    final String scriptLanguage = config.getStringValue("language", null);
+    if (!isBlank(scriptLanguage))
     {
-      return;
+      return scriptLanguage;
     }
 
-    LOGGER.log(level,
-               String.format(
-                 "Using script engine%n%s %s (%s %s)%nScript engine names: %s%nSupported file extensions: %s",
-                 scriptEngineFactory.getEngineName(),
-                 scriptEngineFactory.getEngineVersion(),
-                 scriptEngineFactory.getLanguageName(),
-                 scriptEngineFactory.getLanguageVersion(),
-                 ObjectToString.toString(scriptEngineFactory.getNames()),
-                 ObjectToString.toString(scriptEngineFactory.getExtensions())));
+    // Use the script file extension if the scripting language is not specified
+    String scriptFile;
+    scriptFile = config.getStringValue("script:file", null);
+    if (isBlank(scriptFile))
+    {
+      scriptFile = config.getStringValue("script:resource", null);
+    }
+    final String scriptExtension = getFileExtension(scriptFile);
+    if (!isBlank(scriptExtension))
+    {
+      return scriptExtension;
+    }
+
+    return "nashorn";
+  }
+
+  private InputResource scriptResource()
+    throws IOException
+  {
+    InputResource scriptResource;
+    scriptResource = scriptClasspathResource();
+    if (scriptResource == null)
+    {
+      scriptResource = scriptFileResource();
+    }
+    if (scriptResource == null)
+    {
+      throw new SchemaCrawlerRuntimeException("No script file provided");
+    }
+    return scriptResource;
+  }
+
+  private InputResource scriptFileResource()
+    throws IOException
+  {
+    final Config config = getAdditionalConfiguration();
+    final String scriptFile = config.getStringValue("script:file", null);
+    if (isBlank(scriptFile))
+    {
+      return null;
+    }
+    final Path scriptFilePath = Paths.get(scriptFile).toAbsolutePath();
+    return new FileInputResource(scriptFilePath);
+  }
+
+  private InputResource scriptClasspathResource()
+    throws IOException
+  {
+    final Config config = getAdditionalConfiguration();
+    final String scriptResource = config.getStringValue("script:resource",
+                                                        null);
+    if (isBlank(scriptResource))
+    {
+      return null;
+    }
+    return new ClasspathInputResource(scriptResource);
   }
 
 }

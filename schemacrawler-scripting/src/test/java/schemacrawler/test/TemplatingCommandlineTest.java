@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.test.schemacrawler.integration.test;
+package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,59 +46,59 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class ScriptingCommandlineTest
+public class TemplatingCommandlineTest
 {
 
-  @Test
-  public void commandlineGroovy(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "script",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.groovy")),
-               hasSameContentAs(classpathResource("script_output.txt")));
-  }
-
-  @Test
-  public void commandlineJavaScript(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "script",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.js")),
-               hasSameContentAs(classpathResource("script_output.txt")));
-  }
-
-  @Test
-  public void commandlinePython(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "script",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.py")),
-               hasSameContentAs(classpathResource("script_output.txt")));
-  }
-
-  @Test
-  public void commandlineRuby(final DatabaseConnectionInfo connectionInfo)
-    throws Exception
-  {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "script",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.rb")),
-               hasSameContentAs(classpathResource("script_output_rb.txt")));
-  }
-
-  private Map<String, String> additionalArgsMap()
+  private static Map<String, String> additionalArgsMap()
   {
     final Map<String, String> argsMap = new HashMap<>();
     argsMap.put("-schemas", "((?!FOR_LINT).)*");
     argsMap.put("-info-level", "standard");
     return argsMap;
+  }
+
+  @Test
+  public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "freemarker",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.ftl")),
+               hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
+  }
+
+  @Test
+  public void commandlineMustache(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "mustache",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.mustache")),
+               hasSameContentAs(classpathResource("executableForMustache.txt")));
+  }
+
+  @Test
+  public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "thymeleaf",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.thymeleaf")),
+               hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
+  }
+
+  @Test
+  public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
+    throws Exception
+  {
+    assertThat(outputOf(commandlineExecution(connectionInfo,
+                                             "velocity",
+                                             additionalArgsMap(),
+                                             "/plaintextschema.vm")),
+               hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 
 }

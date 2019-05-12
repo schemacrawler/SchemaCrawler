@@ -28,20 +28,26 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
+import java.nio.file.Path;
+
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 
 public class ScriptCommandProvider
   extends BaseCommandProvider
 {
 
+  public static final String DESCRIPTION_HEADER =
+    "Process a script file, such as JavaScript, "
+    + "against the database schema";
+
   public ScriptCommandProvider()
   {
-    super(new CommandDescription(ScriptCommand.COMMAND,
-                                 "Execute a script against a schema"));
+    super(new CommandDescription(ScriptCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
@@ -56,6 +62,22 @@ public class ScriptCommandProvider
                                               final OutputOptions outputOptions)
   {
     return supportsCommand(command);
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    final PluginCommand pluginCommand = new PluginCommand("script",
+                                                          "** "
+                                                          + DESCRIPTION_HEADER);
+    pluginCommand.addOption("script:file",
+                            "Path to the script file",
+                            Path.class);
+    pluginCommand.addOption("script:resource",
+                            "Classpath resource for the script file",
+                            String.class);
+    pluginCommand.addOption("language", "Scripting language", String.class);
+    return pluginCommand;
   }
 
 }

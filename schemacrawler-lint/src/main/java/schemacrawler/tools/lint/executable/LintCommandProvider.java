@@ -42,10 +42,13 @@ public class LintCommandProvider
   extends BaseCommandProvider
 {
 
+  public static final String DESCRIPTION_HEADER =
+    "Find lints (non-adherence to coding standards and conventions) "
+    + "in the database schema";
+
   public LintCommandProvider()
   {
-    super(new CommandDescription(LintCommand.COMMAND,
-                                 "Display database lints"));
+    super(new CommandDescription(LintCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
@@ -66,7 +69,8 @@ public class LintCommandProvider
   public PluginCommand getCommandLineCommand()
   {
     final PluginCommand pluginCommand = new PluginCommand("lint",
-                                                          "** Find lints in database schema");
+                                                          "** "
+                                                          + DESCRIPTION_HEADER);
     pluginCommand.addOption("linter-configs",
                             "Path to the linter configuration file",
                             Path.class)

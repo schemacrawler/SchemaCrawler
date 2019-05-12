@@ -42,21 +42,18 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.lint.executable.LintOptionsBuilder;
 import schemacrawler.tools.options.OutputFormat;
 
-@ExtendWith(TestAssertNoSystemErrOutput.class)
-@ExtendWith(TestAssertNoSystemOutOutput.class)
-public abstract class BaseLintExecutableTest
+public final class LintTestUtility
 {
 
-  protected static void executableLint(final Connection connection,
-                                       final String linterConfigsResource,
-                                       final Config additionalConfig,
-                                       final String referenceFileName)
+  public static void executableLint(final Connection connection,
+                                    final String linterConfigsResource,
+                                    final Config additionalConfig,
+                                    final String referenceFileName)
     throws Exception
   {
     final SchemaCrawlerExecutable lintExecutable = new SchemaCrawlerExecutable(
@@ -80,11 +77,11 @@ public abstract class BaseLintExecutableTest
                hasSameContentAs(classpathResource(referenceFileName + ".txt")));
   }
 
-  protected static void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
-                                               final OutputFormat outputFormat,
-                                               final String linterConfigsResource,
-                                               final Map<String, String> additionalArgs,
-                                               final String referenceFileName)
+  public static void executeLintCommandLine(final DatabaseConnectionInfo connectionInfo,
+                                            final OutputFormat outputFormat,
+                                            final String linterConfigsResource,
+                                            final Map<String, String> additionalArgs,
+                                            final String referenceFileName)
     throws Exception
   {
     final Map<String, String> argsMap = new HashMap<>();

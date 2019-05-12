@@ -29,17 +29,20 @@ http://www.gnu.org/licenses/
 package schemacrawler.test;
 
 
+import static schemacrawler.test.utility.LintTestUtility.executableLint;
+
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.test.utility.BaseLintExecutableTest;
+import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
+import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
+@ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 public class LintSqlTest
-  extends BaseLintExecutableTest
 {
 
   @Test

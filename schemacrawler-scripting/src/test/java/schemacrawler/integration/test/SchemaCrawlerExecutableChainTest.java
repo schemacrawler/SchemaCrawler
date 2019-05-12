@@ -45,6 +45,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
@@ -69,29 +70,34 @@ public class SchemaCrawlerExecutableChainTest
     final Path testOutputFile = IOUtility.createTempFilePath("sc", "data");
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().includeAllRoutines();
+      .builder()
+      .includeAllRoutines();
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
-    textOptionsBuilder.noSchemaCrawlerInfo(false).showDatabaseInfo()
-      .showJdbcDriverInfo();
+    textOptionsBuilder.noSchemaCrawlerInfo(false)
+                      .showDatabaseInfo()
+                      .showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .newOutputOptions("/chain.js", testOutputFile);
+    final Config additionalConfiguration = SchemaTextOptionsBuilder.builder(
+      textOptions).toConfig();
+    additionalConfiguration.put("script:resource", "/chain.js");
+
+    final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions(
+      "text",
+      testOutputFile);
 
     executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
     executable.setOutputOptions(outputOptions);
-    executable
-      .setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(textOptions)
-                                    .toConfig());
+    executable.setAdditionalConfiguration(additionalConfiguration);
     executable.setConnection(connection);
     executable.execute();
 
-    assertThat("Created files \"schema.txt\" and \"schema.png\"" + System
-                 .lineSeparator(),
+    assertThat("Created files \"schema.txt\" and \"schema.png\""
+               + System.lineSeparator(),
                equalTo(readFully(new FileReader(testOutputFile.toFile()))));
 
     final List<String> failures = compareOutput("schema.txt",

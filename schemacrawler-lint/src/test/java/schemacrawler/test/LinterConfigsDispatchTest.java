@@ -33,6 +33,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.fail;
 import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.LintTestUtility.executableLint;
+import static schemacrawler.test.utility.LintTestUtility.executeLintCommandLine;
 import static schemacrawler.test.utility.TestUtility.readerForResource;
 
 import java.io.*;
@@ -56,8 +58,9 @@ import schemacrawler.tools.options.TextOutputFormat;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
+@ExtendWith(TestAssertNoSystemErrOutput.class)
+@ExtendWith(TestAssertNoSystemOutOutput.class)
 public class LinterConfigsDispatchTest
-  extends BaseLintExecutableTest
 {
 
   private TestOutputStream err;
