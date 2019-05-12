@@ -180,7 +180,8 @@ public final class ScriptCommand
     final Config config = getAdditionalConfiguration();
 
     // Check if the scripting language is specified
-    final String scriptLanguage = config.getStringValue("language", null);
+    final String scriptLanguage = config.getStringValue("scripting-language",
+                                                        null);
     if (!isBlank(scriptLanguage))
     {
       return scriptLanguage;

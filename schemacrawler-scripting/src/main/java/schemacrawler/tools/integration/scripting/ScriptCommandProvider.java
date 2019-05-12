@@ -76,7 +76,9 @@ public class ScriptCommandProvider
     pluginCommand.addOption("script:resource",
                             "Classpath resource for the script file",
                             String.class);
-    pluginCommand.addOption("language", "Scripting language", String.class);
+    pluginCommand.addOption("scripting-language",
+                            "Scripting language",
+                            String.class);
     return pluginCommand;
   }
 
