@@ -29,6 +29,7 @@ package schemacrawler.tools.offline;
 
 
 import java.io.IOException;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -48,8 +49,13 @@ public final class OfflineDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
-          null,
-          url -> Pattern.matches("jdbc:offline:.*", url));
+          null);
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:offline:.*", url);
   }
 
 }

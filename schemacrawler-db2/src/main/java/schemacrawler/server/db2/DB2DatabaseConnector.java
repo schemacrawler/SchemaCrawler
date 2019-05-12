@@ -30,6 +30,7 @@ package schemacrawler.server.db2;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.crawl.MetadataRetrievalStrategy;
@@ -52,8 +53,7 @@ public final class DB2DatabaseConnector
     super(new DatabaseServerType("db2", "IBM DB2"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/db2.information_schema"),
-          url -> Pattern.matches("jdbc:db2:.*", url));
+            .fromResourceFolder("/db2.information_schema"));
   }
 
   @Override
@@ -64,6 +64,12 @@ public final class DB2DatabaseConnector
     schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
       MetadataRetrievalStrategy.metadata_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:db2:.*", url);
   }
 
 }

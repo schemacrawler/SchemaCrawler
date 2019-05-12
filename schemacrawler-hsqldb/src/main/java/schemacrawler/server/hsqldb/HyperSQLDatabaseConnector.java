@@ -29,6 +29,7 @@ package schemacrawler.server.hsqldb;
 
 
 import java.io.IOException;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -47,8 +48,13 @@ public final class HyperSQLDatabaseConnector
     super(new DatabaseServerType("hsqldb", "HyperSQL DataBase"),
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/hsqldb.information_schema"),
-          url -> Pattern.matches("jdbc:hsqldb:.*", url));
+            .fromResourceFolder("/hsqldb.information_schema"));
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:hsqldb:.*", url);
   }
 
 }

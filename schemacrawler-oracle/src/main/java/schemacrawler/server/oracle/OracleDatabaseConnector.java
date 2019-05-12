@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.regex.Pattern;
 
@@ -135,8 +136,7 @@ public final class OracleDatabaseConnector
   {
     super(DB_SERVER_TYPE,
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
-          new OracleInformationSchemaViewsBuilder(),
-          url -> Pattern.matches("jdbc:oracle:.*", url));
+          new OracleInformationSchemaViewsBuilder());
 
     System.setProperty("oracle.jdbc.Trace", "true");
   }
@@ -165,6 +165,12 @@ public final class OracleDatabaseConnector
                                  .withFunctionColumnRetrievalStrategy(
                                    MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:oracle:.*", url);
   }
 
 }

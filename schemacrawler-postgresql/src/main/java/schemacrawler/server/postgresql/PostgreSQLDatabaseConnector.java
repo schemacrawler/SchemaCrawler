@@ -29,6 +29,7 @@ package schemacrawler.server.postgresql;
 
 
 import java.io.IOException;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -50,8 +51,13 @@ public final class PostgreSQLDatabaseConnector
           new ClasspathInputResource(
             "/schemacrawler-postgresql.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/postgresql.information_schema"),
-          url -> Pattern.matches("jdbc:postgresql:.*", url));
+            .fromResourceFolder("/postgresql.information_schema"));
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:postgresql:.*", url);
   }
 
 }

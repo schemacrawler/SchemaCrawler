@@ -45,16 +45,19 @@ public abstract class DatabaseConnector
 
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
+    @Override
+    protected Predicate<String> supportsUrlPredicate()
+    {
+      return url -> false;
+    }
   };
   private final InputResource configResource;
   private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection;
-  private final Predicate<String> supportsUrlPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
                               final InputResource configResource,
-                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
-                              final Predicate<String> supportsUrlPredicate)
+                              final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection)
   {
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
@@ -63,9 +66,6 @@ public abstract class DatabaseConnector
                                          "No config resource provided");
 
     this.informationSchemaViewsBuilderForConnection = informationSchemaViewsBuilderForConnection;
-
-    this.supportsUrlPredicate = requireNonNull(supportsUrlPredicate,
-                                               "No database connection URL predicate provided");
   }
 
   /**
@@ -77,7 +77,6 @@ public abstract class DatabaseConnector
     dbServerType = DatabaseServerType.UNKNOWN;
     configResource = null;
     informationSchemaViewsBuilderForConnection = null;
-    supportsUrlPredicate = url -> false;
   }
 
   /**
@@ -142,7 +141,7 @@ public abstract class DatabaseConnector
     {
       return false;
     }
-    return supportsUrlPredicate.test(url);
+    return supportsUrlPredicate().test(url);
   }
 
   @Override
@@ -157,5 +156,7 @@ public abstract class DatabaseConnector
       return "Database connector for " + dbServerType;
     }
   }
+
+  protected abstract Predicate<String> supportsUrlPredicate();
 
 }

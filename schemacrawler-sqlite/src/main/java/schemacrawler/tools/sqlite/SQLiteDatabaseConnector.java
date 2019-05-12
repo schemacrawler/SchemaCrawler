@@ -30,6 +30,7 @@ package schemacrawler.tools.sqlite;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
@@ -50,8 +51,7 @@ public final class SQLiteDatabaseConnector
     super(new DatabaseServerType("sqlite", "SQLite"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
-            .fromResourceFolder("/sqlite.information_schema"),
-          url -> Pattern.matches("jdbc:sqlite:.*", url));
+            .fromResourceFolder("/sqlite.information_schema"));
   }
 
   @Override
@@ -80,6 +80,12 @@ public final class SQLiteDatabaseConnector
     }
 
     return super.newDatabaseConnectionSource(databaseConnectorOptions);
+  }
+
+  @Override
+  protected Predicate<String> supportsUrlPredicate()
+  {
+    return url -> Pattern.matches("jdbc:sqlite:.*", url);
   }
 
 }
