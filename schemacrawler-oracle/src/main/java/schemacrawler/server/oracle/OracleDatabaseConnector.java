@@ -52,50 +52,18 @@ public final class OracleDatabaseConnector
   extends DatabaseConnector
 {
 
+  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType(
+    "oracle",
+    "Oracle");
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    OracleDatabaseConnector.class.getName());
+
+
   private static class OracleInformationSchemaViewsBuilder
     implements BiConsumer<InformationSchemaViewsBuilder, Connection>
   {
 
-    @Override
-    public void accept(final InformationSchemaViewsBuilder informationSchemaViewsBuilder,
-                       final Connection connection)
-    {
-      if (informationSchemaViewsBuilder == null)
-      {
-        LOGGER.log(Level.FINE, "No information schema views builder provided");
-        return;
-      }
-
-      informationSchemaViewsBuilder
-        .fromResourceFolder("/oracle.information_schema");
-
-      try
-      {
-        if (connection == null)
-        {
-          LOGGER.log(Level.FINE, "No Oracle database connection provided");
-          return;
-        }
-        final DatabaseMetaData dbMetaData = connection.getMetaData();
-        final int oracleMajorVersion = dbMetaData.getDatabaseMajorVersion();
-        if (oracleMajorVersion < 12)
-        {
-          informationSchemaViewsBuilder
-            .fromResourceFolder("/oracle.information_schema.old");
-        }
-      }
-      catch (final Exception e)
-      {
-        LOGGER.log(Level.FINE, e.getMessage(), e);
-        return;
-      }
-
-      // Check level of access
-      final String catalogScope = getCatalogScope(connection);
-      informationSchemaViewsBuilder.substituteAll("catalogscope", catalogScope);
-    }
-
-    private String getCatalogScope(final Connection connection)
+    private static String getCatalogScope(final Connection connection)
     {
       String catalogScope = "ALL";
       try
@@ -114,26 +82,58 @@ public final class OracleDatabaseConnector
         catalogScope = "ALL";
       }
 
-      LOGGER
-        .log(Level.INFO,
-             new StringFormat("Using Oracle data dictionary catalog scope <%s>",
-                              catalogScope));
+      LOGGER.log(Level.INFO,
+                 new StringFormat(
+                   "Using Oracle data dictionary catalog scope <%s>",
+                   catalogScope));
       return catalogScope;
     }
 
+    @Override
+    public void accept(final InformationSchemaViewsBuilder informationSchemaViewsBuilder,
+                       final Connection connection)
+    {
+      if (informationSchemaViewsBuilder == null)
+      {
+        LOGGER.log(Level.FINE, "No information schema views builder provided");
+        return;
+      }
+
+      informationSchemaViewsBuilder.fromResourceFolder(
+        "/oracle.information_schema");
+
+      try
+      {
+        if (connection == null)
+        {
+          LOGGER.log(Level.FINE, "No Oracle database connection provided");
+          return;
+        }
+        final DatabaseMetaData dbMetaData = connection.getMetaData();
+        final int oracleMajorVersion = dbMetaData.getDatabaseMajorVersion();
+        if (oracleMajorVersion < 12)
+        {
+          informationSchemaViewsBuilder.fromResourceFolder(
+            "/oracle.information_schema.old");
+        }
+      }
+      catch (final Exception e)
+      {
+        LOGGER.log(Level.FINE, e.getMessage(), e);
+        return;
+      }
+
+      // Check level of access
+      final String catalogScope = getCatalogScope(connection);
+      informationSchemaViewsBuilder.substituteAll("catalogscope", catalogScope);
+    }
+
   }
-
-  static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("oracle",
-                                                                          "Oracle");
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(OracleDatabaseConnector.class.getName());
 
   public OracleDatabaseConnector()
     throws IOException
   {
     super(DB_SERVER_TYPE,
-          new ClasspathInputResource("/help/Connections.oracle.txt"),
           new ClasspathInputResource("/schemacrawler-oracle.config.properties"),
           new OracleInformationSchemaViewsBuilder(),
           url -> Pattern.matches("jdbc:oracle:.*", url));
@@ -144,17 +144,26 @@ public final class OracleDatabaseConnector
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder
-      .withTableRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withPrimaryKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withForeignKeyRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withIndexRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withProcedureRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withProcedureColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withFunctionRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all)
-      .withFunctionColumnRetrievalStrategy(MetadataRetrievalStrategy.data_dictionary_all);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
+      connection);
+    schemaRetrievalOptionsBuilder.withTableRetrievalStrategy(
+      MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withTableColumnRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withPrimaryKeyRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withForeignKeyRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withIndexRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withProcedureRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withProcedureColumnRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withFunctionRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all)
+                                 .withFunctionColumnRetrievalStrategy(
+                                   MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
   }
 

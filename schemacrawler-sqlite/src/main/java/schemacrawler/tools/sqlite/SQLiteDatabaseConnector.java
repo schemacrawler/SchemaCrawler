@@ -48,7 +48,6 @@ public final class SQLiteDatabaseConnector
     throws IOException
   {
     super(new DatabaseServerType("sqlite", "SQLite"),
-          new ClasspathInputResource("/help/Connections.sqlite.txt"),
           new ClasspathInputResource("/schemacrawler-sqlite.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
             .fromResourceFolder("/sqlite.information_schema"),
@@ -58,8 +57,8 @@ public final class SQLiteDatabaseConnector
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super
-      .getSchemaRetrievalOptionsBuilder(connection);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
+      connection);
     schemaRetrievalOptionsBuilder.withIdentifierQuoteString("\"");
     return schemaRetrievalOptionsBuilder;
   }

@@ -43,27 +43,26 @@ public final class DB2DatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DB2DatabaseConnector.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    DB2DatabaseConnector.class.getName());
 
   public DB2DatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("db2", "IBM DB2"),
-          new ClasspathInputResource("/help/Connections.db2.txt"),
           new ClasspathInputResource("/schemacrawler-db2.config.properties"),
-          (informationSchemaViewsBuilder,
-           connection) -> informationSchemaViewsBuilder
-             .fromResourceFolder("/db2.information_schema"),
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
+            .fromResourceFolder("/db2.information_schema"),
           url -> Pattern.matches("jdbc:db2:.*", url));
   }
 
   @Override
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
-    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(connection);
-    schemaRetrievalOptionsBuilder
-      .withTableColumnRetrievalStrategy(MetadataRetrievalStrategy.metadata_all);
+    final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = super.getSchemaRetrievalOptionsBuilder(
+      connection);
+    schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
+      MetadataRetrievalStrategy.metadata_all);
     return schemaRetrievalOptionsBuilder;
   }
 

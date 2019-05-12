@@ -40,18 +40,17 @@ public final class SqlServerDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(SqlServerDatabaseConnector.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    SqlServerDatabaseConnector.class.getName());
 
   public SqlServerDatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("sqlserver", "Microsoft SQL Server"),
-          new ClasspathInputResource("/help/Connections.sqlserver.txt"),
-          new ClasspathInputResource("/schemacrawler-sqlserver.config.properties"),
-          (informationSchemaViewsBuilder,
-           connection) -> informationSchemaViewsBuilder
-             .fromResourceFolder("/sqlserver.information_schema"),
+          new ClasspathInputResource(
+            "/schemacrawler-sqlserver.config.properties"),
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
+            .fromResourceFolder("/sqlserver.information_schema"),
           url -> Pattern.matches("jdbc:sqlserver:.*", url));
   }
 

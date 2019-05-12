@@ -40,14 +40,13 @@ public final class PostgreSQLDatabaseConnector
   extends DatabaseConnector
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(PostgreSQLDatabaseConnector.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    PostgreSQLDatabaseConnector.class.getName());
 
   public PostgreSQLDatabaseConnector()
     throws IOException
   {
     super(new DatabaseServerType("postgresql", "PostgreSQL"),
-          new ClasspathInputResource("/help/Connections.postgresql.txt"),
           new ClasspathInputResource(
             "/schemacrawler-postgresql.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder

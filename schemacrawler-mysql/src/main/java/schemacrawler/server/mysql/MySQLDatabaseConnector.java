@@ -28,12 +28,12 @@ http://www.gnu.org/licenses/
 package schemacrawler.server.mysql;
 
 
+import java.io.IOException;
+import java.util.regex.Pattern;
+
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.iosource.ClasspathInputResource;
-
-import java.io.IOException;
-import java.util.regex.Pattern;
 
 public final class MySQLDatabaseConnector
   extends DatabaseConnector
@@ -45,11 +45,9 @@ public final class MySQLDatabaseConnector
     throws IOException
   {
     super(new DatabaseServerType("mysql", "MySQL"),
-          new ClasspathInputResource("/help/Connections.mysql.txt"),
           new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
-          (informationSchemaViewsBuilder,
-           connection) -> informationSchemaViewsBuilder
-             .fromResourceFolder("/mysql.information_schema"),
+          (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
+            .fromResourceFolder("/mysql.information_schema"),
           url -> Pattern.matches("jdbc:(mysql|mariadb):.*", url));
   }
 

@@ -39,17 +39,14 @@ public final class OfflineDatabaseConnector
   extends DatabaseConnector
 {
 
-  public static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType("offline",
-                                                                                 "SchemaCrawler "
-                                                                                            + "Offline "
-                                                                                            + "Catalog "
-                                                                                            + "Snapshot");
+  public static final DatabaseServerType DB_SERVER_TYPE = new DatabaseServerType(
+    "offline",
+    "SchemaCrawler " + "Offline " + "Catalog " + "Snapshot");
 
   public OfflineDatabaseConnector()
     throws IOException
   {
     super(DB_SERVER_TYPE,
-          new ClasspathInputResource("/help/Connections.offline.txt"),
           new ClasspathInputResource("/schemacrawler-offline.config.properties"),
           null,
           url -> Pattern.matches("jdbc:offline:.*", url));

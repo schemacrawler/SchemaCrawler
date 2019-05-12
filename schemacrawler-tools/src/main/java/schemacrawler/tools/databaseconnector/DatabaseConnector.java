@@ -46,24 +46,18 @@ public abstract class DatabaseConnector
   protected static final DatabaseConnector UNKNOWN = new DatabaseConnector()
   {
   };
-
-  private final DatabaseServerType dbServerType;
-  private final InputResource connectionHelpResource;
   private final InputResource configResource;
+  private final DatabaseServerType dbServerType;
   private final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection;
   private final Predicate<String> supportsUrlPredicate;
 
   protected DatabaseConnector(final DatabaseServerType dbServerType,
-                              final InputResource connectionHelpResource,
                               final InputResource configResource,
                               final BiConsumer<InformationSchemaViewsBuilder, Connection> informationSchemaViewsBuilderForConnection,
                               final Predicate<String> supportsUrlPredicate)
   {
     this.dbServerType = requireNonNull(dbServerType,
                                        "No database server type provided");
-
-    this.connectionHelpResource = requireNonNull(connectionHelpResource,
-                                                 "No connection help provided");
 
     this.configResource = requireNonNull(configResource,
                                          "No config resource provided");
@@ -81,7 +75,6 @@ public abstract class DatabaseConnector
   private DatabaseConnector()
   {
     dbServerType = DatabaseServerType.UNKNOWN;
-    connectionHelpResource = null;
     configResource = null;
     informationSchemaViewsBuilderForConnection = null;
     supportsUrlPredicate = url -> false;
@@ -100,11 +93,6 @@ public abstract class DatabaseConnector
     return PropertiesUtility.loadConfig(configResource);
   }
 
-  public InputResource getConnectionHelpResource()
-  {
-    return connectionHelpResource;
-  }
-
   public DatabaseServerType getDatabaseServerType()
   {
     return dbServerType;
@@ -119,17 +107,14 @@ public abstract class DatabaseConnector
   public SchemaRetrievalOptionsBuilder getSchemaRetrievalOptionsBuilder(final Connection connection)
   {
     final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = SchemaRetrievalOptionsBuilder
-      .builder().withDatabaseServerType(dbServerType)
+      .builder()
+      .withDatabaseServerType(dbServerType)
       .withInformationSchemaViewsForConnection(
         informationSchemaViewsBuilderForConnection,
-        connection).fromConnnection(connection);
+        connection)
+      .fromConnnection(connection);
 
     return schemaRetrievalOptionsBuilder;
-  }
-
-  public boolean isUnknownDatabaseSystem()
-  {
-    return dbServerType.isUnknownDatabaseSystem();
   }
 
   /**
@@ -145,8 +130,8 @@ public abstract class DatabaseConnector
     requireNonNull(databaseConnectorOptions,
                    "No database connection options provided");
 
-    final DatabaseConnectionSource connectionOptions = databaseConnectorOptions
-      .toDatabaseConnectionSource(getConfig());
+    final DatabaseConnectionSource connectionOptions = databaseConnectorOptions.toDatabaseConnectionSource(
+      getConfig());
 
     return connectionOptions;
   }
