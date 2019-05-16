@@ -41,7 +41,7 @@ import java.util.*;
 import java.util.logging.Level;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
+import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
@@ -55,23 +55,22 @@ public final class DatabaseConnectorRegistry
   implements Iterable<DatabaseServerType>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(DatabaseConnectorRegistry.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    DatabaseConnectorRegistry.class.getName());
 
   private static Map<String, DatabaseConnector> loadDatabaseConnectorRegistry()
-    throws SchemaCrawlerException
   {
 
     final Map<String, DatabaseConnector> databaseConnectorRegistry = new HashMap<>();
 
     try
     {
-      final ServiceLoader<DatabaseConnector> serviceLoader = ServiceLoader
-        .load(DatabaseConnector.class);
+      final ServiceLoader<DatabaseConnector> serviceLoader = ServiceLoader.load(
+        DatabaseConnector.class);
       for (final DatabaseConnector databaseConnector : serviceLoader)
       {
-        final String databaseSystemIdentifier = databaseConnector
-          .getDatabaseServerType().getDatabaseSystemIdentifier();
+        final String databaseSystemIdentifier = databaseConnector.getDatabaseServerType()
+                                                                 .getDatabaseSystemIdentifier();
         try
         {
           LOGGER.log(Level.CONFIG,
@@ -79,8 +78,8 @@ public final class DatabaseConnectorRegistry
                                       databaseSystemIdentifier,
                                       databaseConnector.getClass().getName()));
           // Put in map
-          databaseConnectorRegistry
-            .put(databaseSystemIdentifier, databaseConnector);
+          databaseConnectorRegistry.put(databaseSystemIdentifier,
+                                        databaseConnector);
         }
         catch (final Exception e)
         {
@@ -94,7 +93,7 @@ public final class DatabaseConnectorRegistry
     }
     catch (final Exception e)
     {
-      throw new SchemaCrawlerException(
+      throw new SchemaCrawlerRuntimeException(
         "Could not load database connector registry",
         e);
     }
@@ -102,10 +101,35 @@ public final class DatabaseConnectorRegistry
     return databaseConnectorRegistry;
   }
 
+  private static void logRegisteredJdbcDrivers()
+  {
+    if (!LOGGER.isLoggable(Level.CONFIG))
+    {
+      return;
+    }
+
+    try
+    {
+      final StringBuilder buffer = new StringBuilder(1024);
+      buffer.append("Registered JDBC drivers:");
+      for (final Driver driver : Collections.list(DriverManager.getDrivers()))
+      {
+        buffer.append(String.format("%n%s %d.%d",
+                                    driver.getClass().getName(),
+                                    driver.getMajorVersion(),
+                                    driver.getMinorVersion()));
+      }
+      LOGGER.log(Level.CONFIG, buffer.toString());
+    }
+    catch (final Exception e)
+    {
+      LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
+    }
+  }
+
   private final Map<String, DatabaseConnector> databaseConnectorRegistry;
 
   public DatabaseConnectorRegistry()
-    throws SchemaCrawlerException
   {
     databaseConnectorRegistry = loadDatabaseConnectorRegistry();
     logRegisteredJdbcDrivers();
@@ -120,8 +144,7 @@ public final class DatabaseConnectorRegistry
   public Iterator<DatabaseServerType> iterator()
   {
     final List<DatabaseServerType> databaseServerTypes = new ArrayList<>();
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry
-      .values())
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values())
     {
       databaseServerTypes.add(databaseConnector.getDatabaseServerType());
     }
@@ -162,8 +185,7 @@ public final class DatabaseConnectorRegistry
       return DatabaseConnector.UNKNOWN;
     }
 
-    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry
-      .values())
+    for (final DatabaseConnector databaseConnector : databaseConnectorRegistry.values())
     {
       if (databaseConnector.supportsUrl(url))
       {
@@ -172,32 +194,6 @@ public final class DatabaseConnectorRegistry
     }
 
     return DatabaseConnector.UNKNOWN;
-  }
-
-  private void logRegisteredJdbcDrivers()
-  {
-    if (!LOGGER.isLoggable(Level.CONFIG))
-    {
-      return;
-    }
-
-    try
-    {
-      final StringBuilder buffer = new StringBuilder(1024);
-      buffer.append("Registered JDBC drivers:");
-      for (final Driver driver : Collections.list(DriverManager.getDrivers()))
-      {
-        buffer.append(String.format("%n%s %d.%d",
-                                    driver.getClass().getName(),
-                                    driver.getMajorVersion(),
-                                    driver.getMinorVersion()));
-      }
-      LOGGER.log(Level.CONFIG, buffer.toString());
-    }
-    catch (final Exception e)
-    {
-      LOGGER.log(Level.FINE, "Could not log registered JDBC drivers", e);
-    }
   }
 
 }

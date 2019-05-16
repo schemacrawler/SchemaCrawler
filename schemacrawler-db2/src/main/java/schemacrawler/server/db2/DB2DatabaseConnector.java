@@ -37,6 +37,7 @@ import schemacrawler.crawl.MetadataRetrievalStrategy;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import sf.util.SchemaCrawlerLogger;
 
@@ -64,6 +65,24 @@ public final class DB2DatabaseConnector
     schemaRetrievalOptionsBuilder.withTableColumnRetrievalStrategy(
       MetadataRetrievalStrategy.metadata_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=mysql%n"
+                            + "Loads SchemaCrawler plug-in for IBM DB2",
+                            String.class)
+                 .addOption("host",
+                            "Host name%n" + "Optional, defaults to localhost",
+                            String.class)
+                 .addOption("port",
+                            "Port number%n" + "Optional, defaults to 50000",
+                            Integer.class)
+                 .addOption("database", "Database name", String.class);
+    return pluginCommand;
   }
 
   @Override

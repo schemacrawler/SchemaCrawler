@@ -38,8 +38,6 @@ import java.util.Set;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -140,17 +138,8 @@ public class DatabaseConfigConnectionOptions
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    try
-    {
-      return new DatabaseConnectorRegistry().lookupDatabaseConnector(
-        databaseSystemIdentifier);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Please provide database connection options",
-        e);
-    }
+    return new DatabaseConnectorRegistry().lookupDatabaseConnector(
+      databaseSystemIdentifier);
   }
 
   @Override

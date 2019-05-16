@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class HyperSQLDatabaseConnector
@@ -49,6 +50,24 @@ public final class HyperSQLDatabaseConnector
           new ClasspathInputResource("/schemacrawler-hsqldb.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
             .fromResourceFolder("/hsqldb.information_schema"));
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=hsqldb%n"
+                            + "Loads SchemaCrawler plug-in for HyperSQL",
+                            String.class)
+                 .addOption("host",
+                            "Host name%n" + "Optional, defaults to localhost",
+                            String.class)
+                 .addOption("port",
+                            "Port number%n" + "Optional, defaults to 9001",
+                            Integer.class)
+                 .addOption("database", "Database name", String.class);
+    return pluginCommand;
   }
 
   @Override

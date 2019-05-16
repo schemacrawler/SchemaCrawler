@@ -31,8 +31,6 @@ package schemacrawler.tools.commandline.command;
 
 import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
@@ -51,17 +49,8 @@ public class DatabaseUrlConnectionOptions
   @Override
   public DatabaseConnector getDatabaseConnector()
   {
-    try
-    {
-      return new DatabaseConnectorRegistry().lookupDatabaseConnectorFromUrl(
-        connectionUrl);
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Please provide database connection options",
-        e);
-    }
+    return new DatabaseConnectorRegistry().lookupDatabaseConnectorFromUrl(
+      connectionUrl);
   }
 
   @Override

@@ -1,7 +1,0 @@
---- Offline Snapshot Options ---
-
--server=offline
-  Loads SchemaCrawler plug-in for offline snapshots.
-  
--database=<file>
-	File name and location of the database snapshot.

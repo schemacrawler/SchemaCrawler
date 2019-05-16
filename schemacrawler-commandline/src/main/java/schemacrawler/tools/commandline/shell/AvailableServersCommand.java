@@ -39,8 +39,6 @@ import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 @CommandLine.Command(name = "servers",
@@ -53,19 +51,11 @@ public class AvailableServersCommand
     final TextTable textTable = forColumns(Ansi.OFF,
                                            new Column(15, 1, SPAN),
                                            new Column(65, 1, WRAP));
-    try
+
+    for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
     {
-      for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
-      {
-        textTable.addRowValues(serverType.getDatabaseSystemIdentifier(),
-                               serverType.getDatabaseSystemName());
-      }
-    }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not initialize server registry",
-        e);
+      textTable.addRowValues(serverType.getDatabaseSystemIdentifier(),
+                             serverType.getDatabaseSystemName());
     }
     return textTable.toString();
   }

@@ -39,6 +39,7 @@ import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorOptions;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class SQLiteDatabaseConnector
@@ -80,6 +81,22 @@ public final class SQLiteDatabaseConnector
     }
 
     return super.newDatabaseConnectionSource(databaseConnectorOptions);
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=sqlite%n"
+                            + "Loads SchemaCrawler plug-in for SQLite",
+                            String.class)
+                 .addOption("host", "Should be omitted", String.class)
+                 .addOption("port", "Should be omitted", Integer.class)
+                 .addOption("database",
+                            "SQLite database file path",
+                            String.class);
+    return pluginCommand;
   }
 
   @Override

@@ -33,8 +33,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
 public class AvailableServers
@@ -44,21 +42,11 @@ public class AvailableServers
   private static List<String> availableServers()
   {
     final List<String> availableServers = new ArrayList<>();
-    try
+    for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
     {
-      for (final DatabaseServerType serverType : new DatabaseConnectorRegistry())
-      {
-        final String description = serverType.getDatabaseSystemIdentifier();
-        availableServers.add(description);
-      }
+      final String description = serverType.getDatabaseSystemIdentifier();
+      availableServers.add(description);
     }
-    catch (final SchemaCrawlerException e)
-    {
-      throw new SchemaCrawlerRuntimeException(
-        "Could not initialize command registry",
-        e);
-    }
-
     return availableServers;
   }
 

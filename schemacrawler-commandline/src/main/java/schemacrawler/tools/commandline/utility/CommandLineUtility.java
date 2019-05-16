@@ -37,8 +37,10 @@ import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.CommandRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.executable.commandline.PluginCommandOption;
@@ -46,46 +48,15 @@ import schemacrawler.tools.executable.commandline.PluginCommandOption;
 public class CommandLineUtility
 {
 
-  private static void addPluginCommands(final CommandLine commandLine,
-                                        final boolean addAsMixins)
-    throws SchemaCrawlerException
+  private static void addDatabasePluginHelpCommands(final CommandLine commandLine,
+                                                    final boolean addAsMixins)
   {
-    // Add commands for plugins
-    final CommandRegistry commandRegistry = new CommandRegistry();
-    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
+    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    for (final DatabaseServerType databaseServerType : databaseConnectorRegistry)
     {
-      if (pluginCommand == null || pluginCommand.isEmpty())
-      {
-        continue;
-      }
-      final String pluginCommandName = pluginCommand.getName();
-      final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
-      usageMessageSpec.header(pluginCommand.getHelpHeader());
-      usageMessageSpec.description(pluginCommand.getHelpDescription());
+      final String pluginCommandName = databaseServerType.getDatabaseSystemIdentifier();
       final CommandSpec pluginCommandSpec = CommandSpec.create()
-                                                       .name(pluginCommandName)
-                                                       .usageMessage(
-                                                         usageMessageSpec);
-      for (final PluginCommandOption option : pluginCommand)
-      {
-        final String optionName = option.getName();
-        final String paramName = String.format("<%s>", optionName);
-        final String helpText;
-        if (option.getValueClass().isEnum())
-        {
-          helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
-                                   option.getHelpText());
-        }
-        else
-        {
-          helpText = option.getHelpText();
-        }
-        pluginCommandSpec.addOption(OptionSpec.builder("--" + optionName)
-                                              .description(helpText)
-                                              .paramLabel(paramName)
-                                              .type(option.getValueClass())
-                                              .build());
-      }
+                                                       .name(pluginCommandName);
       if (addAsMixins)
       {
         commandLine.addMixin(pluginCommandName, pluginCommandSpec);
@@ -97,7 +68,65 @@ public class CommandLineUtility
     }
   }
 
-  private static CommandLine configureCommandLine(final CommandLine commandLine)
+  public static void addPluginCommand(final CommandLine commandLine,
+                                      final PluginCommand pluginCommand,
+                                      final boolean addAsMixins)
+  {
+    if (pluginCommand == null || pluginCommand.isEmpty())
+    {
+      return;
+    }
+    final String pluginCommandName = pluginCommand.getName();
+    final UsageMessageSpec usageMessageSpec = new UsageMessageSpec();
+    usageMessageSpec.header(pluginCommand.getHelpHeader());
+    usageMessageSpec.description(pluginCommand.getHelpDescription());
+    final CommandSpec pluginCommandSpec = CommandSpec.create()
+                                                     .name(pluginCommandName)
+                                                     .usageMessage(
+                                                       usageMessageSpec);
+    for (final PluginCommandOption option : pluginCommand)
+    {
+      final String optionName = option.getName();
+      final String paramName = String.format("<%s>", optionName);
+      final String helpText;
+      if (option.getValueClass().isEnum())
+      {
+        helpText = String.format("%s%nUse one of ${COMPLETION-CANDIDATES}",
+                                 option.getHelpText());
+      }
+      else
+      {
+        helpText = option.getHelpText();
+      }
+      pluginCommandSpec.addOption(OptionSpec.builder("--" + optionName)
+                                            .description(helpText)
+                                            .paramLabel(paramName)
+                                            .type(option.getValueClass())
+                                            .build());
+    }
+    if (addAsMixins)
+    {
+      commandLine.addMixin(pluginCommandName, pluginCommandSpec);
+    }
+    else
+    {
+      commandLine.addSubcommand(pluginCommandName, pluginCommandSpec);
+    }
+  }
+
+  private static void addPluginCommands(final CommandLine commandLine,
+                                        final boolean addAsMixins)
+    throws SchemaCrawlerException
+  {
+    // Add commands for plugins
+    final CommandRegistry commandRegistry = new CommandRegistry();
+    for (final PluginCommand pluginCommand : commandRegistry.getCommandLineCommands())
+    {
+      addPluginCommand(commandLine, pluginCommand, addAsMixins);
+    }
+  }
+
+  public static CommandLine configureCommandLine(final CommandLine commandLine)
   {
     commandLine.setUnmatchedArgumentsAllowed(true);
     commandLine.setCaseInsensitiveEnumValuesAllowed(true);
@@ -130,6 +159,7 @@ public class CommandLineUtility
     try
     {
       addPluginCommands(commandLine, addPluginsAsMixins);
+      addDatabasePluginHelpCommands(commandLine, addPluginsAsMixins);
       configureCommandLine(commandLine);
     }
     catch (final SchemaCrawlerException e)

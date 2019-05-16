@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class MySQLDatabaseConnector
@@ -49,6 +50,24 @@ public final class MySQLDatabaseConnector
           new ClasspathInputResource("/schemacrawler-mysql.config.properties"),
           (informationSchemaViewsBuilder, connection) -> informationSchemaViewsBuilder
             .fromResourceFolder("/mysql.information_schema"));
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=mysql%n"
+                            + "Loads SchemaCrawler plug-in for MySQL",
+                            String.class)
+                 .addOption("host",
+                            "Host name%n" + "Optional, defaults to localhost",
+                            String.class)
+                 .addOption("port",
+                            "Port number%n" + "Optional, defaults to 3306",
+                            Integer.class)
+                 .addOption("database", "Database name", String.class);
+    return pluginCommand;
   }
 
   @Override

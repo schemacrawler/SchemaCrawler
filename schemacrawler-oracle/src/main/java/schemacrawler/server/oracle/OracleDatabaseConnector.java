@@ -44,6 +44,7 @@ import schemacrawler.schemacrawler.InformationSchemaViewsBuilder;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 import schemacrawler.utility.Query;
 import sf.util.SchemaCrawlerLogger;
@@ -165,6 +166,28 @@ public final class OracleDatabaseConnector
                                  .withFunctionColumnRetrievalStrategy(
                                    MetadataRetrievalStrategy.data_dictionary_all);
     return schemaRetrievalOptionsBuilder;
+  }
+
+  @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=oracle%n"
+                            + "Loads SchemaCrawler plug-in for Oracle",
+                            String.class)
+                 .addOption("host",
+                            "Host name%n" + "Optional, defaults to localhost",
+                            String.class)
+                 .addOption("port",
+                            "Port number%n" + "Optional, defaults to 1521",
+                            Integer.class)
+                 .addOption("database",
+                            "Oracle Service Name%n"
+                            + "You can use a query similar to the one below to find it.%n"
+                            + "SELECT GLOBAL_NAME FROM GLOBAL_NAME",
+                            String.class);
+    return pluginCommand;
   }
 
   @Override

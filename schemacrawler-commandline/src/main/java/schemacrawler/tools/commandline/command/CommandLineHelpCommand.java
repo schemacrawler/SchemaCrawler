@@ -29,18 +29,23 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.*;
+import static sf.util.Utility.isBlank;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.commandline.state.StateFactory;
+import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 
 @CommandLine.Command(name = "help",
                      header = "Displays SchemaCrawler command-line help",
@@ -48,6 +53,39 @@ import schemacrawler.tools.commandline.state.StateFactory;
 public final class CommandLineHelpCommand
   implements Runnable
 {
+
+  private static CommandLine databaseConnectorCommand(final String databaseSystemIdentifier)
+  {
+    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
+      databaseSystemIdentifier);
+
+    @CommandLine.Command
+    class EmptyCommand
+    {
+      @CommandLine.Option(names = "--database")
+      private String database;
+      @CommandLine.Option(names = "--server")
+      private String databaseSystemIdentifier;
+      @CommandLine.Option(names = "--host")
+      private String host;
+      @CommandLine.Option(names = "--port")
+      private Integer port;
+      @CommandLine.Option(names = "--urlx")
+      private Map<String, String> urlx;
+    }
+
+    final CommandLine commandLine = new CommandLine(new EmptyCommand());
+
+    final PluginCommand helpCommand = databaseConnector.getHelpCommand();
+    addPluginCommand(commandLine, helpCommand, false);
+
+    final CommandLine subcommandLine = commandLine.getSubcommands()
+                                                  .get(databaseSystemIdentifier);
+    configureCommandLine(subcommandLine);
+
+    return subcommandLine;
+  }
 
   private CommandLine.Help.Ansi ansi;
   @CommandLine.Parameters
@@ -108,7 +146,20 @@ public final class CommandLineHelpCommand
   private void showHelpForSubcommand(final CommandLine parent,
                                      final String commandName)
   {
-    final CommandLine subCommand = parent.getSubcommands().get(commandName);
+    if (isBlank(commandName))
+    {
+      return;
+    }
+    final DatabaseConnectorRegistry databaseConnectorRegistry = new DatabaseConnectorRegistry();
+    final CommandLine subCommand;
+    if (databaseConnectorRegistry.hasDatabaseSystemIdentifier(commandName))
+    {
+      subCommand = databaseConnectorCommand(commandName);
+    }
+    else
+    {
+      subCommand = parent.getSubcommands().get(commandName);
+    }
     if (subCommand != null)
     {
       subCommand.usage(out, ansi);

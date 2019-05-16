@@ -36,6 +36,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import schemacrawler.schemacrawler.*;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.InputResource;
 import schemacrawler.utility.PropertiesUtility;
 
@@ -155,6 +156,15 @@ public abstract class DatabaseConnector
     {
       return "Database connector for " + dbServerType;
     }
+  }
+
+  public PluginCommand getHelpCommand()
+  {
+
+    final PluginCommand pluginCommand = new PluginCommand(dbServerType.getDatabaseSystemIdentifier(),
+                                                          "** Connect to "
+                                                          + dbServerType.getDatabaseSystemName());
+    return pluginCommand;
   }
 
   protected abstract Predicate<String> supportsUrlPredicate();

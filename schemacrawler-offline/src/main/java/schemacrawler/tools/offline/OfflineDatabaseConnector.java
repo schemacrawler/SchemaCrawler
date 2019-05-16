@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
 
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.iosource.ClasspathInputResource;
 
 public final class OfflineDatabaseConnector
@@ -53,9 +54,24 @@ public final class OfflineDatabaseConnector
   }
 
   @Override
+  public PluginCommand getHelpCommand()
+  {
+    final PluginCommand pluginCommand = super.getHelpCommand();
+    pluginCommand.addOption("server",
+                            "--server=offline%n"
+                            + "Loads SchemaCrawler plug-in for offline snapshots",
+                            String.class)
+                 .addOption("host", "Should be omitted", String.class)
+                 .addOption("port", "Should be omitted", Integer.class)
+                 .addOption("database",
+                            "File name and location of the database metadata snapshot",
+                            String.class);
+    return pluginCommand;
+  }
+
+  @Override
   protected Predicate<String> supportsUrlPredicate()
   {
     return url -> Pattern.matches("jdbc:offline:.*", url);
   }
-
 }
