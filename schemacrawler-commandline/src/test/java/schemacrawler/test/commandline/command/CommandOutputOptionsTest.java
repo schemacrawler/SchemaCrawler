@@ -4,7 +4,7 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -22,7 +22,8 @@ public class CommandOutputOptionsTest
     final String[] args = new String[0];
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    parseCommand(options, args);
+    final CommandLine commandLine = newCommandLine(options, null, true);
+    commandLine.parse(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue().isPresent(), is(false));
@@ -34,7 +35,8 @@ public class CommandOutputOptionsTest
     final String[] args = { "--some-option" };
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    parseCommand(options, args);
+    final CommandLine commandLine = newCommandLine(options, null, true);
+    commandLine.parse(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue().isPresent(), is(false));
@@ -45,8 +47,12 @@ public class CommandOutputOptionsTest
   {
     final String[] args = { "--output-file" };
 
-    assertThrows(CommandLine.MissingParameterException.class,
-                 () -> parseCommand(new CommandOutputOptions(), args));
+    assertThrows(CommandLine.MissingParameterException.class, () -> {
+      final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
+                                                     null,
+                                                     true);
+      commandLine.parse(args);
+    });
   }
 
   @Test
@@ -54,8 +60,12 @@ public class CommandOutputOptionsTest
   {
     final String[] args = { "--output-format" };
 
-    assertThrows(CommandLine.MissingParameterException.class,
-                 () -> parseCommand(new CommandOutputOptions(), args));
+    assertThrows(CommandLine.MissingParameterException.class, () -> {
+      final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
+                                                     null,
+                                                     true);
+      commandLine.parse(args);
+    });
   }
 
   @Test
@@ -71,7 +81,8 @@ public class CommandOutputOptionsTest
     };
 
     final CommandOutputOptions options = new CommandOutputOptions();
-    parseCommand(options, args);
+    final CommandLine commandLine = newCommandLine(options, null, true);
+    commandLine.parse(args);
 
     assertThat(options.getOutputFile()
                       .orElseThrow(() -> new IllegalArgumentException(

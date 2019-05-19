@@ -31,7 +31,7 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -61,7 +61,8 @@ public class ConnectionOptionsTest
     final String[] args = { "--some-option" };
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    parseCommand(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parse(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
   }
@@ -98,7 +99,8 @@ public class ConnectionOptionsTest
     };
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    parseCommand(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parse(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
@@ -128,7 +130,8 @@ public class ConnectionOptionsTest
     config.put("url", "jdbc:newdb://${host}:${port}/${database}");
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    parseCommand(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parse(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
@@ -158,8 +161,10 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
 
-    assertThrows(CommandLine.MutuallyExclusiveArgsException.class,
-                 () -> parseCommand(optionsParser, args));
+    assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
+      final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+      commandLine.parse(args);
+    });
   }
 
 }

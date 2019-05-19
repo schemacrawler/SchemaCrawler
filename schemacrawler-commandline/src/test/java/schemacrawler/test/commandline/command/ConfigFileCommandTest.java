@@ -4,8 +4,10 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.is;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
+import picocli.CommandLine;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.command.ConfigFileCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -19,7 +21,10 @@ public class ConfigFileCommandTest
     final String[] args = new String[0];
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigFileCommand(state), args);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
+                                                   null,
+                                                   false);
+    commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
@@ -31,7 +36,10 @@ public class ConfigFileCommandTest
     final String[] args = { "--some-option" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigFileCommand(state), args);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
+                                                   null,
+                                                   false);
+    commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));
@@ -43,7 +51,10 @@ public class ConfigFileCommandTest
     final String[] args = { "-g" };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigFileCommand(state), args);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
+                                                   null,
+                                                   false);
+    commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not null", config, is(anEmptyMap()));
@@ -57,7 +68,10 @@ public class ConfigFileCommandTest
     };
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
-    picocli.CommandLine.run(new ConfigFileCommand(state), args);
+    final CommandLine commandLine = newCommandLine(new ConfigFileCommand(state),
+                                                   null,
+                                                   false);
+    commandLine.execute(args);
     final Config config = state.getBaseConfiguration();
 
     assertThat("Config is not empty", config, is(anEmptyMap()));

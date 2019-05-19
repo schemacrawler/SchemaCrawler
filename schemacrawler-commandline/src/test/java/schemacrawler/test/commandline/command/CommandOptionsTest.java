@@ -31,7 +31,7 @@ package schemacrawler.test.commandline.command;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static schemacrawler.test.utility.CommandlineTestUtility.parseCommand;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
@@ -92,7 +92,8 @@ public class CommandOptionsTest
     };
 
     final CommandOptions optionsParser = new CommandOptions();
-    parseCommand(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, true);
+    commandLine.parse(args);
     final String options = optionsParser.getCommand();
 
     assertThat(options, is("a_command"));

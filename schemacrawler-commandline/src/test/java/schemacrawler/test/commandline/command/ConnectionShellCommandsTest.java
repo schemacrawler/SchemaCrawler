@@ -32,6 +32,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static schemacrawler.test.utility.FileHasContent.hasNoContent;
 import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
@@ -100,7 +101,8 @@ public class ConnectionShellCommandsTest
     final String[] args = new String[0];
 
     final IsConnectedCommand optionsParser = new IsConnectedCommand(state);
-    CommandLine.run(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(out.getFileContents(), startsWith("connected"));
@@ -114,7 +116,8 @@ public class ConnectionShellCommandsTest
     final String[] args = new String[0];
 
     final IsConnectedCommand optionsParser = new IsConnectedCommand(state);
-    CommandLine.run(optionsParser, args);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(outputOf(err), hasNoContent());
     assertThat(out.getFileContents(), startsWith("not connected"));
@@ -132,8 +135,9 @@ public class ConnectionShellCommandsTest
 
     assertThat(state.getDataSource(), is(not(nullValue())));
 
-    final DisconnectCommand disconnectCommand = new DisconnectCommand(state);
-    CommandLine.run(disconnectCommand, args);
+    final DisconnectCommand optionsParser = new DisconnectCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
   }
@@ -149,8 +153,9 @@ public class ConnectionShellCommandsTest
 
     assertThat(state.getDataSource(), is(nullValue()));
 
-    final DisconnectCommand disconnectCommand = new DisconnectCommand(state);
-    CommandLine.run(disconnectCommand, args);
+    final DisconnectCommand optionsParser = new DisconnectCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(state.getDataSource(), is(nullValue()));
   }
@@ -166,8 +171,9 @@ public class ConnectionShellCommandsTest
 
     assertThat(state.getAdditionalConfiguration(), is(not(nullValue())));
 
-    final SweepCommand sweepCommand = new SweepCommand(state);
-    CommandLine.run(sweepCommand, args);
+    final SweepCommand optionsParser = new SweepCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(state.getAdditionalConfiguration(), is(nullValue()));
   }
@@ -182,8 +188,9 @@ public class ConnectionShellCommandsTest
 
     assertThat(state.getAdditionalConfiguration(), is(nullValue()));
 
-    final SweepCommand sweepCommand = new SweepCommand(state);
-    CommandLine.run(sweepCommand, args);
+    final SweepCommand optionsParser = new SweepCommand(state);
+    final CommandLine commandLine = newCommandLine(optionsParser, null, false);
+    commandLine.execute(args);
 
     assertThat(state.getAdditionalConfiguration(), is(nullValue()));
   }

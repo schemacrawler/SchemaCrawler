@@ -29,9 +29,7 @@ public class FilterCommandTest
     final CommandLine commandLine = newCommandLine(FilterCommand.class,
                                                    new StateFactory(state),
                                                    true);
-    commandLine.parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                  new picocli.CommandLine.DefaultExceptionHandler<>(),
-                                  args);
+    commandLine.parse(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));
@@ -122,9 +120,7 @@ public class FilterCommandTest
     final CommandLine commandLine = newCommandLine(FilterCommand.class,
                                                    new StateFactory(state),
                                                    true);
-    commandLine.parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                  new picocli.CommandLine.DefaultExceptionHandler<>(),
-                                  args);
+    commandLine.execute(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(2));
