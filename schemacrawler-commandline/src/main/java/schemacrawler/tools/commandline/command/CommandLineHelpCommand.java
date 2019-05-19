@@ -36,7 +36,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
@@ -63,16 +62,6 @@ public final class CommandLineHelpCommand
     @CommandLine.Command
     class EmptyCommand
     {
-      @CommandLine.Option(names = "--database")
-      private String database;
-      @CommandLine.Option(names = "--server")
-      private String databaseSystemIdentifier;
-      @CommandLine.Option(names = "--host")
-      private String host;
-      @CommandLine.Option(names = "--port")
-      private Integer port;
-      @CommandLine.Option(names = "--urlx")
-      private Map<String, String> urlx;
     }
 
     final CommandLine commandLine = new CommandLine(new EmptyCommand());
