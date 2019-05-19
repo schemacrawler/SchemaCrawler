@@ -36,12 +36,9 @@ import static schemacrawler.test.utility.TestUtility.flattenCommandlineArgs;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import picocli.CommandLine;
@@ -150,72 +147,62 @@ public final class CommandlineTestUtility
   public static void runCommandInTest(final Object object, final String[] args)
   {
 
-    class ThrowExceptionHandler<R>
-      extends CommandLine.AbstractHandler<R, ThrowExceptionHandler<R>>
-      implements CommandLine.IExceptionHandler2<R>
+    class SaveExceptionHandler
+      implements CommandLine.IParameterExceptionHandler,
+      CommandLine.IExecutionExceptionHandler
     {
-      public List<Object> handleException(final CommandLine.ParameterException ex,
-                                          final PrintStream out,
-                                          final CommandLine.Help.Ansi ansi,
-                                          final String... args)
-      {
-        internalHandleParseException(ex, out, ansi, args);
-        return Collections.<Object>emptyList();
-      }
+      private Exception lastException;
 
-      /**
-       * Prints the message of the specified exception, followed by the usage message for the command or subcommand
-       * whose input was invalid, to the stream returned by {@link #err()}.
-       *
-       * @param ex   the ParameterException describing the problem that occurred while parsing the command line arguments,
-       *             and the CommandLine representing the command or subcommand whose input was invalid
-       * @param args the command line arguments that could not be parsed
-       * @return the empty list
-       * @since 3.0
-       */
       @Override
-      public R handleParseException(final CommandLine.ParameterException ex,
-                                    final String[] args)
+      public int handleParseException(final CommandLine.ParameterException ex,
+                                      final String[] args)
+        throws Exception
       {
-        internalHandleParseException(ex, err(), ansi(), args);
-        return returnResultOrExit(null);
-      }
-
-      /**
-       * This implementation always simply rethrows the specified exception.
-       *
-       * @param ex          the ExecutionException describing the problem that occurred while executing the {@code Runnable} or {@code Callable} command
-       * @param parseResult the result of parsing the command line arguments
-       * @return nothing: this method always rethrows the specified exception
-       * @throws CommandLine.ExecutionException always rethrows the specified exception
-       * @since 3.0
-       */
-      @Override
-      public R handleExecutionException(final CommandLine.ExecutionException ex,
-                                        final CommandLine.ParseResult parseResult)
-      {
-        return throwOrExit(ex);
+        lastException = ex;
+        return 0;
       }
 
       @Override
-      protected ThrowExceptionHandler<R> self()
+      public int handleExecutionException(final Exception ex,
+                                          final CommandLine commandLine,
+                                          final CommandLine.ParseResult parseResult)
+        throws Exception
       {
-        return this;
+        lastException = ex;
+        return 0;
       }
 
-      private void internalHandleParseException(final CommandLine.ParameterException ex,
-                                                final PrintStream out,
-                                                final CommandLine.Help.Ansi ansi,
-                                                final String[] args)
+      public RuntimeException getLastException()
       {
-        throw ex;
+        if (lastException == null)
+        {
+          return new NullPointerException();
+        }
+        else if (lastException instanceof RuntimeException)
+        {
+          return (RuntimeException) lastException;
+        }
+        else
+        {
+          return new RuntimeException(lastException);
+        }
+      }
+
+      public boolean hasException()
+      {
+        return lastException != null;
       }
     }
 
+    final SaveExceptionHandler saveExceptionHandler = new SaveExceptionHandler();
     final CommandLine commandLine = newCommandLine(object, null, true);
-    commandLine.parseWithHandlers(new picocli.CommandLine.RunLast(),
-                                  new ThrowExceptionHandler(),
-                                  args);
+    commandLine.setParameterExceptionHandler(saveExceptionHandler);
+    commandLine.setExecutionExceptionHandler(saveExceptionHandler);
+    commandLine.execute(args);
+    if (saveExceptionHandler.hasException())
+    {
+      throw saveExceptionHandler.getLastException();
+    }
   }
 
   private static Path writeConfigToTempFile(final Config config)
