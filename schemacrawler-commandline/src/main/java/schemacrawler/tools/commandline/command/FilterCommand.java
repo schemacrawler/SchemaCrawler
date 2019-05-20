@@ -31,7 +31,7 @@ package schemacrawler.tools.commandline.command;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -40,47 +40,47 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "filter",
-                     header = "** Filter Options - Filter database object metadata",
-                     description = {
-                       "",
-                     })
+@Command(name = "filter",
+         header = "** Filter Options - Filter database object metadata",
+         description = {
+           "",
+         })
 public final class FilterCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--children"
   },
-                      description = {
-                        "<children> is the number of generations of descendants for the tables "
-                        + "selected by grep, and shown in the results",
-                        "Optional, default is 0"
-                      })
+          description = {
+            "<children> is the number of generations of descendants for the tables "
+            + "selected by grep, and shown in the results",
+            "Optional, default is 0"
+          })
   private Integer children;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--no-empty-tables"
   },
-                      description = {
-                        "Includes only tables that have rows of data",
-                        "Will work only if infolevel is maximum",
-                        "Optional, default is false"
-                      })
+          description = {
+            "Includes only tables that have rows of data",
+            "Will work only if infolevel is maximum",
+            "Optional, default is false"
+          })
   private Boolean noemptytables;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--parents"
   },
-                      description = {
-                        "<parents> is the number of generations of ancestors for the tables "
-                        + "selected by grep, and shown in the results",
-                        "Optional, default is 0"
-                      })
+          description = {
+            "<parents> is the number of generations of ancestors for the tables "
+            + "selected by grep, and shown in the results",
+            "Optional, default is 0"
+          })
   private Integer parents;
 
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  @Spec
+  private Model.CommandSpec spec;
 
   public FilterCommand(final SchemaCrawlerShellState state)
   {
@@ -101,8 +101,8 @@ public final class FilterCommand
       }
       else
       {
-        throw new CommandLine.ParameterException(spec.commandLine(),
-                                                 "Please provide a valid value for --parents");
+        throw new ParameterException(spec.commandLine(),
+                                     "Please provide a valid value for --parents");
       }
     }
 
@@ -114,8 +114,8 @@ public final class FilterCommand
       }
       else
       {
-        throw new CommandLine.ParameterException(spec.commandLine(),
-                                                 "Please provide a valid value for --children");
+        throw new ParameterException(spec.commandLine(),
+                                     "Please provide a valid value for --children");
       }
     }
 

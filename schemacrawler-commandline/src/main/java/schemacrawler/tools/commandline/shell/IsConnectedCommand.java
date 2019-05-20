@@ -31,12 +31,12 @@ package schemacrawler.tools.commandline.shell;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "is-connected",
-                     header = "** Connectivity Options - Check connectivity to the database")
+@Command(name = "is-connected",
+         header = "** Connectivity Options - Check connectivity to the database")
 public class IsConnectedCommand
   implements Runnable
 {

@@ -36,7 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
@@ -55,23 +55,23 @@ public final class UserCredentialsOptions
 
   public static class PasswordOptions
   {
-    @CommandLine.Option(names = "--password:env",
-                        description = "Database password, from an environmental variable value",
-                        paramLabel = "<environment variable name>")
+    @Option(names = "--password:env",
+            description = "Database password, from an environmental variable value",
+            paramLabel = "<environment variable name>")
     private String passwordEnvironmentVariable;
-    @CommandLine.Option(names = "--password:file",
-                        description = "Database password, read from a file",
-                        paramLabel = "<path to password file>")
+    @Option(names = "--password:file",
+            description = "Database password, read from a file",
+            paramLabel = "<path to password file>")
     private Path passwordFile;
-    @CommandLine.Option(names = "--password:prompt",
-                        interactive = true,
-                        description = "Database password, prompted from the console")
+    @Option(names = "--password:prompt",
+            interactive = true,
+            description = "Database password, prompted from the console")
     private String passwordPrompted;
-    @CommandLine.Option(names = {
+    @Option(names = {
       "--password"
     },
-                        description = "Database password",
-                        paramLabel = "<password>")
+            description = "Database password",
+            paramLabel = "<password>")
     private String passwordProvided;
 
     /**
@@ -158,14 +158,14 @@ public final class UserCredentialsOptions
   }
 
 
-  @CommandLine.ArgGroup
+  @ArgGroup
   private PasswordOptions passwordOptions;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
-  @CommandLine.Option(names = {
+  @Spec
+  private Model.CommandSpec spec;
+  @Option(names = {
     "--user"
   },
-                      description = "Database user name")
+          description = "Database user name")
   private String user;
 
   public UserCredentials getUserCredentials()
@@ -184,10 +184,9 @@ public final class UserCredentialsOptions
     {
       return passwordOptions.getPassword();
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No password provided");
+      throw new ParameterException(spec.commandLine(), "No password provided");
     }
   }
 

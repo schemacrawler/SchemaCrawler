@@ -29,23 +29,24 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.shell;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import schemacrawler.JvmSystemInfo;
 import schemacrawler.OperatingSystemInfo;
 import schemacrawler.SchemaCrawlerInfo;
 
-@CommandLine.Command(name = "version",
-                     aliases = {
-                       "sys-info", "system-info"
-                     },
-                     header = "** System Information Options - Display SchemaCrawler version and system information")
+@Command(name = "version",
+         aliases = {
+           "sys-info", "system-info"
+         },
+         header = "** System Information Options - Display SchemaCrawler version and system information")
 public class SystemCommand
   implements Runnable
 {
 
-  @CommandLine.Option(names = { "-V", "--version" },
-                      versionHelp = true,
-                      description = "Display SchemaCrawler version and system information")
+  @Option(names = { "-V", "--version" },
+          versionHelp = true,
+          description = "Display SchemaCrawler version and system information")
   private boolean versionRequested;
 
   public boolean isVersionRequested()

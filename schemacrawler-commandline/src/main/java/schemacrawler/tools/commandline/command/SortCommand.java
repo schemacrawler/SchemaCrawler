@@ -31,7 +31,8 @@ package schemacrawler.tools.commandline.command;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -41,48 +42,48 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "sort",
-                     header = "** Sort Options - Sort database objects in output",
-                     description = {
-                       ""
-                     })
+@Command(name = "sort",
+         header = "** Sort Options - Sort database objects in output",
+         description = {
+           ""
+         })
 public final class SortCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = { "--sort-columns" },
-                      description = {
-                        "Sort columns in a table alphabetically",
-                        "--sort-columns=<sortcolumns>",
-                        "<sortcolumns> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--sort-columns" },
+          description = {
+            "Sort columns in a table alphabetically",
+            "--sort-columns=<sortcolumns>",
+            "<sortcolumns> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean sortcolumns;
-  @CommandLine.Option(names = { "--sort-in-out" },
-                      description = {
-                        "Sort parameters in a routine alphabetically",
-                        "--sort-in-out=<sortinout>",
-                        "<sortinout> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--sort-in-out" },
+          description = {
+            "Sort parameters in a routine alphabetically",
+            "--sort-in-out=<sortinout>",
+            "<sortinout> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean sortinout;
-  @CommandLine.Option(names = { "--sort-routines" },
-                      description = {
-                        "Sort routines alphabetically",
-                        "--sort-routines=<sortroutines>",
-                        "<sortroutines> can be true or false",
-                        "Optional, defaults to true"
-                      })
+  @Option(names = { "--sort-routines" },
+          description = {
+            "Sort routines alphabetically",
+            "--sort-routines=<sortroutines>",
+            "<sortroutines> can be true or false",
+            "Optional, defaults to true"
+          })
   private Boolean sortroutines;
-  @CommandLine.Option(names = { "--sort-tables" },
-                      description = {
-                        "Sort tables alphabetically",
-                        "--sort-tables=<sorttables>",
-                        "<sorttables> can be true or false",
-                        "Optional, defaults to true"
-                      })
+  @Option(names = { "--sort-tables" },
+          description = {
+            "Sort tables alphabetically",
+            "--sort-tables=<sorttables>",
+            "<sorttables> can be true or false",
+            "Optional, defaults to true"
+          })
   private Boolean sorttables;
 
   public SortCommand(final SchemaCrawlerShellState state)

@@ -31,7 +31,8 @@ package schemacrawler.tools.commandline.command;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
@@ -41,53 +42,53 @@ import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "show",
-                     header = "** Show Options - Show information in output",
-                     description = {
-                       "",
-                     })
+@Command(name = "show",
+         header = "** Show Options - Show information in output",
+         description = {
+           "",
+         })
 public final class ShowCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = { "--no-info" },
-                      description = {
-                        "Hide database information",
-                        "--no-info=<boolean>",
-                        "<boolean> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--no-info" },
+          description = {
+            "Hide database information",
+            "--no-info=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean noinfo;
-  @CommandLine.Option(names = { "--no-remarks" },
-                      description = {
-                        "Hide table and column remarks",
-                        "--no-remarks=<boolean>",
-                        "<boolean> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--no-remarks" },
+          description = {
+            "Hide table and column remarks",
+            "--no-remarks=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean noremarks;
-  @CommandLine.Option(names = { "--portable-names" },
-                      description = {
-                        "Allow for easy comparison between databases, "
-                        + "by hiding foreign key names, constraint names, "
-                        + "trigger names, specific names for routines, "
-                        + "or index and primary key names, "
-                        + "and not showing the fully-qualified table name",
-                        "--portable-names=<boolean>",
-                        "<boolean> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--portable-names" },
+          description = {
+            "Allow for easy comparison between databases, "
+            + "by hiding foreign key names, constraint names, "
+            + "trigger names, specific names for routines, "
+            + "or index and primary key names, "
+            + "and not showing the fully-qualified table name",
+            "--portable-names=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean portablenames;
-  @CommandLine.Option(names = { "--weak-associations" },
-                      description = {
-                        "Show inferred relationships between tables, "
-                        + "based on common table and column naming conventions",
-                        "--weak-associations=<boolean>",
-                        "<boolean> can be true or false",
-                        "Optional, defaults to false"
-                      })
+  @Option(names = { "--weak-associations" },
+          description = {
+            "Show inferred relationships between tables, "
+            + "based on common table and column naming conventions",
+            "--weak-associations=<boolean>",
+            "<boolean> can be true or false",
+            "Optional, defaults to false"
+          })
   private Boolean weakassociations;
 
   public ShowCommand(final SchemaCrawlerShellState state)

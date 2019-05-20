@@ -31,7 +31,10 @@ package schemacrawler.tools.commandline.command;
 
 import static sf.util.Utility.isBlank;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Model;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Spec;
 
 /**
  * Parses the command-line.
@@ -41,23 +44,22 @@ import picocli.CommandLine;
 public final class CommandOptions
 {
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "-c", "--command"
   },
-                      required = true,
-                      description = "SchemaCrawler command",
-                      completionCandidates = AvailableCommands.class)
+          required = true,
+          description = "SchemaCrawler command",
+          completionCandidates = AvailableCommands.class)
   private String command;
 
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  @Spec
+  private Model.CommandSpec spec;
 
   public String getCommand()
   {
     if (isBlank(command))
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No command provided");
+      throw new ParameterException(spec.commandLine(), "No command provided");
     }
 
     return command;

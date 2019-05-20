@@ -35,7 +35,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -48,11 +48,11 @@ import schemacrawler.tools.options.OutputOptions;
 import schemacrawler.tools.options.OutputOptionsBuilder;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "execute",
-                     header = "** Execute Options - Execute SchemaCrawler command",
-                     description = {
-                       ""
-                     })
+@Command(name = "execute",
+         header = "** Execute Options - Execute SchemaCrawler command",
+         description = {
+           ""
+         })
 public class ExecuteCommand
   implements Runnable
 {
@@ -62,12 +62,12 @@ public class ExecuteCommand
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Mixin
+  @Mixin
   private CommandOptions commandOptions;
-  @CommandLine.Mixin
+  @Mixin
   private CommandOutputOptions commandOutputOptions;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  @Spec
+  private Model.CommandSpec spec;
 
   public ExecuteCommand(final SchemaCrawlerShellState state)
   {
@@ -79,8 +79,8 @@ public class ExecuteCommand
   {
     if (!state.isLoaded())
     {
-      throw new CommandLine.ExecutionException(spec.commandLine(),
-                                               "Cannot execute SchemaCrawler command");
+      throw new ExecutionException(spec.commandLine(),
+                                   "Cannot execute SchemaCrawler command");
     }
 
     Connection connection = null;
@@ -150,9 +150,9 @@ public class ExecuteCommand
     }
     catch (final Exception e)
     {
-      throw new CommandLine.ExecutionException(spec.commandLine(),
-                                               "Cannot execute SchemaCrawler command",
-                                               e);
+      throw new ExecutionException(spec.commandLine(),
+                                   "Cannot execute SchemaCrawler command",
+                                   e);
     }
     finally
     {

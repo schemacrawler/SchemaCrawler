@@ -36,7 +36,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import schemacrawler.tools.iosource.ClasspathInputResource;
@@ -50,21 +51,21 @@ import sf.util.StringFormat;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "config-file",
-                     header = "** Configuration Options - Load SchemaCrawler configuration from the classpath and file",
-                     description = {
-                       "",
-                       "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
-                       + "from the CLASSPATH, which includes the lib/ folder. "
-                       + "You can modify the default settings in this file.",
-                       "",
-                       "The order of loading configuration settings is:",
-                       "1. From a CLASSPATH resource called schemacrawler.config.properties",
-                       "2. Which can be overridden by settings in a configuration file (see below)",
-                       "3. Which can be overridden by other command-line options",
-                       "",
-                       "Command-line options will override configuration file options.",
-                     })
+@Command(name = "config-file",
+         header = "** Configuration Options - Load SchemaCrawler configuration from the classpath and file",
+         description = {
+           "",
+           "SchemaCrawler configuration reads a resource called schemacrawler.config.properties "
+           + "from the CLASSPATH, which includes the lib/ folder. "
+           + "You can modify the default settings in this file.",
+           "",
+           "The order of loading configuration settings is:",
+           "1. From a CLASSPATH resource called schemacrawler.config.properties",
+           "2. Which can be overridden by settings in a configuration file (see below)",
+           "3. Which can be overridden by other command-line options",
+           "",
+           "Command-line options will override configuration file options.",
+         })
 public class ConfigFileCommand
   implements Runnable
 {
@@ -74,13 +75,13 @@ public class ConfigFileCommand
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "-g", "--config-file"
   },
-                      description =
-                        "Read SchemaCrawler configuration properties from <configfile>%n"
-                        + "<configfile> is the full path to the configuration file%n"
-                        + "Optional, uses the default schemacrawler.config.properties file in the current directory, or in-built default options")
+          description =
+            "Read SchemaCrawler configuration properties from <configfile>%n"
+            + "<configfile> is the full path to the configuration file%n"
+            + "Optional, uses the default schemacrawler.config.properties file in the current directory, or in-built default options")
   private Path configfile;
 
   public ConfigFileCommand(final SchemaCrawlerShellState state)

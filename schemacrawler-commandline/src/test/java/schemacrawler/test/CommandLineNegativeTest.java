@@ -61,8 +61,18 @@ public class CommandLineNegativeTest
 
   private static final String COMMAND_LINE_NEGATIVE_OUTPUT = "command_line_negative_output/";
 
-  private TestOutputStream out;
+  private static Path createConfig(final Map<String, String> config)
+    throws IOException
+  {
+    final String prefix = "SchemaCrawler.TestCommandLineConfig";
+    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
+    final Properties configProperties = new Properties();
+    configProperties.putAll(config);
+    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
+    return configFile;
+  }
   private TestOutputStream err;
+  private TestOutputStream out;
 
   @AfterEach
   public void cleanUpStreams()
@@ -91,17 +101,6 @@ public class CommandLineNegativeTest
 
     err = new TestOutputStream();
     System.setErr(new PrintStream(err));
-  }
-
-  private Path createConfig(final Map<String, String> config)
-    throws IOException
-  {
-    final String prefix = "SchemaCrawler.TestCommandLineConfig";
-    final Path configFile = IOUtility.createTempFilePath(prefix, "properties");
-    final Properties configProperties = new Properties();
-    configProperties.putAll(config);
-    configProperties.store(newBufferedWriter(configFile, UTF_8), prefix);
-    return configFile;
   }
 
   private void run(final TestContext testContext,

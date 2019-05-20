@@ -33,13 +33,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "sweep",
-                     aliases = { "clean" },
-                     header = "** Sweep Options - Disconnect from a database, and clear loaded catalog")
+@Command(name = "sweep",
+         aliases = { "clean" },
+         header = "** Sweep Options - Disconnect from a database, and clear loaded catalog")
 public class SweepCommand
   implements Runnable
 {

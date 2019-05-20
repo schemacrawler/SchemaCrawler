@@ -33,24 +33,25 @@ import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.
 
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
-@CommandLine.Command(name = "log",
-                     header = "** Logging Options - Turn logging on or off",
-                     description = {
-                       ""
-                     })
+@Command(name = "log",
+         header = "** Logging Options - Turn logging on or off",
+         description = {
+           ""
+         })
 public final class LogCommand
   implements Runnable
 {
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--log-level"
   },
-                      description = {
-                        "Set log level using one of ${COMPLETION-CANDIDATES}",
-                        "Optional, defaults to OFF"
-                      })
+          description = {
+            "Set log level using one of ${COMPLETION-CANDIDATES}",
+            "Optional, defaults to OFF"
+          })
   private LogLevel loglevel;
 
   @Override

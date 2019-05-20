@@ -34,7 +34,7 @@ import static java.util.Objects.requireNonNull;
 import java.sql.Connection;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.InfoLevel;
@@ -46,11 +46,11 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@CommandLine.Command(name = "load",
-                     header = "** Load Options - Load database metadata into memory",
-                     description = {
-                       ""
-                     })
+@Command(name = "load",
+         header = "** Load Options - Load database metadata into memory",
+         description = {
+           ""
+         })
 public class LoadCommand
   implements Runnable
 {
@@ -60,20 +60,20 @@ public class LoadCommand
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "-i", "--info-level"
   },
-                      required = true,
-                      description = {
-                        "<infolevel> is one of ${COMPLETION-CANDIDATES}",
-                        "The info level determines the amount of database metadata retrieved, "
-                        + "and also determines the time taken to crawl the schema",
-                        "Optional, defaults to standard\n"
-                      })
+          required = true,
+          description = {
+            "<infolevel> is one of ${COMPLETION-CANDIDATES}",
+            "The info level determines the amount of database metadata retrieved, "
+            + "and also determines the time taken to crawl the schema",
+            "Optional, defaults to standard\n"
+          })
   private InfoLevel infolevel;
 
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  @Spec
+  private Model.CommandSpec spec;
 
   public LoadCommand(final SchemaCrawlerShellState state)
   {
@@ -90,8 +90,8 @@ public class LoadCommand
   {
     if (!state.isConnected())
     {
-      throw new CommandLine.ExecutionException(spec.commandLine(),
-                                               "Not connected to the database");
+      throw new ExecutionException(spec.commandLine(),
+                                   "Not connected to the database");
     }
 
     if (infolevel != null)
@@ -131,9 +131,9 @@ public class LoadCommand
     }
     catch (final Exception e)
     {
-      throw new CommandLine.ExecutionException(spec.commandLine(),
-                                               "Cannot load catalog",
-                                               e);
+      throw new ExecutionException(spec.commandLine(),
+                                   "Cannot load catalog",
+                                   e);
     }
   }
 

@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import picocli.CommandLine;
+import picocli.CommandLine.ParseResult;
 import schemacrawler.Version;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -63,7 +64,7 @@ public final class SchemaCrawlerCommandLine
       final CommandLine commandLine = newCommandLine(commands,
                                                      stateFactory,
                                                      true);
-      final CommandLine.ParseResult parseResult = commandLine.parseArgs(args);
+      final ParseResult parseResult = commandLine.parseArgs(args);
       final Config additionalConfig = retrievePluginOptions(parseResult);
       state.addAdditionalConfiguration(additionalConfig);
 

@@ -1,11 +1,11 @@
 package schemacrawler.tools.commandline;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.command.*;
 import schemacrawler.tools.commandline.shell.*;
 
-@CommandLine.Command(subcommands = {
+@Command(subcommands = {
   CommandLineHelpCommand.class,
   LogCommand.class,
   ConfigFileCommand.class,

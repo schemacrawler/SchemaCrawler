@@ -29,6 +29,7 @@ package schemacrawler.tools.commandline;
 
 
 import static java.util.Objects.requireNonNull;
+import static picocli.CommandLine.printHelpIfRequested;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.newCommandLine;
 import static schemacrawler.tools.commandline.utility.CommandLineUtility.retrievePluginOptions;
 
@@ -39,6 +40,9 @@ import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import picocli.CommandLine;
+import picocli.CommandLine.Help;
+import picocli.CommandLine.ParseResult;
+import picocli.CommandLine.PicocliException;
 import picocli.shell.jline3.PicocliJLineCompleter;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -107,8 +111,8 @@ public final class SchemaCrawlerShell
                                   final String[] arguments)
     throws SchemaCrawlerException
   {
-    final CommandLine.ParseResult parseResult = commandLine.parseArgs(arguments);
-    if (CommandLine.printHelpIfRequested(parseResult))
+    final ParseResult parseResult = commandLine.parseArgs(arguments);
+    if (printHelpIfRequested(parseResult))
     {
       return;
     }
@@ -131,9 +135,9 @@ public final class SchemaCrawlerShell
             command.run();
           }
         }
-        catch (final CommandLine.PicocliException e)
+        catch (final PicocliException e)
         {
-          subcommandLine.usage(System.out, CommandLine.Help.Ansi.AUTO);
+          subcommandLine.usage(System.out, Help.Ansi.AUTO);
         }
       }
     }

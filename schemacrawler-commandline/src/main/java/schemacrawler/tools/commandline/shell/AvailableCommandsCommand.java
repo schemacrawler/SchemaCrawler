@@ -36,7 +36,7 @@ import static sf.util.Utility.isBlank;
 
 import java.util.Collection;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
@@ -45,8 +45,8 @@ import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.CommandRegistry;
 
-@CommandLine.Command(name = "commands",
-                     header = "** Commands Options - List available SchemaCrawler commands")
+@Command(name = "commands",
+         header = "** Commands Options - List available SchemaCrawler commands")
 public class AvailableCommandsCommand
   implements Runnable
 {

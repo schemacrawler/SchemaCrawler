@@ -31,14 +31,14 @@ package schemacrawler.tools.commandline.shell;
 
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "exit",
-                     aliases = {
-                       "quit", "terminate"
-                     },
-                     header = "** Exit Options - Terminate the interactive shell")
+@Command(name = "exit",
+         aliases = {
+           "quit", "terminate"
+         },
+         header = "** Exit Options - Terminate the interactive shell")
 public class ExitCommand
   implements Runnable
 {

@@ -35,7 +35,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
@@ -48,15 +48,15 @@ import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
-@CommandLine.Command(name = "connect",
-                     header = "** Connection Options - Database connection options",
-                     description = {
-                       "",
-                       "For database connections, please read",
-                       "https://www.schemacrawler.com/database-support.html",
-                       "first, before running SchemaCrawler",
-                       ""
-                     })
+@Command(name = "connect",
+         header = "** Connection Options - Database connection options",
+         description = {
+           "",
+           "For database connections, please read",
+           "https://www.schemacrawler.com/database-support.html",
+           "first, before running SchemaCrawler",
+           ""
+         })
 public class ConnectCommand
   implements Runnable
 {
@@ -65,11 +65,11 @@ public class ConnectCommand
     ConnectCommand.class.getName());
 
   private final SchemaCrawlerShellState state;
-  @CommandLine.ArgGroup(exclusive = true)
+  @ArgGroup(exclusive = true)
   private DatabaseConnectionOptions databaseConnectionOptions;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
-  @CommandLine.Mixin
+  @Spec
+  private Model.CommandSpec spec;
+  @Mixin
   private UserCredentialsOptions userCredentialsOptions;
 
   public ConnectCommand(final SchemaCrawlerShellState state)
@@ -120,15 +120,15 @@ public class ConnectCommand
   {
     if (databaseConnectionOptions == null)
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No database connection options provided");
+      throw new ParameterException(spec.commandLine(),
+                                   "No database connection options provided");
     }
 
     final DatabaseConnectable databaseConnectable = databaseConnectionOptions.getDatabaseConnectable();
     if (databaseConnectable == null)
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No database connection options provided");
+      throw new ParameterException(spec.commandLine(),
+                                   "No database connection options provided");
     }
 
     return databaseConnectable;
@@ -139,8 +139,8 @@ public class ConnectCommand
 
     if (userCredentialsOptions == null)
     {
-      throw new CommandLine.ParameterException(spec.commandLine(),
-                                               "No database connection credentials provided");
+      throw new ParameterException(spec.commandLine(),
+                                   "No database connection credentials provided");
     }
     final UserCredentials userCredentials = userCredentialsOptions.getUserCredentials();
     return userCredentials;

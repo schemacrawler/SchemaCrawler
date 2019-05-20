@@ -30,6 +30,7 @@ package schemacrawler;
 
 
 import static java.util.Objects.requireNonNull;
+import static picocli.CommandLine.populateCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.*;
 
 import java.util.logging.Level;
@@ -59,7 +60,7 @@ public final class Main
     logSystemProperties();
 
     final InteractiveShellOptions interactiveShellOptions = new InteractiveShellOptions();
-    picocli.CommandLine.populateCommand(interactiveShellOptions, args);
+    populateCommand(interactiveShellOptions, args);
 
     final boolean isInteractive = interactiveShellOptions.isInteractive();
     if (isInteractive)

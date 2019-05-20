@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -102,37 +102,37 @@ public class DatabaseConfigConnectionOptions
     return connectionUrl;
   }
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--database"
   },
-                      description = "Database name")
+          description = "Database name")
   private String database;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--server"
   },
-                      required = true,
-                      description = {
-                        "Where <database system identifier> is a database for "
-                        + "which a SchemaCrawler plug-in is available",
-                        "Use one of ${COMPLETION-CANDIDATES}"
-                      },
-                      completionCandidates = AvailableServers.class,
-                      paramLabel = "<database system identifier>")
+          required = true,
+          description = {
+            "Where <database system identifier> is a database for "
+            + "which a SchemaCrawler plug-in is available",
+            "Use one of ${COMPLETION-CANDIDATES}"
+          },
+          completionCandidates = AvailableServers.class,
+          paramLabel = "<database system identifier>")
   private String databaseSystemIdentifier;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--host"
   },
-                      description = "Database server host")
+          description = "Database server host")
   private String host;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--port"
   },
-                      description = "Database server port")
+          description = "Database server port")
   private Integer port;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--urlx"
   },
-                      description = "JDBC URL additional properties")
+          description = "JDBC URL additional properties")
   private Map<String, String> urlx;
 
   @Override

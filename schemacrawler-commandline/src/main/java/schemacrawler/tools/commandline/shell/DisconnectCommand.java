@@ -33,12 +33,12 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.logging.Level;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 import sf.util.SchemaCrawlerLogger;
 
-@CommandLine.Command(name = "disconnect",
-                     header = "** Disconnect Options - Disconnect from a database")
+@Command(name = "disconnect",
+         header = "** Disconnect Options - Disconnect from a database")
 public class DisconnectCommand
   implements Runnable
 {

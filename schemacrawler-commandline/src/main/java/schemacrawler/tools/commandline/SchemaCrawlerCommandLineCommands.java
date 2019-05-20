@@ -1,32 +1,33 @@
 package schemacrawler.tools.commandline;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Mixin;
 import schemacrawler.tools.commandline.command.*;
 
-@CommandLine.Command
+@Command
 class SchemaCrawlerCommandLineCommands
 {
 
-  @CommandLine.Mixin
+  @Mixin
   private ConfigFileCommand configfile;
-  @CommandLine.Mixin
+  @Mixin
   private ConnectCommand connect;
-  @CommandLine.Mixin
+  @Mixin
   private ExecuteCommand execute;
-  @CommandLine.Mixin
+  @Mixin
   private FilterCommand filter;
-  @CommandLine.Mixin
+  @Mixin
   private GrepCommand grep;
-  @CommandLine.Mixin
+  @Mixin
   private LimitCommand limit;
-  @CommandLine.Mixin
+  @Mixin
   private LoadCommand load;
-  @CommandLine.Mixin
+  @Mixin
   private LogCommand log;
-  @CommandLine.Mixin
+  @Mixin
   private ShowCommand show;
-  @CommandLine.Mixin
+  @Mixin
   private SortCommand sort;
 
 }

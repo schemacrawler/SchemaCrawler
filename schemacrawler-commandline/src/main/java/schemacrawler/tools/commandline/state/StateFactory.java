@@ -30,10 +30,10 @@ package schemacrawler.tools.commandline.state;
 
 import static java.util.Objects.requireNonNull;
 
-import picocli.CommandLine;
+import picocli.CommandLine.IFactory;
 
 public class StateFactory
-  implements CommandLine.IFactory
+  implements IFactory
 {
 
   private final SchemaCrawlerShellState state;

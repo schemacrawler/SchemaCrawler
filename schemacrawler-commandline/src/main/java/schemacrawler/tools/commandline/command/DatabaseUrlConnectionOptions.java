@@ -29,7 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
@@ -39,11 +39,11 @@ public class DatabaseUrlConnectionOptions
   implements DatabaseConnectable
 {
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--url"
   },
-                      required = true,
-                      description = "JDBC connection URL to the database")
+          required = true,
+          description = "JDBC connection URL to the database")
   private String connectionUrl;
 
   @Override

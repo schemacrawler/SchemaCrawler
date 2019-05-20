@@ -29,17 +29,17 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.command;
 
 
-import picocli.CommandLine;
+import picocli.CommandLine.ArgGroup;
 
 public class DatabaseConnectionOptions
 {
 
-  @CommandLine.ArgGroup(exclusive = false,
-                        heading = "%nFor connecting to specific databases, use%n")
+  @ArgGroup(exclusive = false,
+            heading = "%nFor connecting to specific databases, use%n")
   private DatabaseConfigConnectionOptions databaseConfigConnectionOptions;
-  @CommandLine.ArgGroup(exclusive = false,
-                        heading = "%nIf your database does not have a "
-                                  + "SchemaCrawler plug-in, use%n")
+  @ArgGroup(exclusive = false,
+            heading = "%nIf your database does not have a "
+                      + "SchemaCrawler plug-in, use%n")
   private DatabaseUrlConnectionOptions databaseUrlConnectionOptions;
 
   DatabaseConnectable getDatabaseConnectable()

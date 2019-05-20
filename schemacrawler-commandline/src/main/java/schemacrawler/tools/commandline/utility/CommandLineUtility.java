@@ -33,9 +33,11 @@ import static picocli.CommandLine.Model.UsageMessageSpec.*;
 import java.util.Arrays;
 
 import picocli.CommandLine;
+import picocli.CommandLine.IFactory;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.Model.UsageMessageSpec;
+import picocli.CommandLine.ParseResult;
 import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -152,7 +154,7 @@ public class CommandLineUtility
   }
 
   public static CommandLine newCommandLine(final Object object,
-                                           final CommandLine.IFactory factory,
+                                           final IFactory factory,
                                            final boolean addPluginsAsMixins)
   {
     final CommandLine commandLine = newCommandLine(object, factory);
@@ -172,7 +174,7 @@ public class CommandLineUtility
   }
 
   private static CommandLine newCommandLine(final Object object,
-                                            final CommandLine.IFactory factory)
+                                            final IFactory factory)
   {
     final CommandLine commandLine;
     if (factory == null)
@@ -187,7 +189,7 @@ public class CommandLineUtility
     return commandLine;
   }
 
-  public static Config retrievePluginOptions(final CommandLine.ParseResult parseResult)
+  public static Config retrievePluginOptions(final ParseResult parseResult)
     throws SchemaCrawlerException
   {
     // Retrieve options, and save them to the state

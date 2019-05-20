@@ -33,7 +33,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.regex.Pattern;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 
@@ -42,64 +43,64 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
  *
  * @author Sualeh Fatehi
  */
-@CommandLine.Command(name = "grep",
-                     header = "** Grep Options - Grep for database object metadata",
-                     description = {
-                       "",
-                     })
+@Command(name = "grep",
+         header = "** Grep Options - Grep for database object metadata",
+         description = {
+           "",
+         })
 public final class GrepCommand
   implements Runnable
 {
 
   private final SchemaCrawlerShellState state;
 
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--grep-columns"
   },
-                      description = {
-                        "<grepcolumns> is a regular expression to match fully qualified column names, "
-                        + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
-                        + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
-                        + "matches columns named STREET or PRICE in any table",
-                        "Optional, default is no grep"
-                      })
+          description = {
+            "<grepcolumns> is a regular expression to match fully qualified column names, "
+            + "in the form \"SCHEMANAME.TABLENAME.COLUMNNAME\" "
+            + "- for example, --grep-columns=.*\\.STREET|.*\\.PRICE "
+            + "matches columns named STREET or PRICE in any table",
+            "Optional, default is no grep"
+          })
   private Pattern grepcolumns;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--grep-def"
   },
-                      description = {
-                        "<grepdef> is a regular expression to match text within remarks and definitions "
-                        + "of views, stored proedures and triggers, if available",
-                        "Optional, default is no grep"
-                      })
+          description = {
+            "<grepdef> is a regular expression to match text within remarks and definitions "
+            + "of views, stored proedures and triggers, if available",
+            "Optional, default is no grep"
+          })
   private Pattern grepdef;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--grep-in-out"
   },
-                      description = {
-                        "<grepinout> is a regular expression to match fully qualified inout names, "
-                        + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
-                        + "- for example, --grep-in-out=.*\\.STREET|.*\\.PRICE "
-                        + "matches inouts named STREET or PRICE in any routine",
-                        "Optional, default is no grep"
-                      })
+          description = {
+            "<grepinout> is a regular expression to match fully qualified inout names, "
+            + "in the form \"SCHEMANAME.ROUTINENAME.INOUTNAME\" "
+            + "- for example, --grep-in-out=.*\\.STREET|.*\\.PRICE "
+            + "matches inouts named STREET or PRICE in any routine",
+            "Optional, default is no grep"
+          })
   private Pattern grepinout;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--invert-match"
   },
-                      description = {
-                        "Inverts the sense of matching, and shows non-matching tables and columns",
-                        "Optional, default is false"
-                      })
+          description = {
+            "Inverts the sense of matching, and shows non-matching tables and columns",
+            "Optional, default is false"
+          })
   private Boolean invertMatch;
-  @CommandLine.Option(names = {
+  @Option(names = {
     "--only-matching"
   },
-                      description = {
-                        "Shows only matching tables, and does not show foreign keys "
-                        + "that reference other non-matching tables",
-                        "Optional, default is false"
-                      })
+          description = {
+            "Shows only matching tables, and does not show foreign keys "
+            + "that reference other non-matching tables",
+            "Optional, default is false"
+          })
   private Boolean onlyMatching;
 
   public GrepCommand(final SchemaCrawlerShellState state)

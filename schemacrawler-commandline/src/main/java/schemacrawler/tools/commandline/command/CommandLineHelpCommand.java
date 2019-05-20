@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import picocli.CommandLine;
+import picocli.CommandLine.*;
 import schemacrawler.tools.commandline.SchemaCrawlerShellCommands;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
@@ -46,9 +47,9 @@ import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 import schemacrawler.tools.executable.commandline.PluginCommand;
 
-@CommandLine.Command(name = "help",
-                     header = "Displays SchemaCrawler command-line help",
-                     helpCommand = true)
+@Command(name = "help",
+         header = "Displays SchemaCrawler command-line help",
+         helpCommand = true)
 public final class CommandLineHelpCommand
   implements Runnable
 {
@@ -59,7 +60,7 @@ public final class CommandLineHelpCommand
     final DatabaseConnector databaseConnector = databaseConnectorRegistry.lookupDatabaseConnector(
       databaseSystemIdentifier);
 
-    @CommandLine.Command
+    @Command
     class EmptyCommand
     {
     }
@@ -76,17 +77,17 @@ public final class CommandLineHelpCommand
     return subcommandLine;
   }
 
-  private CommandLine.Help.Ansi ansi;
-  @CommandLine.Parameters
+  private Help.Ansi ansi;
+  @Parameters
   private String[] commands;
   private PrintStream err;
-  @CommandLine.Option(names = { "-h", "--help" },
-                      usageHelp = true,
-                      description = "Displays SchemaCrawler command-line help")
+  @Option(names = { "-h", "--help" },
+          usageHelp = true,
+          description = "Displays SchemaCrawler command-line help")
   private boolean helpRequested;
   private PrintStream out;
-  @CommandLine.Spec
-  private CommandLine.Model.CommandSpec spec;
+  @Spec
+  private Model.CommandSpec spec;
 
   public boolean isHelpRequested()
   {
@@ -96,7 +97,7 @@ public final class CommandLineHelpCommand
   @Override
   public void run()
   {
-    ansi = CommandLine.Help.Ansi.AUTO;
+    ansi = Help.Ansi.AUTO;
     out = System.out;
     err = System.err;
 

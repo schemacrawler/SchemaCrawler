@@ -34,15 +34,15 @@ import static picocli.CommandLine.Help.Column.Overflow.WRAP;
 import static picocli.CommandLine.Help.TextTable.forColumns;
 import static sf.util.Utility.isBlank;
 
-import picocli.CommandLine;
+import picocli.CommandLine.Command;
 import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine.Help.Column;
 import picocli.CommandLine.Help.TextTable;
 import schemacrawler.schemacrawler.DatabaseServerType;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
-@CommandLine.Command(name = "servers",
-                     header = "** Servers Options - List available SchemaCrawler database plugins")
+@Command(name = "servers",
+         header = "** Servers Options - List available SchemaCrawler database plugins")
 public class AvailableServersCommand
   implements Runnable
 {
