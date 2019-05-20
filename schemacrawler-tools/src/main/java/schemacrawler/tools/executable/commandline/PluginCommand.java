@@ -40,10 +40,12 @@ public class PluginCommand
   {
     return new PluginCommand(null, null);
   }
+
   private final String helpDescription;
   private final String helpHeader;
   private final String name;
   private final Collection<PluginCommandOption> options;
+
   private PluginCommand(final String name,
                         final String helpHeader,
                         final String helpDescription,

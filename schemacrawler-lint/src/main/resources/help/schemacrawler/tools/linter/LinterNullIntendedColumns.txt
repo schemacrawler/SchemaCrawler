@@ -1,2 +1,0 @@
-Checks for tables where the default value is ‘NULL’ instead of NULL, 
-since this may indicate a error when creating a table. 

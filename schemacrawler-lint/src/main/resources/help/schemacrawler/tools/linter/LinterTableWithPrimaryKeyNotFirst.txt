@@ -1,2 +1,0 @@
-Checks for tables where the primary key columns are not first, since 
-this is the convention. 

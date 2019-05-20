@@ -1,0 +1,21 @@
+** Find lints (non-adherence to coding standards and conventions) in the
+database schema
+For more information, see https://www.schemacrawler.com/lint.html
+
+      --lint-dispatch=<lint-dispatch>
+                          Specifies how to fail if a linter threshold is exceeded
+                          Optional, defaults to none
+                          Corresponds to the configuration file setting:
+                            schemacrawler.lint.lintdispatch
+                          Use one of none, write_err, throw_exception,
+                            terminate_system
+      --linter-configs=<linter-configs>
+                          Path to the SchemaCrawler lint XML configuration file
+      --run-all-linters   Whether to run all linters, including running the ones
+                            that are not explicitly configured with their default
+                            settings
+                          Optional, defaults to true
+                          Corresponds to the configuration file setting:
+                            schemacrawler.lint.runalllinters
+
+

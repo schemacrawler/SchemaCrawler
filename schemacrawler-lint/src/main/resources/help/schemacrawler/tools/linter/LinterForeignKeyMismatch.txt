@@ -1,2 +1,0 @@
-Checks tables where the foreign key column data type is different from 
-the referenced primary key column data type. 
