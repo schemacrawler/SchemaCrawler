@@ -60,7 +60,7 @@ public final class SerializationCommand
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     // Nothing additional to check at this point. The Command should be
@@ -77,13 +77,17 @@ public final class SerializationCommand
     checkCatalog();
 
     final Path outputFile = outputOptions.getOutputFile()
-      .orElseGet(() -> Paths
-        .get(".",
-             String.format("schemacrawler-%s.%s", UUID.randomUUID(), "data")))
-      .normalize().toAbsolutePath();
+                                         .orElseGet(() -> Paths.get(".",
+                                                                    String.format(
+                                                                      "schemacrawler-%s.%s",
+                                                                      UUID.randomUUID(),
+                                                                      "data")))
+                                         .normalize()
+                                         .toAbsolutePath();
 
-    final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(catalog);
-    try (final OutputStream out = newOutputStream(outputFile);)
+    final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(
+      catalog);
+    try (final OutputStream out = newOutputStream(outputFile))
     {
       serializableCatalog.save(out);
     }

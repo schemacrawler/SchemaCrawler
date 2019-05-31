@@ -37,7 +37,7 @@
 
 ## Distribution
 
-1.  [Where is SchemaCrawler available?](#availibility)
+1.  [Where is SchemaCrawler available?](#availability )
 2.  [Is technical support available?](#tech-support)
 3.  [Is SchemaCrawler free?](#cost)
 
@@ -214,7 +214,7 @@ SchemaCrawler comes pre-built with integration with [Apache Velocity.](http://ve
 
 ## Distribution
 
-### <a name="availibility">Where is SchemaCrawler available?</a>
+### <a name="availability ">Where is SchemaCrawler available?</a>
 
 SchemaCrawler is available as a download from [GitHub](https://github.com/schemacrawler/SchemaCrawler/releases) .
 

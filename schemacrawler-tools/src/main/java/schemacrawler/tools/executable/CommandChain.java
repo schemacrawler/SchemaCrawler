@@ -95,9 +95,13 @@ public final class CommandChain
     requireNonNull(outputFileName, "No output file name provided");
 
     final Path outputFile = Paths.get(outputFileName);
-    final OutputOptions outputOptions = OutputOptionsBuilder
-      .builder(getOutputOptions()).withOutputFormatValue(outputFormat)
-      .withOutputFile(outputFile).toOptions();
+    final OutputOptions outputOptions = OutputOptionsBuilder.builder(
+      getOutputOptions())
+                                                            .withOutputFormatValue(
+                                                              outputFormat)
+                                                            .withOutputFile(
+                                                              outputFile)
+                                                            .toOptions();
 
     return addNextAndConfigureForExecution(command, outputOptions);
   }
@@ -109,7 +113,7 @@ public final class CommandChain
     checkCatalog();
 
     initializeChain();
-    checkAvailibilityChain();
+    checkAvailabilityChain();
     executeChain();
   }
 

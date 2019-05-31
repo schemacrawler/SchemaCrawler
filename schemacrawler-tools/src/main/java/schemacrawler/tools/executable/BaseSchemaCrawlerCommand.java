@@ -74,7 +74,7 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     // Nothing additional to check at this point.
@@ -89,9 +89,22 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
+  public final void setAdditionalConfiguration(final Config additionalConfiguration)
+  {
+    this.additionalConfiguration = requireNonNull(additionalConfiguration,
+                                                  "No additional configuration provided");
+  }
+
+  @Override
   public Catalog getCatalog()
   {
     return catalog;
+  }
+
+  @Override
+  public void setCatalog(final Catalog catalog)
+  {
+    this.catalog = catalog;
   }
 
   /**
@@ -110,9 +123,21 @@ public abstract class BaseSchemaCrawlerCommand
   }
 
   @Override
+  public void setConnection(final Connection connection)
+  {
+    this.connection = connection;
+  }
+
+  @Override
   public Identifiers getIdentifiers()
   {
     return identifiers;
+  }
+
+  @Override
+  public void setIdentifiers(final Identifiers identifiers)
+  {
+    this.identifiers = identifiers;
   }
 
   /**
@@ -122,38 +147,6 @@ public abstract class BaseSchemaCrawlerCommand
   public final OutputOptions getOutputOptions()
   {
     return outputOptions;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
-  {
-    return schemaCrawlerOptions;
-  }
-
-  @Override
-  public void initialize()
-    throws Exception
-  {
-    checkOptions();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
-  {
-    if (schemaCrawlerOptions != null)
-    {
-      this.schemaCrawlerOptions = schemaCrawlerOptions;
-    }
-    else
-    {
-      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
-    }
   }
 
   /**
@@ -172,29 +165,36 @@ public abstract class BaseSchemaCrawlerCommand
     }
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public void setIdentifiers(final Identifiers identifiers)
+  public final SchemaCrawlerOptions getSchemaCrawlerOptions()
   {
-    this.identifiers = identifiers;
+    return schemaCrawlerOptions;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public final void setSchemaCrawlerOptions(final SchemaCrawlerOptions schemaCrawlerOptions)
+  {
+    if (schemaCrawlerOptions != null)
+    {
+      this.schemaCrawlerOptions = schemaCrawlerOptions;
+    }
+    else
+    {
+      this.schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.newSchemaCrawlerOptions();
+    }
   }
 
   @Override
-  public void setConnection(final Connection connection)
+  public void initialize()
+    throws Exception
   {
-    this.connection = connection;
-  }
-
-  @Override
-  public void setCatalog(final Catalog catalog)
-  {
-    this.catalog = catalog;
-  }
-
-  @Override
-  public final void setAdditionalConfiguration(final Config additionalConfiguration)
-  {
-    this.additionalConfiguration = requireNonNull(additionalConfiguration,
-                                                  "No additional configuration provided");
+    checkOptions();
   }
 
   /**

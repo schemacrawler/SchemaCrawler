@@ -1,5 +1,2 @@
 schemacrawler.tools.integration.scripting.ScriptCommandProvider
-schemacrawler.tools.integration.freemarker.FreeMarkerCommandProvider
-schemacrawler.tools.integration.mustache.MustacheCommandProvider
-schemacrawler.tools.integration.velocity.VelocityCommandProvider
-schemacrawler.tools.integration.thymeleaf.ThymeleafCommandProvider
+schemacrawler.tools.integration.template.TemplateCommandProvider

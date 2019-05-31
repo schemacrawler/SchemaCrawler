@@ -60,12 +60,12 @@ abstract class BaseCommandChain
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     // Check the availability of the chain, even though there may be no
     // command in the chain until the actual point of execution
-    checkAvailibilityChain();
+    checkAvailabilityChain();
   }
 
   final SchemaCrawlerCommand addNextAndConfigureForExecution(final String command,
@@ -100,7 +100,7 @@ abstract class BaseCommandChain
     }
   }
 
-  final void checkAvailibilityChain()
+  final void checkAvailabilityChain()
     throws Exception
   {
     if (scCommands.isEmpty())
@@ -111,7 +111,7 @@ abstract class BaseCommandChain
 
     for (final SchemaCrawlerCommand scCommand : scCommands)
     {
-      scCommand.checkAvailibility();
+      scCommand.checkAvailability();
     }
   }
 

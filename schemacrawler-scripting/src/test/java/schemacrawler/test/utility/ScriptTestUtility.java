@@ -35,6 +35,7 @@ import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 
 import java.nio.file.Path;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
 
 import schemacrawler.schemacrawler.Config;
@@ -43,25 +44,63 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 public class ScriptTestUtility
 {
 
-  public static Path executableScript(final Connection connection,
-                                      final String scriptResource)
+  private static Map<String, String> additionalArgsMap()
+  {
+    final Map<String, String> argsMap = new HashMap<>();
+    argsMap.put("-schemas", "((?!FOR_LINT).)*");
+    argsMap.put("-info-level", "standard");
+    return argsMap;
+  }
+
+  public static Path commandLineScriptExecution(final DatabaseConnectionInfo connectionInfo,
+                                                final String script)
     throws Exception
   {
-    final SchemaCrawlerExecutable executable = executableOf("script");
+    return keyedCommandLineExecution(connectionInfo, "script", script);
+  }
+
+  public static Path commandLineTemplateExecution(final DatabaseConnectionInfo connectionInfo,
+                                                  final String template)
+    throws Exception
+  {
+    return keyedCommandLineExecution(connectionInfo, "template", template);
+  }
+
+  private static Path keyedCommandLineExecution(final DatabaseConnectionInfo connectionInfo,
+                                                final String key,
+                                                final String script)
+    throws Exception
+  {
+    final Map<String, String> argsMap = additionalArgsMap();
+    argsMap.put("-" + key, script);
+    return commandlineExecution(connectionInfo, key, argsMap, "text");
+  }
+
+  private static Path keyedExecutableExecution(final Connection connection,
+                                               final String key,
+                                               final String script)
+    throws Exception
+  {
+    final SchemaCrawlerExecutable executable = executableOf(key);
     final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("script:resource", scriptResource);
+    additionalConfiguration.put(key, script);
     executable.setAdditionalConfiguration(additionalConfiguration);
 
     return executableExecution(connection, executable, "text");
   }
 
-  public static Path executeScriptCommandLine(final DatabaseConnectionInfo connectionInfo,
-                                              final Map<String, String> argsMap,
-                                              final String scriptResource)
+  public static Path scriptExecution(final Connection connection,
+                                     final String script)
     throws Exception
   {
-    argsMap.put("-script:resource", scriptResource);
-    return commandlineExecution(connectionInfo, "script", argsMap, "text");
+    return keyedExecutableExecution(connection, "script", script);
+  }
+
+  public static Path templateExecution(final Connection connection,
+                                       final String template)
+    throws Exception
+  {
+    return keyedExecutableExecution(connection, "template", template);
   }
 
 }

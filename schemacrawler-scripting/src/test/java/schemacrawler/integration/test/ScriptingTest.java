@@ -31,7 +31,7 @@ package schemacrawler.integration.test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.ScriptTestUtility.executableScript;
+import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
 import java.sql.Connection;
 
@@ -51,8 +51,7 @@ public class ScriptingTest
   public void executableGroovy(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableScript(connection,
-                                         "/plaintextschema.groovy")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.groovy")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
@@ -60,7 +59,7 @@ public class ScriptingTest
   public void executableJavaScript(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableScript(connection, "/plaintextschema.js")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.js")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
@@ -69,7 +68,7 @@ public class ScriptingTest
     throws Exception
   {
     System.setProperty("python.console.encoding", "UTF-8");
-    assertThat(outputOf(executableScript(connection, "/plaintextschema.py")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.py")),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 
@@ -77,7 +76,7 @@ public class ScriptingTest
   public void executableRuby(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableScript(connection, "/plaintextschema.rb")),
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.rb")),
                hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 

@@ -60,17 +60,19 @@ public final class CommandDaisyChain
       throw new SchemaCrawlerException("No command specified");
     }
 
-    for (final String command: commands)
+    for (final String command : commands)
     {
-      final SchemaCrawlerCommand scCommand = addNextAndConfigureForExecution(command,
-                                                                             outputOptions);
+      final SchemaCrawlerCommand scCommand = addNextAndConfigureForExecution(
+        command,
+        outputOptions);
       if (scCommand == null)
       {
         continue;
       }
 
       final CommonTextOptionsBuilder commonTextOptionsBuilder = CommonTextOptionsBuilder
-        .builder().fromConfig(additionalConfiguration);
+        .builder()
+        .fromConfig(additionalConfiguration);
 
       if (commands.hasMultipleCommands())
       {
@@ -109,7 +111,7 @@ public final class CommandDaisyChain
     }
 
     initializeChain();
-    checkAvailibilityChain();
+    checkAvailabilityChain();
     executeChain();
 
   }

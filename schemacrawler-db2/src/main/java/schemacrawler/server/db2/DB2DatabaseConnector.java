@@ -72,7 +72,7 @@ public final class DB2DatabaseConnector
   {
     final PluginCommand pluginCommand = super.getHelpCommand();
     pluginCommand.addOption("server",
-                            "--server=mysql%n"
+                            "--server=db2%n"
                             + "Loads SchemaCrawler plug-in for IBM DB2",
                             String.class)
                  .addOption("host",

@@ -25,29 +25,33 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.thymeleaf;
+package schemacrawler.tools.integration.template;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
 import schemacrawler.tools.executable.SchemaCrawlerCommand;
+import schemacrawler.tools.executable.commandline.PluginCommand;
 import schemacrawler.tools.options.OutputOptions;
 
-public class ThymeleafCommandProvider
+public class TemplateCommandProvider
   extends BaseCommandProvider
 {
 
-  public ThymeleafCommandProvider()
+  public static final String DESCRIPTION_HEADER =
+    "Process a template file, such as Freemarker, "
+    + "against the database schema";
+
+  public TemplateCommandProvider()
   {
-    super(new CommandDescription(ThymeleafRenderer.COMMAND,
-                                 "Render a Thymeleaf template against a schema"));
+    super(new CommandDescription(TemplateCommand.COMMAND, DESCRIPTION_HEADER));
   }
 
   @Override
   public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
   {
-    return new ThymeleafRenderer();
+    return new TemplateCommand();
   }
 
   @Override
@@ -56,6 +60,21 @@ public class ThymeleafCommandProvider
                                               final OutputOptions outputOptions)
   {
     return supportsCommand(command);
+  }
+
+  @Override
+  public PluginCommand getCommandLineCommand()
+  {
+    final PluginCommand pluginCommand = new PluginCommand("template",
+                                                          "** "
+                                                          + DESCRIPTION_HEADER);
+    pluginCommand.addOption("template",
+                            "Path to the template file or to the CLASSPATH resource",
+                            String.class)
+                 .addOption("templating-language",
+                            "Templating language",
+                            String.class);
+    return pluginCommand;
   }
 
 }

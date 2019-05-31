@@ -31,9 +31,7 @@ package schemacrawler.tools.integration.embeddedgraph;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.Files.newBufferedReader;
 import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 import static sf.util.IOUtility.copy;
 import static sf.util.IOUtility.createTempFilePath;
 
@@ -56,9 +54,37 @@ public class EmbeddedGraphRenderer
   extends BaseSchemaCrawlerCommand
 {
 
-  private static Pattern svgInsertionPoint = Pattern
-    .compile("<h2.*Tables.*h2>");
-  private static Pattern svgStart = Pattern.compile("<svg.*");
+  private static final Pattern svgInsertionPoint = Pattern.compile(
+    "<h2.*Tables.*h2>");
+  private static final Pattern svgStart = Pattern.compile("<svg.*");
+
+  private static void insertSvg(final BufferedWriter finalHtmlFileWriter,
+                                final BufferedReader baseSvgFileReader)
+    throws IOException
+  {
+    finalHtmlFileWriter.append(System.lineSeparator());
+    boolean skipLines = true;
+    boolean isSvgStart = false;
+    String line;
+    while ((line = baseSvgFileReader.readLine()) != null)
+    {
+      if (skipLines)
+      {
+        isSvgStart = svgStart.matcher(line).matches();
+        skipLines = !isSvgStart;
+      }
+      if (!skipLines)
+      {
+        if (isSvgStart)
+        {
+          line = "<svg";
+          isSvgStart = false;
+        }
+        finalHtmlFileWriter.append(line).append(System.lineSeparator());
+      }
+    }
+    finalHtmlFileWriter.append(System.lineSeparator());
+  }
 
   public EmbeddedGraphRenderer(final String command)
   {
@@ -66,15 +92,15 @@ public class EmbeddedGraphRenderer
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     if (GraphvizUtility.isGraphvizAvailable())
     {
       return;
     }
-    else if (GraphvizJavaExecutorUtility
-      .isGraphvizJavaAvailable(GraphOutputFormat.svg))
+    else if (GraphvizJavaExecutorUtility.isGraphvizJavaAvailable(
+      GraphOutputFormat.svg))
     {
       return;
     }
@@ -101,16 +127,16 @@ public class EmbeddedGraphRenderer
     chain.execute();
 
     // Interleave HTML and SVG
-    try (
-        final BufferedWriter finalHtmlFileWriter = newBufferedWriter(finalHtmlFile,
-                                                                     UTF_8,
-                                                                     WRITE,
-                                                                     CREATE,
-                                                                     TRUNCATE_EXISTING);
-        final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
-                                                                    UTF_8);
-        final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
-                                                                   UTF_8);)
+    try (final BufferedWriter finalHtmlFileWriter = newBufferedWriter(
+      finalHtmlFile,
+      UTF_8,
+      WRITE,
+      CREATE,
+      TRUNCATE_EXISTING);
+      final BufferedReader baseHtmlFileReader = newBufferedReader(baseHtmlFile,
+                                                                  UTF_8);
+      final BufferedReader baseSvgFileReader = newBufferedReader(baseSvgFile,
+                                                                 UTF_8))
     {
       String line;
       while ((line = baseHtmlFileReader.readLine()) != null)
@@ -123,7 +149,7 @@ public class EmbeddedGraphRenderer
       }
     }
 
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       copy(newBufferedReader(finalHtmlFile, UTF_8), writer);
     }
@@ -133,34 +159,6 @@ public class EmbeddedGraphRenderer
   public boolean usesConnection()
   {
     return false;
-  }
-
-  private void insertSvg(final BufferedWriter finalHtmlFileWriter,
-                         final BufferedReader baseSvgFileReader)
-    throws IOException
-  {
-    finalHtmlFileWriter.append(System.lineSeparator());
-    boolean skipLines = true;
-    boolean isSvgStart = false;
-    String line;
-    while ((line = baseSvgFileReader.readLine()) != null)
-    {
-      if (skipLines)
-      {
-        isSvgStart = svgStart.matcher(line).matches();
-        skipLines = !isSvgStart;
-      }
-      if (!skipLines)
-      {
-        if (isSvgStart)
-        {
-          line = "<svg";
-          isSvgStart = false;
-        }
-        finalHtmlFileWriter.append(line).append(System.lineSeparator());
-      }
-    }
-    finalHtmlFileWriter.append(System.lineSeparator());
   }
 
 }

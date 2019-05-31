@@ -33,18 +33,14 @@ import static schemacrawler.tools.iosource.InputResourceUtility.createInputResou
 
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
-
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.integration.template.BaseTemplateRenderer;
 import schemacrawler.tools.iosource.InputResource;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Main executor for the Mustache integration.
@@ -52,65 +48,29 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class MustacheRenderer
-  extends BaseSchemaCrawlerCommand
+  extends BaseTemplateRenderer
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(MustacheRenderer.class.getName());
-
-  static final String COMMAND = "mustache";
-
-  public MustacheRenderer()
-  {
-    super(COMMAND);
-  }
-
-  @Override
-  public void checkAvailibility()
-    throws Exception
-  {
-    // Nothing to check at this point. The Command should be available
-    // after the class is loaded, and imports are resolved.
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final void execute()
     throws Exception
   {
-    checkCatalog();
+    final OutputOptions outputOptions = getOutputOptions();
 
-    final String templateLocation = outputOptions.getOutputFormatValue();
+    final String templateLocation = getResourceFilename();
     final InputResource inputResource = createInputResource(templateLocation);
 
-    LOGGER.log(Level.INFO,
-               new StringFormat("Rendering template <%s> using Mustache",
-                                templateLocation));
-
     final MustacheFactory mustacheFactory = new DefaultMustacheFactory();
-    final Mustache mustache = mustacheFactory
-      .compile(inputResource.openNewInputReader(StandardCharsets.UTF_8),
-               templateLocation);
+    final Mustache mustache = mustacheFactory.compile(inputResource.openNewInputReader(
+      StandardCharsets.UTF_8), templateLocation);
 
-    // Create the root hash
-    final Map<String, Object> context = new HashMap<>();
-    context.put("catalog", catalog);
-    context.put("identifiers", identifiers);
-
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       // Evaluate the template
+      final Map<String, Object> context = getContext();
       mustache.execute(writer, context).flush();
     }
 
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return true;
   }
 
 }

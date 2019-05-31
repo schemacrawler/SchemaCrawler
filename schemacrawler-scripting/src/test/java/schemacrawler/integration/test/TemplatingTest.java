@@ -30,9 +30,8 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.*;
+import static schemacrawler.test.utility.ScriptTestUtility.templateExecution;
 
 import java.sql.Connection;
 
@@ -45,16 +44,14 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class TemplatingIntegrationTest
+public class TemplatingTest
 {
 
   @Test
   public void executableFreeMarker(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("freemarker"),
-                                            "/plaintextschema.ftl")),
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
@@ -62,9 +59,8 @@ public class TemplatingIntegrationTest
   public void executableMustache(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("mustache"),
-                                            "/plaintextschema.mustache")),
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.mustache")),
                hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
@@ -72,9 +68,8 @@ public class TemplatingIntegrationTest
   public void executableThymeleaf(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("thymeleaf"),
-                                            "/plaintextschema.thymeleaf")),
+    assertThat(outputOf(templateExecution(connection,
+                                          "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
@@ -82,9 +77,7 @@ public class TemplatingIntegrationTest
   public void executableVelocity(final Connection connection)
     throws Exception
   {
-    assertThat(outputOf(executableExecution(connection,
-                                            executableOf("velocity"),
-                                            "/plaintextschema.vm")),
+    assertThat(outputOf(templateExecution(connection, "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 

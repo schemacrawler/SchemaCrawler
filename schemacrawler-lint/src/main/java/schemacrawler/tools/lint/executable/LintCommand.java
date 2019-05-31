@@ -59,10 +59,18 @@ public class LintCommand
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     // Lint is always available
+  }
+
+  @Override
+  public void initialize()
+    throws Exception
+  {
+    super.initialize();
+    loadLintOptions();
   }
 
   @Override
@@ -86,22 +94,14 @@ public class LintCommand
   }
 
   @Override
-  public void initialize()
-    throws Exception
+  public boolean usesConnection()
   {
-    super.initialize();
-    loadLintOptions();
+    return false;
   }
 
   public final void setLintOptions(final LintOptions lintOptions)
   {
     this.lintOptions = requireNonNull(lintOptions, "No lint options provided");
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return false;
   }
 
   private void dispatch(final Linters linters)
@@ -137,11 +137,9 @@ public class LintCommand
     formatter.handleStart();
     formatter.handle(catalog);
 
-    final List<? extends Table> tablesList = new ArrayList<>(catalog
-                                                               .getTables());
+    final List<? extends Table> tablesList = new ArrayList<>(catalog.getTables());
     Collections.sort(tablesList,
-                     NamedObjectSort.getNamedObjectSort(lintOptions
-                                                          .isAlphabeticalSortForTables()));
+                     NamedObjectSort.getNamedObjectSort(lintOptions.isAlphabeticalSortForTables()));
     for (final Table table : tablesList)
     {
       formatter.handle(table);
@@ -159,8 +157,8 @@ public class LintCommand
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
 
-    final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(
+      outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new LintJsonFormatter(lintOptions,
@@ -182,7 +180,8 @@ public class LintCommand
     if (lintOptions == null)
     {
       lintOptions = LintOptionsBuilder.builder()
-        .fromConfig(additionalConfiguration).toOptions();
+                                      .fromConfig(additionalConfiguration)
+                                      .toOptions();
     }
   }
 

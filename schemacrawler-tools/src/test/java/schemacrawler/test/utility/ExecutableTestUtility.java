@@ -71,9 +71,12 @@ public final class ExecutableTestUtility
     final TestWriter testout = new TestWriter();
     try (final TestWriter out = testout)
     {
-      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder
-        .builder(executable.getOutputOptions())
-        .withOutputFormatValue(outputFormatValue).withOutputWriter(out);
+      final OutputOptionsBuilder outputOptionsBuilder = OutputOptionsBuilder.builder(
+        executable.getOutputOptions())
+                                                                            .withOutputFormatValue(
+                                                                              outputFormatValue)
+                                                                            .withOutputWriter(
+                                                                              out);
 
       executable.setOutputOptions(outputOptionsBuilder.toOptions());
       executable.setConnection(connection);
@@ -90,17 +93,17 @@ public final class ExecutableTestUtility
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final SchemaCrawlerExecutable scriptExecutable = new SchemaCrawlerExecutable(
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
       command);
-    scriptExecutable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-    return scriptExecutable;
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+    return executable;
   }
 
   public static Matcher<TestResource> hasSameContentAndTypeAs(final TestResource classpathTestResource,
                                                               final OutputFormat outputFormat)
   {
-    return FileHasContent
-      .hasSameContentAndTypeAs(classpathTestResource, outputFormat.getFormat());
+    return FileHasContent.hasSameContentAndTypeAs(classpathTestResource,
+                                                  outputFormat.getFormat());
   }
 
   private ExecutableTestUtility()

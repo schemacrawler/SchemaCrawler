@@ -29,25 +29,15 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import static sf.util.IOUtility.getFileExtension;
-import static sf.util.Utility.isBlank;
-
 import javax.script.*;
-import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
-import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
 import schemacrawler.tools.executable.CommandChain;
-import schemacrawler.tools.iosource.ClasspathInputResource;
-import schemacrawler.tools.iosource.FileInputResource;
 import schemacrawler.tools.iosource.InputResource;
 import sf.util.ObjectToString;
 import sf.util.SchemaCrawlerLogger;
@@ -85,13 +75,16 @@ public final class ScriptCommand
                  ObjectToString.toString(scriptEngineFactory.getExtensions())));
   }
 
+  private final ScriptLanguage scriptLanguage;
+
   public ScriptCommand()
   {
     super(COMMAND);
+    scriptLanguage = new ScriptLanguage();
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     getScriptEngine();
@@ -106,12 +99,13 @@ public final class ScriptCommand
   {
     checkCatalog();
 
+    scriptLanguage.addConfig(getAdditionalConfiguration());
+
     final Charset inputCharset = outputOptions.getInputCharset();
-    // The output format value is the script file or resource name
-    final String outputFormatValue = outputOptions.getOutputFormatValue();
 
     final ScriptEngine scriptEngine = getScriptEngine();
-    try (final Reader reader = scriptResource().openNewInputReader(inputCharset);
+    final InputResource inputResource = scriptLanguage.getResource();
+    try (final Reader reader = inputResource.openNewInputReader(inputCharset);
       final Writer writer = outputOptions.openNewOutputWriter())
     {
       final CommandChain chain = new CommandChain(this);
@@ -147,7 +141,7 @@ public final class ScriptCommand
   {
     final ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
     ScriptEngine scriptEngine = null;
-    final String scriptingLanguage = getScriptingLanguage();
+    final String scriptingLanguage = scriptLanguage.getLanguage();
     LOGGER.log(Level.CONFIG,
                new StringFormat("Using scripting language <%s>",
                                 scriptingLanguage));
@@ -173,76 +167,6 @@ public final class ScriptCommand
     logScriptEngineDetails(Level.CONFIG, scriptEngine.getFactory());
 
     return scriptEngine;
-  }
-
-  private String getScriptingLanguage()
-  {
-    final Config config = getAdditionalConfiguration();
-
-    // Check if the scripting language is specified
-    final String scriptLanguage = config.getStringValue("scripting-language",
-                                                        null);
-    if (!isBlank(scriptLanguage))
-    {
-      return scriptLanguage;
-    }
-
-    // Use the script file extension if the scripting language is not specified
-    String scriptFile;
-    scriptFile = config.getStringValue("script:file", null);
-    if (isBlank(scriptFile))
-    {
-      scriptFile = config.getStringValue("script:resource", null);
-    }
-    final String scriptExtension = getFileExtension(scriptFile);
-    if (!isBlank(scriptExtension))
-    {
-      return scriptExtension;
-    }
-
-    return "nashorn";
-  }
-
-  private InputResource scriptResource()
-    throws IOException
-  {
-    InputResource scriptResource;
-    scriptResource = scriptClasspathResource();
-    if (scriptResource == null)
-    {
-      scriptResource = scriptFileResource();
-    }
-    if (scriptResource == null)
-    {
-      throw new SchemaCrawlerRuntimeException("No script file provided");
-    }
-    return scriptResource;
-  }
-
-  private InputResource scriptFileResource()
-    throws IOException
-  {
-    final Config config = getAdditionalConfiguration();
-    final String scriptFile = config.getStringValue("script:file", null);
-    if (isBlank(scriptFile))
-    {
-      return null;
-    }
-    final Path scriptFilePath = Paths.get(scriptFile).toAbsolutePath();
-    return new FileInputResource(scriptFilePath);
-  }
-
-  private InputResource scriptClasspathResource()
-    throws IOException
-  {
-    final Config config = getAdditionalConfiguration();
-    final String scriptResource = config.getStringValue("script:resource",
-                                                        null);
-    if (isBlank(scriptResource))
-    {
-      return null;
-    }
-    return new ClasspathInputResource(scriptResource);
   }
 
 }

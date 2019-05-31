@@ -28,8 +28,6 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.integration.scripting;
 
 
-import java.nio.file.Path;
-
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.tools.executable.BaseCommandProvider;
 import schemacrawler.tools.executable.CommandDescription;
@@ -70,13 +68,10 @@ public class ScriptCommandProvider
     final PluginCommand pluginCommand = new PluginCommand("script",
                                                           "** "
                                                           + DESCRIPTION_HEADER);
-    pluginCommand.addOption("script:file",
-                            "Path to the script file",
-                            Path.class);
-    pluginCommand.addOption("script:resource",
-                            "Classpath resource for the script file",
-                            String.class);
-    pluginCommand.addOption("scripting-language",
+    pluginCommand.addOption("script",
+                            "Path to the script file or to the CLASSPATH resource",
+                            String.class)
+                 .addOption("scripting-language",
                             "Scripting language",
                             String.class);
     return pluginCommand;

@@ -53,13 +53,14 @@ public class ScriptingLanguageTest
 {
 
   private static Path executableScriptFromFile(final Connection connection,
+                                               final String language,
                                                final Path scriptFile)
     throws Exception
   {
     final SchemaCrawlerExecutable executable = executableOf("script");
     final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("script:file", scriptFile.toString());
-    additionalConfiguration.put("scripting-language", "groovy");
+    additionalConfiguration.put("script", scriptFile.toString());
+    additionalConfiguration.put("scripting-language", language);
     executable.setAdditionalConfiguration(additionalConfiguration);
 
     return executableExecution(connection, executable, "text");
@@ -70,7 +71,9 @@ public class ScriptingLanguageTest
     throws Exception
   {
     final Path scriptFile = copyResourceToTempFile("/plaintextschema.groovy");
-    assertThat(outputOf(executableScriptFromFile(connection, scriptFile)),
+    assertThat(outputOf(executableScriptFromFile(connection,
+                                                 "groovy",
+                                                 scriptFile)),
                hasSameContentAs(classpathResource("script_output.txt")));
   }
 

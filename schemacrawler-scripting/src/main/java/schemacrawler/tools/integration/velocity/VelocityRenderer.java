@@ -32,7 +32,6 @@ package schemacrawler.tools.integration.velocity;
 import java.io.File;
 import java.io.Writer;
 import java.util.Properties;
-import java.util.logging.Level;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -43,9 +42,8 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.tools.integration.template.BaseTemplateRenderer;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Main executor for the Velocity integration.
@@ -53,13 +51,8 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class VelocityRenderer
-  extends BaseSchemaCrawlerCommand
+  extends BaseTemplateRenderer
 {
-
-  static final String COMMAND = "velocity";
-
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(VelocityRenderer.class.getName());
 
   private static void setVelocityResourceLoaderProperty(final Properties p,
                                                         final String resourceLoaderName,
@@ -71,31 +64,16 @@ public final class VelocityRenderer
       + resourceLoaderPropertyName, resourceLoaderPropertyValue);
   }
 
-  public VelocityRenderer()
-  {
-    super(COMMAND);
-  }
-
-  @Override
-  public void checkAvailibility()
-    throws Exception
-  {
-    // Nothing to check at this point. The Command should be available
-    // after the class is loaded, and imports are resolved.
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final void execute()
     throws Exception
   {
-    checkCatalog();
+
+    final OutputOptions outputOptions = getOutputOptions();
 
     // Set the file path, in case the template is a file template
     // This allows Velocity to load templates from any directory
-    String templateLocation = outputOptions.getOutputFormatValue();
+    String templateLocation = getResourceFilename();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
@@ -129,26 +107,15 @@ public final class VelocityRenderer
                                       "path",
                                       templatePath);
 
-    LOGGER.log(Level.CONFIG,
-               new StringFormat("Velocity configuration properties <%s>",
-                                p.toString()));
-
     ve.init(p);
 
-    final Context context = new VelocityContext();
-    context.put("catalog", catalog);
-    context.put("identifiers", identifiers);
+    final Context context = new VelocityContext(getContext());
 
     try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       final String templateEncoding = outputOptions.getInputCharset().name();
-      LOGGER.log(Level.INFO,
-                 new StringFormat(
-                   "Reading Velocity template <%s>, with encoding <%s>",
-                   templateLocation,
-                   templateEncoding));
-      final Template template = ve
-        .getTemplate(templateLocation, templateEncoding);
+      final Template template = ve.getTemplate(templateLocation,
+                                               templateEncoding);
       template.merge(context, writer);
     }
     catch (final ResourceNotFoundException e)
@@ -158,12 +125,6 @@ public final class VelocityRenderer
         e);
     }
 
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return true;
   }
 
 }

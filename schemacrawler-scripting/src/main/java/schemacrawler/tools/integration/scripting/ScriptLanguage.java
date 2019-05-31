@@ -25,37 +25,19 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.mustache;
+
+package schemacrawler.tools.integration.scripting;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.integration.BaseLanguage;
 
-public class MustacheCommandProvider
-  extends BaseCommandProvider
+public final class ScriptLanguage
+  extends BaseLanguage
 {
 
-  public MustacheCommandProvider()
+  public ScriptLanguage()
   {
-    super(new CommandDescription(MustacheRenderer.COMMAND,
-                                 "Render a Mustache template against a schema"));
-  }
-
-  @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
-  {
-    return new MustacheRenderer();
-  }
-
-  @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final OutputOptions outputOptions)
-  {
-    return supportsCommand(command);
+    super("scripting-language", "script", "nashorn");
   }
 
 }

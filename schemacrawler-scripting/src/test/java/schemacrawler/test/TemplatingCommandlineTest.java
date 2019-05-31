@@ -30,11 +30,8 @@ package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.CommandlineTestUtility.commandlineExecution;
 import static schemacrawler.test.utility.FileHasContent.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import static schemacrawler.test.utility.ScriptTestUtility.commandLineTemplateExecution;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,22 +46,12 @@ import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
 public class TemplatingCommandlineTest
 {
 
-  private static Map<String, String> additionalArgsMap()
-  {
-    final Map<String, String> argsMap = new HashMap<>();
-    argsMap.put("-schemas", "((?!FOR_LINT).)*");
-    argsMap.put("-info-level", "standard");
-    return argsMap;
-  }
-
   @Test
   public void commandlineFreeMarker(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "freemarker",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.ftl")),
+    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     "/plaintextschema.ftl")),
                hasSameContentAs(classpathResource("executableForFreeMarker.txt")));
   }
 
@@ -72,10 +59,8 @@ public class TemplatingCommandlineTest
   public void commandlineMustache(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "mustache",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.mustache")),
+    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     "/plaintextschema.mustache")),
                hasSameContentAs(classpathResource("executableForMustache.txt")));
   }
 
@@ -83,10 +68,8 @@ public class TemplatingCommandlineTest
   public void commandlineThymeleaf(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "thymeleaf",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.thymeleaf")),
+    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     "/plaintextschema.thymeleaf")),
                hasSameContentAs(classpathResource("executableForThymeleaf.txt")));
   }
 
@@ -94,10 +77,8 @@ public class TemplatingCommandlineTest
   public void commandlineVelocity(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertThat(outputOf(commandlineExecution(connectionInfo,
-                                             "velocity",
-                                             additionalArgsMap(),
-                                             "/plaintextschema.vm")),
+    assertThat(outputOf(commandLineTemplateExecution(connectionInfo,
+                                                     "/plaintextschema.vm")),
                hasSameContentAs(classpathResource("executableForVelocity.txt")));
   }
 

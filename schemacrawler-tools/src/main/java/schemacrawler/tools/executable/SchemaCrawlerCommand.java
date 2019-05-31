@@ -49,56 +49,53 @@ public interface SchemaCrawlerCommand
    * Checks whether a command is available, and throws an exception if
    * it is not available.
    *
-   * @throws Exception
-   *         On an exception
+   * @throws Exception On an exception
    */
-  void checkAvailibility()
+  void checkAvailability()
     throws Exception;
 
   /**
    * Executes functionality for SchemaCrawler, after database metadata
    * has been obtained.
    *
-   * @throws Exception
-   *         On an exception
+   * @throws Exception On an exception
    */
   void execute()
     throws Exception;
 
   Config getAdditionalConfiguration();
 
+  void setAdditionalConfiguration(Config config);
+
   Catalog getCatalog();
+
+  void setCatalog(Catalog catalog);
 
   String getCommand();
 
   Connection getConnection();
 
+  void setConnection(Connection connection);
+
   Identifiers getIdentifiers();
+
+  void setIdentifiers(Identifiers identifiers);
 
   OutputOptions getOutputOptions();
 
+  void setOutputOptions(OutputOptions outputOptions);
+
   SchemaCrawlerOptions getSchemaCrawlerOptions();
+
+  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
   /**
    * Initializes the command for execution.
    *
-   * @throws Exception
-   *         On an exception
+   * @throws Exception On an exception
    */
   void initialize()
     throws Exception;
-
-  void setAdditionalConfiguration(Config config);
-
-  void setCatalog(Catalog catalog);
-
-  void setConnection(Connection connection);
-
-  void setIdentifiers(Identifiers identifiers);
-
-  void setOutputOptions(OutputOptions outputOptions);
-
-  void setSchemaCrawlerOptions(SchemaCrawlerOptions schemaCrawlerOptions);
 
   default boolean usesConnection()
   {

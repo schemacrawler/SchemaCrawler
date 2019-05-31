@@ -34,13 +34,9 @@ import java.nio.charset.Charset;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.templateresolver.AbstractConfigurableTemplateResolver;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.UrlTemplateResolver;
-
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import org.thymeleaf.templateresolver.*;
+import schemacrawler.tools.integration.template.BaseTemplateRenderer;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Main executor for the Thymeleaf integration.
@@ -48,36 +44,25 @@ import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
  * @author Sualeh Fatehi
  */
 public final class ThymeleafRenderer
-  extends BaseSchemaCrawlerCommand
+  extends BaseTemplateRenderer
 {
 
-  static final String COMMAND = "thymeleaf";
-
-  public ThymeleafRenderer()
+  private static ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
+                                             final Charset inputEncoding)
   {
-    super(COMMAND);
+    templateResolver.setCharacterEncoding(inputEncoding.name());
+    templateResolver.setTemplateMode("HTML5");
+    return templateResolver;
   }
 
-  @Override
-  public void checkAvailibility()
-    throws Exception
-  {
-    // Nothing to check at this point. The Command should be available
-    // after the class is loaded, and imports are resolved.
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final void execute()
     throws Exception
   {
-    checkCatalog();
+    final OutputOptions outputOptions = getOutputOptions();
 
     final Context context = new Context();
-    context.setVariable("catalog", catalog);
-    context.setVariable("identifiers", identifiers);
+    context.setVariables(getContext());
 
     final TemplateEngine templateEngine = new TemplateEngine();
     final Charset inputCharset = outputOptions.getInputCharset();
@@ -88,32 +73,18 @@ public final class ThymeleafRenderer
 
     final ClassLoaderTemplateResolver classpathResolver = new ClassLoaderTemplateResolver();
     classpathResolver.setCheckExistence(true);
-    templateEngine
-      .addTemplateResolver(configure(classpathResolver, inputCharset));
+    templateEngine.addTemplateResolver(configure(classpathResolver,
+                                                 inputCharset));
 
     final UrlTemplateResolver urlResolver = new UrlTemplateResolver();
     urlResolver.setCheckExistence(true);
     templateEngine.addTemplateResolver(configure(urlResolver, inputCharset));
 
-    final String templateLocation = outputOptions.getOutputFormatValue();
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    final String templateLocation = getResourceFilename();
+    try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       templateEngine.process(templateLocation, context, writer);
     }
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return true;
-  }
-
-  private ITemplateResolver configure(final AbstractConfigurableTemplateResolver templateResolver,
-                                      final Charset inputEncoding)
-  {
-    templateResolver.setCharacterEncoding(inputEncoding.name());
-    templateResolver.setTemplateMode("HTML5");
-    return templateResolver;
   }
 
 }

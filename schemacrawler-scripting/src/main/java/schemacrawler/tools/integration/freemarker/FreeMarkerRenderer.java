@@ -31,10 +31,8 @@ package schemacrawler.tools.integration.freemarker;
 
 import java.io.File;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
 
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.FileTemplateLoader;
@@ -42,9 +40,8 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
-import sf.util.SchemaCrawlerLogger;
-import sf.util.StringFormat;
+import schemacrawler.tools.integration.template.BaseTemplateRenderer;
+import schemacrawler.tools.options.OutputOptions;
 
 /**
  * Main executor for the FreeMarker integration.
@@ -52,37 +49,17 @@ import sf.util.StringFormat;
  * @author Sualeh Fatehi
  */
 public final class FreeMarkerRenderer
-  extends BaseSchemaCrawlerCommand
+  extends BaseTemplateRenderer
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(FreeMarkerRenderer.class.getName());
-
-  static final String COMMAND = "freemarker";
-
-  public FreeMarkerRenderer()
-  {
-    super(COMMAND);
-  }
-
-  @Override
-  public void checkAvailibility()
-    throws Exception
-  {
-    // Nothing to check at this point. The Command should be available
-    // after the class is loaded, and imports are resolved.
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public final void execute()
     throws Exception
   {
-    checkCatalog();
 
-    String templateLocation = outputOptions.getOutputFormatValue();
+    final OutputOptions outputOptions = getOutputOptions();
+
+    String templateLocation = getResourceFilename();
     String templatePath = ".";
     final File templateFilePath = new File(templateLocation);
     if (templateFilePath.exists())
@@ -91,13 +68,8 @@ public final class FreeMarkerRenderer
       templateLocation = templateFilePath.getName();
     }
 
-    System
-      .setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
-                   freemarker.log.Logger.LIBRARY_NAME_JUL);
-
-    LOGGER.log(Level.INFO,
-               new StringFormat("Rendering using FreeMarker, version %s",
-                                Configuration.getVersion()));
+    System.setProperty(freemarker.log.Logger.SYSTEM_PROPERTY_NAME_LOGGER_LIBRARY,
+                       freemarker.log.Logger.LIBRARY_NAME_JUL);
 
     // Create a new instance of the configuration
     final Configuration cfg = new Configuration(Configuration.VERSION_2_3_28);
@@ -106,34 +78,20 @@ public final class FreeMarkerRenderer
                                                        "/");
     final TemplateLoader ftl = new FileTemplateLoader(new File(templatePath));
     final TemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {
-                                                                              ctl,
-                                                                              ftl });
+      ctl, ftl
+    });
     cfg.setTemplateLoader(mtl);
     cfg.setEncoding(Locale.getDefault(),
                     outputOptions.getInputCharset().name());
     cfg.setWhitespaceStripping(true);
 
-    LOGGER
-      .log(Level.CONFIG,
-           new StringFormat("FreeMarker configuration properties <%s>", cfg));
-
-    // Create the root hash
-    final Map<String, Object> context = new HashMap<>();
-    context.put("catalog", catalog);
-    context.put("identifiers", identifiers);
-
-    try (final Writer writer = outputOptions.openNewOutputWriter();)
+    try (final Writer writer = outputOptions.openNewOutputWriter())
     {
       // Evaluate the template
       final Template template = cfg.getTemplate(templateLocation);
+      final Map<String, Object> context = getContext();
       template.process(context, writer);
     }
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return true;
   }
 
 }

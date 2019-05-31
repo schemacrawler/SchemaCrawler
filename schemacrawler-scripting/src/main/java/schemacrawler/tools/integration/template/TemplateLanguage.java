@@ -25,37 +25,54 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.velocity;
+
+package schemacrawler.tools.integration.template;
 
 
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.tools.executable.BaseCommandProvider;
-import schemacrawler.tools.executable.CommandDescription;
-import schemacrawler.tools.executable.SchemaCrawlerCommand;
-import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.integration.BaseLanguage;
 
-public class VelocityCommandProvider
-  extends BaseCommandProvider
+public final class TemplateLanguage
+  extends BaseLanguage
 {
 
-  public VelocityCommandProvider()
+  public TemplateLanguage()
   {
-    super(new CommandDescription(VelocityRenderer.COMMAND,
-                                 "Render an Apache Velocity template against a schema"));
+    super("templating-language",
+          "template",
+          TemplateLanguageType.unknown.name());
   }
 
-  @Override
-  public SchemaCrawlerCommand newSchemaCrawlerCommand(final String command)
+  public final TemplateLanguageType getTemplateLanguageType()
   {
-    return new VelocityRenderer();
-  }
+    final String language = getLanguage();
 
-  @Override
-  public boolean supportsSchemaCrawlerCommand(final String command,
-                                              final SchemaCrawlerOptions schemaCrawlerOptions,
-                                              final OutputOptions outputOptions)
-  {
-    return supportsCommand(command);
+    try
+    {
+      final TemplateLanguageType templateLanguageType = TemplateLanguageType.valueOf(
+        language);
+      if (templateLanguageType != TemplateLanguageType.unknown)
+      {
+        return templateLanguageType;
+      }
+    }
+    catch (final IllegalArgumentException e)
+    {
+      // Ignore
+    }
+    catch (final Exception e)
+    {
+      return TemplateLanguageType.unknown;
+    }
+
+    // Second try using extensions
+    try
+    {
+      return TemplateLanguageType.valueOfFromExtension(language);
+    }
+    catch (final Exception e)
+    {
+      return TemplateLanguageType.unknown;
+    }
   }
 
 }

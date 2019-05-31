@@ -58,10 +58,18 @@ public final class SchemaTextRenderer
   }
 
   @Override
-  public void checkAvailibility()
+  public void checkAvailability()
     throws Exception
   {
     // Text rendering is always available
+  }
+
+  @Override
+  public void initialize()
+    throws Exception
+  {
+    super.initialize();
+    loadSchemaTextOptions();
   }
 
   @Override
@@ -89,13 +97,19 @@ public final class SchemaTextRenderer
     final SchemaTraverser traverser = new SchemaTraverser();
     traverser.setCatalog(aCatalog);
     traverser.setHandler(formatter);
-    traverser.setTablesComparator(NamedObjectSort
-      .getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForTables()));
-    traverser.setRoutinesComparator(NamedObjectSort
-      .getNamedObjectSort(schemaTextOptions.isAlphabeticalSortForRoutines()));
+    traverser.setTablesComparator(NamedObjectSort.getNamedObjectSort(
+      schemaTextOptions.isAlphabeticalSortForTables()));
+    traverser.setRoutinesComparator(NamedObjectSort.getNamedObjectSort(
+      schemaTextOptions.isAlphabeticalSortForRoutines()));
 
     traverser.traverse();
 
+  }
+
+  @Override
+  public boolean usesConnection()
+  {
+    return false;
   }
 
   public SchemaTextOptions getSchemaTextOptions()
@@ -103,24 +117,10 @@ public final class SchemaTextRenderer
     return schemaTextOptions;
   }
 
-  @Override
-  public void initialize()
-    throws Exception
-  {
-    super.initialize();
-    loadSchemaTextOptions();
-  }
-
   public final void setSchemaTextOptions(final SchemaTextOptions schemaTextOptions)
   {
     this.schemaTextOptions = requireNonNull(schemaTextOptions,
                                             "No schema text options provided");
-  }
-
-  @Override
-  public boolean usesConnection()
-  {
-    return false;
   }
 
   private SchemaTextDetailType getSchemaTextDetailType()
@@ -144,8 +144,8 @@ public final class SchemaTextRenderer
     final SchemaTraversalHandler formatter;
 
     final String identifierQuoteString = identifiers.getIdentifierQuoteString();
-    final TextOutputFormat outputFormat = TextOutputFormat
-      .fromFormat(outputOptions.getOutputFormatValue());
+    final TextOutputFormat outputFormat = TextOutputFormat.fromFormat(
+      outputOptions.getOutputFormatValue());
     if (outputFormat == TextOutputFormat.json)
     {
       formatter = new SchemaJsonFormatter(schemaTextDetailType,
@@ -176,7 +176,9 @@ public final class SchemaTextRenderer
     if (schemaTextOptions == null)
     {
       schemaTextOptions = SchemaTextOptionsBuilder.builder()
-        .fromConfig(additionalConfiguration).toOptions();
+                                                  .fromConfig(
+                                                    additionalConfiguration)
+                                                  .toOptions();
     }
   }
 

@@ -84,7 +84,7 @@ public class SchemaCrawlerExecutableChainTest
 
     final Config additionalConfiguration = SchemaTextOptionsBuilder.builder(
       textOptions).toConfig();
-    additionalConfiguration.put("script:resource", "/chain.js");
+    additionalConfiguration.put("script", "/chain.js");
 
     final OutputOptions outputOptions = OutputOptionsBuilder.newOutputOptions(
       "text",
