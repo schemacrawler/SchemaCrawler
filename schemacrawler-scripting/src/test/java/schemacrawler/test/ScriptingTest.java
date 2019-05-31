@@ -26,55 +26,58 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.integration.test;
+package schemacrawler.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableOf;
 import static schemacrawler.test.utility.FileHasContent.*;
-import static schemacrawler.test.utility.TestUtility.copyResourceToTempFile;
+import static schemacrawler.test.utility.ScriptTestUtility.scriptExecution;
 
-import java.nio.file.Path;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import schemacrawler.schemacrawler.Config;
 import schemacrawler.test.utility.TestAssertNoSystemErrOutput;
 import schemacrawler.test.utility.TestAssertNoSystemOutOutput;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
-public class TemplatingLanguageTest
+public class ScriptingTest
 {
-
-  private static Path executableScriptFromFile(final Connection connection,
-                                               final String language,
-                                               final Path scriptFile)
-    throws Exception
-  {
-    final SchemaCrawlerExecutable executable = executableOf("template");
-    final Config additionalConfiguration = new Config();
-    additionalConfiguration.put("template", scriptFile.toString());
-    additionalConfiguration.put("templating-language", language);
-    executable.setAdditionalConfiguration(additionalConfiguration);
-
-    return executableExecution(connection, executable, "text");
-  }
 
   @Test
   public void executableGroovy(final Connection connection)
     throws Exception
   {
-    final Path scriptFile = copyResourceToTempFile("/plaintextschema.vm");
-    assertThat(outputOf(executableScriptFromFile(connection,
-                                                 "velocity",
-                                                 scriptFile)),
-               hasSameContentAs(classpathResource("executableForVelocity.txt")));
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.groovy")),
+               hasSameContentAs(classpathResource("script_output.txt")));
+  }
+
+  @Test
+  public void executableJavaScript(final Connection connection)
+    throws Exception
+  {
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.js")),
+               hasSameContentAs(classpathResource("script_output.txt")));
+  }
+
+  @Test
+  public void executablePython(final Connection connection)
+    throws Exception
+  {
+    System.setProperty("python.console.encoding", "UTF-8");
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.py")),
+               hasSameContentAs(classpathResource("script_output.txt")));
+  }
+
+  @Test
+  public void executableRuby(final Connection connection)
+    throws Exception
+  {
+    assertThat(outputOf(scriptExecution(connection, "/plaintextschema.rb")),
+               hasSameContentAs(classpathResource("script_output_rb.txt")));
   }
 
 }

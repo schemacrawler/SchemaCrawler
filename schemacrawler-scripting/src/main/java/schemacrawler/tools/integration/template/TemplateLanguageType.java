@@ -33,12 +33,12 @@ import java.util.EnumSet;
 public enum TemplateLanguageType
 {
   unknown(null, null),
-  velocity("schemacrawler.tools.integration.velocity.VelocityRenderer", "vm"),
-  freemarker("schemacrawler.tools.integration.freemarker.FreeMarkerRenderer",
+  velocity("schemacrawler.tools.integration.template.VelocityRenderer", "vm"),
+  freemarker("schemacrawler.tools.integration.template.FreeMarkerRenderer",
              "ftl"),
-  mustache("schemacrawler.tools.integration.mustache.MustacheRenderer",
+  mustache("schemacrawler.tools.integration.template.MustacheRenderer",
            "mustache"),
-  thymeleaf("schemacrawler.tools.integration.thymeleaf.ThymeleafRenderer",
+  thymeleaf("schemacrawler.tools.integration.template.ThymeleafRenderer",
             "thymeleaf");
 
   /**

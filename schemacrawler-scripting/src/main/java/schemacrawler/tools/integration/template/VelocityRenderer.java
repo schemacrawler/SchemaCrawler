@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.velocity;
+package schemacrawler.tools.integration.template;
 
 
 import java.io.File;
@@ -42,7 +42,6 @@ import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.apache.velocity.runtime.resource.loader.FileResourceLoader;
 import schemacrawler.schemacrawler.SchemaCrawlerRuntimeException;
-import schemacrawler.tools.integration.template.BaseTemplateRenderer;
 import schemacrawler.tools.options.OutputOptions;
 
 /**

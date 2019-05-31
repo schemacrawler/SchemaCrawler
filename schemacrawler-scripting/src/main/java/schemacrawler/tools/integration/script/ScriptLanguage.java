@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.scripting;
+package schemacrawler.tools.integration.script;
 
 
 import schemacrawler.tools.integration.BaseLanguage;
@@ -37,7 +37,7 @@ public final class ScriptLanguage
 
   public ScriptLanguage()
   {
-    super("scripting-language", "script", "nashorn");
+    super("script-language", "script", "nashorn");
   }
 
 }

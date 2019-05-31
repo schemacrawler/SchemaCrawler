@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.freemarker;
+package schemacrawler.tools.integration.template;
 
 
 import java.io.File;
@@ -40,7 +40,6 @@ import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import schemacrawler.tools.integration.template.BaseTemplateRenderer;
 import schemacrawler.tools.options.OutputOptions;
 
 /**

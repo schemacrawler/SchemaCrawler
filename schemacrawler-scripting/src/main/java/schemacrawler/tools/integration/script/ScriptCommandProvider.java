@@ -25,7 +25,7 @@ http://www.gnu.org/licenses/
 
 ========================================================================
 */
-package schemacrawler.tools.integration.scripting;
+package schemacrawler.tools.integration.script;
 
 
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
@@ -71,7 +71,7 @@ public class ScriptCommandProvider
     pluginCommand.addOption("script",
                             "Path to the script file or to the CLASSPATH resource",
                             String.class)
-                 .addOption("scripting-language",
+                 .addOption("script-language",
                             "Scripting language",
                             String.class);
     return pluginCommand;

@@ -1,2 +1,2 @@
-schemacrawler.tools.integration.scripting.ScriptCommandProvider
+schemacrawler.tools.integration.script.ScriptCommandProvider
 schemacrawler.tools.integration.template.TemplateCommandProvider

@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.thymeleaf;
+package schemacrawler.tools.integration.template;
 
 
 import java.io.Writer;
@@ -35,7 +35,6 @@ import java.nio.charset.Charset;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.*;
-import schemacrawler.tools.integration.template.BaseTemplateRenderer;
 import schemacrawler.tools.options.OutputOptions;
 
 /**

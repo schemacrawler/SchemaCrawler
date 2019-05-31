@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/
 ========================================================================
 */
 
-package schemacrawler.tools.integration.scripting;
+package schemacrawler.tools.integration.script;
 
 
 import javax.script.*;
@@ -44,7 +44,7 @@ import sf.util.SchemaCrawlerLogger;
 import sf.util.StringFormat;
 
 /**
- * Main executor for the scripting engine integration.
+ * Main executor for the script engine integration.
  *
  * @author Sualeh Fatehi
  */
@@ -143,7 +143,7 @@ public final class ScriptCommand
     ScriptEngine scriptEngine = null;
     final String scriptingLanguage = scriptLanguage.getLanguage();
     LOGGER.log(Level.CONFIG,
-               new StringFormat("Using scripting language <%s>",
+               new StringFormat("Using script language <%s>",
                                 scriptingLanguage));
     try
     {
