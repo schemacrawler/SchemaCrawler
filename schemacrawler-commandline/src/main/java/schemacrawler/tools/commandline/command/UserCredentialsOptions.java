@@ -37,7 +37,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import picocli.CommandLine.*;
-import schemacrawler.tools.databaseconnector.SingleUseUserCredentials;
+import schemacrawler.tools.commandline.state.MultiUseUserCredentials;
 import schemacrawler.tools.databaseconnector.UserCredentials;
 import sf.util.SchemaCrawlerLogger;
 
@@ -170,7 +170,7 @@ public final class UserCredentialsOptions
 
   public UserCredentials getUserCredentials()
   {
-    return new SingleUseUserCredentials(user, getPassword());
+    return new MultiUseUserCredentials(user, getPassword());
   }
 
   private String getPassword()

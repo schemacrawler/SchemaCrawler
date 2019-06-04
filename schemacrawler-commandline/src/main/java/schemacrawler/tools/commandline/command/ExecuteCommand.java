@@ -84,17 +84,9 @@ public class ExecuteCommand
     }
 
     Connection connection = null;
-    try
+    if (state.isConnected())
     {
-      if (state.isConnected())
-      {
-        connection = state.getDataSource().getConnection();
-      }
-    }
-    catch (final SQLException e)
-    {
-      LOGGER.log(Level.FINE, e.getMessage(), e);
-      connection = null;
+      connection = state.getDataSource().get();
     }
 
     try

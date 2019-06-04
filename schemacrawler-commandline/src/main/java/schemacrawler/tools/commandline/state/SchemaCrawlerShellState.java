@@ -29,9 +29,9 @@ http://www.gnu.org/licenses/
 package schemacrawler.tools.commandline.state;
 
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 import schemacrawler.schema.Catalog;
@@ -48,9 +48,19 @@ public class SchemaCrawlerShellState
   private Config additionalConfiguration;
   private Config baseConfiguration;
   private Catalog catalog;
-  private DataSource dataSource;
+  private Supplier<Connection> dataSource;
   private SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder;
   private SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder;
+
+  public Supplier<Connection> getDataSource()
+  {
+    return dataSource;
+  }
+
+  public void setDataSource(final Supplier<Connection> dataSource)
+  {
+    this.dataSource = dataSource;
+  }
 
   public Config getBaseConfiguration()
   {
@@ -78,17 +88,6 @@ public class SchemaCrawlerShellState
 
   public void disconnect()
   {
-    if (dataSource instanceof AutoCloseable)
-    {
-      try
-      {
-        ((AutoCloseable) dataSource).close();
-      }
-      catch (final Exception e)
-      {
-        // Ignore errors
-      }
-    }
     dataSource = null;
   }
 
@@ -120,16 +119,6 @@ public class SchemaCrawlerShellState
     this.catalog = catalog;
   }
 
-  public DataSource getDataSource()
-  {
-    return dataSource;
-  }
-
-  public void setDataSource(final DataSource dataSource)
-  {
-    this.dataSource = dataSource;
-  }
-
   public SchemaCrawlerOptionsBuilder getSchemaCrawlerOptionsBuilder()
   {
     return schemaCrawlerOptionsBuilder;
@@ -156,7 +145,7 @@ public class SchemaCrawlerShellState
     {
       return false;
     }
-    try (final Connection connection = dataSource.getConnection())
+    try (final Connection connection = dataSource.get())
     {
       if (!connection.isValid(0))
       {

@@ -37,8 +37,9 @@ import static schemacrawler.tools.commandline.utility.CommandLineUtility.newComm
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.sql.Connection;
+import java.util.function.Supplier;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,16 +58,16 @@ import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
 public class ConnectionShellCommandsTest
 {
 
-  private static BasicDataSource createDataSource(final DatabaseConnectionInfo connectionInfo)
+  private static Supplier<Connection> createDataSource(final Connection connection)
   {
-    final BasicDataSource dataSource = new BasicDataSource();
-    dataSource.setUsername("sa");
-    dataSource.setPassword("");
-    dataSource.setUrl(connectionInfo.getConnectionUrl());
-    dataSource.setDefaultAutoCommit(false);
-    dataSource.setInitialSize(1);
-    dataSource.setMaxTotal(1);
-    return dataSource;
+    return new Supplier<Connection>()
+    {
+      @Override
+      public Connection get()
+      {
+        return connection;
+      }
+    };
   }
 
   private TestOutputStream err;
@@ -91,9 +92,9 @@ public class ConnectionShellCommandsTest
   }
 
   @Test
-  public void isConnected(final DatabaseConnectionInfo connectionInfo)
+  public void isConnected(final Connection connection)
   {
-    final BasicDataSource dataSource = createDataSource(connectionInfo);
+    final Supplier<Connection> dataSource = createDataSource(connection);
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setDataSource(dataSource);
@@ -124,9 +125,9 @@ public class ConnectionShellCommandsTest
   }
 
   @Test
-  public void disconnect(final DatabaseConnectionInfo connectionInfo)
+  public void disconnect(final Connection connection)
   {
-    final BasicDataSource dataSource = createDataSource(connectionInfo);
+    final Supplier<Connection> dataSource = createDataSource(connection);
 
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setDataSource(dataSource);

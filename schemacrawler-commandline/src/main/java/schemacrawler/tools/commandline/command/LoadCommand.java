@@ -100,7 +100,7 @@ public class LoadCommand
            .withSchemaInfoLevel(infolevel.toSchemaInfoLevel());
     }
 
-    try (final Connection connection = state.getDataSource().getConnection())
+    try (final Connection connection = state.getDataSource().get())
     {
       LOGGER.log(Level.INFO, new StringFormat("infolevel=%s", infolevel));
 

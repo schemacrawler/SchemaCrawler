@@ -41,7 +41,6 @@ import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaRetrievalOptionsBuilder;
 import schemacrawler.tools.commandline.state.SchemaCrawlerShellState;
-import schemacrawler.tools.commandline.state.SimpleDataSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnectionSource;
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.UserCredentials;
@@ -166,10 +165,7 @@ public class ConnectCommand
       databaseConnectable);
     databaseConnectionSource.setUserCredentials(userCredentials);
 
-    final SimpleDataSource dataSource = new SimpleDataSource(
-      databaseConnectionSource);
-
-    state.setDataSource(dataSource);
+    state.setDataSource(databaseConnectionSource);
   }
 
   private void loadSchemaCrawlerOptionsBuilder()
@@ -193,7 +189,7 @@ public class ConnectCommand
                () -> "Creating SchemaCrawler retrieval options builder");
 
     final Config config = state.getAdditionalConfiguration();
-    try (final Connection connection = state.getDataSource().getConnection())
+    try (final Connection connection = state.getDataSource().get())
     {
       final SchemaRetrievalOptionsBuilder schemaRetrievalOptionsBuilder = databaseConnector
         .getSchemaRetrievalOptionsBuilder(connection);
