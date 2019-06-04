@@ -1,0 +1,12 @@
+** Connect to HyperSQL DataBase
+
+      --database=<database>
+                          Database name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 9001
+      --server=<server>   --server=hsqldb
+                          Loads SchemaCrawler plug-in for HyperSQL
+
+

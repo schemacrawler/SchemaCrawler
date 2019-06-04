@@ -1,0 +1,10 @@
+** Connect to SQLite
+
+      --database=<database>
+                          SQLite database file path
+      --host=<host>       Should be omitted
+      --port=<port>       Should be omitted
+      --server=<server>   --server=sqlite
+                          Loads SchemaCrawler plug-in for SQLite
+
+

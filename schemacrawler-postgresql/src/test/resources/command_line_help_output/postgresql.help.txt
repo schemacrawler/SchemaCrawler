@@ -1,0 +1,16 @@
+** Connect to PostgreSQL
+
+      --database=<database>
+                          Database name
+                          Optional, uses the PGDATABASE environmental variable if
+                            available
+      --host=<host>       Host name
+                          Optional, uses the PGHOSTADDR and PGHOST environmental
+                            variables if available, or defaults to localhost
+      --port=<port>       Port number
+                          Optional, uses the PGPORT environmental variable if
+                            available, or defaults to 5432
+      --server=<server>   --server=postgresql
+                          Loads SchemaCrawler plug-in for PostgreSQL
+
+

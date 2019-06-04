@@ -48,7 +48,7 @@ import schemacrawler.tools.commandline.shell.SystemCommand;
 public final class Main
 {
 
-  public static void main(final String[] args)
+  public static void main(final String... args)
     throws Exception
   {
     requireNonNull(args, "No arguments provided");

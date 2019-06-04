@@ -1,0 +1,10 @@
+** Connect to SchemaCrawler Offline Catalog Snapshot
+
+      --database=<database>
+                          File name and location of the database metadata snapshot
+      --host=<host>       Should be omitted
+      --port=<port>       Should be omitted
+      --server=<server>   --server=offline
+                          Loads SchemaCrawler plug-in for offline snapshots
+
+

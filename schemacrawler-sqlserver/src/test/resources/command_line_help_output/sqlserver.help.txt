@@ -1,0 +1,18 @@
+** Connect to Microsoft SQL Server
+
+      --database=<database>
+                          Database name
+                          Be sure to also restrict your schemas to this database, by
+                            using an additional option,
+                          --schemas=<database>.dbo
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 1433
+      --server=<server>   --server=mysql
+                          Loads SchemaCrawler plug-in for Microsoft SQL Server
+                          If you are using named pipes, or Windows authentication,
+                            you will need to provide a database connection URL on
+                            the SchemaCrawler command-line
+
+

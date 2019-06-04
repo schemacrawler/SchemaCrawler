@@ -1,0 +1,14 @@
+** Connect to Oracle
+
+      --database=<database>
+                          Oracle Service Name
+                          You can use a query similar to the one below to find it.
+                          SELECT GLOBAL_NAME FROM GLOBAL_NAME
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 1521
+      --server=<server>   --server=oracle
+                          Loads SchemaCrawler plug-in for Oracle
+
+

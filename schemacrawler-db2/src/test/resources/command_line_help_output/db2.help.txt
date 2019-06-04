@@ -1,0 +1,12 @@
+** Connect to IBM DB2
+
+      --database=<database>
+                          Database name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 50000
+      --server=<server>   --server=db2
+                          Loads SchemaCrawler plug-in for IBM DB2
+
+

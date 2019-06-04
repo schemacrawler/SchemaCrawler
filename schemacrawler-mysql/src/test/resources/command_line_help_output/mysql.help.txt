@@ -1,0 +1,12 @@
+** Connect to MySQL
+
+      --database=<database>
+                          Database name
+      --host=<host>       Host name
+                          Optional, defaults to localhost
+      --port=<port>       Port number
+                          Optional, defaults to 3306
+      --server=<server>   --server=mysql
+                          Loads SchemaCrawler plug-in for MySQL
+
+
