@@ -59,20 +59,9 @@ public final class TemplateLanguage
     {
       // Ignore
     }
-    catch (final Exception e)
-    {
-      return TemplateLanguageType.unknown;
-    }
 
     // Second try using extensions
-    try
-    {
-      return TemplateLanguageType.valueOfFromExtension(language);
-    }
-    catch (final Exception e)
-    {
-      return TemplateLanguageType.unknown;
-    }
+    return TemplateLanguageType.valueOfFromExtension(language);
   }
 
 }
