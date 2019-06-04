@@ -35,6 +35,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
+import com.ginsberg.junit.exit.ExpectSystemExitWithStatus;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestOutputStream;
 import schemacrawler.tools.commandline.shell.AvailableCommandsCommand;
 import schemacrawler.tools.commandline.shell.AvailableServersCommand;
+import schemacrawler.tools.commandline.shell.ExitCommand;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
 @ExtendWith(TestContextParameterResolver.class)
@@ -80,6 +82,16 @@ public class ShellCommandsTest
                hasSameContentAs(classpathResource(
                  SHELL_COMMANDS_OUTPUT + testContext.testMethodName()
                  + ".stdout.txt")));
+  }
+
+  @Test
+  @ExpectSystemExitWithStatus(0)
+  public void exit(final TestContext testContext)
+  {
+    new ExitCommand().run();
+
+    assertThat(outputOf(err), hasNoContent());
+    assertThat(outputOf(out), hasNoContent());
   }
 
   @Test
