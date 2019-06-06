@@ -14,33 +14,42 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="schemacrawler-distrib" />
-        <module name="schemacrawler-archetype-plugin-lint" />
         <module name="schemacrawler-diff" />
         <module name="schemacrawler-scripting" />
+        <module name="schemacrawler-testdb" />
+        <module name="schemacrawler" />
         <module name="schemacrawler-sapiq" />
-        <module name="schemacrawler-lint" />
-        <module name="schemacrawler-offline" />
-        <module name="schemacrawler-maven-plugin-test" />
-        <module name="schemacrawler-tools" />
-        <module name="schemacrawler-timesten" />
-        <module name="schemacrawler-api" />
+        <module name="schemacrawler-dbtest" />
         <module name="schemacrawler-archetype-plugin-dbconnector" />
+        <module name="schemacrawler-tools" />
+        <module name="schemacrawler-api" />
+        <module name="schemacrawler-archetype-plugin-lint" />
         <module name="schemacrawler-archetype-plugin-command" />
         <module name="schemacrawler-postgresql" />
         <module name="schemacrawler-archetype-maven-project" />
         <module name="schemacrawler-sqlite" />
+        <module name="schemacrawler-maven-plugin-test" />
         <module name="schemacrawler-db2" />
-        <module name="schemacrawler" />
-        <module name="schemacrawler-commandline" />
+        <module name="schemacrawler-lint" />
         <module name="schemacrawler-sqlserver" />
         <module name="schemacrawler-maven-plugin" />
         <module name="schemacrawler-oracle" />
         <module name="schemacrawler-examplecode" />
         <module name="schemacrawler-integrations" />
         <module name="schemacrawler-hsqldb" />
-        <module name="schemacrawler-dbtest" />
-        <module name="schemacrawler-testdb" />
+        <module name="schemacrawler-timesten" />
+        <module name="schemacrawler-offline" />
         <module name="schemacrawler-mysql" />
+      </profile>
+      <profile name="Annotation profile for SchemaCrawler [Parent]" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/info/picocli/picocli-codegen/4.0.0-beta-1b/picocli-codegen-4.0.0-beta-1b.jar" />
+          <entry name="$MAVEN_REPOSITORY$/info/picocli/picocli/4.0.0-beta-1b/picocli-4.0.0-beta-1b.jar" />
+        </processorPath>
+        <module name="schemacrawler-commandline" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
