@@ -48,7 +48,6 @@ import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.*;
 import schemacrawler.utility.NamedObjectSort;
 
-@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SchemaCrawlerTest

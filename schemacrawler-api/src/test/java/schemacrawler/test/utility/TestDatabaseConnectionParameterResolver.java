@@ -29,22 +29,53 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import static sf.util.Utility.applyApplicationLogLevel;
+
 import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
-import org.junit.jupiter.api.extension.ParameterResolver;
-
+import org.junit.jupiter.api.extension.*;
 import schemacrawler.testdb.TestDatabase;
 
 public class TestDatabaseConnectionParameterResolver
-  implements ParameterResolver
+  implements ParameterResolver, BeforeAllCallback
 {
 
   private final static TestDatabase testDatabase = TestDatabase.initialize();
+
+  private static boolean isParameterConnection(final Parameter parameter)
+  {
+    return parameter.getType().equals(Connection.class);
+  }
+
+  private static boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
+  {
+    return parameter.getType().equals(DatabaseConnectionInfo.class);
+  }
+
+  @Override
+  public void beforeAll(final ExtensionContext context)
+    throws Exception
+  {
+    applyApplicationLogLevel(Level.OFF);
+  }
+
+  @Override
+  public boolean supportsParameter(final ParameterContext parameterContext,
+                                   final ExtensionContext extensionContext)
+    throws ParameterResolutionException
+  {
+    final boolean hasConnection;
+    final boolean hasDatabaseConnectionInfo;
+    final Parameter parameter = parameterContext.getParameter();
+
+    hasConnection = isParameterConnection(parameter);
+    hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
+
+    return hasConnection || hasDatabaseConnectionInfo;
+  }
 
   @Override
   public Object resolveParameter(final ParameterContext parameterContext,
@@ -67,39 +98,14 @@ public class TestDatabaseConnectionParameterResolver
       }
       else
       {
-        throw new ParameterResolutionException("Could not resolve "
-                                               + parameter);
+        throw new ParameterResolutionException(
+          "Could not resolve " + parameter);
       }
     }
     catch (final SQLException e)
     {
       throw new ParameterResolutionException("", e);
     }
-  }
-
-  @Override
-  public boolean supportsParameter(final ParameterContext parameterContext,
-                                   final ExtensionContext extensionContext)
-    throws ParameterResolutionException
-  {
-    boolean hasConnection;
-    boolean hasDatabaseConnectionInfo;
-    final Parameter parameter = parameterContext.getParameter();
-
-    hasConnection = isParameterConnection(parameter);
-    hasDatabaseConnectionInfo = isParameterDatabaseConnectionInfo(parameter);
-
-    return hasConnection || hasDatabaseConnectionInfo;
-  }
-
-  private boolean isParameterConnection(final Parameter parameter)
-  {
-    return parameter.getType().equals(Connection.class);
-  }
-
-  private boolean isParameterDatabaseConnectionInfo(final Parameter parameter)
-  {
-    return parameter.getType().equals(DatabaseConnectionInfo.class);
   }
 
 }

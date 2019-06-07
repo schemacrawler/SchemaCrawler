@@ -30,11 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
 import java.io.FileInputStream;
@@ -47,16 +43,13 @@ import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Schema;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import sf.util.IOUtility;
 
-@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class CatalogSerializationTest
 {
@@ -79,11 +72,11 @@ public class CatalogSerializationTest
                catalog.getTables(schema),
                hasSize(10));
 
-    final Path testOutputFile = IOUtility
-      .createTempFilePath("sc_java_serialization", "ser");
-    try (
-        final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(testOutputFile
-          .toFile()));)
+    final Path testOutputFile = IOUtility.createTempFilePath(
+      "sc_java_serialization",
+      "ser");
+    try (final ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+      testOutputFile.toFile())))
     {
       out.writeObject(catalog);
     }
@@ -92,15 +85,14 @@ public class CatalogSerializationTest
                greaterThan(0L));
 
     Catalog catalogDeserialized = null;
-    try (
-        final ObjectInputStream in = new ObjectInputStream(new FileInputStream(testOutputFile
-          .toFile()));)
+    try (final ObjectInputStream in = new ObjectInputStream(new FileInputStream(
+      testOutputFile.toFile())))
     {
       catalogDeserialized = (Catalog) in.readObject();
     }
 
-    final Schema schemaDeserialized = catalogDeserialized
-      .lookupSchema("PUBLIC.BOOKS").orElse(null);
+    final Schema schemaDeserialized = catalogDeserialized.lookupSchema(
+      "PUBLIC.BOOKS").orElse(null);
     assertThat("Could not obtain schema", schemaDeserialized, notNullValue());
     assertThat("Unexpected number of tables in the schema",
                catalogDeserialized.getTables(schemaDeserialized),

@@ -54,7 +54,6 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
-@ExtendWith(TestLoggingExtension.class)
 public class SqliteDistributionTest
 {
 
@@ -75,7 +74,8 @@ public class SqliteDistributionTest
 
     final Connection connection = null;
     assertThat(dbConnector.getSchemaRetrievalOptionsBuilder(connection)
-                 .toOptions().getIdentifierQuoteString(), is("\""));
+                          .toOptions()
+                          .getIdentifierQuoteString(), is("\""));
   }
 
   @Test
@@ -87,10 +87,12 @@ public class SqliteDistributionTest
     try (final TestWriter out = testout)
     {
       final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-        .normalize().toAbsolutePath();
+                                         .normalize()
+                                         .toAbsolutePath();
 
       TestSchemaCreator.main(new String[] {
-        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
+        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
+      });
 
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "sqlite");

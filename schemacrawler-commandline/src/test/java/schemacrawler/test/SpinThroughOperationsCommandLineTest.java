@@ -51,7 +51,6 @@ import schemacrawler.tools.text.operation.Operation;
 
 @ExtendWith(TestAssertNoSystemErrOutput.class)
 @ExtendWith(TestAssertNoSystemOutOutput.class)
-@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 public class SpinThroughOperationsCommandLineTest
 {
@@ -65,12 +64,43 @@ public class SpinThroughOperationsCommandLineTest
     TestUtility.clean(SPIN_THROUGH_OPERATIONS_OUTPUT);
   }
 
+  private static Stream<InfoLevel> infoLevels()
+  {
+    return Arrays.stream(InfoLevel.values())
+                 .filter(infoLevel -> infoLevel != InfoLevel.unknown);
+  }
+
+  private static Stream<Operation> operations()
+  {
+    return Arrays.stream(Operation.values());
+  }
+
+  private static Stream<TextOutputFormat> outputFormats()
+  {
+    return Arrays.stream(new TextOutputFormat[] {
+      TextOutputFormat.text, TextOutputFormat.html, TextOutputFormat.json
+    });
+  }
+
+  private static String referenceFile(final Operation operation,
+                                      final InfoLevel infoLevel,
+                                      final OutputFormat outputFormat)
+  {
+    final String referenceFile = String.format("%d%d.%s_%s.%s",
+                                               operation.ordinal(),
+                                               infoLevel.ordinal(),
+                                               operation,
+                                               infoLevel,
+                                               outputFormat.getFormat());
+    return referenceFile;
+  }
+
   @Test
   public void spinThroughMain(final DatabaseConnectionInfo connectionInfo)
     throws Exception
   {
-    assertAll(infoLevels().flatMap(infoLevel -> outputFormats()
-      .flatMap(outputFormat -> operations().map(operation -> () -> {
+    assertAll(infoLevels().flatMap(infoLevel -> outputFormats().flatMap(
+      outputFormat -> operations().map(operation -> () -> {
 
         // Special case where no output is generated
         if (infoLevel == InfoLevel.minimum && operation == Operation.dump)
@@ -101,36 +131,6 @@ public class SpinThroughOperationsCommandLineTest
                                            outputFormat));
 
       }))));
-  }
-
-  private Stream<InfoLevel> infoLevels()
-  {
-    return Arrays.stream(InfoLevel.values())
-      .filter(infoLevel -> infoLevel != InfoLevel.unknown);
-  }
-
-  private Stream<TextOutputFormat> outputFormats()
-  {
-    return Arrays.stream(new TextOutputFormat[] {
-      TextOutputFormat.text, TextOutputFormat.html, TextOutputFormat.json });
-  }
-
-  private String referenceFile(final Operation operation,
-                               final InfoLevel infoLevel,
-                               final OutputFormat outputFormat)
-  {
-    final String referenceFile = String.format("%d%d.%s_%s.%s",
-                                               operation.ordinal(),
-                                               infoLevel.ordinal(),
-                                               operation,
-                                               infoLevel,
-                                               outputFormat.getFormat());
-    return referenceFile;
-  }
-
-  private Stream<Operation> operations()
-  {
-    return Arrays.stream(Operation.values());
   }
 
 }

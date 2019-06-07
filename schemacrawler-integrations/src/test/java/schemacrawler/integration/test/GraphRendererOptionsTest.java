@@ -48,25 +48,17 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import schemacrawler.schemacrawler.IncludeAll;
-import schemacrawler.schemacrawler.RegularExpressionExclusionRule;
-import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
-import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
+import schemacrawler.schemacrawler.*;
 import schemacrawler.test.utility.DatabaseTestUtility;
 import schemacrawler.test.utility.TestContext;
 import schemacrawler.test.utility.TestContextParameterResolver;
 import schemacrawler.test.utility.TestDatabaseConnectionParameterResolver;
-import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
-@ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class GraphRendererOptionsTest
@@ -74,7 +66,55 @@ public class GraphRendererOptionsTest
 
   private static final String GRAPH_OPTIONS_OUTPUT = "graph_options_output/";
 
-  private static Path directory;
+  private static void executableGraph(final String command,
+                                      final Connection connection,
+                                      final SchemaCrawlerOptions options,
+                                      final GraphOptions graphOptions,
+                                      final String testMethodName)
+    throws Exception
+  {
+    SchemaCrawlerOptions schemaCrawlerOptions = options;
+    if (options.getSchemaInclusionRule().equals(new IncludeAll()))
+    {
+      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
+                                                        .fromOptions(options)
+                                                        .includeSchemas(new RegularExpressionExclusionRule(
+                                                          ".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
+                                                        .toOptions();
+    }
+
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      command);
+    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
+
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder(
+      graphOptions);
+    graphOptionsBuilder.sortTables(true);
+    graphOptionsBuilder.noInfo(graphOptions.isNoInfo());
+    if (!"maximum".equals(options.getSchemaInfoLevel().getTag()))
+    {
+      graphOptionsBuilder.weakAssociations(true);
+    }
+    executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
+
+    // Generate diagram, so that we have something to look at, even if
+    // the DOT file comparison fails
+    final Path testDiagramFile = executableExecution(connection,
+                                                     executable,
+                                                     GraphOutputFormat.png);
+    copy(testDiagramFile,
+         directory.resolve(testMethodName + ".png"),
+         REPLACE_EXISTING);
+
+    // Check DOT file
+    final String referenceFileName = testMethodName;
+    assertThat(outputOf(executableExecution(connection,
+                                            executable,
+                                            GraphOutputFormat.scdot)),
+               hasSameContentAndTypeAs(classpathResource(
+                 GRAPH_OPTIONS_OUTPUT + referenceFileName + ".dot"),
+                                       GraphOutputFormat.scdot));
+  }
 
   @BeforeAll
   public static void removeOutputDir()
@@ -87,13 +127,13 @@ public class GraphRendererOptionsTest
   public static void setupDirectory(final TestContext testContext)
     throws Exception
   {
-    directory = testContext
-      .resolveTargetFromRootPath("../schemacrawler-docs/graphs/"
-                                 + GraphRendererOptionsTest.class
-                                   .getSimpleName());
+    directory = testContext.resolveTargetFromRootPath(
+      "../schemacrawler-docs/graphs/"
+      + GraphRendererOptionsTest.class.getSimpleName());
     FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
+  private static Path directory;
 
   @Test
   public void executableForGraph_00(final TestContext testContext,
@@ -115,8 +155,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.sortTableColumns();
     graphOptionsBuilder.showOrdinalNumbers();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
@@ -133,8 +172,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.noForeignKeyNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -150,8 +188,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.noSchemaCrawlerInfo(true);
     graphOptionsBuilder.showDatabaseInfo(false);
     graphOptionsBuilder.showJdbcDriverInfo(false);
@@ -169,8 +206,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -187,7 +223,8 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+      .builder()
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -236,12 +273,12 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
+      .builder()
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -258,13 +295,13 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
+      .builder()
+      .includeTables(new RegularExpressionInclusionRule(".*BOOKS"))
       .grepOnlyMatching(true);
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.noForeignKeyNames().showUnqualifiedNames();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -282,7 +319,8 @@ public class GraphRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.REGIONS\\..*"))
       .toOptions();
 
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
@@ -301,8 +339,10 @@ public class GraphRendererOptionsTest
   {
     final SchemaCrawlerOptions schemaCrawlerOptions = SchemaCrawlerOptionsBuilder
       .builder()
-      .includeGreppedColumns(new RegularExpressionInclusionRule(".*\\.REGIONS\\..*"))
-      .grepOnlyMatching(true).toOptions();
+      .includeGreppedColumns(new RegularExpressionInclusionRule(
+        ".*\\.REGIONS\\..*"))
+      .grepOnlyMatching(true)
+      .toOptions();
 
     final GraphOptions graphOptions = GraphOptionsBuilder.builder().toOptions();
 
@@ -318,8 +358,7 @@ public class GraphRendererOptionsTest
                                     final Connection connection)
     throws Exception
   {
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.showRowCounts();
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -345,8 +384,7 @@ public class GraphRendererOptionsTest
     final String NODE = "node.";
     graphvizAttributes.put(NODE + "shape", "none");
 
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder();
+    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder.builder();
     graphOptionsBuilder.withGraphvizAttributes(graphvizAttributes);
     final GraphOptions graphOptions = graphOptionsBuilder.toOptions();
 
@@ -365,7 +403,8 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
       .includeSchemas(new RegularExpressionInclusionRule(".*\\.FOR_LINT"));
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
@@ -377,55 +416,6 @@ public class GraphRendererOptionsTest
                     schemaCrawlerOptions,
                     graphOptions,
                     testContext.testMethodName());
-  }
-
-  private void executableGraph(final String command,
-                               final Connection connection,
-                               final SchemaCrawlerOptions options,
-                               final GraphOptions graphOptions,
-                               final String testMethodName)
-    throws Exception
-  {
-    SchemaCrawlerOptions schemaCrawlerOptions = options;
-    if (options.getSchemaInclusionRule().equals(new IncludeAll()))
-    {
-      schemaCrawlerOptions = SchemaCrawlerOptionsBuilder.builder()
-        .fromOptions(options)
-        .includeSchemas(new RegularExpressionExclusionRule(".*\\.SYSTEM_LOBS|.*\\.FOR_LINT"))
-        .toOptions();
-    }
-
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(command);
-    executable.setSchemaCrawlerOptions(schemaCrawlerOptions);
-
-    final GraphOptionsBuilder graphOptionsBuilder = GraphOptionsBuilder
-      .builder(graphOptions);
-    graphOptionsBuilder.sortTables(true);
-    graphOptionsBuilder.noInfo(graphOptions.isNoInfo());
-    if (!"maximum".equals(options.getSchemaInfoLevel().getTag()))
-    {
-      graphOptionsBuilder.weakAssociations(true);
-    }
-    executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
-
-    // Generate diagram, so that we have something to look at, even if
-    // the DOT file comparison fails
-    final Path testDiagramFile = executableExecution(connection,
-                                                     executable,
-                                                     GraphOutputFormat.png);
-    copy(testDiagramFile,
-         directory.resolve(testMethodName + ".png"),
-         REPLACE_EXISTING);
-
-    // Check DOT file
-    final String referenceFileName = testMethodName;
-    assertThat(outputOf(executableExecution(connection,
-                                            executable,
-                                            GraphOutputFormat.scdot)),
-               hasSameContentAndTypeAs(classpathResource(GRAPH_OPTIONS_OUTPUT
-                                                         + referenceFileName
-                                                         + ".dot"),
-                                       GraphOutputFormat.scdot));
   }
 
 }
