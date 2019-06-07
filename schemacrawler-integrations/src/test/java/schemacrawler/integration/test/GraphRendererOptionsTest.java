@@ -128,11 +128,12 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     directory = testContext.resolveTargetFromRootPath(
-      "../schemacrawler-docs/graphs/"
+      "../../../schemacrawler-docs/graphs/"
       + GraphRendererOptionsTest.class.getSimpleName());
     FileUtils.deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
+
   private static Path directory;
 
   @Test

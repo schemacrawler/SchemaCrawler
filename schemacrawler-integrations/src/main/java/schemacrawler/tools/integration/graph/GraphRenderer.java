@@ -176,13 +176,6 @@ public final class GraphRenderer
   private GraphExecutor getGraphExecutor(final Path dotFile)
     throws SchemaCrawlerException
   {
-    // Set the format, in case we are using the default
-    outputOptions = OutputOptionsBuilder.builder(outputOptions)
-                                        .withOutputFormat(graphOutputFormat)
-                                        .withOutputFormatValue(graphOutputFormat
-                                                                 .getFormat())
-                                        .toOptions();
-
     final Path outputFile = outputOptions.getOutputFile()
                                          .orElseGet(() -> Paths.get(".",
                                                                     String.format(
@@ -192,6 +185,14 @@ public final class GraphRenderer
                                                                         .getOutputFormatValue())))
                                          .normalize()
                                          .toAbsolutePath();
+
+    // Set the format, in case we are using the default
+    outputOptions = OutputOptionsBuilder.builder(outputOptions)
+                                        .withOutputFormat(graphOutputFormat)
+                                        .withOutputFormatValue(graphOutputFormat
+                                                                 .getFormat())
+                                        .withOutputFile(outputFile)
+                                        .toOptions();
 
     GraphExecutor graphExecutor;
     if (graphOutputFormat != GraphOutputFormat.scdot)
