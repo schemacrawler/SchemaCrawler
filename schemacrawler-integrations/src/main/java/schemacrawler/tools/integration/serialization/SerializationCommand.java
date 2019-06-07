@@ -33,10 +33,9 @@ import static java.nio.file.Files.newOutputStream;
 
 import java.io.OutputStream;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
 
 import schemacrawler.tools.executable.BaseSchemaCrawlerCommand;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 
 /**
  * Main executor for the graphing integration.
@@ -76,14 +75,12 @@ public final class SerializationCommand
   {
     checkCatalog();
 
-    final Path outputFile = outputOptions.getOutputFile()
-                                         .orElseGet(() -> Paths.get(".",
-                                                                    String.format(
-                                                                      "schemacrawler-%s.%s",
-                                                                      UUID.randomUUID(),
-                                                                      "data")))
-                                         .normalize()
-                                         .toAbsolutePath();
+    // Force a file to be created
+    final Path outputFile = outputOptions.getOutputFile("data");
+
+    outputOptions = OutputOptionsBuilder.builder(outputOptions)
+                                        .withOutputFile(outputFile)
+                                        .toOptions();
 
     final SerializableCatalog serializableCatalog = new JavaSerializedCatalog(
       catalog);

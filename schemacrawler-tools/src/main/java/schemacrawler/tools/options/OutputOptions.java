@@ -30,12 +30,14 @@ package schemacrawler.tools.options;
 
 
 import static java.util.Objects.requireNonNull;
+import static sf.util.Utility.isBlank;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.Optional;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 import schemacrawler.schemacrawler.Options;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -52,10 +54,10 @@ public final class OutputOptions
   implements Options
 {
 
-  private final OutputResource outputResource;
-  private final String outputFormatValue;
   private final Charset inputEncodingCharset;
   private final Charset outputEncodingCharset;
+  private final String outputFormatValue;
+  private final OutputResource outputResource;
   private final String title;
 
   OutputOptions(final Charset inputEncodingCharset,
@@ -101,7 +103,7 @@ public final class OutputOptions
     return outputEncodingCharset;
   }
 
-  public Optional<Path> getOutputFile()
+  public Path getOutputFile(final String extension)
   {
     final Path outputFile;
     if (outputResource instanceof FileOutputResource)
@@ -110,9 +112,23 @@ public final class OutputOptions
     }
     else
     {
-      outputFile = null;
+      final String fileExtension;
+      if (isBlank(extension))
+      {
+        fileExtension = "";
+      }
+      else
+      {
+        fileExtension = extension;
+      }
+      outputFile = Paths.get(".",
+                             String.format("schemacrawler-%s.%s",
+                                           UUID.randomUUID(),
+                                           fileExtension))
+                        .normalize()
+                        .toAbsolutePath();
     }
-    return Optional.ofNullable(outputFile);
+    return outputFile;
   }
 
   /**

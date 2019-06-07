@@ -34,9 +34,7 @@ import static sf.util.IOUtility.createTempFilePath;
 import static sf.util.IOUtility.readResourceFully;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 import schemacrawler.schema.Catalog;
 import schemacrawler.schemacrawler.SchemaCrawlerException;
@@ -176,15 +174,7 @@ public final class GraphRenderer
   private GraphExecutor getGraphExecutor(final Path dotFile)
     throws SchemaCrawlerException
   {
-    final Path outputFile = outputOptions.getOutputFile()
-                                         .orElseGet(() -> Paths.get(".",
-                                                                    String.format(
-                                                                      "schemacrawler-%s.%s",
-                                                                      UUID.randomUUID(),
-                                                                      outputOptions
-                                                                        .getOutputFormatValue())))
-                                         .normalize()
-                                         .toAbsolutePath();
+    final Path outputFile = outputOptions.getOutputFile(outputOptions.getOutputFormatValue());
 
     // Set the format, in case we are using the default
     outputOptions = OutputOptionsBuilder.builder(outputOptions)
