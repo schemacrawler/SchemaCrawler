@@ -29,9 +29,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
-import static java.nio.file.Files.copy;
 import static java.nio.file.Files.createDirectories;
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
@@ -57,6 +55,8 @@ import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.integration.graph.GraphOptions;
 import schemacrawler.tools.integration.graph.GraphOptionsBuilder;
 import schemacrawler.tools.integration.graph.GraphOutputFormat;
+import schemacrawler.tools.options.OutputOptions;
+import schemacrawler.tools.options.OutputOptionsBuilder;
 import schemacrawler.tools.text.schema.SchemaTextDetailType;
 
 @ExtendWith(TestDatabaseConnectionParameterResolver.class)
@@ -97,14 +97,11 @@ public class GraphRendererOptionsTest
     }
     executable.setAdditionalConfiguration(graphOptionsBuilder.toConfig());
 
+    executable.setConnection(connection);
+
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
-    final Path testDiagramFile = executableExecution(connection,
-                                                     executable,
-                                                     GraphOutputFormat.png);
-    copy(testDiagramFile,
-         directory.resolve(testMethodName + ".png"),
-         REPLACE_EXISTING);
+    saveGraph(connection, executable, testMethodName);
 
     // Check DOT file
     final String referenceFileName = testMethodName;
@@ -121,6 +118,27 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     clean(GRAPH_OPTIONS_OUTPUT);
+  }
+
+  private static void saveGraph(final Connection connection,
+                                final SchemaCrawlerExecutable executable,
+                                final String testMethodName)
+    throws Exception
+  {
+    final OutputOptions oldOutputOptions = executable.getOutputOptions();
+    final Path testDiagramFile = directory.resolve(testMethodName + ".png");
+    final OutputOptions outputOptions = OutputOptionsBuilder.builder()
+                                                            .fromOptions(
+                                                              oldOutputOptions)
+                                                            .withOutputFile(
+                                                              testDiagramFile)
+                                                            .withOutputFormat(
+                                                              GraphOutputFormat.png)
+                                                            .toOptions();
+
+    executable.setOutputOptions(outputOptions);
+
+    executable.execute();
   }
 
   @BeforeAll
