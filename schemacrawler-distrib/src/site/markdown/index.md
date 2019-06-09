@@ -124,9 +124,11 @@ SchemaCrawler provides metadata for the following database objects:
 * Synonyms
 * Privileges and grants
 
-The sample code below demonstrates just how easy it is to use SchemaCrawler. For more details, please refer to the [javadocs](apidocs/index.html).
+The sample code below demonstrates just how easy it is to use SchemaCrawler. 
+For more example code, take a look at the [examples project](https://github.com/schemacrawler/SchemaCrawler/tree/master/schemacrawler-examplecode).
+For more details, please refer to the [javadocs](apidocs/index.html).
 
-<script src="https://gist.github.com/sualeh/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
+<script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
 
 
 ## Acknowledgements
