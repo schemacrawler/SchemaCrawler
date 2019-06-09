@@ -30,6 +30,7 @@ package schemacrawler.integration.test;
 
 
 import static java.nio.file.Files.createDirectories;
+import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
 import static schemacrawler.test.utility.ExecutableTestUtility.hasSameContentAndTypeAs;
@@ -42,7 +43,6 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,7 +101,7 @@ public class GraphRendererOptionsTest
 
     // Generate diagram, so that we have something to look at, even if
     // the DOT file comparison fails
-    saveGraph(connection, executable, testMethodName);
+    saveGraph(executable, testMethodName);
 
     // Check DOT file
     final String referenceFileName = testMethodName;
@@ -120,13 +120,13 @@ public class GraphRendererOptionsTest
     clean(GRAPH_OPTIONS_OUTPUT);
   }
 
-  private static void saveGraph(final Connection connection,
-                                final SchemaCrawlerExecutable executable,
+  private static void saveGraph(final SchemaCrawlerExecutable executable,
                                 final String testMethodName)
     throws Exception
   {
-    final OutputOptions oldOutputOptions = executable.getOutputOptions();
     final Path testDiagramFile = directory.resolve(testMethodName + ".png");
+
+    final OutputOptions oldOutputOptions = executable.getOutputOptions();
     final OutputOptions outputOptions = OutputOptionsBuilder.builder()
                                                             .fromOptions(
                                                               oldOutputOptions)
@@ -146,9 +146,8 @@ public class GraphRendererOptionsTest
     throws Exception
   {
     directory = testContext.resolveTargetFromRootPath(
-      "../../../schemacrawler-docs/graphs/"
-      + GraphRendererOptionsTest.class.getSimpleName());
-    FileUtils.deleteDirectory(directory.toFile());
+      "test-output-graphs/" + GraphRendererOptionsTest.class.getSimpleName());
+    deleteDirectory(directory.toFile());
     createDirectories(directory);
   }
 

@@ -53,6 +53,25 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SiteSnapshotVariationsTest
 {
 
+  private static void run(final DatabaseConnectionInfo connectionInfo,
+                          final Map<String, String> argsMap,
+                          final OutputFormat outputFormat,
+                          final Path outputFile)
+    throws Exception
+  {
+    deleteIfExists(outputFile);
+
+    final String command = "details,count,dump";
+
+    argsMap.put("-title", "Details of Example Database");
+
+    final Path snapshotFile = commandlineExecution(connectionInfo,
+                                                   command,
+                                                   argsMap,
+                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
+                                                   outputFormat);
+    move(snapshotFile, outputFile);
+  }
   private Path directory;
 
   @BeforeEach
@@ -63,7 +82,8 @@ public class SiteSnapshotVariationsTest
     {
       return;
     }
-    directory = testContext.resolveTargetFromRootPath("snapshot-examples");
+    directory = testContext.resolveTargetFromRootPath(
+      "_website/snapshot-examples");
   }
 
   @Test
@@ -74,7 +94,8 @@ public class SiteSnapshotVariationsTest
       TextOutputFormat.html,
       TextOutputFormat.json,
       TextOutputFormat.text,
-      GraphOutputFormat.htmlx })
+      GraphOutputFormat.htmlx
+    })
     {
       final String extension;
       if ("htmlx".equals(outputFormat.getFormat()))
@@ -94,26 +115,6 @@ public class SiteSnapshotVariationsTest
           outputFormat,
           directory.resolve("snapshot." + extension));
     }
-  }
-
-  private void run(final DatabaseConnectionInfo connectionInfo,
-                   final Map<String, String> argsMap,
-                   final OutputFormat outputFormat,
-                   final Path outputFile)
-    throws Exception
-  {
-    deleteIfExists(outputFile);
-
-    final String command = "details,count,dump";
-
-    argsMap.put("-title", "Details of Example Database");
-
-    final Path snapshotFile = commandlineExecution(connectionInfo,
-                                                   command,
-                                                   argsMap,
-                                                   "/hsqldb.INFORMATION_SCHEMA.config.properties",
-                                                   outputFormat);
-    move(snapshotFile, outputFile);
   }
 
 }

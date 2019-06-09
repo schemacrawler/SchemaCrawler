@@ -38,23 +38,18 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.notNullValue;
 import static schemacrawler.utility.SchemaCrawlerUtility.getCatalog;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+import com.wix.mysql.EmbeddedMysql;
+import com.wix.mysql.config.MysqldConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.wix.mysql.EmbeddedMysql;
-import com.wix.mysql.config.MysqldConfig;
-
 import schemacrawler.schema.Catalog;
 import schemacrawler.schema.Column;
 import schemacrawler.schema.Schema;
 import schemacrawler.schema.Table;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -72,8 +67,15 @@ public class MySQLEnumColumnTest
   public void columnWithEnum()
     throws Exception
   {
+    if (!isDatabaseRunning)
+    {
+      LOGGER.log(Level.INFO, "Did NOT run MySQL test");
+      return;
+    }
+
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
-      .builder().withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
+      .builder()
+      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum());
     final SchemaCrawlerOptions schemaCrawlerOptions = schemaCrawlerOptionsBuilder
       .toOptions();
 
@@ -90,27 +92,36 @@ public class MySQLEnumColumnTest
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException, SQLException, IOException
   {
     try
     {
       final String schema = "schema_with_enum";
 
-      final MysqldConfig config = aMysqldConfig(v5_6_latest)
-        .withServerVariable("bind-address", "localhost")
-        .withServerVariable("lower_case_table_names", 1).withCharset(UTF8)
-        .withTimeout(1, MINUTES).withFreePort()
-        .withUser("schema_with_enum", "schema_with_enum").build();
-      mysqld = anEmbeddedMysql(config)
-        .addSchema(schema,
-                   () -> "CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))")
-        .start();
+      final MysqldConfig config = aMysqldConfig(v5_6_latest).withServerVariable(
+        "bind-address",
+        "localhost")
+                                                            .withServerVariable(
+                                                              "lower_case_table_names",
+                                                              1)
+                                                            .withCharset(UTF8)
+                                                            .withTimeout(1,
+                                                                         MINUTES)
+                                                            .withFreePort()
+                                                            .withUser(
+                                                              "schema_with_enum",
+                                                              "schema_with_enum")
+                                                            .build();
+      mysqld = anEmbeddedMysql(config).addSchema(schema,
+                                                 () -> "CREATE TABLE shirts (name VARCHAR(40), size ENUM('small', 'medium', 'large'))")
+                                      .start();
 
       final int port = mysqld.getConfig().getPort();
       final String user = mysqld.getConfig().getUsername();
       final String password = mysqld.getConfig().getPassword();
-      final String connectionUrl = String
-        .format("jdbc:mysql://localhost:%d/%s?useSSL=false", port, schema);
+      final String connectionUrl = String.format(
+        "jdbc:mysql://localhost:%d/%s?useSSL=false",
+        port,
+        schema);
 
       createDataSource(connectionUrl, user, password);
 

@@ -52,6 +52,22 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SiteLintReportVariationsTest
 {
 
+  private static void run(final DatabaseConnectionInfo connectionInfo,
+                          final Map<String, String> argsMap,
+                          final OutputFormat outputFormat,
+                          final Path outputFile)
+    throws Exception
+  {
+    deleteIfExists(outputFile);
+
+    argsMap.put("-title", "Lint Report of Example Database");
+
+    final Path lintReportFile = commandlineExecution(connectionInfo,
+                                                     "lint",
+                                                     argsMap,
+                                                     outputFormat);
+    move(lintReportFile, outputFile);
+  }
   private Path directory;
 
   @BeforeEach
@@ -63,7 +79,8 @@ public class SiteLintReportVariationsTest
       return;
     }
 
-    directory = testContext.resolveTargetFromRootPath("lint-report-examples");
+    directory = testContext.resolveTargetFromRootPath(
+      "_website/lint-report-examples");
   }
 
   @Test
@@ -71,7 +88,8 @@ public class SiteLintReportVariationsTest
     throws Exception
   {
     for (final OutputFormat outputFormat : new OutputFormat[] {
-      TextOutputFormat.html, TextOutputFormat.json, TextOutputFormat.text, })
+      TextOutputFormat.html, TextOutputFormat.json, TextOutputFormat.text,
+      })
     {
       final String extension;
       if (outputFormat == TextOutputFormat.text)
@@ -90,23 +108,6 @@ public class SiteLintReportVariationsTest
           outputFormat,
           directory.resolve("lint_report." + extension));
     }
-  }
-
-  private void run(final DatabaseConnectionInfo connectionInfo,
-                   final Map<String, String> argsMap,
-                   final OutputFormat outputFormat,
-                   final Path outputFile)
-    throws Exception
-  {
-    deleteIfExists(outputFile);
-
-    argsMap.put("-title", "Lint Report of Example Database");
-
-    final Path lintReportFile = commandlineExecution(connectionInfo,
-                                                     "lint",
-                                                     argsMap,
-                                                     outputFormat);
-    move(lintReportFile, outputFile);
   }
 
 }

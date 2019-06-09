@@ -28,18 +28,16 @@ http://www.gnu.org/licenses/
 package schemacrawler.test.utility;
 
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.DataSource;
-
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.testdb.TestSchemaCreator;
 
@@ -48,8 +46,8 @@ import schemacrawler.testdb.TestSchemaCreator;
 public abstract class BaseAdditionalDatabaseTest
 {
 
-  protected final static Logger LOGGER = Logger
-    .getLogger(ExecutableTestUtility.class.getName());
+  protected final static Logger LOGGER = Logger.getLogger(ExecutableTestUtility.class
+                                                            .getName());
 
   @BeforeAll
   public static final void startLogging()
@@ -65,7 +63,7 @@ public abstract class BaseAdditionalDatabaseTest
   protected void createDatabase(final String scriptsResource)
     throws SchemaCrawlerException, SQLException
   {
-    try (Connection connection = getConnection();)
+    try (final Connection connection = getConnection())
     {
       final TestSchemaCreator schemaCreator = new TestSchemaCreator(connection,
                                                                     scriptsResource);
@@ -76,7 +74,6 @@ public abstract class BaseAdditionalDatabaseTest
   protected void createDataSource(final String connectionUrl,
                                   final String user,
                                   final String password)
-    throws SchemaCrawlerException, SQLException
   {
     LOGGER.log(Level.CONFIG, "Database connection URL: " + connectionUrl);
 

@@ -36,29 +36,23 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.classpathResource;
-import static schemacrawler.test.utility.FileHasContent.hasSameContentAs;
-import static schemacrawler.test.utility.FileHasContent.outputOf;
+import static schemacrawler.test.utility.FileHasContent.*;
 import static sf.util.Utility.isBlank;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import com.wix.mysql.EmbeddedMysql;
 import com.wix.mysql.SqlScriptSource;
 import com.wix.mysql.config.MysqldConfig;
-
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import schemacrawler.schemacrawler.RegularExpressionInclusionRule;
-import schemacrawler.schemacrawler.SchemaCrawlerException;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
 import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
 import schemacrawler.schemacrawler.SchemaInfoLevelBuilder;
@@ -99,31 +93,42 @@ public class MySQLTest
 
   }
 
+
   private boolean isDatabaseRunning;
   private EmbeddedMysql mysqld;
 
   @BeforeEach
   public void createDatabase()
-    throws SchemaCrawlerException, SQLException, IOException
   {
     try
     {
       final String schema = "books";
       final List<SqlScriptSource> sqlScriptSources = sqlScriptSources();
 
-      final MysqldConfig config = aMysqldConfig(v5_6_latest)
-        .withServerVariable("bind-address", "localhost")
-        .withServerVariable("lower_case_table_names", 1).withCharset(UTF8)
-        .withTimeout(1, MINUTES).withFreePort()
-        .withUser("schemacrawler", "schemacrawler").build();
+      final MysqldConfig config = aMysqldConfig(v5_6_latest).withServerVariable(
+        "bind-address",
+        "localhost")
+                                                            .withServerVariable(
+                                                              "lower_case_table_names",
+                                                              1)
+                                                            .withCharset(UTF8)
+                                                            .withTimeout(1,
+                                                                         MINUTES)
+                                                            .withFreePort()
+                                                            .withUser(
+                                                              "schemacrawler",
+                                                              "schemacrawler")
+                                                            .build();
       mysqld = anEmbeddedMysql(config).addSchema(schema, sqlScriptSources)
-        .start();
+                                      .start();
 
       final int port = mysqld.getConfig().getPort();
       final String user = mysqld.getConfig().getUsername();
       final String password = mysqld.getConfig().getPassword();
-      final String connectionUrl = String
-        .format("jdbc:mysql://localhost:%d/%s?useSSL=false", port, schema);
+      final String connectionUrl = String.format(
+        "jdbc:mysql://localhost:%d/%s?useSSL=false",
+        port,
+        schema);
 
       createDataSource(connectionUrl, user, password);
 
@@ -158,22 +163,24 @@ public class MySQLTest
 
     final SchemaCrawlerOptionsBuilder schemaCrawlerOptionsBuilder = SchemaCrawlerOptionsBuilder
       .builder();
-    schemaCrawlerOptionsBuilder
-      .withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
-      .includeSchemas(new RegularExpressionInclusionRule("books"))
-      .includeAllSequences().includeAllSynonyms().includeAllRoutines();
-    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder
-      .toOptions();
+    schemaCrawlerOptionsBuilder.withSchemaInfoLevel(SchemaInfoLevelBuilder.maximum())
+                               .includeSchemas(new RegularExpressionInclusionRule(
+                                 "books"))
+                               .includeAllSequences()
+                               .includeAllSynonyms()
+                               .includeAllRoutines();
+    final SchemaCrawlerOptions options = schemaCrawlerOptionsBuilder.toOptions();
 
     final SchemaTextOptionsBuilder textOptionsBuilder = SchemaTextOptionsBuilder
       .builder();
     textOptionsBuilder.showDatabaseInfo().showJdbcDriverInfo();
     final SchemaTextOptions textOptions = textOptionsBuilder.toOptions();
 
-    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable("details");
+    final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
+      "details");
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-      .builder(textOptions).toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(
+      textOptions).toConfig());
 
     assertThat(outputOf(executableExecution(getConnection(), executable)),
                hasSameContentAs(classpathResource("testMySQLWithConnection.txt")));
@@ -185,9 +192,9 @@ public class MySQLTest
   {
     final String scriptsResource = "/mysql.scripts.5.6.txt";
     final List<SqlScriptSource> scriptsResourceList = new ArrayList<>();
-    try (
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(MySQLTest.class
-          .getResourceAsStream(scriptsResource), UTF_8));)
+    try (final BufferedReader reader = new BufferedReader(new InputStreamReader(
+      MySQLTest.class.getResourceAsStream(scriptsResource),
+      UTF_8)))
     {
       reader.lines().forEach(line -> {
         if (!isBlank(line) && line.startsWith(";"))

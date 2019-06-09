@@ -64,45 +64,55 @@ public final class TestContext
     throws URISyntaxException, IOException
   {
     final Path projectRootPath = getProjectRootPath();
-    final Path directory = projectRootPath
-      .resolve(Paths.get("target", "_website")).resolve(relativePath)
-      .normalize().toAbsolutePath();
+    final Path directory = projectRootPath.resolve(Paths.get("target"))
+                                          .resolve(relativePath)
+                                          .normalize()
+                                          .toAbsolutePath();
     createDirectories(directory);
     return directory;
   }
 
   public String testMethodFullName()
   {
-    return optionalTestMethod
-      .map(method -> String.format("%s.%s",
-                                   method.getDeclaringClass().getSimpleName(),
-                                   method.getName()))
-      .orElseThrow(() -> new RuntimeException("Could not find test method"));
+    return optionalTestMethod.map(method -> String.format("%s.%s",
+                                                          method.getDeclaringClass()
+                                                                .getSimpleName(),
+                                                          method.getName()))
+                             .orElseThrow(() -> new RuntimeException(
+                               "Could not find test method"));
   }
 
   public String testMethodName()
   {
     return optionalTestMethod.map(method -> method.getName())
-      .orElseThrow(() -> new RuntimeException("Could not find test method"));
+                             .orElseThrow(() -> new RuntimeException(
+                               "Could not find test method"));
   }
 
   @Override
   public String toString()
   {
-    return new ToStringBuilder(this)
-      .append("testClass", nullSafeGet(optionalTestClass))
-      .append("testMethod", nullSafeGet(optionalTestMethod)).toString();
+    return new ToStringBuilder(this).append("testClass",
+                                            nullSafeGet(optionalTestClass))
+                                    .append("testMethod",
+                                            nullSafeGet(optionalTestMethod))
+                                    .toString();
   }
 
   private Path getProjectRootPath()
     throws URISyntaxException, IOException
   {
-    final Class<?> testClass = optionalTestClass
-      .orElseThrow(() -> new RuntimeException("Could not find test class"));
+    final Class<?> testClass = optionalTestClass.orElseThrow(() -> new RuntimeException(
+      "Could not find test class"));
     final Path codePath = Paths.get(testClass.getProtectionDomain()
-      .getCodeSource().getLocation().toURI()).normalize().toAbsolutePath();
-    final Path projectRoot = codePath.resolve("../..").normalize()
-      .toAbsolutePath();
+                                             .getCodeSource()
+                                             .getLocation()
+                                             .toURI())
+                               .normalize()
+                               .toAbsolutePath();
+    final Path projectRoot = codePath.resolve("../..")
+                                     .normalize()
+                                     .toAbsolutePath();
     Files.createDirectories(projectRoot);
     return projectRoot;
   }

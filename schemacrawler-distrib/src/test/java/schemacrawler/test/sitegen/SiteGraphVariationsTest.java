@@ -53,6 +53,31 @@ import schemacrawler.tools.integration.graph.GraphOutputFormat;
 public class SiteGraphVariationsTest
 {
 
+  private static void run(final DatabaseConnectionInfo connectionInfo,
+                          final Map<String, String> argsMap,
+                          final Map<String, String> config,
+                          final Path outputFile)
+    throws Exception
+  {
+    deleteIfExists(outputFile);
+
+    argsMap.put("-title", "Details of Example Database");
+
+    final Config runConfig = new Config();
+    final Config informationSchema = loadHsqldbConfig();
+    runConfig.putAll(informationSchema);
+    if (config != null)
+    {
+      runConfig.putAll(config);
+    }
+
+    final Path pngFile = commandlineExecution(connectionInfo,
+                                              "schema",
+                                              argsMap,
+                                              runConfig,
+                                              GraphOutputFormat.png);
+    move(pngFile, outputFile);
+  }
   private Path directory;
 
   @BeforeEach
@@ -63,7 +88,8 @@ public class SiteGraphVariationsTest
     {
       return;
     }
-    directory = testContext.resolveTargetFromRootPath("diagram-examples");
+    directory = testContext.resolveTargetFromRootPath(
+      "_website/diagram-examples");
   }
 
   @Test
@@ -261,32 +287,6 @@ public class SiteGraphVariationsTest
   private Path diagramPath(final TestContext testContext)
   {
     return directory.resolve(testContext.testMethodName() + ".png");
-  }
-
-  private void run(final DatabaseConnectionInfo connectionInfo,
-                   final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final Path outputFile)
-    throws Exception
-  {
-    deleteIfExists(outputFile);
-
-    argsMap.put("-title", "Details of Example Database");
-
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
-    runConfig.putAll(informationSchema);
-    if (config != null)
-    {
-      runConfig.putAll(config);
-    }
-
-    final Path pngFile = commandlineExecution(connectionInfo,
-                                              "schema",
-                                              argsMap,
-                                              runConfig,
-                                              GraphOutputFormat.png);
-    move(pngFile, outputFile);
   }
 
 }

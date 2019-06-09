@@ -53,6 +53,31 @@ import schemacrawler.tools.options.TextOutputFormat;
 public class SiteHTMLVariationsTest
 {
 
+  private static void run(final DatabaseConnectionInfo connectionInfo,
+                          final Map<String, String> argsMap,
+                          final Map<String, String> config,
+                          final Path outputFile)
+    throws Exception
+  {
+    deleteIfExists(outputFile);
+
+    argsMap.put("-title", "Details of Example Database");
+
+    final Config runConfig = new Config();
+    final Config informationSchema = loadHsqldbConfig();
+    runConfig.putAll(informationSchema);
+    if (config != null)
+    {
+      runConfig.putAll(config);
+    }
+
+    final Path htmlFile = commandlineExecution(connectionInfo,
+                                               "schema",
+                                               argsMap,
+                                               runConfig,
+                                               TextOutputFormat.html);
+    move(htmlFile, outputFile);
+  }
   private Path directory;
 
   @BeforeEach
@@ -63,7 +88,7 @@ public class SiteHTMLVariationsTest
     {
       return;
     }
-    directory = testContext.resolveTargetFromRootPath("html-examples");
+    directory = testContext.resolveTargetFromRootPath("_website/html-examples");
   }
 
   @Test
@@ -190,32 +215,6 @@ public class SiteHTMLVariationsTest
         args,
         config,
         directory.resolve(testContext.testMethodName() + ".html"));
-  }
-
-  private void run(final DatabaseConnectionInfo connectionInfo,
-                   final Map<String, String> argsMap,
-                   final Map<String, String> config,
-                   final Path outputFile)
-    throws Exception
-  {
-    deleteIfExists(outputFile);
-
-    argsMap.put("-title", "Details of Example Database");
-
-    final Config runConfig = new Config();
-    final Config informationSchema = loadHsqldbConfig();
-    runConfig.putAll(informationSchema);
-    if (config != null)
-    {
-      runConfig.putAll(config);
-    }
-
-    final Path htmlFile = commandlineExecution(connectionInfo,
-                                               "schema",
-                                               argsMap,
-                                               runConfig,
-                                               TextOutputFormat.html);
-    move(htmlFile, outputFile);
   }
 
 }
