@@ -34,7 +34,6 @@ import static org.hamcrest.Matchers.is;
 import java.sql.Connection;
 
 import org.junit.jupiter.api.Test;
-
 import schemacrawler.tools.databaseconnector.DatabaseConnector;
 import schemacrawler.tools.databaseconnector.DatabaseConnectorRegistry;
 
@@ -48,11 +47,10 @@ public class BundledDistributionTest
 
     final Connection connection = null;
     final DatabaseConnectorRegistry registry = new DatabaseConnectorRegistry();
-    final DatabaseConnector databaseSystemIdentifier = registry
-      .lookupDatabaseConnector("oracle");
-    assertThat(databaseSystemIdentifier
-      .getSchemaRetrievalOptionsBuilder(connection).toOptions()
-      .getInformationSchemaViews().size(), is(25));
+    final DatabaseConnector databaseSystemIdentifier = registry.lookupDatabaseConnector(
+      "oracle");
+    assertThat(databaseSystemIdentifier.getSchemaRetrievalOptionsBuilder(
+      connection).toOptions().getInformationSchemaViews().size(), is(26));
   }
 
   @Test
