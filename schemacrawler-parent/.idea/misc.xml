@@ -11,6 +11,14 @@
         <option value="$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin - Usage Example/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../schemacrawler-archetype-maven-project/pom.xml" />
+        <option value="$PROJECT_DIR$/../schemacrawler-archetype-plugin-command/pom.xml" />
+        <option value="$PROJECT_DIR$/../schemacrawler-archetype-plugin-dbconnector/pom.xml" />
+        <option value="$PROJECT_DIR$/../schemacrawler-archetype-plugin-lint/pom.xml" />
+      </set>
+    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/target" />

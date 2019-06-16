@@ -96,11 +96,6 @@
 
                 <module>../schemacrawler-diff</module>
 
-                <module>../schemacrawler-archetype-maven-project</module>
-                <module>../schemacrawler-archetype-plugin-command</module>
-                <module>../schemacrawler-archetype-plugin-lint</module>
-                <module>../schemacrawler-archetype-plugin-dbconnector</module>
-
                 <module>../schemacrawler-docs</module>
                 <module>../schemacrawler-distrib</module>
             </modules>

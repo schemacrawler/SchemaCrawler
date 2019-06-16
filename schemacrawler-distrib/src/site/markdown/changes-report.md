@@ -71,8 +71,8 @@
 - Support PGHOST, PGHOSTADDR, PGPORT, PGDATABASE environmental variables for PostgreSQL connections
 
 
-<a name="a15.06.01"></a>
-## Release 15.06.01 - 2018-10-14
+<a name="a15.07.01"></a>
+## Release 15.07.01 - 2018-10-14
 
 - Add SchemaCrawler Shell example to the main distribution
 
