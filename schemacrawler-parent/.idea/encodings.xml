@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+  <component name="Encoding">
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin - Usage Example" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Database-Plugins/schemacrawler-database-plugins-parent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Database-Plugins/schemacrawler-sapiq" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Database-Plugins/schemacrawler-timesten" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Plugins-Starter/example-command-plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Plugins-Starter/example-dbconnector-plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Plugins-Starter/example-lint-plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Plugins-Starter/schemacrawler-plugins-starter-parent" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../SchemaCrawler-Shell" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-api" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-maven-project" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-command" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-dbconnector" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../schemacrawler-archetype-plugin-lint" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-commandline" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-db2" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../schemacrawler-dbtest" charset="UTF-8" />

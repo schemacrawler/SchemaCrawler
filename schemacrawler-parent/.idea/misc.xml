@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/../../SchemaCrawler-Database-Plugins/schemacrawler-database-plugins-parent/pom.xml" />
         <option value="$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin/pom.xml" />
         <option value="$PROJECT_DIR$/../../SchemaCrawler Report Maven Plugin - Usage Example/pom.xml" />
+        <option value="$PROJECT_DIR$/../../SchemaCrawler-Plugins-Starter/schemacrawler-plugins-starter-parent/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
