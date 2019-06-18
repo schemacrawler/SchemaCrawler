@@ -24,7 +24,7 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-testdb</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>us.fatehi</groupId>
@@ -44,13 +44,13 @@
       <groupId>us.fatehi</groupId>
       <artifactId>schemacrawler-commandline</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.15</version>
+      <version>8.0.16</version>
     </dependency>
 
     <dependency>
