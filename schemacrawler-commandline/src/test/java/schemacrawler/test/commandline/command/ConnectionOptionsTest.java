@@ -50,7 +50,7 @@ public class ConnectionOptionsTest
     final String[] args = new String[0];
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    new CommandLine(optionsParser).parse(args);
+    new CommandLine(optionsParser).parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
   }
@@ -62,7 +62,7 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getDatabaseConnectable());
   }
@@ -74,7 +74,7 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
     assertThrows(CommandLine.ParameterException.class,
-                 () -> new CommandLine(optionsParser).parse(args));
+                 () -> new CommandLine(optionsParser).parseArgs(args));
   }
 
   @Test
@@ -85,7 +85,7 @@ public class ConnectionOptionsTest
     };
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
-    new CommandLine(optionsParser).parse(args);
+    new CommandLine(optionsParser).parseArgs(args);
     assertThrows(IllegalArgumentException.class,
                  () -> optionsParser.getDatabaseConnectable()
                                     .toDatabaseConnectionSource(new Config()));
@@ -100,7 +100,7 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
@@ -131,7 +131,7 @@ public class ConnectionOptionsTest
 
     final ConnectCommand optionsParser = new ConnectCommand(new SchemaCrawlerShellState());
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     final DatabaseConnectable databaseConnectable = optionsParser.getDatabaseConnectable();
     final DatabaseConnectionSource databaseConnectionSource = databaseConnectable
@@ -163,7 +163,7 @@ public class ConnectionOptionsTest
 
     assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 

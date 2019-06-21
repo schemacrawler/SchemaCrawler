@@ -47,7 +47,7 @@ public class CommandOptionsTest
 
     final CommandOptions optionsParser = new CommandOptions();
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> new CommandLine(optionsParser).parse(args));
+                 () -> new CommandLine(optionsParser).parseArgs(args));
   }
 
   @Test
@@ -58,7 +58,7 @@ public class CommandOptionsTest
     final CommandOptions optionsParser = new CommandOptions();
 
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> new CommandLine(optionsParser).parse(args));
+                 () -> new CommandLine(optionsParser).parseArgs(args));
   }
 
   @Test
@@ -68,7 +68,7 @@ public class CommandOptionsTest
 
     final CommandOptions optionsParser = new CommandOptions();
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> new CommandLine(optionsParser).parse(args));
+                 () -> new CommandLine(optionsParser).parseArgs(args));
   }
 
   @Test
@@ -79,7 +79,7 @@ public class CommandOptionsTest
     };
 
     final CommandOptions optionsParser = new CommandOptions();
-    new CommandLine(optionsParser).parse(args);
+    new CommandLine(optionsParser).parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getCommand());
   }
@@ -93,7 +93,7 @@ public class CommandOptionsTest
 
     final CommandOptions optionsParser = new CommandOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final String options = optionsParser.getCommand();
 
     assertThat(options, is("a_command"));

@@ -50,7 +50,7 @@ public class SchemaCrawlerShellCommandsTest
                                                     new StateFactory(state));
 
     assertThrows(CommandLine.UnmatchedArgumentException.class,
-                 () -> commandLine.parse(args));
+                 () -> commandLine.parseArgs(args));
   }
 
 }

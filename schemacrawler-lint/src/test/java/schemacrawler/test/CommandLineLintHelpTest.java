@@ -69,7 +69,7 @@ public class CommandLineLintHelpTest
     };
 
     final CommandLineHelpCommand optionsParser = new CommandLineHelpCommand();
-    new CommandLine(optionsParser).parse(args);
+    new CommandLine(optionsParser).parseArgs(args);
     optionsParser.run();
 
     assertThat(outputOf(err), hasNoContent());

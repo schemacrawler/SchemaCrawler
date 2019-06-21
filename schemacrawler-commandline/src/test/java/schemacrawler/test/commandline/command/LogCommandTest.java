@@ -47,7 +47,7 @@ public class LogCommandTest
     final String[] args = new String[0];
 
     final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parse(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
     assertThat(optionsParser.getLogLevel(), is(LogLevel.OFF));
   }
@@ -58,7 +58,7 @@ public class LogCommandTest
     final String[] args = { "--some-option" };
 
     final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parse(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
     assertThat(optionsParser.getLogLevel(), is(LogLevel.OFF));
   }
@@ -70,7 +70,9 @@ public class LogCommandTest
 
     final LogCommand optionsParser = new LogCommand();
     assertThrows(CommandLine.MissingParameterException.class,
-                 () -> newCommandLine(optionsParser, null, true).parse(args));
+                 () -> newCommandLine(optionsParser,
+                                      null,
+                                      true).parseArgs(args));
   }
 
   @Test
@@ -80,7 +82,9 @@ public class LogCommandTest
 
     final LogCommand optionsParser = new LogCommand();
     assertThrows(CommandLine.ParameterException.class,
-                 () -> newCommandLine(optionsParser, null, true).parse(args));
+                 () -> newCommandLine(optionsParser,
+                                      null,
+                                      true).parseArgs(args));
   }
 
   @Test
@@ -89,7 +93,7 @@ public class LogCommandTest
     final String[] args = { "--log-level", "FINE" };
 
     final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parse(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
     assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
   }
@@ -100,7 +104,7 @@ public class LogCommandTest
     final String[] args = { "--log-level", "FinE" };
 
     final LogCommand optionsParser = new LogCommand();
-    newCommandLine(optionsParser, null, true).parse(args);
+    newCommandLine(optionsParser, null, true).parseArgs(args);
 
     assertThat(optionsParser.getLogLevel(), is(LogLevel.FINE));
   }

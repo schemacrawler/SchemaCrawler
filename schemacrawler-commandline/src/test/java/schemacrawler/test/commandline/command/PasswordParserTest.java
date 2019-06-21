@@ -54,7 +54,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -68,7 +68,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -82,7 +82,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -101,7 +101,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -115,7 +115,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -135,7 +135,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final UserCredentials options = optionsParser.getUserCredentials();
 
     assertThat(options.getUser(), is(nullValue()));
@@ -150,7 +150,7 @@ public class PasswordParserTest
 
     final UserCredentialsOptions optionsParser = new UserCredentialsOptions();
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     assertThrows(CommandLine.ParameterException.class,
                  () -> optionsParser.getUserCredentials());
   }
@@ -172,7 +172,7 @@ public class PasswordParserTest
 
     assertThrows(CommandLine.MutuallyExclusiveArgsException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 

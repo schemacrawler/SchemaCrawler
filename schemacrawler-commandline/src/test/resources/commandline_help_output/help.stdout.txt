@@ -45,8 +45,8 @@ Queries with
 ** Logging Options - Turn logging on or off
 
       --log-level=<loglevel>
-         Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER,
-           FINEST, ALL
+         Set log level using one of OFF, SEVERE, WARNING, INFO, CONFIG, FINE,
+           FINER, FINEST, ALL
          Optional, defaults to OFF
 
 
@@ -79,7 +79,8 @@ first, before running SchemaCrawler
       --password=<password>
                           Database password
       --password:env=<environment variable name>
-                          Database password, from an environmental variable value
+                          Database password, from an environmental variable
+                            value
       --password:file=<path to password file>
                           Database password, read from a file
       --password:prompt   Database password, prompted from the console
@@ -91,8 +92,8 @@ For connecting to specific databases, use
       --host=<host>       Database server host
       --port=<port>       Database server port
       --server=<database system identifier>
-                          Where <database system identifier> is a database for which
-                            a SchemaCrawler plug-in is available
+                          Where <database system identifier> is a database for
+                            which a SchemaCrawler plug-in is available
                           Use one of
       --urlx=<String=String>
                           JDBC URL additional properties
@@ -105,18 +106,19 @@ If your database does not have a SchemaCrawler plug-in, use
 ** Limit Options - Limit database object metadata
 
       --exclude-columns=<excludecolumns>
-                            <excludecolumns> is a regular expression to match fully
-                              qualified column names, in the form "CATALOGNAME.
-                              SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
-                              --exclude-columns=.*\.STREET|.*\.PRICE matches columns
-                              named STREET or PRICE in any table
+                            <excludecolumns> is a regular expression to match
+                              fully qualified column names, in the form
+                              "CATALOGNAME.SCHEMANAME.TABLENAME.COLUMNNAME" -
+                              for example, --exclude-columns=.*\.STREET|.*\.
+                              PRICE matches columns named STREET or PRICE in
+                              any table
                             Columns that match the pattern are not displayed
                             Optional, default is to show all columns
       --exclude-in-out=<excludeinout>
-                            <excludeinout> is a regular expression to match fully
-                              qualified parameter names - for example,
-                              --exclude-in-out=@p1|@p2 matches parameters named @p1
-                              or @p2 in any procedure
+                            <excludeinout> is a regular expression to match
+                              fully qualified parameter names - for example,
+                              --exclude-in-out=@p1|@p2 matches parameters named
+                              @p1 or @p2 in any procedure
                             Parameters that match the pattern are not displayed
                             Optional, default is to show all parameters
       --routine-types=<routinetypes>[,<routinetypes>...]
@@ -124,93 +126,104 @@ If your database does not have a SchemaCrawler plug-in, use
                               types of PROCEDURE,FUNCTION
                             Optional, defaults to PROCEDURE,FUNCTION
       --routines=<routines> <routines> is a regular expression to match fully
-                              qualified stored procedure or function names, in the
-                              form "CATALOGNAME.SCHEMANAME.ROUTINENAME" - for
-                              example, --routines=.*\.C.*|.*\.P.* matches any
-                              routines whose names start with C or P
-                            Routines that do not match the pattern are not displayed
+                              qualified stored procedure or function names, in
+                              the form "CATALOGNAME.SCHEMANAME.ROUTINENAME" -
+                              for example, --routines=.*\.C.*|.*\.P.* matches
+                              any routines whose names start with C or P
+                            Routines that do not match the pattern are not
+                              displayed
                             Use --routines= to omit routines
                             Optional, defaults to showing no routines
       --schemas=<schemas>   <schemas> is a regular expression to match fully
                               qualified schema names, in the form "CATALOGNAME.
-                              SCHEMANAME" - for example, --schemas=.*\.C.*|.*\.P.*
-                              matches any schemas whose names start with C or P
-                            Schemas that do not match the pattern are not displayed
+                              SCHEMANAME" - for example, --schemas=.*\.C.*|.*\.
+                              P.* matches any schemas whose names start with C
+                              or P
+                            Schemas that do not match the pattern are not
+                              displayed
                             Optional, defaults to showing all schemas
       --sequences=<sequences>
                             <sequences> is a regular expression to match fully
-                              qualified sequence names, in the form "CATALOGNAME.
-                              SCHEMANAME.SEQUENCENAME" - for example, --sequences=.
-                              *\.C.*|.*\.P.* matches any sequences whose names start
-                              with C or P
-                            Sequences that do not match the pattern are not displayed
+                              qualified sequence names, in the form
+                              "CATALOGNAME.SCHEMANAME.SEQUENCENAME" - for
+                              example, --sequences=.*\.C.*|.*\.P.* matches any
+                              sequences whose names start with C or P
+                            Sequences that do not match the pattern are not
+                              displayed
                             Use --sequences= to omit sequences
                             Sequences will only be shown when -infolevel=maximum
                             Optional, defaults to showing no sequences
       --synonyms=<synonyms> <synonyms> is a regular expression to match fully
                               qualified synonym names, in the form "CATALOGNAME.
-                              SCHEMANAME.SYNONYMNAME" - for example, --synonyms=.*\.
-                              C.*|.*\.P.* matches any synonyms whose names start
-                              with C or P
-                            Synonyms that do not match the pattern are not displayed
+                              SCHEMANAME.SYNONYMNAME" - for example,
+                              --synonyms=.*\.C.*|.*\.P.* matches any synonyms
+                              whose names start with C or P
+                            Synonyms that do not match the pattern are not
+                              displayed
                             Synonyms will only be shown when -infolevel=maximum
                             Use --synonyms= to omit synonyms
                             Optional, defaults to showing no synonyms
       --table-types=<tabletypes>[,<tabletypes>...]
-                            <tabletypes> is a comma-separated list of table types
-                              supported by the database
-                            If no value is specified, all types of tables are shown
+                            <tabletypes> is a comma-separated list of table
+                              types supported by the database
+                            If no value is specified, all types of tables are
+                              shown
                             Optional, defaults to TABLE,VIEW
-      --tables=<tables>     <regular-expression> is a regular expression to match
-                              fully qualified table names, in the form "CATALOGNAME.
-                              SCHEMANAME.TABLENAME" - for example, --tables=.*\.C.*|.
-                              *\.P.* matches any tables whose names start with C or P
-                            Tables that do not match the pattern are not displayed
-                            Use with care, since --tables= actually takes tables out
-                              of consideration from the perspective of SchemaCrawler
-                              - to filter tables, look into the grep options
+      --tables=<tables>     <regular-expression> is a regular expression to
+                              match fully qualified table names, in the form
+                              "CATALOGNAME.SCHEMANAME.TABLENAME" - for example,
+                              --tables=.*\.C.*|.*\.P.* matches any tables whose
+                              names start with C or P
+                            Tables that do not match the pattern are not
+                              displayed
+                            Use with care, since --tables= actually takes
+                              tables out of consideration from the perspective
+                              of SchemaCrawler - to filter tables, look into
+                              the grep options
                             Optional, defaults to showing all tables
 
 
 ** Grep Options - Grep for database object metadata
 
       --grep-columns=<grepcolumns>
-                             <grepcolumns> is a regular expression to match fully
-                               qualified column names, in the form "SCHEMANAME.
-                               TABLENAME.COLUMNNAME" - for example, --grep-columns=.
-                               *\.STREET|.*\.PRICE matches columns named STREET or
-                               PRICE in any table
+                             <grepcolumns> is a regular expression to match
+                               fully qualified column names, in the form
+                               "SCHEMANAME.TABLENAME.COLUMNNAME" - for example,
+                               --grep-columns=.*\.STREET|.*\.PRICE matches
+                               columns named STREET or PRICE in any table
                              Optional, default is no grep
-      --grep-def=<grepdef>   <grepdef> is a regular expression to match text within
-                               remarks and definitions of views, stored proedures
-                               and triggers, if available
+      --grep-def=<grepdef>   <grepdef> is a regular expression to match text
+                               within remarks and definitions of views, stored
+                               proedures and triggers, if available
                              Optional, default is no grep
       --grep-in-out=<grepinout>
                              <grepinout> is a regular expression to match fully
                                qualified inout names, in the form "SCHEMANAME.
-                               ROUTINENAME.INOUTNAME" - for example, --grep-in-out=.
-                               *\.STREET|.*\.PRICE matches inouts named STREET or
-                               PRICE in any routine
+                               ROUTINENAME.INOUTNAME" - for example,
+                               --grep-in-out=.*\.STREET|.*\.PRICE matches
+                               inouts named STREET or PRICE in any routine
                              Optional, default is no grep
-      --invert-match         Inverts the sense of matching, and shows non-matching
-                               tables and columns
+      --invert-match         Inverts the sense of matching, and shows
+                               non-matching tables and columns
                              Optional, default is false
-      --only-matching        Shows only matching tables, and does not show foreign
-                               keys that reference other non-matching tables
+      --only-matching        Shows only matching tables, and does not show
+                               foreign keys that reference other non-matching
+                               tables
                              Optional, default is false
 
 
 ** Filter Options - Filter database object metadata
 
-      --children=<children> <children> is the number of generations of descendants
-                              for the tables selected by grep, and shown in the
-                              results
+      --children=<children> <children> is the number of generations of
+                              descendants for the tables selected by grep, and
+                              shown in the results
                             Optional, default is 0
       --no-empty-tables     Includes only tables that have rows of data
                             Will work only if infolevel is maximum
                             Optional, default is false
-      --parents=<parents>   <parents> is the number of generations of ancestors for
-                              the tables selected by grep, and shown in the results
+      --parents=<parents>   <parents> is the number of generations of ancestors
+                              for the tables selected by grep, and shown in the
+                              results
                             Optional, default is 0
 
 
@@ -218,8 +231,8 @@ If your database does not have a SchemaCrawler plug-in, use
 
   -i, --info-level=<infolevel>
          <infolevel> is one of unknown, minimum, standard, detailed, maximum
-         The info level determines the amount of database metadata retrieved, and
-           also determines the time taken to crawl the schema
+         The info level determines the amount of database metadata retrieved,
+           and also determines the time taken to crawl the schema
          Optional, defaults to standard
 
 
@@ -234,15 +247,16 @@ If your database does not have a SchemaCrawler plug-in, use
                             --no-remarks=<boolean>
                             <boolean> can be true or false
                             Optional, defaults to false
-      --portable-names      Allow for easy comparison between databases, by hiding
-                              foreign key names, constraint names, trigger names,
-                              specific names for routines, or index and primary key
-                              names, and not showing the fully-qualified table name
+      --portable-names      Allow for easy comparison between databases, by
+                              hiding foreign key names, constraint names,
+                              trigger names, specific names for routines, or
+                              index and primary key names, and not showing the
+                              fully-qualified table name
                             --portable-names=<boolean>
                             <boolean> can be true or false
                             Optional, defaults to false
-      --weak-associations   Show inferred relationships between tables, based on
-                              common table and column naming conventions
+      --weak-associations   Show inferred relationships between tables, based
+                              on common table and column naming conventions
                             --weak-associations=<boolean>
                             <boolean> can be true or false
                             Optional, defaults to false
@@ -277,29 +291,31 @@ If your database does not have a SchemaCrawler plug-in, use
                             Generate output in a named file
                             <outputfile> is the path to the output file
                             Optional, defaults to the console (stdout) for text
-                              output, and a random file in the current directory for
-                              binary output
+                              output, and a random file in the current
+                              directory for binary output
       --output-format=<outputFormatValue>
-                            Format of the SchemaCrawler output, where <outputformat>
-                              is one of:
+                            Format of the SchemaCrawler output, where
+                              <outputformat> is one of:
                               text - For text output (default)
                               html - For HTML5 output
                               json - For JavaScript Object Notation output
                               scdot - For Graphviz DOT output, for schema only
 
                             You can generate a database diagram using Graphviz
-                            For a diagram <outputformat> is one of dot, eps, gif,
-                              jpg, or png
-                            For a complete list Graphviz output formats, see http:
-                              //www.graphviz.org/
-                            You can generate HTML output format with an embedded SVG
-                              diagram with an <outputformat> of htmlx
-                            IMPORTANT: Graphviz needs to be installed, and available
-                              on the system PATH
+                            For a diagram <outputformat> is one of dot, eps,
+                              gif, jpg, or png
+                            For a complete list Graphviz output formats, see
+                              http://www.graphviz.org/
+                            You can generate HTML output format with an
+                              embedded SVG diagram with an <outputformat> of
+                              htmlx
+                            IMPORTANT: Graphviz needs to be installed, and
+                              available on the system PATH
                             http://www.graphviz.org/
-                            If Graphviz is not installed, a DOT file is produced.
+                            If Graphviz is not installed, a DOT file is
+                              produced.
 
-                            Optional, defaults to the format specified by the output
-                              file, otherwise, text
+                            Optional, defaults to the format specified by the
+                              output file, otherwise, text
 
 

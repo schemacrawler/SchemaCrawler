@@ -87,7 +87,7 @@ public final class Main
     final CommandLineHelpCommand commandLineHelpCommand = new CommandLineHelpCommand();
     final CommandLine commandLine = new CommandLine(commandLineHelpCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     if (commandLineHelpCommand.isHelpRequested())
     {
       commandLineHelpCommand.run();
@@ -101,7 +101,7 @@ public final class Main
     final SystemCommand systemCommand = new SystemCommand();
     final CommandLine commandLine = new CommandLine(systemCommand);
     commandLine.setUnmatchedArgumentsAllowed(true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     if (systemCommand.isVersionRequested())
     {
       systemCommand.run();

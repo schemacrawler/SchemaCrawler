@@ -23,7 +23,7 @@ public class CommandOutputOptionsTest
 
     final CommandOutputOptions options = new CommandOutputOptions();
     final CommandLine commandLine = newCommandLine(options, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue().isPresent(), is(false));
@@ -36,7 +36,7 @@ public class CommandOutputOptionsTest
 
     final CommandOutputOptions options = new CommandOutputOptions();
     final CommandLine commandLine = newCommandLine(options, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     assertThat(options.getOutputFile().isPresent(), is(false));
     assertThat(options.getOutputFormatValue().isPresent(), is(false));
@@ -51,7 +51,7 @@ public class CommandOutputOptionsTest
       final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
                                                      null,
                                                      true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -64,7 +64,7 @@ public class CommandOutputOptionsTest
       final CommandLine commandLine = newCommandLine(new CommandOutputOptions(),
                                                      null,
                                                      true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -82,7 +82,7 @@ public class CommandOutputOptionsTest
 
     final CommandOutputOptions options = new CommandOutputOptions();
     final CommandLine commandLine = newCommandLine(options, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     assertThat(options.getOutputFile()
                       .orElseThrow(() -> new IllegalArgumentException(

@@ -36,9 +36,8 @@ public class LimitCommandTest
     final SchemaCrawlerOptionsBuilder builder = SchemaCrawlerOptionsBuilder.builder();
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     state.setSchemaCrawlerOptionsBuilder(builder);
-    newCommandLine(LimitCommand.class,
-                   new StateFactory(state),
-                   true).parse(args);
+    newCommandLine(LimitCommand.class, new StateFactory(state), true).parseArgs(
+      args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getSchemaInclusionRule(),

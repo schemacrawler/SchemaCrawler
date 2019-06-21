@@ -29,7 +29,7 @@ public class FilterCommandTest
     final CommandLine commandLine = newCommandLine(FilterCommand.class,
                                                    new StateFactory(state),
                                                    true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
     final SchemaCrawlerOptions schemaCrawlerOptions = builder.toOptions();
 
     assertThat(schemaCrawlerOptions.getParentTableFilterDepth(), is(0));

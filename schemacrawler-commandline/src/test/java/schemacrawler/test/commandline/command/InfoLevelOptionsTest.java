@@ -25,7 +25,7 @@ public class InfoLevelOptionsTest
 
     assertThrows(CommandLine.ParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -39,7 +39,7 @@ public class InfoLevelOptionsTest
 
     assertThrows(CommandLine.ParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -53,7 +53,7 @@ public class InfoLevelOptionsTest
 
     assertThrows(CommandLine.ParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -67,7 +67,7 @@ public class InfoLevelOptionsTest
 
     assertThrows(CommandLine.ParameterException.class, () -> {
       final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-      commandLine.parse(args);
+      commandLine.parseArgs(args);
     });
   }
 
@@ -81,7 +81,7 @@ public class InfoLevelOptionsTest
     final SchemaCrawlerShellState state = new SchemaCrawlerShellState();
     final LoadCommand optionsParser = new LoadCommand(state);
     final CommandLine commandLine = newCommandLine(optionsParser, null, true);
-    commandLine.parse(args);
+    commandLine.parseArgs(args);
 
     final InfoLevel schemaInfoLevel = optionsParser.getInfoLevel();
 
