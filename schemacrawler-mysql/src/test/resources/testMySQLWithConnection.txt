@@ -1585,6 +1585,11 @@ xdevapi.connect-timeout                                [driver property]
   not required
   value                             10000                       
 
+xdevapi.connection-attributes                          [driver property]
+  An X DevAPI-specific comma-delimited list of user-defined key=value pairs (in addition to standard X Protocol-defined key=value pairs) to be passed to MySQL Server for display as connection attributes in PERFORMANCE_SCHEMA tables session_account_connect_attrs and session_connect_attrs. Example usage: xdevapi.connection-attributes=key1=value1,key2=value2 or xdevapi.connection-attributes=[key1=value1,key2=value2]. This functionality is available for use with MySQL Server version 8.0.16 or later only. Earlier versions of X Protocol do not support connection attributes, causing this configuration option to be ignored. For situations where Session creation/initialization speed is critical, setting xdevapi.connection-attributes=false will cause connection attribute processing to be bypassed.
+  not required
+  value                             NULL                        
+
 xdevapi.ssl-mode                                       [driver property]
   X DevAPI-specific SSL mode setting. If not specified, use "sslMode". Because the "PREFERRED" mode is not applicable to X Protocol, if "xdevapi.ssl-mode" is not set and "sslMode" is set to "PREFERRED", "xdevapi.ssl-mode" is set to "REQUIRED".
   not required; choices [DISABLED, REQUIRED, VERIFY_CA, VERIFY_IDENTITY]
