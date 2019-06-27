@@ -207,7 +207,7 @@
                 <artifactItem>
                   <groupId>org.postgresql</groupId>
                   <artifactId>postgresql</artifactId>
-                  <version>42.2.5</version>
+                  <version>42.2.6</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
@@ -239,7 +239,7 @@
                 <artifactItem>
                   <groupId>org.hsqldb</groupId>
                   <artifactId>hsqldb</artifactId>
-                  <version>2.4.1</version>
+                  <version>2.5.0</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>
@@ -255,7 +255,7 @@
                 <artifactItem>
                   <groupId>org.xerial</groupId>
                   <artifactId>sqlite-jdbc</artifactId>
-                  <version>3.25.2</version>
+                  <version>3.27.2.1</version>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                   <outputDirectory>${project.build.directory}/_base-distribution/lib/</outputDirectory>

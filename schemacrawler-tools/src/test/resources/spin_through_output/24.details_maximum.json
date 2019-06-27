@@ -1,7 +1,7 @@
 [
 {
   "schemaCrawlerInfo": {
-    "productVersion": "15.06.01",
+    "productVersion": "15.07.01",
     "productName": "SchemaCrawler"
   },
   "tables": [
@@ -4413,7 +4413,7 @@
     "fullName": "PUBLIC.BOOKS.PUBLICATIONS"
   },
   "databaseInfo": {
-    "databaseProductVersion": "2.4.1",
+    "databaseProductVersion": "2.5.0",
     "databaseProductName": "HSQL Database Engine",
     "databaseProperties": [
       {
@@ -4477,6 +4477,7 @@
           "hsqldb.temp_directory",
           "hsqldb.tx",
           "hsqldb.tx_conflict_rollback",
+          "hsqldb.tx_interrupt_rollback",
           "hsqldb.tx_level",
           "hsqldb.write_delay",
           "hsqldb.write_delay_millis",
@@ -4543,7 +4544,7 @@
       {
         "name": "getDatabaseMinorVersion",
         "description": "database minor version",
-        "value": 4
+        "value": 5
       },
       {
         "name": "getDefaultTransactionIsolation",
@@ -4578,7 +4579,7 @@
       {
         "name": "getDriverMinorVersion",
         "description": "driver minor version",
-        "value": 4
+        "value": 5
       },
       {
         "name": "getExtraNameCharacters",
@@ -5425,8 +5426,8 @@
     "databaseUserName": "SA"
   },
   "schemaCrawlerHeaderInfo": {
-    "runId": "a569abf3-8cda-48c1-a8b8-e9fee5f8a098",
-    "crawlTimestamp": "2019-01-28 23:34:53",
+    "runId": "e3b4d24b-1e55-4c29-8b90-e4ebc88f0d1f",
+    "crawlTimestamp": "2019-06-25 20:47:10",
     "title": ""
   },
   "routines": [
@@ -5800,11 +5801,11 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.4.1",
+    "driverVersion": "2.5.0",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
-    "url": "jdbc:hsqldb:hsql://0.0.0.0:61135/schemacrawler61135",
+    "url": "jdbc:hsqldb:hsql://0.0.0.0:60697/schemacrawler60697",
     "jdbcDriverProperties": [
       {
         "name": "default_schema",

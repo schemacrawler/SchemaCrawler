@@ -2357,7 +2357,7 @@
     }
   ],
   "databaseInfo": {
-    "databaseProductVersion": "2.4.1",
+    "databaseProductVersion": "2.5.0",
     "databaseProductName": "HSQL Database Engine",
     "databaseUserName": "SA"
   },
@@ -2719,7 +2719,7 @@
     }
   ],
   "jdbcDriverInfo": {
-    "driverVersion": "2.4.1",
+    "driverVersion": "2.5.0",
     "isJDBCCompliant": "true",
     "driverClassName": "org.hsqldb.jdbc.JDBCDriver",
     "driverName": "HSQL Database Engine Driver",
