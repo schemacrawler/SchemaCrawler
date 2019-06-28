@@ -340,7 +340,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the -weakassociations command-line argument.
+   * Corresponds to the --weak-associations command-line argument.
    */
   public final B weakAssociations()
   {
@@ -348,7 +348,7 @@ public abstract class BaseSchemaTextOptionsBuilder<B extends BaseSchemaTextOptio
   }
 
   /**
-   * Corresponds to the -weakassociations=&lt;boolean&gt; command-line
+   * Corresponds to the --weak-associations=&lt;boolean&gt; command-line
    * argument.
    */
   public final B weakAssociations(final boolean value)
