@@ -1,16 +1,12 @@
 # Database System Support
 
-SchemaCrawler supports almost any database that has a JDBC driver. You can simply download a JDBC
-driver, and place it in the `lib` directory. SchemaCrawler will pick it up immediately.
+SchemaCrawler supports almost any database that has a JDBC driver. You can simply download a JDBC driver, and place it in the `lib` directory. SchemaCrawler will pick it up immediately.
 
-SchemaCrawler is bundled with JDBC drivers for some commonly used relational database management
-systems (RDBMS) for convenience. The bundled distributions of SchemaCrawler are ready to use for a
-given database system. However, some JDBC drivers are proprietary, even if free. These JDBC
-drivers need to be downloaded separately.
+SchemaCrawler is bundled with JDBC drivers for some commonly used relational database management systems (RDBMS) for convenience. The bundled distributions of SchemaCrawler are ready to use for a given database system. However, some JDBC drivers are proprietary, even if free. These JDBC drivers need to be downloaded separately.
 
 The JDBC drivers for database systems commonly used with SchemaCrawler are:
 
-- The [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc)
+- The [SQLite](http://www.sqlite.org/) [Xerial SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) 
   is included with the SchemaCrawler download.
 - The [Oracle](http://www.oracle.com/) [JDBC driver](http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html)
   needs to be downloaded separately.
@@ -46,22 +42,22 @@ not mentioned above, you can simply provide the database connection URL, a usern
 For the databases mentioned above, you can provide connection details by using the following
 command-line options:
 
-- `-server` - identifies the database server, and can be one of `sqlite`, `oracle`, `sqlserver`,
+- `--server` - identifies the database server, and can be one of `sqlite`, `oracle`, `sqlserver`,
    `db2`, `mysql`, `postgresql`, `offline`
-- `-database` - identifies the database, and can have different meaning based on the server type
-- `-host` - specifies the database server host; it is optional, and defaults to localhost
-- `-port` - specifies the database server port; it is optional, and defaults to the default port for the server type
+- `--database` - identifies the database, and can have different meaning based on the server type
+- `--host` - specifies the database server host; it is optional, and defaults to localhost
+- `--port` - specifies the database server port; it is optional, and defaults to the default port for the server type
 
 For example, typical command-line options for SchemaCrawler for Microsoft SQL Server looks like:
-`-server=sqlserver -host=localhost -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo
--user=schemacrawler -password=schemacrawler`
+`--server=sqlserver --host=localhost --port=1433 --database=schemacrawler --schemas=schemacrawler.dbo
+--user=schemacrawler --password=schemacrawler`
 
-You should always use the `-schemas` command-line switch for databases that support it. The value
-for the `-schemas` switch is a regular expression that determines which schemas SchemaCrawler will
+You should always use the `--schemas` command-line switch for databases that support it. The value
+for the `--schemas` switch is a regular expression that determines which schemas SchemaCrawler will
 work with. The "schema" is database-dependent - for example, on Microsoft SQL Server, typically
 schemas look like "database_name.user", but for Oracle, typically, schemas look like "USER" (in uppercase).
 
-If there are environmental variables that contain a value, you can use the supported shell functionality to pass data to SchemaCrawler. For example, `-host %DBHOST%` on Windows will use the host value specified in the `DBHOST` environmental variable, and `-host $DBHOST` will do the same thing on Linux.
+If a system has environmental variables that contain a value, you can use the supported shell functionality to pass data to SchemaCrawler. For example, `--host %DBHOST%` on Windows will use the host value specified in the `DBHOST` environmental variable, and `--host $DBHOST` will do the same thing on Linux.
 
 ## Making Connections to a Database
 
@@ -73,7 +69,7 @@ are interested in, for Microsoft SQL Server.
 
 Typical command-line arguments will look like:
 ```
--server=sqlserver -host=db.example.com -port=1433 -database=schemacrawler -schemas=schemacrawler.dbo -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+--server=sqlserver --host=db.example.com --port=1433 --database=schemacrawler --schemas=schemacrawler.dbo --user=xxxxx --password=xxxxx --info-level=standard -command=schema
 ```
 
 If your Microsoft SQL Server instance is set up with Windows authentication or named pipes, you
@@ -83,7 +79,7 @@ for details.
 
 Typical command-line arguments for connecting to SQL Server with Windows authentication will look like:
 ```
--server=sqlserver -url=<url> -schemas=schemacrawler.dbo -user= -password= -infolevel=standard -command=schema
+--server=sqlserver --url=<url> --schemas=schemacrawler.dbo --user= --password= --info-level=standard --command=schema
 ```
 
 ### Oracle
@@ -96,7 +92,7 @@ to find the Oracle Service Name.
     
 Typical command-line arguments will look like:
 ```
--server=oracle -host=db.example.com -port=1521 -database=ORCL -schemas=SCHEMACRAWLER -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+--server=oracle --host=db.example.com --port=1521 --database=ORCL --schemas=SCHEMACRAWLER --user=xxxxx --password=xxxxx --info-level=standard --command=schema
 ```
 
 In the example above, "ORCL" is the Oracle Service Name.
@@ -110,7 +106,7 @@ are interested in, for MySQL.
 
 Typical command-line arguments will look like:
 ```
--server=mysql -host=db.example.com -port=3306 -database=schemacrawler -schemas=schemacrawler -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+--server=mysql --host=db.example.com --port=3306 --database=schemacrawler --schemas=schemacrawler --user=xxxxx --password=xxxxx --info-level=standard --command=schema
 ```
 
 ### PostgreSQL
@@ -121,11 +117,11 @@ are interested in, for PostgreSQL.
 
 Typical command-line arguments will look like:
 ```
--server=postgresql -host=db.example.com -port=5432 -database=schemacrawler -schemas=public -user=xxxxx -password=xxxxx -infolevel=standard -command=schema
+--server=postgresql --host=db.example.com --port=5432 --database=schemacrawler --schemas=public --user=xxxxx --password=xxxxx --info-level=standard --command=schema
 ```
-* `-host`  is optional if the `PGHOSTADDR` or `PGHOST` environmental variables are set
-* `-port`  is optional if the `PGPORT` environmental variables is set
-* `-database`  is optional if the `PGDATABASE`  environmental variables is set
+* `--host`  is optional if the `PGHOSTADDR` or `PGHOST` environmental variables are set
+* `--port`  is optional if the `PGPORT` environmental variables is set
+* `--database`  is optional if the `PGDATABASE`  environmental variables is set
 
 ### MariaDB
 
@@ -136,5 +132,5 @@ in the `lib/` folder.
 
 Typical command-line arguments will look like:
 ```
--url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler -schemas=schemacrawler -user=schemacrawler -password=schemacrawler --table-types=UNKNOWN,VIEW -infolevel=standard -command=schema
+--url=jdbc:mariadb://scmariadb.cdf972bn8znp.us-east-1.rds.amazonaws.com:3306/schemacrawler --schemas=schemacrawler --user=schemacrawler --password=schemacrawler --table-types=UNKNOWN,VIEW --info-level=standard --command=schema
 ```
