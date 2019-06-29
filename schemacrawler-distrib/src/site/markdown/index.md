@@ -130,6 +130,7 @@ For more details, please refer to the [javadocs](apidocs/index.html).
 
 <script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
 
+More code examples are at [Code Examples Using the SchemaCrawler API](code-examples.html).
 
 ## Acknowledgements
 

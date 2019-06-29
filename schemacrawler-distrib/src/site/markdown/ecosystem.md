@@ -7,13 +7,16 @@ Development Departement of [La Ville de Noumea](http://www.noumea.nc/).
 
 However, this is a registry of plugins and extensions to SchemaCrawler.
 
-## Custom SchemaCrawler Plugins
+## Database Projects Using SchemaCrawler 
 
-### SchemaCrawler Plugin for neo4j
+### SchemaCrawler Plugin for Neo4j
 
-[schemacrawler-plugin-neo4j](https://github.com/adriens/schemacrawler-plugin-neo4j) is maintained by
-[Adrien Sales]. This plugin dumps database structure into a neo4j database. 
-Once this done, you can view it in neo4j web console, or perform CYPHER queries on it.
+The [Neo4j APOC](https://neo4j-contrib.github.io/neo4j-apoc-procedures/#database-modeling) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph. 
+
+### Goldman Sachs Obevo
+
+[Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) is a database deployment tool that handles enterprise scale schemas and complexity. It leverages SchemaCrawler for obtaining database metadata.
+
 
 ## Custom SchemaCrawler Lints
 

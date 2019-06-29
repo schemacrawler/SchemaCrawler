@@ -63,7 +63,7 @@ SchemaCrawler can produce [plain text,](snapshot-examples/snapshot.text) [HTML5,
 
 The easiest way to see the SchemaCrawler commands is to download and install SchemaCrawler, and run the provided scripts (`schemacrawler.sh` on Unix, and `schemacrawler.cmd` on Windows). Detailed command-line help will be displayed.
 
-SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _infolevel_ , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
+SchemaCrawler can produce listings, and standard, or verbose details of your schema. The brief schema option gives you just table, view, stored procedure and function names. The standard schema option gives you the column names and primary keys. The verbose schema option will give you details of data types, indexes, primary and foreign keys, view, stored procedure and function definitions. The SchemaCrawler command can be combined with an _info-level_ , which determines the level of detail of schema metadata obtained. The maximum infolevel will give you privileges, triggers definitions, and check constraints. Each successive option takes more time to execute.
 
 SchemaCrawler provides commands for producing graphs and running templates, if the appropriate extensions are installed.
 
@@ -131,13 +131,13 @@ _For more details, see the [diagramming](diagramming.html) page._
 ### <a name="diagram-output">What does a SchemaCrawler database diagram look like?</a>
 
 An example of a SchemaCrawler database diagram:
-[![](images/diagram.png)](images/diagram.png "SchemaCrawler database diagram")
+[![](diagram-examples/diagram.png)](diagram-examples/diagram.png "SchemaCrawler database diagram")
 
-
-</dl>
-
+----------
 
 ## SchemaCrawler Grep
+
+----------
 
 ### <a name="whats-schemacrawler-grep">What is SchemaCrawler Grep?</a>
 

@@ -10,25 +10,25 @@ build system that supports the Central Repository.
 ### Apache Maven Projects
 In order to use SchemaCrawler in your [Apache Maven] projects, add a dependency to SchemaCrawler in your `pom.xml`.
 
-<div class="source"><pre>
-&lt;dependencies&gt;
+```xml
+<dependencies>
   ...
-  &lt;dependency&gt;
-    &lt;groupId&gt;us.fatehi&lt;/groupId&gt;
-    &lt;artifactId&gt;schemacrawler&lt;/artifactId&gt;
-    &lt;version&gt;16.1.1&lt;/version&gt;
-  &lt;/dependency&gt;
-&lt;/dependencies&gt;
-</pre></div>
+  <dependency>
+    <groupId>us.fatehi</groupId>
+    <artifactId>schemacrawler</artifactId>
+    <version>16.1.1</version>
+  </dependency>
+</dependencies>
+```
 
 ### Gradle Projects
 In order to use SchemaCrawler in your [Gradle] projects, add a dependency to SchemaCrawler in your `build.gradle`.
 
-<div class="source"><pre>
+```groovy
 dependencies {
   compile group: 'us.fatehi', name: 'schemacrawler', version: '16.1.1'
 }
-</pre></div>
+```
 
 ### SchemaCrawler Docker Image
 The official [SchemaCrawler Docker image] is available on Docker Hub. The SchemaCrawler command-line and the interactive shell are available, with open-source JDBC drivers.

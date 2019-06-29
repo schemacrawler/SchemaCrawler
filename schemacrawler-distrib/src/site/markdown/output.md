@@ -11,7 +11,6 @@ serves for database documentation, and is designed to be
 [diff-ed](http://en.wikipedia.org/wiki/Diff) against other database
 schemas.
 
-
 SchemaCrawler is unique among database documentation tools in that you
 do not need to know the table names or column names that you are
 interested in. All you need is a search expression, in the form of a
@@ -29,11 +28,11 @@ options to change what you see on the database diagram. Here are a few
 variations, with examples in SchemaCrawler's HTML output format:
 
 -   Suppress schema names and foreign key names, using the
-    `-portablenames` command-line option [(see
+    `--portable-names` command-line option [(see
     HTML output)](html-examples/html_2_portablenames.html).
 -   Show significant columns, such as primary and foreign key columns,
     and columns that are part of unique indexes. Use the
-    `-infolevel=standard -command=brief` command-line option [(see
+    `--info-level=standard --command=brief` command-line option [(see
     HTML output)](html-examples/html_3_important_columns.html).
 -   Show column ordinals, by setting configuration option
     `schemacrawler.format.show_ordinal_numbers=true` in the

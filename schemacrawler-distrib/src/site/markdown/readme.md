@@ -73,9 +73,9 @@ to launch SchemaCrawler
 To use SchemaCrawler in your development projects, or to build SchemaCrawler from the source code, read 
 about [building].
 
-## Additonal Installation Options
+## Additional Installation Options
 
-Additonal installation options are available from the [SchemaCrawler ecosystem](ecosystem.html).
+Additional installation options are available from the [SchemaCrawler ecosystem](ecosystem.html).
 
 
 [FAQs]: faq.html
@@ -86,7 +86,7 @@ Additonal installation options are available from the [SchemaCrawler ecosystem](
 [Java]: https://www.java.com/
 [SchemaCrawler examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
 [SchemaCrawler distribution with examples]: http://github.com/schemacrawler/SchemaCrawler/releases/
-[SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler* 
+[SchemaCrawler jars]: https://search.maven.org/search?q=g:us.fatehi%20a:schemacrawler*
 [SchemaCrawler Docker image]: https://hub.docker.com/r/schemacrawler/schemacrawler/
 [Gradle]: https://gradle.org/
 [Groovy]: http://www.groovy-lang.org/

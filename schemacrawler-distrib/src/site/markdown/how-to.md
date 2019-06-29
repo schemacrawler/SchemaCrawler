@@ -61,12 +61,12 @@ a properties configuration file. There are options to load configuration from pr
 JDBC drivers and other external libraries must be available on the classpath for this 
 application to function.
 
-For help, use the -h command-line switch.
+For help, use the ``-h` command-line switch.
 
 ---------
 
 ### <a name="arbitrary-query">How to run an arbitrary query</a>
-Run SchemaCrawler withquery, with a query for the command `"-command=SELECT * FROM PUBLIC.BOOKS.AUTHORS"` (The double quotes are required.)
+Run SchemaCrawler withquery, with a query for the command `"--scommand=SELECT * FROM PUBLIC.BOOKS.AUTHORS"` (The double quotes are required.)
 
 ----------
 
@@ -80,7 +80,7 @@ Re-run SchemaCrawler with `--log-level=ALL` on the command-line.
 ----------
 
 ### <a name="include-significant-columns">How to include only significant columns - that is, columns that are part of a primary key or unique index, or columns that are foreign keys</a>
-Re-run SchemaCrawler with the `-infolevel=standard -command=brief` command-line options.
+Re-run SchemaCrawler with the `--info-level=standard --command=brief` command-line options.
 
 ----------
 
@@ -101,7 +101,7 @@ Further, see the [details on the command-line options.](faq.html#commands)
 
 ### <a name="excluded-routines">How to exclude routines, that is, stored procedures and functions from the output</a>
 
-The option in the configuration can be overridden by the `-routines=` command-line option. 
+The option in the configuration can be overridden by the `--routines=` command-line option. 
 Further, see the [details on the command-line options.](faq.html#commands)
 
 ----------
@@ -141,7 +141,7 @@ diff friendly output.
 
 ### <a name="portable-names">How to hide display of object names that can change from server to server</a>
 
-Use the `-portablenames=true` command-line option to allow for easy comparison between 
+Use the `--portable-names=true` command-line option to allow for easy comparison between 
 databases, by hiding foreign key names, constraint names, trigger names, specific names for 
 procedures, and index and primary key names, and not showing the fully-qualified table name.
 
@@ -161,7 +161,7 @@ and primary key names are not explicitly provided while creating a schema, most 
 systems assign default names. These names can show up as spurious diffs in SchemaCrawler 
 output. Change the configuration for the following properties in your 
 `schemacrawler.config.properties` file. All of these names can be hidden by using the 
-`-portablenames` command-line option.
+`--portable-names` command-line option.
 
 ```
 schemacrawler.format.hide_primarykey_names=false
@@ -189,13 +189,13 @@ Change the configuration for the SchemaCrawler `schemacrawler.format.no_schema_c
 
 ### <a name="javascript">How to script with your database</a>
 
-SchemaCrawler has built-in support to be used with JavaScript scripts. Write your JavaScript file, assuming that a "catalog" variable containing the database schema will be available. A "connection" variable will also be available, and you will be able to execute SQL against your database. Run SchemaCrawler with the command-line options - `-command script -outputformat <your script file>` . See the example in the `examples\javascript` directory for more details.
+SchemaCrawler has built-in support to be used with JavaScript scripts. Write your JavaScript file, assuming that a "catalog" variable containing the database schema will be available. A "connection" variable will also be available, and you will be able to execute SQL against your database. Run SchemaCrawler with the command-line options - `--command script --output-format <your script file>` . See the example in the `examples\javascript` directory for more details.
 
 ----------
 
 ### <a name="velocity">How to create your own output format</a>
 
-SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated ouput. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options - `-command script -outputformat <your script file>` . `-command velocity -outputformat <your Velocity template>` . See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
+SchemaCrawler integrates with [Apache Velocity](http://velocity.apache.org/) to allow for templated ouput. Put Velocity on your classpath, and create your template, and run SchemaCrawler with the command-line options - `--command script --output-format <your script file>` . `--command velocity --output-format <your Velocity template>` . See the Velocity example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
 
 ----------
 
@@ -208,7 +208,7 @@ SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce gr
 ### <a name="graphviz_opts">How to provide additional Graphviz command-line options</a>
 
 SchemaCrawler integrates with [Graphviz](http://www.graphviz.org/) to produce graph images. See the previous question for details.
-You can provide additional Graphviz command-line options using the SC_GRAPHVIZ_OPTS environmental variable, or pass in the additional arguments using the SC_GRAPHVIZ_OPTS Java system property.
+You can provide additional Graphviz command-line options using the `SC_GRAPHVIZ_OPTS` environmental variable, or pass in the additional arguments using the `SC_GRAPHVIZ_OPTS` Java system property.
 
 ----------
 
@@ -226,11 +226,13 @@ In certain situations, it may not be possible to install Graphviz. SchemaCrawler
 ### <a name="api">How to use SchemaCrawler programmatically</a>
 
 Read [Java API Makes Database Metadata as Easily Accessible as POJOs](http://www.devx.com/Java/Article/32443) for an introduction to the SchemaCrawler API. (This article may refer to an older release of the SchemaCrawler API, but the concepts are the same.) You can also browse the [javadocs](apidocs/index.html) .
-_See the api example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download.
+_See the api example in the [SchemaCrawler examples](http://github.com/schemacrawler/SchemaCrawler/releases/) download._
 
 Or, if you are impatient, try code similar to the following:
 
-<script src="https://gist.github.com/sualeh/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
+<script src="https://gist.github.com/schemacrawler/63e4b8cb0515c6e928e7a9a419f46411.js"></script>
+
+More code examples are at [Code Examples Using the SchemaCrawler API](code-examples.html).
 
 ----------
 
@@ -264,8 +266,9 @@ can generate database documentation for an Apache Maven-generated website.
 
 ----------
 
-
 ## Advanced SchemaCrawler Usage
+
+----------
 
 ### <a name="definitions">How to get trigger, view, stored procedure and function definitions</a>
 
@@ -284,8 +287,8 @@ _See the documentation in [Extensions Using the Data Dictionary](data-dictionary
 Tables are sorted in alphabetical order by default. If you turn alphabetical sorting off, the 
 tables will be displayed in "create" order - that is, tables with no foreign-key dependencies 
 will be displayed first. The "drop" order is the reverse of the "create" order. Use the 
-following command-line arguments to obtain tables in "create" order: `-command=list 
--sorttables=false -routines=`
+following command-line arguments to obtain tables in "create" order: `--command=list 
+--sort-tables=false --routines=`
 
 ----------
 

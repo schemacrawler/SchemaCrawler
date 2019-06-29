@@ -11,12 +11,12 @@ schema to find all tables that have a CUSTOMER_ID column, for example.
 
 To find tables with certain names, run SchemaCrawler with command-line options
 similar to 
-`-infolevel=standard -command=list --grep-columns=.*\\..*CUSTOMER.*\\..*` 
+`--info-level=standard --command=list --grep-columns=.*\\..*CUSTOMER.*\\..*` 
 This will find table with names that have "CUSTOMER" in them.
 
 To find tables with certain column names, run SchemaCrawler with command-line
 options similar to 
-`-infolevel=standard -command=list --grep-columns=.*\\.CUSTOMER_ID` 
+`--info-level=standard --command=list --grep-columns=.*\\.CUSTOMER_ID` 
 This will find all tables that have a CUSTOMER_ID column.
 
 For more details, see the grep example in the 

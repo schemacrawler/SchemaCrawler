@@ -10,7 +10,7 @@ types?
 SchemaCrawler can analyze and
 [lint](https://en.wikipedia.org/wiki/Lint_(software)) your database to find
 potential design flaws. SchemaCrawler Lint can be run using the 
-`-command=lint`
+`--command=lint`
 command-line option. A lint report will be produced in any specified format -
 either text, HTML5 or JSON.
 
@@ -32,7 +32,7 @@ SchemaCrawler Lint can produce reports in
 SchemaCrawler linters can be configured (both severity, and thresholds) using
 an [XML configuration file.](config/schemacrawler-linter-configs.xml) You can run SchemaCrawler
 lint with an additional command-line option, for example, 
-`-linterconfigs=[path to linter XML configuration file]`, 
+`--linter-configs=[path to linter XML configuration file]`, 
 pointing to the path of the SchemaCrawler linter XML configuration file. You can
 configure whether or not to run a linter, change a linter's severity, or exclude
 certain tables and columns from the linter using the configuration file. You can 
@@ -105,7 +105,7 @@ Notice the use of `${table}` to indicate the name of the table the lint
 is running against.   
 Example configuration:
 
-```
+```xml
 <linter id="schemacrawler.tools.linter.LinterTableSql">
   <table-exclusion-pattern><![CDATA[.*BOOKS]]></table-exclusion-pattern>
   <config>
@@ -123,7 +123,7 @@ If you want to detect columns named `ID`, you could use configuration as
 shown in the example below.  
 Example configuration:
 
-```
+```xml
 <linter id="schemacrawler.tools.linter.LinterTableWithBadlyNamedColumns">
   <config>
     <property name="bad-column-names"><![CDATA[.*\.ID]]></property>
@@ -170,7 +170,7 @@ since these could result in additional reads when returning query
 results. By default, this is more than one such column.   
 Example configuration:
 
-```
+```xml
 <linter id="schemacrawler.tools.linter.LinterTooManyLobs">
   <config>
     <property name="max-large-objects">3</property>
@@ -206,7 +206,7 @@ Valid lint dispatch methods are
 
 Here is an example linter configuration, with a threshold defined, making it eligible for dispatch:
 
-```
+```xml
 <linter id="schemacrawler.tools.linter.LinterTableWithNoIndexes">
   <severity>critical</severity>
   <threshold>1</threshold>

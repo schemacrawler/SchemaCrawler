@@ -15,6 +15,7 @@ SchemaCrawler questions from users.
 
 ## Companies
 
+- The [Neo4j APOC](https://neo4j-contrib.github.io/neo4j-apoc-procedures/#database-modeling) project provides a plugin for database modeling that uses SchemaCrawler to model a relational schema as a graph. 
 - [Goldman Sachs Obevo](https://github.com/goldmansachs/obevo) project, a database deployment tool 
   that handles enterprise-scale schemas
 - [Atlassian JIRA database schema](https://developer.atlassian.com/display/JIRADEV/Database+Schema)
@@ -29,7 +30,6 @@ change those data without losing control of what is being done.
 SchemaCrawler is the only tool that I found that could export both 
 metadata and data in a predictable way, so that I can compare (diff) 2 
 schemas without getting false alerts." 
-
 - SchemaCrawler database diagrams in use at the Scrum meeting at the Software
 Development Departement of [La Ville de Noumea.](http://www.noumea.nc/)
 Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
@@ -45,19 +45,14 @@ Photograph courtesy of [Adrien Sales](https://www.linkedin.com/in/adrien-sales).
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">TIL about a project called SchemaCrawler that generates graphviz charts of a db schema by introspecting on foreign keys. 💯 would recommend</p>&mdash; virtual dom pérignon 🧙‍♂️ (@jacobrothstein) <a href="https://twitter.com/jacobrothstein/status/912806745663139840?ref_src=twsrc%5Etfw">September 26, 2017</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">use <a href="http://t.co/JFm542dT">http://t.co/JFm542dT</a> for easy working with database metadata &amp; generation of your own code artifacts</p>&mdash; Marek Tomáš (@marektomas) <a href="https://twitter.com/marektomas/status/240462380365119489?ref_src=twsrc%5Etfw">August 28, 2012</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Thanks SchemaCrawler! (database schema discovery and comprehension, and schema documentation tool) <a href="http://t.co/8lV6pIB2">http://t.co/8lV6pIB2</a></p>&mdash; Claudio Bastos Iorio (@selecters75) <a href="https://twitter.com/selecters75/status/218357126823817218?ref_src=twsrc%5Etfw">June 28, 2012</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler (http://schemacrawler.sourceforge.net/) is awesome for working with a db&#39;s metadata</p>&mdash; Stig KleppeJørgensen (@stigkj) <a href="https://twitter.com/stigkj/status/70973992479109121?ref_src=twsrc%5Etfw">May 18, 2011</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">SchemaCrawler is an excelent tool to explore a database schema. It&#39;s a layer on top of JDBC: http://bit.ly/aVqIVZ. Give it a try.</p>&mdash; William Chinelato (@willchinelato) <a href="https://twitter.com/willchinelato/status/12117092941?ref_src=twsrc%5Etfw">April 13, 2010</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
 
 ## Press
 

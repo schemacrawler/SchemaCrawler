@@ -37,12 +37,12 @@ download. An example of a SchemaCrawler database diagram is below.
 
 SchemaCrawler offers several options to change what you see on the database diagram. Here are a few variations:
 
-- Suppress schema names and foreign key names, using the `-portablenames` command-line option.
+- Suppress schema names and foreign key names, using the `--portable-names` command-line option.
 <br />
 <a href="diagram-examples/diagram_2_portablenames.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_2_portablenames.png" style="width: 200px;" />
 </a>
-- Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `-infolevel=standard -command=brief `command-line option.
+- Show only significant columns, such as primary and foreign key columns, and columns that are part of unique indexes. Use the `--info-level=standard --command=brief `command-line option.
 <br />
 <a href="diagram-examples/diagram_3_important_columns.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_3_important_columns.png" style="width: 200px;" />
@@ -52,7 +52,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_4_ordinals.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_4_ordinals.png" style="width: 200px;" />
 </a>
-- Display columns in alphabetical order, using the `-sortcolumns` command-line option.
+- Display columns in alphabetical order, using the `--sort-columns` command-line option.
 <br />
 <a href="diagram-examples/diagram_5_alphabetical.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_5_alphabetical.png" style="width: 200px;" />
@@ -72,7 +72,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_8_no_cardinality.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_8_no_cardinality.png" style="width: 200px;" />
 </a>
-- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` in the configuration file, and use `-infolevel=maximum` on the command-line.
+- Show table row counts on the diagrams, set configuration option `schemacrawler.format.show_row_counts=true` in the configuration file, and use `--info-level=maximum` on the command-line.
 <br />
 <a href="diagram-examples/diagram_9_row_counts.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_9_row_counts.png" style="width: 200px;" />
@@ -82,7 +82,7 @@ SchemaCrawler offers several options to change what you see on the database diag
 <a href="diagram-examples/diagram_10_no_schema_colors.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_10_no_schema_colors.png" style="width: 200px;" />
 </a>
-- Show a title on the diagram, use `-title "Books and Publishers Schema"` on the command-line.
+- Show a title on the diagram, use `--title "Books and Publishers Schema"` on the command-line.
 <br />
 <a href="diagram-examples/diagram_11_title.png" data-lightbox="lightbox" title="SchemaCrawler database diagram">
 <img class="img-fluid img-thumbnail" src="diagram-examples/diagram_11_title.png" style="width: 200px;" />

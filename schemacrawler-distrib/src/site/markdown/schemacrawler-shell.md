@@ -10,9 +10,9 @@ Unzip it, and follow instructions in the `shell` example included with the distr
 Example commands look like:
 
 ```sh
-connect -server <server> -host <host> -user <host> -password <password> -database <database>
-load-catalog -infolevel maximum
-execute -command list
+connect --server <server> --host <host> --user <host> --password <password> --database <database>
+load-catalog --info-level maximum
+execute --command list
 ```
 
 Results of command output can be redirected into a file. You can also generate schema diagrams. 
