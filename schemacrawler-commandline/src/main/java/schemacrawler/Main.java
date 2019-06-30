@@ -33,12 +33,11 @@ import static java.util.Objects.requireNonNull;
 import static picocli.CommandLine.populateCommand;
 import static schemacrawler.tools.commandline.utility.CommandLineLoggingUtility.*;
 
-import java.util.logging.Level;
-
 import picocli.CommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerCommandLine;
 import schemacrawler.tools.commandline.SchemaCrawlerShell;
 import schemacrawler.tools.commandline.command.CommandLineHelpCommand;
+import schemacrawler.tools.commandline.command.LogCommand;
 import schemacrawler.tools.commandline.shell.InteractiveShellOptions;
 import schemacrawler.tools.commandline.shell.SystemCommand;
 
@@ -53,7 +52,9 @@ public final class Main
   {
     requireNonNull(args, "No arguments provided");
 
-    applyApplicationLogLevel(Level.OFF);
+    final CommandLine commandLine = new CommandLine(new LogCommand());
+    commandLine.setUnmatchedArgumentsAllowed(true);
+    commandLine.execute(args);
 
     logSafeArguments(args);
     logSystemClasspath();
