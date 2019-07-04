@@ -59,7 +59,7 @@ final class NeuteredLinesFilter
     Pattern.compile(".*15\\.0[6-7]\\.\\d\\d.*"),
     Pattern.compile(".*16\\.\\d\\.\\d.*"),
     Pattern.compile(".*(Windows|Linux).*"),
-    Pattern.compile(".*Oracle Corporation Java HotSpot.*"),
+    Pattern.compile(".*Oracle Corporation (Java|OpenJDK).*"),
     };
 
   /**
