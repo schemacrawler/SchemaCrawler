@@ -29,66 +29,84 @@ http://www.gnu.org/licenses/
 package schemacrawler.integration.test;
 
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
+import static schemacrawler.test.utility.FileHasContent.*;
+
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import schemacrawler.schemacrawler.Config;
+import schemacrawler.schemacrawler.InfoLevel;
 import schemacrawler.schemacrawler.SchemaCrawlerOptions;
-import schemacrawler.test.utility.*;
+import schemacrawler.schemacrawler.SchemaCrawlerOptionsBuilder;
+import schemacrawler.test.utility.BaseSqliteTest;
+import schemacrawler.test.utility.TestContext;
+import schemacrawler.test.utility.TestContextParameterResolver;
+import schemacrawler.test.utility.TestLoggingExtension;
 import schemacrawler.testdb.TestSchemaCreator;
 import schemacrawler.tools.executable.SchemaCrawlerExecutable;
 import schemacrawler.tools.text.schema.SchemaTextOptions;
 import schemacrawler.tools.text.schema.SchemaTextOptionsBuilder;
 import sf.util.IOUtility;
 
-import java.nio.file.Path;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static schemacrawler.test.utility.ExecutableTestUtility.executableExecution;
-import static schemacrawler.test.utility.FileHasContent.*;
-
 @ExtendWith(TestLoggingExtension.class)
 @ExtendWith(TestContextParameterResolver.class)
 public class SQLiteExecutableTest
-    extends BaseSqliteTest
+  extends BaseSqliteTest
 {
 
   @Test
-  public void count(final TestContext testContext)
-      throws Exception
+  public void list(final TestContext testContext)
+    throws Exception
   {
-    run(testContext.testMethodFullName(), "count");
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "list");
+  }
+
+  @Test
+  public void count(final TestContext testContext)
+    throws Exception
+  {
+    run(testContext.testMethodFullName(), InfoLevel.minimum, "count");
   }
 
   @Test
   public void dump(final TestContext testContext)
-      throws Exception
+    throws Exception
   {
-    run(testContext.testMethodFullName(), "dump");
+    run(testContext.testMethodFullName(), InfoLevel.standard, "dump");
   }
 
-  private void run(final String currentMethodFullName, final String command)
-      throws Exception
+  private void run(final String currentMethodFullName,
+                   final InfoLevel infoLevel,
+                   final String command)
+    throws Exception
   {
     final Path sqliteDbFile = IOUtility.createTempFilePath("sc", ".db")
-        .normalize().toAbsolutePath();
+                                       .normalize()
+                                       .toAbsolutePath();
 
     TestSchemaCreator.main(new String[] {
-        "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt" });
+      "jdbc:sqlite:" + sqliteDbFile, null, null, "/sqlite.scripts.txt"
+    });
 
     final Config config = new Config();
     config.put("server", "sqlite");
     config.put("database", sqliteDbFile.toString());
 
-    final SchemaCrawlerOptions options = DatabaseTestUtility.schemaCrawlerOptionsWithMaximumSchemaInfoLevel;
+    final SchemaCrawlerOptions options = SchemaCrawlerOptionsBuilder.builder()
+                                                                    .withSchemaInfoLevel(
+                                                                      infoLevel.toSchemaInfoLevel())
+                                                                    .toOptions();
 
-    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder
-        .newSchemaTextOptions();
+    final SchemaTextOptions textOptions = SchemaTextOptionsBuilder.newSchemaTextOptions();
 
     final SchemaCrawlerExecutable executable = new SchemaCrawlerExecutable(
-        command);
+      command);
     executable.setSchemaCrawlerOptions(options);
-    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder
-                                              .builder(textOptions).toConfig());
+    executable.setAdditionalConfiguration(SchemaTextOptionsBuilder.builder(
+      textOptions).toConfig());
 
     assertThat(outputOf(executableExecution(createConnection(sqliteDbFile),
                                             executable)),
