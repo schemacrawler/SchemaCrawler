@@ -59,7 +59,8 @@ public final class SortCommand
             "--sort-columns=<sortcolumns>",
             "<sortcolumns> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean sortcolumns;
   @Option(names = { "--sort-in-out" },
           description = {
@@ -67,7 +68,8 @@ public final class SortCommand
             "--sort-in-out=<sortinout>",
             "<sortinout> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean sortinout;
   @Option(names = { "--sort-routines" },
           description = {
@@ -75,7 +77,8 @@ public final class SortCommand
             "--sort-routines=<sortroutines>",
             "<sortroutines> can be true or false",
             "Optional, defaults to true"
-          })
+          },
+          negatable = true)
   private Boolean sortroutines;
   @Option(names = { "--sort-tables" },
           description = {
@@ -83,7 +86,8 @@ public final class SortCommand
             "--sort-tables=<sorttables>",
             "<sorttables> can be true or false",
             "Optional, defaults to true"
-          })
+          },
+          negatable = true)
   private Boolean sorttables;
 
   public SortCommand(final SchemaCrawlerShellState state)

@@ -51,27 +51,22 @@ public final class FilterCommand
 
   private final SchemaCrawlerShellState state;
 
-  @Option(names = {
-    "--children"
-  },
+  @Option(names = "--children",
           description = {
             "<children> is the number of generations of descendants for the tables "
             + "selected by grep, and shown in the results",
             "Optional, default is 0"
           })
   private Integer children;
-  @Option(names = {
-    "--no-empty-tables"
-  },
+  @Option(names = "--no-empty-tables",
           description = {
             "Includes only tables that have rows of data",
             "Will work only if infolevel is maximum",
             "Optional, default is false"
-          })
+          },
+          negatable = true)
   private Boolean noemptytables;
-  @Option(names = {
-    "--parents"
-  },
+  @Option(names = "--parents",
           description = {
             "<parents> is the number of generations of ancestors for the tables "
             + "selected by grep, and shown in the results",

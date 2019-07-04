@@ -55,40 +55,44 @@ public final class ShowCommand
 
   @Option(names = { "--no-info" },
           description = {
-            "Hide database information",
+            "Hide or show database information",
             "--no-info=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean noinfo;
   @Option(names = { "--no-remarks" },
           description = {
-            "Hide table and column remarks",
+            "Hide or show table and column remarks",
             "--no-remarks=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean noremarks;
   @Option(names = { "--portable-names" },
           description = {
             "Allow for easy comparison between databases, "
-            + "by hiding foreign key names, constraint names, "
+            + "by hiding or showing foreign key names, constraint names, "
             + "trigger names, specific names for routines, "
             + "or index and primary key names, "
-            + "and not showing the fully-qualified table name",
+            + "and fully-qualified table names",
             "--portable-names=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean portablenames;
   @Option(names = { "--weak-associations" },
           description = {
-            "Show inferred relationships between tables, "
+            "Hide or show inferred relationships between tables, "
             + "based on common table and column naming conventions",
             "--weak-associations=<boolean>",
             "<boolean> can be true or false",
             "Optional, defaults to false"
-          })
+          },
+          negatable = true)
   private Boolean weakassociations;
 
   public ShowCommand(final SchemaCrawlerShellState state)
