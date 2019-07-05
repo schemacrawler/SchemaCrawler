@@ -47,7 +47,7 @@
       location="${SchemaCrawler.home}/schemacrawler-distrib/src/examples/resources" />
 
     <!-- 1. STAGE FOR EXAMPLES -->
-  	
+
   	<mkdir dir="${main-distribution.staging.dir}"/>
 
     <!-- Copy licenses -->
@@ -86,7 +86,7 @@
     <copy todir="${main-distribution.staging.dir}/_schemacrawler">
       <fileset dir="${schemacrawler.base-distribution}" />
     </copy>
-  	
+
     <fixcrlf srcdir="${main-distribution.staging.dir}" includes="**/*.sh"
       eol="unix" eof="remove" tab="remove" tablength="2" outputencoding="UTF-8" />
 
@@ -120,6 +120,12 @@
 
     <echo>Create zip file for distribution</echo>
 
+    <chmod perm="+x" type="file">
+      <dirset dir="${main-distribution.staging.dir}">
+        <include name="**/*.sh"/>
+      </dirset>
+    </chmod>
+
     <delete file="${distribution.target}/${main-distribution.stem}.zip" />
     <zip destfile="${distribution.target}/${main-distribution.stem}.zip">
       <zipfileset dir="${main-distribution.staging.dir}"
@@ -149,7 +155,7 @@
     <property name="website.source.config.location"
       location="${SchemaCrawler.home}/schemacrawler-docs/config" />
 
-    <!-- No-op if the directories already exist, but do this so that downstream 
+    <!-- No-op if the directories already exist, but do this so that downstream
       steps do not fail -->
     <mkdir dir="${website.staging.dir}" />
     <mkdir dir="${website.source.apidocs.location}" />
