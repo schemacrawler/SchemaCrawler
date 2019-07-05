@@ -4,7 +4,7 @@
   xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
   <info organisation="schemacrawler" module="schemacrawler-groovy" />
   <dependencies>
-    <dependency org="org.codehaus.groovy" name="groovy-jsr223"
+    <dependency org="org.codehaus.groovy" name="groovy-all"
       rev="2.5.7" />
 
     <exclude org="org.codehaus.groovy" module="groovy-cli-picocli" />

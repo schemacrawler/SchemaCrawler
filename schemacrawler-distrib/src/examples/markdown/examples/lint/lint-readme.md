@@ -12,7 +12,7 @@ below to run SchemaCrawler Lint.
 
 ## How to Experiment
 1. See help on all of the available lints, run 
-   `schemacrawler.cmd --command=lint --help` 
+   `schemacrawler.cmd lint --help` 
    (use `schemacrawler.sh` instead of `schemacrawler.cmd` on Unix)
 1. Create the SchemaCrawler Lint report in HTML5 and JSON formats. 
 2. Create a customized SchemaCrawler Lint report using a linter configuration file. 
