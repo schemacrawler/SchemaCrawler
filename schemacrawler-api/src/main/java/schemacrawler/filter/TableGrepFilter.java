@@ -28,6 +28,7 @@ http://www.gnu.org/licenses/
 package schemacrawler.filter;
 
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 
@@ -43,8 +44,8 @@ class TableGrepFilter
   implements Predicate<Table>
 {
 
-  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger
-    .getLogger(TableGrepFilter.class.getName());
+  private static final SchemaCrawlerLogger LOGGER = SchemaCrawlerLogger.getLogger(
+    TableGrepFilter.class.getName());
 
   private final boolean invertMatch;
   private final InclusionRule grepColumnInclusionRule;
@@ -56,7 +57,7 @@ class TableGrepFilter
 
     grepColumnInclusionRule = options.getGrepColumnInclusionRule().orElse(null);
     grepDefinitionInclusionRule = options.getGrepDefinitionInclusionRule()
-      .orElse(null);
+                                         .orElse(null);
   }
 
   /**
@@ -64,15 +65,15 @@ class TableGrepFilter
    * column inclusion rule is found, and at least one column matches the
    * rule.
    *
-   * @param table
-   *        Table to check
+   * @param table Table to check
    * @return Whether the column should be included
    */
   @Override
   public boolean test(final Table table)
   {
     final boolean checkIncludeForColumns = grepColumnInclusionRule != null;
-    final boolean checkIncludeForDefinitions = grepDefinitionInclusionRule != null;
+    final boolean checkIncludeForDefinitions =
+      grepDefinitionInclusionRule != null;
 
     if (!checkIncludeForColumns && !checkIncludeForDefinitions)
     {
@@ -81,7 +82,14 @@ class TableGrepFilter
 
     boolean includeForColumns = false;
     boolean includeForDefinitions = false;
-    for (final Column column: table.getColumns())
+    final List<Column> columns = table.getColumns();
+    // Check if info-level=minimum, and no columns were retrieved
+    if (columns.isEmpty())
+    {
+      includeForColumns = true;
+      includeForDefinitions = true;
+    }
+    for (final Column column : columns)
     {
       if (checkIncludeForColumns)
       {
@@ -111,7 +119,7 @@ class TableGrepFilter
       {
         includeForDefinitions = true;
       }
-      for (final Trigger trigger: table.getTriggers())
+      for (final Trigger trigger : table.getTriggers())
       {
         if (grepDefinitionInclusionRule.test(trigger.getActionStatement()))
         {
