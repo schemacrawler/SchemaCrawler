@@ -18,27 +18,27 @@
         <module name="schemacrawler-diff" />
         <module name="schemacrawler-scripting" />
         <module name="schemacrawler-sapiq" />
-        <module name="schemacrawler-maven-plugin-test" />
+        <module name="schemacrawler-offline" />
+        <module name="schemacrawler-oracle" />
         <module name="schemacrawler-tools" />
         <module name="schemacrawler-api" />
         <module name="example-lint-plugin" />
         <module name="schemacrawler-lint" />
-        <module name="schemacrawler-db2" />
-        <module name="schemacrawler-sqlite" />
         <module name="schemacrawler-postgresql" />
         <module name="schemacrawler-testdb" />
-        <module name="schemacrawler-dbtest" />
-        <module name="example-dbconnector-plugin" />
+        <module name="schemacrawler-sqlite" />
+        <module name="schemacrawler-maven-plugin-test" />
+        <module name="schemacrawler-db2" />
         <module name="schemacrawler" />
         <module name="schemacrawler-commandline" />
         <module name="schemacrawler-sqlserver" />
         <module name="schemacrawler-maven-plugin" />
-        <module name="schemacrawler-oracle" />
+        <module name="example-dbconnector-plugin" />
         <module name="schemacrawler-examplecode" />
         <module name="schemacrawler-integrations" />
         <module name="schemacrawler-hsqldb" />
         <module name="schemacrawler-timesten" />
-        <module name="schemacrawler-offline" />
+        <module name="schemacrawler-dbtest" />
         <module name="schemacrawler-mysql" />
       </profile>
     </annotationProcessing>

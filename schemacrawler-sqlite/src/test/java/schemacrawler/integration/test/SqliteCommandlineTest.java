@@ -54,7 +54,7 @@ import schemacrawler.tools.options.TextOutputFormat;
 import sf.util.IOUtility;
 
 @ExtendWith(TestLoggingExtension.class)
-public class SqliteDistributionTest
+public class SqliteCommandlineTest
 {
 
   private DatabaseConnector dbConnector;
@@ -97,16 +97,16 @@ public class SqliteDistributionTest
       final Map<String, String> argsMap = new HashMap<>();
       argsMap.put("-server", "sqlite");
       argsMap.put("-database", sqliteDbFile.toString());
-      argsMap.put("-no-info", Boolean.FALSE.toString());
-      argsMap.put("-command", "details,dump,count");
-      argsMap.put("-info-level", InfoLevel.maximum.name());
+      argsMap.put("-no-info", Boolean.TRUE.toString());
+      argsMap.put("-command", "list");
+      argsMap.put("-info-level", InfoLevel.minimum.name());
       argsMap.put("-output-file", out.toString());
 
       Main.main(flattenCommandlineArgs(argsMap));
     }
     assertThat(outputOf(testout),
                hasSameContentAs(classpathResource(
-                 "sqlite.main" + "." + outputFormat.getFormat())));
+                 "sqlite.main.list." + outputFormat.getFormat())));
   }
 
 }

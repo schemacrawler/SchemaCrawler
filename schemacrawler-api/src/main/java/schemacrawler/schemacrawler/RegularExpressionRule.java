@@ -199,7 +199,7 @@ public final class RegularExpressionRule
     }
     else
     {
-      actionMessage = new StringFormat("Excluding, since text is bank");
+      actionMessage = new StringFormat("Excluding, since text is blank");
     }
 
     // Log caller
